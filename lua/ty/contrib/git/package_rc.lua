@@ -2,7 +2,7 @@ local M = {}
 
 M.setup_gitsigns = require('ty.contrib.git.gitsigns_rc').setup
 M.setup_git_conflict = function()
-  local conflict = pcall(require, 'git-conflict')
+  local conflict = require('git-conflict')
 
   conflict.setup({
     default_mappings = true, -- disable buffer local mapping created by this plugin

@@ -9,7 +9,7 @@ function M.setup()
 
   vim.g.mapleader = ' '
   vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-  vim.g.maplocalleader = '-'
+  vim.g.maplocalleader = ','
 
   require('ty.core.globals')
   require('ty.core.options').setup()

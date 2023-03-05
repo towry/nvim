@@ -1,6 +1,6 @@
 local function bind_npm_keys(bufnr)
   local keymap = require('ty.core.keymap')
-  local n, cmd = keymap.n, keymap.cmd
+  local n, cmd = keymap.nmap, keymap.cmd
 
   if not require('ty.core.utils').has_plugin('package-info.nvim') then return end
 

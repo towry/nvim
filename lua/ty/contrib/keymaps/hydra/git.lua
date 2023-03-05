@@ -6,9 +6,10 @@ M.open_git_conflict_hydra = function()
     _p_: Prev conflict   _t_: Choose theirs  _q_: Exit
 ]]
   local Hydra = require('hydra')
-  local h = Hydra({
+  Hydra({
     name = 'Git conflict',
     hint = hint,
+    options = {},
     heads = {
       { 'b', '<cmd>GitConflictChooseBoth<CR>', { desc = 'choose both' } },
       { 'n', '<cmd>GitConflictNextConflict<CR>', { desc = 'move to next conflict' } },
@@ -17,9 +18,7 @@ M.open_git_conflict_hydra = function()
       { 't', '<cmd>GitConflictChooseTheirs<CR>', { desc = 'choose theirs' } },
       { 'q', nil, { exit = true, nowait = true, desc = 'exit' } },
     },
-  })
-
-  h:active()
+  }):activate()
 end
 
 return M
