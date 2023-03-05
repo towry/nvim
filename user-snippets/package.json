@@ -1,0 +1,19 @@
+{
+  "name": "user-snippets",
+  "engines": {
+    "vscode": "^1.11.0"
+  },
+  "description": " { 'language': ['lua'] } ",
+  "contributes": {
+    "snippets": [
+      {
+        "language": ["all"],
+        "path": "./all.json"
+      },
+      {
+        "language": ["lua"],
+        "path": "./test-lua.json"
+      }
+    ]
+  }
+}

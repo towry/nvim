@@ -1,0 +1,4 @@
+spell
+.DS_Store
+log.txt
+lua/towry/settings_env.lua

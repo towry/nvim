@@ -1,0 +1,127 @@
+local M = {}
+
+M.setup = function()
+  local config = require('ty.core.config').langsupport.treesitter or {}
+  require('nvim-treesitter.install').prefer_git = true
+  require('nvim-treesitter.configs').setup({
+    -- parser_install_dir = parser_install_dir,
+    ensure_installed = config.ensure_installed, -- one of "all", or a list of languages
+    sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
+    auto_install = false,
+    ignore_install = { 'all' }, -- list of parsers to ignore installing
+    highlight = {
+      enable = config.enable_highlight,
+      -- disable = { "c", "rust" },  -- list of language that will be disabled
+      -- additional_vim_regex_highlighting = false,
+    },
+
+    incremental_selection = {
+      enable = config.enable_incremental_selection,
+      keymaps = {
+        init_selection = '<leader>gnn',
+        node_incremental = '<leader>gnr',
+        scope_incremental = '<leader>gne',
+        node_decremental = '<leader>gnt',
+      },
+    },
+
+    indent = {
+      -- use yati.
+      enable = config.enable_indent,
+    },
+
+    yati = {
+      -- https://github.com/yioneko/nvim-yati
+      enable = config.enable_yati,
+      default_lazy = true,
+      default_fallback = 'auto',
+      -- if ts.indent is truee, use below to suppress conflict warns.
+      -- suppress_conflict_warning = true,
+    },
+
+    context_commentstring = {
+      enable = config.enable_context_commentstring,
+      enable_autocmd = false,
+    },
+
+    rainbow = {
+      enable = config.enable_rainbow,
+      -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
+      extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+      max_file_lines = 8000,
+    },
+
+    refactor = {
+      smart_rename = {
+        enable = false,
+        client = {
+          smart_rename = '<leader>cr',
+        },
+      },
+      navigation = {
+        enable = false,
+        keymaps = {
+          -- goto_definition = "gd",
+          -- list_definitions = "gnD",
+          -- list_definitions_toc = "gO",
+          -- goto_next_usage = "<a-*>",
+          -- goto_previous_usage = "<a-#>",
+        },
+      },
+    },
+
+    textobjects = {
+      move = {
+        enable = config.enable_textobjects_move,
+        set_jumps = true, -- whether to set jumps in the jumplist
+        goto_next_start = {
+          [']]'] = '@function.outer',
+          [']m'] = '@class.outer',
+        },
+        goto_next_end = {
+          [']['] = '@function.outer',
+          [']M'] = '@class.outer',
+        },
+        goto_previous_start = {
+          ['[['] = '@function.outer',
+          ['[m'] = '@class.outer',
+        },
+        goto_previous_end = {
+          ['[]'] = '@function.outer',
+          ['[M'] = '@class.outer',
+        },
+      },
+      select = {
+        enable = true,
+
+        -- Automatically jump forward to textobj, similar to targets.vim
+        lookahead = true,
+
+        keymaps = {
+          -- You can use the capture groups defined in textobjects.scm
+          ['af'] = '@function.outer',
+          ['if'] = '@function.inner',
+          ['ac'] = '@class.outer',
+          ['ic'] = '@class.inner',
+        },
+      },
+      swap = {
+        enable = false,
+        swap_next = {
+          -- FIXME: keymap
+          -- ["<S-~>"] = "@parameter.inner",
+        },
+      },
+    },
+
+    textsubjects = {
+      -- has issues.
+      enable = config.enable_textsubjects,
+      keymaps = {
+        ['<cr>'] = 'textsubjects-smart', -- works in visual mode
+      },
+    },
+  })
+end
+
+return M

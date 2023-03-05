@@ -1,0 +1,14 @@
+{
+  "Prettier ignore comment": {
+    "prefix": ["ignore_prettier", "prettier_ignore"],
+    "body": [
+      "// prettier-ignore"
+    ]
+  },
+  "Eslint disable next line": {
+    "prefix": ["eslint_disable"],
+    "body": [
+      "// eslint-disable-next-line"
+    ]
+  }
+}

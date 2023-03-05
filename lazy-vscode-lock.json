@@ -1,0 +1,12 @@
+{
+  "accelerated-jk.nvim": { "branch": "main", "commit": "38bbbf9258aab876906588ea979901ed3ed569c6" },
+  "leap.nvim": { "branch": "main", "commit": "f565a9c4d92245d8b619235bebeaa73cc38aa40e" },
+  "nui.nvim": { "branch": "main", "commit": "d147222a1300901656f3ebd5b95f91732785a329" },
+  "numb.nvim": { "branch": "master", "commit": "d95b7ea62e320b02ca1aa9df3635471a88d6f3b1" },
+  "nvim-surround": { "branch": "main", "commit": "ad56e6234bf42fb7f7e4dccc7752e25abd5ec80e" },
+  "nvim-web-devicons": { "branch": "master", "commit": "ade34ca7d19543904b28b903e606be8930fb9ee3" },
+  "plenary.nvim": { "branch": "master", "commit": "9a0d3bf7b832818c042aaf30f692b081ddd58bd9" },
+  "popup.nvim": { "branch": "master", "commit": "b7404d35d5d3548a82149238289fa71f7f6de4ac" },
+  "stay-in-place.nvim": { "branch": "main", "commit": "0628b6db8970fc731abf9608d6f80659b58932c9" },
+  "vim-repeat": { "branch": "master", "commit": "24afe922e6a05891756ecf331f39a1f6743d3d5a" }
+}

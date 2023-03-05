@@ -1,0 +1,82 @@
+## marks
+Set mark x.                                    | m{x}
+Set the next available alphabetical mark.      | <none>
+Toggle the next available mark.                | m<space>
+Delete mark x.                                 | <none>
+Delete all marks on the current line.          | <none>
+Delete all marks in the current buffer.        | m<bs>
+Move to next mark.                             | m,
+Move to previous mark.                         | m.
+Preview mark.                                  | m:
+Add a bookmark from bookmark group[0-9].       | m{0-9}
+Delete the bookmark under the cursor.          | dm=
+Delete all bookmarks from bookmark group[0-9]. | dm{0-9ll}
+Move to next bookmark of same type.            | <none>
+Move to previous bookmark of same type.        | <none>
+
+## search-and-replace
+Search and Replace                       | /<pattern>
+Disable highlight after search           | <leader>-h
+Press * on a word (or visual selection), | *
+  // represents selected string          | :%s//replace/gc
+Delete "whatever" from every open buffer | bufdo exe ":%g/whatever/d" | w
+change around brackets                   | cab
+change in brackets                       | cib
+
+## surround
+you surround in word              | ysiw)
+you surround to end of line "     | ys$"
+[delete surrounding brackets]     | dz]
+delete surrounding (html) tags    | dzt
+change surrounding ' (to) "       | cs'"
+change surrounding tag h1         | csth1<CR>
+delete surrounding function       | dzf
+you surround some function <func> | yssffunc
+
+## leap
+Jump to next target               | <enter>
+Jump to previous target           | <tab>
+Switch to next group              | <space>
+
+## live_grep_search
+Ignore file with glob pattern     | -g '!package-lock.json'
+Quote search text                 | <c-k>
+Enter normal mode                 | <c-e>
+Rg help doc                       | https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md
+
+## jump-around-buffers
+Tag a file using grapple          | <space>m
+Jump backward -portal.nvim        | <meta-o>
+Jump forward - portal.nvim        | <meta-i>
+
+## Move-around-in-buffer
+Jump to next quote                | f"
+Jump to previous qutoe            | F"
+Jump to 3 more quotes and so on   | 3f"
+Move inside tags                  | cit
+
+## Repeat-actions
+Repeat last fFtT command          | ;
+Repeat last search                | ,
+
+## ts-textobjects
+Go to next start/end of function  | ]], ][
+Go to next start/end of class     | ]m, ]m
+Go to pre start/end of function   | [[, []
+
+## mini-ident-motion
+Textobject object scope in border | ii, you can do vii, select anything inside the border.
+Textobject object with border     | ai, you can do vai, select anything including the border.
+Go to top of border line          | [i, you can do v[i
+Go to botom of border line        | ]i, you can do v]i
+
+## neovim-dev
+Luasnip logging file path         | ~/.local/state/nvim/luasnip.log | ~/.cache/nvim/luasnip.log
+Luasnip not working               | make sure package.json file exists and is valid json file.
+
+## vsc
+Git commit                       | :Git commit
+Git diff or git log              | :Git diff(Gdiffsplit|Gvdiffsplit) | :Git log
+Git blame                        | :Git blame
+Open commit browser              | :GV, (:GV! for current buffer)
+Motion - Select hunk             | ih
