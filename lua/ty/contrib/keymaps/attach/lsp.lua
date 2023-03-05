@@ -42,7 +42,7 @@ return function(client, buffer)
     cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "HINT")]], opts)
   )
 
-  n('<Plug>(leader-code-map)f', '[LSP] Go find code', cmd('lua Ty.Func.navigate.goto_code_references()', opts))
+  n('<Plug>(leader-code-map)d', '[LSP] Go find code', cmd('lua Ty.Func.navigate.goto_code_references()', opts))
 
   if client.name == 'tsserver' then
     n(
@@ -57,9 +57,7 @@ return function(client, buffer)
     n('<Plug>(leader-code-map)r', _('Rename'), cmd([[lua Ty.Func.editing.rename_name()]], opts))
   end
   nv('<Plug>(leader-code-map)a', _('Code Action'), cmd([[lua Ty.Func.editing.open_code_action()]], opts))
-  if cap.documentFormatting then
-    nv('<Plug>(leader-code-map)f', _('Format code'), cmd([[lua Ty.Func.editing.format_code()]], opts))
-  end
+  nv('<Plug>(leader-code-map)f', _('Format code'), cmd([[lua Ty.Func.editing.format_code()]], opts))
   n('<Plug>(leader-code-map)p', _('Peek definition'), cmd([[lua Ty.Func.editing.peek_definition()]], opts))
 
   -- goto.

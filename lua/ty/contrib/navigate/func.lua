@@ -24,7 +24,7 @@ function M.goto_definition_in_file(command) require('gtd').exec({ command = comm
 function M.goto_code_references()
   local has_lspsaga = require('ty.core.utils').has_plugin('lspsaga.nvim')
   if has_lspsaga then
-    require('lspsaga.finder'):finder()
+    vim.cmd('Lspsaga lsp_finder')
   else
     vim.lsp.buf.references()
   end
