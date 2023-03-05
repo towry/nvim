@@ -5,6 +5,55 @@ M.init_lspconfig = require('ty.contrib.editing.lsp').init
 M.setup_nvim_ufo = require('ty.contrib.editing.folding').setup_ufo
 M.setup_switch = require('ty.contrib.editing.switch_rc').setup
 M.setup_yanky = require('ty.contrib.editing.yanky_rc').setup
+M.setup_lspsaga = function()
+  require('lspsaga').setup({
+    request_timeout = 1500,
+    code_action = {
+      num_shortcut = true,
+      show_server_name = true,
+      extend_gitsigns = true,
+      keys = {
+        -- string | table type
+        quit = '<ESC>',
+        exec = '<CR>',
+      },
+    },
+    lightbulb = {
+      enable = false,
+      enable_in_insert = false,
+      sign = true,
+      sign_priority = 40,
+      virtual_text = true,
+    },
+    diagnostic = {
+      on_insert = false,
+      show_virt_line = false,
+      border_follow = false,
+      text_hl_follow = true,
+      show_code_action = false,
+      keys = {
+        quit = '<ESC>',
+      },
+    },
+    callhierarchy = {
+      keys = {
+        quit = '<ESC>',
+        vsplit = 'v',
+        split = 'x',
+      },
+    },
+    symbol_in_winbar = {
+      enable = false,
+    },
+    beacon = {
+      enable = false,
+    },
+    ui = {
+      border = Ty.Config.ui.float.border, -- single, double, rounded, solid, shadow.
+      winblend = 1,
+    },
+  })
+end
 
 M.setup_comment = function()
   require('Comment').setup({

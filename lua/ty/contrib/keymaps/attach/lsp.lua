@@ -42,6 +42,8 @@ return function(client, buffer)
     cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "HINT")]], opts)
   )
 
+  n('<Plug>(leader-code-map)f', '[LSP] Go find code', cmd('lua Ty.Func.navigate.goto_code_references()', opts))
+
   if client.name == 'tsserver' then
     n(
       '<Plug>(leader-code-map)o',
@@ -64,7 +66,6 @@ return function(client, buffer)
   n('gfd<space>', 'Go find definition in file', cmd('lua Ty.Func.navigate.goto_definition_in_file()', opts))
   n('gfdx', 'Go find definition in file in split', cmd('lua Ty.Func.navigate.goto_definition_in_file("split")', opts))
   n('gfdv', 'Go find definition in file in vsplit', cmd('lua Ty.Func.navigate.goto_definition_in_file("vsplit")', opts))
-  n('gfcr', 'Go find code references', cmd('lua Ty.Func.navigate.goto_code_references()', opts))
 
   -- workspace.
   n('<leader>wa', _('add workspace folder'), key(vim.lsp.buf.add_workspace_folder, opts))
@@ -76,9 +77,10 @@ return function(client, buffer)
   )
 
   -- inline actions.
-  n('KK', _('Show hover or reveal UFO folding'), cmd('lua Ty.Func.editing.hover_action()', opts))
-  n('KS', _('Show signature help'), cmd('lua Ty.Func.editing.show_signature_help()', opts))
-  n('KL', _('Show diagnostics on current line'), cmd('lua Ty.Func.editing.show_diagnostics("line")', opts))
-  n('KC', _('Show diagnostics at cursor'), cmd('lua Ty.Func.editing.show_diagnostics("cursor")', opts))
-  n('KP', _('Peek definition'), cmd([[lua Ty.Func.editing.peek_definition()]], opts))
+  n('KK', _('[LSP] Show hover or reveal UFO folding'), cmd('lua Ty.Func.editing.hover_action()', opts))
+  n('KS', _('[LSP] Show signature help'), cmd('lua Ty.Func.editing.show_signature_help()', opts))
+  n('KL', _('[LSP] Show diagnostics on current line'), cmd('lua Ty.Func.editing.show_diagnostics("line")', opts))
+  n('KC', _('[LSP] Show diagnostics at cursor'), cmd('lua Ty.Func.editing.show_diagnostics("cursor")', opts))
+  n('KP', _('[LSP] Peek definition'), cmd([[lua Ty.Func.editing.peek_definition()]], opts))
+  n('KT', _('[LSP] Peek type definition'), cmd([[lua Ty.Func.editing.peek_type_definition()]], opts))
 end

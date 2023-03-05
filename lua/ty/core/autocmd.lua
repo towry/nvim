@@ -2,6 +2,7 @@
 local M = {
   EVENTS = {
     on_git_blame_done = 'OnGitBlameDone',
+    on_need_hl_update = 'OnNeedHlUpdate',
   },
   --- execute autocmds.
   exec = vim.api.nvim_exec_autocmds,
@@ -60,6 +61,20 @@ function M.on_lazy_done(callback)
   vim.api.nvim_create_autocmd('User', {
     pattern = 'LazyDone',
     callback = function() callback() end,
+  })
+end
+
+---Listen to the request on hl update.
+function M.on_need_hl_update(callback)
+  vim.api.nvim_create_autocmd('User', {
+    pattern = M.EVENTS.on_need_hl_update,
+    callback = function() callback() end,
+  })
+end
+---Need to update the hl, requested by some plugin.
+function M.do_need_hl_update()
+  M.exec('User', {
+    pattern = M.EVENTS.on_need_hl_update,
   })
 end
 

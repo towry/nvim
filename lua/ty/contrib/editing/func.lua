@@ -1,12 +1,19 @@
 local M = {}
 
-function M.show_signature_help() Ty.NOTIFY('TODO show_signature_help') end
+function M.show_signature_help()
+  local has_lspsaga = require('ty.core.utils').has_plugin('lspsaga.nvim')
+  if has_lspsaga then
+    vim.cmd('Lspsaga peek_type_definition<CR>')
+  else
+    vim.lsp.buf.signature_help()
+  end
+end
 
----@param pos string "line" or "cursor"
+---@param pos string "line" or "cursor" or "buffer"
 function M.show_diagnostics(pos)
   local has_lspsaga = require('ty.core.utils').has_plugin('lspsaga.nvim')
   if has_lspsaga then
-    require('lspsaga.diagnostic').show_line_diagnostics({})
+    require('lspsaga.diagnostic'):show_diagnostics({}, pos)
   else
     vim.diagnostic.open_float(nil, { scope = pos })
   end
@@ -19,17 +26,30 @@ function M.hover_action()
   if has_ufo then winid = require('ufo').peekFoldedLinesUnderCursor() end
 
   if not winid then
-    -- TODO: add lsp hover.
-    vim.lsp.buf.hover()
+    local has_lspsaga = require('ty.core.utils').has_plugin('lspsaga.nvim')
+    if has_lspsaga then
+      vim.cmd('Lspsaga hover_doc')
+    else
+      vim.lsp.buf.hover()
+    end
   end
 end
 
 function M.peek_definition()
   local has_lspsaga = require('ty.core.utils').has_plugin('lspsaga.nvim')
   if has_lspsaga then
-    require('lspsaga.provider').preview_definition()
+    vim.cmd('Lspsaga peek_definition')
   else
     vim.lsp.buf.definition()
+  end
+end
+
+function M.peek_type_definition()
+  local has_lspsaga = require('ty.core.utils').has_plugin('lspsaga.nvim')
+  if has_lspsaga then
+    vim.cmd('Lspsaga peek_type_definition')
+  else
+    vim.lsp.buf.type_definition()
   end
 end
 
@@ -38,25 +58,23 @@ function M.format_code(bufnr) require('ty.contrib.editing.lsp.formatting').forma
 function M.open_code_action()
   local has_lspsaga = require('ty.core.utils').has_plugin('lspsaga.nvim')
   local mode = vim.api.nvim_get_mode().mode
-
-  if mode == 'n' then
-    if has_lspsaga then
-      require('lspsaga.codeaction').code_action()
-    else
-      vim.lsp.buf_code_action()
-    end
-  elseif mode == 'v' then
-    vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-U>', true, false, true))
-    if has_lspsaga then
-      require('lspsaga.codeaction').range_code_action()
-    else
-      vim.lsp.buf_range_code_action()
-    end
+  if mode == 'v' then vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-U>', true, false, true)) end
+  if has_lspsaga then
+    require('lspsaga.codeaction'):code_action()
+  else
+    vim.lsp.buf.code_action()
   end
 end
 
 -- rename var etc.
-function M.rename_name() vim.lsp.buf.rename() end
+function M.rename_name()
+  local has_lspsaga = require('ty.core.utils').has_plugin('lspsaga.nvim')
+  if has_lspsaga then
+    require('lspsaga.rename'):lsp_rename()
+    return
+  end
+  vim.lsp.buf.rename()
+end
 
 -- rename file etc.
 function M.ts_rename_file()

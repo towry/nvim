@@ -19,7 +19,6 @@ pack({
 
 --- libs.
 ---
-pack({ 'kyazdani42/nvim-web-devicons', opts = { default = true } })
 pack({ 'nvim-lua/popup.nvim' })
 pack({
   'MunifTanjim/nui.nvim',

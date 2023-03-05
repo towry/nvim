@@ -234,7 +234,7 @@ function M.setup_cmp()
     },
   })
 
-  -- ╭───────────────────────────────────────────────────���──────╮
+  -- ╭───────────────────────────────────────────────────�������──────╮
   -- │ Cmdline Setup                                            │
   -- ╰──────────────────────────────────────────────────────────╯
 
@@ -272,6 +272,8 @@ function M.setup_cmp()
     ignore = {},
     only_semantic_versions = true,
   })
+
+  require('ty.core.autocmd').do_need_hl_update()
 end
 
 return M

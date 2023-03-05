@@ -16,7 +16,9 @@ function M.setup_edit()
   o.splitright = true --- Vertical splits will automatically be to the right
   o.swapfile = false --- Swap not needed
   o.tabstop = 2 --- Insert 2 spaces for a tab
-  o.timeoutlen = 450 --- Key sequence wait time | Faster completion (cannot be lower than 200 because then commenting doesn't work)
+  o.timeoutlen = 850 --- Key sequence wait time | Faster completion (cannot be lower than 200 because then commenting doesn't work)
+  o.showcmd = true
+  o.showcmdloc = 'last'
   o.undofile = true --- Sets undo to file
   o.updatetime = 250 --- Faster completion
   -- o.viminfo        = "'1000" --- Increase the size of file history
@@ -42,7 +44,7 @@ function M.setup_interface()
   o.ruler = false -- Always show cursor position
   o.termguicolors = true --- Correct terminal colors
   o.confirm = true
-  o.showtabline = 0 --- Always show tabs
+  o.showtabline = 2 --- Always show tabs
   o.signcolumn = 'yes:1' --- Add extra sign column next to line number
   o.relativenumber = true --- Enables relative number
   o.numberwidth = 1

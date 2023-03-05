@@ -22,6 +22,15 @@ pack({
   ImportInit = 'lspconfig',
 })
 pack({
+  'glepnir/lspsaga.nvim',
+  event = 'BufRead',
+  dependencies = {
+    --Please make sure you install markdown and markdown_inline parser
+    { 'nvim-treesitter/nvim-treesitter' },
+  },
+  ImportConfig = 'lspsaga',
+})
+pack({
   'folke/neodev.nvim',
 })
 

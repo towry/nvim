@@ -4,11 +4,11 @@ local M = {}
 local default_colorscheme = 'everforest'
 
 M.init = function()
-  print('setup theme')
   require('ty.core.utils').try(
     function() vim.cmd('colorscheme ' .. require('ty.core.config').ui.theme.colorscheme or default_colorscheme) end,
     'error when loading colorscheme'
   )
+  require('ty.core.autocmd').on_need_hl_update(require('ty.contrib.ui.on_need_hl_update'))
 end
 
 M.theme_gruvbox = {

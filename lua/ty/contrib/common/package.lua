@@ -3,6 +3,9 @@ local pack = require('ty.core.pack').common
 pack({
   'nvim-lua/plenary.nvim',
 })
+pack({
+  'nvim-tree/nvim-web-devicons',
+})
 
 pack({
   -- free the leader key.

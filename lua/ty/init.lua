@@ -1,7 +1,10 @@
 local M = {}
 local _inited = false
 
-local function setup_later_modules() require('ty.core.pack'):startup() end
+local function setup_later_modules()
+  pcall(require, 'settings_env') -- load env settings
+  require('ty.core.pack'):startup() -- start loading modules.
+end
 
 function M.setup()
   if _inited then return end

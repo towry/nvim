@@ -40,12 +40,6 @@ function M.setup_everforest()
   vim.g.everforest_sign_column_background = 'none' -- "none" | "grey"
   vim.g.everforest_ui_contrast = 'low' -- contrast of line numbers, indent lines etc. "low" | "high"
   vim.g.everforest_diagnostic_virtual_text = 'grey' -- "grey" | "colored"
-
-  vim.api.nvim_set_hl(0, 'CmpMenuSel', {
-    bg = '#a7c080',
-    fg = '#ffffff',
-    bold = true,
-  })
 end
 
 function M.init_notify()
