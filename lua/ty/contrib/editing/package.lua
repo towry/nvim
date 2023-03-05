@@ -21,6 +21,9 @@ pack({
   ImportConfig = 'lspconfig',
   ImportInit = 'lspconfig',
 })
+pack({
+  'folke/neodev.nvim',
+})
 
 --- inlay hint for lsp.
 pack({

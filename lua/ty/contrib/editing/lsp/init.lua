@@ -157,11 +157,20 @@ function M.setup()
     settings = require('ty.contrib.editing.lsp.servers.jsonls').settings,
   })
 
+  if require('ty.core.utils').has_plugin('neodev.nvim') then
+    require('neodev').setup({
+      setup_jsonls = false,
+      lspconfig = true,
+      library = {
+        plugins = { 'nvim-treesitter', 'plenary.nvim', 'telescope.nvim', 'nvim-luadev' },
+      },
+    })
+  end
   lspconfig.lua_ls.setup({
     capabilities = capabilities,
     handlers = handlers,
     on_attach = on_attach,
-    settings = require('ty.contrib.editing.lsp.servers.sumneko_lua').settings,
+    settings = require('ty.contrib.editing.lsp.servers.lua_ls').settings,
   })
 
   -- lspconfig.vuels.setup {

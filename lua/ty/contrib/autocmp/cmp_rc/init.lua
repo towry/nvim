@@ -95,7 +95,23 @@ function M.setup_cmp()
       }),
       ['<CR>'] = cmp.mapping.confirm({ select = cmp_config:get('autocomplete.select_first_on_enter') }),
       ['<Tab>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
+        local entry = cmp.get_selected_entry()
+        if not entry and vim.b._copilot and vim.b._copilot.suggestions ~= nil then
+          -- Make sure the suggestion exists and it does not start with whitespace
+          -- This is to prevent the user from accidentally selecting a suggestion
+          -- when trying to indent
+          local suggestion = vim.b._copilot.suggestions[1]
+          if suggestion ~= nil then suggestion = suggestion.displayText end
+          if suggestion == nil or (suggestion:find('^%s') ~= nil and suggestion:find('^\n') == nil) then
+            if cmp.visible() then
+              cmp.select_next_item()
+            else
+              fallback()
+            end
+          else
+            vim.fn.feedkeys(vim.fn['copilot#Accept'](), '')
+          end
+        elseif cmp.visible() then
           cmp.select_next_item()
         elseif luasnip.expandable() then
           luasnip.expand()
@@ -218,7 +234,7 @@ function M.setup_cmp()
     },
   })
 
-  -- ╭──────────────────────────────────────────────────────────╮
+  -- ╭───────────────────────────────────────────────────���──────╮
   -- │ Cmdline Setup                                            │
   -- ╰──────────────────────────────────────────────────────────╯
 

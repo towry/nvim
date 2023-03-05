@@ -5,19 +5,19 @@ M.setup_marks = function()
     default_mappings = false,
     builtin_marks = {},
     refresh_interval = 600,
-    excluded_filetypes = { "oil", "expJABS", "NvimTree", },
+    excluded_filetypes = { 'oil', 'expJABS', 'NvimTree' },
     -- keymaps for marks.
     mappings = {
-      preview = "m:",
-      toggle = "m<space>",
-      next = "m,",
-      prev = "m.",
-      delete_buf = "m<bs>",
-    }
+      preview = 'm:',
+      toggle = 'm<space>',
+      next = 'm,',
+      prev = 'm.',
+      delete_buf = 'm<bs>',
+    },
   })
 
-  local colors = require("ty.contrib.ui").colors()
-  vim.api.nvim_set_hl(0, "MarkSignHL", {
+  local colors = require('ty.contrib.ui').colors()
+  vim.api.nvim_set_hl(0, 'MarkSignHL', {
     bg = colors.marks_sign,
     fg = '#ffffff',
     bold = true,
@@ -26,13 +26,13 @@ M.setup_marks = function()
 end
 
 M.setup_portal = function()
-  local colors = require("ty.contrib.ui").colors()
+  local colors = require('ty.contrib.ui').colors()
   local nvim_set_hl = vim.api.nvim_set_hl
-  require("portal").setup({
-    log_level = "error",
+  require('portal').setup({
+    log_level = 'error',
     query = {
-      "grapple",
-      "valid",
+      'grapple',
+      'valid',
     },
     portal = {
       title = {
@@ -42,12 +42,12 @@ M.setup_portal = function()
       body = {
         -- When a portal is empty, render an empty buffer body
         render_empty = false,
-      }
+      },
     },
   })
 
-  nvim_set_hl(0, "PortalBorderForward", { fg = colors.portal_border_forward })
-  nvim_set_hl(0, "PortalBorderNone", { fg = colors.portal_border_none })
+  nvim_set_hl(0, 'PortalBorderForward', { fg = colors.portal_border_forward })
+  nvim_set_hl(0, 'PortalBorderNone', { fg = colors.portal_border_none })
 end
 
 M.setup_leap = function()
@@ -80,6 +80,7 @@ M.setup_leap = function()
     })
     vim.api.nvim_set_hl(0, 'LeapLabelSecondary', {
       bg = colors.leap_label_secondary,
+      fg = '#ffffff',
       bold = true,
       undercurl = true,
       underline = false,
@@ -101,8 +102,8 @@ M.option_surround = {
 }
 
 M.option_grapple = {
-  log_level = "error",
-  scope = "git",
+  log_level = 'error',
+  scope = 'git',
   integrations = {
     resession = false,
   },

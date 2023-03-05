@@ -150,6 +150,8 @@ if has_plugin('portal.nvim') then
   n('<M-o>', 'Portal jump backward', cmd([[lua require('portal').jump_backward()]]))
   n('<M-i>', 'Portal jump forward', cmd([[lua require('portal').jump_forward()]]))
 end
+-- TODO: use hydra
+if has_plugin('copilot.vim') then n('<leader>zp', 'Open github copilot panel', cmd([[Copilot panel]])) end
 --[[
 A = { "<cmd>lua require('towry.utils.plug-telescope').my_git_commits()<CR>", "commits (Telescope)" },
 a = { "<cmd>LazyGitFilter<CR>", "commits" },

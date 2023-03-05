@@ -99,7 +99,7 @@ M.setup = function()
           },
           file_status = true,
           newfile_status = true,
-          path = 0,
+          path = 1,
           color = function()
             return {
               fg = colors.lualine_filename_fg,
