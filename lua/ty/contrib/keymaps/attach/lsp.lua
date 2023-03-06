@@ -75,7 +75,7 @@ return function(client, buffer)
   )
 
   -- inline actions.
-  n('K', _('[LSP] Show hover or reveal UFO folding'), cmd('lua Ty.Func.editing.hover_action()', {
+  n('<leader>k', _('[LSP] Show hover or reveal UFO folding'), cmd('lua Ty.Func.editing.hover_action()', {
     '-nowait',
     buffer = buffer
   }))

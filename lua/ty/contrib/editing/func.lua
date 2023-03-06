@@ -28,7 +28,9 @@ function M.hover_action()
   if not winid then
     local has_lspsaga = require('ty.core.utils').has_plugin('lspsaga.nvim')
     if has_lspsaga then
-      vim.cmd('Lspsaga hover_doc')
+      vim.schedule(function()
+        vim.cmd('Lspsaga hover_doc')
+      end)
     else
       vim.lsp.buf.hover()
     end
