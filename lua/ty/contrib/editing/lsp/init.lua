@@ -95,6 +95,7 @@ function M.setup()
     automatic_installation = true,
   })
 
+  require('ty.contrib.editing.lsp.diagnostics').setup()
   setup_fidget()
   default_lspconfig_ui_options()
   setup_typescript()
@@ -192,7 +193,6 @@ function M.setup()
   require('ty.contrib.editing.lsp.null-ls').setup({
     on_attach = on_attach,
   })
-  require('ty.contrib.editing.lsp.diagnostics').setup()
 end
 
 function M.init()
