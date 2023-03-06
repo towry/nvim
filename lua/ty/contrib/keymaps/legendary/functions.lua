@@ -55,6 +55,22 @@ function M.default_functions()
       function() require('ty.contrib.editing.lsp.formatting').toggle_format() end,
       description = 'Toggle auto format',
     },
+    {
+      function() Ty.Func.editor.save_current_session() end,
+      description = "[Session] Save current session",
+    },
+    {
+      function() Ty.Func.editor.load_last_session() end,
+      description = "[Session] Load last session",
+    },
+    {
+      function() Ty.Func.editor.remove_current_session() end,
+      description = "[Session] Remove current session",
+    },
+    {
+      function() Ty.Func.editor.list_all_session() end,
+      description = "[Session] List all session",
+    },
   }
 end
 

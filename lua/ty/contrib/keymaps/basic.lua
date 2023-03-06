@@ -115,8 +115,6 @@ n('<Plug>(leader-help-map)?', 'Open cheatsheet', cmd('Cheatsheet'))
 n('<Plug>(leader-help-map)/', 'Open cheat.sh', cmd('Cheat'))
 n('<Plug>(leader-help-map)k', 'Show keymaps', cmd('Telescope keymaps'))
 n('<leader>F', 'Find folders', cmd('lua Ty.Func.explorer.find_folder()'))
-n('<leader>/ss', '[/] Save session', cmd([[lua Ty.Func.editor.save_current_session()]]))
-n('<leader>/sl', '[/] List sessions', cmd([[lua Ty.Func.editor.list_all_session()]]))
 n('<leader>/oo', '[/] Toggle outline', cmd([[lua Ty.Func.explore.toggle_outline()]]))
 n('<leader>t-', 'Switch variables, false <==> true', cmd([[Switch]]))
 
