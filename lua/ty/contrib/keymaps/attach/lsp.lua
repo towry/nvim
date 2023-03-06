@@ -61,7 +61,7 @@ return function(client, buffer)
   n('<Plug>(leader-code-map)p', _('Peek definition'), cmd([[lua Ty.Func.editing.peek_definition()]], opts))
 
   -- goto.
-  n('gfd<space>', 'Go find definition in file', cmd('lua Ty.Func.navigate.goto_definition_in_file()', opts))
+  n('gfd', 'Go find definition in file', cmd('lua Ty.Func.navigate.goto_definition_in_file()', opts))
   n('gfdx', 'Go find definition in file in split', cmd('lua Ty.Func.navigate.goto_definition_in_file("split")', opts))
   n('gfdv', 'Go find definition in file in vsplit', cmd('lua Ty.Func.navigate.goto_definition_in_file("vsplit")', opts))
 
