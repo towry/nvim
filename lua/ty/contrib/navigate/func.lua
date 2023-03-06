@@ -12,8 +12,11 @@ function M.diagnostic_goto(next, severity)
 
   if has_lspsaga then
     local saga = require('lspsaga.diagnostic')
-    go = next and saga.goto_next or saga.goto_prev
-    go(saga, { severity = sev })
+    if next then
+      saga:goto_next({ severity = sev })
+    else
+      saga:goto_prev({ severity = sev })
+    end
     return
   end
 
@@ -33,11 +36,11 @@ end
 
 function M.jump_to_tag(target)
   local method_name = ({
-    parent = 'jumpParent',
-    next = 'jumpNextSibling',
-    prev = 'jumpPrevSibling',
-    child = 'jumpChild',
-  })[target]
+        parent = 'jumpParent',
+        next = 'jumpNextSibling',
+        prev = 'jumpPrevSibling',
+        child = 'jumpChild',
+      })[target]
   require('jump-tag')[method_name]()
 end
 

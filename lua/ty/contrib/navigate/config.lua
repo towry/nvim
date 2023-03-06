@@ -2,7 +2,7 @@
 -- sections: { 'navigate', 'textobject', 'motion' }
 
 local M = {
-  enable_lspasaga_diagnostic_jump = false,
+  enable_lspasaga_diagnostic_jump = true,
 }
 
 return M

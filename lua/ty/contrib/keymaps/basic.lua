@@ -3,7 +3,7 @@
 local has_plugin = require('ty.core.utils').has_plugin
 local keymap = require('ty.core.keymap')
 local n, i, v, x, ni, nxv, cmd, key =
-  keymap.nmap, keymap.imap, keymap.vmap, keymap.xmap, keymap.nimap, keymap.nxv, keymap.cmd, keymap.key
+    keymap.nmap, keymap.imap, keymap.vmap, keymap.xmap, keymap.nimap, keymap.nxv, keymap.cmd, keymap.key
 
 n('<leader>c', 'Leader code maps', key('<Plug>(leader-code-map)', { '+remap' }))
 n('<leader>g', 'Leader go maps', key('<Plug>(leader-go-map)', { '+remap' }))
@@ -115,9 +115,9 @@ n('<Plug>(leader-help-map)?', 'Open cheatsheet', cmd('Cheatsheet'))
 n('<Plug>(leader-help-map)/', 'Open cheat.sh', cmd('Cheat'))
 n('<Plug>(leader-help-map)k', 'Show keymaps', cmd('Telescope keymaps'))
 n('<leader>F', 'Find folders', cmd('lua Ty.Func.explorer.find_folder()'))
-n('<leader>/ss', 'Save session', cmd([[lua Ty.Func.editor.save_current_session()]]))
-n('<leader>/sl', 'List sessions', cmd([[lua Ty.Func.editor.list_all_session()]]))
-n('<leader>/oo', 'Toggle outline', cmd([[lua Ty.Func.explore.toggle_outline()]]))
+n('<leader>/ss', '[/] Save session', cmd([[lua Ty.Func.editor.save_current_session()]]))
+n('<leader>/sl', '[/] List sessions', cmd([[lua Ty.Func.editor.list_all_session()]]))
+n('<leader>/oo', '[/] Toggle outline', cmd([[lua Ty.Func.explore.toggle_outline()]]))
 n('<leader>t-', 'Switch variables, false <==> true', cmd([[Switch]]))
 
 -- gits
