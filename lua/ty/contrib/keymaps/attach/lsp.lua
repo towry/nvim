@@ -75,7 +75,10 @@ return function(client, buffer)
   )
 
   -- inline actions.
-  n('KK', _('[LSP] Show hover or reveal UFO folding'), cmd('lua Ty.Func.editing.hover_action()', opts))
+  n('K', _('[LSP] Show hover or reveal UFO folding'), cmd('lua Ty.Func.editing.hover_action()', {
+    '-nowait',
+    buffer = buffer
+  }))
   n('KS', _('[LSP] Show signature help'), cmd('lua Ty.Func.editing.show_signature_help()', opts))
   n('KL', _('[LSP] Show diagnostics on current line'), cmd('lua Ty.Func.editing.show_diagnostics("line")', opts))
   n('KC', _('[LSP] Show diagnostics at cursor'), cmd('lua Ty.Func.editing.show_diagnostics("cursor")', opts))

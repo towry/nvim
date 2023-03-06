@@ -9,7 +9,7 @@ n('<leader>c', 'Leader code maps', key('<Plug>(leader-code-map)', { '+remap' }))
 n('<leader>g', 'Leader go maps', key('<Plug>(leader-go-map)', { '+remap' }))
 n('[', 'Motion next map', key('<Plug>(motion-next-map)', { '+remap' }))
 n(']', 'Motion prev map', key('<Plug>(motion-prev-map)', { '+remap' }))
-n('<leader>?', 'Leader help maps', key('<Plug>(leader-help-map)', { '+remap' }))
+n('<leader>h', 'Leader help maps', key('<Plug>(leader-help-map)', { '+remap' }))
 
 i('<C-e>', 'Insert mode: move to end of line', key('<End>'))
 n('<C-z>', 'N: Undo, no more background key', key('<ESC> u'))
