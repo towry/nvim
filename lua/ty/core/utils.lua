@@ -37,7 +37,7 @@ end
 
 M.starts_with = function(str, start) return str:sub(1, #start) == start end
 
-M.end_with = function(str, ending) return ending == '' or str:sub(-#ending) == ending end
+M.end_with = function(str, ending) return ending == '' or str:sub( -#ending) == ending end
 
 M.split = function(s, delimiter)
   local result = {}
@@ -126,8 +126,8 @@ function M.get_root()
     for _, client in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
       local workspace = client.config.workspace_folders
       local paths = workspace and vim.tbl_map(function(ws) return vim.uri_to_fname(ws.uri) end, workspace)
-        or client.config.root_dir and { client.config.root_dir }
-        or {}
+          or client.config.root_dir and { client.config.root_dir }
+          or {}
       for _, p in ipairs(paths) do
         local r = vim.loop.fs_realpath(p)
         if path:find(r, 1, true) then roots[#roots + 1] = r end
@@ -190,6 +190,61 @@ function M.try(fn, opts)
   ---@type boolean, any
   local ok, result = xpcall(fn, error_handler)
   return ok and result or nil
+end
+
+---Parse the `style` string into nvim_set_hl options
+---@param style string @The style config
+---@return table
+local function parse_style(style)
+  if not style or style == "NONE" then
+    return {}
+  end
+
+  local result = {}
+  for field in string.gmatch(style, "([^,]+)") do
+    result[field] = true
+  end
+
+  return result
+end
+
+---Wrapper function for nvim_get_hl_by_name
+---@param hl_group string @Highlight group name
+---@return table
+local function get_highlight(hl_group)
+  local hl = vim.api.nvim_get_hl_by_name(hl_group, true)
+  if hl.link then
+    return get_highlight(hl.link)
+  end
+
+  local result = parse_style(hl.style)
+  result.fg = hl.foreground and string.format("#%06x", hl.foreground)
+  result.bg = hl.background and string.format("#%06x", hl.background)
+  result.sp = hl.special and string.format("#%06x", hl.special)
+  for attr, val in pairs(hl) do
+    if type(attr) == "string" and attr ~= "foreground" and attr ~= "background" and attr ~= "special" then
+      result[attr] = val
+    end
+  end
+
+  return result
+end
+
+
+---@see https://github.com/justchokingaround/nvim/blob/a11aae6d66d025627d7f52f705cbe5951f2f6eb6/lua/modules/utils/init.lua
+---Extend a highlight group
+---@param name string @Target highlight group name
+---@param def table @Attributes to be extended
+function M.extend_hl(name, def)
+  local hlexists = pcall(vim.api.nvim_get_hl_by_name, name, true)
+  if not hlexists then
+    -- Do nothing if highlight group not found
+    return
+  end
+  local current_def = get_highlight(name)
+  local combined_def = vim.tbl_deep_extend("force", current_def, def)
+
+  vim.api.nvim_set_hl(0, name, combined_def)
 end
 
 return M

@@ -8,7 +8,10 @@ M.init = function()
     function() vim.cmd('colorscheme ' .. require('ty.core.config').ui.theme.colorscheme or default_colorscheme) end,
     'error when loading colorscheme'
   )
-  require('ty.core.autocmd').on_need_hl_update(require('ty.contrib.ui.on_need_hl_update'))
+
+  local hl_update_callback = require('ty.contrib.ui.on_need_hl_update')
+  hl_update_callback();
+  require('ty.core.autocmd').on_need_hl_update(hl_update_callback)
 end
 
 M.theme_gruvbox = {

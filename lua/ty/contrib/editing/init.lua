@@ -11,12 +11,14 @@ local init_autocmds = function()
 
   local current_timeoutlen = vim.opt.timeoutlen:get() or 400
   au.with_group('no_insert_delay')
-    :create('InsertEnter', {
-      callback = function() vim.opt.timeoutlen = 0 end,
-    })
-    :create('InsertLeave', {
-      callback = function() vim.opt.timeoutlen = current_timeoutlen end,
-    })
+      :create('InsertEnter', {
+        callback = function()
+          vim.opt.timeoutlen = 1
+        end,
+      })
+      :create('InsertLeave', {
+        callback = function() vim.opt.timeoutlen = current_timeoutlen end,
+      })
 end
 
 M.init = function() init_autocmds() end

@@ -4,7 +4,8 @@ local M = {}
 --- @param next boolean "next" or "prev"
 --- @param severity string "ERROR", "WARN", "INFO", "HINT"
 function M.diagnostic_goto(next, severity)
-  local has_lspsaga = require('ty.core.utils').has_plugin('lspsaga.nvim')
+  local enable_lspasaga_jump = Ty.Config.navigate.enable_lspasaga_diagnostic_jump
+  local has_lspsaga = enable_lspasaga_jump and require('ty.core.utils').has_plugin('lspsaga.nvim')
 
   local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
   local sev = severity and vim.diagnostic.severity[severity] or nil
@@ -16,7 +17,7 @@ function M.diagnostic_goto(next, severity)
     return
   end
 
-  return function() go({ severity = sev }) end
+  go({ severity = sev })
 end
 
 function M.goto_definition_in_file(command) require('gtd').exec({ command = command or 'edit' }) end

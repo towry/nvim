@@ -52,7 +52,7 @@ end
 
 M.setup_leap = function()
   local leap = require('leap')
-  local colors = require('ty.contrib.ui.theme').colors()
+  local colors = require('ty.contrib.ui').colors()
 
   leap.opts.highlight_unlabeled_phase_one_targets = true
   leap.opts.substitute_chars = {

@@ -27,8 +27,9 @@ M.setup_lspsaga = function()
     },
     diagnostic = {
       on_insert = false,
+      on_insert_follow = false,
       show_virt_line = false,
-      border_follow = false,
+      border_follow = true,
       text_hl_follow = true,
       show_code_action = false,
       keys = {
@@ -53,6 +54,8 @@ M.setup_lspsaga = function()
       winblend = 1,
     },
   })
+
+  require('ty.core.autocmd').do_need_hl_update()
 end
 
 M.setup_comment = function()
