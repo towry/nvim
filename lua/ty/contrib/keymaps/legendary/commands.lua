@@ -34,6 +34,18 @@ function M.default_commands()
       ':MarkdownPreviewStop',
       description = 'Stop markdown preview',
     },
+    {
+      ':Telescope keymaps',
+      description = 'Show all  keymaps',
+    },
+    {
+      ':Cheat',
+      description = 'Open cheat.sh',
+    },
+    {
+      ':Cheatsheet',
+      description = 'Open cheatsheet',
+    }
   }
 end
 

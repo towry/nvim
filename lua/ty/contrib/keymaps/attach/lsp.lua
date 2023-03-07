@@ -42,7 +42,7 @@ return function(client, buffer)
     cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "HINT")]], opts)
   )
 
-  n('<Plug>(leader-code-map)d', '[LSP] Go find code', cmd('lua Ty.Func.navigate.goto_code_references()', opts))
+  n('<Plug>(leader-code-map)h', '[LSP] find code references', cmd('lua Ty.Func.navigate.goto_code_references()', opts))
 
   if client.name == 'tsserver' then
     n(
@@ -58,12 +58,16 @@ return function(client, buffer)
   end
   nv('<Plug>(leader-code-map)a', _('Code Action'), cmd([[lua Ty.Func.editing.open_code_action()]], opts))
   nv('<Plug>(leader-code-map)f', _('Format code'), cmd([[lua Ty.Func.editing.format_code()]], opts))
-  n('<Plug>(leader-code-map)p', _('Peek definition'), cmd([[lua Ty.Func.editing.peek_definition()]], opts))
 
   -- goto.
-  n('gfd', 'Go find definition in file', cmd('lua Ty.Func.navigate.goto_definition_in_file()', opts))
-  n('gfdx', 'Go find definition in file in split', cmd('lua Ty.Func.navigate.goto_definition_in_file("split")', opts))
-  n('gfdv', 'Go find definition in file in vsplit', cmd('lua Ty.Func.navigate.goto_definition_in_file("vsplit")', opts))
+  n('gdf', '[LSP] Go find definition in file', cmd('lua Ty.Func.navigate.goto_definition_in_file()', opts))
+  n('gdfx', '[LSP] Go find definition in file in split',
+    cmd('lua Ty.Func.navigate.goto_definition_in_file("split")', opts))
+  n('gdfv', '[LSP] Go find definition in file in vsplit',
+    cmd('lua Ty.Func.navigate.goto_definition_in_file("vsplit")', opts))
+  n('gt', '[LSP] Go to type definition', cmd('lua Ty.Func.navigate.goto_type_definition()'))
+  n('gT', '[LSP] Peek type definition', cmd('lua Ty.Func.editing.peek_type_definition()'))
+
 
   -- workspace.
   n('<leader>wa', _('add workspace folder'), key(vim.lsp.buf.add_workspace_folder, opts))

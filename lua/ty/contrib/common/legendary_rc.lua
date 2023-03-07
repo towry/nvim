@@ -25,6 +25,7 @@ function M.setup()
     icons = {
       fn = "🪄",
       command = " ",
+      key = " ",
     },
   })
 
@@ -33,4 +34,3 @@ function M.setup()
 end
 
 return M
-
