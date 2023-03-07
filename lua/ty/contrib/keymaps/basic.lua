@@ -106,7 +106,7 @@ nxv(
   'Search and replace cword in current file',
   cmd('lua Ty.Func.explorer.search_and_replace_cword_in_buffer()')
 )
-n('<leader>.', 'Open legendary', cmd([[lua require('ty.contrib.keymaps.legendary').open_legendary()]]))
+n('<C-p>', 'Open legendary', cmd([[lua require('ty.contrib.keymaps.legendary').open_legendary()]]))
 n('<leader>wv', 'Split buffer right', key('<C-W>v'))
 n('<leader>wV', 'Split buffer bottom', key('<C-W>s'))
 n('<leader>q', 'Open quick list', key('quicklist'))

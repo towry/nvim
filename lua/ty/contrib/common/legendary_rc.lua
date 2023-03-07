@@ -16,20 +16,21 @@ function M.setup()
     commands = require("ty.contrib.keymaps.legendary.commands").default_commands(),
     -- autocmds =
     default_item_formatter = my_formatter,
-    include_builtin = false,
+    include_builtin = true,
     include_legendary_cmds = false,
     default_opts = {
       keymaps = { silent = true, noremap = true },
     },
-    which_key = {
-      auto_register = false,
-      do_binding = false,
-    }
+    select_prompt = " ⚒ ",
+    icons = {
+      fn = "🪄",
+      command = " ",
+    },
   })
 
   lg.commands(require("ty.contrib.keymaps.legendary.commands").mini_commands())
   require("ty.contrib.keymaps.legendary.lg-git").setup(lg)
 end
 
-
 return M
+

@@ -60,17 +60,6 @@ function M.setup()
   -- │ Header                                                   │
   -- ╰──────────────────────────────────────────────────────────╯
 
-  -- local header = {
-  --   '          ▀████▀▄▄              ▄█ ',
-  --   '            █▀    ▀▀▄▄▄▄▄    ▄▄▀▀█ ',
-  --   '    ▄        █          ▀▀▀▀▄  ▄▀  ',
-  --   '   ▄▀ ▀▄      ▀▄              ▀▄▀  ',
-  --   '  ▄▀    █     █▀   ▄█▀▄      ▄█    ',
-  --   '  ▀▄     ▀▄  █     ▀██▀     ██▄█   ',
-  --   '   ▀▄    ▄▀ █   ▄██▄   ▄  ▄  ▀▀ █  ',
-  --   '    █  ▄▀  █    ▀██▀    ▀▀ ▀▀  ▄▀  ',
-  --   '   █   █  █      ▄▄           ▄▀   ',
-  -- }
   local header = {
     '                              ',
     tip,
@@ -97,8 +86,8 @@ function M.setup()
   local hi_top_section = {
     type = 'text',
     val = '┌────────────   Today is '
-        .. date
-        .. ' ────────────┐',
+    .. date
+    .. ' ────────────┐',
     opts = {
       position = 'center',
       hl = 'NormalInfo',
@@ -117,8 +106,8 @@ function M.setup()
   local hi_bottom_section = {
     type = 'text',
     val = '└───══───══───══───  '
-        .. datetime
-        .. '  ───══───══───══────┘',
+    .. datetime
+    .. '  ───══───══───══────┘',
     opts = {
       position = 'center',
       hl = 'NormalInfo',
@@ -167,7 +156,7 @@ function M.setup()
 
   dashboard.section.buttons.val = {
     button(
-      'SPC / s d',
+      '<Nop>',
       icons.timer .. ' ' .. 'Load Current Dir Session',
       '<cmd>SessionManager load_current_dir_session<CR>',
       {}
@@ -178,8 +167,8 @@ function M.setup()
       '<cmd>Telescope oldfiles cwd_only=true hidden=true<CR>',
       {}
     ),
-    button('<C-P>', icons.fileNoBg .. ' ' .. 'Find File', '<cmd>lua Ty.Func.explorer.project_files()<CR>', {}),
-    button('<S-P>', icons.t .. ' ' .. 'Find Word', '<cmd>lua Ty.Func.explorer.multi_rg_find_word()<CR>', {}),
+    button('<F8>', icons.fileNoBg .. ' ' .. 'Find File', '<cmd>lua Ty.Func.explorer.project_files()<CR>', {}),
+    button('<F9>', icons.t .. ' ' .. 'Find Word', '<cmd>lua Ty.Func.explorer.multi_rg_find_word()<CR>', {}),
     button('~', '  ' .. ' ' .. 'Plugins', '<cmd>Lazy<CR>', {}),
     button('-', icons.exit .. ' ' .. 'Exit', '<cmd>exit<CR>', {}),
   }

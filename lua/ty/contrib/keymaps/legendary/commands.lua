@@ -34,10 +34,6 @@ function M.default_commands()
       ':MarkdownPreviewStop',
       description = 'Stop markdown preview',
     },
-    {
-      ':Telescope find_files',
-      description = 'Find project files',
-    },
   }
 end
 

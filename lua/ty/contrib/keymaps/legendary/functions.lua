@@ -4,10 +4,22 @@ function M.default_functions()
   return {
     {
       function()
-        vim.cmd('source $MYVIMRC')
+        for name, _ in pairs(package.loaded) do
+          if name:match('^ty.') then
+            package.loaded[name] = nil
+          end
+        end
+
+        dofile(vim.env.MYVIMRC)
         Ty.NOTIFY('nvimrc reloaded')
       end,
       description = 'Reload nvimrc',
+    },
+    {
+      function()
+        require('ty.contrib.common.telescope_rc.pickers').edit_neovim()
+      end,
+      description = "Edit Neovim dotfiles(nvimrc)",
     },
     {
       function() vim.cmd('e ' .. vim.fs.dirname(vim.fn.expand('$MYVIMRC')) .. '/lua/ty/contrib/editing/switch_rc.lua') end,
@@ -71,6 +83,10 @@ function M.default_functions()
       function() Ty.Func.editor.list_all_session() end,
       description = "[Session] List all session",
     },
+    {
+      function() require('ty.contrib.common.telescope_rc.pickers').project_files({ no_gitfiles = true }) end,
+      description = "Telescope find project files (No Git)",
+    }
   }
 end
 

@@ -3,7 +3,7 @@ local M = {}
 M.get_path_and_tail = function(filename)
   local utils = require('telescope.utils')
   local bufname_tail = utils.path_tail(filename)
-  local path_without_tail = require('plenary/strings').truncate(filename, #filename - #bufname_tail, '')
+  local path_without_tail = require('plenary.strings').truncate(filename, #filename - #bufname_tail, '')
   local path_to_display = utils.transform_path({
     path_display = { 'truncate' },
   }, path_without_tail)
@@ -39,12 +39,16 @@ M.project_files = function(opts)
       local icon, iconhl = utils.get_devicons(tail_raw)
 
       return displayer({
-        { icon, iconhl },
+        { icon,            iconhl },
         tail,
         { path_to_display, 'TelescopeResultsComment' },
       })
     end
     return entry
+  end
+
+  if opts and opts.no_gitfiles then
+    return require('telescope.builtin').find_files(opts)
   end
 
   local ok = pcall(require('telescope.builtin').git_files, opts)
@@ -119,7 +123,7 @@ M.edit_neovim = function()
     color_devicons = true,
     cwd = '~/.config/nvim',
     previewer = false,
-    prompt_title = 'Dotfiles',
+    prompt_title = 'NeoVim Dotfiles',
     sorting_strategy = 'ascending',
     winblend = 4,
     layout_config = {
@@ -237,13 +241,13 @@ function M.gen_from_buffer(opts)
     icon_width = strings.strdisplaywidth(icon)
   end
 
-  local cwd = vim.fn.expand(opts.cwd or vim.loop.cwd())
+  local cwd = vim.fn.expand(opts.cwd or vim.loop.cwd() or ".")
 
   local make_display = function(entry)
     -- bufnr_width + modes + icon + 3 spaces + : + lnum
     opts.__prefix = opts.bufnr_width + 4 + icon_width + 3 + 1 + #tostring(entry.lnum)
     local bufname_tail = utils.path_tail(entry.filename)
-    local path_without_tail = require('plenary/strings').truncate(entry.filename, #entry.filename - #bufname_tail, '')
+    local path_without_tail = require('plenary.strings').truncate(entry.filename, #entry.filename - #bufname_tail, '')
     local path_to_display = utils.transform_path({
       path_display = { 'truncate' },
     }, path_without_tail)
@@ -262,9 +266,9 @@ function M.gen_from_buffer(opts)
     })
 
     return displayer({
-      { entry.bufnr, 'TelescopeResultsNumber' },
+      { entry.bufnr,     'TelescopeResultsNumber' },
       { entry.indicator, 'TelescopeResultsComment' },
-      { icon, hl_group },
+      { icon,            hl_group },
       bufname_tail,
       { path_to_display .. ':' .. entry.lnum, 'TelescopeResultsComment' },
     })
