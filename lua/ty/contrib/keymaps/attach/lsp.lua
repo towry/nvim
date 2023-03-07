@@ -67,11 +67,12 @@ return function(client, buffer)
   n('<Plug>(leader-code-map)m', _('Show signature help'), cmd('lua Ty.Func.editing.show_signature_help()', opts))
 
   -- goto.
-  n('gdf', '[LSP] Go find definition in file', cmd('lua Ty.Func.navigate.goto_definition_in_file()', opts))
+  -- n('gdf', '[LSP] Go find definition in file', cmd('lua Ty.Func.navigate.goto_definition_in_file()', opts))
   n('gdfx', '[LSP] Go find definition in file in split',
     cmd('lua Ty.Func.navigate.goto_definition_in_file("split")', opts))
   n('gdfv', '[LSP] Go find definition in file in vsplit',
     cmd('lua Ty.Func.navigate.goto_definition_in_file("vsplit")', opts))
+  n('gd', _('Go to definition'), cmd('lua Ty.Func.navigate.goto_definition()', opts))
   n('gt', '[LSP] Go to type definition', cmd('lua Ty.Func.navigate.goto_type_definition()'))
 
 

@@ -25,6 +25,15 @@ end
 
 function M.goto_definition_in_file(command) require('gtd').exec({ command = command or 'edit' }) end
 
+function M.goto_definition()
+  local has_lspsaga = require('ty.core.utils').has_plugin('lspsaga.nvim')
+  if has_lspsaga then
+    vim.cmd('Lspsaga goto_definition')
+  else
+    vim.lsp.buf.definition()
+  end
+end
+
 function M.goto_type_definition()
   local has_lspsaga = require('ty.core.utils').has_plugin('lspsaga.nvim')
   if has_lspsaga then
