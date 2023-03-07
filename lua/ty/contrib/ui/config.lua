@@ -24,9 +24,6 @@ M.diagnostic = {
   --- @see vim.diagnostic.config
   --- @type table|boolean
   virtual_text = false, -- disable virtual text for diagnostic.
-  signs = {
-    Error = 'E',
-  },
 }
 
 M.float = {

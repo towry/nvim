@@ -62,6 +62,7 @@ return function(client, buffer)
   end
   nv('<Plug>(leader-code-map)a', _('Code Action'), cmd([[lua Ty.Func.editing.open_code_action()]], opts))
   nv('<Plug>(leader-code-map)f', _('Format code'), cmd([[lua Ty.Func.editing.format_code()]], opts))
+  n('(Plug>(leader-code-map)t', '[LSP] Peek type definition', cmd('lua Ty.Func.editing.peek_type_definition()'))
 
   -- goto.
   n('gdf', '[LSP] Go find definition in file', cmd('lua Ty.Func.navigate.goto_definition_in_file()', opts))
@@ -70,7 +71,6 @@ return function(client, buffer)
   n('gdfv', '[LSP] Go find definition in file in vsplit',
     cmd('lua Ty.Func.navigate.goto_definition_in_file("vsplit")', opts))
   n('gt', '[LSP] Go to type definition', cmd('lua Ty.Func.navigate.goto_type_definition()'))
-  n('gT', '[LSP] Peek type definition', cmd('lua Ty.Func.editing.peek_type_definition()'))
 
 
   -- workspace.
