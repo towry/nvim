@@ -42,8 +42,9 @@ return function(client, buffer)
     cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "HINT")]], opts)
   )
 
+  ---code maps.
+  n('<Plug>(leader-code-map)d', _('Toggle document diagnostics'), cmd('TroubleToggle document_diagnostics'))
   n('<Plug>(leader-code-map)h', '[LSP] find code references', cmd('lua Ty.Func.navigate.goto_code_references()', opts))
-
   if client.name == 'tsserver' then
     n(
       '<Plug>(leader-code-map)o',
@@ -52,7 +53,6 @@ return function(client, buffer)
     )
     n('<Plug>(leader-code-map)R', _('Rename file'), cmd([[lua Ty.Func.editing.ts_rename_file()]], opts))
   end
-
   if cap.renameProvider then
     n('<Plug>(leader-code-map)r', _('Rename'), cmd([[lua Ty.Func.editing.rename_name()]], opts))
   end
@@ -77,9 +77,10 @@ return function(client, buffer)
     _('list workspace folders'),
     key(function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts)
   )
+  n('<leader>wd', _('toggle workspace diagnostics'), cmd('TroubleToggle workspace_diagnostics'))
 
   -- inline actions.
-  n('<leader>k', _('[LSP] Show hover or reveal UFO folding'), cmd('lua Ty.Func.editing.hover_action()', {
+  n('K', _('[LSP] Show hover or reveal UFO folding'), cmd('lua Ty.Func.editing.hover_action()', {
     '-nowait',
     buffer = buffer
   }))
