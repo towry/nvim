@@ -62,7 +62,9 @@ return function(client, buffer)
   end
   nv('<Plug>(leader-code-map)a', _('Code Action'), cmd([[lua Ty.Func.editing.open_code_action()]], opts))
   nv('<Plug>(leader-code-map)f', _('Format code'), cmd([[lua Ty.Func.editing.format_code()]], opts))
-  n('(Plug>(leader-code-map)t', '[LSP] Peek type definition', cmd('lua Ty.Func.editing.peek_type_definition()'))
+  n('<Plug>(leader-code-map)t', _('Peek type definition'), cmd('lua Ty.Func.editing.peek_type_definition()'))
+  n('<Plug>(leader-code-map)p', _('Peek definition'), cmd([[lua Ty.Func.editing.peek_definition()]], opts))
+  n('<Plug>(leader-code-map)m', _('Show signature help'), cmd('lua Ty.Func.editing.show_signature_help()', opts))
 
   -- goto.
   n('gdf', '[LSP] Go find definition in file', cmd('lua Ty.Func.navigate.goto_definition_in_file()', opts))
@@ -84,13 +86,10 @@ return function(client, buffer)
   n('<leader>wd', _('toggle workspace diagnostics'), cmd('TroubleToggle workspace_diagnostics'))
 
   -- inline actions.
-  n('KK', _('[LSP] Show hover or reveal UFO folding'), cmd('lua Ty.Func.editing.hover_action()', {
+  n('KK', _('Show hover or reveal UFO folding'), cmd('lua Ty.Func.editing.hover_action()', {
     '+nowait',
     buffer = buffer
   }))
-  n('KS', _('[LSP] Show signature help'), cmd('lua Ty.Func.editing.show_signature_help()', opts))
-  n('KL', _('[LSP] Show diagnostics on current line'), cmd('lua Ty.Func.editing.show_diagnostics("line")', opts))
-  n('KC', _('[LSP] Show diagnostics at cursor'), cmd('lua Ty.Func.editing.show_diagnostics("cursor")', opts))
-  n('KP', _('[LSP] Peek definition'), cmd([[lua Ty.Func.editing.peek_definition()]], opts))
-  n('KT', _('[LSP] Peek type definition'), cmd([[lua Ty.Func.editing.peek_type_definition()]], opts))
+  n('KL', _('Show diagnostics on current line'), cmd('lua Ty.Func.editing.show_diagnostics("line")', opts))
+  n('KC', _('Show diagnostics at cursor'), cmd('lua Ty.Func.editing.show_diagnostics("cursor")', opts))
 end
