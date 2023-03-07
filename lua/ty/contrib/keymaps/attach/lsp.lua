@@ -84,8 +84,8 @@ return function(client, buffer)
   n('<leader>wd', _('toggle workspace diagnostics'), cmd('TroubleToggle workspace_diagnostics'))
 
   -- inline actions.
-  n('K', _('[LSP] Show hover or reveal UFO folding'), cmd('lua Ty.Func.editing.hover_action()', {
-    '-nowait',
+  n('KK', _('[LSP] Show hover or reveal UFO folding'), cmd('lua Ty.Func.editing.hover_action()', {
+    '+nowait',
     buffer = buffer
   }))
   n('KS', _('[LSP] Show signature help'), cmd('lua Ty.Func.editing.show_signature_help()', opts))

@@ -29,7 +29,7 @@ function M.hover_action()
     local has_lspsaga = require('ty.core.utils').has_plugin('lspsaga.nvim')
     if has_lspsaga then
       vim.schedule(function()
-        vim.cmd('Lspsaga hover_doc')
+        vim.cmd('Lspsaga hover_doc ++quiet')
       end)
     else
       vim.lsp.buf.hover()
