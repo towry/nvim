@@ -1,50 +1,54 @@
 --- bind lsp keys.
 return function(client, buffer)
   local keymap = require('ty.core.keymap')
-  local n, v, nv, cmd, key = keymap.nmap, keymap.vmap, keymap.nv, keymap.cmd, keymap.key
+  local n, nv, cmd, key = keymap.nmap, keymap.nv, keymap.cmd, keymap.key
   local cap = client.server_capabilities
   local opts = {
     buffer = buffer,
   }
+  local opts_nowait = {
+    buffer = buffer,
+    '+nowait',
+  }
   local _ = function(d) return '[LSP] ' .. d end
 
   -- diagnostic.
-  n('<Plug>(motion-next-map)dd', _('Next Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(true)]], opts))
-  n('<Plug>(motion-prev-map)dd', _('Prev Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false)]], opts))
+  n('<Plug>(motion-next-map)dd', _('Next Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(true)]], opts_nowait))
+  n('<Plug>(motion-prev-map)dd', _('Prev Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false)]], opts_nowait))
   n(
     '<Plug>(motion-next-map)de',
     _('Next Error Diagnostic'),
-    cmd([[lua Ty.Func.navigate.diagnostic_goto(true, "ERROR")]], opts)
+    cmd([[lua Ty.Func.navigate.diagnostic_goto(true, "ERROR")]], opts_nowait)
   )
   n(
     '<Plug>(motion-prev-map)de',
     _('Prev Error Diagnostic'),
-    cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "ERROR")]], opts)
+    cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "ERROR")]], opts_nowait)
   )
   n(
     '<Plug>(motion-next-map)dw',
     _('Next Warning Diagnostic'),
-    cmd([[lua Ty.Func.navigate.diagnostic_goto(true, "WARN")]], opts)
+    cmd([[lua Ty.Func.navigate.diagnostic_goto(true, "WARN")]], opts_nowait)
   )
   n(
     '<Plug>(motion-prev-map)dw',
     _('Prev Warning Diagnostic'),
-    cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "WARN")]], opts)
+    cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "WARN")]], opts_nowait)
   )
   n(
     '<Plug>(motion-next-map)dh',
     _('Next Hint Diagnostic'),
-    cmd([[lua Ty.Func.navigate.diagnostic_goto(true, "HINT")]], opts)
+    cmd([[lua Ty.Func.navigate.diagnostic_goto(true, "HINT")]], opts_nowait)
   )
   n(
     '<Plug>(motion-prev-map)dh',
     _('Prev Hint Diagnostic'),
-    cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "HINT")]], opts)
+    cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "HINT")]], opts_nowait)
   )
 
   ---code maps.
   n('<Plug>(leader-code-map)d', _('Toggle document diagnostics'), cmd('TroubleToggle document_diagnostics'))
-  n('<Plug>(leader-code-map)h', '[LSP] find code references', cmd('lua Ty.Func.navigate.goto_code_references()', opts))
+  n('<Plug>(leader-code-map)h', _('find code references'), cmd('lua Ty.Func.navigate.goto_code_references()', opts))
   if client.name == 'tsserver' then
     n(
       '<Plug>(leader-code-map)o',
