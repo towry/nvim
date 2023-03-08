@@ -3,14 +3,21 @@ local M = {
   EVENTS = {
     on_git_blame_done = 'OnGitBlameDone',
     on_need_hl_update = 'OnNeedHlUpdate',
+    on_gitsigns_attach = "OnGitsignsAttach",
   },
   --- execute autocmds.
   exec = vim.api.nvim_exec_autocmds,
 }
 
-function M.augroup(name) return vim.api.nvim_create_augroup('ty_au_' .. name, { clear = true }) end
+function M.augroup(name)
+  if not name then return nil end
+  return vim.api.nvim_create_augroup('ty_au_' .. name, { clear = true })
+end
 
-function M.augroup_get(name) return vim.api.nvim_create_augroup('ty_au_' .. name, { clear = false }) end
+function M.augroup_get(name)
+  if not name then return nil end
+  return vim.api.nvim_create_augroup('ty_au_' .. name, { clear = false })
+end
 
 ---@usage require('ty.core.autocmd').with_group("editing_pkg"):create("BufRead", { pattern = node_modules_pattern, command = 'lua vim.diagnostic.disable(0)' })
 function M.with_group(name)
@@ -34,6 +41,38 @@ function M:create(events, opts)
   opts.group = self.group
   vim.api.nvim_create_autocmd(events, opts)
   return self
+end
+
+function M.trigger(events_or_and_group, data)
+  local group = nil
+  local event_name = nil
+  if type(events_or_and_group) == 'string' then
+    event_name = events_or_and_group
+  else
+    event_name = events_or_and_group[1]
+    group = M.augroup_get(events_or_and_group[2])
+  end
+
+  M.exec('User', {
+    group = group,
+    pattern = event_name,
+    data = data,
+  })
+end
+
+function M.listen(events_or_and_group, callback)
+  if type(events_or_and_group) == 'string' then
+    vim.api.nvim_create_autocmd('User', {
+      pattern = events_or_and_group,
+      callback = callback,
+    })
+  else
+    vim.api.nvim_create_autocmd('User', {
+      pattern = events_or_and_group[1],
+      group = M.augroup(events_or_and_group[2]),
+      callback = callback
+    })
+  end
 end
 
 ---@param on_attach fun(client, buffer, args)
@@ -71,6 +110,7 @@ function M.on_need_hl_update(callback)
     callback = function() callback() end,
   })
 end
+
 ---Need to update the hl, requested by some plugin.
 function M.do_need_hl_update()
   M.exec('User', {

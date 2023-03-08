@@ -1,9 +1,10 @@
 --- keymappings for neovim for basic usage.
 --- Should be in alphabetical order.
+local autocmd = require('ty.core.autocmd')
 local has_plugin = require('ty.core.utils').has_plugin
 local keymap = require('ty.core.keymap')
 local n, i, v, x, ni, nxv, cmd, key =
-  keymap.nmap, keymap.imap, keymap.vmap, keymap.xmap, keymap.nimap, keymap.nxv, keymap.cmd, keymap.key
+keymap.nmap, keymap.imap, keymap.vmap, keymap.xmap, keymap.nimap, keymap.nxv, keymap.cmd, keymap.key
 
 i('<C-e>', 'Insert mode: move to end of line', key('<End>'))
 n('<C-z>', 'N: Undo, no more background key', key('<ESC> u'))
@@ -21,10 +22,6 @@ n('<A-h>', 'Resize window to left', cmd('lua Ty.Func.buffer.resize_window_by("le
 n('<A-j>', 'Resize window to down', cmd('lua Ty.Func.buffer.resize_window_by("down")'))
 n('<A-k>', 'Resize window to up', cmd('lua Ty.Func.buffer.resize_window_by("up")'))
 n('<A-l>', 'Resize window to right', cmd('lua Ty.Func.buffer.resize_window_by("right")'))
-n('<A-H>', 'Swap buf to left window', cmd('lua Ty.Func.buffer.swap_buffer_to_window("left")'))
-n('<A-J>', 'Swap buf to down window', cmd('lua Ty.Func.buffer.swap_buffer_to_window("down")'))
-n('<A-K>', 'Swap buf to up window', cmd('lua Ty.Func.buffer.swap_buffer_to_window("up")'))
-n('<A-L>', 'Swap buf to right window', cmd('lua Ty.Func.buffer.swap_buffer_to_window("right")'))
 n('<C-h>', 'Move cursor to left window', cmd('lua Ty.Func.buffer.move_cursor_to_window("left")'))
 n('<C-j>', 'Move cursor to down window', cmd('lua Ty.Func.buffer.move_cursor_to_window("down")'))
 n('<C-k>', 'Move cursor to up window', cmd('lua Ty.Func.buffer.move_cursor_to_window("up")'))
@@ -93,6 +90,7 @@ n('[td', 'Jump to next todo', cmd([[lua Ty.Func.editor.jump_to_todo('next')]]))
 n(']td', 'Jump to previous todo', cmd([[lua Ty.Func.editor.jump_to_todo('prev')]]))
 
 -- functional keys.
+n('<leader>s', 'Search and replace')
 nxv('<leader>sp', 'Search and replace', cmd('lua Ty.Func.explorer.search_and_replace()'))
 nxv(
   '<leader>sP',
@@ -105,9 +103,10 @@ n('<C-p>', 'Open legendary', cmd([[lua require('ty.contrib.keymaps.legendary').o
 n('<leader>q', 'Open quick list', key('quicklist'))
 n('<leader>x', 'Close buffer and window', cmd('Sayonara'))
 n('<leader>F', 'Find folders', cmd('lua Ty.Func.explorer.find_folder()'))
-n('<leader>/oo', '[/] Toggle outline', cmd([[lua Ty.Func.explore.toggle_outline()]]))
+n('<leader>t', 'Tool|Toggle')
 n('<leader>t-', 'Switch variables, false <==> true', cmd([[Switch]]))
-
+n("<leader>/", "Outline|Git")
+n('<leader>/oo', '[/] Toggle outline', cmd([[lua Ty.Func.explore.toggle_outline()]]))
 -- gits
 --[[
 d = "diff hunk",
@@ -119,13 +118,19 @@ S = "stage buffer",
 t = "toggle deleted",
 u = "undo stage",
 --]]
+n('<leader>/g', 'Git operations')
 n('<leader>/ga', 'Git add current', cmd([[!git add %:p]]))
 n('<leader>/gA', 'Git add all', cmd([[!git add .]]))
 n('<leader>/gb', 'Git open blame', cmd([[lua Ty.Func.git.open_blame()]]))
 n('<leader>/gB', 'Git branchs', cmd([[Telescope git_branches]]))
 n('<leader>/gd', 'Git diff file', cmd([[lua Ty.Func.git.toggle_file_history()]]))
 n('<leader>/gg', 'Lazygit', cmd([[LazyGit]]))
-n('<leader>/gc', 'Open git conflict menus', cmd([[lua require('ty.contrib.keymaps.hydra.git').open_conflict_hydra()]]))
+n('<leader>/gc', 'Open git conflict menus',
+  cmd("lua require('ty.contrib.keymaps.hydra.git').open_git_conflict_hydra()", { "+noremap" }))
+autocmd.listen({ autocmd.EVENTS.on_gitsigns_attach }, function(ctx)
+  n('<leader>/gh', 'Gitsigns',
+    cmd("lua require('ty.contrib.keymaps.hydra.git').open_git_signs_hydra()", { buffer = ctx.buf }))
+end)
 
 --- folding.
 if has_plugin('nvim-ufo') then
@@ -133,13 +138,15 @@ if has_plugin('nvim-ufo') then
   n('zM', 'Close all folds', cmd([[lua require('ufo').closeAllFolds]]))
   n('zr', 'Open folds except kinds', cmd([[lua require('ufo').openFoldsExceptKinds]]))
 end
+
 --- portal and grapple
 if has_plugin('grapple.nvim') then n('<leader>m', 'Toggle grapple mark', cmd([[lua require("grapple").toggle()]])) end
 if has_plugin('portal.nvim') then
   n('<M-o>', 'Portal jump backward', cmd([[lua require('portal').jump_backward()]]))
   n('<M-i>', 'Portal jump forward', cmd([[lua require('portal').jump_forward()]]))
 end
--- TODO: use hydra
+
+n('<leader>z', 'Copilot|...')
 if has_plugin('copilot.vim') then n('<leader>zp', 'Open github copilot panel', cmd([[Copilot panel]])) end
 --[[
 A = { "<cmd>lua require('towry.utils.plug-telescope').my_git_commits()<CR>", "commits (Telescope)" },

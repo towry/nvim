@@ -30,7 +30,7 @@ M.resize_window_by = function(dir_str, delta)
   splits[method](delta)
 end
 
-M.swap_buf_to_window = function(dir_str, move_cursor)
+M.swap_buffer_to_window = function(dir_str, move_cursor)
   local ok, splits = pcall(require, 'smart-splits')
   if not ok then return end
   local method = 'swap_buf_' .. dir_str
