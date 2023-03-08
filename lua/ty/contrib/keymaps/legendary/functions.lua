@@ -76,7 +76,7 @@ function M.default_functions()
       description = "[Session] Load last session",
     },
     {
-      function() Ty.Func.editor.remove_current_session() end,
+      function() Ty.Func.editor.remove_current_sesion() end,
       description = "[Session] Remove current session",
     },
     {

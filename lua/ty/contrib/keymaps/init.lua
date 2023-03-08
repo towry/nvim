@@ -10,6 +10,8 @@ M.init = function()
   require('ty.contrib.keymaps.attach.git_blame')(au)
   require('ty.contrib.keymaps.attach.npm')(au)
   require('ty.contrib.keymaps.attach.jest')(au)
+
+  if require('ty.core.utils').has_plugin('which-key.nvim') then require('ty.contrib.keymaps.whichkey').init() end
 end
 
 return M

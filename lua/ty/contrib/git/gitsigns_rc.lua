@@ -5,6 +5,7 @@ local gitsigns_current_blame_delay = 0
 M.setup = function()
   local signs = require('gitsigns')
   local ui_config = require('ty.core.config').ui
+  local autocmd = require('ty.core.autocmd')
 
   -- ╭──────────────────────────────────────────────────────────╮
   -- │ Setup                                                    │
@@ -51,8 +52,9 @@ M.setup = function()
       enable = false,
     },
     on_attach = function(bufnr)
-      -- Text object
-      -- map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+      autocmd.trigger(autocmd.EVENTS.on_gitsigns_attach, {
+        buffer = bufnr
+      })
     end,
   })
 end

@@ -16,7 +16,7 @@ function M.setup()
     commands = require("ty.contrib.keymaps.legendary.commands").default_commands(),
     -- autocmds =
     default_item_formatter = my_formatter,
-    include_builtin = true,
+    include_builtin = false,
     include_legendary_cmds = false,
     default_opts = {
       keymaps = { silent = true, noremap = true },
