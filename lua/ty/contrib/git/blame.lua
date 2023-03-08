@@ -45,7 +45,8 @@ local function blame_syntax()
     hash = vim.fn.substitute(hash, [[\(\x\x\)]], [[\=printf("%02x", str2nr(submatch(1),16)*3/4+32)]], 'g')
     if hash ~= '' and orig_hash ~= '000000' and seen[hash] == nil then
       seen[hash] = 1
-      if vim.wo.t_Co == '256' then
+      ---@diagnostic disable-next-line: undefined-field
+      if vim.go.t_Co == '256' then
         local colors = vim.fn.map(vim.fn.matchlist(orig_hash, [[\(\x\)\x\(\x\)\x\(\x\)\x]]), 'str2nr(v:val,16)')
         local r = colors[2]
         local g = colors[3]
@@ -101,16 +102,13 @@ local function on_blame_done(lines)
   vim.api.nvim_win_set_option(starting_win, 'cursorbind', true)
 
   -- Keymaps
-  local options = {
-    noremap = true,
-    silent = true,
-    expr = false,
-  }
-
   local autocmd = require('ty.core.autocmd')
   autocmd.exec('User', {
     pattern = autocmd.EVENTS.on_git_blame_done,
     modeline = false,
+    data = {
+      buffer = vim.api.nvim_get_current_buf(),
+    }
   })
   vim.api.nvim_command("autocmd BufWinLeave <buffer> lua require('ty.contrib.git.blame').blame_quit()")
 
@@ -160,7 +158,7 @@ function M.blame_commit()
   end
 
   local commit_hash =
-    git.run_git_cmd('git -C ' .. blame_state.git_root .. ' --literal-pathspecs rev-parse --verify ' .. commit .. ' --')
+  git.run_git_cmd('git -C ' .. blame_state.git_root .. ' --literal-pathspecs rev-parse --verify ' .. commit .. ' --')
   if commit_hash == nil then
     utils.warnlog('Commit hash not found', 'Git')
     return
@@ -168,11 +166,11 @@ function M.blame_commit()
 
   commit_hash = string.gsub(commit_hash, '\n', '')
   local diff_cmd = 'git -C '
-    .. blame_state.git_root
-    .. ' --literal-pathspecs --no-pager show --no-color '
-    .. commit_hash
-    .. ' -- '
-    .. blame_state.file
+      .. blame_state.git_root
+      .. ' --literal-pathspecs --no-pager show --no-color '
+      .. commit_hash
+      .. ' -- '
+      .. blame_state.file
 
   local lines = {}
   local function on_event(_, data, event)
@@ -203,9 +201,16 @@ function M.blame_quit()
   vim.api.nvim_win_set_option(blame_state.starting_win, 'cursorbind', false)
 end
 
+local blame_is_open = false
 function M.open()
   local fpath = vim.api.nvim_buf_get_name(0)
   if fpath == '' or fpath == nil then return end
+  if blame_is_open then
+    vim.notify("Blame window is already open")
+    M.blame_quit()
+    return
+  end
+  blame_is_open = true
 
   local git_root = git.get_git_repo()
   if git_root == '' then return end
@@ -213,9 +218,9 @@ function M.open()
   blame_state.relative_path = vim.fn.fnamemodify(vim.fn.expand('%'), ':~:.')
 
   local blame_cmd = 'git -C '
-    .. git_root
-    .. ' --literal-pathspecs --no-pager -c blame.coloring=none -c blame.blankBoundary=false blame --show-number -- '
-    .. fpath
+      .. git_root
+      .. ' --literal-pathspecs --no-pager -c blame.coloring=none -c blame.blankBoundary=false blame --show-number -- '
+      .. fpath
 
   local lines = {}
   local has_error = false

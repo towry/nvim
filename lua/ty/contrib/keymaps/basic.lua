@@ -78,8 +78,6 @@ x('K', 'Move selected line / block of text in visual mode up', key(":move '<-2<C
 x('J', 'Move selected line / block of text in visual mode down', key(":move '>+1<CR>gv-gv"))
 
 --- '[' and ']' keys
-n('[gh', 'Git next hunk', cmd('lua Ty.Func.git.next_hunk()'))
-n(']gh', 'Git prev hunk', cmd('lua Ty.Func.git.prev_hunk()'))
 -- html tags
 n('[tp', 'Jump to parent tag', cmd([[lua Ty.Func.navigate.jump_to_tag('parent')]]))
 n('[tc', 'Jump to child tag', cmd([[lua Ty.Func.navigate.jump_to_tag('child')]]))
@@ -127,7 +125,10 @@ n('<leader>/gd', 'Git diff file', cmd([[lua Ty.Func.git.toggle_file_history()]])
 n('<leader>/gg', 'Lazygit', cmd([[LazyGit]]))
 n('<leader>/gc', 'Open git conflict menus',
   cmd("lua require('ty.contrib.keymaps.hydra.git').open_git_conflict_hydra()", { "+noremap" }))
+
 autocmd.listen({ autocmd.EVENTS.on_gitsigns_attach }, function(ctx)
+  n('[gh', 'Git next hunk', cmd('lua Ty.Func.git.next_hunk()'))
+  n(']gh', 'Git prev hunk', cmd('lua Ty.Func.git.prev_hunk()'))
   n('<leader>/gh', 'Gitsigns',
     cmd("lua require('ty.contrib.keymaps.hydra.git').open_git_signs_hydra()", { buffer = ctx.buf }))
 end)

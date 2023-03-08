@@ -11,7 +11,7 @@ local function bind_git_blame_keys(bufnr)
   if not bufnr then error('invalid setup') end
 
   local keymap = require('ty.core.keymap')
-  local n, cmd = keymap.n, keymap.cmd
+  local n, cmd = keymap.nmap, keymap.cmd
   local opts = {
     '+noremap',
     '+silent',
@@ -29,6 +29,6 @@ end
 return function(au)
   au:create('User', {
     pattern = au.EVENTS.on_git_blame_done,
-    callback = function(ctx) bind_git_blame_keys(ctx.bufnr) end,
+    callback = function(ctx) bind_git_blame_keys(ctx.buf) end,
   })
 end
