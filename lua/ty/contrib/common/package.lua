@@ -13,6 +13,12 @@ pack({
 })
 
 pack({
+  'folke/which-key.nvim',
+  lazy = true,
+  ImportConfig = 'whichkey',
+})
+
+pack({
   'mrjones2014/legendary.nvim',
   dependencies = {
     -- used for frecency sort

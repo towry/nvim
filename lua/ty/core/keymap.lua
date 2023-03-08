@@ -1,5 +1,40 @@
 local set = vim.keymap.set
 local M = {}
+-- tables that contain which-key groups only
+-- which key group is like table: ['<leader>'] = { name = "<desc>" }
+local has_which_key = nil
+
+local function insert_which_key_group(modes, opts)
+  if has_which_key == false then return end
+  local lhs = opts.lhs
+  local buffer = opts.buffer
+  local name = opts.name
+  if type(modes) == 'string' then modes = { modes } end
+  for _, mode in ipairs(modes) do
+    -- take last char of lhs as lhs, take the rest as prefix
+    local prefix = lhs:sub(1, #lhs - 1)
+    local last_char = lhs:sub(#lhs, #lhs)
+    -- register to which key
+    if has_which_key == nil then
+      local ok, wk = pcall(require, 'which-key')
+      if not ok then
+        has_which_key = false
+        return
+      end
+      has_which_key = wk
+    end
+    if last_char == '>' then return end
+    has_which_key.register({
+      [last_char] = {
+        name = name,
+        buffer = buffer,
+      },
+    }, {
+      prefix = prefix,
+      mode = mode,
+    })
+  end
+end
 
 --- parse { '+silent', '-silent', buffer = bufnr } etc opt into dict.
 local function parse_opts(opts)
@@ -29,6 +64,16 @@ local function map_one(mode, lhs, desc, rhs_opts)
   local rhs = rhs_opts[1]
   local opts = rhs_opts[2] or {}
   opts.desc = desc
+
+  if opts.group == true then
+    -- for remap as group name.
+    insert_which_key_group(mode, {
+      name = desc,
+      buffer = opts.buffer,
+      lhs = lhs,
+    })
+    opts.group = nil
+  end
   set(mode, lhs, rhs, opts)
 end
 
@@ -43,7 +88,13 @@ local function map(mode, lhs, desc, rhs_opts)
     end
     return
   end
-  if not rhs_opts then return end -- do not set for empty descriptive keymap.
+  if not rhs_opts then
+    insert_which_key_group(mode, {
+      lhs = lhs,
+      name = desc,
+    })
+    return -- do not set for empty descriptive keymap.
+  end
   map_one(mode, lhs, desc, rhs_opts)
 end
 

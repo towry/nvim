@@ -3,13 +3,7 @@
 local has_plugin = require('ty.core.utils').has_plugin
 local keymap = require('ty.core.keymap')
 local n, i, v, x, ni, nxv, cmd, key =
-    keymap.nmap, keymap.imap, keymap.vmap, keymap.xmap, keymap.nimap, keymap.nxv, keymap.cmd, keymap.key
-
-n('<leader>c', 'Leader code maps', key('<Plug>(leader-code-map)', { '+remap' }))
-n('<leader>g', 'Leader go maps', key('<Plug>(leader-go-map)', { '+remap' }))
-n('[', 'Motion next map', key('<Plug>(motion-next-map)', { '+remap' }))
-n(']', 'Motion prev map', key('<Plug>(motion-prev-map)', { '+remap' }))
-n('<leader>h', 'Leader help maps', key('<Plug>(leader-help-map)', { '+remap' }))
+  keymap.nmap, keymap.imap, keymap.vmap, keymap.xmap, keymap.nimap, keymap.nxv, keymap.cmd, keymap.key
 
 i('<C-e>', 'Insert mode: move to end of line', key('<End>'))
 n('<C-z>', 'N: Undo, no more background key', key('<ESC> u'))
@@ -87,18 +81,16 @@ x('K', 'Move selected line / block of text in visual mode up', key(":move '<-2<C
 x('J', 'Move selected line / block of text in visual mode down', key(":move '>+1<CR>gv-gv"))
 
 --- '[' and ']' keys
-n('<Plug>(motion-next-map)d', 'Go to next diagnostics')
-n('<Plug>(motion-prev-map)d', 'Go to previous diagnostics')
-n('<Plug>(motion-next-map)gh', 'Git next hunk', cmd('lua Ty.Func.git.next_hunk()'))
-n('<Plug>(motion-prev-map)gh', 'Git prev hunk', cmd('lua Ty.Func.git.prev_hunk()'))
+n('[gh', 'Git next hunk', cmd('lua Ty.Func.git.next_hunk()'))
+n(']gh', 'Git prev hunk', cmd('lua Ty.Func.git.prev_hunk()'))
 -- html tags
 n('[tp', 'Jump to parent tag', cmd([[lua Ty.Func.navigate.jump_to_tag('parent')]]))
 n('[tc', 'Jump to child tag', cmd([[lua Ty.Func.navigate.jump_to_tag('child')]]))
 n('[t[', 'Jump to next tag', cmd([[lua Ty.Func.navigate.jump_to_tag('next')]]))
 n('[t]', 'Jump to previous tag', cmd([[lua Ty.Func.navigate.jump_to_tag('prev')]]))
 -- todo jump
-n('<Plug>(motion-next-map)td', 'Jump to next todo', cmd([[lua Ty.Func.editor.jump_to_todo('next')]]))
-n('<Plug>(motion-prev-map)td', 'Jump to previous todo', cmd([[lua Ty.Func.editor.jump_to_todo('prev')]]))
+n('[td', 'Jump to next todo', cmd([[lua Ty.Func.editor.jump_to_todo('next')]]))
+n(']td', 'Jump to previous todo', cmd([[lua Ty.Func.editor.jump_to_todo('prev')]]))
 
 -- functional keys.
 nxv('<leader>sp', 'Search and replace', cmd('lua Ty.Func.explorer.search_and_replace()'))

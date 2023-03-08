@@ -13,70 +13,52 @@ return function(client, buffer)
   local _ = function(d) return '[LSP] ' .. d end
 
   -- diagnostic.
-  n('<Plug>(motion-next-map)dd', _('Next Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(true)]], opts_nowait))
-  n('<Plug>(motion-prev-map)dd', _('Prev Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false)]], opts_nowait))
-  n(
-    '<Plug>(motion-next-map)de',
-    _('Next Error Diagnostic'),
-    cmd([[lua Ty.Func.navigate.diagnostic_goto(true, "ERROR")]], opts_nowait)
-  )
-  n(
-    '<Plug>(motion-prev-map)de',
-    _('Prev Error Diagnostic'),
-    cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "ERROR")]], opts_nowait)
-  )
-  n(
-    '<Plug>(motion-next-map)dw',
-    _('Next Warning Diagnostic'),
-    cmd([[lua Ty.Func.navigate.diagnostic_goto(true, "WARN")]], opts_nowait)
-  )
-  n(
-    '<Plug>(motion-prev-map)dw',
-    _('Prev Warning Diagnostic'),
-    cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "WARN")]], opts_nowait)
-  )
-  n(
-    '<Plug>(motion-next-map)dh',
-    _('Next Hint Diagnostic'),
-    cmd([[lua Ty.Func.navigate.diagnostic_goto(true, "HINT")]], opts_nowait)
-  )
-  n(
-    '<Plug>(motion-prev-map)dh',
-    _('Prev Hint Diagnostic'),
-    cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "HINT")]], opts_nowait)
-  )
+  n('[d', 'Next Diagnostic')
+  n(']d', 'Prev Diagnostic')
+  n('[dd', _('Next Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(true)]], opts_nowait))
+  n(']dd', _('Prev Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false)]], opts_nowait))
+  n('[de', _('Next Error Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(true, "ERROR")]], opts_nowait))
+  n(']de', _('Prev Error Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "ERROR")]], opts_nowait))
+  n('[dw', _('Next Warning Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(true, "WARN")]], opts_nowait))
+  n(']dw', _('Prev Warning Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "WARN")]], opts_nowait))
+  n(']dh', _('Next Hint Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(true, "HINT")]], opts_nowait))
+  n(']dh', _('Prev Hint Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "HINT")]], opts_nowait))
 
   ---code maps.
-  n('<Plug>(leader-code-map)d', _('Toggle document diagnostics'), cmd('TroubleToggle document_diagnostics'))
-  n('<Plug>(leader-code-map)h', _('find code references'), cmd('lua Ty.Func.navigate.goto_code_references()', opts))
+  n('<leader>c', 'Leader code maps')
+  n('<leader>cd', _('Toggle document diagnostics'), cmd('TroubleToggle document_diagnostics'))
+  n('<leader>ch', _('find code references'), cmd('lua Ty.Func.navigate.goto_code_references()', opts))
   if client.name == 'tsserver' then
-    n(
-      '<Plug>(leader-code-map)o',
-      _('Organize Imports'),
-      cmd([[lua require("typescript").actions.organizeImports()]], opts)
-    )
-    n('<Plug>(leader-code-map)R', _('Rename file'), cmd([[lua Ty.Func.editing.ts_rename_file()]], opts))
+    n('<leader>co', _('Organize Imports'), cmd([[lua require("typescript").actions.organizeImports()]], opts))
+    n('<leader>cR', _('Rename file'), cmd([[lua Ty.Func.editing.ts_rename_file()]], opts))
   end
-  if cap.renameProvider then
-    n('<Plug>(leader-code-map)r', _('Rename'), cmd([[lua Ty.Func.editing.rename_name()]], opts))
-  end
-  nv('<Plug>(leader-code-map)a', _('Code Action'), cmd([[lua Ty.Func.editing.open_code_action()]], opts))
-  nv('<Plug>(leader-code-map)f', _('Format code'), cmd([[lua Ty.Func.editing.format_code()]], opts))
-  n('<Plug>(leader-code-map)t', _('Peek type definition'), cmd('lua Ty.Func.editing.peek_type_definition()'))
-  n('<Plug>(leader-code-map)p', _('Peek definition'), cmd([[lua Ty.Func.editing.peek_definition()]], opts))
-  n('<Plug>(leader-code-map)m', _('Show signature help'), cmd('lua Ty.Func.editing.show_signature_help()', opts))
+  if cap.renameProvider then n('<leader>cr', _('Rename'), cmd([[lua Ty.Func.editing.rename_name()]], opts)) end
+  nv('<leader>ca', _('Code Action'), cmd([[lua Ty.Func.editing.open_code_action()]], opts))
+  nv('<leader>cf', _('Format code'), cmd([[lua Ty.Func.editing.format_code()]], opts))
+  n('<leader>ct', _('Peek type definition'), cmd('lua Ty.Func.editing.peek_type_definition()'))
+  n('<leader>cp', _('Peek definition'), cmd([[lua Ty.Func.editing.peek_definition()]], opts))
+  n('<leader>cm', _('Show signature help'), cmd('lua Ty.Func.editing.show_signature_help()', opts))
 
   -- goto.
-  -- n('gdf', '[LSP] Go find definition in file', cmd('lua Ty.Func.navigate.goto_definition_in_file()', opts))
-  n('gdfx', '[LSP] Go find definition in file in split',
-    cmd('lua Ty.Func.navigate.goto_definition_in_file("split")', opts))
-  n('gdfv', '[LSP] Go find definition in file in vsplit',
-    cmd('lua Ty.Func.navigate.goto_definition_in_file("vsplit")', opts))
-  n('gd', _('Go to definition'), cmd('lua Ty.Func.navigate.goto_definition()', opts))
+  n('gd', _('Go to definition'), cmd('lua Ty.Func.navigate.goto_definition()', {
+    buffer = buffer,
+    "+group"
+  }))
   n('gt', '[LSP] Go to type definition', cmd('lua Ty.Func.navigate.goto_type_definition()'))
-
+  n('gdf', '[LSP] Go find definition in file')
+  n(
+    'gdfx',
+    '[LSP] Go find definition in file in split',
+    cmd('lua Ty.Func.navigate.goto_definition_in_file("split")', opts)
+  )
+  n(
+    'gdfv',
+    '[LSP] Go find definition in file in vsplit',
+    cmd('lua Ty.Func.navigate.goto_definition_in_file("vsplit")', opts)
+  )
 
   -- workspace.
+  n("<leader>w", _("Workspace"))
   n('<leader>wa', _('add workspace folder'), key(vim.lsp.buf.add_workspace_folder, opts))
   n('<leader>wr', _('remove workspace folder'), key(vim.lsp.buf.remove_workspace_folder, opts))
   n(
@@ -87,10 +69,15 @@ return function(client, buffer)
   n('<leader>wd', _('toggle workspace diagnostics'), cmd('TroubleToggle workspace_diagnostics'))
 
   -- inline actions.
-  n('KK', _('Show hover or reveal UFO folding'), cmd('lua Ty.Func.editing.hover_action()', {
-    '+nowait',
-    buffer = buffer
-  }))
+  n(
+    'KK',
+    _('Show hover or reveal UFO folding'),
+    cmd('lua Ty.Func.editing.hover_action()', {
+      '+nowait',
+      buffer = buffer,
+    })
+  )
   n('KL', _('Show diagnostics on current line'), cmd('lua Ty.Func.editing.show_diagnostics("line")', opts))
   n('KC', _('Show diagnostics at cursor'), cmd('lua Ty.Func.editing.show_diagnostics("cursor")', opts))
+  -- require('which-key').reset();
 end
