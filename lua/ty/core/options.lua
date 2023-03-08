@@ -62,7 +62,6 @@ function M.setup_interface()
   o.emoji = true --- Fix emoji display
   o.cursorlineopt = 'both'
   o.foldcolumn = 'auto' -- Folding
-
   o.list = true
   o.listchars:append('tab:⇢ ')
   o.listchars:append('extends:»')

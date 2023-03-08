@@ -35,6 +35,7 @@ n('<C-h>', 'Move cursor to left window', cmd('lua Ty.Func.buffer.move_cursor_to_
 n('<C-j>', 'Move cursor to down window', cmd('lua Ty.Func.buffer.move_cursor_to_window("down")'))
 n('<C-k>', 'Move cursor to up window', cmd('lua Ty.Func.buffer.move_cursor_to_window("up")'))
 n('<C-l>', 'Move cursor to right window', cmd('lua Ty.Func.buffer.move_cursor_to_window("right")'))
+n('<C-w>', 'Window operations', cmd('lua require("ty.contrib.keymaps.hydra.window").open_window_hydra(true)'))
 
 n('<Tab>', 'List Buffers', cmd('lua Ty.Func.explorer.open_buffers()'))
 n('<S-Tab>', 'Go to previous edited Buffer', key(':e #<cr>'))
