@@ -31,4 +31,21 @@ return function(au)
     pattern = au.EVENTS.on_git_blame_done,
     callback = function(ctx) bind_git_blame_keys(ctx.buf) end,
   })
+
+  au.listen(au.EVENTS.on_git_diffview_open, function(ctx)
+    local view = ctx.data.view
+    local km = require('ty.core.keymap')
+    local lib = require('diffview.lib')
+
+    km.nmap('<leader>q', ' Quit git diff', { function()
+      if not view then
+        vim.cmd("DiffviewClose")
+        return
+      end
+      view:close()
+      lib.dispose_view(view)
+    end, {
+      buffer = ctx.buf,
+    } })
+  end)
 end

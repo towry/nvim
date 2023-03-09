@@ -59,6 +59,7 @@ pack({
     'DiffviewFileHistory',
     'DiffviewToggleFiles',
   },
+  ImportConfig = "diffview",
 })
 
 pack({

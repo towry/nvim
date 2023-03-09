@@ -17,6 +17,22 @@ M.toggle_file_history = function()
   end
 end
 
+M.toggle_working_changes = function()
+  local lib = require('diffview.lib')
+  local diffview = require('diffview')
+
+  local view = lib.get_current_view()
+  if view == nil then
+    diffview.open()
+    return
+  end
+
+  if view then
+    view:close()
+    lib.dispose_view(view)
+  end
+end
+
 M.toggle_status = function()
   local lib = require('diffview.lib')
   local diffview = require('diffview')

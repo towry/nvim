@@ -4,7 +4,7 @@ local autocmd = require('ty.core.autocmd')
 local has_plugin = require('ty.core.utils').has_plugin
 local keymap = require('ty.core.keymap')
 local n, i, v, x, ni, nxv, cmd, key =
-keymap.nmap, keymap.imap, keymap.vmap, keymap.xmap, keymap.nimap, keymap.nxv, keymap.cmd, keymap.key
+    keymap.nmap, keymap.imap, keymap.vmap, keymap.xmap, keymap.nimap, keymap.nxv, keymap.cmd, keymap.key
 
 i('<C-e>', 'Insert mode: move to end of line', key('<End>'))
 n('<C-z>', 'N: Undo, no more background key', key('<ESC> u'))
@@ -70,6 +70,12 @@ else
   n('gx', 'Open link at cursor', cmd('silent execute "!xdg-open " . shellescape("<cWORD>")'))
 end
 if has_plugin('junegunn/vim-easy-align') then nxv('ga', 'Easy align', key('<Plug>(EasyAlign)')) end
+autocmd.listen({ autocmd.EVENTS.on_gitsigns_attach }, function(ctx)
+  n('[gh', 'Git next hunk', cmd('lua Ty.Func.git.next_hunk()'))
+  n(']gh', 'Git prev hunk', cmd('lua Ty.Func.git.prev_hunk()'))
+  n('gh', 'Gitsigns',
+    cmd("lua require('ty.contrib.keymaps.hydra.git').open_git_signs_hydra()", { buffer = ctx.buf }))
+end)
 
 n('H', 'Move to first non-blank character of the line', key('^'))
 n('L', 'Move to last non-blank character of the line', key('$'))
@@ -106,32 +112,18 @@ n('<leader>t-', 'Switch variables, false <==> true', cmd([[Switch]]))
 n("<leader>/", "Outline|Git")
 n('<leader>/oo', '[/] Toggle outline', cmd([[lua Ty.Func.explore.toggle_outline()]]))
 -- gits
---[[
-d = "diff hunk",
-p = "preview",
-R = "reset buffer",
-r = "reset hunk",
-s = "stage hunk",
-S = "stage buffer",
-t = "toggle deleted",
-u = "undo stage",
---]]
 n('<leader>/g', 'Git operations')
 n('<leader>/ga', 'Git add current', cmd([[!git add %:p]]))
 n('<leader>/gA', 'Git add all', cmd([[!git add .]]))
 n('<leader>/gb', 'Git open blame', cmd([[lua Ty.Func.git.open_blame()]]))
 n('<leader>/gB', 'Git branchs', cmd([[Telescope git_branches]]))
-n('<leader>/gd', 'Git diff file', cmd([[lua Ty.Func.git.toggle_file_history()]]))
+n('<leader>/gD', 'Git file history', cmd([[lua Ty.Func.git.toggle_file_history()]]))
+n('<leader>/gd', 'Git changes', cmd([[lua Ty.Func.git.toggle_git_changes()]]))
+n('<leader>/gv', 'Git commits', cmd([[GV]]))
 n('<leader>/gg', 'Lazygit', cmd([[LazyGit]]))
 n('<leader>/gc', 'Open git conflict menus',
   cmd("lua require('ty.contrib.keymaps.hydra.git').open_git_conflict_hydra()", { "+noremap" }))
 
-autocmd.listen({ autocmd.EVENTS.on_gitsigns_attach }, function(ctx)
-  n('[gh', 'Git next hunk', cmd('lua Ty.Func.git.next_hunk()'))
-  n(']gh', 'Git prev hunk', cmd('lua Ty.Func.git.prev_hunk()'))
-  n('<leader>/gh', 'Gitsigns',
-    cmd("lua require('ty.contrib.keymaps.hydra.git').open_git_signs_hydra()", { buffer = ctx.buf }))
-end)
 
 --- folding.
 if has_plugin('nvim-ufo') then

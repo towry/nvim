@@ -14,5 +14,25 @@ M.setup_git_conflict = function()
   })
 end
 M.setup_git_worktree = require('ty.contrib.git.worktree_rc').setup
+M.setup_diffview = function()
+  require('diffview').setup({
+    view = {
+      default = {
+        layout = "diff2_vertical",
+        winbar_info = false,
+      },
+    },
+    hooks = {
+      diff_buf_read = function(bufnr)
+      end,
+      view_opened = function(view)
+        local autocmd = require('ty.core.autocmd')
+        autocmd.trigger(autocmd.EVENTS.on_git_diffview_open, {
+          -- view = view,
+        })
+      end
+    }
+  })
+end
 
 return M

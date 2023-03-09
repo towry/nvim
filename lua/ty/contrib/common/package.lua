@@ -10,16 +10,19 @@ pack({
 pack({
   -- free the leader key.
   'anuvyklack/hydra.nvim',
+  pin = true,
 })
 
 pack({
   'folke/which-key.nvim',
   lazy = true,
+  pin = true,
   ImportConfig = 'whichkey',
 })
 
 pack({
   'mrjones2014/legendary.nvim',
+  pin = true,
   dependencies = {
     -- used for frecency sort
     'kkharji/sqlite.lua',
@@ -30,6 +33,7 @@ pack({
 -- telescope
 pack({
   'nvim-telescope/telescope.nvim',
+  pint = true,
   cmd = { 'Telescope' },
   dependencies = {
     { 'nvim-lua/popup.nvim' },

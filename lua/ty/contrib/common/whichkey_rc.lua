@@ -60,6 +60,8 @@ M.setup = function()
       "'",
       'g`',
       "g'",
+      "gg",
+      "G",
       -- registers
       '"',
       '<c-r>',
