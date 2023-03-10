@@ -24,7 +24,7 @@ pack({
   'luukvbaal/statuscol.nvim',
   event = { 'BufReadPre', 'BufNewFile' },
   cond = function() return vim.fn.has('nvim-0.9.0') == 1 end,
-  ImportOption = 'statuscol',
+  ImportConfig = 'statuscol',
 })
 
 pack({

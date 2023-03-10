@@ -101,7 +101,7 @@ M.setup_indent_line = function()
   })
 
   local _ = colors.indent_line_fg and vim.api.nvim_set_hl(0, 'IndentBlanklineChar', { fg = colors.indent_line_fg })
-    or nil
+      or nil
 end
 
 M.option_true_zen = {
@@ -110,14 +110,27 @@ M.option_true_zen = {
   },
 }
 
-M.option_statuscol = {
-  separator = '│',
-  foldfunc = 'builtin',
-  relculright = true,
-  setopt = true,
-  -- N: line number, S: sign column, F: fold column, s: Separator string. w: whitespace
-  order = 'SFNs',
-}
+M.setup_statuscol = function()
+  local statuscol = require('statuscol')
+  local builtin = require('statuscol.builtin')
+
+  statuscol.setup {
+    separator = '│',
+    foldfunc = 'builtin',
+    relculright = true,
+    setopt = true,
+    -- N: line number, S: sign column, F: fold column, s: Separator string. w: whitespace
+    segments = {
+      { text = { "%s" },                  click = "v:lua.ScSa" },
+      {
+        text = { builtin.lnumfunc, " " },
+        condition = { true, builtin.not_empty },
+        click = "v:lua.ScLa",
+      },
+      { text = { builtin.foldfunc, " " }, click = "v:lua.ScFa" },
+    }
+  }
+end
 
 M.option_guess_indent = {
   auto_cmd = true, -- Set to false to disable automatic execution
