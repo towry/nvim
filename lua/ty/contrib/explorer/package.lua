@@ -31,11 +31,15 @@ pack({
 })
 
 -- better quickfix
-pack({ 
+pack({
   -- https://github.com/kevinhwang91/nvim-bqf
-  'kevinhwang91/nvim-bqf', 
+  'kevinhwang91/nvim-bqf',
   ft = 'qf',
   dependencies = {
-    {'junegunn/fzf', build = function() vim.fn['fzf#install']() end },
+    { 'junegunn/fzf', build = function() vim.fn['fzf#install']() end },
   }
+})
+
+pack({
+  'ThePrimeagen/harpoon',
 })

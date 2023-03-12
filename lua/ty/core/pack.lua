@@ -151,11 +151,13 @@ function pack.contrib(scope)
     end
     -- load opts.
     if type(repo[Spec.ImportOption]) == 'string' and repo.opts == nil then
-      repo.opts = require('ty.contrib.' .. scope .. '.package_rc')['option_' .. repo[Spec.ImportOption]]
+      repo.opts = function()
+        return require('ty.contrib.' .. scope .. '.package_rc')['option_' .. repo[Spec.ImportOption]]
+      end
     end
     -- load init.
     if type(repo[Spec.ImportInit]) == 'string' and repo.init == nil then
-      repo.init = require('ty.contrib.' .. scope .. '.package_rc')['init_' .. repo[Spec.ImportInit]]
+      repo.init = function() require('ty.contrib.' .. scope .. '.package_rc')['init_' .. repo[Spec.ImportInit]]() end
     end
 
     -- add.
