@@ -133,16 +133,21 @@ if has_plugin('nvim-ufo') then
 end
 
 --- portal and grapple
-if has_plugin('grapple.nvim') then n('<leader>m', 'Toggle grapple mark', cmd([[lua require("grapple").toggle()]])) end
+if has_plugin('grapple.nvim') then n('<leader>bg', 'Toggle grapple mark', cmd([[GrappleToggle]])) end
 if has_plugin('portal.nvim') then
-  n('<M-o>', 'Portal jump backward', cmd([[lua require('portal').jump_backward()]]))
-  n('<M-i>', 'Portal jump forward', cmd([[lua require('portal').jump_forward()]]))
+  n('<M-o>', 'Portal jump backward', cmd([[lua Ty.Func.navigate.portal_backward()]]))
+  n('<M-i>', 'Portal jump forward', cmd([[lua Ty.Func.navigate.portal_forward()]]))
+end
+if has_plugin('harpoon') then
+  n('<leader>bm', 'Mark buffer with harpoon', cmd([[lua require('harpoon.mark').add_file()]]))
+  n('<leader>bn', 'Harpoon next mark', cmd([[lua require('harpoon.ui').nav_next()]]))
+  n('<leader>bp', 'Harpoon prev mark', cmd([[lua require('harpoon.ui').nav_prev()]]))
 end
 
 n('<leader>z', 'Copilot|...')
 if has_plugin('copilot.vim') then n('<leader>zp', 'Open github copilot panel', cmd([[Copilot panel]])) end
 --[[
-A = { "<cmd>lua require('towry.utils.plug-telescope').my_git_commits()<CR>", "commits (Telescope)" },
+A = {  },
 a = { "<cmd>LazyGitFilter<CR>", "commits" },
 C = { "<cmd>lua require('towry.utils.plug-telescope').my_git_bcommits()<CR>", "buffer commits (Telescope)" },
 c = { "<cmd>LazyGitFilterCurrentFile<CR>", "buffer commits" },

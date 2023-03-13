@@ -27,6 +27,7 @@ pack({
 -- visualize jumplist.
 pack({
   'cbochs/portal.nvim',
+  cmd = { "Portal" },
   dependencies = {
     'cbochs/grapple.nvim',
   },
@@ -35,6 +36,7 @@ pack({
 
 pack({
   'cbochs/grapple.nvim',
+  cmd = { 'GrappleToggle', 'GrapplePopup', 'GrappleCycle' },
   ImportOption = "grapple",
 })
 

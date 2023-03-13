@@ -33,6 +33,7 @@ M.setup_portal = function()
     query = {
       'grapple',
       'valid',
+      'harpoon',
     },
     portal = {
       title = {

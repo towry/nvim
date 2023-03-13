@@ -85,7 +85,7 @@ M.setup = function()
             local key = require('grapple').key()
             return ' [' .. key .. ']'
           end,
-          cond = function() return require('ty.core.utils').has_plugin('grapple.nvim') and require('grapple').exists end,
+          cond = function() return require('ty.core.utils').has_plugin('grapple.nvim') and require('grapple').exists() end,
         },
         'searchcount',
       },
