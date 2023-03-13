@@ -9,7 +9,7 @@ local M = {}
 M.theme = {
   colorscheme = 'everforest', -- colorscheme name.
   background = 'auto', -- auto, dark, light.
-  contrast = 'medium', -- soft, medium, hard.
+  contrast = 'soft', -- soft, medium, hard.
 }
 
 --- configuration for theme everforest
