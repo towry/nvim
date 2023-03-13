@@ -3,7 +3,6 @@ local _inited = false
 local autocmd = require('ty.core.autocmd')
 
 local function setup_later_modules()
-  pcall(require, 'settings_env') -- load env settings
   require('ty.core.pack'):startup() -- start loading modules.
 end
 
@@ -17,7 +16,8 @@ function M.setup()
 
   require('ty.core.globals')
   require('ty.core.options').setup()
-  if vim.fn.argc( -1) == 0 then
+  pcall(require, 'settings_env') -- load env settings
+  if vim.fn.argc(-1) == 0 then
     autocmd.on_very_lazy(setup_later_modules)
   else
     vim.schedule(setup_later_modules)

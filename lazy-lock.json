@@ -22,6 +22,7 @@
   "dressing.nvim": { "branch": "master", "commit": "5f44f829481640be0f96759c965ae22a3bcaf7ce" },
   "everforest": { "branch": "master", "commit": "164a44fe8655ff66073189bf6b0a718bfaffa0c0" },
   "fidget.nvim": { "branch": "main", "commit": "688b4fec4517650e29c3e63cfbb6e498b3112ba1" },
+  "flatten.nvim": { "branch": "main", "commit": "17bbf3e51d67f77f6adacbfc965734a3dccb02a3" },
   "friendly-snippets": { "branch": "main", "commit": "009887b76f15d16f69ae1341f86a7862f61cf2a1" },
   "fugitive-gitlab.vim": { "branch": "master", "commit": "b73a8e97de95d26280082abb7f51465a3d3b239e" },
   "fzf": { "branch": "master", "commit": "63cf9d04deab832a3a472b6e4de2db837932d957" },

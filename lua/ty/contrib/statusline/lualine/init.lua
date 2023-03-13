@@ -111,9 +111,17 @@ M.setup = function()
         {
           'copilot',
         },
-        'encoding',
+        {
+          'encoding',
+          cond = function()
+            return vim.opt.fileencoding and vim.opt.fileencoding:get() ~= 'utf-8'
+          end
+        },
         {
           'fileformat',
+          cond = function()
+            return not vim.tbl_contains({ 'unix', 'mac' }, vim.bo.fileformat)
+          end,
         },
         { 'filetype', colored = true, icon_only = true },
       },

@@ -168,7 +168,7 @@ function M.setup()
     })
   end
   lspconfig.lua_ls.setup({
-    -- before_init = require('neodev.lsp').before_init,
+    before_init = require('neodev.lsp').before_init,
     capabilities = capabilities,
     handlers = handlers,
     on_attach = on_attach,

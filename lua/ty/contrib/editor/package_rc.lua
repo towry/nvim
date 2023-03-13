@@ -121,7 +121,7 @@ M.setup_statuscol = function()
     setopt = true,
     -- N: line number, S: sign column, F: fold column, s: Separator string. w: whitespace
     segments = {
-      { text = { "%s" },                  click = "v:lua.ScSa" },
+      { text = { "%s" }, click = "v:lua.ScSa" },
       {
         text = { builtin.lnumfunc, " " },
         condition = { true, builtin.not_empty },
@@ -146,7 +146,7 @@ M.option_rooter = {
 }
 
 M.option_buf_lastplace = {
-  lastplace_ignore_buftype = { 'quickfix', 'nofile', 'help' },
+  lastplace_ignore_buftype = { "quickfix", "nofile", "help", "alpha", "NvimTree" },
   lastplace_ignore_filetype = { 'spectre_panel', 'gitcommit', 'gitrebase', 'svn', 'hgcommit' },
   lastplace_open_folds = true,
 }
