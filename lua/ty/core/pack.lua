@@ -132,6 +132,8 @@ function pack.contrib(scope)
     end
     -- load config.
     if type(repo[Spec.ImportConfig]) == 'string' and repo.config == nil then
+      local import_config = repo[Spec.ImportConfig]
+      repo[Spec.ImportConfig] = nil
       repo.config = function(...)
         local args = ...
         utils.try(function()
@@ -140,24 +142,26 @@ function pack.contrib(scope)
             print('package rc not found for ' .. scope)
             return
           end
-          local setup_method = rc['setup_' .. repo[Spec.ImportConfig]]
+          local setup_method = rc['setup_' .. import_config]
           if type(setup_method) == 'function' then
             setup_method(unpack(args))
           else
-            error('invalid package ImportConfig for ' .. repo[Spec.ImportConfig])
+            error('invalid package ImportConfig for ' .. import_config)
           end
         end)
       end
     end
     -- load opts.
     if type(repo[Spec.ImportOption]) == 'string' and repo.opts == nil then
-      repo.opts = function()
-        return require('ty.contrib.' .. scope .. '.package_rc')['option_' .. repo[Spec.ImportOption]]
-      end
+      local import_opts = repo[Spec.ImportOption]
+      repo[Spec.ImportOption] = nil
+      repo.opts = function() return require('ty.contrib.' .. scope .. '.package_rc')['option_' .. import_opts] end
     end
     -- load init.
     if type(repo[Spec.ImportInit]) == 'string' and repo.init == nil then
-      repo.init = function() require('ty.contrib.' .. scope .. '.package_rc')['init_' .. repo[Spec.ImportInit]]() end
+      local import_init = repo[Spec.ImportInit]
+      repo[Spec.ImportInit] = nil
+      repo.init = function() require('ty.contrib.' .. scope .. '.package_rc')['init_' .. import_init]() end
     end
 
     -- add.
