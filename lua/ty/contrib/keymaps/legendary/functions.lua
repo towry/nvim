@@ -86,6 +86,23 @@ function M.default_functions()
     {
       function() require('ty.contrib.common.telescope_rc.pickers').project_files({ no_gitfiles = true }) end,
       description = "Telescope find project files (No Git)",
+    },
+    {
+      itemgroup = "Navigation UI",
+      funcs = {
+        {
+          function()
+            require("harpoon.ui").toggle_quick_menu()
+          end,
+          description = "harpoon marks menu',"
+        },
+        {
+          function()
+            require('grapple').popup_tags()
+          end,
+          description = "grapple popup tags",
+        }
+      }
     }
   }
 end
