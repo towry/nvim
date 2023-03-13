@@ -108,7 +108,9 @@ M.setup = function()
         },
       },
       lualine_x = {
-        'copilot',
+        {
+          'copilot',
+        },
         'encoding',
         {
           'fileformat',
