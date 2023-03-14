@@ -104,7 +104,7 @@ nxv(
 n('<C-p>', 'Open legendary', cmd([[lua require('ty.contrib.keymaps.legendary').open_legendary()]]))
 -- n('<leader>wv', 'Split buffer right', key('<C-W>v'))
 -- n('<leader>wV', 'Split buffer bottom', key('<C-W>s'))
-n('<leader>q', 'Open quick list', key('quicklist'))
+n('<leader>q', 'Open quick list', cmd('lua Ty.Func.editor.toggle_qf()'))
 n('<leader>x', 'Close buffer and window', cmd('bdelete'))
 n('<leader>F', 'Find folders', cmd('lua Ty.Func.explorer.find_folder()'))
 n('<leader>t', 'Tool|Toggle')
