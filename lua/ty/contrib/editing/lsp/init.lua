@@ -11,14 +11,15 @@ local auto_servers = { 'bashls', 'html', 'volar', 'prismals' }
 local function setup_fidget()
   require('fidget').setup({
     text = {
-      spinner = 'dots',
+      spinner = 'pipe',
+      done = "  "
     },
     align = {
       bottom = true, -- align fidgets along bottom edge of buffer
       right = true, -- align fidgets along right edge of buffer
     },
     window = {
-      relative = 'win',
+      relative = 'editor',
       zindex = 100,
       border = 'rounded',
       blend = 0,
