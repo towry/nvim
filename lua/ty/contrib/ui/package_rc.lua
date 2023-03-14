@@ -26,7 +26,7 @@ function M.setup_gruvbox()
   })
 end
 
-function M.setup_everforest()
+function M.init_everforest()
   -- @see https://github.com/sainnhe/everforest/blob/master/doc/everforest.txt
   local theme = require('ty.contrib.ui').theme_everforest
   local config = require('ty.core.config').ui
@@ -34,7 +34,7 @@ function M.setup_everforest()
   vim.g.everforest_background = theme.contrast
   vim.g.everforest_better_performance = config:get('theme_everforest.better_performance', 0)
   vim.g.everforest_enable_italic = config:get('theme_everforest.italic', 1)
-  vim.g.everforest_disable_italic_comment = true
+  vim.g.everforest_disable_italic_comment = false
   vim.g.everforest_transparent_background = false
   vim.g.everforest_dim_inactive_windows = false
   vim.g.everforest_sign_column_background = 'none' -- "none" | "grey"
@@ -45,6 +45,7 @@ end
 function M.init_notify()
   require('ty.core.autocmd').on_very_lazy(function() vim.notify = require('notify') end)
 end
+
 function M.setup_notify()
   require('notify').setup({
     timeout = '3000',

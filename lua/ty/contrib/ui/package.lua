@@ -14,7 +14,7 @@ pack({
   'sainnhe/everforest',
   lazy = false,
   priority = 1000,
-  ImportConfig = 'everforest',
+  ImportInit = 'everforest',
 })
 
 --- libs.

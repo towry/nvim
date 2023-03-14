@@ -33,7 +33,9 @@ local lazy_opts = {
   -- lockfile = self.path_helper.join(self.data_path, 'lazy-lock.json'),
   dev = {
     path = '~/workspace/git-repos',
+    fallback = true,
   },
+  concurrency = 3,
   install = { colorscheme = { config.ui.theme.colorscheme } },
   checker = { enabled = false },
   defaults = { lazy = true },
@@ -49,6 +51,20 @@ local lazy_opts = {
       lazy = ' ',
       plugin = ' ',
     },
+  },
+  custom_keys = {
+    -- open lazygit log
+    ["<localleader>l"] = function(plugin)
+      require("lazy.util").float_term({ "lazygit", "log" }, {
+        cwd = plugin.dir,
+      })
+    end,
+    -- open a terminal for the plugin dir
+    ["<localleader>t"] = function(plugin)
+      require("lazy.util").float_term(nil, {
+        cwd = plugin.dir,
+      })
+    end,
   },
   performance = {
     cache = {
