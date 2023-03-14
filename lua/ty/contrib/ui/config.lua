@@ -15,7 +15,7 @@ M.theme = {
 --- configuration for theme everforest
 M.theme_everforest = {
   --- @type number
-  better_performance = 1, -- 1, 2, 3.
+  better_performance = 0, -- 0, 1.
   italic = true,
 }
 

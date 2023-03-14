@@ -23,6 +23,7 @@ function M.setup()
     { 'dark',       'light' },
     { 'production', 'development', 'test' },
     { "soft",       "medium",      "hard" },
+    { "low",        "high" },
   }
 end
 
