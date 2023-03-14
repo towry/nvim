@@ -48,7 +48,7 @@ ni('<F8>', 'Open Project files', cmd('lua Ty.Func.explorer.project_files()'))
 ni('<F9>', 'Grep search', cmd([[lua require('telescope').extensions.live_grep_args.live_grep_args()]]))
 ni('<F10>', 'Resume telescope pickers', cmd([[lua require('telescope.builtin').resume()]]))
 ni('<F19>', 'Toggle find file', cmd('lua Ty.Func.explorer.toggle_nvim_tree_find_file()'))
-ni('<F20>', 'Open old files', cmd('Telescope oldfiles cwd_only=true'))
+ni('<F20>', 'Open old files', cmd('lua Ty.Func.explorer.oldfiles({ cwd_only = true })'))
 
 -- yanks.
 n('d', 'Delete char and yank to register x', key('"xd'))

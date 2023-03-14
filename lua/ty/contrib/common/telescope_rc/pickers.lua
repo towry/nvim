@@ -47,6 +47,10 @@ M.project_files = function(opts)
     return entry
   end
 
+  if opts and opts.oldfiles then
+    return require('telescope.builtin').oldfiles(opts)
+  end
+
   if opts and opts.no_gitfiles then
     return require('telescope.builtin').find_files(opts)
   end

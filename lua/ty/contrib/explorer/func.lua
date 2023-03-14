@@ -14,6 +14,12 @@ function M.search_and_replace_cword_in_buffer()
   })
 end
 
+function M.oldfiles(opts)
+  opts = opts or {}
+  opts['oldfiles'] = true
+  require('ty.contrib.common.telescope_rc.pickers').project_files(opts)
+end
+
 function M.project_files(...) require('ty.contrib.common.telescope_rc.pickers').project_files(...) end
 
 function M.multi_rg_find_word(...) require('ty.contrib.common.telescope_rc.multi-rg-picker')(...) end

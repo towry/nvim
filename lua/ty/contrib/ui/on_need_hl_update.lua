@@ -8,17 +8,16 @@ return function()
     bold = true,
   })
 
-
-  utils.extend_hl('DiagnosticHint', {
-    undercurl = false,
-  })
-  utils.extend_hl('DiagnosticInfo', {
-    undercurl = false,
-  })
-  utils.extend_hl('DiagnosticWarn', {
-    undercurl = false,
-  })
-  utils.extend_hl('DiagnosticError', {
-    undercurl = false,
-  })
+  -- utils.extend_hl('DiagnosticHint', {
+  --   undercurl = false,
+  -- })
+  -- utils.extend_hl('DiagnosticInfo', {
+  --   undercurl = false,
+  -- })
+  -- utils.extend_hl('DiagnosticWarn', {
+  --   undercurl = false,
+  -- })
+  -- utils.extend_hl('DiagnosticError', {
+  --   undercurl = false,
+  -- })
 end
