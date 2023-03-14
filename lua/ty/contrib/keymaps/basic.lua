@@ -4,7 +4,7 @@ local autocmd = require('ty.core.autocmd')
 local has_plugin = require('ty.core.utils').has_plugin
 local keymap = require('ty.core.keymap')
 local n, i, v, x, ni, nxv, cmd, key =
-    keymap.nmap, keymap.imap, keymap.vmap, keymap.xmap, keymap.nimap, keymap.nxv, keymap.cmd, keymap.key
+keymap.nmap, keymap.imap, keymap.vmap, keymap.xmap, keymap.nimap, keymap.nxv, keymap.cmd, keymap.key
 
 i('<C-e>', 'Insert mode: move to end of line', key('<End>'))
 n('<C-z>', 'N: Undo, no more background key', key('<ESC> u'))
@@ -105,7 +105,7 @@ n('<C-p>', 'Open legendary', cmd([[lua require('ty.contrib.keymaps.legendary').o
 -- n('<leader>wv', 'Split buffer right', key('<C-W>v'))
 -- n('<leader>wV', 'Split buffer bottom', key('<C-W>s'))
 n('<leader>q', 'Open quick list', key('quicklist'))
-n('<leader>x', 'Close buffer and window', cmd('Sayonara'))
+n('<leader>x', 'Close buffer and window', cmd('bdelete'))
 n('<leader>F', 'Find folders', cmd('lua Ty.Func.explorer.find_folder()'))
 n('<leader>t', 'Tool|Toggle')
 n('<leader>t-', 'Switch variables, false <==> true', cmd([[Switch]]))

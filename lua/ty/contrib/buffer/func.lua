@@ -14,7 +14,10 @@ M.switch_to_buffer_by_index = function(i)
   return vim.cmd('LualineBuffersJump! ' .. i)
 end
 
-M.close_buffer = function() vim.cmd('Sayonara!') end
+-- close buffer and keep window layout
+M.close_buffer = function()
+  require('mini.bufremove').delete(0)
+end
 
 M.move_cursor_to_window = function(dir_str)
   local ok, splits = pcall(require, 'smart-splits')

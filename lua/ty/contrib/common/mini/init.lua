@@ -1,6 +1,9 @@
 local M = {}
 
 M.setup = function()
+  require('mini.bufremove').setup({
+    set_vim_settings = false,
+  })
   require('mini.align').setup()
   -- trail ws hl and remove ops.
   require('mini.trailspace').setup()

@@ -6,9 +6,6 @@ pack({
   ImportOption = 'window_picker',
 })
 
-pack({ 'mhinz/vim-sayonara', cmd = 'Sayonara' })
-pack({ 'moll/vim-bbye', cmd = { 'Bdelete', 'Bwipeout' } })
-
 pack({
   'kwkarlwang/bufresize.nvim',
   config = true,
