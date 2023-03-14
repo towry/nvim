@@ -27,7 +27,10 @@ M.init = function()
       clear = true,
     }),
     callback = function()
-      if vim.bo.buftype == '' or vim.bo.buftype == "nofile" then
+      if vim.bo.buftype == '' then
+        -- normal file.
+        vim.b.miniindentscope_disable = false
+      else
         vim.b.miniindentscope_disable = true
       end
     end,

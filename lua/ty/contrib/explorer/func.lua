@@ -26,7 +26,7 @@ function M.multi_rg_find_word(...) require('ty.contrib.common.telescope_rc.multi
 
 function M.find_folder() require('ty.contrib.common.telescope_rc.find-folders-picker')() end
 
-function M.toggle_outline() vim.cmd([[AerialToggle]]) end
+function M.toggle_outline() vim.cmd([[SymbolsOutline]]) end
 
 M.toggle_nvim_tree = require('ty.contrib.explorer.nvim-tree').toggle_nvim_tree
 M.toggle_nvim_tree_find_file = require('ty.contrib.explorer.nvim-tree').toggle_nvim_tree_find_file

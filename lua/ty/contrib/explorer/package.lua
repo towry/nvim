@@ -12,8 +12,8 @@ pack({
 
 --- outline
 pack({
-  'stevearc/aerial.nvim',
-  cmd = 'AerialToggle',
+  'simrat39/symbols-outline.nvim',
+  cmd = { 'SymbolsOutline', 'SymbolsOutlineOpen', 'SymbolsOutlineClose' },
   ImportOption = 'outline',
 })
 

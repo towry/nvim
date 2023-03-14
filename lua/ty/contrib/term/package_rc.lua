@@ -28,7 +28,7 @@ M.setup_toggleterm = function()
         link = 'FloatBorder',
       },
     },
-    shade_filetypes = {},
+    shade_filetypes = { "none" },
     shade_terminals = true,
     shading_factor = 1, -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
     start_in_insert = true,
@@ -44,11 +44,14 @@ M.setup_toggleterm = function()
       -- the 'curved' border is a custom border type
       -- not natively supported but implemented in this plugin.
       border = 'curved', -- single/double/shadow/curved
-      winblend = 4,
+      winblend = 0,
     },
     winbar = {
       enabled = false,
     },
+    on_open = function(_term)
+      vim.cmd('startinsert!')
+    end,
   })
 end
 
@@ -56,7 +59,8 @@ M.init_toggleterm = function()
   Ty.set_terminal_keymaps = function()
     local opts = { noremap = true }
     vim.api.nvim_buf_set_keymap(0, 't', '<C-\\>', [[<C-\><C-n>:ToggleTerm<CR>]], opts)
-    vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], opts)
+    vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>:ToggleTerm<CR>]], opts)
+    -- vim.api.nvim_buf_set_keymap(0, 't', '<C-e>', [[<ESC>:<C-n>]], opts)
     vim.api.nvim_buf_set_keymap(0, 't', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
     vim.api.nvim_buf_set_keymap(0, 't', '<C-j>', [[<C-\><C-n><C-W>j]], opts)
     vim.api.nvim_buf_set_keymap(0, 't', '<C-k>', [[<C-\><C-n><C-W>k]], opts)
@@ -65,10 +69,16 @@ M.init_toggleterm = function()
   vim.cmd('autocmd! TermOpen term://*toggleterm#* lua Ty.set_terminal_keymaps()')
   vim.keymap.set('n', '<C-\\>', function()
     if vim.tbl_contains({
-      'NvimTree',
-      'lazy',
-    }, vim.bo.filetype) then return end
-    vim.cmd([[ToggleTerm direction=float]])
+          'NvimTree',
+          'lazy',
+        }, vim.bo.filetype) then
+      return
+    end
+    if vim.v.count <= 1 then
+      vim.cmd([[ToggleTerm direction=float]])
+    else
+      vim.cmd(vim.v.count .. [[ToggleTerm direction=horizontal]])
+    end
   end, {
     desc = 'toggle term',
     silent = true,

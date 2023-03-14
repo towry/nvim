@@ -70,6 +70,8 @@ M.setup_session_manager = function()
     autosave_ignore_not_normal = true, -- Plugin will not save a session when no buffers are opened, or all of them aren't writable or listed.
     autosave_ignore_filetypes = { -- All buffers of these file types will be closed before the session is saved.
       'gitcommit',
+      'toggleterm',
+      'term',
     },
     autosave_only_in_session = true, -- Always autosaves session. If true, only autosaves after a session is active.
     max_path_length = 80, -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
@@ -89,7 +91,7 @@ M.setup_indent_line = function()
     filetype_exclude = {
       'help',
       'startify',
-      'aerial',
+      'Outline',
       'alpha',
       'dashboard',
       'lazy',
@@ -121,7 +123,7 @@ M.setup_statuscol = function()
     setopt = true,
     -- N: line number, S: sign column, F: fold column, s: Separator string. w: whitespace
     segments = {
-      { text = { "%s" }, click = "v:lua.ScSa" },
+      { text = { "%s" },                  click = "v:lua.ScSa" },
       {
         text = { builtin.lnumfunc, " " },
         condition = { true, builtin.not_empty },

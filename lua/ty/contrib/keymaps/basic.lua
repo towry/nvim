@@ -110,7 +110,7 @@ n('<leader>F', 'Find folders', cmd('lua Ty.Func.explorer.find_folder()'))
 n('<leader>t', 'Tool|Toggle')
 n('<leader>t-', 'Switch variables, false <==> true', cmd([[Switch]]))
 n("<leader>/", "Outline|Git")
-n('<leader>/oo', '[/] Toggle outline', cmd([[lua Ty.Func.explorer.toggle_outline()]]))
+n('<leader>/o', '[/] Toggle outline', cmd([[lua Ty.Func.explorer.toggle_outline()]]))
 -- gits
 n('<leader>/g', 'Git operations')
 n('<leader>/ga', 'Git add current', cmd([[!git add %:p]]))
