@@ -91,24 +91,8 @@ M.setup = function()
       },
       -- filename is displayed by the incline.
       lualine_c = {
-        {
-          'filename',
-          symbols = {
-            modified = '🐷',
-            newfile = '🐼',
-          },
-          file_status = true,
-          newfile_status = true,
-          path = 1,
-          color = function()
-            return {
-              fg = colors.lualine_filename_fg,
-            }
-          end,
-        },
       },
       lualine_x = {
-        "g:GetTip()",
         {
           'copilot',
         },
