@@ -32,13 +32,13 @@ n('<Tab>', 'List Buffers', cmd('lua Ty.Func.explorer.open_buffers()'))
 n('<S-Tab>', 'Go to previous edited Buffer', key(':e #<cr>'))
 n('<S-q>', 'Quit current buffer', cmd('lua Ty.Func.buffer.close_buffer()'))
 -- Move between buffers
-for inx = 1, 9 do
-  n(
-    '<Space>' .. inx,
-    'Move to buffer by index ' .. inx,
-    cmd('lua Ty.Func.buffer.switch_to_buffer_by_index(' .. inx .. ')')
-  )
-end
+-- for inx = 1, 9 do
+--   n(
+--     '<Space>' .. inx,
+--     'Move to buffer by index ' .. inx,
+--     cmd('lua Ty.Func.buffer.switch_to_buffer_by_index(' .. inx .. ')')
+--   )
+-- end
 
 -- fn keys
 -- move fn key mappings in 'must_have' to here and use above style.

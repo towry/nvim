@@ -28,25 +28,25 @@ M.setup = function()
       section_separators = { left = '', right = '' },
       disabled_filetypes = { winbar = { 'lazy', 'alpha' }, statusline = { 'dashboard', 'lazy', 'alpha' } },
     },
-    tabline = {
-      lualine_a = {
-        {
-          'buffers',
-          mode = 1,
-          show_modified_status = true,
-          symbols = {
-            modified = '',
-            alternate_file = ' ',
-            directory = ' ',
-          },
-        },
-      },
-      lualine_b = { '' },
-      lualine_c = { '' },
-      lualine_x = {},
-      lualine_y = {},
-      lualine_z = { '' },
-    },
+    -- tabline = {
+    --   lualine_a = {
+    --     {
+    --       'buffers',
+    --       mode = 1,
+    --       show_modified_status = true,
+    --       symbols = {
+    --         modified = '',
+    --         alternate_file = ' ',
+    --         directory = ' ',
+    --       },
+    --     },
+    --   },
+    --   lualine_b = { '' },
+    --   lualine_c = { '' },
+    --   lualine_x = {},
+    --   lualine_y = {},
+    --   lualine_z = { '' },
+    -- },
     sections = {
       lualine_a = {
         { 'mode' },
