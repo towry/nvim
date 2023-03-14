@@ -8,6 +8,8 @@ vim.api.nvim_create_autocmd('BufWinLeave', {
   buffer = 0,
   callback = function(ctx)
     local bufnr = ctx.buf
-    vim.api.nvim_buf_delete(bufnr, { force = true })
+    vim.schedule(function()
+      vim.api.nvim_buf_delete(bufnr, { force = true })
+    end)
   end,
 })
