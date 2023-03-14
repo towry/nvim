@@ -9,3 +9,16 @@ require('ty.core.utils').try(
     })
   end
 )
+
+do
+  -- NOTE: currently modified for theme everforest.
+  -- fix lspsaga floating window hl.
+  -- @see https://github.com/sainnhe/everforest/blob/master/colors/everforest.vim
+  local ns = vim.api.nvim_create_namespace('markdown')
+  vim.api.nvim_win_set_hl_ns(0, ns)
+
+  vim.api.nvim_set_hl(ns, 'ErrorText', { link = 'Normal' })
+  vim.api.nvim_set_hl(ns, 'WarningText', { link = 'Normal' })
+  vim.api.nvim_set_hl(ns, 'InfoText', { link = 'Normal' })
+  vim.api.nvim_set_hl(ns, 'HintText', { link = 'Normal' })
+end

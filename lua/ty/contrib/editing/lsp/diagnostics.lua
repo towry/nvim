@@ -6,7 +6,7 @@ function M.setup()
   local config = require('ty.core.config')
   local uiconfig = config.ui
 
-  local signs = config.merge('ui.diagnostic.signs', { Error = '', Warn = '', Hint = '', Info = '' })
+  local signs = config.merge('ui.diagnostic.signs', { Error = '⭘', Warn = '', Hint = '', Info = '' })
 
   vim.diagnostic.config({
     severity_sort = true,
@@ -14,7 +14,7 @@ function M.setup()
     underline = uiconfig.diagnostic.underline == false and false or true,
     update_in_insert = false,
     virtual_text = config.merge('ui.diagnostic.virtual_text', {
-      prefix = ' :',
+      prefix = ' :',
     }),
   })
 
