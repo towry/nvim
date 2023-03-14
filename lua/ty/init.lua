@@ -17,12 +17,13 @@ function M.setup()
   require('ty.core.globals')
   require('ty.core.options').setup()
   pcall(require, 'settings_env') -- load env settings
-  if vim.fn.argc(-1) == 0 then
+  if vim.fn.argc( -1) == 0 then
     autocmd.on_very_lazy(setup_later_modules)
+    require('ty.core.pack'):setup()
   else
-    vim.schedule(setup_later_modules)
+    require('ty.core.pack'):setup()
+    setup_later_modules()
   end
-  require('ty.core.pack'):setup()
 end
 
 return M
