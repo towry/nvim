@@ -36,7 +36,7 @@ M.setup = function()
           show_modified_status = true,
           symbols = {
             modified = '',
-            alternate_file = ' ',
+            alternate_file = ' ',
             directory = ' ',
           },
         },
