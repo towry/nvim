@@ -6,7 +6,7 @@ function M.setup()
   local config = require('ty.core.config')
   local uiconfig = config.ui
 
-  local signs = config.merge('ui.diagnostic.signs', { Error = '🀅', Warn = '🀅', Hint = '🀅', Info = '🀅' })
+  local signs = config.merge('ui.diagnostic.signs', { Error = '', Warn = '', Hint = '', Info = '' })
 
   vim.diagnostic.config({
     severity_sort = true,

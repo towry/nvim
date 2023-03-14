@@ -108,6 +108,7 @@ M.setup = function()
         },
       },
       lualine_x = {
+        "g:GetTip()",
         {
           'copilot',
         },
