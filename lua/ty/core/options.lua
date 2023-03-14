@@ -83,7 +83,7 @@ function M.setup_interface()
   o.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
   o.shortmess:append({ W = true, I = true, c = true })
   if vim.fn.has('nvim-0.9.0') == 1 then
-    o.splitkeep = 'screen'
+    o.splitkeep = 'cursor'
     o.shortmess:append({ C = true })
   end
   o.formatoptions:remove('c')

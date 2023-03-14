@@ -218,7 +218,25 @@ function M.buffers()
         table.remove(cached_pickers, 1)
       end
 
+      local open_selected = function()
+        local entry = actionstate.get_selected_entry()
+        actions.close(prompt_bufnr)
+        if not entry and not entry.bufnr then
+          vim.notify("no selected entry found")
+          return
+        end
+        local bufnr = entry.bufnr
+        local buf_win_id = unpack(vim.fn.win_findbuf(bufnr))
+        if buf_win_id ~= nil then
+          vim.api.nvim_set_current_win(buf_win_id)
+          return
+        end
+        vim.api.nvim_set_current_buf(bufnr)
+      end
+
       map('i', '<C-h>', close_buf)
+      map('i', '<CR>', open_selected)
+
       return true
     end,
   })
