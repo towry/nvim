@@ -1,3 +1,4 @@
+local Buffer = require('ty.core.buffer')
 local M = {}
 
 local tig_instance = nil
@@ -30,6 +31,19 @@ end
 M.toggle_tig = function()
   local tig = get_tig_term()
   tig:toggle()
+end
+
+M.terms_count = function()
+  local buffers = Buffer.list()
+  local pattern = 'term://.*'
+  local count = 0
+  for _, bName in pairs(buffers) do
+    if string.match(bName, pattern) ~= nil then
+      count = count + 1
+    end
+  end
+
+  return count
 end
 
 return M

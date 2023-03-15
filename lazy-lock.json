@@ -103,6 +103,7 @@
   "symbols-outline.nvim": { "branch": "master", "commit": "512791925d57a61c545bc303356e8a8f7869763c" },
   "telescope-fzf-native.nvim": { "branch": "main", "commit": "580b6c48651cabb63455e97d7e131ed557b8c7e2" },
   "telescope-live-grep-args.nvim": { "branch": "master", "commit": "7de3baef1ec4fb77f7a8195fe87bebd513244b6a" },
+  "telescope-termfinder.nvim": { "branch": "master", "commit": "d639bfae1ff5e644700f20d208b2224648b573cf" },
   "telescope.nvim": { "branch": "master", "commit": "a3f17d3baf70df58b9d3544ea30abe52a7a832c2" },
   "template-string.nvim": { "branch": "main", "commit": "b97ee201fa2d5edced1c6dbaf432d00fec0468f1" },
   "todo-comments.nvim": { "branch": "main", "commit": "6ccb0bebeb22dbe31940776a750db54b844ae653" },
@@ -113,7 +114,6 @@
   "vim-git": { "branch": "master", "commit": "5143bea9ed17bc32163dbe3ca706344d79507b9d" },
   "vim-repeat": { "branch": "master", "commit": "24afe922e6a05891756ecf331f39a1f6743d3d5a" },
   "vim-table-mode": { "branch": "master", "commit": "9555a3e6e5bcf285ec181b7fc983eea90500feb4" },
-  "vim-tips": { "branch": "master", "commit": "6cfa50cb45ceb8a2f4f9087ec12c3950454db90e" },
   "which-key.nvim": { "branch": "main", "commit": "fb027738340502b556c3f43051f113bcaa7e8e63" },
   "yanky.nvim": { "branch": "main", "commit": "c4c794afd762a00ca543972e5b9e34ce9aa14a87" }
 }

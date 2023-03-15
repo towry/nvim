@@ -44,6 +44,9 @@ pack({
       'nvim-telescope/telescope-fzf-native.nvim',
       build = 'make',
     },
+    {
+      'tknightz/telescope-termfinder.nvim',
+    },
   },
   ImportConfig = 'telescope',
 })

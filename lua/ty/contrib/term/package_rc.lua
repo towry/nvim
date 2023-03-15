@@ -11,7 +11,7 @@ M.setup_toggleterm = function()
       end
     end,
     -- f24 = shift + f12
-    open_mapping = [[<F24>]],
+    open_mapping = [[<C-\>]],
     hide_numbers = true, -- hide the number column in toggleterm buffers
     highlights = {
       -- highlights which map to a highlight group name and a table of it's values
@@ -34,6 +34,8 @@ M.setup_toggleterm = function()
     start_in_insert = true,
     insert_mappings = true, -- whether or not the open mapping applies in insert mode
     persist_size = false,
+    persist_mode = true,
+    auto_scroll = false,
     direction = 'horizontal', -- | 'horizontal' | 'window' | 'float',
     close_on_exit = true, -- close the terminal window when the process exits
     shell = vim.o.shell, -- change the default shell
@@ -60,7 +62,7 @@ M.init_toggleterm = function()
     local opts = { noremap = true }
     vim.api.nvim_buf_set_keymap(0, 't', '<C-\\>', [[<C-\><C-n>:ToggleTerm<CR>]], opts)
     vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>:ToggleTerm<CR>]], opts)
-    -- vim.api.nvim_buf_set_keymap(0, 't', '<C-e>', [[<ESC>:<C-n>]], opts)
+    vim.api.nvim_buf_set_keymap(0, 't', '<C-e>', [[<C-\><C-n>:]], opts)
     vim.api.nvim_buf_set_keymap(0, 't', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
     vim.api.nvim_buf_set_keymap(0, 't', '<C-j>', [[<C-\><C-n><C-W>j]], opts)
     vim.api.nvim_buf_set_keymap(0, 't', '<C-k>', [[<C-\><C-n><C-W>k]], opts)

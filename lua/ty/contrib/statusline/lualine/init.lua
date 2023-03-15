@@ -1,6 +1,7 @@
 local M = {}
 
 M.setup = function()
+  local terms = require('ty.contrib.statusline.lualine.terms_component')
   local colors = require('ty.contrib.ui').colors()
   local spectre_extension = {
     sections = {
@@ -64,8 +65,6 @@ M.setup = function()
             return icon .. #vim.fn.getbufinfo({ buflisted = 1 })
           end,
 
-          separator = { right = '' },
-
           color = function()
             if vim.b['has_modified_file'] then
               return {
@@ -75,6 +74,10 @@ M.setup = function()
             end
           end,
         },
+        {
+          terms,
+          separator = { right = '' },
+        }
       },
       lualine_b = {
         'branch',
