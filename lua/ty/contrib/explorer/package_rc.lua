@@ -56,7 +56,8 @@ M.option_outline = {
   show_guides = true,
   auto_preview = false,
   autofold_depth = 3,
-  auto_close = false,
+  width = 20,
+  auto_close = true, -- auto close after selection
   keymaps = {
     close = { "<Esc>", "q", "Q", "<leader>x" },
   },
