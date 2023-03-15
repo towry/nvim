@@ -9,7 +9,7 @@ pack({
 
 pack({
   'akinsho/nvim-toggleterm.lua',
-  cmd = { 'ToggleTerm' },
+  cmd = { 'ToggleTerm', 'TermExec', },
   branch = 'main',
   ImportInit = 'toggleterm',
   ImportConfig = 'toggleterm',
