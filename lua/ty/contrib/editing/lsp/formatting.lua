@@ -21,7 +21,7 @@ function M.format(bufnr, opts)
 
   if format_disabled and opts.auto then return end
 
-  local _, name = pcall(vim.api.nvim_buf_get_var, bufnr or 0, 'formatter_name')
+  local name = vim.b[bufnr or vim.api.nvim_get_current_buf()].formatter_name or nil
   local fmt_opts = {
     bufnr = bufnr,
     async = opts.async or false,
@@ -30,7 +30,6 @@ function M.format(bufnr, opts)
     fmt_opts.name = name
   end
 
-  vim.notify("format ...")
   vim.lsp.buf.format(fmt_opts)
 end
 
@@ -50,7 +49,7 @@ function M.setup_autoformat(client, buf)
 
   -- format on save
   if enable then
-    vim.api.nvim_buf_set_var(buf or 0, 'formatter_name', client.name or nil)
+    vim.b[buf].formatter_name = client.name or nil
     vim.api.nvim_create_autocmd(event_name, {
       pattern = "*",
       group = vim.api.nvim_create_augroup("AutoFormat", { clear = false }),

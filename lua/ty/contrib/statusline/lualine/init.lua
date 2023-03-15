@@ -106,6 +106,14 @@ M.setup = function()
           end
         },
         {
+          function()
+            return string.format(' %s', vim.b[0].formatter_name)
+          end,
+          cond = function()
+            return vim.b[0].formatter_name ~= nil
+          end
+        },
+        {
           'fileformat',
           cond = function()
             return not vim.tbl_contains({ 'unix', 'mac' }, vim.bo.fileformat)
