@@ -66,7 +66,7 @@ M.init_toggleterm = function()
     vim.api.nvim_buf_set_keymap(0, 't', '<C-k>', [[<C-\><C-n><C-W>k]], opts)
     vim.api.nvim_buf_set_keymap(0, 't', '<C-l>', [[<C-\><C-n><C-W>l]], opts)
   end
-  vim.cmd('autocmd! TermOpen term://*toggleterm#* lua Ty.set_terminal_keymaps()')
+  vim.cmd('autocmd! TermOpen term://* lua Ty.set_terminal_keymaps()')
   vim.keymap.set('n', '<C-\\>', function()
     if vim.tbl_contains({
           'NvimTree',

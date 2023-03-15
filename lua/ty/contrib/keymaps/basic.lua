@@ -4,7 +4,7 @@ local autocmd = require('ty.core.autocmd')
 local has_plugin = require('ty.core.utils').has_plugin
 local keymap = require('ty.core.keymap')
 local n, i, v, x, ni, nxv, cmd, key =
-keymap.nmap, keymap.imap, keymap.vmap, keymap.xmap, keymap.nimap, keymap.nxv, keymap.cmd, keymap.key
+    keymap.nmap, keymap.imap, keymap.vmap, keymap.xmap, keymap.nimap, keymap.nxv, keymap.cmd, keymap.key
 
 i('<C-e>', 'Insert mode: move to end of line', key('<End>'))
 n('<C-z>', 'N: Undo, no more background key', key('<ESC> u'))
@@ -119,7 +119,7 @@ n('<leader>/gb', 'Git open blame', cmd([[lua Ty.Func.git.open_blame()]]))
 n('<leader>/gB', 'Git branchs', cmd([[Telescope git_branches]]))
 n('<leader>/gD', 'Git file history', cmd([[lua Ty.Func.git.toggle_file_history()]]))
 n('<leader>/gd', 'Git changes', cmd([[lua Ty.Func.git.toggle_git_changes()]]))
-n('<leader>/gv', 'Git commits', cmd([[GV]]))
+n('<leader>/gv', 'Git commits', cmd([[lua Ty.Func.term.toggle_tig()]]))
 n('<leader>/gg', 'Lazygit', cmd([[LazyGit]]))
 n('<leader>/gc', 'Open git conflict menus',
   cmd("lua require('ty.contrib.keymaps.hydra.git').open_git_conflict_hydra()", { "+noremap" }))
