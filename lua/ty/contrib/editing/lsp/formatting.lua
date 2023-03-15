@@ -21,7 +21,7 @@ function M.format(bufnr, opts)
 
   if format_disabled and opts.auto then return end
 
-  local name = vim.api.nvim_buf_get_var(bufnr or 0, 'formatter_name')
+  local _, name = pcall(vim.api.nvim_buf_get_var, bufnr or 0, 'formatter_name')
 
   vim.lsp.buf.format({
     bufnr = bufnr,
