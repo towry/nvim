@@ -11,7 +11,7 @@ function M.init_manually()
   vim.api.nvim_create_autocmd('FileType', {
     group = 'alpha_tabline',
     pattern = 'alpha',
-    command = 'set showtabline=0 laststatus=0 noruler',
+    command = 'set showtabline=0 noruler',
   })
 
   vim.api.nvim_create_autocmd('FileType', {
@@ -21,7 +21,7 @@ function M.init_manually()
       vim.api.nvim_create_autocmd('BufUnload', {
         group = 'alpha_tabline',
         buffer = 0,
-        command = 'set showtabline=' .. vim.opt.showtabline:get() .. ' ruler laststatus=3',
+        command = 'set showtabline=' .. vim.opt.showtabline:get() .. ' ruler',
       })
     end,
   })
