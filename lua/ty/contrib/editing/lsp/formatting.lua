@@ -22,12 +22,16 @@ function M.format(bufnr, opts)
   if format_disabled and opts.auto then return end
 
   local _, name = pcall(vim.api.nvim_buf_get_var, bufnr or 0, 'formatter_name')
-
-  vim.lsp.buf.format({
+  local fmt_opts = {
     bufnr = bufnr,
     async = opts.async or false,
-    name = name,
-  })
+  }
+  if name then
+    fmt_opts.name = name
+  end
+
+  vim.notify("format ...")
+  vim.lsp.buf.format(fmt_opts)
 end
 
 function M.setup_autoformat(client, buf)
