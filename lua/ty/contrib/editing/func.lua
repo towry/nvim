@@ -55,7 +55,7 @@ function M.peek_type_definition()
   end
 end
 
-function M.format_code(bufnr) require('ty.contrib.editing.lsp.formatting').format(bufnr) end
+function M.format_code(bufnr, opts) require('ty.contrib.editing.lsp.formatting').format(bufnr, opts) end
 
 function M.open_code_action()
   local has_lspsaga = require('ty.core.utils').has_plugin('lspsaga.nvim')
