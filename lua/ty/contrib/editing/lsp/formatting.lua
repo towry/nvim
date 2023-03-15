@@ -52,8 +52,8 @@ function M.setup_autoformat(client, buf)
   if enable then
     vim.b[buf].formatter_name = client.name or nil
     vim.api.nvim_create_autocmd(event_name, {
-      pattern = "*",
-      group = vim.api.nvim_create_augroup("AutoFormat", { clear = false }),
+      buffer = buf,
+      group = vim.api.nvim_create_augroup("AutoFormat_" .. buf, { clear = true }),
       callback = function(ctx)
         M.format(ctx.buf, {
           async = async,
