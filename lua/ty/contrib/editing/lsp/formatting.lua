@@ -30,6 +30,7 @@ function M.format(bufnr, opts)
     fmt_opts.name = name
   end
 
+  vim.notify("format with " .. (name or "default"))
   vim.lsp.buf.format(fmt_opts)
 end
 
