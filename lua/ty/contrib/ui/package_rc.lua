@@ -1,3 +1,4 @@
+---@diagnostic disable: duplicate-set-field
 local M = {}
 
 -- setup dressing
@@ -45,7 +46,9 @@ function M.init_everforest()
 end
 
 function M.init_notify()
-  require('ty.core.autocmd').on_very_lazy(function() vim.notify = require('notify') end)
+  vim.notify = function(...)
+    require('notify')(...)
+  end
 end
 
 function M.setup_notify()

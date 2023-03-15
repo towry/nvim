@@ -87,7 +87,6 @@ function M.setup()
 end
 
 function M.init()
-  -- require('ty.core.autocmd').
 end
 
 return M

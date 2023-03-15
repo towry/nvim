@@ -13,6 +13,7 @@ pack({
 })
 
 pack({
+  enabled = false,
   'michaelb/vim-tips',
   init = function() vim.g.vim_tips_display_at_startup = 0 end,
 })
