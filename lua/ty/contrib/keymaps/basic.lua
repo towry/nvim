@@ -141,6 +141,7 @@ if has_plugin('portal.nvim') then
   n('<M-i>', 'Portal jump forward', cmd([[lua Ty.Func.navigate.portal_forward()]]))
 end
 if has_plugin('harpoon') then
+  n('<leader>bb', 'Open harpoon ui', cmd([[lua require('harpoon.ui').toggle_quick_menu()]]))
   n('<leader>bm', 'Mark buffer with harpoon', cmd([[lua require('harpoon.mark').add_file()]]))
   n('<leader>bn', 'Harpoon next mark', cmd([[lua require('harpoon.ui').nav_next()]]))
   n('<leader>bp', 'Harpoon prev mark', cmd([[lua require('harpoon.ui').nav_prev()]]))
