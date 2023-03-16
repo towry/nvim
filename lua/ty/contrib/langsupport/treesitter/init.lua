@@ -1,7 +1,9 @@
+local Buffer = require('ty.core.buffer')
 local M = {}
 
 local disabled = function(lang, bufnr)
-  return vim.api.nvim_buf_line_count(bufnr) > 20000
+  -- great than 100kb or lines great than 20000
+  return vim.api.nvim_buf_line_count(bufnr) > 20000 or Buffer.getfsize(bufnr) > 100000
 end
 
 M.setup = function()
