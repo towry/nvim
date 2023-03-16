@@ -121,6 +121,7 @@ n('<leader>/gB', 'Git branchs', cmd([[Telescope git_branches]]))
 n('<leader>/gD', 'Git file history', cmd([[lua Ty.Func.git.toggle_file_history()]]))
 n('<leader>/gd', 'Git changes', cmd([[lua Ty.Func.git.toggle_git_changes()]]))
 n('<leader>/gv', 'Git commits', cmd([[lua Ty.Func.term.toggle_tig()]]))
+n('<leader>/gV', 'Git file history', cmd([[lua Ty.Func.git.toggle_tig_file_history()]]))
 n('<leader>/gg', 'Lazygit', cmd([[LazyGit]]))
 n('<leader>/gc', 'Open git conflict menus',
   cmd("lua require('ty.contrib.keymaps.hydra.git').open_git_conflict_hydra()", { "+noremap" }))
