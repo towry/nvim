@@ -11,7 +11,7 @@ M.setup_toggleterm = function()
       end
     end,
     -- f24 = shift + f12
-    open_mapping = [[<C-\>]],
+    open_mapping = nil,
     hide_numbers = true, -- hide the number column in toggleterm buffers
     highlights = {
       -- highlights which map to a highlight group name and a table of it's values
@@ -45,7 +45,7 @@ M.setup_toggleterm = function()
       -- see :h nvim_win_open for details on borders however
       -- the 'curved' border is a custom border type
       -- not natively supported but implemented in this plugin.
-      border = 'curved', -- single/double/shadow/curved
+      border = 'shadow', -- single/double/shadow/curved
       winblend = 0,
     },
     winbar = {
