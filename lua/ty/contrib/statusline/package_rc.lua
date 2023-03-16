@@ -8,7 +8,7 @@ M.setup_incline = function()
   require('incline').setup({
     hide = {
       cursorline = true,
-      focused_win = false,
+      focused_win = true,
       only_win = true,
     },
     window = {
