@@ -28,4 +28,24 @@ function M.list()
   end, {}, valid_buffers)
 end
 
+---@return table<number> list of buffer numbers
+function M.unsaved_list()
+  local all_buffers = vim.api.nvim_list_bufs()
+  local valid_buffers = Table.filter(function(b)
+    if b == 0 then
+      return false
+    end
+    if vim.api.nvim_buf_get_name(b) == "" then
+      return false
+    end
+
+    if not vim.api.nvim_buf_get_option(b, 'modified') then
+      return false
+    end
+
+    return vim.api.nvim_buf_is_loaded(b)
+  end, all_buffers)
+  return valid_buffers
+end
+
 return M

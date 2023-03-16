@@ -145,6 +145,9 @@ if has_plugin('harpoon') then
   n('<leader>bn', 'Harpoon next mark', cmd([[lua require('harpoon.ui').nav_next()]]))
   n('<leader>bp', 'Harpoon prev mark', cmd([[lua require('harpoon.ui').nav_prev()]]))
 end
+n('<leader>b[', 'Next unsaved buffer', cmd([[lua Ty.Func.navigate.next_unsaved_buf()]]))
+n('<leader>b]', 'Prev unsaved buffer', cmd([[lua Ty.Func.navigate.prev_unsaved_buf()]]))
+n('<leader>bd', 'Discard buffer changes', key([[:e!<CR>]]))
 
 n('<leader>z', 'Copilot|...')
 if has_plugin('copilot.vim') then n('<leader>zp', 'Open github copilot panel', cmd([[Copilot panel]])) end

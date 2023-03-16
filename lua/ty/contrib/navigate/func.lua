@@ -90,4 +90,12 @@ function M.portal_forward()
   require('portal').tunnel({ harpoon, grapples, jumplist })
 end
 
+function M.next_unsaved_buf()
+  return require('ty.contrib.navigate.buffer').next_unsaved_buf()
+end
+
+function M.prev_unsaved_buf()
+  return require('ty.contrib.navigate.buffer').prev_unsaved_buf()
+end
+
 return M
