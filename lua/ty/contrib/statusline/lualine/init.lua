@@ -78,7 +78,10 @@ M.setup = function()
         }
       },
       lualine_b = {
-        'branch',
+        {
+          'branch',
+          icon = ""
+        },
         {
           function()
             local key = require('grapple').key()
