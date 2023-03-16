@@ -1,8 +1,9 @@
 local M = {}
 
+
 M.setup = function()
   local terms = require('ty.contrib.statusline.lualine.terms_component')
-  local colors = require('ty.contrib.ui').colors()
+  -- local colors = require('ty.contrib.ui').colors()
   local spectre_extension = {
     sections = {
       lualine_a = { 'mode' },
@@ -84,10 +85,16 @@ M.setup = function()
         },
         {
           function()
-            local key = require('grapple').key()
-            return ' [' .. key .. ']'
+            -- local key = require('grapple').key()
+            -- return ' [' .. key .. ']'
+            local idx = require('harpoon.mark').status()
+            return ' [' .. idx .. ']'
           end,
-          cond = function() return require('ty.core.utils').has_plugin('grapple.nvim') and require('grapple').exists() end,
+          cond = function()
+            local idx = require('harpoon.mark').status()
+            return idx and idx ~= ''
+          end
+          -- cond = function() return require('ty.core.utils').has_plugin('grapple.nvim') and require('grapple').exists() end,
         },
         'searchcount',
       },
