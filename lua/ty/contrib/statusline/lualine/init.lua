@@ -127,7 +127,7 @@ M.setup = function()
         },
         { 'filetype', colored = true, icon_only = true },
       },
-      lualine_y = { 'progress' },
+      lualine_y = { 'filesize', 'progress' },
       lualine_z = { { 'location', separator = { right = '' }, left_padding = 0 } },
     },
     inactive_sections = {

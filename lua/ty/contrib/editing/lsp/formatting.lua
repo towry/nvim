@@ -19,6 +19,13 @@ end
 function M.format(bufnr, opts)
   opts = opts or {}
 
+  local fsize = require('ty.core.buffer').getfsize(bufnr)
+  if fsize / 1024 > 200 then
+    -- great than 200kb
+    Ty.NOTIFY('File is too large to format', vim.log.levels.WARN)
+    return
+  end
+
   if format_disabled and opts.auto then return end
 
   local name = vim.b[bufnr or vim.api.nvim_get_current_buf()].formatter_name or nil

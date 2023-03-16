@@ -48,4 +48,19 @@ function M.unsaved_list()
   return valid_buffers
 end
 
+function M.getfsize(bufnr)
+  local file = nil
+  if bufnr == nil then
+    file = vim.fn.expand('%:p')
+  else
+    file = vim.api.nvim_buf_get_name(bufnr)
+  end
+
+  local size = vim.fn.getfsize(file)
+  if size <= 0 then
+    return 0
+  end
+  return size
+end
+
 return M
