@@ -19,6 +19,7 @@ Ty.SCROLL = function(...)
 end
 
 Ty.NOTIFY = function(...) require('notify').notify(...) end
+Ty.ECHO = function(...) vim.api.nvim_echo(...) end
 
 Ty.TS_UTIL = function() return require('nvim-treesitter.ts_utils') end
 -- get node type at current cursor

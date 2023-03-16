@@ -30,7 +30,7 @@ function M.format(bufnr, opts)
     fmt_opts.name = name
   end
 
-  vim.notify("format with " .. (name or "default"))
+  Ty.ECHO({ { "format with " .. (name or "default"), "Comment" } }, true, {})
   vim.lsp.buf.format(fmt_opts)
 end
 
