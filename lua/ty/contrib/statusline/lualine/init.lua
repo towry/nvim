@@ -2,6 +2,7 @@ local M = {}
 
 
 M.setup = function()
+  local Buffer = require('ty.core.buffer')
   local terms = require('ty.contrib.statusline.lualine.terms_component')
   -- local colors = require('ty.contrib.ui').colors()
   local spectre_extension = {
@@ -34,16 +35,12 @@ M.setup = function()
       lualine_a = {
         {
           function()
-            local has_modified = false
-            for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-              if vim.api.nvim_buf_get_option(buf, 'modified') then
-                has_modified = true
-                break
-              end
-            end
+            local unsaved_count = #Buffer.unsaved_list()
+            local has_modified = unsaved_count > 0
+            local unsaved_count_text = unsaved_count > 0 and (':' .. unsaved_count) or ''
             vim.b['has_modified_file'] = has_modified
             local icon = has_modified and ' ' or ' '
-            return icon .. #vim.fn.getbufinfo({ buflisted = 1 })
+            return icon .. #vim.fn.getbufinfo({ buflisted = 1 }) .. unsaved_count_text
           end,
 
           color = function()
