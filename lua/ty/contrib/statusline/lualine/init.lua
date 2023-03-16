@@ -32,24 +32,6 @@ M.setup = function()
     tabline = {
       lualine_a = {
         {
-          'filename',
-          path = 1,
-          symbols = {
-            modified = '',
-            readonly = '',
-          }
-        }
-      },
-      lualine_b = { 'diff', 'diagnostics', },
-      lualine_c = { '' },
-      lualine_x = {},
-      lualine_y = {},
-      lualine_z = { '' },
-    },
-    sections = {
-      lualine_a = {
-        { 'mode' },
-        {
           function()
             local has_modified = false
             for _, buf in ipairs(vim.api.nvim_list_bufs()) do
@@ -72,6 +54,24 @@ M.setup = function()
             end
           end,
         },
+        {
+          'filename',
+          path = 1,
+          symbols = {
+            modified = '*',
+            readonly = '!',
+          }
+        }
+      },
+      lualine_b = { 'diff', 'diagnostics', },
+      lualine_c = { '' },
+      lualine_x = {},
+      lualine_y = {},
+      lualine_z = { '' },
+    },
+    sections = {
+      lualine_a = {
+        { 'mode' },
         {
           terms,
           separator = { right = '' },
