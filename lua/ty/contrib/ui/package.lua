@@ -28,8 +28,17 @@ pack({
   ImportInit = 'dressing',
   ImportConfig = 'dressing',
 })
+-- pack({
+--   'rcarriga/nvim-notify',
+--   ImportConfig = 'notify',
+--   ImportInit = 'notify',
+-- })
+
 pack({
-  'rcarriga/nvim-notify',
-  ImportConfig = 'notify',
-  ImportInit = 'notify',
+  'folke/noice.nvim',
+  event = "VeryLazy",
+  dependencies = {
+    'rcarriga/nvim-notify',
+  },
+  ImportConfig = 'noice',
 })

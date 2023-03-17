@@ -68,4 +68,50 @@ function M.setup_notify()
   })
 end
 
+function M.setup_noice()
+  local routes = {
+  }
+
+  require('noice').setup({
+    presets = {
+      lsp_doc_border = false,
+      inc_rename = false,
+    },
+    cmdline = {
+      enabled = true,
+      format = {
+        cmdline = {
+          pattern = "^:",
+          icon = ""
+        }
+      }
+    },
+    messages = {
+      enabled = false,
+    },
+    popupmenu = {
+      enabled = false,
+    },
+    notify = {
+      enabled = true,
+    },
+    lsp = {
+      progress = {
+        enabled = false,
+      },
+      override = {},
+      hover = {
+        enabled = false,
+      },
+      signature = {
+        enabled = false,
+      },
+    },
+    smart_move = {
+      enabled = false,
+    },
+    routes = routes,
+  })
+end
+
 return M
