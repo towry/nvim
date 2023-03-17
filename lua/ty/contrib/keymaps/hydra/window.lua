@@ -49,8 +49,8 @@ M.open_window_hydra = function(is_manually)
       { 'o',     '<C-w>o',                        { exit = true, desc = 'remain only' } },
       { '<C-o>', '<C-w>o',                        { exit = true, desc = false } },
 
-      { 'c',     pcmd('close', 'E444') },
-      { 'q',     pcmd('close', 'E444'),           { desc = 'close window' } },
+      { 'c',     pcmd('close', 'E444'),           { exit = true, nowait = true } },
+      { 'q',     pcmd('close', 'E444'),           { desc = 'close window', exit = true } },
       { '<C-c>', pcmd('close', 'E444'),           { desc = false } },
       { '<C-q>', pcmd('close', 'E444'),           { desc = false } },
 
