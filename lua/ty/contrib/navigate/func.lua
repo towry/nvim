@@ -73,7 +73,7 @@ function M.portal_backward()
   -- local harpoon = builtins.harpoon.query(opts)
   local grapples = builtins.grapple.query(opts)
 
-  require('portal').tunnel({ grapples, jumplist })
+  require('portal').tunnel({ jumplist, grapples })
 end
 
 function M.portal_forward()
@@ -87,7 +87,7 @@ function M.portal_forward()
   -- local harpoon = builtins.harpoon.query(opts)
   local grapples = builtins.grapple.query(opts)
 
-  require('portal').tunnel({ grapples, jumplist })
+  require('portal').tunnel({ jumplist, grapples, })
 end
 
 function M.next_unsaved_buf()
