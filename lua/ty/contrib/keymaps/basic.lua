@@ -64,8 +64,6 @@ else
 end
 if has_plugin('junegunn/vim-easy-align') then nxv('ga', 'Easy align', key('<Plug>(EasyAlign)')) end
 autocmd.listen({ autocmd.EVENTS.on_gitsigns_attach }, function(ctx)
-  n('[gh', 'Git next hunk', cmd('lua Ty.Func.git.next_hunk()'))
-  n(']gh', 'Git prev hunk', cmd('lua Ty.Func.git.prev_hunk()'))
   n('gh', 'Gitsigns',
     cmd("lua require('ty.contrib.keymaps.hydra.git').open_git_signs_hydra()", { buffer = ctx.buf }))
 end)
