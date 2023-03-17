@@ -28,9 +28,8 @@ pack({
 pack({
   -- git runtimes. ft etc.
   'tpope/vim-git',
-  -- TODO check is git repo.
+  event = { 'BufReadPost', 'BufNewFile' },
   cond = function() return true end,
-  event = 'VeryLazy',
 })
 pack({
   -- tig like git commit browser.
@@ -42,9 +41,6 @@ pack({
 })
 pack({
   'lewis6991/gitsigns.nvim',
-  dependencies = {
-    -- "petertriho/nvim-scrollbar"
-  },
   event = { 'BufReadPost', 'BufNewFile' },
   ImportConfig = 'gitsigns',
 })
@@ -64,12 +60,16 @@ pack({
 
 pack({
   'akinsho/git-conflict.nvim',
+  tag = "v1.0.0",
   cmd = {
     'GitConflictChooseBoth',
     'GitConflictNextConflict',
     'GitConflictChooseOurs',
     'GitConflictPrevConflict',
     'GitConflictChooseTheirs',
+    'GitConflictListQf',
+    'GitConflictChooseNone',
+    'GitConflictRefresh',
   },
   ImportConfig = 'git_conflict',
 })

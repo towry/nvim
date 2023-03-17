@@ -31,14 +31,6 @@ n('<C-w>', 'Window operations', cmd('lua require("ty.contrib.keymaps.hydra.windo
 n('<Tab>', 'List Buffers', cmd('lua Ty.Func.explorer.open_buffers()'))
 n('<S-Tab>', 'Go to previous edited Buffer', key(':e #<cr>'))
 n('<S-q>', 'Quit current buffer', cmd('lua Ty.Func.buffer.close_buffer()'))
--- Move between buffers
--- for inx = 1, 9 do
---   n(
---     '<Space>' .. inx,
---     'Move to buffer by index ' .. inx,
---     cmd('lua Ty.Func.buffer.switch_to_buffer_by_index(' .. inx .. ')')
---   )
--- end
 
 -- fn keys
 -- move fn key mappings in 'must_have' to here and use above style.
@@ -103,8 +95,6 @@ nxv(
   cmd('lua Ty.Func.explorer.search_and_replace_cword_in_buffer()')
 )
 n('<C-p>', 'Open legendary', cmd([[lua require('ty.contrib.keymaps.legendary').open_legendary()]]))
--- n('<leader>wv', 'Split buffer right', key('<C-W>v'))
--- n('<leader>wV', 'Split buffer bottom', key('<C-W>s'))
 n('<leader>q', 'Toggle quick list', cmd('lua Ty.Func.editor.toggle_qf()'))
 n('<leader>x', 'Close buffer and window', cmd('bdelete'))
 n('<leader>F', 'Find folders', cmd('lua Ty.Func.explorer.find_folder()'))
@@ -114,17 +104,18 @@ n("<leader>/", "Outline|Git")
 n("<leader>//", "Find terms", cmd([[Telescope termfinder find]]))
 n('<leader>/o', '[/] Toggle outline', cmd([[lua Ty.Func.explorer.toggle_outline()]]))
 -- gits
-n('<leader>/g', 'Git operations')
-n('<leader>/ga', 'Git add current', cmd([[!git add %:p]]))
-n('<leader>/gA', 'Git add all', cmd([[!git add .]]))
-n('<leader>/gb', 'Git open blame', cmd([[lua Ty.Func.git.open_blame()]]))
-n('<leader>/gB', 'Git branchs', cmd([[Telescope git_branches]]))
-n('<leader>/gD', 'Git file history', cmd([[lua Ty.Func.git.toggle_file_history()]]))
-n('<leader>/gd', 'Git changes', cmd([[lua Ty.Func.git.toggle_git_changes()]]))
-n('<leader>/gv', 'Git commits', cmd([[lua Ty.Func.term.toggle_tig()]]))
-n('<leader>/gV', 'Git file history', cmd([[lua Ty.Func.git.toggle_tig_file_history()]]))
-n('<leader>/gg', 'Lazygit', cmd([[LazyGit]]))
-n('<leader>/gc', 'Open git conflict menus',
+n('<leader>g', 'Git operations')
+n('<leader>gg', 'Fugitive Git', key([[:Git<CR>]]))
+n('<leader>ga', 'Git add current', cmd([[!git add %:p]]))
+n('<leader>gA', 'Git add all', cmd([[!git add .]]))
+n('<leader>gb', 'Git open blame', cmd([[lua Ty.Func.git.open_blame()]]))
+n('<leader>gB', 'Git branchs', cmd([[Telescope git_branches]]))
+n('<leader>gD', 'Git file history', cmd([[lua Ty.Func.git.toggle_file_history()]]))
+n('<leader>gd', 'Git changes', cmd([[lua Ty.Func.git.toggle_git_changes()]]))
+n('<leader>gv', 'Git commits', cmd([[lua Ty.Func.term.toggle_tig()]]))
+n('<leader>gV', 'Git file history', cmd([[lua Ty.Func.git.toggle_tig_file_history()]]))
+n('<leader>gl', 'Lazygit', cmd([[LazyGit]]))
+n('<leader>gc', 'Open git conflict menus',
   cmd("lua require('ty.contrib.keymaps.hydra.git').open_git_conflict_hydra()", { "+noremap" }))
 
 
@@ -153,11 +144,3 @@ n('<leader>bd', 'Discard buffer changes', key([[:e!<CR>]]))
 
 n('<leader>z', 'Copilot|...')
 if has_plugin('copilot.vim') then n('<leader>zp', 'Open github copilot panel', cmd([[Copilot panel]])) end
---[[
-A = {  },
-a = { "<cmd>LazyGitFilter<CR>", "commits" },
-C = { "<cmd>lua require('towry.utils.plug-telescope').my_git_bcommits()<CR>", "buffer commits (Telescope)" },
-c = { "<cmd>LazyGitFilterCurrentFile<CR>", "buffer commits" },
-m = { "blame line" },
-s = { '<cmd>lua require("towry.plugins.plug-git").toggle_status()<CR>', 'status' },
-]]

@@ -32,17 +32,17 @@ function M.init_everforest()
   local theme = require('ty.contrib.ui').theme_everforest
   local config = require('ty.core.config').ui
 
-  vim.g.everforest_background = theme.contrast
-  vim.g.everforest_better_performance = config:get('theme_everforest.better_performance', 0)
+  vim.g.everforest_background = theme.background_contrast
+  vim.g.everforest_ui_contrast = theme.ui_contrast
+  vim.g.everforest_better_performance = config:get('theme_everforest.better_performance', 1)
   vim.g.everforest_enable_italic = config:get('theme_everforest.italic', 1)
   vim.g.everforest_disable_italic_comment = true
   vim.g.everforest_transparent_background = false
   vim.g.everforest_dim_inactive_windows = false
   vim.g.everforest_sign_column_background = 'none' -- "none" | "grey"
-  vim.g.everforest_ui_contrast = 'high' -- contrast of line numbers, indent lines etc. "low" | "high"
   vim.g.everforest_diagnostic_virtual_text = 'grey' -- "grey" | "colored"
-  vim.g.everforest_diagnostic_text_highlight = 1
-  vim.g.everforest_diagnostic_line_highlight = 1
+  vim.g.everforest_diagnostic_text_highlight = 0
+  vim.g.everforest_diagnostic_line_highlight = 0
 end
 
 function M.init_notify()

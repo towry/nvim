@@ -48,7 +48,8 @@ M.theme_gruvbox = {
   end,
 }
 M.theme_everforest = {
-  contrast = 'medium',
+  background_contrast = 'medium', -- 'soft' | 'medium' | 'hard'
+  ui_contrast = "low", -- low or high, contrast of lineNum or indent lines
   better_performance = 1,
   get_palette = function()
     local configuration = vim.fn['everforest#get_configuration']()

@@ -56,8 +56,8 @@ M.setup = function()
           'filename',
           path = 1,
           symbols = {
-            modified = '*',
-            readonly = '!',
+            modified = '',
+            readonly = '',
           }
         }
       },
