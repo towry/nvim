@@ -225,7 +225,7 @@ function M.buffers()
       local open_selected = function()
         local entry = actionstate.get_selected_entry()
         actions.close(prompt_bufnr)
-        if not entry and not entry.bufnr then
+        if not entry or (not entry.bufnr) then
           vim.notify("no selected entry found")
           return
         end

@@ -1,3 +1,4 @@
+local utils = require('ty.core.utils')
 local M = {}
 
 M.save_current_session = function()
@@ -25,6 +26,12 @@ M.jump_to_todo = function(dir)
 end
 
 M.toggle_qf = function()
+  if utils.has_plugin('trouble.nvim') then
+    if require('trouble').is_open() then
+      require('trouble').close()
+      return
+    end
+  end
   local buffers = vim.api.nvim_list_bufs()
   local bufFound = false
   for _, buffer in ipairs(buffers) do

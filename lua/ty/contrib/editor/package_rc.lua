@@ -116,22 +116,26 @@ M.setup_statuscol = function()
   local statuscol = require('statuscol')
   local builtin = require('statuscol.builtin')
 
-  statuscol.setup {
+  statuscol.setup({
     separator = '│',
-    foldfunc = 'builtin',
     relculright = true,
     setopt = true,
-    -- N: line number, S: sign column, F: fold column, s: Separator string. w: whitespace
     segments = {
-      { text = { "%s" },                  click = "v:lua.ScSa" },
       {
-        text = { builtin.lnumfunc, " " },
-        condition = { true, builtin.not_empty },
-        click = "v:lua.ScLa",
+        sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 1, auto = true },
+        click = 'v:lua.ScSa',
       },
-      { text = { builtin.foldfunc, " " }, click = "v:lua.ScFa" },
-    }
-  }
+      {
+        sign = { name = { 'Diagnostic' }, maxwidth = 2, auto = true },
+        click = 'v:lua.ScSa',
+      },
+      {
+        sign = { name = { '.*' }, maxwidth = 1, colwidth = 1, auto = true },
+      },
+      { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
+      { text = { builtin.foldfunc, ' ' }, click = 'v:lua.ScFa' },
+    },
+  })
 end
 
 M.option_guess_indent = {
@@ -148,7 +152,7 @@ M.option_rooter = {
 }
 
 M.option_buf_lastplace = {
-  lastplace_ignore_buftype = { "quickfix", "nofile", "help", "alpha", "NvimTree" },
+  lastplace_ignore_buftype = { 'quickfix', 'nofile', 'help', 'alpha', 'NvimTree' },
   lastplace_ignore_filetype = { 'spectre_panel', 'gitcommit', 'gitrebase', 'svn', 'hgcommit' },
   lastplace_open_folds = true,
 }

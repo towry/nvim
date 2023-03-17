@@ -64,6 +64,7 @@ v('X', 'Cut chars and do not yank to register', key('"_X'))
 v('p', 'Do not yank on visual paste', key('"_dP'))
 x('p', 'Do not yank on select paste', key('"_dP'))
 
+-- prefix: g
 if vim.fn.has('macunix') == 1 then
   n('gx', 'Open link at cursor', cmd('silent execute "!open " . shellescape("<cWORD>")'))
 else
@@ -104,7 +105,7 @@ nxv(
 n('<C-p>', 'Open legendary', cmd([[lua require('ty.contrib.keymaps.legendary').open_legendary()]]))
 -- n('<leader>wv', 'Split buffer right', key('<C-W>v'))
 -- n('<leader>wV', 'Split buffer bottom', key('<C-W>s'))
-n('<leader>q', 'Open quick list', cmd('lua Ty.Func.editor.toggle_qf()'))
+n('<leader>q', 'Toggle quick list', cmd('lua Ty.Func.editor.toggle_qf()'))
 n('<leader>x', 'Close buffer and window', cmd('bdelete'))
 n('<leader>F', 'Find folders', cmd('lua Ty.Func.explorer.find_folder()'))
 n('<leader>t', 'Tool|Toggle')
