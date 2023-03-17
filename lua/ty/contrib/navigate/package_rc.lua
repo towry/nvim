@@ -30,21 +30,15 @@ M.setup_portal = function()
   local nvim_set_hl = vim.api.nvim_set_hl
   require('portal').setup({
     log_level = 'error',
-    query = {
-      'grapple',
-      'valid',
-      'harpoon',
-    },
-    portal = {
-      title = {
-        --- When a portal is empty, render an default portal title
-        render_empty = false,
-      },
-      body = {
-        -- When a portal is empty, render an empty buffer body
-        render_empty = false,
-      },
-    },
+    window_options = {
+      relative = "cursor",
+      width = 30,
+      height = 1,
+      col = 1,
+      focusable = false,
+      border = "rounded",
+      noautocmd = true,
+    }
   })
 
   nvim_set_hl(0, 'PortalBorderForward', { fg = colors.portal_border_forward })
