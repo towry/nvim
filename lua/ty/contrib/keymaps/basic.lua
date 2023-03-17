@@ -31,6 +31,7 @@ n('<C-w>', 'Window operations', cmd('lua require("ty.contrib.keymaps.hydra.windo
 n('<Tab>', 'List Buffers', cmd('lua Ty.Func.explorer.open_buffers()'))
 n('<S-Tab>', 'Go to previous edited Buffer', key(':e #<cr>'))
 n('<S-q>', 'Quit current buffer', cmd('lua Ty.Func.buffer.close_buffer()'))
+n('<leader><space>', 'Mark jump position', cmd('normal! m\'', { '+noremap', '+nowait' }))
 
 -- fn keys
 -- move fn key mappings in 'must_have' to here and use above style.
