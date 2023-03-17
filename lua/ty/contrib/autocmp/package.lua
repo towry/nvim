@@ -69,27 +69,6 @@ pack({
       expr = true,
       script = true,
     })
-    -- not useful
-    vim.keymap.set({ 'n' }, '<S-l>', function()
-      if vim.b._copilot and vim.b._copilot.suggestions ~= nil then
-        -- Make sure the suggestion exists and it does not start with whitespace
-        -- This is to prevent the user from accidentally selecting a suggestion
-        -- when trying to indent
-        local suggestion = vim.b._copilot.suggestions[1]
-        if suggestion ~= nil then suggestion = suggestion.displayText end
-        if suggestion == nil or (suggestion:find('^%s') ~= nil and suggestion:find('^\n') == nil) then
-          return 'L'
-        else
-          return "copilot#Accept('')"
-        end
-      else
-        return 'L'
-      end
-    end, {
-      silent = true,
-      expr = true,
-      script = true,
-    })
   end,
   init = function()
     vim.g.copilot_filetypes = {
