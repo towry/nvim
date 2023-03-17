@@ -9,8 +9,8 @@ pack({
 
 pack({
   -- free the leader key.
-  'anuvyklack/hydra.nvim',
-  pin = true,
+  -- 'anuvyklack/hydra.nvim',
+  'pze/hydra.nvim',
 })
 
 pack({
