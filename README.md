@@ -1,5 +1,9 @@
 # Towry's hand crafted NeoVim config
 
+## TODO
+
+- improve the init.
+
 ## Folder structure
 
 ```tree

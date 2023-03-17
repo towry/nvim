@@ -16,8 +16,25 @@ pack({
   -- Whenever cursor jumps some distance or moves between windows, it will flash so you can see where it is.
   'DanilaMihailov/beacon.nvim',
   cmd = { 'Beacon' },
+  init = function()
+    vim.g.beacon_ignore_buffers = { 'quickfix' }
+    vim.g.beacon_ignore_filetypes = {
+      'alpha',
+      'lazy',
+      'TelescopePrompt',
+      'term',
+      'nofile',
+      'spectre_panel',
+      'help',
+      'txt',
+      'log',
+      'Trouble',
+      'NvimTree',
+      'qf',
+    }
+    vim.g.beacon_size = 60
+  end,
   ImportConfig = 'cursor_beacon',
-  ImportInit = 'cursor_beacon',
 })
 
 pack({

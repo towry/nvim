@@ -88,6 +88,8 @@ function M.setup_noice()
     },
     messages = {
       enabled = false,
+      view = "notify",
+      view_error = "messages",
     },
     popupmenu = {
       enabled = false,

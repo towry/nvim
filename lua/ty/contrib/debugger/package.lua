@@ -29,5 +29,4 @@ pack({
     'haydenmeade/neotest-jest',
   },
   ImportConfig = 'neotest',
-  ImportInit = "neotest",
 })
