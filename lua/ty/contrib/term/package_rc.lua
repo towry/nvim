@@ -77,7 +77,7 @@ M.init_toggleterm = function()
       return
     end
     if vim.v.count <= 1 then
-      vim.cmd([[ToggleTerm direction=float]])
+      vim.cmd([[1ToggleTerm direction=float]])
     else
       vim.cmd(vim.v.count .. [[ToggleTerm direction=horizontal]])
     end
