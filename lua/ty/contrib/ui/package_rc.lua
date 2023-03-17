@@ -45,12 +45,6 @@ function M.init_everforest()
   vim.g.everforest_diagnostic_line_highlight = 0
 end
 
-function M.init_notify()
-  vim.notify = function(...)
-    require('notify')(...)
-  end
-end
-
 function M.setup_notify()
   require('notify').setup({
     timeout = '3000',
