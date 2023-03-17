@@ -42,8 +42,18 @@ pack({
 pack({
   'rcarriga/nvim-notify',
   init = function()
-    vim.notify = function(...)
-      require('notify')(...)
+    local banned_msgs = {
+      "No information available",
+      "LSP[tsserver] Inlay Hints request failed. File not opened in the editor.",
+      "LSP[tsserver] Inlay Hints request failed. Requires TypeScript 4.4+.",
+    }
+    vim.notify = function(msg, ...)
+      -- check banned_msgs contains msg with reg match
+      if vim.tbl_contains(banned_msgs, msg) then
+        return
+      end
+
+      require('notify')(msg, ...)
     end
   end,
   ImportConfig = 'notify',
