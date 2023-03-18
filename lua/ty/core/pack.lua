@@ -66,6 +66,9 @@ local lazy_opts = {
       })
     end,
   },
+  readme = {
+    enabled = false,
+  },
   performance = {
     cache = {
       enabled = true,

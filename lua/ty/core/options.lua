@@ -17,8 +17,8 @@ function M.setup_edit()
   o.swapfile = false --- Swap not needed
   o.tabstop = 2 --- Insert 2 spaces for a tab
   o.timeoutlen = 400 --- Key sequence wait time | Faster completion (cannot be lower than 200 because then commenting doesn't work)
-  o.showcmd = true
-  o.showcmdloc = 'last'
+  o.showcmd = false
+  o.showcmdloc = 'statusline'
   o.undofile = true --- Sets undo to file
   o.updatetime = 250 --- Faster completion
   -- o.viminfo        = "'1000" --- Increase the size of file history
@@ -81,7 +81,7 @@ function M.setup_interface()
   o.foldlevelstart = 99 --- Expand all folds by default
   -- vim.o.statuscolumn     = '%=%l%s%{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "-" : "+") : "│") : " " }'
   o.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
-  o.shortmess:append({ W = true, I = true, c = true })
+  o.shortmess:append({ W = true, I = true, c = true, F = true })
   if vim.fn.has('nvim-0.9.0') == 1 then
     o.splitkeep = 'cursor'
     o.shortmess:append({ C = true })
