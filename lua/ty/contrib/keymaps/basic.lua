@@ -4,14 +4,14 @@ local autocmd = require('ty.core.autocmd')
 local has_plugin = require('ty.core.utils').has_plugin
 local keymap = require('ty.core.keymap')
 local n, i, v, x, ni, nxv, cmd, key =
-    keymap.nmap, keymap.imap, keymap.vmap, keymap.xmap, keymap.nimap, keymap.nxv, keymap.cmd, keymap.key
+keymap.nmap, keymap.imap, keymap.vmap, keymap.xmap, keymap.nimap, keymap.nxv, keymap.cmd, keymap.key
 
 i('<C-e>', 'Insert mode: move to end of line', key('<End>'))
 n('<C-z>', 'N: Undo, no more background key', key('<ESC> u'))
 i('<C-z>', 'I: Undo, no more background key', key('<ESC> u'))
-v('<A-`>', 'Case change in visual mode', key('U'))
-n('<A-s>', 'N: Save current file by <command-s>', cmd('w'))
-i('<A-s>', 'I: Save current file by <command-s>', cmd('w'))
+v('<D-`>', 'Case change in visual mode', key('U'))
+n('<D-s>', 'N: Save current file by <command-s>', cmd('w'))
+i('<D-s>', 'I: Save current file by <command-s>', cmd('w'))
 n('<ESC>', 'Clear search highlight', cmd('noh'))
 v('<', 'Keep visual mode indenting, left', key('<gv'))
 v('>', 'Keep visual mode indenting, right', key('>gv'))
