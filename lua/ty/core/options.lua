@@ -44,7 +44,7 @@ function M.setup_interface()
   o.ruler = false -- Always show cursor position
   o.termguicolors = true --- Correct terminal colors
   o.confirm = true
-  o.showtabline = 1 --- Always show tabs
+  o.showtabline = 2 --- Always show tabs
   o.signcolumn = 'yes:1' --- Add extra sign column next to line number
   o.relativenumber = true --- Enables relative number
   o.numberwidth = 1
