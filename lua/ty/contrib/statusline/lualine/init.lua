@@ -28,7 +28,7 @@ M.setup = function()
       theme = require('ty.contrib.ui').plugins.lualine.theme,
       globalstatus = true,
       -- component_separators = '│',
-      component_separators = '',
+      component_separators = '',
       section_separators = { left = '', right = '' },
       disabled_filetypes = { winbar = { 'lazy', 'alpha' }, statusline = { 'dashboard', 'lazy', 'alpha' } },
     },
