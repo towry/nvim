@@ -1,8 +1,10 @@
 local M = {}
 
 local dashboard = nil
+local showtabline = 0
 
 function M.init_manually()
+  showtabline = vim.opt.showtabline:get()
   -- ╭──────────────────────────────────────────────────────────╮
   -- │ Hide tabline and statusline on startup screen            │
   -- ╰──────────────────────────────────────────────────────────╯
@@ -21,7 +23,7 @@ function M.init_manually()
       vim.api.nvim_create_autocmd('BufUnload', {
         group = 'alpha_tabline',
         buffer = 0,
-        command = 'setlocal showtabline=' .. vim.opt.showtabline:get() .. ' ruler',
+        command = 'setlocal showtabline=' .. showtabline .. ' ruler',
       })
     end,
   })
