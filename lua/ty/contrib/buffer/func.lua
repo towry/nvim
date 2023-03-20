@@ -17,6 +17,20 @@ end
 -- close buffer and keep window layout
 M.close_buffer = function()
   require('mini.bufremove').delete(0)
+  vim.schedule(function()
+    if #require('ty.core.buffer').list_bufnrs() <= 0 then
+      vim.cmd('Alpha')
+    end
+  end)
+end
+
+M.close_bufwin = function()
+  vim.cmd('bdelete')
+  vim.schedule(function()
+    if #require('ty.core.buffer').list_bufnrs() <= 0 then
+      vim.cmd('Alpha')
+    end
+  end)
 end
 
 M.move_cursor_to_window = function(dir_str)

@@ -8,6 +8,7 @@ function M.set_options(buf, opts)
 end
 
 -- see https://github.com/nathanlc/dotfiles/blob/4eab9adac18965899fbeec0e6b0201997a3668fe/nvim/lua/utils/buffer.lua
+---@return table<number, string> map of buffer number to buffer name
 function M.list()
   local all_buffers = vim.api.nvim_list_bufs()
   local valid_buffers = Table.filter(function(b)
@@ -26,6 +27,21 @@ function M.list()
 
     return nrNameMap
   end, {}, valid_buffers)
+end
+
+function M.list_bufnrs()
+  local all_buffers = vim.api.nvim_list_bufs()
+  local valid_buffers = Table.filter(function(b)
+    if b == 0 then
+      return false
+    end
+    if vim.api.nvim_buf_get_name(b) == "" then
+      return false
+    end
+
+    return vim.api.nvim_buf_is_loaded(b)
+  end, all_buffers)
+  return valid_buffers
 end
 
 ---@return table<number> list of buffer numbers
