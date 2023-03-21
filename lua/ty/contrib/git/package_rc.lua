@@ -5,14 +5,35 @@ M.setup_git_conflict = function()
   local conflict = require('git-conflict')
 
   conflict.setup({
-    default_mappings = true, -- disable buffer local mapping created by this plugin
-    disable_diagnostics = false, -- This will disable the diagnostics in a buffer whilst it is conflicted
+    default_mappings = false, -- disable buffer local mapping created by this plugin
+    default_commands = true,
+    disable_diagnostics = true, -- This will disable the diagnostics in a buffer whilst it is conflicted
     highlights = { -- They must have background color, otherwise the default color will be used
-      incoming = 'DiffText',
-      current = 'DiffAdd',
+      -- incoming = 'DiffText',
+      -- current = 'DiffAdd',
     },
   })
 end
 M.setup_git_worktree = require('ty.contrib.git.worktree_rc').setup
+M.setup_diffview = function()
+  require('diffview').setup({
+    view = {
+      default = {
+        layout = "diff2_vertical",
+        winbar_info = false,
+      },
+    },
+    hooks = {
+      diff_buf_read = function(bufnr)
+      end,
+      view_opened = function(view)
+        local autocmd = require('ty.core.autocmd')
+        autocmd.trigger(autocmd.EVENTS.on_git_diffview_open, {
+          -- view = view,
+        })
+      end
+    }
+  })
+end
 
 return M

@@ -82,8 +82,8 @@ function M.setup()
             -- allow cancelling.
             if not win_picked then return end
             action_state
-              .get_current_history()
-              :append(action_state.get_current_line(), action_state.get_current_picker(prompt_bufnr))
+                .get_current_history()
+                :append(action_state.get_current_line(), action_state.get_current_picker(prompt_bufnr))
             picker.get_selection_window = function() return win_picked or 0 end
             return action_set.select(prompt_bufnr, 'default')
           end,
@@ -125,6 +125,11 @@ function M.setup()
   require('telescope').load_extension('live_grep_args')
   require('telescope').load_extension('git_worktree')
   require('telescope').load_extension('cheatsheet')
+  require('telescope').load_extension("termfinder")
+
+  -- colorscheme
+  vim.cmd('hi! link TelescopeBorder FloatBorder')
+  vim.cmd('hi! link TelescopePromptNormal FloatBorder')
 end
 
 return M

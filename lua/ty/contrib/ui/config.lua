@@ -9,13 +9,13 @@ local M = {}
 M.theme = {
   colorscheme = 'everforest', -- colorscheme name.
   background = 'auto', -- auto, dark, light.
-  contrast = 'medium', -- soft, medium, hard.
+  contrast = 'soft', -- soft, medium, hard.
 }
 
 --- configuration for theme everforest
 M.theme_everforest = {
   --- @type number
-  better_performance = 1, -- 1, 2, 3.
+  better_performance = 0, -- 0, 1.
   italic = true,
 }
 

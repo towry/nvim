@@ -1,8 +1,8 @@
+---@diagnostic disable: duplicate-set-field
 local M = {}
 
 -- setup dressing
 M.setup_dressing = require('ty.contrib.ui.dressing-plug').setup_dressing
-M.init_dressing = require('ty.contrib.ui.dressing-plug').init_dressing
 
 function M.setup_gruvbox()
   local theme = require('ty.contrib.ui').theme_gruvbox
@@ -26,25 +26,6 @@ function M.setup_gruvbox()
   })
 end
 
-function M.setup_everforest()
-  -- @see https://github.com/sainnhe/everforest/blob/master/doc/everforest.txt
-  local theme = require('ty.contrib.ui').theme_everforest
-  local config = require('ty.core.config').ui
-
-  vim.g.everforest_background = theme.contrast
-  vim.g.everforest_better_performance = config:get('theme_everforest.better_performance', 0)
-  vim.g.everforest_enable_italic = config:get('theme_everforest.italic', 1)
-  vim.g.everforest_disable_italic_comment = true
-  vim.g.everforest_transparent_background = false
-  vim.g.everforest_dim_inactive_windows = false
-  vim.g.everforest_sign_column_background = 'none' -- "none" | "grey"
-  vim.g.everforest_ui_contrast = 'low' -- contrast of line numbers, indent lines etc. "low" | "high"
-  vim.g.everforest_diagnostic_virtual_text = 'grey' -- "grey" | "colored"
-end
-
-function M.init_notify()
-  require('ty.core.autocmd').on_very_lazy(function() vim.notify = require('notify') end)
-end
 function M.setup_notify()
   require('notify').setup({
     timeout = '3000',
@@ -59,6 +40,53 @@ function M.setup_notify()
       -- local style = notif.title[1] == '' and 'default' or 'default'
       require('notify.render')[style](...)
     end,
+  })
+end
+
+function M.setup_noice()
+  local routes = {}
+
+  require('noice').setup({
+    presets = {
+      lsp_doc_border = false,
+      inc_rename = false,
+    },
+    cmdline = {
+      enabled = true,
+      format = {
+        cmdline = {
+          pattern = '^:',
+          icon = '',
+        },
+      },
+    },
+    messages = {
+      enabled = false,
+      view = 'notify',
+      view_error = 'messages',
+    },
+    popupmenu = {
+      enabled = false,
+    },
+    notify = {
+      enabled = true,
+    },
+    lsp = {
+      progress = {
+        enabled = false,
+      },
+      override = {},
+      hover = {
+        enabled = false,
+      },
+      signature = {
+        enabled = false,
+      },
+    },
+    smart_move = {
+      enabled = false,
+    },
+    routes = routes,
   })
 end
 

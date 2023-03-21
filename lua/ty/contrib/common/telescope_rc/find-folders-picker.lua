@@ -41,29 +41,43 @@ return function()
   local action_state = require('telescope.actions.state')
 
   pickers
-    .new(picker_opts, {
-      finder = finders.new_oneshot_job(picker_opts.find_command, picker_opts),
-      sorter = conf.file_sorter(picker_opts),
-      attach_mappings = function(prompt_bufnr, map)
-        -- map("i", "asdf", "command")
-        actions.select_default:replace(function()
-          actions.close(prompt_bufnr)
-          local selection = action_state.get_selected_entry()
-          if not selection then return false end
+      .new(picker_opts, {
+        finder = finders.new_oneshot_job(picker_opts.find_command, picker_opts),
+        sorter = conf.file_sorter(picker_opts),
+        attach_mappings = function(prompt_bufnr, map)
+          -- map("i", "asdf", "command")
+          actions.select_default:replace(function()
+            actions.close(prompt_bufnr)
+            local selection = action_state.get_selected_entry()
+            if not selection then return false end
 
-          local selected = selection[1]
+            local selected = selection[1]
 
-          local new_cwd = nvim_tree_utils.path_join({ find_folders_cwd, selected })
-          nvim_tree_api.tree.open({
-            update_root = false,
-            find_file = false,
-            current_window = false,
-          })
-          nvim_tree_api.tree.change_root(new_cwd)
-        end)
-        -- need return true to use default mappings.
-        return true
-      end,
-    })
-    :find()
+            local new_cwd = nvim_tree_utils.path_join({ find_folders_cwd, selected })
+            nvim_tree_api.tree.open({
+              update_root = false,
+              find_file = false,
+              current_window = false,
+            })
+            nvim_tree_api.tree.change_root(new_cwd)
+          end)
+
+          -- search inside folder.
+          map('i', "<C-s>", function()
+            actions.close(prompt_bufnr)
+            local selection = action_state.get_selected_entry()
+            if not selection then return false end
+
+            local selected = selection[1]
+            require('telescope').extensions.live_grep_args.live_grep_args({
+              prompt_title = 'Grep search inside: ' .. selected,
+              cwd = selected,
+            })
+          end)
+
+          -- need return true to use default mappings.
+          return true
+        end,
+      })
+      :find()
 end

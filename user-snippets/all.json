@@ -10,5 +10,22 @@
     "body": [
       "// eslint-disable-next-line"
     ]
+  },
+  "generate snippet package": {
+    "prefix": ["snippet_package"],
+    "body": [
+      "{",
+      " \"name\": \"user-snippets\",",
+      " \"description\": \"User snippets for VS Code\",",
+      " \"contributes\": {",
+      "   \"snippets\": [",
+      "     {",
+      "       \"language\": \"all\",",
+      "       \"path\": \"./all.json\"",
+      "     }",
+      "    ]",
+      "  }",
+      "}"
+    ]
   }
 }

@@ -3,17 +3,6 @@ local M = {}
 
 local default_colorscheme = 'everforest'
 
-M.init = function()
-  require('ty.core.utils').try(
-    function() vim.cmd('colorscheme ' .. require('ty.core.config').ui.theme.colorscheme or default_colorscheme) end,
-    'error when loading colorscheme'
-  )
-
-  local hl_update_callback = require('ty.contrib.ui.on_need_hl_update')
-  hl_update_callback();
-  require('ty.core.autocmd').on_need_hl_update(hl_update_callback)
-end
-
 M.theme_gruvbox = {
   contrast = 'soft',
   reverse = true,
@@ -45,7 +34,8 @@ M.theme_gruvbox = {
   end,
 }
 M.theme_everforest = {
-  contrast = 'medium',
+  background_contrast = 'medium', -- 'soft' | 'medium' | 'hard'
+  ui_contrast = 'low', -- low or high, contrast of lineNum or indent lines
   better_performance = 1,
   get_palette = function()
     local configuration = vim.fn['everforest#get_configuration']()

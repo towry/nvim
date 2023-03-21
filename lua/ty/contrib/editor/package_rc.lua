@@ -32,24 +32,6 @@ M.setup_todo_comments = function()
   })
 end
 
-M.init_cursor_beacon = function()
-  vim.g.beacon_ignore_buffers = { 'quickfix' }
-  vim.g.beacon_ignore_filetypes = {
-    'alpha',
-    'lazy',
-    'TelescopePrompt',
-    'term',
-    'nofile',
-    'spectre_panel',
-    'help',
-    'txt',
-    'log',
-    'Trouble',
-    'NvimTree',
-    'qf',
-  }
-  vim.g.beacon_size = 60
-end
 M.setup_cursor_beacon = function()
   local colors = require('ty.contrib.ui').colors()
   vim.api.nvim_set_hl(0, 'Beacon', {
@@ -70,6 +52,8 @@ M.setup_session_manager = function()
     autosave_ignore_not_normal = true, -- Plugin will not save a session when no buffers are opened, or all of them aren't writable or listed.
     autosave_ignore_filetypes = { -- All buffers of these file types will be closed before the session is saved.
       'gitcommit',
+      'toggleterm',
+      'term',
     },
     autosave_only_in_session = true, -- Always autosaves session. If true, only autosaves after a session is active.
     max_path_length = 80, -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
@@ -89,7 +73,7 @@ M.setup_indent_line = function()
     filetype_exclude = {
       'help',
       'startify',
-      'aerial',
+      'Outline',
       'alpha',
       'dashboard',
       'lazy',
@@ -110,14 +94,31 @@ M.option_true_zen = {
   },
 }
 
-M.option_statuscol = {
-  separator = '│',
-  foldfunc = 'builtin',
-  relculright = true,
-  setopt = true,
-  -- N: line number, S: sign column, F: fold column, s: Separator string. w: whitespace
-  order = 'SFNs',
-}
+M.setup_statuscol = function()
+  local statuscol = require('statuscol')
+  local builtin = require('statuscol.builtin')
+
+  statuscol.setup({
+    separator = '│',
+    relculright = true,
+    setopt = true,
+    segments = {
+      {
+        sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 1, auto = true },
+        click = 'v:lua.ScSa',
+      },
+      {
+        sign = { name = { 'Diagnostic' }, maxwidth = 2, auto = true },
+        click = 'v:lua.ScSa',
+      },
+      {
+        sign = { name = { '.*' }, maxwidth = 1, colwidth = 1, auto = true },
+      },
+      { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
+      { text = { builtin.foldfunc, ' ' }, click = 'v:lua.ScFa' },
+    },
+  })
+end
 
 M.option_guess_indent = {
   auto_cmd = true, -- Set to false to disable automatic execution
@@ -133,7 +134,7 @@ M.option_rooter = {
 }
 
 M.option_buf_lastplace = {
-  lastplace_ignore_buftype = { 'quickfix', 'nofile', 'help' },
+  lastplace_ignore_buftype = { 'quickfix', 'nofile', 'help', 'alpha', 'NvimTree' },
   lastplace_ignore_filetype = { 'spectre_panel', 'gitcommit', 'gitrebase', 'svn', 'hgcommit' },
   lastplace_open_folds = true,
 }

@@ -1,9 +1,18 @@
 local M = {}
 local _inited = false
 
-local function setup_later_modules()
-  pcall(require, 'settings_env') -- load env settings
-  require('ty.core.pack'):startup() -- start loading modules.
+local function resize_kitty()
+  local kitty_aug = vim.api.nvim_create_augroup('kitty_aug', { clear = true })
+  vim.api.nvim_create_autocmd('VimEnter', {
+    group = kitty_aug,
+    pattern = '*',
+    command = ':silent !kitty @ --to=$KITTY_LISTEN_ON set-spacing padding=0 margin=0',
+  })
+  vim.api.nvim_create_autocmd('VimLeave', {
+    group = kitty_aug,
+    pattern = '*',
+    command = ':silent !kitty @ --to=$KITTY_LISTEN_ON set-spacing padding=8 margin=0',
+  })
 end
 
 function M.setup()
@@ -14,13 +23,11 @@ function M.setup()
   vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
   vim.g.maplocalleader = ','
 
+  resize_kitty()
+
   require('ty.core.globals')
   require('ty.core.options').setup()
-  if vim.fn.argc(-1) == 0 then
-    require('ty.core.autocmd').on_lazy_done(setup_later_modules)
-  else
-    vim.schedule(setup_later_modules)
-  end
+  pcall(require, 'settings_env') -- load env settings
   require('ty.core.pack'):setup()
 end
 

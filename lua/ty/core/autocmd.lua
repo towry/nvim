@@ -4,6 +4,7 @@ local M = {
     on_git_blame_done = 'OnGitBlameDone',
     on_need_hl_update = 'OnNeedHlUpdate',
     on_gitsigns_attach = "OnGitsignsAttach",
+    on_git_diffview_open = "OnGitDiffViewOpen",
   },
   --- execute autocmds.
   exec = vim.api.nvim_exec_autocmds,
@@ -43,7 +44,7 @@ function M:create(events, opts)
   return self
 end
 
-function M.trigger(events_or_and_group, data)
+function M.trigger(events_or_and_group, data_)
   local group = nil
   local event_name = nil
   if type(events_or_and_group) == 'string' then
@@ -53,11 +54,13 @@ function M.trigger(events_or_and_group, data)
     group = M.augroup_get(events_or_and_group[2])
   end
 
-  M.exec('User', {
+  local opts = {
     group = group,
     pattern = event_name,
-    data = data,
-  })
+    data = data_
+  }
+
+  M.exec('User', opts)
 end
 
 function M.listen(events_or_and_group, callback)

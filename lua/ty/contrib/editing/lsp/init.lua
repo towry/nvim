@@ -11,14 +11,15 @@ local auto_servers = { 'bashls', 'html', 'volar', 'prismals' }
 local function setup_fidget()
   require('fidget').setup({
     text = {
-      spinner = 'dots',
+      spinner = 'pipe',
+      done = '  ',
     },
     align = {
       bottom = true, -- align fidgets along bottom edge of buffer
       right = true, -- align fidgets along right edge of buffer
     },
     window = {
-      relative = 'win',
+      relative = 'editor',
       zindex = 100,
       border = 'rounded',
       blend = 0,
@@ -161,13 +162,14 @@ function M.setup()
   if require('ty.core.utils').has_plugin('neodev.nvim') then
     require('neodev').setup({
       setup_jsonls = false,
-      lspconfig = true,
+      lspconfig = false,
       library = {
         plugins = { 'nvim-treesitter', 'plenary.nvim', 'telescope.nvim', 'nvim-luadev' },
       },
     })
   end
   lspconfig.lua_ls.setup({
+    before_init = require('neodev.lsp').before_init,
     capabilities = capabilities,
     handlers = handlers,
     on_attach = on_attach,
@@ -193,21 +195,6 @@ function M.setup()
   require('ty.contrib.editing.lsp.null-ls').setup({
     on_attach = on_attach,
   })
-end
-
-function M.init()
-  local format_on_save_on_filetypes = Ty.Config.editing:get('format.format_on_save_on_filetypes') or {}
-  require('ty.core.autocmd').on_attach(function(client, bufnr)
-    local lsp_formatting = require('ty.contrib.editing.lsp.formatting')
-    local ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
-    if vim.tbl_contains(format_on_save_on_filetypes, ft) then lsp_formatting.setup_autoformat(client, bufnr) end
-  end)
-
-  vim.api.nvim_create_user_command(
-    'LspToggleAutoFormat',
-    'lua require("ty.contrib.editing.lsp.functions").toggle_format_on_save()',
-    {}
-  )
 end
 
 return M

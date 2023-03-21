@@ -62,4 +62,40 @@ function M.jump_to_tag(target)
   require('jump-tag')[method_name]()
 end
 
+function M.portal_backward()
+  local builtins = require('portal.builtin')
+  local opts = {
+    direction = 'backward',
+    max_results = 2,
+  }
+
+  local jumplist = builtins.jumplist.query(opts)
+  -- local harpoon = builtins.harpoon.query(opts)
+  local grapples = builtins.grapple.query(opts)
+
+  require('portal').tunnel({ jumplist, grapples })
+end
+
+function M.portal_forward()
+  local builtins = require('portal.builtin')
+  local opts = {
+    direction = 'forward',
+    max_results = 2,
+  }
+
+  local jumplist = builtins.jumplist.query(opts)
+  -- local harpoon = builtins.harpoon.query(opts)
+  local grapples = builtins.grapple.query(opts)
+
+  require('portal').tunnel({ jumplist, grapples, })
+end
+
+function M.next_unsaved_buf()
+  return require('ty.contrib.navigate.buffer').next_unsaved_buf()
+end
+
+function M.prev_unsaved_buf()
+  return require('ty.contrib.navigate.buffer').prev_unsaved_buf()
+end
+
 return M

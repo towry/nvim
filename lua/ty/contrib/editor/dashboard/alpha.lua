@@ -1,8 +1,10 @@
 local M = {}
 
 local dashboard = nil
+local showtabline = 0
 
 function M.init_manually()
+  showtabline = vim.opt.showtabline:get()
   -- ╭──────────────────────────────────────────────────────────╮
   -- │ Hide tabline and statusline on startup screen            │
   -- ╰──────────────────────────────────────────────────────────╯
@@ -11,7 +13,7 @@ function M.init_manually()
   vim.api.nvim_create_autocmd('FileType', {
     group = 'alpha_tabline',
     pattern = 'alpha',
-    command = 'set showtabline=0 laststatus=0 noruler',
+    command = 'setlocal showtabline=0 noruler',
   })
 
   vim.api.nvim_create_autocmd('FileType', {
@@ -21,18 +23,10 @@ function M.init_manually()
       vim.api.nvim_create_autocmd('BufUnload', {
         group = 'alpha_tabline',
         buffer = 0,
-        command = 'set showtabline=' .. vim.opt.showtabline:get() .. ' ruler laststatus=3',
+        command = 'setlocal showtabline=' .. showtabline .. ' ruler',
       })
     end,
   })
-  -- vim.api.nvim_create_autocmd("User", {
-  --   once = true,
-  --   pattern = "LazyVimStarted",
-  --   callback = function()
-  --     if not dashboard then return end
-  --     dashboard.section.footer.val = footer()
-  --   end,
-  -- })
 end
 
 -- ╭──────────────────────────────────────────────────────────╮
@@ -41,9 +35,10 @@ end
 local function footer()
   local ok, plugins = pcall(function() return require('lazy').stats().count end)
   if not ok then plugins = 0 end
-  local startup_time = require('lazy').stats().startuptime or 0
+  local stats = require('lazy').stats()
+  local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
   local v = vim.version()
-  return string.format(' v%d.%d.%d   %d   %sms ', v.major, v.minor, v.patch, plugins, startup_time)
+  return string.format(' v%d.%d.%d   %d   %sms ', v.major, v.minor, v.patch, plugins, ms)
 end
 
 function M.setup()
@@ -53,20 +48,39 @@ function M.setup()
   local icons = require('ty.contrib.ui.icons')
   local if_nil = vim.F.if_nil
 
-  vim.cmd('Lazy load vim-tips')
-  local tip = vim.api.nvim_eval('g:GetTip()')
+  vim.api.nvim_create_autocmd('User', {
+    pattern = 'LazyVimStarted',
+    callback = function()
+      local stats = require('lazy').stats()
+      local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
+      dashboard.section.footer.val = footer()
+      pcall(vim.cmd.AlphaRedraw)
+    end,
+  })
 
   -- ╭──────────────────────────────────────────────────────────╮
   -- │ Header                                                   │
   -- ╰──────────────────────────────────────────────────────────╯
+  local header = [[
+       _,    _   _    ,_
+  .o888P     Y8o8Y     Y888o.
+ d88888      88888      88888b
+d888888b_  _d88888b_  _d888888b
+8888888888888888888888888888888
+8888888888888888888888888888888
+YJGS8P"Y888P"Y888P"Y888P"Y8888P
+ Y888   '8'   Y8P   '8'   888Y
+  '8o          V          o8'
+    `                     `
+  ]]
 
-  local header = {
-    '                              ',
-    tip,
-    '                              ',
-  }
+  local lines = {}
+  for line in header:gmatch('[^\r\n]+') do
+    table.insert(lines, line)
+  end
+
   dashboard.section.header.type = 'text'
-  dashboard.section.header.val = header
+  dashboard.section.header.val = lines
   dashboard.section.header.opts = {
     position = 'center',
     hl = 'Normal',
@@ -86,8 +100,8 @@ function M.setup()
   local hi_top_section = {
     type = 'text',
     val = '┌────────────   Today is '
-    .. date
-    .. ' ────────────┐',
+      .. date
+      .. ' ────────────┐',
     opts = {
       position = 'center',
       hl = 'NormalInfo',
@@ -106,8 +120,8 @@ function M.setup()
   local hi_bottom_section = {
     type = 'text',
     val = '└───══───══───══───  '
-    .. datetime
-    .. '  ───══───══───══────┘',
+      .. datetime
+      .. '  ───══───══───══────┘',
     opts = {
       position = 'center',
       hl = 'NormalInfo',
@@ -198,7 +212,7 @@ function M.setup()
     layout = {
       { type = 'padding', val = 2 },
       section.header,
-      { type = 'padding', val = 1 },
+      { type = 'padding', val = 0 },
       section.hi_top_section,
       section.hi_middle_section,
       section.hi_bottom_section,

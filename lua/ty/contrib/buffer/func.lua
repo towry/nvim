@@ -2,6 +2,10 @@ local M = {}
 ---@diagnostic disable-next-line: deprecated
 local unpack = table.unpack or unpack
 
+local function start_dashboard()
+  vim.cmd('Alpha')
+end
+
 M.switch_to_buffer_by_index = function(i)
   local bufs = require('lualine.components.buffers').bufpos2nr
   local bufn = bufs[i]
@@ -14,7 +18,32 @@ M.switch_to_buffer_by_index = function(i)
   return vim.cmd('LualineBuffersJump! ' .. i)
 end
 
-M.close_buffer = function() vim.cmd('Sayonara!') end
+-- close buffer and keep window layout
+M.close_buffer = function()
+  require('mini.bufremove').delete(0)
+  vim.schedule(function()
+    if #require('ty.core.buffer').list_bufnrs() <= 0 then
+      local cur_empty = require('ty.core.buffer').get_current_empty_buffer()
+      start_dashboard()
+      if cur_empty then
+        vim.api.nvim_buf_delete(cur_empty, { force = true })
+      end
+    end
+  end)
+end
+
+M.close_bufwin = function()
+  vim.cmd('bdelete')
+  vim.schedule(function()
+    if #require('ty.core.buffer').list_bufnrs() <= 0 then
+      local cur_empty = require('ty.core.buffer').get_current_empty_buffer()
+      start_dashboard()
+      if cur_empty then
+        vim.api.nvim_buf_delete(cur_empty, { force = true })
+      end
+    end
+  end)
+end
 
 M.move_cursor_to_window = function(dir_str)
   local ok, splits = pcall(require, 'smart-splits')

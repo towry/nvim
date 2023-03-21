@@ -34,7 +34,7 @@ return function(client, buffer)
   end
   if cap.renameProvider then n('<leader>cr', _('Rename'), cmd([[lua Ty.Func.editing.rename_name()]], opts)) end
   nv('<leader>ca', _('Code Action'), cmd([[lua Ty.Func.editing.open_code_action()]], opts))
-  nv('<leader>cf', _('Format code'), cmd([[lua Ty.Func.editing.format_code()]], opts))
+  nv('<leader>cf', _('Format code'), cmd([[lua Ty.Func.editing.format_code(0, { async = true })]], opts))
   n('<leader>ct', _('Peek type definition'), cmd('lua Ty.Func.editing.peek_type_definition()'))
   n('<leader>cp', _('Peek definition'), cmd([[lua Ty.Func.editing.peek_definition()]], opts))
   n('<leader>cm', _('Show signature help'), cmd('lua Ty.Func.editing.show_signature_help()', opts))
