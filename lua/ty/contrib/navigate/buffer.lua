@@ -21,7 +21,9 @@ M.next_unsaved_buf = function()
   end
   local next_buf = unsaved_buffers[next_buf_index]
   if not next_buf or next_buf < 1 then return end
-  vim.api.nvim_set_current_buf(next_buf)
+
+  Buffer.set_current_buffer_focus(next_buf)
+  -- vim.api.nvim_set_current_buf(next_buf)
 end
 
 M.prev_unsaved_buf = function()
@@ -43,7 +45,8 @@ M.prev_unsaved_buf = function()
   end
   local prev_buf = unsaved_buffers[prev_buf_index]
   if not prev_buf or prev_buf < 1 then return end
-  vim.api.nvim_set_current_buf(prev_buf)
+  Buffer.set_current_buffer_focus(prev_buf)
+  -- vim.api.nvim_set_current_buf(prev_buf)
 end
 
 return M

@@ -201,6 +201,7 @@ function M.buffers()
   local builtin = require('telescope.builtin')
   local actions = require('telescope.actions')
   local actionstate = require('telescope.actions.state')
+  local Buffer = require('ty.core.buffer')
 
   builtin.buffers({
     ignore_current_buffer = true,
@@ -230,12 +231,7 @@ function M.buffers()
           return
         end
         local bufnr = entry.bufnr
-        local buf_win_id = unpack(vim.fn.win_findbuf(bufnr))
-        if buf_win_id ~= nil then
-          vim.api.nvim_set_current_win(buf_win_id)
-          return
-        end
-        vim.api.nvim_set_current_buf(bufnr)
+        Buffer.set_current_buffer_focus(bufnr)
       end
 
       map('i', '<C-h>', close_buf)

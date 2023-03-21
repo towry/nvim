@@ -90,4 +90,16 @@ function M.getfsize(bufnr)
   return size
 end
 
+-- set the current buffer, if already showed in visible windows,
+-- switch focus to it's window.
+function M.set_current_buffer_focus(bufnr)
+  local buf_win_id = unpack(vim.fn.win_findbuf(bufnr))
+  if buf_win_id ~= nil then
+    vim.api.nvim_set_current_win(buf_win_id)
+    return
+  end
+
+  vim.api.nvim_set_current_buf(bufnr)
+end
+
 return M
