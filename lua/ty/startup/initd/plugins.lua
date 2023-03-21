@@ -50,12 +50,14 @@ return {
   end,
   buffer = function()
     return {
-      init = function() end,
+      init = function()
+      end,
     }
   end,
   debugger = function()
     return {
-      neotest = function() end,
+      neotest = function()
+      end,
     }
   end,
   editing = function()
@@ -73,12 +75,12 @@ return {
 
           local current_timeoutlen = vim.opt.timeoutlen:get() or 400
           au.with_group('no_insert_delay')
-            :create('InsertEnter', {
-              callback = function() vim.opt.timeoutlen = 1 end,
-            })
-            :create('InsertLeave', {
-              callback = function() vim.opt.timeoutlen = current_timeoutlen end,
-            })
+              :create('InsertEnter', {
+                callback = function() vim.opt.timeoutlen = 1 end,
+              })
+              :create('InsertLeave', {
+                callback = function() vim.opt.timeoutlen = current_timeoutlen end,
+              })
         end
 
         init_autocmds()
@@ -106,7 +108,7 @@ return {
           pattern = '*',
           once = true,
           callback = function()
-            vim.defer_fn(function() require('alpha').start(true) end, 10)
+            vim.defer_fn(function() require('alpha').start(true) end, 1)
           end,
         })
       end,
@@ -148,7 +150,6 @@ return {
       end,
     }
   end,
-
   keymaps = function()
     return {
       init = function()
@@ -172,7 +173,6 @@ return {
       end,
     }
   end,
-
   term = function()
     return {
       init = function()
@@ -209,9 +209,9 @@ return {
         vim.cmd('autocmd! TermOpen term://* lua Ty.set_terminal_keymaps()')
         vim.keymap.set('n', '<C-\\>', function()
           if vim.tbl_contains({
-            'NvimTree',
-            'lazy',
-          }, vim.bo.filetype) then
+                'NvimTree',
+                'lazy',
+              }, vim.bo.filetype) then
             return
           end
           if vim.v.count <= 1 then
@@ -226,7 +226,6 @@ return {
       end,
     }
   end,
-
   ui = function()
     local inited = false
     local ui_config = Ty.Config.ui
@@ -243,7 +242,6 @@ return {
         au.on_need_hl_update(hl_update_callback)
         inited = true
       end,
-
       dressing = function()
         ---@diagnostic disable-next-line: duplicate-set-field
         vim.ui.select = function(...)
@@ -269,7 +267,6 @@ return {
           require('notify')(msg, ...)
         end
       end,
-
       everforest = function()
         -- @see https://github.com/sainnhe/everforest/blob/master/doc/everforest.txt
         local theme = require('ty.contrib.ui').theme_everforest
