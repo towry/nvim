@@ -657,6 +657,10 @@ return {
       end,
       ImportOption = 'chat_gpt',
     },
+    {
+      'dstein64/vim-startuptime',
+      lazy = false,
+    },
   },
 
   ui = {

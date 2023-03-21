@@ -101,7 +101,15 @@ return {
   end,
   editor = function(F)
     return {
-      init = function() require('alpha').start(true) end,
+      init = function()
+        vim.api.nvim_create_autocmd({ 'UIEnter' }, {
+          pattern = '*',
+          once = true,
+          callback = function()
+            vim.defer_fn(function() require('alpha').start(true) end, 10)
+          end,
+        })
+      end,
       cursor_beacon = function()
         vim.g.beacon_ignore_buffers = { 'quickfix' }
         vim.g.beacon_ignore_filetypes = {
@@ -145,19 +153,20 @@ return {
     return {
       init = function()
         local autocmd = au
+        local aug = autocmd.with_group('attach_binding')
+        autocmd.on_attach(require('ty.contrib.keymaps.attach.lsp'), aug.group)
+
+        require('ty.contrib.keymaps.attach.git_blame')(aug)
+        require('ty.contrib.keymaps.attach.npm')(aug)
+        require('ty.contrib.keymaps.attach.jest')(aug)
+
         vim.api.nvim_create_autocmd('User', {
           pattern = 'VeryLazy',
           callback = function()
-            require('ty.contrib.keymaps.basic')
-
-            local aug = autocmd.with_group('attach_binding')
-            autocmd.on_attach(require('ty.contrib.keymaps.attach.lsp'), aug.group)
-
-            require('ty.contrib.keymaps.attach.git_blame')(aug)
-            require('ty.contrib.keymaps.attach.npm')(aug)
-            require('ty.contrib.keymaps.attach.jest')(aug)
-
-            if Utils.has_plugin('which-key.nvim') then require('ty.contrib.keymaps.whichkey').init() end
+            vim.defer_fn(function()
+              require('ty.contrib.keymaps.basic')
+              if Utils.has_plugin('which-key.nvim') then require('ty.contrib.keymaps.whichkey').init() end
+            end, 10)
           end,
         })
       end,

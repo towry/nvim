@@ -75,8 +75,10 @@ local lazy_opts = {
       enabled = true,
     },
     rtp = {
+      -- https://github.com/neovim/neovim/tree/master/runtime/plugin
       disabled_plugins = {
-        'gzi',
+        'gzip',
+        'man',
         'matchit',
         'matchparen',
         'netrwPlugin',
@@ -84,6 +86,8 @@ local lazy_opts = {
         'tohtml',
         'tutor',
         'zipPlugin',
+        -- for downloading spell files.
+        'spellfile_plugin',
       },
     },
   },
