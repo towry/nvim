@@ -129,7 +129,7 @@ function M.setup()
 
   -- colorscheme
   vim.cmd('hi! link TelescopeBorder FloatBorder')
-  vim.cmd('hi! link TelescopePrompt FloatBorder')
+  vim.cmd('hi! link TelescopePromptNormal FloatBorder')
 end
 
 return M
