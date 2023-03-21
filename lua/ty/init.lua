@@ -3,11 +3,11 @@ local _inited = false
 
 local function resize_kitty()
   local kitty_aug = vim.api.nvim_create_augroup('kitty_aug', { clear = true })
-  vim.api.nvim_create_autocmd('UIEnter', {
+  vim.api.nvim_create_autocmd('User', {
     group = kitty_aug,
-    pattern = '*',
+    pattern = 'DashboardDismiss',
     callback = function()
-      vim.defer_fn(function() vim.cmd(':silent !kitty @ --to=$KITTY_LISTEN_ON set-spacing padding=0 margin=0') end, 0)
+      vim.cmd(':silent !kitty @ --to=$KITTY_LISTEN_ON set-spacing padding=0 margin=0')
     end,
   })
   vim.api.nvim_create_autocmd('UILeave', {

@@ -101,14 +101,16 @@ return {
       end,
     }
   end,
-  editor = function(F)
+  editor = function()
     return {
       init = function()
         vim.api.nvim_create_autocmd({ 'UIEnter' }, {
           pattern = '*',
           once = true,
           callback = function()
-            require('alpha').start(true)
+            vim.defer_fn(function()
+              require('alpha').start(true)
+            end, 1)
           end,
         })
       end,

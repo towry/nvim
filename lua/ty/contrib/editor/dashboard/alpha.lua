@@ -23,7 +23,12 @@ function M.init_manually()
       vim.api.nvim_create_autocmd('BufUnload', {
         group = 'alpha_tabline',
         buffer = 0,
-        command = 'setlocal showtabline=' .. showtabline .. ' ruler',
+        callback = function()
+          vim.cmd('setlocal showtabline=' .. showtabline .. ' ruler')
+          vim.api.nvim_exec_autocmds('User', {
+            pattern = 'DashboardDismiss',
+          })
+        end,
       })
     end,
   })
@@ -100,8 +105,8 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
   local hi_top_section = {
     type = 'text',
     val = '┌────────────   Today is '
-      .. date
-      .. ' ────────────┐',
+        .. date
+        .. ' ────────────┐',
     opts = {
       position = 'center',
       hl = 'NormalInfo',
@@ -120,8 +125,8 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
   local hi_bottom_section = {
     type = 'text',
     val = '└───══───══───══───  '
-      .. datetime
-      .. '  ───══───══───══────┘',
+        .. datetime
+        .. '  ───══───══───══────┘',
     opts = {
       position = 'center',
       hl = 'NormalInfo',
