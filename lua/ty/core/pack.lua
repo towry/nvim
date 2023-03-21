@@ -1,20 +1,5 @@
---[[
-  @usage:
-  ```lua
-  local pack = require("ty.core.pack").editing
-  pack({
-    "folke/lazy.nvim",
-    Feature = "format",
-    lazy = true,
-  })
-  ```
-]]
---
-local uv, api, fn = vim.loop, vim.api, vim.fn
+local uv, api = vim.loop, vim.api
 local config = require('ty.core.config')
-local utils = require('ty.core.utils')
----@diagnostic disable-next-line: deprecated
-local unpack = table.unpack or unpack
 
 local Spec = {
   ImportConfig = 'ImportConfig',
@@ -23,20 +8,17 @@ local Spec = {
   ImportInit = 'ImportInit',
 }
 
-if _G.cachedPack ~= nil then return _G.cachedPack end
-
 local pack = {
   repos = {},
   initd = {},
 }
 
 local lazy_opts = {
-  -- lockfile = self.path_helper.join(self.data_path, 'lazy-lock.json'),
   dev = {
     path = '~/workspace/git-repos',
     fallback = true,
   },
-  concurrency = 3,
+  concurrency = 5,
   install = { colorscheme = { config.ui.theme.colorscheme } },
   checker = { enabled = false },
   defaults = { lazy = true },
@@ -93,6 +75,10 @@ local lazy_opts = {
   },
 }
 
+local function path_join(...)
+  return table.concat(vim.tbl_flatten { ... }, '/')
+end
+
 function pack:load_modules_packages()
   local specs = require('ty.startup.repos')
   local plugins_initd = require('ty.startup.initd.plugins')
@@ -104,20 +90,17 @@ function pack:load_modules_packages()
     for _, repo in ipairs(plugins) do
       if type(repo[Spec.ImportConfig]) == 'string' and repo.config == nil then
         repo.config = function(...)
-          local args = ...
-          utils.try(function()
-            local is_ok, rc = pcall(require, 'ty.contrib.' .. scope .. '.package_rc')
-            if not is_ok then
-              print('package rc not found for ' .. scope)
-              return
-            end
-            local setup_method = rc['setup_' .. repo[Spec.ImportConfig]]
-            if type(setup_method) == 'function' then
-              setup_method(unpack(args))
-            else
-              error('invalid package ImportConfig for ' .. repo[Spec.ImportConfig])
-            end
-          end)
+          local is_ok, rc = pcall(require, 'ty.contrib.' .. scope .. '.package_rc')
+          if not is_ok then
+            print('package rc not found for ' .. scope)
+            return
+          end
+          local setup_method = rc['setup_' .. repo[Spec.ImportConfig]]
+          if type(setup_method) == 'function' then
+            setup_method(...)
+          else
+            error('invalid package ImportConfig for ' .. repo[Spec.ImportConfig])
+          end
         end
       end
       -- load opts.
@@ -137,11 +120,10 @@ function pack:load_modules_packages()
 end
 
 function pack:setup()
-  self.path_helper = require('ty.core.path')
   self.data_path = vim.fn.stdpath('data')
   self.config_path = vim.fn.stdpath('config')
 
-  local lazy_path = self.path_helper.join(self.data_path, 'lazy', 'lazy.nvim')
+  local lazy_path = path_join(self.data_path, 'lazy', 'lazy.nvim')
   local state = uv.fs_stat(lazy_path)
   if not state then
     local cmd = '!git clone https://github.com/folke/lazy.nvim ' .. lazy_path
@@ -163,18 +145,5 @@ function pack:setup()
   lazy.setup(self.repos, lazy_opts)
   self.repos = nil
 end
-
-function pack.package(repo) table.insert(pack.repos, repo) end
-
---- load plugin.
-pack.load = function(...) return require('lazy').load(...) end
-
--- set __index on pack, so we use access pack.xxx, we take xxx as scope and
--- return pack.contrib(xxx).
-setmetatable(pack, {
-  __index = function(_, key) return pack.contrib(key) end,
-})
-
-_G.cachedPack = pack
 
 return pack

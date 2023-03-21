@@ -167,7 +167,7 @@ return {
             vim.defer_fn(function()
               require('ty.contrib.keymaps.basic')
               if Utils.has_plugin('which-key.nvim') then require('ty.contrib.keymaps.whichkey').init() end
-            end, 10)
+            end, 1)
           end,
         })
       end,
@@ -209,9 +209,9 @@ return {
         vim.cmd('autocmd! TermOpen term://* lua Ty.set_terminal_keymaps()')
         vim.keymap.set('n', '<C-\\>', function()
           if vim.tbl_contains({
-                'NvimTree',
-                'lazy',
-              }, vim.bo.filetype) then
+            'NvimTree',
+            'lazy',
+          }, vim.bo.filetype) then
             return
           end
           if vim.v.count <= 1 then
@@ -243,14 +243,21 @@ return {
         inited = true
       end,
       dressing = function()
+        local is_inited = false
         ---@diagnostic disable-next-line: duplicate-set-field
         vim.ui.select = function(...)
-          require('ty.core.pack').load({ plugins = { 'dressing.nvim' } })
+          if not is_inited then
+            require('lazy').load({ plugins = { 'dressing.nvim' } })
+            is_inited = true
+          end
           return vim.ui.select(...)
         end
         ---@diagnostic disable-next-line: duplicate-set-field
         vim.ui.input = function(...)
-          require('ty.core.pack').load({ plugins = { 'dressing.nvim' } })
+          if not is_inited then
+            require('lazy').load({ plugins = { 'dressing.nvim' } })
+            is_inited = true
+          end
           return vim.ui.input(...)
         end
       end,
