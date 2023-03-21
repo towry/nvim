@@ -108,7 +108,7 @@ return {
           pattern = '*',
           once = true,
           callback = function()
-            vim.defer_fn(function() require('alpha').start(true) end, 1)
+            require('alpha').start(true)
           end,
         })
       end,

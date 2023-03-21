@@ -1,5 +1,4 @@
 local uv, api = vim.loop, vim.api
-local config = require('ty.core.config')
 
 local Spec = {
   ImportConfig = 'ImportConfig',
@@ -19,7 +18,7 @@ local lazy_opts = {
     fallback = true,
   },
   concurrency = 5,
-  install = { colorscheme = { config.ui.theme.colorscheme } },
+  install = { colorscheme = { Ty.Config.ui.theme.colorscheme } },
   checker = { enabled = false },
   defaults = { lazy = true },
   change_detection = {
