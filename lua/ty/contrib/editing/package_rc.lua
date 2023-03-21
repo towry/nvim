@@ -1,7 +1,6 @@
 local M = {}
 
 M.setup_lspconfig = require('ty.contrib.editing.lsp').setup
-M.init_lspconfig = require('ty.contrib.editing.lsp').init
 M.setup_nvim_ufo = require('ty.contrib.editing.folding').setup_ufo
 M.setup_switch = require('ty.contrib.editing.switch_rc').setup
 M.setup_yanky = require('ty.contrib.editing.yanky_rc').setup

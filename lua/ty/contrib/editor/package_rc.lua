@@ -32,24 +32,6 @@ M.setup_todo_comments = function()
   })
 end
 
-M.init_cursor_beacon = function()
-  vim.g.beacon_ignore_buffers = { 'quickfix' }
-  vim.g.beacon_ignore_filetypes = {
-    'alpha',
-    'lazy',
-    'TelescopePrompt',
-    'term',
-    'nofile',
-    'spectre_panel',
-    'help',
-    'txt',
-    'log',
-    'Trouble',
-    'NvimTree',
-    'qf',
-  }
-  vim.g.beacon_size = 60
-end
 M.setup_cursor_beacon = function()
   local colors = require('ty.contrib.ui').colors()
   vim.api.nvim_set_hl(0, 'Beacon', {
@@ -103,7 +85,7 @@ M.setup_indent_line = function()
   })
 
   local _ = colors.indent_line_fg and vim.api.nvim_set_hl(0, 'IndentBlanklineChar', { fg = colors.indent_line_fg })
-      or nil
+    or nil
 end
 
 M.option_true_zen = {

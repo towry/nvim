@@ -23,21 +23,4 @@ M.setup = function()
   -- https://github.com/echasnovski/mini.nvim/blob/main/doc/mini-bufremove.txt
 end
 
-M.init = function()
-  vim.api.nvim_create_autocmd('BufWinEnter', {
-    pattern = '*',
-    group = vim.api.nvim_create_augroup('MiniIdentEnter', {
-      clear = true,
-    }),
-    callback = function()
-      if vim.bo.buftype == '' then
-        -- normal file.
-        vim.b.miniindentscope_disable = false
-      else
-        vim.b.miniindentscope_disable = true
-      end
-    end,
-  })
-end
-
 return M

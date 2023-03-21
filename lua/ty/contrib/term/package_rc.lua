@@ -28,7 +28,7 @@ M.setup_toggleterm = function()
         link = 'FloatBorder',
       },
     },
-    shade_filetypes = { "none" },
+    shade_filetypes = { 'none' },
     shade_terminals = true,
     shading_factor = 1, -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
     start_in_insert = true,
@@ -51,39 +51,7 @@ M.setup_toggleterm = function()
     winbar = {
       enabled = false,
     },
-    on_open = function(_term)
-      vim.cmd('startinsert!')
-    end,
-  })
-end
-
-M.init_toggleterm = function()
-  Ty.set_terminal_keymaps = function()
-    local opts = { noremap = true }
-    vim.api.nvim_buf_set_keymap(0, 't', '<C-\\>', [[<C-\><C-n>:ToggleTerm<CR>]], opts)
-    vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>:ToggleTerm<CR>]], opts)
-    vim.api.nvim_buf_set_keymap(0, 't', '<C-e>', [[<C-\><C-n>:]], opts)
-    vim.api.nvim_buf_set_keymap(0, 't', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
-    vim.api.nvim_buf_set_keymap(0, 't', '<C-j>', [[<C-\><C-n><C-W>j]], opts)
-    vim.api.nvim_buf_set_keymap(0, 't', '<C-k>', [[<C-\><C-n><C-W>k]], opts)
-    vim.api.nvim_buf_set_keymap(0, 't', '<C-l>', [[<C-\><C-n><C-W>l]], opts)
-  end
-  vim.cmd('autocmd! TermOpen term://* lua Ty.set_terminal_keymaps()')
-  vim.keymap.set('n', '<C-\\>', function()
-    if vim.tbl_contains({
-          'NvimTree',
-          'lazy',
-        }, vim.bo.filetype) then
-      return
-    end
-    if vim.v.count <= 1 then
-      vim.cmd([[1ToggleTerm direction=float]])
-    else
-      vim.cmd(vim.v.count .. [[ToggleTerm direction=horizontal]])
-    end
-  end, {
-    desc = 'toggle term',
-    silent = true,
+    on_open = function(_term) vim.cmd('startinsert!') end,
   })
 end
 
@@ -91,45 +59,37 @@ M.option_term_flatten = {
   callbacks = {
     pre_open = function()
       -- Close toggleterm when an external open request is received
-      require("toggleterm").toggle(0)
+      require('toggleterm').toggle(0)
     end,
     post_open = function(bufnr, winnr, ft)
-      if ft == "gitcommit" then
+      if ft == 'gitcommit' then
         -- If the file is a git commit, create one-shot autocmd to delete it on write
         -- If you just want the toggleable terminal integration, ignore this bit and only use the
         -- code in the else block
-        vim.api.nvim_create_autocmd(
-          "BufWritePost",
-          {
-            buffer = bufnr,
-            once = true,
-            callback = function()
-              -- This is a bit of a hack, but if you run bufdelete immediately
-              -- the shell can occasionally freeze
-              vim.defer_fn(
-                function()
-                  vim.api.nvim_buf_delete(bufnr, {})
-                end,
-                50
-              )
-            end
-          }
-        )
+        vim.api.nvim_create_autocmd('BufWritePost', {
+          buffer = bufnr,
+          once = true,
+          callback = function()
+            -- This is a bit of a hack, but if you run bufdelete immediately
+            -- the shell can occasionally freeze
+            vim.defer_fn(function() vim.api.nvim_buf_delete(bufnr, {}) end, 50)
+          end,
+        })
       else
         -- If it's a normal file, then reopen the terminal, then switch back to the newly opened window
         -- This gives the appearance of the window opening independently of the terminal
-        require("toggleterm").toggle(0)
+        require('toggleterm').toggle(0)
         vim.api.nvim_set_current_win(winnr)
       end
     end,
     block_end = function()
       -- After blocking ends (for a git commit, etc), reopen the terminal
-      require("toggleterm").toggle(0)
-    end
+      require('toggleterm').toggle(0)
+    end,
   },
   window = {
-    open = "current",
-  }
+    open = 'current',
+  },
 }
 
 return M
