@@ -115,20 +115,26 @@ return {
       end,
     }
   end,
+
   keymaps = function()
     return {
       init = function()
         local autocmd = au
-        require('ty.contrib.keymaps.basic')
+        vim.api.nvim_create_autocmd('User', {
+          pattern = 'VeryLazy',
+          callback = function()
+            require('ty.contrib.keymaps.basic')
 
-        local aug = autocmd.with_group('attach_binding')
-        autocmd.on_attach(require('ty.contrib.keymaps.attach.lsp'), aug.group)
+            local aug = autocmd.with_group('attach_binding')
+            autocmd.on_attach(require('ty.contrib.keymaps.attach.lsp'), aug.group)
 
-        require('ty.contrib.keymaps.attach.git_blame')(aug)
-        require('ty.contrib.keymaps.attach.npm')(aug)
-        require('ty.contrib.keymaps.attach.jest')(aug)
+            require('ty.contrib.keymaps.attach.git_blame')(aug)
+            require('ty.contrib.keymaps.attach.npm')(aug)
+            require('ty.contrib.keymaps.attach.jest')(aug)
 
-        if Utils.has_plugin('which-key.nvim') then require('ty.contrib.keymaps.whichkey').init() end
+            if Utils.has_plugin('which-key.nvim') then require('ty.contrib.keymaps.whichkey').init() end
+          end,
+        })
       end,
     }
   end,
@@ -198,7 +204,6 @@ return {
           function() vim.cmd('colorscheme ' .. ui_config.theme.colorscheme or default_colorscheme) end,
           'error when loading colorscheme'
         )
-
         local hl_update_callback = require('ty.contrib.ui.on_need_hl_update')
         hl_update_callback()
         au.on_need_hl_update(hl_update_callback)
