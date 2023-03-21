@@ -1,6 +1,5 @@
 local M = {}
 local _inited = false
-local autocmd = require('ty.core.autocmd')
 
 local function resize_kitty()
   local kitty_aug = vim.api.nvim_create_augroup('kitty_aug', { clear = true })
