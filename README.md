@@ -15,12 +15,9 @@ ty
 │  │  │  └─ rules.lua
 │  │  ├─ cmp_rc
 │  │  │  └─ init.lua
-│  │  ├─ config.lua
-│  │  ├─ package.lua
-│  │  └─ package_rc.lua
+│  │  └─ config.lua
 │  ├─ buffer
 │  │  ├─ func.lua
-│  │  ├─ package.lua
 │  │  ├─ package_rc.lua
 │  │  └─ splits_rc.lua
 │  ├─ common
@@ -32,15 +29,14 @@ ty
 │  │  │  ├─ multi-rg-picker.lua
 │  │  │  └─ pickers.lua
 │  │  ├─ legendary_rc.lua
-│  │  ├─ package.lua
-│  │  └─ package_rc.lua
+│  │  ├─ package_rc.lua
+│  │  └─ whichkey_rc.lua
 │  ├─ debugger
 │  │  ├─ dap
 │  │  │  └─ init.lua
 │  │  ├─ neotest
 │  │  │  └─ init.lua
 │  │  ├─ config.lua
-│  │  ├─ package.lua
 │  │  └─ package_rc.lua
 │  ├─ editing
 │  │  ├─ folding
@@ -53,7 +49,7 @@ ty
 │  │  │  │  ├─ graphql.lua
 │  │  │  │  ├─ html.lua
 │  │  │  │  ├─ jsonls.lua
-│  │  │  │  ├─ sumneko_lua.lua
+│  │  │  │  ├─ lua_ls.lua
 │  │  │  │  ├─ tailwindcss.lua
 │  │  │  │  ├─ tsserver.lua
 │  │  │  │  └─ vuels.lua
@@ -68,8 +64,6 @@ ty
 │  │  │  └─ null-ls.lua
 │  │  ├─ config.lua
 │  │  ├─ func.lua
-│  │  ├─ init.lua
-│  │  ├─ package.lua
 │  │  ├─ package_rc.lua
 │  │  ├─ switch_rc.lua
 │  │  └─ yanky_rc.lua
@@ -79,15 +73,11 @@ ty
 │  │  │  └─ init.lua
 │  │  ├─ config.lua
 │  │  ├─ func.lua
-│  │  ├─ init.lua
-│  │  ├─ package.lua
 │  │  └─ package_rc.lua
 │  ├─ explorer
 │  │  ├─ nvim-tree
 │  │  ├─ config.lua
 │  │  ├─ func.lua
-│  │  ├─ init.lua
-│  │  ├─ package.lua
 │  │  └─ package_rc.lua
 │  ├─ git
 │  ├─ keymaps
@@ -98,6 +88,7 @@ ty
 │  ├─ tools
 │  └─ ui
 ├─ core
+├─ startup
 └─ init.lua
 ```
 
