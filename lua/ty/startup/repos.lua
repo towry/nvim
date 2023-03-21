@@ -105,7 +105,6 @@ return {
     },
     {
       'windwp/nvim-autopairs',
-      -- lazy = false,
       event = { 'InsertEnter' },
       Feature = 'autocomplete',
       config = function() require('ty.contrib.autocmp.autopairs_rc').setup() end,
@@ -114,42 +113,17 @@ return {
       -- https://github.com/dermoumi/dotfiles/blob/418de1a521e4f4ac6dc0aa10e75ffb890b0cb908/nvim/lua/plugins/copilot.lua#L4
       'github/copilot.vim',
       event = { 'InsertEnter' },
-      keys = { { '<C-_>', mode = 'i' } },
+      keys = { { '<C-/>', mode = 'i' } },
       cmd = { 'Copilot' },
       config = function()
-        -- vim.keymap.set({ "i" }, "<C-e>", [[copilot#Accept("")]], {
-        --   silent = true,
-        --   expr = true,
-        --   script = true,
-        -- })
-        vim.keymap.set({ 'i' }, '<C-_>', 'copilot#Suggest()', {
+        -- <C-/>
+        vim.keymap.set({ 'i' }, '<C-/>', 'copilot#Suggest()', {
           silent = true,
           expr = true,
           script = true,
         })
       end,
-      init = function()
-        vim.g.copilot_filetypes = {
-          ['*'] = true,
-          ['TelescopePrompt'] = false,
-          ['TelescopeResults'] = false,
-        }
-        vim.g.copilot_no_tab_map = true
-        vim.g.copilot_tab_fallback = ''
-        vim.g.copilot_assume_mapped = true
-        vim.g.copilot_proxy = '127.0.0.1:1080'
-        vim.g.copilot_proxy_strict_ssl = false
-        vim.api.nvim_create_autocmd({ 'FileType' }, {
-          pattern = 'copilot.*',
-          callback = function(ctx)
-            vim.keymap.set('n', 'q', '<cmd>close<cr>', {
-              silent = true,
-              buffer = ctx.buf,
-              noremap = true,
-            })
-          end,
-        })
-      end,
+      ImportInit = 'copilot',
     },
   },
 
@@ -707,35 +681,12 @@ return {
     },
     {
       'stevearc/dressing.nvim',
-      init = function()
-        ---@diagnostic disable-next-line: duplicate-set-field
-        vim.ui.select = function(...)
-          require('ty.core.pack').load({ plugins = { 'dressing.nvim' } })
-          return vim.ui.select(...)
-        end
-        ---@diagnostic disable-next-line: duplicate-set-field
-        vim.ui.input = function(...)
-          require('ty.core.pack').load({ plugins = { 'dressing.nvim' } })
-          return vim.ui.input(...)
-        end
-      end,
+      ImportInit = 'dressing',
       ImportConfig = 'dressing',
     },
     {
       'rcarriga/nvim-notify',
-      init = function()
-        local banned_msgs = {
-          'No information available',
-          'LSP[tsserver] Inlay Hints request failed. File not opened in the editor.',
-          'LSP[tsserver] Inlay Hints request failed. Requires TypeScript 4.4+.',
-        }
-        vim.notify = function(msg, ...)
-          -- check banned_msgs contains msg with reg match
-          if vim.tbl_contains(banned_msgs, msg) then return end
-
-          require('notify')(msg, ...)
-        end
-      end,
+      ImportInit = 'notify',
       ImportConfig = 'notify',
     },
   },

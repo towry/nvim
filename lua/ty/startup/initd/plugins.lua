@@ -22,7 +22,32 @@ return {
       end,
     }
   end,
-  autocmp = function() return {} end,
+  autocmp = function()
+    return {
+      copilot = function()
+        vim.g.copilot_filetypes = {
+          ['*'] = true,
+          ['TelescopePrompt'] = false,
+          ['TelescopeResults'] = false,
+        }
+        vim.g.copilot_no_tab_map = true
+        vim.g.copilot_tab_fallback = ''
+        vim.g.copilot_assume_mapped = true
+        vim.g.copilot_proxy = '127.0.0.1:1080'
+        vim.g.copilot_proxy_strict_ssl = false
+        vim.api.nvim_create_autocmd({ 'FileType' }, {
+          pattern = 'copilot.*',
+          callback = function(ctx)
+            vim.keymap.set('n', 'q', '<cmd>close<cr>', {
+              silent = true,
+              buffer = ctx.buf,
+              noremap = true,
+            })
+          end,
+        })
+      end,
+    }
+  end,
   buffer = function()
     return {
       init = function() end,
@@ -220,6 +245,19 @@ return {
         vim.ui.input = function(...)
           require('ty.core.pack').load({ plugins = { 'dressing.nvim' } })
           return vim.ui.input(...)
+        end
+      end,
+      notify = function()
+        local banned_msgs = {
+          'No information available',
+          'LSP[tsserver] Inlay Hints request failed. File not opened in the editor.',
+          'LSP[tsserver] Inlay Hints request failed. Requires TypeScript 4.4+.',
+        }
+        vim.notify = function(msg, ...)
+          -- check banned_msgs contains msg with reg match
+          if vim.tbl_contains(banned_msgs, msg) then return end
+
+          require('notify')(msg, ...)
         end
       end,
 
