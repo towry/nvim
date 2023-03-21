@@ -64,6 +64,17 @@ function M.unsaved_list()
   return valid_buffers
 end
 
+---@return number|nil buffer number
+function M.get_current_empty_buffer()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local name = vim.api.nvim_buf_get_name(bufnr)
+  local ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+  if name == '' and ft == '' then
+    return bufnr
+  end
+  return nil
+end
+
 function M.getfsize(bufnr)
   local file = nil
   if bufnr == nil then
