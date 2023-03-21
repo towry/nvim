@@ -7,7 +7,7 @@ local function resize_kitty()
     group = kitty_aug,
     pattern = '*',
     callback = function()
-      vim.defer_fn(function() vim.cmd(':silent !kitty @ --to=$KITTY_LISTEN_ON set-spacing padding=0 margin=0') end, 10)
+      vim.defer_fn(function() vim.cmd(':silent !kitty @ --to=$KITTY_LISTEN_ON set-spacing padding=0 margin=0') end, 1)
     end,
   })
   vim.api.nvim_create_autocmd('UILeave', {
