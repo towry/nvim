@@ -29,7 +29,7 @@ function M.setup()
 
   require('ty.core.globals')
   require('ty.core.options').setup()
-  pcall(require, 'settings_env') -- load env settings
+  -- pcall(require, 'settings_env') -- load env settings
   require('ty.core.pack'):setup()
 end
 

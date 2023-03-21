@@ -3,10 +3,6 @@ local config = require('ty.core.config')
 return {
   common = {
     {
-      'lewis6991/impatient.nvim',
-      lazy = false,
-    },
-    {
       'nvim-lua/plenary.nvim',
     },
     {
