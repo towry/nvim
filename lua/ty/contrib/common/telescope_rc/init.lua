@@ -126,6 +126,10 @@ function M.setup()
   require('telescope').load_extension('git_worktree')
   require('telescope').load_extension('cheatsheet')
   require('telescope').load_extension("termfinder")
+
+  -- colorscheme
+  vim.cmd('hi! link TelescopeBorder FloatBorder')
+  vim.cmd('hi! link TelescopePrompt FloatBorder')
 end
 
 return M
