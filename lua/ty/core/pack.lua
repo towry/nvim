@@ -27,6 +27,7 @@ if _G.cachedPack ~= nil then return _G.cachedPack end
 
 local pack = {
   repos = {},
+  initd = {},
 }
 
 local lazy_opts = {
@@ -54,14 +55,14 @@ local lazy_opts = {
   },
   custom_keys = {
     -- open lazygit log
-    ["<localleader>l"] = function(plugin)
-      require("lazy.util").float_term({ "lazygit", "log" }, {
+    ['<localleader>l'] = function(plugin)
+      require('lazy.util').float_term({ 'lazygit', 'log' }, {
         cwd = plugin.dir,
       })
     end,
     -- open a terminal for the plugin dir
-    ["<localleader>t"] = function(plugin)
-      require("lazy.util").float_term(nil, {
+    ['<localleader>t'] = function(plugin)
+      require('lazy.util').float_term(nil, {
         cwd = plugin.dir,
       })
     end,
@@ -89,36 +90,45 @@ local lazy_opts = {
 }
 
 function pack:load_modules_packages()
-  local modules_dir = self.path_helper.join(self.config_path, 'lua', 'ty', 'contrib')
-  self.repos = {}
+  local specs = require('ty.startup.repos')
+  local plugins_initd = require('ty.startup.initd.plugins')
+  -- specs is dict with { 'scope': list of plugins }
+  for scope, plugins in pairs(specs) do
+    local scoped_initd = type(plugins_initd[scope]) == 'function' and plugins_initd[scope]() or {}
+    if scoped_initd.init then table.insert(pack.initd, scoped_initd.init) end
 
-  local list = vim.fn.globpath(modules_dir, '*/package.lua', false, true)
-
-  if #list == 0 then return end
-
-  local disable_modules = {}
-
-  if fn.exists('g:disable_modules') == 1 then
-    disable_modules = vim.split(vim.g.disable_modules, ',', { trimempty = true })
-  end
-
-  for _, f in pairs(list) do
-    local _, pos = f:find(modules_dir)
-    f = f:sub(pos - #'ty/contrib' + 1, #f - 4)
-    if not vim.tbl_contains(disable_modules, f) then require(f) end
-  end
-end
-
-function pack:startup()
-  local modules_dir = self.path_helper.join(self.config_path, 'lua', 'ty', 'contrib')
-  local list = vim.fn.globpath(modules_dir, '*/init.lua', false, true)
-  if #list == 0 then return end
-  for _, f in pairs(list) do
-    local _, pos = f:find(modules_dir)
-    f = f:sub(pos - #'ty/contrib' + 1, #f - 4)
-    f = f:gsub('/init$', '') -- see below.
-    local mod = require(f)
-    if type(mod) == 'table' and type(mod.init) == 'function' then mod.init() end
+    for _, repo in ipairs(plugins) do
+      if type(repo[Spec.ImportConfig]) == 'string' and repo.config == nil then
+        repo.config = function(...)
+          local args = ...
+          utils.try(function()
+            local is_ok, rc = pcall(require, 'ty.contrib.' .. scope .. '.package_rc')
+            if not is_ok then
+              print('package rc not found for ' .. scope)
+              return
+            end
+            local setup_method = rc['setup_' .. repo[Spec.ImportConfig]]
+            if type(setup_method) == 'function' then
+              setup_method(unpack(args))
+            else
+              error('invalid package ImportConfig for ' .. repo[Spec.ImportConfig])
+            end
+          end)
+        end
+      end
+      -- load opts.
+      if type(repo[Spec.ImportOption]) == 'string' and repo.opts == nil then
+        repo.opts = function()
+          return require('ty.contrib.' .. scope .. '.package_rc')['option_' .. repo[Spec.ImportOption]]
+        end
+      end
+      -- load init.
+      if type(repo[Spec.ImportInit]) == 'string' and repo.init == nil and scoped_initd[repo[Spec.ImportInit]] then
+        repo.init = scoped_initd[repo[Spec.ImportInit]]
+      end
+      -- insert
+      table.insert(pack.repos, repo)
+    end
   end
 end
 
@@ -137,56 +147,20 @@ function pack:setup()
   local lazy = require('lazy')
 
   self:load_modules_packages()
+  vim.api.nvim_create_autocmd('User', {
+    group = vim.api.nvim_create_augroup('init_after_lazy_done', { clear = true }),
+    pattern = 'LazyDone',
+    callback = function()
+      for _, init in ipairs(pack.initd) do
+        init()
+      end
+    end,
+  })
   lazy.setup(self.repos, lazy_opts)
   self.repos = nil
 end
 
 function pack.package(repo) table.insert(pack.repos, repo) end
-
-function pack.contrib(scope)
-  return function(repo)
-    -- control the plugin by feature.
-    if repo.enabled == nil and repo.Feature then
-      repo.enabled = config[scope][repo.Feature]['enable'] == false and false or true
-    end
-    -- load config.
-    if type(repo[Spec.ImportConfig]) == 'string' and repo.config == nil then
-      local import_config = repo[Spec.ImportConfig]
-      repo[Spec.ImportConfig] = nil
-      repo.config = function(...)
-        local args = ...
-        utils.try(function()
-          local is_ok, rc = pcall(require, 'ty.contrib.' .. scope .. '.package_rc')
-          if not is_ok then
-            print('package rc not found for ' .. scope)
-            return
-          end
-          local setup_method = rc['setup_' .. import_config]
-          if type(setup_method) == 'function' then
-            setup_method(unpack(args))
-          else
-            error('invalid package ImportConfig for ' .. import_config)
-          end
-        end)
-      end
-    end
-    -- load opts.
-    if type(repo[Spec.ImportOption]) == 'string' and repo.opts == nil then
-      local import_opts = repo[Spec.ImportOption]
-      repo[Spec.ImportOption] = nil
-      repo.opts = function() return require('ty.contrib.' .. scope .. '.package_rc')['option_' .. import_opts] end
-    end
-    -- load init.
-    if type(repo[Spec.ImportInit]) == 'string' and repo.init == nil then
-      local import_init = repo[Spec.ImportInit]
-      repo[Spec.ImportInit] = nil
-      repo.init = function() require('ty.contrib.' .. scope .. '.package_rc')['init_' .. import_init]() end
-    end
-
-    -- add.
-    pack.package(repo)
-  end
-end
 
 --- load plugin.
 pack.load = function(...) return require('lazy').load(...) end

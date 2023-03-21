@@ -35,9 +35,10 @@ end
 local function footer()
   local ok, plugins = pcall(function() return require('lazy').stats().count end)
   if not ok then plugins = 0 end
-  local startup_time = require('lazy').stats().startuptime or 0
+  local stats = require('lazy').stats()
+  local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
   local v = vim.version()
-  return string.format(' v%d.%d.%d   %d   %sms ', v.major, v.minor, v.patch, plugins, startup_time)
+  return string.format(' v%d.%d.%d   %d   %sms ', v.major, v.minor, v.patch, plugins, ms)
 end
 
 function M.setup()
@@ -46,6 +47,16 @@ function M.setup()
   dashboard = require('alpha.themes.dashboard')
   local icons = require('ty.contrib.ui.icons')
   local if_nil = vim.F.if_nil
+
+  vim.api.nvim_create_autocmd('User', {
+    pattern = 'LazyVimStarted',
+    callback = function()
+      local stats = require('lazy').stats()
+      local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
+      dashboard.section.footer.val = footer()
+      pcall(vim.cmd.AlphaRedraw)
+    end,
+  })
 
   -- ╭──────────────────────────────────────────────────────────╮
   -- │ Header                                                   │
@@ -64,7 +75,7 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
   ]]
 
   local lines = {}
-  for line in header:gmatch("[^\r\n]+") do
+  for line in header:gmatch('[^\r\n]+') do
     table.insert(lines, line)
   end
 
@@ -89,8 +100,8 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
   local hi_top_section = {
     type = 'text',
     val = '┌────────────   Today is '
-        .. date
-        .. ' ────────────┐',
+      .. date
+      .. ' ────────────┐',
     opts = {
       position = 'center',
       hl = 'NormalInfo',
@@ -109,8 +120,8 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
   local hi_bottom_section = {
     type = 'text',
     val = '└───══───══───══───  '
-        .. datetime
-        .. '  ───══───══───══────┘',
+      .. datetime
+      .. '  ───══───══───══────┘',
     opts = {
       position = 'center',
       hl = 'NormalInfo',
