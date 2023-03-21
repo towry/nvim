@@ -56,7 +56,7 @@ function M.setup_interface()
   o.sidescrolloff = 8 -- Columns of context
   o.lazyredraw = false --- Makes macros faster & prevent errors in complicated mappings
   o.wildmode = 'longest:full,full' -- Command-line completion mode
-  o.cmdheight = 0 --- Give more space for displaying messages
+  o.cmdheight = 1 --- Give more space for displaying messages
   o.completeopt = 'menu,menuone,noselect' --- Better autocompletion
   o.cursorline = true --- Highlight of current line
   o.emoji = true --- Fix emoji display
