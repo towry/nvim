@@ -1,11 +1,15 @@
 local M = {}
 
 -- autoformat.
-local format_disabled = false
+local auto_format_disabled = false
+
+function M.auto_format_disabled()
+  return auto_format_disabled
+end
 
 function M.toggle_format()
-  format_disabled = not format_disabled
-  if format_disabled then
+  auto_format_disabled = not auto_format_disabled
+  if auto_format_disabled then
     Ty.NOTIFY('Auto format is disabled')
   else
     Ty.NOTIFY('Auto format is enabled')
@@ -26,7 +30,7 @@ function M.format(bufnr, opts)
     return
   end
 
-  if format_disabled and opts.auto then return end
+  if auto_format_disabled and opts.auto then return end
 
   local name = vim.b[bufnr or vim.api.nvim_get_current_buf()].formatter_name or nil
   local fmt_opts = {
