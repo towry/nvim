@@ -127,6 +127,13 @@ function M.default_functions()
       end,
       description = 'Toggle colorizer',
     },
+    {
+      function()
+        require('ty.contrib.common.telescope_rc.pickers').project_files_toggle_between_git_and_fd()
+        Ty.NOTIFY("Toggle between git and fd done", vim.log.levels.INFO)
+      end,
+      description = "Toggle telescope project files source, git or find files",
+    }
   }
 end
 

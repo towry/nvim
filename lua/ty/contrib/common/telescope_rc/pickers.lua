@@ -11,6 +11,12 @@ M.get_path_and_tail = function(filename)
   return bufname_tail, path_to_display
 end
 
+local use_find_files_instead_of_git = false
+
+M.project_files_toggle_between_git_and_fd = function()
+  use_find_files_instead_of_git = not use_find_files_instead_of_git
+end
+
 M.project_files = function(opts)
   local make_entry = require('telescope.make_entry')
   local strings = require('plenary.strings')
@@ -51,7 +57,7 @@ M.project_files = function(opts)
     return require('telescope.builtin').oldfiles(opts)
   end
 
-  if opts and opts.no_gitfiles then
+  if (opts and opts.no_gitfiles) or use_find_files_instead_of_git then
     return require('telescope.builtin').find_files(opts)
   end
 
