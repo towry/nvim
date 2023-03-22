@@ -9,6 +9,7 @@ local ui_inited = false
 local nvim_create_autocmd = vim_api.nvim_create_autocmd
 local vim_ui_select = vim.ui.select
 local vim_ui_input = vim.ui.input
+local start_without_buffer = vim.fn.argc( -1) == 0
 
 return {
   common = {
@@ -54,10 +55,12 @@ return {
     end,
   },
   buffer = {
-    init = function() end,
+    init = function()
+    end,
   },
   debugger = {
-    neotest = function() end,
+    neotest = function()
+    end,
   },
   editing = {
     init = function()
@@ -71,12 +74,12 @@ return {
 
         local current_timeoutlen = vim.opt.timeoutlen:get() or 400
         au.with_group('no_insert_delay')
-          :create('InsertEnter', {
-            callback = function() vim.opt.timeoutlen = 1 end,
-          })
-          :create('InsertLeave', {
-            callback = function() vim.opt.timeoutlen = current_timeoutlen end,
-          })
+            :create('InsertEnter', {
+              callback = function() vim.opt.timeoutlen = 1 end,
+            })
+            :create('InsertLeave', {
+              callback = function() vim.opt.timeoutlen = current_timeoutlen end,
+            })
       end
 
       init_autocmds()
@@ -98,7 +101,7 @@ return {
   },
   editor = {
     init = function()
-      if vim.fn.argc(-1) == 0 then
+      if start_without_buffer then
         nvim_create_autocmd({ 'UIEnter' }, {
           pattern = '*',
           once = true,
@@ -147,19 +150,30 @@ return {
     init = function()
       local autocmd = au
       local aug = autocmd.with_group('attach_binding')
-      autocmd.on_attach(require('ty.contrib.keymaps.attach.lsp'), aug.group)
+      local attach_keymaps = function()
+        autocmd.on_attach(require('ty.contrib.keymaps.attach.lsp'), aug.group)
 
-      require('ty.contrib.keymaps.attach.git_blame')(aug)
-      require('ty.contrib.keymaps.attach.npm')(aug)
-      require('ty.contrib.keymaps.attach.jest')(aug)
+        require('ty.contrib.keymaps.attach.git_blame')(aug)
+        require('ty.contrib.keymaps.attach.npm')(aug)
+        require('ty.contrib.keymaps.attach.jest')(aug)
+      end
+
+      if start_without_buffer then
+        nvim_create_autocmd('User', {
+          pattern = 'VeryLazy',
+          callback = function()
+            attach_keymaps()
+          end,
+        })
+      else
+        attach_keymaps()
+      end
 
       nvim_create_autocmd('User', {
         pattern = 'VeryLazy',
         callback = function()
-          vim.defer_fn(function()
-            require('ty.contrib.keymaps.basic')
-            if has_plugin('which-key.nvim') then require('ty.contrib.keymaps.whichkey').init() end
-          end, 0)
+          if has_plugin('which-key.nvim') then require('ty.contrib.keymaps.whichkey').init() end
+          require('ty.contrib.keymaps.basic')
         end,
       })
     end,
@@ -199,9 +213,11 @@ return {
       vim.cmd('autocmd! TermOpen term://* lua Ty.set_terminal_keymaps()')
       vim.keymap.set('n', '<C-\\>', function()
         if vim.tbl_contains({
-          'NvimTree',
-          'lazy',
-        }, vim.bo.filetype) then return end
+              'NvimTree',
+              'lazy',
+            }, vim.bo.filetype) then
+          return
+        end
         if vim.v.count <= 1 then
           vim.cmd([[1ToggleTerm direction=float]])
         else
