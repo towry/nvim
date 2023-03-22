@@ -68,18 +68,23 @@ local lazy_opts = {
   },
 }
 
-local function path_join(...) return table.concat(vim.tbl_flatten({ ... }), '/') end
-
 function pack.setup(repos, initd_list)
   local data_path = vim.fn.stdpath('data')
   local config_path = vim.fn.stdpath('config')
 
-  local lazy_path = path_join(data_path, 'lazy', 'lazy.nvim')
-  vim.opt.runtimepath:prepend(lazy_path)
-  local lazy_ok, lazy = pcall(require, 'lazy')
-  if not lazy_ok then
-    local cmd = '!git clone https://github.com/folke/lazy.nvim ' .. lazy_path
-    api.nvim_command(cmd)
+  local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+  vim.opt.rtp:prepend(lazypath)
+  local is_lazy_installed, lazy = pcall(require, 'lazy')
+  if not is_lazy_installed then
+    vim.fn.system({
+      'git',
+      'clone',
+      '--filter=blob:none',
+      'https://github.com/folke/lazy.nvim.git',
+      '--branch=stable', -- latest stable release
+      lazypath,
+    })
+    vim.opt.rtp:prepend(lazypath)
     lazy = require('lazy')
   end
 
