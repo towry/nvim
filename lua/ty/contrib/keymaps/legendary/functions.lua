@@ -112,6 +112,21 @@ function M.default_functions()
       end,
       description = "New black jack game",
     },
+    {
+
+      function()
+        utils.load_plugins('nvim-colorizer.lua')
+        vim.cmd('ColorizerAttachToBuffer')
+      end,
+      description = 'Enable colorizer on buffer (color)',
+    },
+    {
+      function()
+        utils.load_plugins('nvim-colorizer.lua')
+        vim.cmd('ToggleColorizer')
+      end,
+      description = 'Toggle colorizer',
+    },
   }
 end
 
