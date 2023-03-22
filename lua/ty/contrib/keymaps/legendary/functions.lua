@@ -123,7 +123,7 @@ function M.default_functions()
     {
       function()
         utils.load_plugins('nvim-colorizer.lua')
-        vim.cmd('ToggleColorizer')
+        vim.cmd('ColorizerToggle')
       end,
       description = 'Toggle colorizer',
     },
