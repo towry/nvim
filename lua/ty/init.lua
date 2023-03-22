@@ -1,9 +1,7 @@
-pcall(require, 'impatient')
 require('ty.core.globals')
 
 local M = {}
 local _inited = false
-local startup_repos = require('ty.startup.repos')
 
 local function resize_kitty()
   local kitty_aug = vim.api.nvim_create_augroup('kitty_aug', { clear = true })
@@ -38,6 +36,7 @@ function M.setup()
 
   resize_kitty()
   require('ty.core.options').setup()
+  local startup_repos = require('ty.startup.repos')
   require('ty.core.pack').setup(startup_repos.repos, startup_repos.initd)
 end
 

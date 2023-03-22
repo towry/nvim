@@ -5,10 +5,6 @@ local _ = require('ty.startup.utils').load_modules_packages
 return _({
   common = {
     {
-      'lewis6991/impatient.nvim',
-      lazy = false,
-    },
-    {
       'nvim-lua/plenary.nvim',
     },
     {
