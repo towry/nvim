@@ -80,8 +80,9 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
   ]]
 
   local lines = {}
+  local insert = table.insert
   for line in header:gmatch('[^\r\n]+') do
-    table.insert(lines, line)
+    insert(lines, line)
   end
 
   dashboard.section.header.type = 'text'
@@ -105,8 +106,8 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
   local hi_top_section = {
     type = 'text',
     val = '┌────────────   Today is '
-        .. date
-        .. ' ────────────┐',
+    .. date
+    .. ' ────────────┐',
     opts = {
       position = 'center',
       hl = 'NormalInfo',
@@ -125,8 +126,8 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
   local hi_bottom_section = {
     type = 'text',
     val = '└───══───══───══───  '
-        .. datetime
-        .. '  ───══───══───══────┘',
+    .. datetime
+    .. '  ───══───══───══────┘',
     opts = {
       position = 'center',
       hl = 'NormalInfo',

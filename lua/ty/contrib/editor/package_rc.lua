@@ -127,10 +127,25 @@ M.option_guess_indent = {
 }
 
 M.option_rooter = {
-  rooter_patterns = config:get('rooter.patterns'),
-  trigger_patterns = { '*' },
-  manual = false,
+  patterns = config:get('rooter.patterns'),
+  manual_mode = false,
   Feature = 'rooter',
+  -- Table of lsp clients to ignore by name
+  -- eg: { "efm", ... }
+  ignore_lsp = {},
+  -- Don't calculate root dir on specific directories
+  -- Ex: { "~/.cargo/*", ... }
+  exclude_dirs = {},
+  -- Show hidden files in telescope
+  show_hidden = false,
+  -- When set to false, you will get a message when project.nvim changes your
+  -- directory.
+  silent_chdir = true,
+  -- What scope to change the directory, valid options are
+  -- * global (default)
+  -- * tab
+  -- * win
+  scope_chdir = 'global',
 }
 
 M.option_buf_lastplace = {

@@ -1,7 +1,13 @@
 local config = require('ty.core.config')
+local initd = require('ty.startup.initd.plugins')
+local _ = require('ty.startup.utils').load_modules_packages
 
-return {
+return _({
   common = {
+    {
+      'lewis6991/impatient.nvim',
+      lazy = false,
+    },
     {
       'nvim-lua/plenary.nvim',
     },
@@ -336,8 +342,9 @@ return {
       ImportConfig = 'dashboard',
     },
     {
-      'notjedi/nvim-rooter.lua',
-      event = { 'BufReadPost', 'BufNewFile' },
+      'ahmedkhalf/project.nvim',
+      name = 'project_nvim',
+      event = { 'VeryLazy' },
       ImportOption = 'rooter',
     },
     {
@@ -694,4 +701,4 @@ return {
       ImportConfig = 'notify',
     },
   },
-}
+}, initd)
