@@ -658,6 +658,11 @@ return _({
     },
     {
       'alanfortlink/blackjack.nvim',
+    },
+    {
+      'nvim-colortils/colortils.nvim',
+      cmd = 'Colortils',
+      config = true
     }
   },
   ui = {
