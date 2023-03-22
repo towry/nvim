@@ -1,9 +1,5 @@
 # Towry's hand crafted NeoVim config
 
-## TODO
-
-- improve the init.
-
 ## Folder structure
 
 ```tree
@@ -91,6 +87,10 @@ ty
 ├─ startup
 └─ init.lua
 ```
+
+## FYI
+
+- If there is something wrong with treesitter, try run `TSUpdate`.
 
 ## Big thanks to
 
