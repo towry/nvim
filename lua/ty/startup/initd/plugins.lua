@@ -7,8 +7,6 @@ local editing_config = Ty.Config.editing
 local ui_config = Ty.Config.ui
 local ui_inited = false
 local nvim_create_autocmd = vim_api.nvim_create_autocmd
-local vim_ui_select = vim.ui.select
-local vim_ui_input = vim.ui.input
 local start_without_buffer = vim.fn.argc( -1) == 0
 
 return {
@@ -257,7 +255,7 @@ return {
           require('lazy').load({ plugins = { 'dressing.nvim' } })
           is_inited = true
         end
-        return vim_ui_select(...)
+        return vim.ui.select(...)
       end
       ---@diagnostic disable-next-line: duplicate-set-field
       vim.ui.input = function(...)
@@ -265,7 +263,7 @@ return {
           require('lazy').load({ plugins = { 'dressing.nvim' } })
           is_inited = true
         end
-        return vim_ui_input(...)
+        return vim.ui.input(...)
       end
     end,
     notify = function()
