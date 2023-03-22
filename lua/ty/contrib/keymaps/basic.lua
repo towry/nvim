@@ -4,14 +4,14 @@ local autocmd = require('ty.core.autocmd')
 local has_plugin = require('ty.core.utils').has_plugin
 local keymap = require('ty.core.keymap')
 local n, i, v, x, ni, nxv, cmd, key =
-    keymap.nmap, keymap.imap, keymap.vmap, keymap.xmap, keymap.nimap, keymap.nxv, keymap.cmd, keymap.key
+keymap.nmap, keymap.imap, keymap.vmap, keymap.xmap, keymap.nimap, keymap.nxv, keymap.cmd, keymap.key
 
 i('<C-e>', 'Insert mode: move to end of line', key('<End>'))
 n('<C-z>', 'N: Undo, no more background key', key('<ESC> u'))
 i('<C-z>', 'I: Undo, no more background key', key('<ESC> u'))
 v('<D-`>', 'Case change in visual mode', key('U'))
-n('<D-s>', 'N: Save current file by <command-s>', cmd('w'))
-i('<D-s>', 'I: Save current file by <command-s>', cmd('w'))
+n('<Char-0xAA>', 'N: Save current file by <command-s>', cmd('w'))
+i('<Char-0xAA>', 'I: Save current file by <command-s>', cmd('w'))
 n('<ESC>', 'Clear search highlight', cmd('noh'))
 v('<', 'Keep visual mode indenting, left', key('<gv'))
 v('>', 'Keep visual mode indenting, right', key('>gv'))
@@ -48,8 +48,8 @@ n('d', 'Delete char and yank to register x', key('"xd'))
 n('D', 'Delete to end of line and yank to register x', key('"xD'))
 v('d', 'Delete char and yank to register x', key('"xd'))
 v('D', 'Delete to end of line and yank to register x', key('"xD'))
-n('<A-x>', 'Cut chars and yank to register *', key('"*x', { '-remap' }))
-v('<A-x>', 'Cut chars and yank to register *', key('"*x', { '-remap' }))
+n('<Char-0xAB>', 'Cut chars and yank to register *', key('"*x', { '-remap' }))
+v('<Char-0xAB>', 'Cut chars and yank to register *', key('"*x', { '-remap' }))
 n('x', 'Cut chars and do not yank to register', key('"_x'))
 n('X', 'Cut chars and do not yank to register', key('"_X'))
 v('x', 'Cut chars and do not yank to register', key('"_x'))
