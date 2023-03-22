@@ -656,6 +656,9 @@ return _({
       end,
       lazy = false,
     },
+    {
+      'alanfortlink/blackjack.nvim',
+    }
   },
   ui = {
     {
@@ -687,5 +690,10 @@ return _({
       ImportInit = 'notify',
       ImportConfig = 'notify',
     },
+    {
+      'tummetott/reticle.nvim',
+      event = { 'BufReadPost', 'BufNewFile' },
+      ImportOption = 'reticle',
+    }
   },
 }, initd)

@@ -1,3 +1,4 @@
+local utils = require('ty.core.utils')
 local M = {}
 
 function M.default_functions()
@@ -103,7 +104,14 @@ function M.default_functions()
           description = "grapple popup tags",
         }
       }
-    }
+    },
+    {
+      function()
+        utils.load_plugins('blackjack.nvim')
+        vim.cmd('BlackJackNewGame')
+      end,
+      description = "New black jack game",
+    },
   }
 end
 

@@ -155,6 +155,13 @@ M.use_plugin = function(plugin_name, callback)
   end
   callback(plugin)
 end
+---@usage load_plugins({'dression.nvim'})
+M.load_plugins = function(plugins)
+  if type(plugins) ~= 'table' then
+    plugins = { plugins }
+  end
+  require('lazy').load({ plugins = plugins })
+end
 
 ---@see LazyVim
 ---@param opts? string|{msg:string, on_error:fun(msg)}
