@@ -33,9 +33,9 @@ function M.setup()
   vim.g.mapleader = ' '
   vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
   vim.g.maplocalleader = ','
+  require('ty.core.options').setup()
 
   resize_kitty()
-  require('ty.core.options').setup()
   local startup_repos = require('ty.startup.repos')
   require('ty.core.pack').setup(startup_repos.repos, startup_repos.initd)
 end

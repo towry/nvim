@@ -54,7 +54,7 @@ function M.setup_interface()
   o.scrolloff = 2 --- Always keep space when scrolling to bottom/top edge
   o.mouse = 'a' --- Enable mouse
   o.sidescrolloff = 8 -- Columns of context
-  o.lazyredraw = false --- Makes macros faster & prevent errors in complicated mappings
+  o.lazyredraw = true --- Makes macros faster & prevent errors in complicated mappings
   o.wildmode = 'longest:full,full' -- Command-line completion mode
   o.cmdheight = 1 --- Give more space for displaying messages
   o.completeopt = 'menu,menuone,noselect' --- Better autocompletion

@@ -240,7 +240,11 @@ return {
       nvim_create_autocmd('User', {
         pattern = 'VeryLazy',
         once = true,
-        callback = hl_update_callback,
+        callback = function()
+          hl_update_callback()
+          -- disable lazyredraw after startup.
+          vim.opt.lazyredraw = false
+        end,
       })
       au.on_need_hl_update(hl_update_callback)
       ui_inited = true

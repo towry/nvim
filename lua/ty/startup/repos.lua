@@ -42,7 +42,6 @@ return _({
       keys = { '.' },
     },
   },
-
   keymaps = {
     {
       -- free the leader key.
@@ -65,7 +64,6 @@ return _({
       ImportConfig = 'legendary',
     },
   },
-
   autocmp = {
     {
       'L3MON4D3/LuaSnip',
@@ -128,7 +126,6 @@ return _({
       ImportInit = 'copilot',
     },
   },
-
   buffer = {
     {
       's1n7ax/nvim-window-picker',
@@ -148,7 +145,6 @@ return _({
       ImportConfig = 'smart_splits',
     },
   },
-
   debugger = {
     {
       -- https://github.com/stevearc/overseer.nvim
@@ -175,7 +171,6 @@ return _({
       ImportConfig = 'neotest',
     },
   },
-
   editing = {
     {
       'williamboman/mason.nvim',
@@ -263,7 +258,6 @@ return _({
       ImportConfig = 'yanky',
     },
   },
-
   editor = {
     {
       'Pocco81/true-zen.nvim',
@@ -355,7 +349,6 @@ return _({
       ImportOption = 'buf_lastplace',
     },
   },
-
   explorer = {
     {
       'kyazdani42/nvim-tree.lua',
@@ -396,7 +389,6 @@ return _({
       'ThePrimeagen/harpoon',
     },
   },
-
   git = {
     { 'kdheepak/lazygit.nvim', cmd = 'LazyGit' },
     {
@@ -533,7 +525,6 @@ return _({
       ImportOption = 'template_string',
     },
   },
-
   navigate = {
     {
       'hrsh7th/nvim-gtd',
@@ -585,7 +576,6 @@ return _({
       ImportOption = 'surround',
     },
   },
-
   statusline = {
     {
       'nvim-lualine/lualine.nvim',
@@ -604,7 +594,6 @@ return _({
       ImportConfig = 'incline',
     },
   },
-
   term = {
     {
       'willothy/flatten.nvim',
@@ -620,7 +609,6 @@ return _({
       ImportConfig = 'toggleterm',
     },
   },
-
   tools = {
     {
       'pze/cheatsheet.nvim',
@@ -662,10 +650,12 @@ return _({
     },
     {
       'dstein64/vim-startuptime',
+      cond = function()
+        return vim.env.PROFILE == 1
+      end,
       lazy = false,
     },
   },
-
   ui = {
     {
       'ellisonleao/gruvbox.nvim',
