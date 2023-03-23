@@ -116,7 +116,8 @@ function M.setup()
     -- ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics),
   }
 
-  local function on_attach(client, bufnr)
+  ---@diagnostic disable-next-line: unused-local
+  local function on_attach(_client, _bufnr)
     -- set up buffer keymaps, etc.
     -- buffer keys is set at `ty.contrib.editing.init`
   end
@@ -131,6 +132,13 @@ function M.setup()
   local tailwindcss_rc = require('ty.contrib.editing.lsp.servers.tailwindcss')
   -- may causing input in jsx very slow.
   lspconfig.tailwindcss.setup({
+    -- cmd = node_util.get_mason_node_cmd({
+    --   cmd_name = 'tailwindcss-language-server',
+    --   node_path = 'tsx',
+    --   args = {
+    --     '--stdio',
+    --   }
+    -- }),
     capabilities = tailwindcss_rc.capabilities,
     filetypes = tailwindcss_rc.filetypes,
     handlers = handlers,
