@@ -599,6 +599,7 @@ return _({
       'b0o/incline.nvim',
       event = { 'BufReadPost', 'BufNewFile' },
       ImportConfig = 'incline',
+      enabled = false,
     },
   },
   term = {

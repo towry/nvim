@@ -33,7 +33,31 @@ M.setup = function()
       section_separators = { left = '', right = '' },
       disabled_filetypes = { winbar = { 'lazy', 'alpha' }, statusline = { 'dashboard', 'lazy', 'alpha' } },
     },
-    tabline = {
+    winbar = {
+      lualine_a = {
+        {
+          'filename',
+          path = 1,
+          symbols = {
+            modified = '',
+            readonly = '',
+          }
+        }
+      },
+    },
+    inactive_winbar = {
+      lualine_a = {
+        {
+          'filename',
+          path = 1,
+          symbols = {
+            modified = '',
+            readonly = '',
+          }
+        }
+      },
+    },
+    sections = {
       lualine_a = {
         {
           function()
@@ -54,23 +78,6 @@ M.setup = function()
             end
           end,
         },
-        {
-          'filename',
-          path = 1,
-          symbols = {
-            modified = '',
-            readonly = '',
-          }
-        }
-      },
-      lualine_b = { 'diff', 'diagnostics', },
-      lualine_c = { '' },
-      lualine_x = {},
-      lualine_y = {},
-      lualine_z = { '' },
-    },
-    sections = {
-      lualine_a = {
         { 'mode' },
         {
           terms,
@@ -97,8 +104,7 @@ M.setup = function()
         'searchcount',
       },
       -- filename is displayed by the incline.
-      lualine_c = {
-      },
+      lualine_c = { 'diff', 'diagnostics', },
       lualine_x = {
         {
           'copilot',
