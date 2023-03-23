@@ -8,10 +8,17 @@ function M.auto_format_disabled()
 end
 
 function M.toggle_format()
+  local lsp_format = require('lsp-format')
   auto_format_disabled = not auto_format_disabled
   if auto_format_disabled then
     Ty.NOTIFY('Auto format is disabled')
+    lsp_format.disable({
+      args = ""
+    })
   else
+    lsp_format.enable({
+      args = ""
+    })
     Ty.NOTIFY('Auto format is enabled')
   end
 end
@@ -46,6 +53,25 @@ function M.format(bufnr, opts)
 end
 
 function M.setup_autoformat(client, buf)
+  local ft = vim.api.nvim_buf_get_option(buf, 'filetype')
+  local nls = require('ty.contrib.editing.lsp.null-ls')
+
+  local enable = false
+  if nls.has_formatter(ft) then
+    enable = client.name == 'null-ls'
+  else
+    enable = client.server_capabilities.documentFormattingProvider and
+        not vim.tbl_contains({ 'null-ls', 'tsserver' }, client.name)
+  end
+
+  -- format on save
+  if enable then
+    vim.b[buf].formatter_name = client.name or nil
+    require('lsp-format').on_attach(client)
+  end
+end
+
+function M.setup_autoformat_deprecated(client, buf)
   local event_name = "BufWritePre"
   local async = event_name == "BufWritePost"
   local ft = vim.api.nvim_buf_get_option(buf, 'filetype')
