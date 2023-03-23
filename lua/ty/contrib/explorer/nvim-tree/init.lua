@@ -167,7 +167,7 @@ function M.setup()
     -- { key = "/",                              action = "search_node" },
     { key = 'f',                              action = 'live_filter' },
     { key = 'F',                              action = 'clear_live_filter' },
-    { key = '<C-\\>',                         action = 'tree actions',      action_cb = tree_actions_menu },
+    { key = '<C-m>',                          action = 'tree actions',      action_cb = tree_actions_menu },
   }
 
   require('nvim-tree').setup({
