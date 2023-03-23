@@ -188,11 +188,16 @@ return _({
         'jose-elias-alvarez/null-ls.nvim',
         'williamboman/mason-lspconfig.nvim',
         'j-hui/fidget.nvim',
-        'lukas-reineke/lsp-format.nvim',
       },
       Feature = 'lsp',
       ImportConfig = 'lspconfig',
       ImportInit = 'lspconfig',
+    },
+
+    {
+      'lukas-reineke/lsp-format.nvim',
+      Feature = 'lsp',
+      ImportConfig = 'lsp_format',
     },
 
     {

@@ -10,12 +10,6 @@ local lsp_flags = {
 local volar_takeover_mode = true
 local auto_servers = { 'bashls', 'html', 'prismals' }
 
-local function setup_lsp_format()
-  require('lsp-format').setup({
-    sync = false,
-  })
-end
-
 local function setup_fidget()
   require('fidget').setup({
     text = {
@@ -105,7 +99,6 @@ function M.setup()
     automatic_installation = true,
   })
 
-  setup_lsp_format()
   setup_fidget()
   require('ty.contrib.editing.lsp.diagnostics').setup()
   default_lspconfig_ui_options()
