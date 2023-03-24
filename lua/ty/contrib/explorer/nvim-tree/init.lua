@@ -88,7 +88,6 @@ local function tree_actions_menu(node)
 end
 
 function M.setup()
-  local colors = require('ty.contrib.ui').colors()
   local nvim_tree_api = require('nvim-tree.api')
 
   local git_icons = {
@@ -313,7 +312,10 @@ function M.setup()
   -- edit file on file creation from nvim tree.
   nvim_tree_api.events.subscribe(
     nvim_tree_api.events.Event.FileCreated,
-    function(file) vim.cmd('edit ' .. file.fname) end
+    function(file)
+      -- FIXME: check window count.
+      vim.cmd('edit ' .. file.fname)
+    end
   )
   -- nvim_tree_events.on_tree_open(function()
   --   bufferline_api.set_offset(TREE_WIDTH + 1, utils.add_whitespaces(13) .. 'File Explorer')
@@ -322,9 +324,6 @@ function M.setup()
   -- nvim_tree_events.on_tree_close(function()
   --   bufferline_api.set_offset(0)
   -- end)
-  vim.api.nvim_set_hl(0, 'NvimTreeIndentMarker', {
-    fg = colors.nvim_tree_indent_marker_fg,
-  })
 end
 
 local function run_nvim_tree_toggle_cmd(cmd)
