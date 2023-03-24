@@ -15,7 +15,7 @@ function M.setup(options)
     -- }),
     -- builtins.formatting.prettier,
     builtins.formatting.prettierd,
-    builtins.code_actions.gitsigns,
+    -- builtins.code_actions.gitsigns,
     -- require("typescript.extensions.null-ls.code-actions"), -- disabled on volar take over mode.
     -- eslint.
     builtins.code_actions.eslint,
