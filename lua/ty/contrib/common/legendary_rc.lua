@@ -5,6 +5,8 @@ local function my_formatter(item)
   local swap = default_columns[2]
   default_columns[2] = default_columns[3]
   default_columns[3] = swap
+  -- remove the key|command column.
+  table.remove(default_columns, 3)
   return default_columns
 end
 
@@ -23,8 +25,8 @@ function M.setup()
     },
     select_prompt = " ⚒ ",
     icons = {
-      fn = "🪄",
-      command = " ",
+      fn = " ",
+      command = " ",
       key = " ",
     },
   })
