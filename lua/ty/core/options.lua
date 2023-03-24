@@ -2,7 +2,7 @@ local M = {}
 local o = vim.opt
 local g = vim.g
 
-function M.setup_edit()
+function M.init_edit()
   o.inccommand = 'nosplit' -- preview incremental substitute
   o.clipboard = 'unnamed,unnamedplus' --- Copy-paste between vim and everything else
   o.expandtab = true --- Use spaces instead of tabs
@@ -36,7 +36,7 @@ function M.setup_edit()
   o.switchbuf = 'usetab' -- Use already opened buffers when switching
 end
 
-function M.setup_interface()
+function M.init_interface()
   o.colorcolumn = '+1' -- Draw colored column one step to the right of desired maximum width
 
   o.showmode = false --- Don't show things like -- INSERT -- anymore
@@ -80,7 +80,7 @@ function M.setup_interface()
   o.foldlevel = 99 --- Using ufo provider need a large value
   o.foldlevelstart = 99 --- Expand all folds by default
   -- vim.o.statuscolumn     = '%=%l%s%{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "-" : "+") : "│") : " " }'
-  o.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
+  o.laststatus = 0 --- Have a global statusline at the bottom instead of one for each window
   o.shortmess:append({ W = true, I = true, c = true, F = true })
   if vim.fn.has('nvim-0.9.0') == 1 then
     o.splitkeep = 'cursor'
@@ -91,7 +91,7 @@ function M.setup_interface()
   o.formatoptions:remove('o')
 end
 
-function M.setup_other()
+function M.init_other()
   g.python3_host_prog = '/Users/towry/.pyenv/versions/3.8.2/bin/python3'
   g.loaded_perl_provider = 0
   g.loaded_node_provider = 0
@@ -99,10 +99,19 @@ function M.setup_other()
   g.markdown_recommended_style = 0
 end
 
+--- called by statusline component on load.
+function M.setup_statusline()
+  o.showtabline = 0 --- Always show tabs
+  o.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
+end
+
 function M.setup()
-  M.setup_edit()
-  M.setup_interface()
-  M.setup_other()
+  M.init_edit()
+  M.init_interface()
+  M.init_other()
+
+  -- TODO: call when statusline component is loaded.
+  M.setup_statusline()
 end
 
 return M
