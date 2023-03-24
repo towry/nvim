@@ -85,7 +85,7 @@ M.setup_indent_line = function()
   })
 
   local _ = colors.indent_line_fg and vim.api.nvim_set_hl(0, 'IndentBlanklineChar', { fg = colors.indent_line_fg })
-    or nil
+      or nil
 end
 
 M.option_true_zen = {
@@ -104,11 +104,11 @@ M.setup_statuscol = function()
     setopt = true,
     segments = {
       {
-        sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 1, auto = true },
+        sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 1, auto = false },
         click = 'v:lua.ScSa',
       },
       {
-        sign = { name = { 'Diagnostic' }, maxwidth = 2, auto = true },
+        sign = { name = { 'Diagnostic' }, maxwidth = 1, auto = false },
         click = 'v:lua.ScSa',
       },
       {
