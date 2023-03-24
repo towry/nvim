@@ -2,6 +2,7 @@ local M = {}
 
 
 M.setup = function()
+  require('ty.core.options').setup_statusline()
   local auto_format_disabled = require('ty.contrib.editing.lsp.formatting').auto_format_disabled
   local Buffer               = require('ty.core.buffer')
   local terms                = require('ty.contrib.statusline.lualine.terms_component')

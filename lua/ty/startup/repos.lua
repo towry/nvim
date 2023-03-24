@@ -592,7 +592,7 @@ return _({
           dev = false,
         },
       },
-      event = { 'BufReadPre', 'BufNewFile' },
+      event = { 'BufReadPost', 'BufNewFile' },
       ImportConfig = 'lualine',
     },
     {

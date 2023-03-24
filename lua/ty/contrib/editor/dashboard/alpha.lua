@@ -56,8 +56,6 @@ function M.setup()
   vim.api.nvim_create_autocmd('User', {
     pattern = 'LazyVimStarted',
     callback = function()
-      local stats = require('lazy').stats()
-      local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
       dashboard.section.footer.val = footer()
       pcall(vim.cmd.AlphaRedraw)
     end,
@@ -176,21 +174,21 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
 
   dashboard.section.buttons.val = {
     button(
-      '<Nop>',
-      icons.timer .. ' ' .. 'Load Current Dir Session',
+      's',
+      icons.timer .. ' ' .. 'Load Session',
       '<cmd>SessionManager load_current_dir_session<CR>',
       {}
     ),
     button(
-      'SPC s h',
+      'r',
       icons.fileRecent .. ' ' .. 'Recents',
       '<cmd>Telescope oldfiles cwd_only=true hidden=true<CR>',
       {}
     ),
-    button('<F8>', icons.fileNoBg .. ' ' .. 'Find File', '<cmd>lua Ty.Func.explorer.project_files()<CR>', {}),
-    button('<F9>', icons.t .. ' ' .. 'Find Word', '<cmd>lua Ty.Func.explorer.multi_rg_find_word()<CR>', {}),
-    button('~', '  ' .. ' ' .. 'Plugins', '<cmd>Lazy<CR>', {}),
-    button('-', icons.exit .. ' ' .. 'Exit', '<cmd>exit<CR>', {}),
+    button('p', icons.fileNoBg .. ' ' .. 'Find File', '<cmd>lua Ty.Func.explorer.project_files()<CR>', {}),
+    button('f', icons.t .. ' ' .. 'Find Word', '<cmd>lua Ty.Func.explorer.multi_rg_find_word()<CR>', {}),
+    button('l', '  ' .. ' ' .. 'Plugins', '<cmd>Lazy<CR>', {}),
+    button('q', icons.exit .. ' ' .. 'Exit', '<cmd>exit<CR>', {}),
   }
 
   dashboard.section.footer.val = {
@@ -209,10 +207,6 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
     buttons = dashboard.section.buttons,
     footer = dashboard.section.footer,
   }
-
-  -- ╭──────────────────────────────────────────────────────────╮
-  -- │ Setup                                                    │
-  -- ╰─────────����────────────────────────────────────��───────────╯
 
   local opts = {
     layout = {

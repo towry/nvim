@@ -109,9 +109,6 @@ function M.setup()
   M.init_edit()
   M.init_interface()
   M.init_other()
-
-  -- TODO: call when statusline component is loaded.
-  M.setup_statusline()
 end
 
 return M
