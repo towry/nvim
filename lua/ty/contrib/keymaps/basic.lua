@@ -94,7 +94,6 @@ nxv(
   cmd('lua Ty.Func.explorer.search_and_replace_cword_in_buffer()')
 )
 n('<C-p>', 'Open legendary', cmd([[lua require('ty.contrib.keymaps.legendary').open_legendary()]]))
-n('<leader>x', 'Close buffer and window', cmd('lua Ty.Func.buffer.close_bufwin()'))
 n('<leader>F', 'Find folders', cmd('lua Ty.Func.explorer.find_folder()'))
 n('<leader>t', 'Tool|Toggle')
 n('<leader>t-', 'Switch variables, false <==> true', cmd([[Switch]]))
@@ -126,6 +125,7 @@ if has_plugin('nvim-ufo') then
 end
 
 --- portal and grapple
+n('<leader>b', 'Buffer Ops')
 if has_plugin('grapple.nvim') then n('<leader>bg', 'Toggle grapple mark', cmd([[GrappleToggle]])) end
 if has_plugin('portal.nvim') then
   n('<M-o>', 'Portal jump backward', cmd([[lua Ty.Func.navigate.portal_backward()]]))
@@ -140,6 +140,7 @@ end
 n('<leader>b[', 'Next unsaved buffer', cmd([[lua Ty.Func.navigate.next_unsaved_buf()]]))
 n('<leader>b]', 'Prev unsaved buffer', cmd([[lua Ty.Func.navigate.prev_unsaved_buf()]]))
 n('<leader>bd', 'Discard buffer changes', key([[:e!<CR>]]))
+n('<leader>bx', 'Close buffer and window', cmd('lua Ty.Func.buffer.close_bufwin()'))
 
 n('<leader>z', 'Copilot|...')
 if has_plugin('copilot.vim') then n('<leader>zp', 'Open github copilot panel', cmd([[Copilot panel]])) end
