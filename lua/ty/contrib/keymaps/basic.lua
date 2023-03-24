@@ -4,7 +4,7 @@ local autocmd = require('ty.core.autocmd')
 local has_plugin = require('ty.core.utils').has_plugin
 local keymap = require('ty.core.keymap')
 local n, i, v, x, ni, nxv, cmd, key =
-keymap.nmap, keymap.imap, keymap.vmap, keymap.xmap, keymap.nimap, keymap.nxv, keymap.cmd, keymap.key
+    keymap.nmap, keymap.imap, keymap.vmap, keymap.xmap, keymap.nimap, keymap.nxv, keymap.cmd, keymap.key
 
 i('<C-e>', 'Insert mode: move to end of line', key('<End>'))
 n('<C-z>', 'N: Undo, no more background key', key('<ESC> u'))
@@ -94,11 +94,11 @@ nxv(
   cmd('lua Ty.Func.explorer.search_and_replace_cword_in_buffer()')
 )
 n('<C-p>', 'Open legendary', cmd([[lua require('ty.contrib.keymaps.legendary').open_legendary()]]))
-n('<leader>q', 'Toggle quick list', cmd('lua Ty.Func.editor.toggle_qf()'))
 n('<leader>x', 'Close buffer and window', cmd('lua Ty.Func.buffer.close_bufwin()'))
 n('<leader>F', 'Find folders', cmd('lua Ty.Func.explorer.find_folder()'))
 n('<leader>t', 'Tool|Toggle')
 n('<leader>t-', 'Switch variables, false <==> true', cmd([[Switch]]))
+n('<leader>tq', 'Quick list', cmd('lua Ty.Func.editor.toggle_qf()'))
 n("<leader>/", "Outline|Git")
 n("<leader>//", "Find terms", cmd([[Telescope termfinder find]]))
 n('<leader>/o', '[/] Toggle outline', cmd([[lua Ty.Func.explorer.toggle_outline()]]))
