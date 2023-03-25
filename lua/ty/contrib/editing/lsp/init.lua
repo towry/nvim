@@ -10,6 +10,7 @@ local lsp_flags = {
 local volar_takeover_mode = true
 local auto_servers = { 'bashls', 'html', 'prismals' }
 
+-- TODO: on setup lspconfig prev.
 local function setup_fidget()
   require('fidget').setup({
     text = {

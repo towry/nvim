@@ -5,6 +5,7 @@ local M = {
     on_need_hl_update = 'OnNeedHlUpdate',
     on_gitsigns_attach = "OnGitsignsAttach",
     on_git_diffview_open = "OnGitDiffViewOpen",
+    on_setup_lspconfig_pre = "OnSetupLspconfigPre",
   },
   --- execute autocmds.
   exec = vim.api.nvim_exec_autocmds,
