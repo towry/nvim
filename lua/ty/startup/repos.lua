@@ -202,7 +202,7 @@ return _({
 
     {
       'glepnir/lspsaga.nvim',
-      event = 'BufRead',
+      cmd = { 'Lspsaga', },
       dependencies = {
         --Please make sure you install markdown and markdown_inline parser
         { 'nvim-treesitter/nvim-treesitter' },
@@ -240,7 +240,7 @@ return _({
       ImportConfig = 'comment',
     },
 
-    { 'AndrewRadev/splitjoin.vim', event = 'BufReadPost' },
+    { 'AndrewRadev/splitjoin.vim', },
 
     {
       -- https://github.com/mg979/vim-visual-multi/wiki/Quick-start
@@ -259,9 +259,6 @@ return _({
       -- better yank.
       'gbprod/yanky.nvim',
       event = { 'BufReadPost', 'BufNewFile' },
-      dependencies = {
-        'mrjones2014/legendary.nvim',
-      },
       ImportConfig = 'yanky',
     },
   },
@@ -305,7 +302,7 @@ return _({
 
     {
       'luukvbaal/statuscol.nvim',
-      event = { 'BufReadPre', 'BufNewFile' },
+      event = { 'BufReadPost', 'BufNewFile' },
       cond = function() return vim.fn.has('nvim-0.9.0') == 1 end,
       ImportConfig = 'statuscol',
     },
