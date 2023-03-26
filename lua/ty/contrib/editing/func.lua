@@ -13,7 +13,13 @@ end
 function M.show_diagnostics(pos)
   local has_lspsaga = require('ty.core.utils').has_plugin('lspsaga.nvim')
   if has_lspsaga then
-    require('lspsaga.diagnostic'):show_diagnostics({}, pos)
+    if pos == 'line' then
+      vim.cmd('Lspsaga show_line_diagnostics')
+    elseif pos == 'cursor' then
+      vim.cmd('Lspsaga show_cursor_diagnostics')
+    else
+      vim.cmd('Lspsaga show_buf_diagnostics')
+    end
   else
     vim.diagnostic.open_float(nil, { scope = pos })
   end
