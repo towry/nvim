@@ -13,8 +13,8 @@ function M.setup(options)
     -- builtins.formatting.stylua.with({
     -- 	filetypes = { "lua" }
     -- }),
-    -- builtins.formatting.prettier,
-    builtins.formatting.prettierd,
+    builtins.formatting.prettier,
+    -- builtins.formatting.prettierd,
     -- builtins.code_actions.gitsigns,
     -- require("typescript.extensions.null-ls.code-actions"), -- disabled on volar take over mode.
     -- eslint.
