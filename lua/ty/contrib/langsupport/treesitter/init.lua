@@ -1,7 +1,15 @@
 local Buffer = require('ty.core.buffer')
 local M = {}
 
+local disabled_fts = {
+  "NvimTree",
+}
+
 local disabled = function(lang, bufnr)
+  local ft = vim.api.nvim_buf_get_option(bufnr, 'ft')
+  if vim.tbl_contains(disabled_fts, ft) then
+    return true
+  end
   -- great than 100kb or lines great than 20000
   return vim.api.nvim_buf_line_count(bufnr) > 20000 or Buffer.getfsize(bufnr) > 100000
 end
@@ -12,9 +20,9 @@ M.setup = function()
   require('nvim-treesitter.configs').setup({
     -- parser_install_dir = parser_install_dir,
     ensure_installed = config.ensure_installed, -- one of "all", or a list of languages
-    sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
+    sync_install = false,                       -- install languages synchronously (only applied to `ensure_installed`)
     auto_install = false,
-    ignore_install = { 'all' }, -- list of parsers to ignore installing
+    ignore_install = { 'all' },                 -- list of parsers to ignore installing
     highlight = {
       disable = disabled,
       enable = config.enable_highlight,
@@ -99,10 +107,8 @@ M.setup = function()
       select = {
         disable = disabled,
         enable = true,
-
         -- Automatically jump forward to textobj, similar to targets.vim
         lookahead = true,
-
         keymaps = {
           -- You can use the capture groups defined in textobjects.scm
           ['af'] = '@function.outer',
