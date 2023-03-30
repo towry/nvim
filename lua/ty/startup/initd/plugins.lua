@@ -89,12 +89,6 @@ return {
         local ft = vim_api.nvim_buf_get_option(bufnr, 'filetype')
         if vim.tbl_contains(format_on_save_on_filetypes, ft) then lsp_formatting.setup_autoformat(client, bufnr) end
       end)
-
-      vim_api.nvim_create_user_command(
-        'LspToggleAutoFormat',
-        'lua require("ty.contrib.editing.lsp.functions").toggle_format_on_save()',
-        {}
-      )
     end,
   },
   editor = {
