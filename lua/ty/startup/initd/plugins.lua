@@ -7,7 +7,7 @@ local editing_config = Ty.Config.editing
 local ui_config = Ty.Config.ui
 local ui_inited = false
 local nvim_create_autocmd = vim_api.nvim_create_autocmd
-local start_without_buffer = vim.fn.argc( -1) == 0
+local start_without_buffer = vim.fn.argc(-1) == 0
 
 return {
   common = {
@@ -281,9 +281,9 @@ return {
       vim.g.everforest_better_performance = ui_config:get('theme_everforest.better_performance', 1)
       vim.g.everforest_enable_italic = ui_config:get('theme_everforest.italic', 1)
       vim.g.everforest_disable_italic_comment = false
-      vim.g.everforest_transparent_background = false
+      vim.g.everforest_transparent_background = true
       vim.g.everforest_dim_inactive_windows = false
-      vim.g.everforest_sign_column_background = 'none' -- "none" | "grey"
+      vim.g.everforest_sign_column_background = 'none'  -- "none" | "grey"
       vim.g.everforest_diagnostic_virtual_text = 'grey' -- "grey" | "colored"
       vim.g.everforest_diagnostic_text_highlight = 0
       vim.g.everforest_diagnostic_line_highlight = 0
