@@ -45,7 +45,8 @@ function M.setup()
         },
         prompt_position = 'top',
       },
-      file_ignore_patterns = require('ty.core.config').explorer:get('find_files.ignore_pattern'),
+      ---@see https://github.com/nvim-telescope/telescope.nvim/issues/522#issuecomment-1107441677
+      file_ignore_patterns = { "node_modules" },
       path_display = { 'truncate' },
       layout_strategy = 'flex',
       file_sorter = require('telescope.sorters').get_fzy_sorter,
@@ -53,13 +54,10 @@ function M.setup()
       color_devicons = true,
       initial_mode = 'insert',
       git_icons = git_icons,
-
       sorting_strategy = 'ascending',
-
       file_previewer = require('telescope.previewers').vim_buffer_cat.new,
       grep_previewer = require('telescope.previewers').vim_buffer_vimgrep.new,
       qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
-
       mappings = {
         i = {
           ['<C-e>'] = function() vim.cmd('stopinsert') end,
@@ -83,8 +81,8 @@ function M.setup()
             -- allow cancelling.
             if not win_picked then return end
             action_state
-              .get_current_history()
-              :append(action_state.get_current_line(), action_state.get_current_picker(prompt_bufnr))
+                .get_current_history()
+                :append(action_state.get_current_line(), action_state.get_current_picker(prompt_bufnr))
             picker.get_selection_window = function() return win_picked or 0 end
             return action_set.select(prompt_bufnr, 'default')
           end,
@@ -104,7 +102,8 @@ function M.setup()
       live_grep_args = {
         disable_coordinates = true,
         auto_quoting = true, -- enable/disable auto-quoting
-        mappings = { -- extend mappings
+        mappings = {
+          -- extend mappings
           i = {
             ['<C-k>'] = lga_actions.quote_prompt(),
             ['<C-r>'] = function(prompt_bufnr)
