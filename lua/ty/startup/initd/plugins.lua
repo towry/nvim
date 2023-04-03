@@ -281,7 +281,7 @@ return {
       vim.g.everforest_better_performance = ui_config:get('theme_everforest.better_performance', 1)
       vim.g.everforest_enable_italic = ui_config:get('theme_everforest.italic', 1)
       vim.g.everforest_disable_italic_comment = false
-      vim.g.everforest_transparent_background = true
+      vim.g.everforest_transparent_background = false
       vim.g.everforest_dim_inactive_windows = false
       vim.g.everforest_sign_column_background = 'none'  -- "none" | "grey"
       vim.g.everforest_diagnostic_virtual_text = 'grey' -- "grey" | "colored"
