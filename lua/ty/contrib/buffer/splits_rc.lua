@@ -26,8 +26,7 @@ M.setup_smart_splits = function()
       'BufEnter',
       'WinEnter',
     },
-    tmux_integration = true,
-    disable_tmux_nav_when_zoomed = true,
+    disable_multiplexer_nav_when_zoomed = true,
   })
 end
 

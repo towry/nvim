@@ -102,6 +102,7 @@ function M.setup()
       live_grep_args = {
         disable_coordinates = true,
         auto_quoting = true, -- enable/disable auto-quoting
+        layout = "dropdown",
         mappings = {
           -- extend mappings
           i = {

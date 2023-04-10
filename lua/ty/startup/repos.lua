@@ -143,6 +143,7 @@ return _({
       dependencies = {
         'kwkarlwang/bufresize.nvim',
       },
+      build = "./kitty/install-kittens.bash",
       ImportConfig = 'smart_splits',
     },
   },
