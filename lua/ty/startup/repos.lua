@@ -13,7 +13,7 @@ return _({
     {
       'nvim-telescope/telescope.nvim',
       pint = true,
-      commit = 'e504cf0',
+      commit = '7141515a7cabde464',
       cmd = { 'Telescope' },
       dependencies = {
         { 'nvim-lua/popup.nvim' },
