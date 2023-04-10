@@ -79,11 +79,11 @@ x('J', 'Move selected line / block of text in visual mode down', key(":move '>+1
 -- html tags
 n('[tp', 'Jump to parent tag', cmd([[lua Ty.Func.navigate.jump_to_tag('parent')]]))
 n('[tc', 'Jump to child tag', cmd([[lua Ty.Func.navigate.jump_to_tag('child')]]))
-n('[t[', 'Jump to next tag', cmd([[lua Ty.Func.navigate.jump_to_tag('next')]]))
-n('[t]', 'Jump to previous tag', cmd([[lua Ty.Func.navigate.jump_to_tag('prev')]]))
+n('[t]', 'Jump to next tag', cmd([[lua Ty.Func.navigate.jump_to_tag('next')]]))
+n('[t[', 'Jump to previous tag', cmd([[lua Ty.Func.navigate.jump_to_tag('prev')]]))
 -- todo jump
-n('[td', 'Jump to next todo', cmd([[lua Ty.Func.editor.jump_to_todo('next')]]))
-n(']td', 'Jump to previous todo', cmd([[lua Ty.Func.editor.jump_to_todo('prev')]]))
+n(']td', 'Jump to next todo', cmd([[lua Ty.Func.editor.jump_to_todo('next')]]))
+n('[td', 'Jump to previous todo', cmd([[lua Ty.Func.editor.jump_to_todo('prev')]]))
 
 -- functional keys.
 n('<leader>s', 'Search and replace')

@@ -13,16 +13,16 @@ return function(client, buffer)
   local _ = function(d) return '[LSP] ' .. d end
 
   -- diagnostic.
-  n('[d', 'Next Diagnostic')
-  n(']d', 'Prev Diagnostic')
-  n('[dd', _('Next Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(true)]], opts_nowait))
-  n(']dd', _('Prev Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false)]], opts_nowait))
-  n('[de', _('Next Error Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(true, "ERROR")]], opts_nowait))
-  n(']de', _('Prev Error Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "ERROR")]], opts_nowait))
-  n('[dw', _('Next Warning Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(true, "WARN")]], opts_nowait))
-  n(']dw', _('Prev Warning Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "WARN")]], opts_nowait))
+  n(']d', 'Next Diagnostic')
+  n('[d', 'Prev Diagnostic')
+  n(']dd', _('Next Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(true)]], opts_nowait))
+  n('[dd', _('Prev Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false)]], opts_nowait))
+  n(']de', _('Next Error Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(true, "ERROR")]], opts_nowait))
+  n('[de', _('Prev Error Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "ERROR")]], opts_nowait))
+  n(']dw', _('Next Warning Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(true, "WARN")]], opts_nowait))
+  n('[dw', _('Prev Warning Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "WARN")]], opts_nowait))
   n(']dh', _('Next Hint Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(true, "HINT")]], opts_nowait))
-  n(']dh', _('Prev Hint Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "HINT")]], opts_nowait))
+  n('[dh', _('Prev Hint Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "HINT")]], opts_nowait))
 
   ---code maps.
   n('<leader>c', 'Leader code maps')
