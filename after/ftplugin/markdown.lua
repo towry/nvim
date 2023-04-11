@@ -11,15 +11,16 @@ require('ty.core.utils').try(
   end
 )
 
-do
-  -- NOTE: currently modified for theme everforest.
+if vim.bo.buftype == "nofile" then
   -- fix lspsaga floating window hl.
   -- @see https://github.com/sainnhe/everforest/blob/master/colors/everforest.vim
   local ns = vim.api.nvim_create_namespace('markdown')
   vim.api.nvim_win_set_hl_ns(0, ns)
 
-  vim.api.nvim_set_hl(ns, 'ErrorText', { link = 'Normal' })
-  vim.api.nvim_set_hl(ns, 'WarningText', { link = 'Normal' })
-  vim.api.nvim_set_hl(ns, 'InfoText', { link = 'Normal' })
-  vim.api.nvim_set_hl(ns, 'HintText', { link = 'Normal' })
+  -- remove the undercurl in the diagnostics float window.
+  -- because it makes it hard to read the error messages.
+  vim.cmd('hi! link ErrorText Normal')
+  vim.cmd('hi! link WarningText Normal')
+  vim.cmd('hi! link InfoText Normal')
+  vim.cmd('hi! link HintText Normal')
 end
