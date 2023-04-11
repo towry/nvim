@@ -37,7 +37,7 @@ end
 
 M.starts_with = function(str, start) return str:sub(1, #start) == start end
 
-M.end_with = function(str, ending) return ending == '' or str:sub( -#ending) == ending end
+M.end_with = function(str, ending) return ending == '' or str:sub(- #ending) == ending end
 
 M.split = function(s, delimiter)
   local result = {}
@@ -219,7 +219,10 @@ end
 ---@param hl_group string @Highlight group name
 ---@return table
 local function get_highlight(hl_group)
-  local hl = vim.api.nvim_get_hl_by_name(hl_group, true)
+  local hl = vim.api.nvim_get_hl(0, {
+    name = hl_group,
+    link = true
+  })
   if hl.link then
     return get_highlight(hl.link)
   end
@@ -242,16 +245,20 @@ end
 ---Extend a highlight group
 ---@param name string @Target highlight group name
 ---@param def table @Attributes to be extended
-function M.extend_hl(name, def)
-  local hlexists = pcall(vim.api.nvim_get_hl_by_name, name, true)
+function M.extend_hl(name, def, ns)
+  local hlexists = pcall(vim.api.nvim_get_hl, ns or 0, {
+    name = name,
+    link = true,
+  })
   if not hlexists then
     -- Do nothing if highlight group not found
     return
   end
   local current_def = get_highlight(name)
   local combined_def = vim.tbl_deep_extend("force", current_def, def)
+  -- print(vim.inspect(combined_def))
 
-  vim.api.nvim_set_hl(0, name, combined_def)
+  vim.api.nvim_set_hl(ns or 0, name, combined_def)
 end
 
 return M

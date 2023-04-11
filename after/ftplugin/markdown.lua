@@ -12,15 +12,15 @@ require('ty.core.utils').try(
 )
 
 if vim.bo.buftype == "nofile" then
+  local Util = require('ty.core.utils')
+  -- NOTE: currently modified for theme everforest.
   -- fix lspsaga floating window hl.
   -- @see https://github.com/sainnhe/everforest/blob/master/colors/everforest.vim
   local ns = vim.api.nvim_create_namespace('markdown')
   vim.api.nvim_win_set_hl_ns(0, ns)
 
-  -- remove the undercurl in the diagnostics float window.
-  -- because it makes it hard to read the error messages.
-  vim.cmd('hi! link ErrorText Normal')
-  vim.cmd('hi! link WarningText Normal')
-  vim.cmd('hi! link InfoText Normal')
-  vim.cmd('hi! link HintText Normal')
+  Util.extend_hl('ErrorText', { undercurl = false, cterm = { undercurl = false } }, ns)
+  Util.extend_hl('WarningText', { undercurl = false, cterm = { undercurl = false } }, ns)
+  Util.extend_hl('InfoText', { undercurl = false, cterm = { undercurl = false } }, ns)
+  Util.extend_hl('HintText', { undercurl = false, cterm = { undercurl = false } }, ns)
 end
