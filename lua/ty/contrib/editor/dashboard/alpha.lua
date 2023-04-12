@@ -47,6 +47,7 @@ local function footer()
 end
 
 function M.setup()
+  local Path = require('ty.core.path')
   local present, alpha = pcall(require, 'alpha')
   if not present then return end
   dashboard = require('alpha.themes.dashboard')
@@ -104,8 +105,8 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
   local hi_top_section = {
     type = 'text',
     val = '┌────────────   Today is '
-    .. date
-    .. ' ────────────┐',
+        .. date
+        .. ' ────────────┐',
     opts = {
       position = 'center',
       hl = 'NormalInfo',
@@ -124,8 +125,8 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
   local hi_bottom_section = {
     type = 'text',
     val = '└───══───══───══───  '
-    .. datetime
-    .. '  ───══───══───══────┘',
+        .. datetime
+        .. '  ───══───══───══────┘',
     opts = {
       position = 'center',
       hl = 'NormalInfo',
@@ -149,7 +150,7 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
       position = 'center',
       shortcut = sc,
       cursor = 5,
-      width = 50,
+      width = 40,
       align_shortcut = 'right',
       hl_shortcut = 'Normal',
     }
@@ -192,11 +193,13 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
   }
 
   dashboard.section.footer.val = {
+    -- normalize absolute path to relative to home direction
+    "  " .. Path.home_to_tilde(vim.loop.cwd()),
     footer(),
   }
   dashboard.section.footer.opts = {
     position = 'center',
-    hl = 'Normal',
+    hl = 'VirtualTextHint',
   }
 
   local section = {
