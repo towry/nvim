@@ -94,15 +94,15 @@ nxv(
 )
 n('<C-p>', 'Open legendary', cmd([[lua require('ty.contrib.keymaps.legendary').open_legendary()]]))
 
-n('<leader>t', 'Tool|Toggle')
+n('<leader>t', 'Tool, Toggle')
 n('<leader>t-', 'Switch variables, false <==> true', cmd([[Switch]]))
 n('<leader>tq', 'Quick list', cmd('lua Ty.Func.editor.toggle_qf()'))
 
-n("<leader>/", "Outline|Git")
+n("<leader>/", "Outline, Terms")
 n("<leader>//", "Find terms", cmd([[Telescope termfinder find]]))
 n('<leader>/o', '[/] Toggle outline', cmd([[lua Ty.Func.explorer.toggle_outline()]]))
 -- gits
-n('<leader>g', 'Git operations')
+n('<leader>g', 'Git')
 n('<leader>gg', 'Fugitive Git', key([[:Git<CR>]]))
 n('<leader>ga', 'Git add current', cmd([[!git add %:p]]))
 n('<leader>gA', 'Git add all', cmd([[!git add .]]))
@@ -121,7 +121,7 @@ n('<leader>ef', 'Open Project files', cmd('lua Ty.Func.explorer.project_files()'
 n('<leader>et', 'Toggle explore tree', cmd([[lua Ty.Func.explorer.toggle_nvim_tree()]]))
 n('<leader>ee', 'Resume telescope pickers', cmd([[lua require('telescope.builtin').resume()]]))
 n('<leader>eo', 'Open old files', cmd('lua Ty.Func.explorer.oldfiles({ cwd_only = true })'))
-n('<leader>e.', 'Explore location current file in tree', cmd('lua Ty.Func.explorer.nvim_tree_find_file()'))
+n('<leader>e.', 'Locate current file in tree', cmd('lua Ty.Func.explorer.nvim_tree_find_file()'))
 n('<leader>es', 'Grep search', cmd([[lua require('telescope').extensions.live_grep_args.live_grep_args()]]))
 n('<leader>el', 'Find folders', cmd('lua Ty.Func.explorer.find_folder()'))
 -- n('<leader>eS', 'Grep search under word', cmd([[lua require('telescope').extensions.live_grep_args.live_grep_args()]]))
@@ -134,7 +134,7 @@ if has_plugin('nvim-ufo') then
 end
 
 --- portal and grapple
-n('<leader>b', 'Buffer Ops')
+n('<leader>b', 'Buffer')
 if has_plugin('grapple.nvim') then n('<leader>bg', 'Toggle grapple mark', cmd([[GrappleToggle]])) end
 if has_plugin('portal.nvim') then
   n('<M-o>', 'Portal jump backward', cmd([[lua Ty.Func.navigate.portal_backward()]]))
@@ -151,5 +151,5 @@ n('<leader>b[', 'Prev unsaved buffer', cmd([[lua Ty.Func.navigate.prev_unsaved_b
 n('<leader>bd', 'Discard buffer changes', key([[:e!<CR>]]))
 n('<leader>bx', 'Close buffer and window', cmd('lua Ty.Func.buffer.close_bufwin()'))
 
-n('<leader>z', 'Copilot|...')
+n('<leader>z', 'Copilot, ...')
 if has_plugin('copilot.vim') then n('<leader>zp', 'Open github copilot panel', cmd([[Copilot panel]])) end

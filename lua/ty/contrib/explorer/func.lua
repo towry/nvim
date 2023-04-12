@@ -30,6 +30,15 @@ function M.toggle_outline() vim.cmd([[SymbolsOutline]]) end
 
 M.toggle_nvim_tree = require('ty.contrib.explorer.nvim-tree').toggle_nvim_tree
 M.toggle_nvim_tree_find_file = require('ty.contrib.explorer.nvim-tree').toggle_nvim_tree_find_file
-M.nvim_tree_find_file = require('ty.contrib.explorer.nvim-tree').nvim_tree_find_file
+M.nvim_tree_find_file = function()
+  local buf = vim.api.nvim_get_current_buf()
+  -- if current buf is empty or not normal buf, then just return.
+  local buftype = vim.api.nvim_buf_get_option(buf, 'buftype')
+  if buftype ~= "" then
+    vim.notify("Not normal buffer, can't find file in nvim-tree.", vim.log.levels.ERROR)
+    return
+  end
+  require('ty.contrib.explorer.nvim-tree').nvim_tree_find_file()
+end
 
 return M
