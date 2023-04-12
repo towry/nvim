@@ -8,9 +8,10 @@ M.open_window_hydra = function(is_manually)
   local hint = [[
   focus:   _h_: ←    _j_: ↓    _k_: ↑    _l_: →
   Rerange: _H_: ←    _J_: ↓    _K_: ↑    _L_: →
-  Split:   _x_: horizontal _v_: vertical
-  Close:   _c_: close _q_: close
-  Other:   _w_: next  _o_: remain only|maximize
+  Split:   _x_: Horizontal _v_: Vertical
+  Close:   _c_: Close _q_: Close
+  Other:   _w_: Next  _o_: Remain only|Maximize
+           _p_: Last
   ]]
   local instance = Hydra({
     name = "Window Operations",
@@ -35,25 +36,20 @@ M.open_window_hydra = function(is_manually)
       { 'J',     '<C-w>J',                        { exit = true } },
       { 'K',     '<C-w>K',                        { exit = true } },
       { 'L',     '<C-w>L',                        { exit = true } },
-
       { '=',     '<C-w>=',                        { desc = 'equalize', exit = true } },
-
       { 'x',     pcmd('split', 'E36'),            { nowait = true, exit = true } },
       { '<C-s>', pcmd('split', 'E36'),            { desc = false, nowait = true, exit = true } },
       { 'v',     pcmd('vsplit', 'E36'),           { nowait = true, exit = true } },
       { '<C-v>', pcmd('vsplit', 'E36'),           { desc = false, nowait = true } },
-
       { 'w',     '<C-w>w',                        { exit = true, desc = false } },
       { '<C-w>', '<C-w>w',                        { exit = true, desc = false } },
-
       { 'o',     '<C-w>o',                        { exit = true, desc = 'remain only' } },
       { '<C-o>', '<C-w>o',                        { exit = true, desc = false } },
-
+      { 'p',     '<C-w><C-p>',                    { exit = true, nowait = true } },
       { 'c',     pcmd('close', 'E444'),           { exit = true, nowait = true } },
       { 'q',     pcmd('close', 'E444'),           { desc = 'close window', exit = true } },
       { '<C-c>', pcmd('close', 'E444'),           { desc = false } },
       { '<C-q>', pcmd('close', 'E444'),           { desc = false } },
-
       { '<Esc>', nil,                             { exit = true, desc = false } },
     }
   })
