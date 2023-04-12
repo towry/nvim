@@ -13,7 +13,7 @@ function M.init_manually()
   vim.api.nvim_create_autocmd('FileType', {
     group = 'alpha_tabline',
     pattern = 'alpha',
-    command = 'setlocal showtabline=0 noruler',
+    command = 'setlocal showtabline=0 noruler nocursorline',
   })
 
   vim.api.nvim_create_autocmd('FileType', {
@@ -24,7 +24,7 @@ function M.init_manually()
         group = 'alpha_tabline',
         buffer = 0,
         callback = function()
-          vim.cmd('setlocal showtabline=' .. showtabline .. ' ruler')
+          vim.cmd('setlocal cursorline showtabline=' .. showtabline .. ' ruler')
           vim.api.nvim_exec_autocmds('User', {
             pattern = 'DashboardDismiss',
           })
