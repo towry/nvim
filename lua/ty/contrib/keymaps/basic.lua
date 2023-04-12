@@ -93,10 +93,11 @@ nxv(
   cmd('lua Ty.Func.explorer.search_and_replace_cword_in_buffer()')
 )
 n('<C-p>', 'Open legendary', cmd([[lua require('ty.contrib.keymaps.legendary').open_legendary()]]))
-n('<leader>F', 'Find folders', cmd('lua Ty.Func.explorer.find_folder()'))
+
 n('<leader>t', 'Tool|Toggle')
 n('<leader>t-', 'Switch variables, false <==> true', cmd([[Switch]]))
 n('<leader>tq', 'Quick list', cmd('lua Ty.Func.editor.toggle_qf()'))
+
 n("<leader>/", "Outline|Git")
 n("<leader>//", "Find terms", cmd([[Telescope termfinder find]]))
 n('<leader>/o', '[/] Toggle outline', cmd([[lua Ty.Func.explorer.toggle_outline()]]))
@@ -122,6 +123,7 @@ n('<leader>ee', 'Resume telescope pickers', cmd([[lua require('telescope.builtin
 n('<leader>eo', 'Open old files', cmd('lua Ty.Func.explorer.oldfiles({ cwd_only = true })'))
 n('<leader>e.', 'Explore location current file in tree', cmd('lua Ty.Func.explorer.nvim_tree_find_file()'))
 n('<leader>es', 'Grep search', cmd([[lua require('telescope').extensions.live_grep_args.live_grep_args()]]))
+n('<leader>el', 'Find folders', cmd('lua Ty.Func.explorer.find_folder()'))
 -- n('<leader>eS', 'Grep search under word', cmd([[lua require('telescope').extensions.live_grep_args.live_grep_args()]]))
 
 --- folding.
