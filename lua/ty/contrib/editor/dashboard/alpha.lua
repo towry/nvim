@@ -94,42 +94,12 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
   -- ╭──────────────────────────────────────────────────────────╮
   -- │ Heading Info                                             │
   -- ╰──────────────────────────────────────────────────────────╯
-
-  local thingy = io.popen('echo "$(date +%a) $(date +%d) $(date +%b)" | tr -d "\n"')
-  if thingy == nil then return end
-  local date = thingy:read('*a')
-  thingy:close()
-
-  local datetime = os.date(' %H:%M')
-
-  local hi_top_section = {
+  local header_bottom = {
     type = 'text',
-    val = '┌────────────   Today is '
-        .. date
-        .. ' ────────────┐',
+    val = "  " .. Path.home_to_tilde(vim.loop.cwd()),
     opts = {
       position = 'center',
-      hl = 'NormalInfo',
-    },
-  }
-
-  local hi_middle_section = {
-    type = 'text',
-    val = '│                                                │',
-    opts = {
-      position = 'center',
-      hl = 'NormalInfo',
-    },
-  }
-
-  local hi_bottom_section = {
-    type = 'text',
-    val = '└───══───══───══───  '
-        .. datetime
-        .. '  ───══───══───══────┘',
-    opts = {
-      position = 'center',
-      hl = 'NormalInfo',
+      hl = 'VirtualTextHint',
     },
   }
 
@@ -175,7 +145,7 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
 
   dashboard.section.buttons.val = {
     button(
-      's',
+      '/',
       icons.timer .. ' ' .. 'Load Session',
       '<cmd>SessionManager load_current_dir_session<CR>',
       {}
@@ -186,15 +156,13 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
       '<cmd>Telescope oldfiles cwd_only=true hidden=true<CR>',
       {}
     ),
-    button('p', icons.fileNoBg .. ' ' .. 'Find File', '<cmd>lua Ty.Func.explorer.project_files()<CR>', {}),
-    button('f', icons.t .. ' ' .. 'Find Word', '<cmd>lua Ty.Func.explorer.multi_rg_find_word()<CR>', {}),
-    button('l', '  ' .. ' ' .. 'Plugins', '<cmd>Lazy<CR>', {}),
+    button('f', icons.fileNoBg .. ' ' .. 'Find File', '<cmd>lua Ty.Func.explorer.project_files()<CR>', {}),
+    button('s', icons.t .. ' ' .. 'Search Content', '<cmd>lua Ty.Func.explorer.multi_rg_find_word()<CR>', {}),
+    button('p', '  ' .. ' ' .. 'Plugins', '<cmd>Lazy<CR>', {}),
     button('q', icons.exit .. ' ' .. 'Exit', '<cmd>exit<CR>', {}),
   }
 
   dashboard.section.footer.val = {
-    -- normalize absolute path to relative to home direction
-    "  " .. Path.home_to_tilde(vim.loop.cwd()),
     footer(),
   }
   dashboard.section.footer.opts = {
@@ -204,9 +172,6 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
 
   local section = {
     header = dashboard.section.header,
-    hi_top_section = hi_top_section,
-    hi_middle_section = hi_middle_section,
-    hi_bottom_section = hi_bottom_section,
     buttons = dashboard.section.buttons,
     footer = dashboard.section.footer,
   }
@@ -216,9 +181,7 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
       { type = 'padding', val = 2 },
       section.header,
       { type = 'padding', val = 0 },
-      section.hi_top_section,
-      section.hi_middle_section,
-      section.hi_bottom_section,
+      header_bottom,
       { type = 'padding', val = 1 },
       section.buttons,
       { type = 'padding', val = 1 },
