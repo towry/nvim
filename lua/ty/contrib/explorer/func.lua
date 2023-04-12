@@ -30,5 +30,6 @@ function M.toggle_outline() vim.cmd([[SymbolsOutline]]) end
 
 M.toggle_nvim_tree = require('ty.contrib.explorer.nvim-tree').toggle_nvim_tree
 M.toggle_nvim_tree_find_file = require('ty.contrib.explorer.nvim-tree').toggle_nvim_tree_find_file
+M.nvim_tree_find_file = require('ty.contrib.explorer.nvim-tree').nvim_tree_find_file
 
 return M

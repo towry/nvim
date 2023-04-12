@@ -1,7 +1,7 @@
 local M = {}
 
 local HEIGHT_RATIO = 0.8 -- You can change this
-local WIDTH_RATIO = 0.5 -- You can change this too
+local WIDTH_RATIO = 0.5  -- You can change this too
 local TREE_INIT_WIDTH = 40
 
 local function tree_actions_menu(node)
@@ -339,5 +339,7 @@ end
 function M.toggle_nvim_tree() run_nvim_tree_toggle_cmd('NvimTreeToggle') end
 
 function M.toggle_nvim_tree_find_file() run_nvim_tree_toggle_cmd('NvimTreeFindFileToggle') end
+
+function M.nvim_tree_find_file() run_nvim_tree_toggle_cmd('NvimTreeFindFile') end
 
 return M

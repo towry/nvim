@@ -1,5 +1,4 @@
 --- keymappings for neovim for basic usage.
---- Should be in alphabetical order.
 local autocmd = require('ty.core.autocmd')
 local has_plugin = require('ty.core.utils').has_plugin
 local keymap = require('ty.core.keymap')
@@ -115,7 +114,15 @@ n('<leader>gV', 'Git file history', cmd([[lua Ty.Func.git.toggle_tig_file_histor
 n('<leader>gl', 'Lazygit', cmd([[LazyGit]]))
 n('<leader>gc', 'Open git conflict menus',
   cmd("lua require('ty.contrib.keymaps.hydra.git').open_git_conflict_hydra()", { "+noremap" }))
-
+-- explores
+n('<leader>e', 'Explorer')
+n('<leader>ef', 'Open Project files', cmd('lua Ty.Func.explorer.project_files()'))
+n('<leader>et', 'Toggle explore tree', cmd([[lua Ty.Func.explorer.toggle_nvim_tree()]]))
+n('<leader>ee', 'Resume telescope pickers', cmd([[lua require('telescope.builtin').resume()]]))
+n('<leader>eo', 'Open old files', cmd('lua Ty.Func.explorer.oldfiles({ cwd_only = true })'))
+n('<leader>e.', 'Explore location current file in tree', cmd('lua Ty.Func.explorer.nvim_tree_find_file()'))
+n('<leader>es', 'Grep search', cmd([[lua require('telescope').extensions.live_grep_args.live_grep_args()]]))
+-- n('<leader>eS', 'Grep search under word', cmd([[lua require('telescope').extensions.live_grep_args.live_grep_args()]]))
 
 --- folding.
 if has_plugin('nvim-ufo') then

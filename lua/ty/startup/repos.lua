@@ -360,6 +360,7 @@ return _({
       cmd = {
         'NvimTreeToggle',
         'NvimTreeFindFileToggle',
+        'NvimTreeFindFile',
       },
       ImportConfig = 'nvim_tree',
     },
