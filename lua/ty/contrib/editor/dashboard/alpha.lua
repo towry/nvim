@@ -43,6 +43,9 @@ local function footer()
   local stats = require('lazy').stats()
   local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
   local v = vim.version()
+  if not v then
+    return "nil"
+  end
   return string.format(' v%d.%d.%d   %d   %sms ', v.major, v.minor, v.patch, plugins, ms)
 end
 
@@ -88,7 +91,7 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
   dashboard.section.header.val = lines
   dashboard.section.header.opts = {
     position = 'center',
-    hl = 'Normal',
+    hl = "Green",
   }
 
   -- ╭──────────────────────────────────────────────────────────╮
