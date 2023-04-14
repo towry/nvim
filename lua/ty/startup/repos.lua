@@ -530,6 +530,10 @@ return _({
       ft = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'python' },
       ImportOption = 'template_string',
     },
+    {
+      'mrjones2014/lua-gf.nvim',
+      ft = 'lua'
+    }
   },
   navigate = {
     {
