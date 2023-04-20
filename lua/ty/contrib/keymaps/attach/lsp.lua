@@ -13,19 +13,19 @@ return function(client, buffer)
   local _ = function(d) return '[LSP] ' .. d end
 
   -- diagnostic.
-  n('[d', 'Next Diagnostic')
-  n(']d', 'Prev Diagnostic')
-  n('[dd', _('Next Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(true)]], opts_nowait))
-  n(']dd', _('Prev Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false)]], opts_nowait))
-  n('[de', _('Next Error Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(true, "ERROR")]], opts_nowait))
-  n(']de', _('Prev Error Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "ERROR")]], opts_nowait))
-  n('[dw', _('Next Warning Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(true, "WARN")]], opts_nowait))
-  n(']dw', _('Prev Warning Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "WARN")]], opts_nowait))
+  n(']d', 'Next Diagnostic')
+  n('[d', 'Prev Diagnostic')
+  n(']dd', _('Next Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(true)]], opts_nowait))
+  n('[dd', _('Prev Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false)]], opts_nowait))
+  n(']de', _('Next Error Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(true, "ERROR")]], opts_nowait))
+  n('[de', _('Prev Error Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "ERROR")]], opts_nowait))
+  n(']dw', _('Next Warning Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(true, "WARN")]], opts_nowait))
+  n('[dw', _('Prev Warning Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "WARN")]], opts_nowait))
   n(']dh', _('Next Hint Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(true, "HINT")]], opts_nowait))
-  n(']dh', _('Prev Hint Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "HINT")]], opts_nowait))
+  n('[dh', _('Prev Hint Diagnostic'), cmd([[lua Ty.Func.navigate.diagnostic_goto(false, "HINT")]], opts_nowait))
 
   ---code maps.
-  n('<leader>c', 'Leader code maps')
+  n('<leader>c', 'Code')
   n('<leader>cd', _('Toggle document diagnostics'), cmd('TroubleToggle document_diagnostics'))
   n('<leader>ch', _('find code references'), cmd('lua Ty.Func.navigate.goto_code_references()', opts))
   if client.name == 'tsserver' then
@@ -58,7 +58,7 @@ return function(client, buffer)
   )
 
   -- workspace.
-  n("<leader>w", _("Workspace"))
+  n("<leader>w", "Workspace")
   n('<leader>wa', _('add workspace folder'), key(vim.lsp.buf.add_workspace_folder, opts))
   n('<leader>wr', _('remove workspace folder'), key(vim.lsp.buf.remove_workspace_folder, opts))
   n(

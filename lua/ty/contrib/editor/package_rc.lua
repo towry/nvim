@@ -85,7 +85,7 @@ M.setup_indent_line = function()
   })
 
   local _ = colors.indent_line_fg and vim.api.nvim_set_hl(0, 'IndentBlanklineChar', { fg = colors.indent_line_fg })
-    or nil
+      or nil
 end
 
 M.option_true_zen = {
@@ -104,11 +104,11 @@ M.setup_statuscol = function()
     setopt = true,
     segments = {
       {
-        sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 1, auto = true },
+        sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 1, auto = false },
         click = 'v:lua.ScSa',
       },
       {
-        sign = { name = { 'Diagnostic' }, maxwidth = 2, auto = true },
+        sign = { name = { 'Diagnostic' }, maxwidth = 1, auto = false },
         click = 'v:lua.ScSa',
       },
       {
@@ -127,10 +127,25 @@ M.option_guess_indent = {
 }
 
 M.option_rooter = {
-  rooter_patterns = config:get('rooter.patterns'),
-  trigger_patterns = { '*' },
-  manual = false,
+  patterns = config:get('rooter.patterns'),
+  manual_mode = false,
   Feature = 'rooter',
+  -- Table of lsp clients to ignore by name
+  -- eg: { "efm", ... }
+  ignore_lsp = {},
+  -- Don't calculate root dir on specific directories
+  -- Ex: { "~/.cargo/*", ... }
+  exclude_dirs = {},
+  -- Show hidden files in telescope
+  show_hidden = false,
+  -- When set to false, you will get a message when project.nvim changes your
+  -- directory.
+  silent_chdir = true,
+  -- What scope to change the directory, valid options are
+  -- * global (default)
+  -- * tab
+  -- * win
+  scope_chdir = 'global',
 }
 
 M.option_buf_lastplace = {

@@ -1,3 +1,4 @@
+local node_util = require('ty.core.node')
 local M = {}
 -- ============================================
 
@@ -6,8 +7,10 @@ local lsp_flags = {
   allow_incremental_sync = false,
 }
 
-local auto_servers = { 'bashls', 'html', 'volar', 'prismals' }
+local volar_takeover_mode = true
+local auto_servers = { 'bashls', 'html', 'prismals' }
 
+-- TODO: on setup lspconfig prev.
 local function setup_fidget()
   require('fidget').setup({
     text = {
@@ -51,7 +54,7 @@ local function setup_typescript()
   local tsserver_rc = require('ty.contrib.editing.lsp.servers.tsserver')
 
   typescript.setup({
-    disable_commands = true, -- prevent the plugin from creating Vim commands
+    disable_commands = false, -- prevent the plugin from creating Vim commands
     debug = false, -- enable debug logging for commands
     -- LSP Config options
     server = {
@@ -77,6 +80,7 @@ local function default_lspconfig_ui_options()
 end
 
 function M.setup()
+  -- local lspconfig_util = require('lspconfig.util')
   local lspconfig = require('lspconfig')
 
   require('mason')
@@ -96,10 +100,13 @@ function M.setup()
     automatic_installation = true,
   })
 
-  require('ty.contrib.editing.lsp.diagnostics').setup()
   setup_fidget()
+  require('ty.contrib.editing.lsp.diagnostics').setup()
   default_lspconfig_ui_options()
-  setup_typescript()
+
+  if not volar_takeover_mode then
+    setup_typescript()
+  end
 
   local handlers = {
     ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = Ty.Config.ui.float.border }),
@@ -110,7 +117,8 @@ function M.setup()
     -- ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics),
   }
 
-  local function on_attach(client, bufnr)
+  ---@diagnostic disable-next-line: unused-local
+  local function on_attach(_client, _bufnr)
     -- set up buffer keymaps, etc.
     -- buffer keys is set at `ty.contrib.editing.init`
   end
@@ -125,6 +133,13 @@ function M.setup()
   local tailwindcss_rc = require('ty.contrib.editing.lsp.servers.tailwindcss')
   -- may causing input in jsx very slow.
   lspconfig.tailwindcss.setup({
+    -- cmd = node_util.get_mason_node_cmd({
+    --   cmd_name = 'tailwindcss-language-server',
+    --   node_path = 'tsx',
+    --   args = {
+    --     '--stdio',
+    --   }
+    -- }),
     capabilities = tailwindcss_rc.capabilities,
     filetypes = tailwindcss_rc.filetypes,
     handlers = handlers,
@@ -143,14 +158,6 @@ function M.setup()
     settings = require('ty.contrib.editing.lsp.servers.cssls').settings,
   })
 
-  -- use null-ls.
-  -- lspconfig.eslint.setup {
-  --   capabilities = capabilities,
-  --   handlers = handlers,
-  --   on_attach = require('ty.contrib.editing.lsp.servers.eslint').on_attach,
-  --   settings = require('ty.contrib.editing.lsp.servers.eslint').settings,
-  --   flags = lsp_flags,
-  -- }
 
   lspconfig.jsonls.setup({
     capabilities = capabilities,
@@ -174,6 +181,18 @@ function M.setup()
     handlers = handlers,
     on_attach = on_attach,
     settings = require('ty.contrib.editing.lsp.servers.lua_ls').settings,
+  })
+  local node_root = vim.loop.cwd()
+  lspconfig.volar.setup({
+    filetypes = not volar_takeover_mode and { 'vue' } or { 'vue', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+    capabilities = capabilities,
+    handlers = handlers,
+    on_attach = on_attach,
+    init_options = {
+      typescript = {
+        tsdk = node_util.get_typescript_server_path(node_root),
+      }
+    }
   })
 
   -- lspconfig.vuels.setup {

@@ -26,6 +26,10 @@ M.find_files = {
     '^dist/',
     '^public/',
     'lazy-lock.json',
+    'package-lock.json',
+    'package.json',
+    'yarn.lock',
+    'pnpm-lock.yaml'
   },
 }
 

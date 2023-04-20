@@ -1,5 +1,4 @@
 --- keymappings for neovim for basic usage.
---- Should be in alphabetical order.
 local autocmd = require('ty.core.autocmd')
 local has_plugin = require('ty.core.utils').has_plugin
 local keymap = require('ty.core.keymap')
@@ -10,8 +9,8 @@ i('<C-e>', 'Insert mode: move to end of line', key('<End>'))
 n('<C-z>', 'N: Undo, no more background key', key('<ESC> u'))
 i('<C-z>', 'I: Undo, no more background key', key('<ESC> u'))
 v('<D-`>', 'Case change in visual mode', key('U'))
-n('<D-s>', 'N: Save current file by <command-s>', cmd('w'))
-i('<D-s>', 'I: Save current file by <command-s>', cmd('w'))
+n('<Char-0xAA>', 'N: Save current file by <command-s>', cmd('w'))
+i('<Char-0xAA>', 'I: Save current file by <command-s>', cmd('w'))
 n('<ESC>', 'Clear search highlight', cmd('noh'))
 v('<', 'Keep visual mode indenting, left', key('<gv'))
 v('>', 'Keep visual mode indenting, right', key('>gv'))
@@ -48,8 +47,8 @@ n('d', 'Delete char and yank to register x', key('"xd'))
 n('D', 'Delete to end of line and yank to register x', key('"xD'))
 v('d', 'Delete char and yank to register x', key('"xd'))
 v('D', 'Delete to end of line and yank to register x', key('"xD'))
-n('<A-x>', 'Cut chars and yank to register *', key('"*x', { '-remap' }))
-v('<A-x>', 'Cut chars and yank to register *', key('"*x', { '-remap' }))
+n('<Char-0xAB>', 'Cut chars and yank to register *', key('"*x', { '-remap' }))
+v('<Char-0xAB>', 'Cut chars and yank to register *', key('"*x', { '-remap' }))
 n('x', 'Cut chars and do not yank to register', key('"_x'))
 n('X', 'Cut chars and do not yank to register', key('"_X'))
 v('x', 'Cut chars and do not yank to register', key('"_x'))
@@ -79,11 +78,11 @@ x('J', 'Move selected line / block of text in visual mode down', key(":move '>+1
 -- html tags
 n('[tp', 'Jump to parent tag', cmd([[lua Ty.Func.navigate.jump_to_tag('parent')]]))
 n('[tc', 'Jump to child tag', cmd([[lua Ty.Func.navigate.jump_to_tag('child')]]))
-n('[t[', 'Jump to next tag', cmd([[lua Ty.Func.navigate.jump_to_tag('next')]]))
-n('[t]', 'Jump to previous tag', cmd([[lua Ty.Func.navigate.jump_to_tag('prev')]]))
+n('[t]', 'Jump to next tag', cmd([[lua Ty.Func.navigate.jump_to_tag('next')]]))
+n('[t[', 'Jump to previous tag', cmd([[lua Ty.Func.navigate.jump_to_tag('prev')]]))
 -- todo jump
-n('[td', 'Jump to next todo', cmd([[lua Ty.Func.editor.jump_to_todo('next')]]))
-n(']td', 'Jump to previous todo', cmd([[lua Ty.Func.editor.jump_to_todo('prev')]]))
+n(']td', 'Jump to next todo', cmd([[lua Ty.Func.editor.jump_to_todo('next')]]))
+n('[td', 'Jump to previous todo', cmd([[lua Ty.Func.editor.jump_to_todo('prev')]]))
 
 -- functional keys.
 n('<leader>s', 'Search and replace')
@@ -94,16 +93,16 @@ nxv(
   cmd('lua Ty.Func.explorer.search_and_replace_cword_in_buffer()')
 )
 n('<C-p>', 'Open legendary', cmd([[lua require('ty.contrib.keymaps.legendary').open_legendary()]]))
-n('<leader>q', 'Toggle quick list', cmd('lua Ty.Func.editor.toggle_qf()'))
-n('<leader>x', 'Close buffer and window', cmd('lua Ty.Func.buffer.close_bufwin()'))
-n('<leader>F', 'Find folders', cmd('lua Ty.Func.explorer.find_folder()'))
-n('<leader>t', 'Tool|Toggle')
+
+n('<leader>t', 'Tool, Toggle')
 n('<leader>t-', 'Switch variables, false <==> true', cmd([[Switch]]))
-n("<leader>/", "Outline|Git")
+n('<leader>tq', 'Quick list', cmd('lua Ty.Func.editor.toggle_qf()'))
+
+n("<leader>/", "Outline, Terms")
 n("<leader>//", "Find terms", cmd([[Telescope termfinder find]]))
 n('<leader>/o', '[/] Toggle outline', cmd([[lua Ty.Func.explorer.toggle_outline()]]))
 -- gits
-n('<leader>g', 'Git operations')
+n('<leader>g', 'Git')
 n('<leader>gg', 'Fugitive Git', key([[:Git<CR>]]))
 n('<leader>ga', 'Git add current', cmd([[!git add %:p]]))
 n('<leader>gA', 'Git add all', cmd([[!git add .]]))
@@ -116,7 +115,16 @@ n('<leader>gV', 'Git file history', cmd([[lua Ty.Func.git.toggle_tig_file_histor
 n('<leader>gl', 'Lazygit', cmd([[LazyGit]]))
 n('<leader>gc', 'Open git conflict menus',
   cmd("lua require('ty.contrib.keymaps.hydra.git').open_git_conflict_hydra()", { "+noremap" }))
-
+-- explores
+n('<leader>e', 'Explorer')
+n('<leader>ef', 'Open Project files', cmd('lua Ty.Func.explorer.project_files()'))
+n('<leader>et', 'Toggle explore tree', cmd([[lua Ty.Func.explorer.toggle_nvim_tree()]]))
+n('<leader>ee', 'Resume telescope pickers', cmd([[lua require('telescope.builtin').resume()]]))
+n('<leader>er', 'Open recent files', cmd('lua Ty.Func.explorer.oldfiles({ cwd_only = true })'))
+n('<leader>e.', 'Locate current file in tree', cmd('lua Ty.Func.explorer.nvim_tree_find_file()'))
+n('<leader>es', 'Grep search', cmd([[lua require('telescope').extensions.live_grep_args.live_grep_args()]]))
+n('<leader>el', 'Find folders', cmd('lua Ty.Func.explorer.find_folder()'))
+-- n('<leader>eS', 'Grep search under word', cmd([[lua require('telescope').extensions.live_grep_args.live_grep_args()]]))
 
 --- folding.
 if has_plugin('nvim-ufo') then
@@ -126,6 +134,7 @@ if has_plugin('nvim-ufo') then
 end
 
 --- portal and grapple
+n('<leader>b', 'Buffer')
 if has_plugin('grapple.nvim') then n('<leader>bg', 'Toggle grapple mark', cmd([[GrappleToggle]])) end
 if has_plugin('portal.nvim') then
   n('<M-o>', 'Portal jump backward', cmd([[lua Ty.Func.navigate.portal_backward()]]))
@@ -137,9 +146,10 @@ if has_plugin('harpoon') then
   n('<leader>bn', 'Harpoon next mark', cmd([[lua require('harpoon.ui').nav_next()]]))
   n('<leader>bp', 'Harpoon prev mark', cmd([[lua require('harpoon.ui').nav_prev()]]))
 end
-n('<leader>b[', 'Next unsaved buffer', cmd([[lua Ty.Func.navigate.next_unsaved_buf()]]))
-n('<leader>b]', 'Prev unsaved buffer', cmd([[lua Ty.Func.navigate.prev_unsaved_buf()]]))
+n('<leader>b]', 'Next unsaved buffer', cmd([[lua Ty.Func.navigate.next_unsaved_buf()]]))
+n('<leader>b[', 'Prev unsaved buffer', cmd([[lua Ty.Func.navigate.prev_unsaved_buf()]]))
 n('<leader>bd', 'Discard buffer changes', key([[:e!<CR>]]))
+n('<leader>bx', 'Close buffer and window', cmd('lua Ty.Func.buffer.close_bufwin()'))
 
-n('<leader>z', 'Copilot|...')
+n('<leader>z', 'Copilot, ...')
 if has_plugin('copilot.vim') then n('<leader>zp', 'Open github copilot panel', cmd([[Copilot panel]])) end

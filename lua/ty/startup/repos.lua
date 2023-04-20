@@ -1,6 +1,8 @@
 local config = require('ty.core.config')
+local initd = require('ty.startup.initd.plugins')
+local _ = require('ty.startup.utils').load_modules_packages
 
-return {
+return _({
   common = {
     {
       'nvim-lua/plenary.nvim',
@@ -11,6 +13,7 @@ return {
     {
       'nvim-telescope/telescope.nvim',
       pint = true,
+      commit = '7141515a7cabde464',
       cmd = { 'Telescope' },
       dependencies = {
         { 'nvim-lua/popup.nvim' },
@@ -40,7 +43,6 @@ return {
       keys = { '.' },
     },
   },
-
   keymaps = {
     {
       -- free the leader key.
@@ -63,7 +65,6 @@ return {
       ImportConfig = 'legendary',
     },
   },
-
   autocmp = {
     {
       'L3MON4D3/LuaSnip',
@@ -126,7 +127,6 @@ return {
       ImportInit = 'copilot',
     },
   },
-
   buffer = {
     {
       's1n7ax/nvim-window-picker',
@@ -143,10 +143,10 @@ return {
       dependencies = {
         'kwkarlwang/bufresize.nvim',
       },
+      build = "./kitty/install-kittens.bash",
       ImportConfig = 'smart_splits',
     },
   },
-
   debugger = {
     {
       -- https://github.com/stevearc/overseer.nvim
@@ -173,7 +173,6 @@ return {
       ImportConfig = 'neotest',
     },
   },
-
   editing = {
     {
       'williamboman/mason.nvim',
@@ -197,8 +196,14 @@ return {
     },
 
     {
+      'lukas-reineke/lsp-format.nvim',
+      Feature = 'lsp',
+      ImportConfig = 'lsp_format',
+    },
+
+    {
       'glepnir/lspsaga.nvim',
-      event = 'BufRead',
+      cmd = { 'Lspsaga', },
       dependencies = {
         --Please make sure you install markdown and markdown_inline parser
         { 'nvim-treesitter/nvim-treesitter' },
@@ -236,7 +241,7 @@ return {
       ImportConfig = 'comment',
     },
 
-    { 'AndrewRadev/splitjoin.vim', event = 'BufReadPost' },
+    { 'AndrewRadev/splitjoin.vim', },
 
     {
       -- https://github.com/mg979/vim-visual-multi/wiki/Quick-start
@@ -255,13 +260,9 @@ return {
       -- better yank.
       'gbprod/yanky.nvim',
       event = { 'BufReadPost', 'BufNewFile' },
-      dependencies = {
-        'mrjones2014/legendary.nvim',
-      },
       ImportConfig = 'yanky',
     },
   },
-
   editor = {
     {
       'Pocco81/true-zen.nvim',
@@ -302,7 +303,7 @@ return {
 
     {
       'luukvbaal/statuscol.nvim',
-      event = { 'BufReadPre', 'BufNewFile' },
+      event = { 'BufReadPost', 'BufNewFile' },
       cond = function() return vim.fn.has('nvim-0.9.0') == 1 end,
       ImportConfig = 'statuscol',
     },
@@ -336,8 +337,9 @@ return {
       ImportConfig = 'dashboard',
     },
     {
-      'notjedi/nvim-rooter.lua',
-      event = { 'BufReadPost', 'BufNewFile' },
+      'ahmedkhalf/project.nvim',
+      name = 'project_nvim',
+      event = { 'VeryLazy' },
       ImportOption = 'rooter',
     },
     {
@@ -352,13 +354,13 @@ return {
       ImportOption = 'buf_lastplace',
     },
   },
-
   explorer = {
     {
       'kyazdani42/nvim-tree.lua',
       cmd = {
         'NvimTreeToggle',
         'NvimTreeFindFileToggle',
+        'NvimTreeFindFile',
       },
       ImportConfig = 'nvim_tree',
     },
@@ -393,7 +395,6 @@ return {
       'ThePrimeagen/harpoon',
     },
   },
-
   git = {
     { 'kdheepak/lazygit.nvim', cmd = 'LazyGit' },
     {
@@ -529,8 +530,11 @@ return {
       ft = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'python' },
       ImportOption = 'template_string',
     },
+    {
+      'mrjones2014/lua-gf.nvim',
+      ft = 'lua'
+    }
   },
-
   navigate = {
     {
       'hrsh7th/nvim-gtd',
@@ -582,7 +586,6 @@ return {
       ImportOption = 'surround',
     },
   },
-
   statusline = {
     {
       'nvim-lualine/lualine.nvim',
@@ -592,16 +595,16 @@ return {
           dev = false,
         },
       },
-      event = { 'BufReadPre', 'BufNewFile' },
+      event = { 'BufReadPost', 'BufNewFile' },
       ImportConfig = 'lualine',
     },
     {
       'b0o/incline.nvim',
       event = { 'BufReadPost', 'BufNewFile' },
       ImportConfig = 'incline',
+      enabled = false,
     },
   },
-
   term = {
     {
       'willothy/flatten.nvim',
@@ -617,7 +620,6 @@ return {
       ImportConfig = 'toggleterm',
     },
   },
-
   tools = {
     {
       'pze/cheatsheet.nvim',
@@ -657,8 +659,22 @@ return {
       end,
       ImportOption = 'chat_gpt',
     },
+    {
+      'dstein64/vim-startuptime',
+      cond = function()
+        return vim.env.PROFILE == 1
+      end,
+      lazy = false,
+    },
+    {
+      'alanfortlink/blackjack.nvim',
+    },
+    {
+      'nvim-colortils/colortils.nvim',
+      cmd = 'Colortils',
+      config = true
+    }
   },
-
   ui = {
     {
       'ellisonleao/gruvbox.nvim',
@@ -689,5 +705,10 @@ return {
       ImportInit = 'notify',
       ImportConfig = 'notify',
     },
+    {
+      'tummetott/reticle.nvim',
+      event = { 'BufReadPost', 'BufNewFile' },
+      ImportOption = 'reticle',
+    }
   },
-}
+}, initd)

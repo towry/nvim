@@ -13,7 +13,7 @@ function M.init_manually()
   vim.api.nvim_create_autocmd('FileType', {
     group = 'alpha_tabline',
     pattern = 'alpha',
-    command = 'setlocal showtabline=0 noruler',
+    command = 'setlocal showtabline=0 noruler nocursorline',
   })
 
   vim.api.nvim_create_autocmd('FileType', {
@@ -23,7 +23,12 @@ function M.init_manually()
       vim.api.nvim_create_autocmd('BufUnload', {
         group = 'alpha_tabline',
         buffer = 0,
-        command = 'setlocal showtabline=' .. showtabline .. ' ruler',
+        callback = function()
+          vim.cmd('setlocal cursorline showtabline=' .. showtabline .. ' ruler')
+          vim.api.nvim_exec_autocmds('User', {
+            pattern = 'DashboardDismiss',
+          })
+        end,
       })
     end,
   })
@@ -38,10 +43,14 @@ local function footer()
   local stats = require('lazy').stats()
   local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
   local v = vim.version()
+  if not v then
+    return "nil"
+  end
   return string.format(' v%d.%d.%d   %d   %sms ', v.major, v.minor, v.patch, plugins, ms)
 end
 
 function M.setup()
+  local Path = require('ty.core.path')
   local present, alpha = pcall(require, 'alpha')
   if not present then return end
   dashboard = require('alpha.themes.dashboard')
@@ -51,8 +60,6 @@ function M.setup()
   vim.api.nvim_create_autocmd('User', {
     pattern = 'LazyVimStarted',
     callback = function()
-      local stats = require('lazy').stats()
-      local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
       dashboard.section.footer.val = footer()
       pcall(vim.cmd.AlphaRedraw)
     end,
@@ -75,56 +82,27 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
   ]]
 
   local lines = {}
+  local insert = table.insert
   for line in header:gmatch('[^\r\n]+') do
-    table.insert(lines, line)
+    insert(lines, line)
   end
 
   dashboard.section.header.type = 'text'
   dashboard.section.header.val = lines
   dashboard.section.header.opts = {
     position = 'center',
-    hl = 'Normal',
+    hl = "Green",
   }
 
   -- ╭──────────────────────────────────────────────────────────╮
   -- │ Heading Info                                             │
   -- ╰──────────────────────────────────────────────────────────╯
-
-  local thingy = io.popen('echo "$(date +%a) $(date +%d) $(date +%b)" | tr -d "\n"')
-  if thingy == nil then return end
-  local date = thingy:read('*a')
-  thingy:close()
-
-  local datetime = os.date(' %H:%M')
-
-  local hi_top_section = {
+  local header_bottom = {
     type = 'text',
-    val = '┌────────────   Today is '
-      .. date
-      .. ' ────────────┐',
+    val = "  " .. Path.home_to_tilde(vim.loop.cwd()),
     opts = {
       position = 'center',
-      hl = 'NormalInfo',
-    },
-  }
-
-  local hi_middle_section = {
-    type = 'text',
-    val = '│                                                │',
-    opts = {
-      position = 'center',
-      hl = 'NormalInfo',
-    },
-  }
-
-  local hi_bottom_section = {
-    type = 'text',
-    val = '└───══───══───══───  '
-      .. datetime
-      .. '  ───══───══───══────┘',
-    opts = {
-      position = 'center',
-      hl = 'NormalInfo',
+      hl = 'VirtualTextHint',
     },
   }
 
@@ -145,7 +123,7 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
       position = 'center',
       shortcut = sc,
       cursor = 5,
-      width = 50,
+      width = 40,
       align_shortcut = 'right',
       hl_shortcut = 'Normal',
     }
@@ -170,21 +148,21 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
 
   dashboard.section.buttons.val = {
     button(
-      '<Nop>',
-      icons.timer .. ' ' .. 'Load Current Dir Session',
+      '/',
+      icons.timer .. ' ' .. 'Load Session',
       '<cmd>SessionManager load_current_dir_session<CR>',
       {}
     ),
     button(
-      'SPC s h',
+      'r',
       icons.fileRecent .. ' ' .. 'Recents',
       '<cmd>Telescope oldfiles cwd_only=true hidden=true<CR>',
       {}
     ),
-    button('<F8>', icons.fileNoBg .. ' ' .. 'Find File', '<cmd>lua Ty.Func.explorer.project_files()<CR>', {}),
-    button('<F9>', icons.t .. ' ' .. 'Find Word', '<cmd>lua Ty.Func.explorer.multi_rg_find_word()<CR>', {}),
-    button('~', '  ' .. ' ' .. 'Plugins', '<cmd>Lazy<CR>', {}),
-    button('-', icons.exit .. ' ' .. 'Exit', '<cmd>exit<CR>', {}),
+    button('f', icons.fileNoBg .. ' ' .. 'Find File', '<cmd>lua Ty.Func.explorer.project_files()<CR>', {}),
+    button('s', icons.t .. ' ' .. 'Search Content', '<cmd>lua Ty.Func.explorer.multi_rg_find_word()<CR>', {}),
+    button('p', '  ' .. ' ' .. 'Plugins', '<cmd>Lazy<CR>', {}),
+    button('q', icons.exit .. ' ' .. 'Exit', '<cmd>exit<CR>', {}),
   }
 
   dashboard.section.footer.val = {
@@ -192,30 +170,21 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
   }
   dashboard.section.footer.opts = {
     position = 'center',
-    hl = 'Normal',
+    hl = 'VirtualTextHint',
   }
 
   local section = {
     header = dashboard.section.header,
-    hi_top_section = hi_top_section,
-    hi_middle_section = hi_middle_section,
-    hi_bottom_section = hi_bottom_section,
     buttons = dashboard.section.buttons,
     footer = dashboard.section.footer,
   }
-
-  -- ╭──────────────────────────────────────────────────────────╮
-  -- │ Setup                                                    │
-  -- ╰─────────����────────────────────────────────────��───────────╯
 
   local opts = {
     layout = {
       { type = 'padding', val = 2 },
       section.header,
       { type = 'padding', val = 0 },
-      section.hi_top_section,
-      section.hi_middle_section,
-      section.hi_bottom_section,
+      header_bottom,
       { type = 'padding', val = 1 },
       section.buttons,
       { type = 'padding', val = 1 },

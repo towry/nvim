@@ -11,6 +11,12 @@ M.get_path_and_tail = function(filename)
   return bufname_tail, path_to_display
 end
 
+local use_find_files_instead_of_git = false
+
+M.project_files_toggle_between_git_and_fd = function()
+  use_find_files_instead_of_git = not use_find_files_instead_of_git
+end
+
 M.project_files = function(opts)
   local make_entry = require('telescope.make_entry')
   local strings = require('plenary.strings')
@@ -51,7 +57,7 @@ M.project_files = function(opts)
     return require('telescope.builtin').oldfiles(opts)
   end
 
-  if opts and opts.no_gitfiles then
+  if (opts and opts.no_gitfiles) or use_find_files_instead_of_git then
     return require('telescope.builtin').find_files(opts)
   end
 
@@ -201,6 +207,7 @@ function M.buffers()
   local builtin = require('telescope.builtin')
   local actions = require('telescope.actions')
   local actionstate = require('telescope.actions.state')
+  local Buffer = require('ty.core.buffer')
 
   builtin.buffers({
     ignore_current_buffer = true,
@@ -230,12 +237,7 @@ function M.buffers()
           return
         end
         local bufnr = entry.bufnr
-        local buf_win_id = unpack(vim.fn.win_findbuf(bufnr))
-        if buf_win_id ~= nil then
-          vim.api.nvim_set_current_win(buf_win_id)
-          return
-        end
-        vim.api.nvim_set_current_buf(bufnr)
+        Buffer.set_current_buffer_focus(bufnr)
       end
 
       map('i', '<C-h>', close_buf)

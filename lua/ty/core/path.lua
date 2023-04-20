@@ -5,6 +5,14 @@ local function escape_wildcards(path)
   return path:gsub('([%[%]%?%*])', '\\%1')
 end
 
+local function home_to_tilde(path)
+  local home = vim.loop.os_homedir()
+  if path:sub(1, #home) == home then
+    return '~' .. path:sub(#home + 1)
+  end
+  return path
+end
+
 local function sanitize(path)
   if is_windows then
     path = path:sub(1, 1):upper() .. path:sub(2)
@@ -150,4 +158,5 @@ return {
   is_descendant = is_descendant,
   path_separator = path_separator,
   search_ancestors = search_ancestors,
+  home_to_tilde = home_to_tilde,
 }

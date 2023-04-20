@@ -2,16 +2,18 @@ local M = {}
 
 
 M.setup = function()
-  local Buffer = require('ty.core.buffer')
-  local terms = require('ty.contrib.statusline.lualine.terms_component')
+  require('ty.core.options').setup_statusline()
+  local auto_format_disabled = require('ty.contrib.editing.lsp.formatting').auto_format_disabled
+  local Buffer               = require('ty.core.buffer')
+  local terms                = require('ty.contrib.statusline.lualine.terms_component')
   -- local colors = require('ty.contrib.ui').colors()
-  local spectre_extension = {
+  local spectre_extension    = {
     sections = {
       lualine_a = { 'mode' },
     },
     filetypes = { 'spectre_panel' },
   }
-  local present, lualine = pcall(require, 'lualine')
+  local present, lualine     = pcall(require, 'lualine')
 
   if not present then
     Ty.NOTIFY('lualine not installed')
@@ -32,7 +34,31 @@ M.setup = function()
       section_separators = { left = '', right = '' },
       disabled_filetypes = { winbar = { 'lazy', 'alpha' }, statusline = { 'dashboard', 'lazy', 'alpha' } },
     },
-    tabline = {
+    winbar = {
+      lualine_a = {
+        {
+          'filename',
+          path = 1,
+          symbols = {
+            modified = '',
+            readonly = '',
+          }
+        }
+      },
+    },
+    inactive_winbar = {
+      lualine_a = {
+        {
+          'filename',
+          path = 1,
+          symbols = {
+            modified = '',
+            readonly = '',
+          }
+        }
+      },
+    },
+    sections = {
       lualine_a = {
         {
           function()
@@ -53,23 +79,6 @@ M.setup = function()
             end
           end,
         },
-        {
-          'filename',
-          path = 1,
-          symbols = {
-            modified = '',
-            readonly = '',
-          }
-        }
-      },
-      lualine_b = { 'diff', 'diagnostics', },
-      lualine_c = { '' },
-      lualine_x = {},
-      lualine_y = {},
-      lualine_z = { '' },
-    },
-    sections = {
-      lualine_a = {
         { 'mode' },
         {
           terms,
@@ -96,8 +105,7 @@ M.setup = function()
         'searchcount',
       },
       -- filename is displayed by the incline.
-      lualine_c = {
-      },
+      lualine_c = { 'diff', 'diagnostics', },
       lualine_x = {
         {
           'copilot',
@@ -110,7 +118,11 @@ M.setup = function()
         },
         {
           function()
-            return string.format(' %s', vim.b[0].formatter_name)
+            local icon = ' '
+            if auto_format_disabled() then
+              icon = ' '
+            end
+            return string.format('%s%s', icon, vim.b[0].formatter_name)
           end,
           cond = function()
             return vim.b[0].formatter_name ~= nil

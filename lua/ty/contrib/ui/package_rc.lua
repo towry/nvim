@@ -3,6 +3,7 @@ local M = {}
 
 -- setup dressing
 M.setup_dressing = require('ty.contrib.ui.dressing-plug').setup_dressing
+M.option_reticle = {}
 
 function M.setup_gruvbox()
   local theme = require('ty.contrib.ui').theme_gruvbox

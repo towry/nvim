@@ -3,6 +3,7 @@ local M = {}
 
 local actions = nil
 local icons = require('ty.contrib.ui.icons')
+local has_plugin = require('ty.core.utils').has_plugin
 local action_state = nil
 local lga_actions = nil
 
@@ -44,7 +45,8 @@ function M.setup()
         },
         prompt_position = 'top',
       },
-      file_ignore_patterns = require('ty.core.config').explorer:get('find_files.ignore_pattern'),
+      ---@see https://github.com/nvim-telescope/telescope.nvim/issues/522#issuecomment-1107441677
+      file_ignore_patterns = { "node_modules" },
       path_display = { 'truncate' },
       layout_strategy = 'flex',
       file_sorter = require('telescope.sorters').get_fzy_sorter,
@@ -52,13 +54,10 @@ function M.setup()
       color_devicons = true,
       initial_mode = 'insert',
       git_icons = git_icons,
-
       sorting_strategy = 'ascending',
-
       file_previewer = require('telescope.previewers').vim_buffer_cat.new,
       grep_previewer = require('telescope.previewers').vim_buffer_vimgrep.new,
       qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
-
       mappings = {
         i = {
           ['<C-e>'] = function() vim.cmd('stopinsert') end,
@@ -103,7 +102,13 @@ function M.setup()
       live_grep_args = {
         disable_coordinates = true,
         auto_quoting = true, -- enable/disable auto-quoting
-        mappings = { -- extend mappings
+        theme = "dropdown",
+        layout_config = {
+          prompt_position = "bottom",
+          width = 0.9,
+        },
+        mappings = {
+          -- extend mappings
           i = {
             ['<C-k>'] = lga_actions.quote_prompt(),
             ['<C-r>'] = function(prompt_bufnr)
@@ -125,7 +130,8 @@ function M.setup()
   require('telescope').load_extension('live_grep_args')
   require('telescope').load_extension('git_worktree')
   require('telescope').load_extension('cheatsheet')
-  require('telescope').load_extension("termfinder")
+  require('telescope').load_extension('termfinder')
+  if has_plugin('project.nvim') then require('telescope').load_extension('projects') end
 
   -- colorscheme
   vim.cmd('hi! link TelescopeBorder FloatBorder')

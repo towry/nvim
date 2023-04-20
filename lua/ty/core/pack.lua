@@ -1,29 +1,4 @@
---[[
-  @usage:
-  ```lua
-  local pack = require("ty.core.pack").editing
-  pack({
-    "folke/lazy.nvim",
-    Feature = "format",
-    lazy = true,
-  })
-  ```
-]]
---
-local uv, api, fn = vim.loop, vim.api, vim.fn
-local config = require('ty.core.config')
-local utils = require('ty.core.utils')
----@diagnostic disable-next-line: deprecated
-local unpack = table.unpack or unpack
-
-local Spec = {
-  ImportConfig = 'ImportConfig',
-  Feature = 'Feature',
-  ImportOption = 'ImportOption',
-  ImportInit = 'ImportInit',
-}
-
-if _G.cachedPack ~= nil then return _G.cachedPack end
+local uv, api = vim.loop, vim.api
 
 local pack = {
   repos = {},
@@ -31,13 +6,12 @@ local pack = {
 }
 
 local lazy_opts = {
-  -- lockfile = self.path_helper.join(self.data_path, 'lazy-lock.json'),
   dev = {
     path = '~/workspace/git-repos',
     fallback = true,
   },
-  concurrency = 3,
-  install = { colorscheme = { config.ui.theme.colorscheme } },
+  concurrency = 5,
+  install = { colorscheme = { Ty.Config.ui.theme.colorscheme } },
   checker = { enabled = false },
   defaults = { lazy = true },
   change_detection = {
@@ -71,12 +45,15 @@ local lazy_opts = {
     enabled = false,
   },
   performance = {
+    reset_packpath = true,
     cache = {
-      enabled = true,
+      enabled = false,
     },
     rtp = {
+      -- https://github.com/neovim/neovim/tree/master/runtime/plugin
       disabled_plugins = {
-        'gzi',
+        'gzip',
+        'man',
         'matchit',
         'matchparen',
         'netrwPlugin',
@@ -84,93 +61,43 @@ local lazy_opts = {
         'tohtml',
         'tutor',
         'zipPlugin',
+        -- for downloading spell files.
+        'spellfile_plugin',
       },
     },
   },
 }
 
-function pack:load_modules_packages()
-  local specs = require('ty.startup.repos')
-  local plugins_initd = require('ty.startup.initd.plugins')
-  -- specs is dict with { 'scope': list of plugins }
-  for scope, plugins in pairs(specs) do
-    local scoped_initd = type(plugins_initd[scope]) == 'function' and plugins_initd[scope]() or {}
-    if scoped_initd.init then table.insert(pack.initd, scoped_initd.init) end
+function pack.setup(repos, initd_list)
+  local data_path = vim.fn.stdpath('data')
+  local config_path = vim.fn.stdpath('config')
 
-    for _, repo in ipairs(plugins) do
-      if type(repo[Spec.ImportConfig]) == 'string' and repo.config == nil then
-        repo.config = function(...)
-          local args = ...
-          utils.try(function()
-            local is_ok, rc = pcall(require, 'ty.contrib.' .. scope .. '.package_rc')
-            if not is_ok then
-              print('package rc not found for ' .. scope)
-              return
-            end
-            local setup_method = rc['setup_' .. repo[Spec.ImportConfig]]
-            if type(setup_method) == 'function' then
-              setup_method(unpack(args))
-            else
-              error('invalid package ImportConfig for ' .. repo[Spec.ImportConfig])
-            end
-          end)
-        end
-      end
-      -- load opts.
-      if type(repo[Spec.ImportOption]) == 'string' and repo.opts == nil then
-        repo.opts = function()
-          return require('ty.contrib.' .. scope .. '.package_rc')['option_' .. repo[Spec.ImportOption]]
-        end
-      end
-      -- load init.
-      if type(repo[Spec.ImportInit]) == 'string' and repo.init == nil and scoped_initd[repo[Spec.ImportInit]] then
-        repo.init = scoped_initd[repo[Spec.ImportInit]]
-      end
-      -- insert
-      table.insert(pack.repos, repo)
-    end
+  local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+  vim.opt.rtp:prepend(lazypath)
+  local is_lazy_installed, lazy = pcall(require, 'lazy')
+  if not is_lazy_installed then
+    vim.fn.system({
+      'git',
+      'clone',
+      '--filter=blob:none',
+      'https://github.com/folke/lazy.nvim.git',
+      '--branch=stable', -- latest stable release
+      lazypath,
+    })
+    vim.opt.rtp:prepend(lazypath)
+    lazy = require('lazy')
   end
-end
 
-function pack:setup()
-  self.path_helper = require('ty.core.path')
-  self.data_path = vim.fn.stdpath('data')
-  self.config_path = vim.fn.stdpath('config')
-
-  local lazy_path = self.path_helper.join(self.data_path, 'lazy', 'lazy.nvim')
-  local state = uv.fs_stat(lazy_path)
-  if not state then
-    local cmd = '!git clone https://github.com/folke/lazy.nvim ' .. lazy_path
-    api.nvim_command(cmd)
-  end
-  vim.opt.runtimepath:prepend(lazy_path)
-  local lazy = require('lazy')
-
-  self:load_modules_packages()
   vim.api.nvim_create_autocmd('User', {
     group = vim.api.nvim_create_augroup('init_after_lazy_done', { clear = true }),
     pattern = 'LazyDone',
     callback = function()
-      for _, init in ipairs(pack.initd) do
+      for _, init in ipairs(initd_list) do
         init()
       end
     end,
   })
-  lazy.setup(self.repos, lazy_opts)
-  self.repos = nil
+  lazy.setup(repos, lazy_opts)
 end
-
-function pack.package(repo) table.insert(pack.repos, repo) end
-
---- load plugin.
-pack.load = function(...) return require('lazy').load(...) end
-
--- set __index on pack, so we use access pack.xxx, we take xxx as scope and
--- return pack.contrib(xxx).
-setmetatable(pack, {
-  __index = function(_, key) return pack.contrib(key) end,
-})
-
-_G.cachedPack = pack
 
 return pack

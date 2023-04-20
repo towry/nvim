@@ -1,17 +1,28 @@
+require('ty.core.globals')
+
 local M = {}
 local _inited = false
 
 local function resize_kitty()
   local kitty_aug = vim.api.nvim_create_augroup('kitty_aug', { clear = true })
-  vim.api.nvim_create_autocmd('VimEnter', {
+  local resized = false
+  vim.api.nvim_create_autocmd('User', {
     group = kitty_aug,
-    pattern = '*',
-    command = ':silent !kitty @ --to=$KITTY_LISTEN_ON set-spacing padding=0 margin=0',
+    pattern = 'DashboardDismiss',
+    callback = function()
+      vim.schedule(function()
+        resized = true
+        vim.cmd(':silent !kitty @ --to=$KITTY_LISTEN_ON set-spacing padding=0 margin=0')
+      end)
+    end,
   })
-  vim.api.nvim_create_autocmd('VimLeave', {
+  vim.api.nvim_create_autocmd('UILeave', {
     group = kitty_aug,
     pattern = '*',
-    command = ':silent !kitty @ --to=$KITTY_LISTEN_ON set-spacing padding=8 margin=0',
+    callback = function()
+      if not resized then return end
+      vim.cmd(':silent !kitty @ --to=$KITTY_LISTEN_ON set-spacing padding=8 margin=0')
+    end,
   })
 end
 
@@ -22,13 +33,11 @@ function M.setup()
   vim.g.mapleader = ' '
   vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
   vim.g.maplocalleader = ','
+  require('ty.core.options').setup()
 
   resize_kitty()
-
-  require('ty.core.globals')
-  require('ty.core.options').setup()
-  pcall(require, 'settings_env') -- load env settings
-  require('ty.core.pack'):setup()
+  local startup_repos = require('ty.startup.repos')
+  require('ty.core.pack').setup(startup_repos.repos, startup_repos.initd)
 end
 
 return M

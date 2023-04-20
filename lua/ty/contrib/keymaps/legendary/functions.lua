@@ -1,3 +1,4 @@
+local utils = require('ty.core.utils')
 local M = {}
 
 function M.default_functions()
@@ -103,6 +104,35 @@ function M.default_functions()
           description = "grapple popup tags",
         }
       }
+    },
+    {
+      function()
+        utils.load_plugins('blackjack.nvim')
+        vim.cmd('BlackJackNewGame')
+      end,
+      description = "New black jack game",
+    },
+    {
+
+      function()
+        utils.load_plugins('nvim-colorizer.lua')
+        vim.cmd('ColorizerAttachToBuffer')
+      end,
+      description = 'Enable colorizer on buffer (color)',
+    },
+    {
+      function()
+        utils.load_plugins('nvim-colorizer.lua')
+        vim.cmd('ColorizerToggle')
+      end,
+      description = 'Toggle colorizer',
+    },
+    {
+      function()
+        require('ty.contrib.common.telescope_rc.pickers').project_files_toggle_between_git_and_fd()
+        Ty.NOTIFY("Toggle between git and fd done", vim.log.levels.INFO)
+      end,
+      description = "Toggle telescope project files source, git or find files",
     }
   }
 end

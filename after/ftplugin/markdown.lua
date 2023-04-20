@@ -11,15 +11,16 @@ require('ty.core.utils').try(
   end
 )
 
-do
+if vim.bo.buftype == "nofile" then
+  local Util = require('ty.core.utils')
   -- NOTE: currently modified for theme everforest.
   -- fix lspsaga floating window hl.
   -- @see https://github.com/sainnhe/everforest/blob/master/colors/everforest.vim
   local ns = vim.api.nvim_create_namespace('markdown')
   vim.api.nvim_win_set_hl_ns(0, ns)
 
-  vim.api.nvim_set_hl(ns, 'ErrorText', { link = 'Normal' })
-  vim.api.nvim_set_hl(ns, 'WarningText', { link = 'Normal' })
-  vim.api.nvim_set_hl(ns, 'InfoText', { link = 'Normal' })
-  vim.api.nvim_set_hl(ns, 'HintText', { link = 'Normal' })
+  Util.extend_hl('ErrorText', { undercurl = false, cterm = { undercurl = false } }, ns)
+  Util.extend_hl('WarningText', { undercurl = false, cterm = { undercurl = false } }, ns)
+  Util.extend_hl('InfoText', { undercurl = false, cterm = { undercurl = false } }, ns)
+  Util.extend_hl('HintText', { undercurl = false, cterm = { undercurl = false } }, ns)
 end

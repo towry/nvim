@@ -37,7 +37,24 @@ Ty.ToggleTheme = function(mode)
 end
 
 ---@usage Ty.Func.explorer.project_files()
-Ty.Func = require('ty.core.func')
+local Func = {}
+local numb_module = {
+  __index = function(_, key)
+    return function() Ty.NOTIFY('Method: "' .. key .. '" not found', 'error') end
+  end,
+}
+setmetatable(Func, {
+  __index = function(_, key)
+    -- load module from `ty/contrib/<key>/func`
+    local ok, module = pcall(require, 'ty.contrib.' .. key .. '.func')
+    if ok and type(module) == 'table' then
+      return module
+    else
+      return numb_module
+    end
+  end,
+})
+Ty.Func = Func
 
 ---@usage Ty.Config.ui.float.border
 Ty.Config = require('ty.core.config')

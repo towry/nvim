@@ -36,8 +36,8 @@ M.open_git_signs_hydra = function()
     _d_: Diff this     _s_: Stage hunk     _r_: Reset hunk
     _S_: Stage buffer  _u_: Undo stage     _R_: Reset buffer
     _p_: Preview hunk  _b_: Blame line     _B_: Toggle blame
-    _x_: Select hunk   _q_: Exit           _[_: Next hunk
-    _]_: Prev hunk
+    _x_: Select hunk   _q_: Exit           _]_: Next hunk
+    _[_: Prev hunk
   ]]
   local Hydra = require('hydra')
   Hydra({
@@ -61,8 +61,8 @@ M.open_git_signs_hydra = function()
       { 'b', '<cmd>Gitsigns blame_line<cr>',                { desc = 'Blame line' } },
       { 'B', '<cmd>Gitsigns toggle_current_line_blame<cr>', { desc = 'Toggle current line blame' } },
       { 'x', '<cmd>Gitsigns select_hunk<cr>',               { desc = 'Select hunk' } },
-      { '[', '<cmd>lua Ty.Func.git.next_hunk()<CR>',        { desc = 'Next hunk' } },
-      { ']', '<cmd>lua Ty.Func.git.prev_hunk()<CR>',        { desc = 'Prev hunk' } },
+      { ']', '<cmd>lua Ty.Func.git.next_hunk()<CR>',        { desc = 'Next hunk' } },
+      { '[', '<cmd>lua Ty.Func.git.prev_hunk()<CR>',        { desc = 'Prev hunk' } },
       { 'q', nil,                                           { exit = true, nowait = true, desc = 'Exit' } },
     },
   }):activate()
