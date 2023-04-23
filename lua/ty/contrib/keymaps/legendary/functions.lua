@@ -113,7 +113,6 @@ function M.default_functions()
       description = "New black jack game",
     },
     {
-
       function()
         utils.load_plugins('nvim-colorizer.lua')
         vim.cmd('ColorizerAttachToBuffer')
@@ -133,6 +132,20 @@ function M.default_functions()
         Ty.NOTIFY("Toggle between git and fd done", vim.log.levels.INFO)
       end,
       description = "Toggle telescope project files source, git or find files",
+    },
+    {
+      function()
+        vim.ui.input({
+          prompt = "Are you sure? (y/n)",
+        }, function(input)
+          if input == nil or input == "n" or input == "N" or input == "no" then
+            return
+          end
+          vim.cmd("e!")
+          vim.notify("Changes reverted")
+        end)
+      end,
+      description = "Discard changes",
     }
   }
 end
