@@ -138,7 +138,7 @@ function M.default_functions()
         vim.ui.input({
           prompt = "Are you sure? (y/n)",
         }, function(input)
-          if input == nil or input == "n" or input == "N" or input == "no" then
+          if input ~= 'y' and input ~= 'Y' and input ~= 'yes' then
             return
           end
           vim.cmd("e!")
