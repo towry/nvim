@@ -202,7 +202,7 @@ return _({
     },
 
     {
-      'glepnir/lspsaga.nvim',
+      'nvimdev/lspsaga.nvim',
       cmd = { 'Lspsaga', },
       dependencies = {
         --Please make sure you install markdown and markdown_inline parser
