@@ -19,7 +19,7 @@ local function setup_fidget()
     },
     align = {
       bottom = true, -- align fidgets along bottom edge of buffer
-      right = true, -- align fidgets along right edge of buffer
+      right = true,  -- align fidgets along right edge of buffer
     },
     window = {
       relative = 'editor',
@@ -55,7 +55,7 @@ local function setup_typescript()
 
   typescript.setup({
     disable_commands = false, -- prevent the plugin from creating Vim commands
-    debug = false, -- enable debug logging for commands
+    debug = false,            -- enable debug logging for commands
     -- LSP Config options
     server = {
       capabilities = tsserver_rc.capabilities,
@@ -184,10 +184,12 @@ function M.setup()
   })
   local node_root = vim.loop.cwd()
   lspconfig.volar.setup({
-    filetypes = not volar_takeover_mode and { 'vue' } or { 'vue', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+    filetypes = not volar_takeover_mode and { 'vue' } or
+        { 'vue', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
     capabilities = capabilities,
     handlers = handlers,
     on_attach = on_attach,
+    commands = require('ty.contrib.editing.lsp.commands'),
     init_options = {
       typescript = {
         tsdk = node_util.get_typescript_server_path(node_root),
