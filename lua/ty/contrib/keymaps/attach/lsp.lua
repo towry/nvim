@@ -10,7 +10,7 @@ return function(client, buffer)
     buffer = buffer,
     '+nowait',
   }
-  local _ = function(d) return '[LSP] ' .. d end
+  local _ = function(d) return ' ' .. d end
 
   -- diagnostic.
   n(']d', 'Next Diagnostic')
@@ -28,12 +28,19 @@ return function(client, buffer)
   n('<leader>c', 'Code')
   n('<leader>cd', _('Toggle document diagnostics'), cmd('TroubleToggle document_diagnostics'))
   n('<leader>ch', _('find code references'), cmd('lua Ty.Func.navigate.goto_code_references()', opts))
+
+  if client.server_capabilities.codeActionProvider then
+    n('<leader>cA', _('Source Action'), cmd([[lua vim.lsp.buf.code_action({ context = { only = { "source" }}})]], opts))
+    n('<leader>co', _('Organize Imports'),
+      cmd([[lua vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' }}, apply = true})]], opts))
+    nv('<leader>ca', _('Code Action'), cmd([[lua Ty.Func.editing.open_code_action()]], opts))
+  end
+
   if client.name == 'tsserver' then
     n('<leader>co', _('Organize Imports'), cmd([[lua require("typescript").actions.organizeImports()]], opts))
     n('<leader>cR', _('Rename file'), cmd([[lua Ty.Func.editing.ts_rename_file()]], opts))
   end
   if cap.renameProvider then n('<leader>cr', _('Rename'), cmd([[lua Ty.Func.editing.rename_name()]], opts)) end
-  nv('<leader>ca', _('Code Action'), cmd([[lua Ty.Func.editing.open_code_action()]], opts))
   nv('<leader>cf', _('Format code'), cmd([[lua Ty.Func.editing.format_code(0, { async = true })]], opts))
   n('<leader>ct', _('Peek type definition'), cmd('lua Ty.Func.editing.peek_type_definition()'))
   n('<leader>cp', _('Peek definition'), cmd([[lua Ty.Func.editing.peek_definition()]], opts))
