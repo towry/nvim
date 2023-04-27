@@ -29,7 +29,7 @@ return function(client, buffer)
   n('<leader>cd', _('Toggle document diagnostics'), cmd('TroubleToggle document_diagnostics'))
   n('<leader>ch', _('find code references'), cmd('lua Ty.Func.navigate.goto_code_references()', opts))
 
-  if cap.codeActionProvider and cap.codeActionProvider.resolveProvider then
+  if cap.codeActionProvider then
     n('<leader>cA', _('Source Action'), cmd([[lua vim.lsp.buf.code_action({ context = { only = { "source" }}})]], opts))
     n('<leader>co', _('Organize Imports'),
       cmd([[lua vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' }}, apply = true})]], opts))
