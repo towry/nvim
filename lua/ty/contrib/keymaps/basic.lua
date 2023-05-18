@@ -96,7 +96,13 @@ nxv(
   'Search and replace cword in current file',
   cmd('lua Ty.Func.explorer.search_and_replace_cword_in_buffer()')
 )
-n('<C-p>', 'Open legendary', cmd([[lua require('ty.contrib.keymaps.legendary').open_legendary()]]))
+vim.keymap.set('n', '<C-p>', function()
+  if vim.bo.buftype ~= "" then
+    -- not work.
+    return vim.api.nvim_feedkeys('<C-p>', 'n', true)
+  end
+  require('ty.contrib.keymaps.legendary').open_legendary()
+end)
 
 n('<leader>t', 'Tool, Toggle')
 n('<leader>t-', 'Switch variables, false <==> true', cmd([[Switch]]))
