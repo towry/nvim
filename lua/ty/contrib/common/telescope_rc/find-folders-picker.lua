@@ -69,10 +69,12 @@ return function()
             if not selection then return false end
 
             local selected = selection[1]
-            require('telescope').extensions.live_grep_args.live_grep_args({
-              prompt_title = 'Grep search inside: ' .. selected,
-              cwd = selected,
-            })
+            vim.schedule(function()
+              require('telescope').extensions.live_grep_args.live_grep_args({
+                prompt_title = 'Grep search inside: ' .. selected,
+                cwd = selected,
+              })
+            end)
           end)
 
           -- need return true to use default mappings.
