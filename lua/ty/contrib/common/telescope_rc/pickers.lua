@@ -73,7 +73,6 @@ M.command_history = function()
     winblend = 4,
     layout_config = {
       width = function(_, max_columns, _) return math.min(max_columns, 150) end,
-
       height = function(_, _, max_lines) return math.min(max_lines, 15) end,
     },
   }))
@@ -212,7 +211,8 @@ function M.buffers()
   builtin.buffers({
     ignore_current_buffer = true,
     sort_mru = true,
-    layout_strategy = 'vertical',
+    -- layout_strategy = 'vertical',
+    layout_strategy = "bottom_pane",
     entry_maker = M.gen_from_buffer({
       bufnr_width = 2,
       sort_mru = true,

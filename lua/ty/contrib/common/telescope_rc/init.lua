@@ -27,6 +27,7 @@ function M.setup()
 
   require('telescope').setup({
     defaults = {
+      winblend = 15,
       cache_picker = {
         num_pickers = 5,
       },
@@ -48,7 +49,8 @@ function M.setup()
       ---@see https://github.com/nvim-telescope/telescope.nvim/issues/522#issuecomment-1107441677
       file_ignore_patterns = { "node_modules" },
       path_display = { 'truncate' },
-      layout_strategy = 'flex',
+      -- layout_strategy = 'flex',
+      layout_strategy = "bottom_pane",
       file_sorter = require('telescope.sorters').get_fzy_sorter,
       prompt_prefix = '',
       color_devicons = true,
@@ -102,7 +104,8 @@ function M.setup()
       live_grep_args = {
         disable_coordinates = true,
         auto_quoting = true, -- enable/disable auto-quoting
-        theme = "dropdown",
+        -- theme = "dropdown",
+        -- layout_strategy = "bottom_pane",
         layout_config = {
           prompt_position = "bottom",
           width = 0.9,
