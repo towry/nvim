@@ -5,6 +5,10 @@ local keymap = require('ty.core.keymap')
 local n, i, v, x, ni, nxv, cmd, key =
     keymap.nmap, keymap.imap, keymap.vmap, keymap.xmap, keymap.nimap, keymap.nxv, keymap.cmd, keymap.key
 
+-- h:scroll-smooth
+n('<C-U>', 'Smooth scroll', key('<C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y>'))
+n('<C-D>', 'Smooth scroll', key('<C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E>'))
+
 i('<C-e>', 'Insert mode: move to end of line', key('<End>'))
 n('<C-z>', 'N: Undo, no more background key', key('<ESC> u'))
 i('<C-z>', 'I: Undo, no more background key', key('<ESC> u'))
@@ -35,12 +39,12 @@ n('<leader><space>', 'Mark jump position', cmd('normal! m\'', { '+noremap', '+no
 -- fn keys
 -- move fn key mappings in 'must_have' to here and use above style.
 ni('<F1>', 'Save all file by F1', cmd('wa'))
-ni('<F7>', 'Toggle NvimTree', cmd('lua Ty.Func.explorer.toggle_nvim_tree()'))
-ni('<F8>', 'Open Project files', cmd('lua Ty.Func.explorer.project_files()'))
-ni('<F9>', 'Grep search', cmd([[lua require('telescope').extensions.live_grep_args.live_grep_args()]]))
-ni('<F10>', 'Resume telescope pickers', cmd([[lua require('telescope.builtin').resume()]]))
-ni('<F19>', 'Toggle find file', cmd('lua Ty.Func.explorer.toggle_nvim_tree_find_file()'))
-ni('<F20>', 'Open old files', cmd('lua Ty.Func.explorer.oldfiles({ cwd_only = true })'))
+-- ni('<F7>', 'Toggle NvimTree', cmd('lua Ty.Func.explorer.toggle_nvim_tree()'))
+-- ni('<F8>', 'Open Project files', cmd('lua Ty.Func.explorer.project_files()'))
+-- ni('<F9>', 'Grep search', cmd([[lua require('telescope').extensions.live_grep_args.live_grep_args()]]))
+-- ni('<F10>', 'Resume telescope pickers', cmd([[lua require('telescope.builtin').resume()]]))
+-- ni('<F19>', 'Toggle find file', cmd('lua Ty.Func.explorer.toggle_nvim_tree_find_file()'))
+-- ni('<F20>', 'Open old files', cmd('lua Ty.Func.explorer.oldfiles({ cwd_only = true })'))
 
 -- yanks.
 n('d', 'Delete char and yank to register x', key('"xd'))

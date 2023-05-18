@@ -74,6 +74,17 @@ function M.open_code_action()
   end
 end
 
+function M.open_source_action()
+  local has_lspsaga = require('ty.core.utils').has_plugin('lspsaga.nvim')
+  local mode = vim.api.nvim_get_mode().mode
+  if mode == 'v' then vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-U>', true, false, true)) end
+  if has_lspsaga then
+    require('lspsaga.codeaction'):code_action({ context = { only = "source" } })
+  else
+    vim.lsp.buf.code_action({ context = { only = "source" } })
+  end
+end
+
 -- rename var etc.
 function M.rename_name()
   local has_lspsaga = require('ty.core.utils').has_plugin('lspsaga.nvim')

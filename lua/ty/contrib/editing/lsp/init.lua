@@ -129,6 +129,11 @@ function M.setup()
     dynamicRegistration = false,
     lineFoldingOnly = true,
   }
+  capabilities.workspace = {
+    didChangeWatchedFiles = {
+      dynamicRegistration = true,
+    }
+  }
 
   local tailwindcss_rc = require('ty.contrib.editing.lsp.servers.tailwindcss')
   -- may causing input in jsx very slow.
