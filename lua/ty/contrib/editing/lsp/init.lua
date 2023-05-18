@@ -19,7 +19,7 @@ local function setup_fidget()
     },
     align = {
       bottom = true, -- align fidgets along bottom edge of buffer
-      right = true, -- align fidgets along right edge of buffer
+      right = true,  -- align fidgets along right edge of buffer
     },
     window = {
       relative = 'editor',
@@ -55,7 +55,7 @@ local function setup_typescript()
 
   typescript.setup({
     disable_commands = false, -- prevent the plugin from creating Vim commands
-    debug = false, -- enable debug logging for commands
+    debug = false,            -- enable debug logging for commands
     -- LSP Config options
     server = {
       capabilities = tsserver_rc.capabilities,
