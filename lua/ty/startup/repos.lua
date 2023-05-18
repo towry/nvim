@@ -680,10 +680,10 @@ return _({
       'ellisonleao/gruvbox.nvim',
       enabled = false,
       -- make sure we load this during startup if it is your main colorscheme
-      lazy = false,
+      lazy = true,
       -- make sure to load this before all the other start plugins
       priority = 1000,
-      ImportConfig = 'gruvbo',
+      ImportConfig = 'gruvbox',
     },
     {
       'sainnhe/everforest',
