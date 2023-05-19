@@ -30,6 +30,7 @@ function M.setup()
   if _inited then return end
   _inited = true
 
+  vim.lsp.set_log_level("ERROR")
   vim.g.mapleader = ' '
   vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
   vim.g.maplocalleader = ','
