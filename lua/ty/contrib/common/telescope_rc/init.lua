@@ -44,6 +44,10 @@ function M.setup()
         horizontal = {
           preview_cutoff = 120,
         },
+        bottom_pane = {
+          preview_width = 0.3,
+          preview_cutoff = 10,
+        },
         prompt_position = 'top',
       },
       ---@see https://github.com/nvim-telescope/telescope.nvim/issues/522#issuecomment-1107441677
