@@ -18,7 +18,7 @@ M.setup = function()
     },
   })
   -- enhance the ftFT; motions.
-  require('mini.jump').setup()
+  -- require('mini.jump').setup()
 
   -- https://github.com/echasnovski/mini.nvim/blob/main/doc/mini-bufremove.txt
 end

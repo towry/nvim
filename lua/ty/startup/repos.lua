@@ -536,6 +536,12 @@ return _({
       config = true,
     },
     {
+      -- https://github.com/jinh0/eyeliner.nvim
+      'jinh0/eyeliner.nvim',
+      ImportConfig = 'eyeliner',
+      keys = { 'f', 'F' },
+    },
+    {
       'ggandor/leap.nvim',
       dependencies = {
         'tpope/vim-repeat',
