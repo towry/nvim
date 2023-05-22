@@ -50,9 +50,9 @@ M.setup_eyeliner = function()
     highlight_on_key = true,
     dim = true,
   })
-
-  vim.api.nvim_set_hl(0, 'EyelinerPrimary', { bold = true, underline = true })
-  vim.api.nvim_set_hl(0, 'EyelinerSecondary', { underline = true })
+  --
+  -- vim.api.nvim_set_hl(0, 'EyelinerPrimary', { bold = true, underline = true })
+  -- vim.api.nvim_set_hl(0, 'EyelinerSecondary', { underline = true })
 end
 
 M.setup_leap = function()

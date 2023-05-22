@@ -539,7 +539,7 @@ return _({
       -- https://github.com/jinh0/eyeliner.nvim
       'jinh0/eyeliner.nvim',
       ImportConfig = 'eyeliner',
-      keys = { 'f', 'F' },
+      keys = { { 'f' }, { 'F' }, { 't' }, { 'T' } },
     },
     {
       'ggandor/leap.nvim',
