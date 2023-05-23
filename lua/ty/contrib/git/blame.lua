@@ -18,19 +18,18 @@ local function create_blame_win()
   local win = vim.api.nvim_get_current_win()
   local buf = vim.api.nvim_get_current_buf()
 
-  vim.api.nvim_buf_set_option(buf, 'buftype', 'nofile')
-  vim.api.nvim_buf_set_option(buf, 'swapfile', false)
-  vim.api.nvim_buf_set_option(buf, 'bufhidden', 'wipe')
-  vim.api.nvim_buf_set_option(buf, 'filetype', 'GitBlame')
-  vim.api.nvim_buf_set_option(buf, 'buflisted', false)
+  vim.api.nvim_set_option_value("buftype", "nofile", { buf = buf })
+  vim.api.nvim_set_option_value("swapfile", false, { buf = buf })
+  vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = buf })
+  vim.api.nvim_set_option_value("filetype", "GitBlame", { buf = buf })
+  vim.api.nvim_set_option_value("buflisted", false, { buf = buf })
 
-  vim.api.nvim_win_set_option(win, 'number', true)
-  vim.api.nvim_win_set_option(win, 'foldcolumn', '0')
-  vim.api.nvim_win_set_option(win, 'foldenable', false)
-  vim.api.nvim_win_set_option(win, 'foldenable', false)
-  vim.api.nvim_win_set_option(win, 'winfixwidth', true)
-  vim.api.nvim_win_set_option(win, 'signcolumn', 'yes')
-  vim.api.nvim_win_set_option(win, 'wrap', false)
+  vim.api.nvim_set_option_value("number", true, { win = win })
+  vim.api.nvim_set_option_value("foldcolumn", "0", { win = win })
+  vim.api.nvim_set_option_value("foldenable", false, { win = win })
+  vim.api.nvim_set_option_value("winfixwidth", true, { win = win })
+  vim.api.nvim_set_option_value("signcolumn", "yes", { win = win })
+  vim.api.nvim_set_option_value("wrap", false, { win = win })
 
   return win, buf
 end
@@ -87,7 +86,7 @@ local function on_blame_done(lines)
   local blame_win, blame_buf = create_blame_win()
 
   vim.api.nvim_buf_set_lines(blame_buf, 0, -1, true, lines)
-  vim.api.nvim_buf_set_option(blame_buf, 'modifiable', false)
+  vim.api.nvim_set_option_value('modifiable', false, { buf = blame_buf })
   vim.api.nvim_win_set_width(blame_win, blameLinechars() + 1)
 
   vim.cmd('execute ' .. tostring(current_top))
@@ -95,11 +94,11 @@ local function on_blame_done(lines)
   vim.cmd('execute ' .. tostring(current_pos))
 
   -- We should call cursorbind, scrollbind here to avoid unexpected behavior
-  vim.api.nvim_win_set_option(blame_win, 'cursorbind', true)
-  vim.api.nvim_win_set_option(blame_win, 'scrollbind', true)
+  vim.api.nvim_set_option_value('cursorbind', true, { win = blame_win })
+  vim.api.nvim_set_option_value('scrollbind', true, { win = blame_win })
 
-  vim.api.nvim_win_set_option(starting_win, 'scrollbind', true)
-  vim.api.nvim_win_set_option(starting_win, 'cursorbind', true)
+  vim.api.nvim_set_option_value('scrollbind', true, { win = starting_win })
+  vim.api.nvim_set_option_value('cursorbind', true, { win = starting_win })
 
   -- Keymaps
   local autocmd = require('ty.core.autocmd')
@@ -135,9 +134,13 @@ local function on_blame_commit_done(commit_hash, lines)
 
   local buf = vim.api.nvim_get_current_buf()
   vim.api.nvim_buf_set_name(buf, commit_hash)
-  vim.api.nvim_buf_set_option(buf, 'buftype', 'nofile')
-  vim.api.nvim_buf_set_option(buf, 'bufhidden', 'delete')
-  vim.api.nvim_buf_set_option(buf, 'filetype', 'Git')
+  -- vim.api.nvim_buf_set_option(buf, 'buftype', 'nofile')
+  -- vim.api.nvim_buf_set_option(buf, 'bufhidden', 'delete')
+  -- vim.api.nvim_buf_set_option(buf, 'filetype', 'Git')
+  -- replace above 3 deprecated api to vim.api.nvim_set_option_value
+  vim.api.nvim_set_option_value('buftype', 'nofile', { buf = buf })
+  vim.api.nvim_set_option_value('bufhidden', 'delete', { buf = buf })
+  vim.api.nvim_set_option_value('filetype', 'Git', { buf = buf })
   vim.api.nvim_command("autocmd BufLeave <buffer> lua require('ty.contrib.git.blame').blame_commit_quit()")
 
   vim.fn.search([[^diff .* b/\M]] .. vim.fn.escape(blame_state.relative_path, '\\') .. '$', 'W')
@@ -158,7 +161,7 @@ function M.blame_commit()
   end
 
   local commit_hash =
-  git.run_git_cmd('git -C ' .. blame_state.git_root .. ' --literal-pathspecs rev-parse --verify ' .. commit .. ' --')
+      git.run_git_cmd('git -C ' .. blame_state.git_root .. ' --literal-pathspecs rev-parse --verify ' .. commit .. ' --')
   if commit_hash == nil then
     utils.warnlog('Commit hash not found', 'Git')
     return
@@ -197,8 +200,11 @@ function M.blame_commit()
 end
 
 function M.blame_quit()
-  vim.api.nvim_win_set_option(blame_state.starting_win, 'scrollbind', false)
-  vim.api.nvim_win_set_option(blame_state.starting_win, 'cursorbind', false)
+  -- vim.api.nvim_win_set_option(blame_state.starting_win, 'scrollbind', false)
+  -- vim.api.nvim_win_set_option(blame_state.starting_win, 'cursorbind', false)
+  -- replace above 2 deprecated api call to vim.api.nvim_set_option_value
+  vim.api.nvim_set_option_value('scrollbind', false, { win = blame_state.starting_win })
+  vim.api.nvim_set_option_value('cursorbind', false, { win = blame_state.starting_win })
 end
 
 local blame_is_open = false
