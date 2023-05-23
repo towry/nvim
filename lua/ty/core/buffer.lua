@@ -55,7 +55,10 @@ function M.unsaved_list()
       return false
     end
 
-    if not vim.api.nvim_buf_get_option(b, 'modified') then
+    local is_modified = vim.api.nvim_get_option_value("modified", {
+      buf = b,
+    })
+    if not is_modified then
       return false
     end
 
@@ -68,7 +71,10 @@ end
 function M.get_current_empty_buffer()
   local bufnr = vim.api.nvim_get_current_buf()
   local name = vim.api.nvim_buf_get_name(bufnr)
-  local ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+  -- local ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+  local ft = vim.api.nvim_get_option_value("filetype", {
+    buf = bufnr,
+  })
   if name == '' and ft == '' then
     return bufnr
   end

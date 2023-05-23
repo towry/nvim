@@ -86,8 +86,11 @@ return {
       local format_on_save_on_filetypes = editing_config:get('format.format_on_save_on_filetypes') or {}
       au.on_attach(function(client, bufnr)
         local lsp_formatting = require('ty.contrib.editing.lsp.formatting')
-        local ft = vim_api.nvim_buf_get_option(bufnr, 'filetype')
+        local ft = vim_api.nvim_get_option_value("filetype", {
+          buf = bufnr
+        })
         if vim.tbl_contains(format_on_save_on_filetypes, ft) then lsp_formatting.setup_autoformat(client, bufnr) end
+        require("lsp-inlayhints").on_attach(client, bufnr)
       end)
     end,
   },

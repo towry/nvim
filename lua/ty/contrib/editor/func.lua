@@ -35,7 +35,10 @@ M.toggle_qf = function()
   local buffers = vim.api.nvim_list_bufs()
   local bufFound = false
   for _, buffer in ipairs(buffers) do
-    local bufferType = vim.api.nvim_buf_get_option(buffer, 'buftype')
+    -- local bufferType = vim.api.nvim_buf_get_option(buffer, 'buftype')
+    local bufferType = vim.api.nvim_get_option_value("buftype", {
+      buf = buffer,
+    })
     if bufferType == 'quickfix' then
       bufFound = true
       break

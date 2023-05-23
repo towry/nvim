@@ -217,6 +217,7 @@ return _({
 
     {
       'lvimuser/lsp-inlayhints.nvim',
+      branch = "anticonceal",
       event = 'LspAttach',
       config = true,
     },

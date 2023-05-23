@@ -304,7 +304,10 @@ function M.gen_from_buffer(opts)
     bufname = Path:new(bufname):normalize(cwd)
 
     local hidden = entry.info.hidden == 1 and 'h' or 'a'
-    local readonly = vim.api.nvim_buf_get_option(entry.bufnr, 'readonly') and '=' or ' '
+    -- local readonly = vim.api.nvim_buf_get_option(entry.bufnr, 'readonly') and '=' or ' '
+    local readonly = vim.api.nvim_get_option_value('readonly', {
+          buf = entry.bufnr,
+        }) and '=' or ' '
     local changed = entry.info.changed == 1 and '+' or ' '
     local indicator = entry.flag .. hidden .. readonly .. changed
     local lnum = 1

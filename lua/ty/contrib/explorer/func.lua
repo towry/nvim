@@ -33,7 +33,10 @@ M.toggle_nvim_tree_find_file = require('ty.contrib.explorer.nvim-tree').toggle_n
 M.nvim_tree_find_file = function()
   local buf = vim.api.nvim_get_current_buf()
   -- if current buf is empty or not normal buf, then just return.
-  local buftype = vim.api.nvim_buf_get_option(buf, 'buftype')
+  -- local buftype = vim.api.nvim_buf_get_option(buf, 'buftype')
+  local buftype = vim.api.nvim_get_option_value("buftype", {
+    buf = buf,
+  })
   if buftype ~= "" then
     vim.notify("Not normal buffer, can't find file in nvim-tree.", vim.log.levels.ERROR)
     return

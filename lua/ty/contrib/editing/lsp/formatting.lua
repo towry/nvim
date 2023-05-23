@@ -53,7 +53,10 @@ function M.format(bufnr, opts)
 end
 
 function M.setup_autoformat(client, buf)
-  local ft = vim.api.nvim_buf_get_option(buf, 'filetype')
+  -- local ft = vim.api.nvim_buf_get_option(buf, 'filetype')
+  local ft = vim.api.nvim_get_option_value("filetype", {
+    buf = buf,
+  })
   local nls = require('ty.contrib.editing.lsp.null-ls')
 
   local enable = false
@@ -74,7 +77,10 @@ end
 function M.setup_autoformat_deprecated(client, buf)
   local event_name = "BufWritePre"
   local async = event_name == "BufWritePost"
-  local ft = vim.api.nvim_buf_get_option(buf, 'filetype')
+  -- local ft = vim.api.nvim_buf_get_option(buf, 'filetype')
+  local ft = vim.api.nvim_get_option_value("filetype", {
+    buf = buf,
+  })
   local nls = require('ty.contrib.editing.lsp.null-ls')
 
   local enable = false

@@ -6,7 +6,10 @@ local disabled_fts = {
 }
 
 local disabled = function(lang, bufnr)
-  local ft = vim.api.nvim_buf_get_option(bufnr, 'ft')
+  -- local ft = vim.api.nvim_buf_get_option(bufnr, 'ft')
+  local ft = vim.api.nvim_get_option_value("filetype", {
+    buf = bufnr,
+  })
   if vim.tbl_contains(disabled_fts, ft) then
     return true
   end
