@@ -395,6 +395,11 @@ return _({
     {
       'ThePrimeagen/harpoon',
     },
+
+    {
+      "imNel/monorepo.nvim",
+      ImportOption = "monorepo"
+    }
   },
   git = {
     { 'kdheepak/lazygit.nvim', cmd = 'LazyGit' },
