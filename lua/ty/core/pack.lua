@@ -19,7 +19,7 @@ local lazy_opts = {
   },
   git = {
     timeout = 120,
-    url_format = 'https://ghproxy.com/https://github.com/%s',
+    -- url_format = 'https://ghproxy.com/https://github.com/%s',
   },
   ui = {
     icons = {
