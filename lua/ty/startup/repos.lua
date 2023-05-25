@@ -498,7 +498,6 @@ return _({
         'RRethy/nvim-treesitter-textsubjects',
         'nvim-treesitter/nvim-treesitter-refactor',
         'JoosepAlviste/nvim-ts-context-commentstring',
-        'mrjones2014/nvim-ts-rainbow',
         -- 'kiyoon/treesitter-indent-object.nvim',
       },
       ImportConfig = 'treesitter',
