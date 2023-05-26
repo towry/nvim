@@ -679,6 +679,13 @@ return _({
       'nvim-colortils/colortils.nvim',
       cmd = 'Colortils',
       config = true
+    },
+    {
+      'keaising/im-select.nvim',
+      enabled = function()
+        return vim.fn.executable('im-select')
+      end,
+      ImportConfig = "im_select",
     }
   },
   ui = {

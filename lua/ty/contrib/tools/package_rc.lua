@@ -26,4 +26,12 @@ M.option_chat_gpt = {
   },
 }
 
+M.setup_im_select = function()
+  require('im_select').setup({
+    default_im_select = "com.apple.keylayout.ABC",
+    default_command = "im-select",
+    keep_quiet_on_no_binary = true,
+  })
+end
+
 return M
