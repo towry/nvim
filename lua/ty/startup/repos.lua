@@ -682,6 +682,7 @@ return _({
     },
     {
       'keaising/im-select.nvim',
+      event = "VeryLazy",
       enabled = function()
         return vim.fn.executable('im-select')
       end,
