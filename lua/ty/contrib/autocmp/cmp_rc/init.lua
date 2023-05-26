@@ -72,6 +72,7 @@ function M.setup_cmp()
 
   cmp.setup({
     performance = {
+      max_view_entries = 5,
       -- debounce = 250,
       -- throttle = 2000,
       -- fetching_timeoul = 1400,
@@ -81,7 +82,6 @@ function M.setup_cmp()
     snippet = {
       expand = function(args) luasnip.lsp_expand(args.body) end,
     },
-
     mapping = cmp.mapping.preset.insert({
       ['<C-k>'] = cmp.mapping.select_prev_item(),
       ['<C-j>'] = cmp.mapping.select_next_item(),
@@ -161,7 +161,6 @@ function M.setup_cmp()
         's',
       }),
     }),
-
     formatting = {
       format = function(entry, vim_item)
         vim_item.kind = lspkind.symbolic(vim_item.kind, { with_text = true })
@@ -182,27 +181,24 @@ function M.setup_cmp()
         return vim_item
       end,
     },
-
     -- You should specify your *installed* sources.
     sources = {
-      { name = 'nvim_lsp', priority = 8, max_item_count = 6 },
-      -- { name = 'codeium', priority = 7, max_item_count = 5, },
+      { name = 'nvim_lsp',                priority = 8, max_item_count = 6 },
+      -- { name = 'codeium', priority = 7,   },
       { name = 'nvim_lsp_signature_help', priority = 8 },
-      { name = 'npm', priority = 3 },
-      { name = 'cmp_tabnine', priority = 6, max_item_count = 3 },
-      { name = 'luasnip', priority = 6, max_item_count = 4 },
+      { name = 'npm',                     priority = 3 },
+      { name = 'cmp_tabnine',             priority = 6, max_item_count = 3 },
+      { name = 'luasnip',                 priority = 6, max_item_count = 4 },
       {
         name = 'buffer',
         priority = 6,
         keyword_length = 4,
         option = buffer_option,
-        max_item_count = 3,
       },
       { name = 'nvim_lua', priority = 5, ft = 'lua' },
-      { name = 'path', priority = 4 },
-      { name = 'calc', priority = 3 },
+      { name = 'path',     priority = 4 },
+      { name = 'calc',     priority = 3 },
     },
-
     sorting = {
       comparators = {
         deprioritize_snippet,
@@ -215,11 +211,9 @@ function M.setup_cmp()
         cmp.config.compare.order,
       },
     },
-
     confirmation = {
       -- get_commit_characters = function (commit_characters) return { '.', ')' } end,
     },
-
     window = {
       completion = cmp.config.window.bordered({
         winhighlight = 'CursorLine:CmpMenuSel,NormalFloat:NormalFloat,FloatBorder:FloatBorder',
@@ -228,7 +222,6 @@ function M.setup_cmp()
         winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
       }),
     },
-
     experimental = {
       ghost_text = false,
     },
