@@ -533,6 +533,11 @@ return _({
     {
       'mrjones2014/lua-gf.nvim',
       ft = 'lua'
+    },
+    {
+      'simrat39/rust-tools.nvim',
+      ft = { 'rust', 'toml' },
+      ImportConfig = "rust",
     }
   },
   navigate = {
