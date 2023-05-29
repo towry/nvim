@@ -83,10 +83,10 @@ function M.setup_cmp()
       expand = function(args) luasnip.lsp_expand(args.body) end,
     },
     mapping = cmp.mapping.preset.insert({
-      ['<C-k>'] = cmp.mapping.select_prev_item(),
-      ['<C-j>'] = cmp.mapping.select_next_item(),
-      ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-2), { 'i', 'c' }),
-      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(2), { 'i', 'c' }),
+      ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+      ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+      ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
       ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
       ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
       ['<C-e>'] = cmp.mapping({
@@ -94,6 +94,10 @@ function M.setup_cmp()
         c = cmp.mapping.close(),
       }),
       ['<CR>'] = cmp.mapping.confirm({ select = cmp_config:get('autocomplete.select_first_on_enter') }),
+      ['<S-CR>'] = cmp.mapping.confirm({
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true,
+      }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
       ['<Tab>'] = cmp.mapping(function(fallback)
         local entry = cmp.get_selected_entry()
         if not entry and vim.b._copilot and vim.b._copilot.suggestions ~= nil then
