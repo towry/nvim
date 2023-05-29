@@ -3,7 +3,7 @@ local autocmd = require('ty.core.autocmd')
 local has_plugin = require('ty.core.utils').has_plugin
 local keymap = require('ty.core.keymap')
 local n, i, v, x, ni, nxv, cmd, key =
-keymap.nmap, keymap.imap, keymap.vmap, keymap.xmap, keymap.nimap, keymap.nxv, keymap.cmd, keymap.key
+    keymap.nmap, keymap.imap, keymap.vmap, keymap.xmap, keymap.nimap, keymap.nxv, keymap.cmd, keymap.key
 
 -- h:scroll-smooth
 n('<C-U>', 'Smooth scroll', key('<C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y>'))
@@ -132,6 +132,9 @@ n('<leader>et', 'Toggle explore tree', cmd([[lua Ty.Func.explorer.toggle_nvim_tr
 n('<leader>ee', 'Resume telescope pickers', cmd([[lua require('telescope.builtin').resume()]]))
 n('<leader>er', 'Open recent files', cmd('lua Ty.Func.explorer.oldfiles({ cwd_only = true })'))
 n('<leader>e.', 'Locate current file in tree', cmd('lua Ty.Func.explorer.nvim_tree_find_file()'))
+-- <cmd-b> to toggle tree.
+n('<Char-0xAC>', 'Toggle tree and locate current buffer if buf is present',
+cmd('lua Ty.Func.explorer.nvim_tree_find_file({ fallback = true })'))
 n('<leader>es', 'Grep search', cmd([[lua require('telescope').extensions.live_grep_args.live_grep_args()]]))
 n('<leader>el', 'Find folders', cmd('lua Ty.Func.explorer.find_folder()'))
 n('<leader>em', 'Manage monorepo', cmd([[lua require('telescope').extensions.monorepo.monorepo()]]))
