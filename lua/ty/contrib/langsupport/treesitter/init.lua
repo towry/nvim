@@ -132,6 +132,7 @@ M.setup = function()
       disable = disabled,
       -- has issues.
       enable = config.enable_textsubjects,
+      lookahead = false,
       keymaps = {
         ['<cr>'] = 'textsubjects-smart', -- works in visual mode
       },
