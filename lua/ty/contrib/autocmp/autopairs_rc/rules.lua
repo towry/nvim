@@ -12,18 +12,18 @@ function M.auto_jsx_closing()
   npairs.remove_rule('(')
   npairs.add_rules({
     default_pa_rule
-    :with_pair(cond.not_inside_quote(), 1),
+        :with_pair(cond.not_inside_quote(), 1),
     -- in jsx
     -- <SomeEle /  => <SomeEle />
     Rule("/", ">", { "typescriptreact", "javascriptreact" })
-    :with_pair(function(opts)
-      local before_text_fn = cond.before_text(" ")
-      local is_ts_node_fn = ts_conds.is_ts_node({ "jsx_self_closing_element" })
+        :with_pair(function(opts)
+          local before_text_fn = cond.before_text(" ")
+          local is_ts_node_fn = ts_conds.is_ts_node({ "jsx_self_closing_element" })
 
-      return before_text_fn(opts) and is_ts_node_fn(opts)
-    end)
-    :set_end_pair_length(0)
-    :with_move(cond.none()),
+          return before_text_fn(opts) and is_ts_node_fn and is_ts_node_fn(opts)
+        end)
+        :set_end_pair_length(0)
+        :with_move(cond.none()),
   })
 end
 
