@@ -23,6 +23,8 @@ function M.diagnostic_goto(next, severity)
   go({ severity = sev })
 end
 
+-- TODO: https://github.com/hrsh7th/nvim-gtd/blob/d2f34debfd8c0af3a0a81708933e33f4478fe120/lua/gtd/init.lua#L183
+-- Add support for `OpenBufferInWindow` command to choose window and edit the file.
 function M.goto_definition_in_file(command) require('gtd').exec({ command = command or 'edit' }) end
 
 function M.goto_definition()
@@ -54,11 +56,11 @@ end
 
 function M.jump_to_tag(target)
   local method_name = ({
-        parent = 'jumpParent',
-        next = 'jumpNextSibling',
-        prev = 'jumpPrevSibling',
-        child = 'jumpChild',
-      })[target]
+    parent = 'jumpParent',
+    next = 'jumpNextSibling',
+    prev = 'jumpPrevSibling',
+    child = 'jumpChild',
+  })[target]
   require('jump-tag')[method_name]()
 end
 
