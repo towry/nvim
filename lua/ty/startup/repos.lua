@@ -152,7 +152,7 @@ return _({
       config = function()
         require('hbac').setup({
           autoclose = true,
-          threshold = 10,
+          threshold = 5,
           close_buffers_with_windows = false,
         })
       end,
