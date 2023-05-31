@@ -69,7 +69,6 @@ M.setup = function()
             local icon = has_modified and ' ' or ' '
             return icon .. #vim.fn.getbufinfo({ buflisted = 1 }) .. unsaved_count_text
           end,
-
           color = function()
             if vim.b['has_modified_file'] then
               return {
@@ -101,6 +100,13 @@ M.setup = function()
             return idx and idx ~= ''
           end
           -- cond = function() return require('ty.core.utils').has_plugin('grapple.nvim') and require('grapple').exists() end,
+        },
+        {
+          function()
+            local bufnr = vim.api.nvim_get_current_buf()
+            return require("hbac.state").is_pinned(bufnr) and "📍" or ""
+          end,
+          color = { fg = "#ef5f6b", gui = "bold" },
         },
         'searchcount',
       },

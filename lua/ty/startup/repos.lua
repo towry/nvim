@@ -146,6 +146,17 @@ return _({
       build = "./kitty/install-kittens.bash",
       ImportConfig = 'smart_splits',
     },
+    {
+      'axkirillov/hbac.nvim',
+      event = "VeryLazy",
+      config = function()
+        require('hbac').setup({
+          autoclose = true,
+          threshold = 10,
+          close_buffers_with_windows = false,
+        })
+      end,
+    }
   },
   debugger = {
     {
@@ -245,7 +256,7 @@ return _({
     {
       'bennypowers/splitjoin.nvim',
       keys = {
-        { 'gj', function() require 'splitjoin'.join() end, desc = 'Join the object under cursor' },
+        { 'gj', function() require 'splitjoin'.join() end,  desc = 'Join the object under cursor' },
         { 'g,', function() require 'splitjoin'.split() end, desc = 'Split the object under cursor' },
       }
     },
