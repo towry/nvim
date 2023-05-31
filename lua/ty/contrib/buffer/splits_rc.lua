@@ -26,6 +26,7 @@ M.setup_smart_splits = function()
       'BufEnter',
       'WinEnter',
     },
+    log_level = "error",
     disable_multiplexer_nav_when_zoomed = true,
   })
 end
