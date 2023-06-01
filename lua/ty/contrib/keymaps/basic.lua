@@ -96,11 +96,7 @@ nxv(
   'Search and replace cword in current file',
   cmd('lua Ty.Func.explorer.search_and_replace_cword_in_buffer()')
 )
-vim.keymap.set('n', '<C-p>', function()
-  if vim.bo.buftype ~= "" then
-    -- not work.
-    return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-p>", true, false, true), "n", false)
-  end
+vim.keymap.set('n', '<C-S-A-p>', function()
   require('ty.contrib.keymaps.legendary').open_legendary()
 end)
 
@@ -134,7 +130,7 @@ n('<leader>er', 'Open recent files', cmd('lua Ty.Func.explorer.oldfiles({ cwd_on
 n('<leader>e.', 'Locate current file in tree', cmd('lua Ty.Func.explorer.nvim_tree_find_file()'))
 -- <cmd-b> to toggle tree.
 n('<Char-0xAC>', 'Toggle tree and locate current buffer if buf is present',
-cmd('lua Ty.Func.explorer.nvim_tree_find_file({ fallback = true })'))
+  cmd('lua Ty.Func.explorer.nvim_tree_find_file({ fallback = true })'))
 n('<leader>es', 'Grep search', cmd([[lua require('telescope').extensions.live_grep_args.live_grep_args()]]))
 n('<leader>el', 'Find folders', cmd('lua Ty.Func.explorer.find_folder()'))
 n('<leader>em', 'Manage monorepo', cmd([[lua require('telescope').extensions.monorepo.monorepo()]]))
