@@ -1,7 +1,7 @@
 local function bind_jest_keys(bufnr)
   local utils = require('ty.core.utils')
   local keymap = require('ty.core.keymap')
-  local n, cmd = keymap.n, keymap.cmd
+  local n, cmd = keymap.nmap, keymap.cmd
   if not utils.has_plugin('neotest') then return end
 
   local prefix = 'lua require("neotest").'

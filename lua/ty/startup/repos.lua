@@ -193,7 +193,7 @@ return _({
     {
       'neovim/nvim-lspconfig',
       name = 'lsp',
-      event = { 'BufReadPre', 'BufNewFile' },
+      event = { 'BufRead', 'BufNewFile', 'BufWinEnter' },
       dependencies = {
         'jose-elias-alvarez/typescript.nvim',
         'hrsh7th/cmp-nvim-lsp',
@@ -248,7 +248,7 @@ return _({
 
     {
       'numToStr/Comment.nvim',
-      event = { 'BufReadPost', 'BufNewFile' },
+      event = { 'BufReadPost', 'BufNewFile', 'BufWinEnter' },
       dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
       ImportConfig = 'comment',
     },
@@ -277,7 +277,7 @@ return _({
     {
       -- better yank.
       'gbprod/yanky.nvim',
-      event = { 'BufReadPost', 'BufNewFile' },
+      event = { 'BufReadPost', 'BufNewFile', 'BufWinEnter' },
       ImportConfig = 'yanky',
     },
   },
@@ -290,7 +290,7 @@ return _({
 
     {
       'folke/todo-comments.nvim',
-      event = { 'BufReadPost', 'BufNewFile' },
+      event = { 'BufReadPost', 'BufNewFile', 'BufWinEnter' },
       ImportConfig = 'todo_comments',
     },
 
@@ -321,7 +321,7 @@ return _({
 
     {
       'luukvbaal/statuscol.nvim',
-      event = { 'BufReadPost', 'BufNewFile' },
+      event = { 'BufRead', 'BufNewFile', 'BufWinEnter' },
       cond = function() return vim.fn.has('nvim-0.9.0') == 1 end,
       ImportConfig = 'statuscol',
     },
@@ -368,7 +368,7 @@ return _({
     },
     {
       'ethanholz/nvim-lastplace',
-      event = { 'BufReadPre', 'BufNewFile' },
+      event = { 'BufReadPre', 'BufNewFile', 'BufWinEnter' },
       ImportOption = 'buf_lastplace',
     },
   },
@@ -447,7 +447,7 @@ return _({
     {
       -- git runtimes. ft etc.
       'tpope/vim-git',
-      event = { 'BufReadPost', 'BufNewFile' },
+      event = { 'BufReadPost', 'BufNewFile', 'BufWinEnter' },
       cond = function() return true end,
     },
     {
@@ -460,7 +460,7 @@ return _({
     },
     {
       'lewis6991/gitsigns.nvim',
-      event = { 'BufReadPost', 'BufNewFile' },
+      event = { 'BufReadPost', 'BufNewFile', 'BufWinEnter' },
       ImportConfig = 'gitsigns',
     },
     {
@@ -499,7 +499,7 @@ return _({
   langsupport = {
     {
       'nvim-treesitter/nvim-treesitter',
-      event = { 'BufReadPre', 'BufNewFile' },
+      event = { 'BufReadPre', 'BufNewFile', 'BufWinEnter' },
       build = function()
         if #vim.api.nvim_list_uis() == 0 then
           -- update sync if running headless
@@ -580,7 +580,7 @@ return _({
       'declancm/cinnamon.nvim',
       -- broken after upgraded neovim.
       enabled = false,
-      event = { 'BufReadPost', 'BufNewFile' },
+      event = { 'BufReadPost', 'BufNewFile', 'BufWinEnter' },
     },
     {
       'cbochs/portal.nvim',
@@ -623,12 +623,12 @@ return _({
           dev = false,
         },
       },
-      event = { 'BufReadPost', 'BufNewFile' },
+      event = { 'BufReadPost', 'BufNewFile', 'BufWinEnter' },
       ImportConfig = 'lualine',
     },
     {
       'b0o/incline.nvim',
-      event = { 'BufReadPost', 'BufNewFile' },
+      event = { 'BufReadPost', 'BufNewFile', 'BufWinEnter' },
       ImportConfig = 'incline',
       enabled = false,
     },
@@ -743,7 +743,7 @@ return _({
     },
     {
       'tummetott/reticle.nvim',
-      event = { 'BufReadPost', 'BufNewFile' },
+      event = { 'BufReadPost', 'BufNewFile', 'BufWinEnter' },
       ImportOption = 'reticle',
     }
   },
