@@ -5,6 +5,7 @@ local disabled_fts = {
   "NvimTree",
 }
 
+
 local disabled = function(lang, bufnr)
   -- local ft = vim.api.nvim_buf_get_option(bufnr, 'ft')
   local ft = vim.api.nvim_get_option_value("filetype", {
@@ -54,7 +55,7 @@ M.setup = function()
       default_lazy = true,
       default_fallback = 'auto',
       -- if ts.indent is truee, use below to suppress conflict warns.
-      -- suppress_conflict_warning = true,
+      suppress_conflict_warning = true,
     },
     context_commentstring = {
       enable = config.enable_context_commentstring,
