@@ -13,8 +13,11 @@ i('<C-e>', 'Insert mode: move to end of line', key('<End>'))
 n('<C-z>', 'N: Undo, no more background key', key('<ESC> u'))
 i('<C-z>', 'I: Undo, no more background key', key('<ESC> u'))
 v('<D-`>', 'Case change in visual mode', key('U'))
+
+-- works with kitty.
 n('<Char-0xAA>', 'N: Save current file by <command-s>', cmd('w'))
 i('<Char-0xAA>', 'I: Save current file by <command-s>', cmd('w'))
+
 n('<ESC>', 'Clear search highlight', cmd('noh'))
 v('<', 'Keep visual mode indenting, left', key('<gv'))
 v('>', 'Keep visual mode indenting, right', key('>gv'))

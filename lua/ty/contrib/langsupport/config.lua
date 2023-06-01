@@ -21,13 +21,13 @@ M.treesitter = {
   },
   enable_incremental_selection = false,
   enable_highlight = true,
-  enable_indent = false,
-  enable_yati = false,
+  enable_indent = true,
+  enable_yati = true,
   enable_rainbow = false,
   enable_context_commentstring = true,
   enable_refactor = false,
   enable_textobjects_move = true,
-  enable_textsubjects = false,
+  enable_textsubjects = true,
 }
 
 M.colorizer = {
