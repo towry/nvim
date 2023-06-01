@@ -147,13 +147,18 @@ return _({
       ImportConfig = 'smart_splits',
     },
     {
-      'axkirillov/hbac.nvim',
+      'chrisgrieser/nvim-early-retirement',
       event = "VeryLazy",
       config = function()
-        require('hbac').setup({
-          autoclose = true,
-          threshold = 5,
-          close_buffers_with_windows = false,
+        require('early-retirement').setup({
+          retirementAgeMins = 15,
+          ignoreAltFile = true,
+          minimumBufferNum = 5,
+          ignoreUnsavedChangesBufs = true,
+          ignoreSpecialBuftypes = true,
+          ignoreVisibleBufs = true,
+          ignoreUnloadedBufs = false,
+          notificationOnAutoClose = true,
         })
       end,
     }

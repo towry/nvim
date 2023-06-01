@@ -101,13 +101,6 @@ M.setup = function()
           end
           -- cond = function() return require('ty.core.utils').has_plugin('grapple.nvim') and require('grapple').exists() end,
         },
-        {
-          function()
-            local bufnr = vim.api.nvim_get_current_buf()
-            return require("hbac.state").is_pinned(bufnr) and "📍" or ""
-          end,
-          color = { fg = "#ef5f6b", gui = "bold" },
-        },
         'searchcount',
       },
       -- filename is displayed by the incline.
