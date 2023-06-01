@@ -34,6 +34,7 @@ return function(client, buffer)
     n('<leader>co', _('Organize Imports'),
       cmd([[lua vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' }}, apply = true})]], opts))
     nv('<leader>ca', _('Code Action'), cmd([[lua Ty.Func.editing.open_code_action()]], opts))
+    -- <CMD-.> on kitty
     n('<Char-0xAD>', _('Code Action'), cmd([[lua Ty.Func.editing.open_code_action()]], opts))
   end
 
