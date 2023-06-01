@@ -109,7 +109,7 @@ n('<leader>tq', 'Quick list', cmd('lua Ty.Func.editor.toggle_qf()'))
 
 n("<leader>/", "Outline, Terms")
 n("<leader>//", "Find terms", cmd([[Telescope termfinder find]]))
-n("<leader>/p", "Pin /toggle this buffer", cmd([[Hhac toggle_pin]]))
+n("<leader>/i", "Pin /toggle this buffer", cmd([[lua require("hbac").toggle_pin()]]))
 n('<leader>/o', '[/] Toggle outline', cmd([[lua Ty.Func.explorer.toggle_outline()]]))
 -- gits
 n('<leader>g', 'Git')
