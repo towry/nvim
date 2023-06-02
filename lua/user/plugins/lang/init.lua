@@ -1,7 +1,10 @@
+local au = require('user.runtime.au')
+
 return {
   {
     'nvim-treesitter/nvim-treesitter',
-    event = { 'BufReadPre', 'BufNewFile', 'BufWinEnter' },
+    -- event = { 'BufReadPre', 'BufNewFile', 'BufWinEnter' },
+    event = au.user_autocmds.FileOpened,
     build = function()
       if #vim.api.nvim_list_uis() == 0 then
         -- update sync if running headless
@@ -27,7 +30,6 @@ return {
   {
     'vuki656/package-info.nvim',
     event = 'BufEnter package.json',
-    ImportConfig = 'package_info',
     config = function()
       require_plugin_spec('lang.package_info.rc').config()
     end,
