@@ -39,8 +39,8 @@ local plugin_opts = {
   editor__jump_lastline_ignore_filetypes = { "gitcommit", "gitrebase", "svn", "hgcommit", "Dashboard" },
   editor__jump_lastline_ignore_buftypes = { "quickfix", "nofile", "help" },
   -- editor extended features.
-  editor_extend__colorizer_enable = true,
-  editor_extend__colorizer_filetypes = {
+  editorExtend__colorizer_enable = true,
+  editorExtend__colorizer_filetypes = {
     'html',
     'css',
     'javascript',
@@ -52,7 +52,7 @@ local plugin_opts = {
     'scss',
     'less',
   },
-  editor_extend__colorizer_enable_tailwind_color = true,
+  editorExtend__colorizer_enable_tailwind_color = true,
 
   ---languages
   lang__treesitter_ensure_installed = {
