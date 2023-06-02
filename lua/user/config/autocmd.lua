@@ -26,10 +26,39 @@ function M.load_on_startup()
       callback = function()
         au.fire_event(au.events.AfterColorschemeChanged)
       end,
+    },
+    {
+      'LspAttach',
+      {
+        group = '_lsp_attach_format',
+        callback = function(args)
+          local bufnr = args.buf
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          au.fire_event(au.events.onLspAttach, {
+            client = client,
+            bufnr = bufnr,
+          })
+        end,
+      }
     }
   }
 
   au.define_autocmds(definitions)
+end
+
+function M.setup_events_on_startup()
+  au.register_event(au.events.onLspAttach, {
+    name = "setup_formatter_on_buf",
+    callback = function(args)
+      require_plugin_spec('lsp.formatting').set_formatter(args.client, args.bufnr)
+    end
+  })
+  au.register_event(au.events.onLspAttach, {
+    name = "setup_autoformat_on_buf",
+    callback = function(args)
+      require_plugin_spec('lsp.formatting').set_autoformat_on_buf(args.client, args.bufnr)
+    end,
+  })
 end
 
 function M.setup()
@@ -37,4 +66,3 @@ function M.setup()
 end
 
 return M
-

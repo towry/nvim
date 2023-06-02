@@ -92,7 +92,7 @@ local _ = {
   lang__treesitter_plugin_textobjects_move = true,
   lang__treesitter_plugin_textsubjects = true,
 
-  lang__lsp_enable_servers = {
+  lsp__enable_servers = {
     "tailwindcss",
     "cssls",
     "jsonls",
@@ -100,16 +100,44 @@ local _ = {
     "volar",
     "bashls",
     "html",
+    "tsserver",
+    "null_ls"
   },
-  lang__lsp_server_tailwindcss_prettier = false,
-  lang__lsp_server_volar_takeover_mode = true,
-  lang__lsp_ui_progress = true,
-  lang__lsp_ui_progress_ignore_servers = {
+  lsp__auto_install_servers = {
+    'bashls',
+    'cssls',
+    'eslint',
+    'html',
+    'jsonls',
+    'lua_ls',
+    'tailwindcss',
+    'tsserver',
+    'volar',
+    'prismals',
+  },
+  lsp__automatic_installation = true,
+  lsp__server_tailwindcss_prettier = false,
+  lsp__server_volar_takeover_mode = true,
+  lsp__ui_progress = true,
+  lsp__ui_progress_ignore_servers = {
     "null-ls",
     "tailwindcss",
   },
-  lang__lsp_allow_incremental_sync = false,
-  lang__lsp_debounce_text_changes = 600,
+  lsp__allow_incremental_sync = false,
+  lsp__debounce_text_changes = 600,
+  lsp__format_on_save = true,
+  lsp__format_on_save_on_filetypes = {
+    'vue',
+    'typescript',
+    'typescriptreact',
+    'javascriptreact',
+    'javascript',
+    'css',
+    'lua',
+    'html',
+    'scss',
+  },
+  lsp__plugin_lspsaga = true,
 
   ---User interfaces
   ui__float_border = true,

@@ -77,6 +77,10 @@ return {
     config = true,
   },
   {
+    'mrjones2014/lua-gf.nvim',
+    ft = 'lua'
+  },
+  {
     -- https://github.com/jinh0/eyeliner.nvim
     'jinh0/eyeliner.nvim',
     config = function()

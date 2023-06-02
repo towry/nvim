@@ -9,7 +9,8 @@ M.events = {
   onGitDiffviewOpen = "onGitDiffviewOpen",
   onGitDiffviewBufRead = "onGitDiffviewBufRead",
   -- close all buffers except current one.
-  doBufferCloseAllButCurrent = "doBufferCloseAllButCurrent"
+  doBufferCloseAllButCurrent = "doBufferCloseAllButCurrent",
+  onLspAttach = "onLspAttach",
 }
 M.user_autocmds = {
   FileOpened = "User FileOpened",
