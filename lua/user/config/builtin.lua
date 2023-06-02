@@ -1,3 +1,123 @@
 local M = {}
+local o = vim.opt
+local g = vim.g
+
+function M.init_edit()
+  o.inccommand = 'nosplit' -- preview incremental substitute
+  o.clipboard = 'unnamed,unnamedplus' --- Copy-paste between vim and everything else
+  o.expandtab = true --- Use spaces instead of tabs
+  o.ignorecase = true --- Needed for smartcase
+  o.shiftwidth = 2 --- Change a number of space characeters inseted for indentation
+  o.shiftround = true -- round indent.
+  o.smartcase = true --- Uses case in search
+  o.smartindent = true --- Makes indenting smart
+  o.smarttab = true --- Makes tabbing smarter will realize you have 2 vs 4
+  o.softtabstop = 2 --- Insert 2 spaces for a tab
+  o.splitright = true --- Vertical splits will automatically be to the right
+  o.swapfile = false --- Swap not needed
+  o.tabstop = 2 --- Insert 2 spaces for a tab
+  o.timeoutlen = 400 --- Key sequence wait time | Faster completion (cannot be lower than 200 because then commenting doesn't work)
+  o.showcmd = false
+  o.showcmdloc = 'statusline'
+  o.undofile = true --- Sets undo to file
+  o.updatetime = 250 --- Faster completion
+  -- o.viminfo        = "'1000" --- Increase the size of file history
+  o.wildignore = '*node_modules/**' --- Don't search inside Node.js modules (works for gutentag)
+  o.wrap = false --- Display long lines as just one line
+  o.writebackup = false --- Not needed
+  o.autoindent = true --- Good auto indent
+  o.backspace = 'indent,eol,start' --- Making sure backspace works
+  o.backup = false --- Recommended by coc
+  o.conceallevel = 0 --- Show `` in markdown files
+  o.encoding = 'utf-8' --- The encoding displayed
+  o.errorbells = false --- Disables sound effect for errors
+  o.fileencoding = 'utf-8' --- The encoding written to file
+  o.incsearch = true --- Start searching before pressing enter
+  o.switchbuf = 'usetab' -- Use already opened buffers when switching
+end
+
+function M.init_interface()
+  o.colorcolumn = '+1' -- Draw colored column one step to the right of desired maximum width
+
+  o.showmode = false --- Don't show things like -- INSERT -- anymore
+  o.modeline = true -- Allow modeline
+  o.ruler = false -- Always show cursor position
+  o.termguicolors = true --- Correct terminal colors
+  o.confirm = true
+  o.showtabline = 0 --- Always show tabs
+  o.signcolumn = 'yes:1' --- Add extra sign column next to line number
+  o.relativenumber = vim.cfg.editor__relative_number --- Enables relative number
+  o.numberwidth = 1
+  o.number = true --- Shows current line number
+  o.pumheight = 10 --- Max num of items in completion menu
+  o.pumblend = 0 -- popup blend
+  o.scrolloff = 2 --- Always keep space when scrolling to bottom/top edge
+  o.mouse = 'a' --- Enable mouse
+  o.sidescrolloff = 8 -- Columns of context
+  o.lazyredraw = true --- Makes macros faster & prevent errors in complicated mappings
+  o.wildmode = 'longest:full,full' -- Command-line completion mode
+  o.cmdheight = 1 --- Give more space for displaying messages
+  o.completeopt = 'menu,menuone,noselect' --- Better autocompletion
+  o.cursorline = true --- Highlight of current line
+  o.emoji = true --- Fix emoji display
+  o.cursorlineopt = 'both'
+  o.foldcolumn = 'auto' -- Folding
+  o.list = true
+  o.listchars:append('tab:⇢ ')
+  o.listchars:append('extends:»')
+  o.listchars:append('nbsp:␣')
+  o.listchars:append('precedes:«')
+  o.fillchars = {
+    stl = ' ',
+    stlnc = ' ',
+    eob = ' ',
+    fold = ' ',
+    foldsep = ' ',
+    foldopen = '',
+    foldclose = '',
+  }
+  o.foldnestmax = 0
+  o.foldlevel = 99 --- Using ufo provider need a large value
+  o.foldlevelstart = 99 --- Expand all folds by default
+  -- vim.o.statuscolumn     = '%=%l%s%{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "-" : "+") : "│") : " " }'
+  o.laststatus = 0 --- Have a global statusline at the bottom instead of one for each window
+  o.shortmess:append({ W = true, I = true, c = true, F = true })
+  if vim.fn.has('nvim-0.9.0') == 1 then
+    o.splitkeep = 'cursor'
+    o.shortmess:append({ C = true })
+  end
+  o.formatoptions:remove('c')
+  o.formatoptions:remove('r')
+  o.formatoptions:remove('o')
+end
+
+function M.init_other()
+  g.python3_host_prog = vim.cfg.runtime__python3_host_prog
+  -- Fix markdown indentation settings
+  g.markdown_recommended_style = 0
+
+  -- built-in plugins disable.
+  for _, plugin in ipairs(vim.cfg.runtime__disable_builtin_plugins) do
+    local var = "loaded_" .. plugin
+    vim.g[var] = 1
+  end
+  -- built-in neovim RPC provider disable
+  for _, provider in ipairs(vim.cfg.runtime__disable_builtin_provider) do
+    local var = "loaded_" .. provider .. "_provider"
+    vim.g[var] = 0
+  end
+end
+
+--- called by statusline component on load.
+function M.setup_statusline()
+  vim.opt.showtabline = 0 --- Always show tabs
+  vim.opt.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
+end
+
+function M.setup()
+  M.init_edit()
+  M.init_interface()
+  M.init_other()
+end
 
 return M

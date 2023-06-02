@@ -524,6 +524,7 @@ return _({
       },
       ImportConfig = 'treesitter',
     },
+    -- TODO: miss me.
     {
       'iamcco/markdown-preview.nvim',
       build = 'cd app && npm install',

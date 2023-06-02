@@ -1,4 +1,9 @@
-local plugin_opts = {
+--- Global used cfigs.
+---@usage
+---```lua
+--- vim.cfg.runtime__disable_builtin_plugins
+---```
+local _ = {
   ---runtime
   runtime__disable_builtin_plugins = {
     "gzip",
@@ -29,6 +34,7 @@ local plugin_opts = {
     "python",
     "python3",
   },
+  runtime__python3_host_prog = '/Users/towry/.pyenv/versions/3.8.2/bin/python3',
 
   ---editor stuff
   --enable relative number or not.
@@ -72,7 +78,10 @@ local plugin_opts = {
     'yaml',
     'markdown',
     'markdown_inline',
-  }
+  },
+  lang__treesitter_plugin_disable_on_filetypes = {
+    "NvimTree",
+  },
   lang__treesitter_plugin_incremental_selection = false,
   lang__treesitter_plugin_highlight = true,
   lang__treesitter_plugin_indent = true,
@@ -91,16 +100,19 @@ local plugin_opts = {
     "volar",
     "bashls",
     "html",
-  }
+  },
   lang__lsp_server_tailwindcss_prettier = false,
   lang__lsp_server_volar_takeover_mode = true,
   lang__lsp_ui_progress = true,
   lang__lsp_ui_progress_ignore_servers = {
     "null-ls",
     "tailwindcss",
-  }
+  },
   lang__lsp_allow_incremental_sync = false,
   lang__lsp_debounce_text_changes = 600,
+
+  ---User interfaces
+  ui__float_border = true,
 
   ---misc stuff.
   misc__buf_exclude = {
@@ -130,7 +142,21 @@ local plugin_opts = {
 }
 
 return {
-  setup = function()
-    vim.cfg = plugin_opts
+  --- Setup vim.cfg.
+  ---@param user_cfg table?
+  setup = function(user_cfg)
+    user_cfg = user_cfg or {}
+    vim.validate({
+      user_cfg = {
+        user_cfg,
+        "table",
+        "expect user configurations to be table"
+      }
+    })
+    vim.cfg = setmetatable(user_cfg, {
+      __index = function(_, key)
+        return _[key]
+      end
+    })
   end
 }

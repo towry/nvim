@@ -1,5 +1,10 @@
 _G.Ty = {}
 
+---see `require`
+_G.require_plugin_spec = function(module_name)
+  return require('user.plugins.' .. module_name)
+end
+
 Ty.P = function(v)
   print(vim.pretty_print(v))
   return v
