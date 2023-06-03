@@ -34,9 +34,22 @@ return {
   {
     'simrat39/symbols-outline.nvim',
     cmd = { 'SymbolsOutline', 'SymbolsOutlineOpen', 'SymbolsOutlineClose' },
-    opts = function()
-      return require_plugin_spec('finder.opts').code_outline
-    end,
+    opts = {
+      -- https://github.com/simrat39/symbols-outline.nvim
+      show_guides = true,
+      auto_preview = false,
+      autofold_depth = 3,
+      width = 20,
+      auto_close = true, -- auto close after selection
+      keymaps = {
+        close = { "<Esc>", "q", "Q", "<leader>x" },
+      },
+      -- on_attach = function(bufnr)
+      --   -- Jump forwards/backwards with '{' and '}'
+      --   vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', { buffer = bufnr })
+      --   vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', { buffer = bufnr })
+      -- end,
+    },
   },
 
   {
@@ -47,9 +60,13 @@ return {
 
   {
     'nvim-pack/nvim-spectre',
-    opts = function()
-      return require_plugin_spec('finder.opts').search_spectre
-    end,
+    opts = {
+      color_devicons = true,
+      open_cmd = 'vnew',
+      live_update = true,
+      is_insert_mode = false,
+      is_open_target_win = false,
+    },
   },
 
   {
@@ -67,9 +84,9 @@ return {
 
   {
     "imNel/monorepo.nvim",
-    opts = function()
-      return require_plugin_spec('finder.opts').monorepo
-    end,
+    opts = {
+      autoload_telescope = true,
+    }
   },
 
   {
@@ -117,9 +134,13 @@ return {
   {
     'cbochs/grapple.nvim',
     cmd = { 'GrappleToggle', 'GrapplePopup', 'GrappleCycle' },
-    opts = function()
-      return require_plugin_spec('finder.opts').grapple
-    end,
+    opts = {
+      log_level = 'error',
+      scope = 'git',
+      integrations = {
+        resession = false,
+      },
+    }
   },
   {
     'chentoast/marks.nvim',
@@ -139,8 +160,10 @@ return {
   {
     'kylechui/nvim-surround',
     event = 'BufReadPost',
-    opts = function()
-      return require_plugin_spec('finder.opts').surround
-    end,
+    opts = {
+      keymaps = {
+        delete = 'dz',
+      },
+    }
   },
 }

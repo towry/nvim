@@ -102,5 +102,13 @@ return {
     branch = "anticonceal",
     event = 'LspAttach',
     config = true,
+  },
+
+  {
+    'simrat39/rust-tools.nvim',
+    ft = { 'rust', 'toml' },
+    config = function()
+      require_plugin_spec('lsp.rust.rc').config()
+    end,
   }
 }

@@ -57,12 +57,4 @@ return {
       return require_plugin_spec('lang.opts').hlargs
     end,
   },
-
-  {
-    'simrat39/rust-tools.nvim',
-    ft = { 'rust', 'toml' },
-    config = function()
-      require_plugin_spec('lang.rust.rc').config()
-    end,
-  }
 }
