@@ -1,5 +1,5 @@
 return {
   {
-    import = "user.plugins.workbench.dashboard"
+    import = "user.plugins.editor.dashboard"
   }
 }
