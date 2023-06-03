@@ -157,13 +157,4 @@ return {
     },
   },
   { 'gbprod/stay-in-place.nvim', config = true, event = 'BufReadPost' },
-  {
-    'kylechui/nvim-surround',
-    event = 'BufReadPost',
-    opts = {
-      keymaps = {
-        delete = 'dz',
-      },
-    }
-  },
 }
