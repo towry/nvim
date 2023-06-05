@@ -153,7 +153,7 @@ return _({
         require('early-retirement').setup({
           retirementAgeMins = 15,
           ignoreAltFile = true,
-          minimumBufferNum = 5,
+          minimumBufferNum = 10,
           ignoreUnsavedChangesBufs = true,
           ignoreSpecialBuftypes = true,
           ignoreVisibleBufs = true,
