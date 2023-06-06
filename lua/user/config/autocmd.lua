@@ -22,10 +22,12 @@ function M.load_on_startup()
     },
     {
       "ColorScheme",
-      group = "_colorscheme",
-      callback = function()
-        au.fire_event(au.events.AfterColorschemeChanged)
-      end,
+      {
+        group = "_colorscheme",
+        callback = function()
+          au.fire_event(au.events.AfterColorschemeChanged)
+        end,
+      }
     },
     {
       'LspAttach',

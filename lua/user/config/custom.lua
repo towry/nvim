@@ -1,5 +1,5 @@
 local user_cfg = {
-
+  ui__theme_name = "everforest",
 }
 
 return {

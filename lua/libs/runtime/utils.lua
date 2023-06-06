@@ -240,6 +240,13 @@ local function get_highlight(hl_group)
   return result
 end
 
+--- taken from LazyVim
+function M.fg(name)
+  ---@type {foreground?:number}?
+  local hl = vim.api.nvim_get_hl and vim.api.nvim_get_hl(0, { name = name }) or vim.api.nvim_get_hl_by_name(name, true)
+  local fg = hl and hl.fg or hl.foreground
+  return fg and { fg = string.format("#%06x", fg) }
+end
 
 ---@see https://github.com/justchokingaround/nvim/blob/a11aae6d66d025627d7f52f705cbe5951f2f6eb6/lua/modules/utils/init.lua
 ---Extend a highlight group

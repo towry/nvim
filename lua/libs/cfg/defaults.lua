@@ -136,6 +136,7 @@ return {
   lsp__plugin_lspsaga = true,
 
   ---User interfaces
+  ui__theme_name = "default",
   ui__float_border = true,
 
   ---misc stuff.

@@ -15,8 +15,6 @@ end
 
 
 local function setup(opts)
-  require('libs.cfg').setup({})
-
   local spec = {
     { import = "plugins.editor" },
     { import = "plugins.workbench" },
@@ -29,7 +27,7 @@ local function setup(opts)
     spec = spec,
     defaults = { lazy = true },
     dev = { patterns = jit.os:find("Windows") and {} or { "folke", "LazyVim" } },
-    -- install = { colorscheme = { vim.cfg.ui__colorscheme } },
+    install = { colorscheme = { vim.cfg.ui__theme_name } },
     ui = {
       icons = {
         lazy = ' ',
