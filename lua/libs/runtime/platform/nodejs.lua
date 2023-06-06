@@ -1,7 +1,7 @@
 local nvm_alias_for_nvim = 'nvim-node'
 local nvim_npm_folder = vim.fn.expand('$HOME/.config/nvim-npm')
 local stdpath = vim.fn.stdpath
-local Path = require('user.runtime.path')
+local Path = require('libs.runtime.path')
 
 ---@diagnostic disable-next-line: deprecated
 local table_unpack = table.unpack == nil and unpack or table.unpack

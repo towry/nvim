@@ -1,4 +1,4 @@
-local Table = require('user.runtime.table')
+local Table = require('libs.runtime.table')
 local M = {}
 
 function M.set_options(buf, opts)

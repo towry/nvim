@@ -1,9 +1,4 @@
---- Global used cfigs.
----@usage
----```lua
---- vim.cfg.runtime__disable_builtin_plugins
----```
-local _ = {
+return {
   ---runtime
   runtime__disable_builtin_plugins = {
     "gzip",
@@ -168,24 +163,4 @@ local _ = {
   plugin__fidget_text_spinner = "pipe",
   plugin__fidget_text_done = '  ',
   plugin__fidget_debug_logging = false,
-}
-
-return {
-  --- Setup vim.cfg.
-  ---@param user_cfg table?
-  setup = function(user_cfg)
-    user_cfg = user_cfg or {}
-    vim.validate({
-      user_cfg = {
-        user_cfg,
-        "table",
-        "expect user configurations to be table"
-      }
-    })
-    vim.cfg = setmetatable(user_cfg, {
-      __index = function(_, key)
-        return _[key]
-      end
-    })
-  end
 }

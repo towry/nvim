@@ -5,7 +5,7 @@ return {
       dim = true,
     })
 
-    -- local au = require('user.runtime.au')
+    -- local au = require('libs.runtime.au')
     -- au.register_event(au.events.AfterColorschemeChanged, {
     --   name = "eyeliner_ui",
     --   callback = function()

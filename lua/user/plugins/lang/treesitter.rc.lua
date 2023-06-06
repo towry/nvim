@@ -1,4 +1,4 @@
-local Buffer = require('user.runtime.buffer')
+local Buffer = require('libs.runtime.buffer')
 
 local M = {}
 

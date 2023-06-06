@@ -15,7 +15,7 @@ return {
       },
     })
 
-    local au = require('user.runtime.au')
+    local au = require('libs.runtime.au')
     au.register_event(au.events.AfterColorschemeChanged, {
       name = "marks_ui",
       callback = function()

@@ -3,8 +3,8 @@ return {
     local present, worktree = pcall(require, 'git-worktree')
     if not present then return end
 
-    local utils = require('user.runtime.utils')
-    local au = require('user.runtime.au')
+    local utils = require('libs.runtime.utils')
+    local au = require('libs.runtime.au')
 
     -- ╭──────────────────────────────────────────────────────────╮
     -- │ Setup                                                    │

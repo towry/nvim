@@ -12,7 +12,7 @@ M.settings = {
 }
 
 return function(opts)
-  if require('user.runtime.utils').has_plugin('neodev.nvim') then
+  if require('libs.runtime.utils').has_plugin('neodev.nvim') then
     require('neodev').setup({
       setup_jsonls = false,
       lspconfig = false,

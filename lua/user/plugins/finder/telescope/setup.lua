@@ -1,9 +1,7 @@
-
-
 return {
   config = function()
-    local au = require('user.runtime.au')
-    local has_plugin = require('user.runtime.utils').has_plugin
+    local au = require('libs.runtime.au')
+    local has_plugin = require('libs.runtime.utils').has_plugin
     local actions = require('telescope.actions')
     local action_state = require('telescope.actions.state')
     local lga_actions = require('telescope-live-grep-args.actions')

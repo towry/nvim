@@ -1,4 +1,4 @@
-local au = require('user.runtime.au')
+local au = require('libs.runtime.au')
 
 local M = {}
 
@@ -85,7 +85,7 @@ local function resize_kitty()
   })
 end
 
----@param opts {resize_kitty?: boolean}
+---@param opts? {resize_kitty?: boolean}
 function M.setup(opts)
   opts = vim.tbl_deep_extend("force", {
     resize_kitty = false,

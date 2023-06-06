@@ -3,7 +3,7 @@ return {
     -- FIXME
     local colors = nil
     local nvim_set_hl = vim.api.nvim_set_hl
-    local au = require('user.runtime.au')
+    local au = require('libs.runtime.au')
 
     require('portal').setup({
       log_level = 'error',

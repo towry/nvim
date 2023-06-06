@@ -3,7 +3,7 @@ return {
     local leap = require('leap')
     -- FIXME
     local colors = nil
-    local au = require('user.runtime.au')
+    local au = require('libs.runtime.au')
 
     leap.opts.highlight_unlabeled_phase_one_targets = true
     leap.opts.substitute_chars = {

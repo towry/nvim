@@ -4,7 +4,7 @@ local gitsigns_current_blame_delay = 0
 
 M.config = function()
   local signs = require('gitsigns')
-  local autocmd = require('user.runtime.au')
+  local autocmd = require('libs.runtime.au')
 
   -- ╭──────────────────────────────────────────────────────────╮
   -- │ Setup                                                    │
