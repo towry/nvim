@@ -92,6 +92,7 @@ local _ = {
   lang__treesitter_plugin_textobjects_move = true,
   lang__treesitter_plugin_textsubjects = true,
 
+  lsp__log_level = "ERROR",
   lsp__enable_servers = {
     "tailwindcss",
     "cssls",
