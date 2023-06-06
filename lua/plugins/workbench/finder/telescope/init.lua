@@ -1,4 +1,19 @@
 return {
+  'nvim-telescope/telescope.nvim',
+  cmd = { 'Telescope' },
+  dependencies = {
+    { 'nvim-lua/popup.nvim' },
+    { 'nvim-lua/plenary.nvim' },
+    { 'ThePrimeagen/git-worktree.nvim' },
+    { 'nvim-telescope/telescope-live-grep-args.nvim' },
+    {
+      'nvim-telescope/telescope-fzf-native.nvim',
+      build = 'make',
+    },
+    {
+      'tknightz/telescope-termfinder.nvim',
+    },
+  },
   config = function()
     local au = require('libs.runtime.au')
     local has_plugin = require('libs.runtime.utils').has_plugin

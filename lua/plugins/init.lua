@@ -20,9 +20,9 @@ local function setup(opts)
   local spec = {
     { import = "plugins.editor" },
     { import = "plugins.workbench" },
-    { import = "plugins.vcs" },
+    { import = "plugins.git" },
     { import = "plugins.terminal" },
-    { import = "plugins.debugger" },
+    -- { import = "plugins.debugger" },
   }
 
   opts = vim.tbl_deep_extend("force", {

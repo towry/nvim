@@ -1,6 +1,10 @@
 local Buffer = require('libs.runtime.buffer')
+local au = require('libs.runtime.au')
 
-local M = {}
+local M = {
+  'nvim-treesitter/nvim-treesitter',
+  event = au.user_autocmds.FileOpened,
+}
 
 local disabled = function(lang, bufnr)
   -- local ft = vim.api.nvim_buf_get_option(bufnr, 'ft')

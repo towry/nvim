@@ -1,4 +1,9 @@
-local M = {}
+local au = require('libs.runtime.au')
+
+local M = {
+  'lewis6991/gitsigns.nvim',
+  event = au.user_autocmds.FileOpened
+}
 
 local gitsigns_current_blame_delay = 0
 

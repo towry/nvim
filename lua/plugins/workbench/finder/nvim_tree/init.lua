@@ -1,4 +1,11 @@
-local M = {}
+local M = {
+  'kyazdani42/nvim-tree.lua',
+  cmd = {
+    'NvimTreeToggle',
+    'NvimTreeFindFileToggle',
+    'NvimTreeFindFile',
+  },
+}
 
 local HEIGHT_RATIO = 0.8 -- You can change this
 local WIDTH_RATIO = 0.5  -- You can change this too
@@ -40,7 +47,7 @@ function M.config()
   end
 
   require('nvim-tree').setup({
-    on_attach = require('user.plugins.finder.nvim-tree.attach').on_attach,
+    on_attach = require('plugins.workbench.finder.nvim_tree.attach').on_attach,
     -- disables netrw completely
     disable_netrw = true,
     -- hijack netrw window on startup

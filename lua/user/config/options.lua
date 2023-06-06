@@ -119,6 +119,27 @@ function M.setup_statusline()
   vim.opt.laststatus = 3  --- Have a global statusline at the bottom instead of one for each window
 end
 
+function M.init_lsp_diagnostic()
+  local signs = { Error = '', Warn = '', Hint = '', Info = '' }
+
+  vim.diagnostic.config({
+    severity_sort = true,
+    signs = signs == false and false or true,
+    underline = true,
+    update_in_insert = false,
+    virtual_text = {
+      prefix = ' :',
+    },
+  })
+
+  if type(signs) == 'table' then
+    for type, icon in pairs(signs) do
+      local hl = 'DiagnosticSign' .. type
+      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = '' })
+    end
+  end
+end
+
 function M.setup()
   vim.g.mapleader = ' '
   vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
@@ -127,6 +148,7 @@ function M.setup()
   M.init_edit()
   M.init_interface()
   M.init_other()
+  M.init_lsp_diagnostic()
 end
 
 return M

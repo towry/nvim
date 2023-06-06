@@ -1,4 +1,5 @@
 return {
+  'ThePrimeagen/git-worktree.nvim',
   config = function()
     local present, worktree = pcall(require, 'git-worktree')
     if not present then return end

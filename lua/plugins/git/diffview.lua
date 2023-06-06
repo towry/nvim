@@ -1,4 +1,14 @@
 return {
+  'sindrets/diffview.nvim',
+  cmd = {
+    'DiffviewLog',
+    'DiffviewOpen',
+    'DiffviewClose',
+    'DiffviewRefresh',
+    'DiffviewFocusFile',
+    'DiffviewFileHistory',
+    'DiffviewToggleFiles',
+  },
   config = function()
     require('diffview').setup({
       view = {
