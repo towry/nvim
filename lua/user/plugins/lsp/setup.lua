@@ -70,16 +70,8 @@ function M.config()
   require('user.plugins.lsp.diagnostics').setup()
   default_lspconfig_ui_options()
 
-  local handlers = {
-    ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = Ty.Config.ui.float.border }),
-    ['textDocument/signatureHelp'] = vim.lsp.with(
-      vim.lsp.handlers.signature_help,
-      { border = vim.cfg.ui__float_border }
-    ),
-    -- ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics),
-  }
-
-  local capabilities = require('cmp_nvim_lsp').default_capabilities()
+  local handlers = require('libs.lspconfig.handlers')
+  local capabilities = require('libs.lspconfig.capbilities')(require('cmp_nvim_lsp').default_capabilities())
 
   capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,

@@ -15,7 +15,7 @@ function M.load_on_startup()
           local buftype = vim.api.nvim_get_option_value("buftype", { buf = args.buf })
           if not (vim.fn.expand "%" == "" or buftype == "nofile") then
             vim.api.nvim_del_augroup_by_name("_file_opened")
-            vim.cmd("do " .. au.user_autocmds.FileOpened)
+            au.do_usercmd(au.user_autocmds.FileOpened)
           end
         end,
       },

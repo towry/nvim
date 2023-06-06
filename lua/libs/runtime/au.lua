@@ -14,6 +14,7 @@ M.events = {
 }
 M.user_autocmds = {
   FileOpened = "User FileOpened",
+  LspConfigDone = "User LspConfigDone",
 }
 
 --- Clean autocommand in a group if it exists
@@ -25,6 +26,10 @@ function M.clear_augroup(name)
       vim.api.nvim_clear_autocmds { group = name }
     end)
   end)
+end
+
+function M.do_usercmd(name)
+  vim.cmd("do " .. name)
 end
 
 --- Create autocommand groups based on the passed definitions
