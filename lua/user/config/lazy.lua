@@ -29,7 +29,7 @@ local function setup(opts)
     spec = spec,
     defaults = { lazy = true },
     dev = { patterns = jit.os:find("Windows") and {} or { "folke", "LazyVim" } },
-    install = { colorscheme = { vim.cfg.ui__colorscheme } },
+    -- install = { colorscheme = { vim.cfg.ui__colorscheme } },
     ui = {
       icons = {
         lazy = ' ',
@@ -95,5 +95,5 @@ local function setup(opts)
 end
 
 return {
-  setup,
+  setup = setup,
 }

@@ -1,3 +1,5 @@
+local defaults = require('libs.cfg.defaults')
+
 return {
   --- Setup vim.cfg.
   ---@param user_cfg table?
@@ -12,7 +14,7 @@ return {
     })
     vim.cfg = setmetatable(user_cfg, {
       __index = function(_, key)
-        return _[key]
+        return defaults[key]
       end
     })
   end
