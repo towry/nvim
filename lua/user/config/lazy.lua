@@ -16,7 +16,11 @@ end
 
 local function setup(opts)
   local spec = {
-    { import = "plugins" },
+    { import = "plugins.editor" },
+    { import = "plugins.workbench" },
+    { import = "plugins.vcs" },
+    { import = "plugins.terminal" },
+    { import = "plugins.debugger" },
   }
 
   opts = vim.tbl_deep_extend("force", {
