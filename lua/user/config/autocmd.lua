@@ -30,7 +30,7 @@ function M.load_on_startup()
     {
       'LspAttach',
       {
-        group = '_lsp_attach',
+        group = '_lsp_attach_event',
         callback = function(args)
           local bufnr = args.buf
           local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -40,7 +40,7 @@ function M.load_on_startup()
           })
         end,
       }
-    }
+    },
   }
 
   au.define_autocmds(definitions)
@@ -50,14 +50,13 @@ function M.setup_events_on_startup()
   au.register_event(au.events.onLspAttach, {
     name = "setup_formatter_on_buf",
     callback = function(args)
-      require_plugin_spec('lsp.formatting').set_formatter(args.client, args.bufnr)
+      require('libs.lsp-format').choose_formatter_for_buf(args.client, args.bufnr)
+      require('libs.lsp-format.autoformat').attach(args.client, args.bufnr)
+      local is_auto_format_enable_config = true
+      if is_auto_format_enable_config then
+        require('libs.lsp-format.autoformat').enable()
+      end
     end
-  })
-  au.register_event(au.events.onLspAttach, {
-    name = "setup_autoformat_on_buf",
-    callback = function(args)
-      require_plugin_spec('lsp.formatting').set_autoformat_on_buf(args.client, args.bufnr)
-    end,
   })
 end
 
@@ -92,6 +91,8 @@ function M.setup(opts)
   }, opts or {})
 
   M.load_on_startup()
+  M.setup_events_on_startup()
+
   if opts.resize_kitty then
     resize_kitty()
   end
