@@ -15,6 +15,8 @@ end
 
 
 local function setup(opts)
+  require('libs.cfg').setup({})
+
   local spec = {
     { import = "plugins.editor" },
     { import = "plugins.workbench" },
