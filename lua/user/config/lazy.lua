@@ -72,7 +72,13 @@ local function setup(opts)
   if not ok then
     vim.api.nvim_create_user_command('InstallLazyVim', function()
       install_lazy_vim()
+      local is_ok_again = prepend_lazy()
+      if not is_ok_again then
+        vim.notify("... something is wrong when installing the lazy plugin")
+        return
+      end
       require("lazy").setup(opts)
+      vim.notify("lazy is ready to user")
     end)
     -- we want user to decide wether to install or not.
     vim.notify("lazy plugin is not installed, please run :installLazyVim command to install")
