@@ -1,5 +1,6 @@
 return {
-  "folke/which-key",
+  'folke/which-key.nvim',
+  keys = { "<leader>" },
   config = function()
     require('which-key').setup({
       plugins = {

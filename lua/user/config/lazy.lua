@@ -26,7 +26,7 @@ local function setup(opts)
   opts = vim.tbl_deep_extend("force", {
     spec = spec,
     defaults = { lazy = true },
-    dev = { patterns = jit.os:find("Windows") and {} or { "folke", "LazyVim" } },
+    dev = { patterns = jit.os:find("Windows") and {} or {} },
     install = { colorscheme = { vim.cfg.ui__theme_name } },
     ui = {
       icons = {
