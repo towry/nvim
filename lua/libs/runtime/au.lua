@@ -4,103 +4,104 @@ local M = {}
 local events_registry = {}
 
 M.events = {
-  AfterColorschemeChanged = "AfterColorschemeChanged",
-  onGitsignsAttach = "onGitsignsAttach",
-  onGitDiffviewOpen = "onGitDiffviewOpen",
-  onGitDiffviewBufRead = "onGitDiffviewBufRead",
-  -- close all buffers except current one.
-  doBufferCloseAllButCurrent = "doBufferCloseAllButCurrent",
-  onLspAttach = "onLspAttach",
+    AfterColorschemeChanged = "AfterColorschemeChanged",
+    onGitsignsAttach = "onGitsignsAttach",
+    onGitDiffviewOpen = "onGitDiffviewOpen",
+    onGitDiffviewBufRead = "onGitDiffviewBufRead",
+    -- close all buffers except current one.
+    doBufferCloseAllButCurrent = "doBufferCloseAllButCurrent",
+    onLspAttach = "onLspAttach",
 }
 M.user_autocmds = {
-  FileOpened = "User FileOpened",
-  LspConfigDone = "User LspConfigDone",
+    FileOpened = "User FileOpened",
+    LspConfigDone = "User LspConfigDone",
+    TermIsOpen = "User TermIsOpen",
 }
 
 --- Clean autocommand in a group if it exists
 --- This is safer than trying to delete the augroup itself
 ---@param name string the augroup name
 function M.clear_augroup(name)
-  vim.schedule(function()
-    pcall(function()
-      vim.api.nvim_clear_autocmds { group = name }
+    vim.schedule(function()
+        pcall(function()
+            vim.api.nvim_clear_autocmds { group = name }
+        end)
     end)
-  end)
 end
 
 function M.do_usercmd(name)
-  vim.cmd("do " .. name)
+    vim.cmd("do " .. name)
 end
 
 --- Create autocommand groups based on the passed definitions
 --- Also creates the augroup automatically if it doesn't exist
 ---@param definitions table contains a tuple of event, opts, see `:h nvim_create_autocmd`
 function M.define_autocmds(definitions)
-  for _, entry in ipairs(definitions) do
-    local event = entry[1]
-    local opts = entry[2]
-    if type(opts.group) == "string" and opts.group ~= "" then
-      local exists, _ = pcall(vim.api.nvim_get_autocmds, { group = opts.group })
-      if not exists then
-        vim.api.nvim_create_augroup(opts.group, {})
-      end
+    for _, entry in ipairs(definitions) do
+        local event = entry[1]
+        local opts = entry[2]
+        if type(opts.group) == "string" and opts.group ~= "" then
+            local exists, _ = pcall(vim.api.nvim_get_autocmds, { group = opts.group })
+            if not exists then
+                vim.api.nvim_create_augroup(opts.group, {})
+            end
+        end
+        vim.api.nvim_create_autocmd(event, opts)
     end
-    vim.api.nvim_create_autocmd(event, opts)
-  end
 end
 
 ---@param args table see `:h nvim_get_autocmds`
 function M.has_autocmds(args)
-  return pcall(vim.api.nvim_get_autocmds, args)
+    return pcall(vim.api.nvim_get_autocmds, args)
 end
 
 --- Add event to be fired.
 ---@param event_name string: The event name.
 ---@param opts {name:string, callback:function, immediate?:boolean}: required options
 function M.register_event(event_name, opts)
-  vim.validate({
-    opts = { opts, "table" },
-  })
-  events_registry[event_name] = events_registry[event_name] or {
-    count = 0,
-    callbacks = {}
-  }
+    vim.validate({
+        opts = { opts, "table" },
+    })
+    events_registry[event_name] = events_registry[event_name] or {
+        count = 0,
+        callbacks = {}
+    }
 
-  events_registry[event_name].callbacks[opts.name] = opts.callback
-  -- fire immediately
-  if opts.immediate ~= nil and opts.immediate == false and events_registry[event_name].count > 0 then
-    opts.callback(events_registry[event_name].args)
-  end
+    events_registry[event_name].callbacks[opts.name] = opts.callback
+    -- fire immediately
+    if opts.immediate ~= nil and opts.immediate == false and events_registry[event_name].count > 0 then
+        opts.callback(events_registry[event_name].args)
+    end
 end
 
 --- Remove event.
 ---@param event_name string
 ---@param handler_name string
 function M.remove_event(event_name, handler_name)
-  if not events_registry[event_name] then
-    return
-  end
-  events_registry[event_name].callbacks[handler_name] = nil
+    if not events_registry[event_name] then
+        return
+    end
+    events_registry[event_name].callbacks[handler_name] = nil
 end
 
 --- Fire an event.
 ---@param event_name string
 ---@param args table?
 function M.fire_event(event_name, args)
-  if not events_registry[event_name] then
-    events_registry[event_name] = {
-      count = 1,
-      callbacks = {},
-      args = args
-    }
-    return
-  end
-  events_registry[event_name].args = args
-  local callbacks = events_registry[event_name].callbacks or {}
-  -- loop through callbacks {[string]: function} and call the function.
-  for _, callback in pairs(callbacks) do
-    callback(args)
-  end
+    if not events_registry[event_name] then
+        events_registry[event_name] = {
+            count = 1,
+            callbacks = {},
+            args = args
+        }
+        return
+    end
+    events_registry[event_name].args = args
+    local callbacks = events_registry[event_name].callbacks or {}
+    -- loop through callbacks {[string]: function} and call the function.
+    for _, callback in pairs(callbacks) do
+        callback(args)
+    end
 end
 
 return M
