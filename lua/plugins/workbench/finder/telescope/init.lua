@@ -1,12 +1,24 @@
 local keymap = require('libs.runtime.keymap')
 local cmdstr = keymap.cmdstr
+local cmd_modcall = keymap.cmd_modcall
+local pickers_mod = 'libs.telescope.pickers'
 
 return {
   'nvim-telescope/telescope.nvim',
   cmd = { 'Telescope' },
   keys = {
-    { '<Tab>',      cmdstr([[require('libs.telescope.pickers').buffers()]]), desc = "List Buffers" },
-    { '<leader>gB', cmdstr([[Telescope git_branches]]),                      desc = 'Git branchs' },
+    { '<Tab>',      cmd_modcall(pickers_mod, 'buffers()'),       desc = "List Buffers" },
+    { '<leader>gB', cmdstr([[Telescope git_branches]]),          desc = 'Git branchs' },
+    { '<leader>ef', cmd_modcall(pickers_mod, 'project_files()'), desc = 'Open Project files' },
+    {
+      '<leader>ee',
+      cmd_modcall('telescope.builtin', 'resume()'),
+      desc =
+      'Resume telescope pickers'
+    },
+    { '<leader>er', cmd_modcall(pickers_mod, 'oldfiles({ cwd_only = true })'),              desc = 'Open recent files' },
+    { '<leader>el', cmd_modcall('find-folders-picker', '()'),                               desc = 'Find folders' },
+    { '<leader>es', cmd_modcall('telescope', 'extensions.live_grep_args.live_grep_args()'), desc = 'Grep search' }
   },
   dependencies = {
     { 'nvim-lua/popup.nvim' },

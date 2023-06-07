@@ -16,6 +16,7 @@ return {
     end
 
     local lg = require("legendary");
+    local au = require("libs.runtime.au")
     lg.setup({
       -- keymaps = require("ty.contrib.keymaps.legendary.keymap").default_keymaps(),
       -- funcs = require("ty.contrib.keymaps.legendary.functions").default_functions(),
@@ -34,5 +35,7 @@ return {
         key = " ",
       },
     })
+
+    au.do_useraucmd(au.user_autocmds.LegendaryConfigDone_User)
   end,
 }

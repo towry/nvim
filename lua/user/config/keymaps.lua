@@ -1,5 +1,6 @@
+local au = require('libs.runtime.au')
 local keymap = require('libs.runtime.keymap')
-local set, cmd = keymap.set, keymap.cmdstr
+local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 
 local M = {}
 
@@ -20,6 +21,11 @@ local function setup_basic()
   set('i', '<C-z>', '<ESC> u', {
     desc = 'I: Undo, no more background key',
   })
+
+  set('n', '<C-S-A-p>', cmd([[lua require('legendary').find({ filters = require('legendary.filters').current_mode() })]]),
+    {
+      desc = 'Open Command Palette',
+    })
 
   -- works with kitty
   set('n', '<Char-0xAA>', cmd(':w'), {
@@ -121,6 +127,30 @@ local function setup_basic()
   --- buffers
   set('n', '<S-Tab>', ':e #<cr>', {
     desc = 'Go to previous edited Buffer',
+  })
+  set('n', '<leader>b]', cmd_modcall('libs.runtime.buffer', 'next_unsaved_buf()'), {
+    desc = 'Next unsaved buffer'
+  })
+  set('n', '<leader>b[', cmd_modcall('libs.runtime.buffer', 'prev_unsaved_buf()'), {
+    desc = 'Next unsaved buffer'
+  })
+  set('n', '<leader>bd', [[:e!<CR>]], {
+    desc = 'Discard buffer changes'
+  })
+  set('n', '<leader>bx', function()
+    vim.cmd('bdelete')
+    vim.schedule(function()
+      if #require('libs.runtime.buffer').list_bufnrs() <= 0 then
+        local cur_empty = require('libs.runtime.buffer').get_current_empty_buffer()
+        -- start_dashboard()
+        au.do_useraucmd(au.user_autocmds.DoEnterDashboard_User)
+        if cur_empty then
+          vim.api.nvim_buf_delete(cur_empty, { force = true })
+        end
+      end
+    end)
+  end, {
+    desc = 'Close buffer and window'
   })
 
   set('n', '<leader><space>', cmd([[normal! m\']]), {

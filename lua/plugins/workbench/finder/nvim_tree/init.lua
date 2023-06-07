@@ -1,3 +1,6 @@
+local keymap = require('libs.runtime.keymap')
+local cmd_modcall = keymap.cmd_modcall
+
 local M = {
   'kyazdani42/nvim-tree.lua',
   cmd = {
@@ -5,6 +8,24 @@ local M = {
     'NvimTreeFindFileToggle',
     'NvimTreeFindFile',
   },
+  keys = {
+    {
+      '<leader>et',
+      cmd_modcall('libs.plugin-nvim-tree', 'toggle_nvim_tree()'),
+      desc = 'Toggle explore tree',
+    },
+    {
+      '<leader>e.',
+      cmd_modcall('libs.plugin-nvim-tree', 'nvim_tree_find_file({fallback=true})'),
+      desc = 'Locate current file in tree',
+    },
+    {
+      -- <cmd-b> to find file.
+      '<Char-0xAC>',
+      cmd_modcall('libs.plugin-nvim-tree', 'nvim_tree_find_file({fallback=true})'),
+      desc = 'Locate current file in tree',
+    }
+  }
 }
 
 local HEIGHT_RATIO = 0.8 -- You can change this

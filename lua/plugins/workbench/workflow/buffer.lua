@@ -57,9 +57,10 @@ return {
       local loaded = false
       au.define_autocmds({
         {
-          au.user_autocmds.FileOpened_User,
+          "User",
           {
             group = "_plugin_load_early_retirement",
+            pattern = au.user_autocmds.FileOpened,
             once = true,
             callback = function()
               if loaded then

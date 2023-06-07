@@ -1,5 +1,6 @@
 local user_cfg = {
   ui__theme_name = "everforest",
+  workbench__lualine_theme = 'everforest',
 }
 
 return {

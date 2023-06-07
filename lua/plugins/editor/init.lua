@@ -11,9 +11,9 @@ return {
   {
     import = "plugins.editor.lsp"
   },
-  -- {
-  --   import = "plugins.editor.motion",
-  -- },
+  {
+    import = "plugins.editor.motion",
+  },
   {
     import = "plugins.editor.indent",
   },

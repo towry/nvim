@@ -138,6 +138,7 @@ return {
   ---User interfaces
   ui__theme_name = "default",
   ui__float_border = true,
+  workbench__lualine_theme = "default",
 
   ---misc stuff.
   misc__buf_exclude = {

@@ -5,4 +5,8 @@ return {
   {
     'nvim-tree/nvim-web-devicons',
   },
+  { 'nvim-lua/popup.nvim' },
+  {
+    'MunifTanjim/nui.nvim',
+  },
 }

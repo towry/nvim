@@ -9,8 +9,17 @@ return {
   },
   {
     'numToStr/Comment.nvim',
-    -- event = au.user_autocmds.FileOpened_User,
-    keys = { "gcc", "gc", "gcb", "gco", "gcO", "gcA", "g>", "g<", "gb", },
+    keys = {
+      { "gcc", mode = { 'n', 'v' } },
+      { "gc",  mode = { 'n', 'v' } },
+      { "gcb", mode = { 'n', 'v' } },
+      { "gco", mode = { 'n', 'v' } },
+      { "gcO", mode = { 'n', 'v' } },
+      { "gcA", mode = { 'n', 'v' } },
+      { "g>",  mode = { 'n', 'v' } },
+      { "g<",  mode = { 'n', 'v' } },
+      { "gb",  mode = { 'n', 'v' } }
+    },
     dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
     config = function()
       require('Comment').setup({

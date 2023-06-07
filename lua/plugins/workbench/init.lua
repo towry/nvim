@@ -10,5 +10,11 @@ return {
   },
   {
     import = "plugins.workbench.workflow",
+  },
+  {
+    import = "plugins.workbench.statusline",
+  },
+  {
+    import = "plugins.workbench.ui",
   }
 }

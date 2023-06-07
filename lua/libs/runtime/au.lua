@@ -20,7 +20,9 @@ M.user_autocmds = setmetatable({
   LspConfigDone = "LspConfigDone",
   TermIsOpen = "TermIsOpen",
   TelescopeConfigDone = "TelescopeConfigDone",
+  LegendaryConfigDone = "LegendaryConfigDone",
   on_git_blame_done = "on_git_blame_done",
+  DoEnterDashboard = 'DoEnterDashboard',
 }, {
   __index = function(_, key)
     -- if key suffix with '_User' then return 'User_' .. <real key>.
