@@ -15,16 +15,8 @@ end
 
 
 local function setup(opts)
-  local spec = {
-    { import = "plugins.editor" },
-    { import = "plugins.workbench" },
-    { import = "plugins.git" },
-    { import = "plugins.terminal" },
-    -- { import = "plugins.debugger" },
-  }
-
   opts = vim.tbl_deep_extend("force", {
-    spec = spec,
+    spec = {},
     defaults = { lazy = true },
     dev = { patterns = jit.os:find("Windows") and {} or {} },
     install = { colorscheme = { vim.cfg.ui__theme_name } },
