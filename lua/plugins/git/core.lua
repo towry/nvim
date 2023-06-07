@@ -1,7 +1,15 @@
 local au = require('libs.runtime.au')
 
 return {
-  { 'kdheepak/lazygit.nvim', cmd = 'LazyGit' },
+  {
+    'kdheepak/lazygit.nvim',
+    cmd = 'LazyGit',
+    keys = {
+      {
+        '<leader>gl', '<cmd>LazyGit<cr>', desc = 'Open Lazygit',
+      }
+    }
+  },
   {
     'tpope/vim-fugitive',
     cmd = {

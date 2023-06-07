@@ -2,6 +2,11 @@ local au = require('libs.runtime.au')
 
 local M = {
   'lewis6991/gitsigns.nvim',
+  keys = {
+    {
+      'gh', '<cmd>lua require("plugins.workbench.workflow.hydra.git").open_git_signs_hydra()<cr>'
+    }
+  },
   event = au.user_autocmds.FileOpened
 }
 

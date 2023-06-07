@@ -7,5 +7,8 @@ return {
   },
   {
     import = "plugins.workbench.theme",
+  },
+  {
+    import = "plugins.workbench.workflow",
   }
 }

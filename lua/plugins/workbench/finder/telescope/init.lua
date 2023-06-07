@@ -1,6 +1,12 @@
+local keymap = require('libs.runtime.keymap')
+local cmdstr = keymap.cmdstr
+
 return {
   'nvim-telescope/telescope.nvim',
   cmd = { 'Telescope' },
+  keys = {
+    { '<Tab>', cmdstr([[require('libs.telescope.pickers').buffers()]]), desc = "List Buffers" },
+  },
   dependencies = {
     { 'nvim-lua/popup.nvim' },
     { 'nvim-lua/plenary.nvim' },

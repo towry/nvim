@@ -1,6 +1,13 @@
 return {
   'akinsho/git-conflict.nvim',
   tag = 'v1.0.0',
+  keys = {
+    {
+      '<leader>gc',
+      '<cmd>lua require("plugins.workbench.workflow.hydra.git").open_git_conflict_hydra()<cr>',
+      desc = 'Open git conflict menus',
+    }
+  },
   cmd = {
     'GitConflictChooseBoth',
     'GitConflictNextConflict',
