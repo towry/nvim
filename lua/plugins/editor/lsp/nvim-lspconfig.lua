@@ -88,7 +88,7 @@ local function default_lspconfig_ui_options()
   local _default_opts = win.default_opts
   win.default_opts = function(options)
     local opts = _default_opts(options)
-    opts.border = Ty.Config.ui.float.border
+    opts.border = vim.cfg.ui__float_border
     return opts
   end
 end

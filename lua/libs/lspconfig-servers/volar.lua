@@ -1,6 +1,6 @@
 return function(opts)
   local node_root = vim.loop.cwd()
-  local node_util = require('lua.libs.runtime.platform.nodejs')
+  local node_util = require('libs.runtime.platform.nodejs')
 
   local fts = vim.cfg.lsp__server_volar_takeover_mode and
       { 'vue', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' } or { 'vue' }

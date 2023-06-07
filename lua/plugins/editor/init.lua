@@ -14,9 +14,9 @@ return {
   -- {
   --   import = "plugins.editor.motion",
   -- },
-  -- {
-  --   import = "plugins.editor.indent",
-  -- },
+  {
+    import = "plugins.editor.indent",
+  },
   {
     import = "plugins.editor.folding",
   },

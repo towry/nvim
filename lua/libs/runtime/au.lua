@@ -16,6 +16,7 @@ M.user_autocmds = setmetatable({
   FileOpened = "FileOpened",
   LspConfigDone = "LspConfigDone",
   TermIsOpen = "TermIsOpen",
+  TelescopeConfigDone = "TelescopeConfigDone",
   on_git_blame_done = "on_git_blame_done",
 }, {
   __index = function(_, key)

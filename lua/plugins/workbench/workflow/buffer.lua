@@ -1,3 +1,5 @@
+local au = require('libs.runtime.au')
+
 return {
   {
     'echasnovski/mini.bufremove',
@@ -18,6 +20,17 @@ return {
         end,
         desc = 'Quit current buffer',
       }
+    }
+  },
+
+  --- open buffer last place.
+  {
+    'ethanholz/nvim-lastplace',
+    event = au.user_autocmds.FileOpened_User,
+    opts = {
+      lastplace_ignore_buftype = { 'quickfix', 'nofile', 'help', 'alpha', 'NvimTree' },
+      lastplace_ignore_filetype = { 'spectre_panel', 'gitcommit', 'gitrebase', 'svn', 'hgcommit' },
+      lastplace_open_folds = true,
     }
   }
 }

@@ -20,6 +20,7 @@ return {
     {
       'tknightz/telescope-termfinder.nvim',
     },
+    { 's1n7ax/nvim-window-picker' },
   },
   config = function()
     local au = require('libs.runtime.au')
@@ -30,7 +31,7 @@ return {
 
     local win_pick = require('window-picker')
     local action_set = require('telescope.actions.set')
-    local icons = require('user.config.icons')
+    local icons = require('libs.icons')
 
     local git_icons = {
       added = icons.gitAdd,
@@ -153,9 +154,9 @@ return {
     require('telescope').load_extension('fzf')
     require('telescope').load_extension('live_grep_args')
     require('telescope').load_extension('git_worktree')
-    require('telescope').load_extension('cheatsheet')
     require('telescope').load_extension('termfinder')
     if has_plugin('project.nvim') then require('telescope').load_extension('projects') end
+    au.do_useraucmd(au.user_autocmds.TelescopeConfigDone_User)
 
     -- colorscheme
     au.register_event(au.events.AfterColorschemeChanged, {

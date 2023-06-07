@@ -4,5 +4,7 @@ return {
   { import = "plugins.git" },
   { import = "plugins.terminal" },
   { import = "plugin-extras.coding.word-switch" },
+  { import = "plugin-extras.workflow.cheatsheets" },
+  { import = "plugin-extras.workflow.zenmode" },
   -- { import = "plugins.debugger" },
 }
