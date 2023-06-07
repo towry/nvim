@@ -5,7 +5,8 @@ return {
   'nvim-telescope/telescope.nvim',
   cmd = { 'Telescope' },
   keys = {
-    { '<Tab>', cmdstr([[require('libs.telescope.pickers').buffers()]]), desc = "List Buffers" },
+    { '<Tab>',      cmdstr([[require('libs.telescope.pickers').buffers()]]), desc = "List Buffers" },
+    { '<leader>gB', cmdstr([[Telescope git_branches]]),                      desc = 'Git branchs' },
   },
   dependencies = {
     { 'nvim-lua/popup.nvim' },

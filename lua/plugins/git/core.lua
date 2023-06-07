@@ -1,4 +1,5 @@
 local au = require('libs.runtime.au')
+local cmdstr = require('libs.runtime.keymap').cmdstr
 
 return {
   {
@@ -12,6 +13,11 @@ return {
   },
   {
     'tpope/vim-fugitive',
+    keys = {
+      { '<leader>gg', ":Git<cr>",               desc = "Fugitive Git" },
+      { '<leader>ga', cmdstr([[!git add %:p]]), desc = "Git add current" },
+      { '<leader>gA', cmdstr([[!git add .]]),   desc = "Git add all" },
+    },
     cmd = {
       'G',
       'Git',
@@ -37,7 +43,7 @@ return {
   {
     -- git runtimes. ft etc.
     'tpope/vim-git',
-    event = au.user_autocmds.FileOpened,
+    event = au.user_autocmds.FileOpened_User,
     cond = function() return true end,
   },
   {

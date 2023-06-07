@@ -5,6 +5,16 @@ return {
       '<leader>//',
       '<cmd>Telescope termfinder find<cr>',
       desc = 'Find terminals with telescope',
+    },
+    {
+      '<leader>gv',
+      '<cmd>require("libs.terminal.term-git").toggle_tig()<cr>',
+      desc = 'Git commits',
+    },
+    {
+      '<leader>gV',
+      '<cmd>require("libs.terminal.term-git").toggle_tig_file_history()<cr>',
+      desc = "Git file history",
     }
   },
   cmd = { 'ToggleTerm', 'TermExec' },
@@ -24,7 +34,7 @@ return {
       end,
       -- f24 = shift + f12
       open_mapping = nil,
-      hide_numbers = true,       -- hide the number column in toggleterm buffers
+      hide_numbers = true, -- hide the number column in toggleterm buffers
       highlights = {
         -- highlights which map to a highlight group name and a table of it's values
         -- NOTE: this is only a subset of values, any group placed here will be set for the terminal window split
@@ -42,29 +52,29 @@ return {
       },
       shade_filetypes = { 'none' },
       shade_terminals = true,
-      shading_factor = 1,           -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
+      shading_factor = 1,     -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
       start_in_insert = true,
-      insert_mappings = true,       -- whether or not the open mapping applies in insert mode
+      insert_mappings = true, -- whether or not the open mapping applies in insert mode
       persist_size = false,
       persist_mode = false,
       auto_scroll = false,
-      direction = 'horizontal',       -- | 'horizontal' | 'window' | 'float',
-      close_on_exit = true,           -- close the terminal window when the process exits
-      shell = vim.o.shell,            -- change the default shell
+      direction = 'horizontal', -- | 'horizontal' | 'window' | 'float',
+      close_on_exit = true,     -- close the terminal window when the process exits
+      shell = vim.o.shell,      -- change the default shell
       -- This field is only relevant if direction is set to 'float'
       float_opts = {
         -- The border key is *almost* the same as 'nvim_win_open'
         -- see :h nvim_win_open for details on borders however
         -- the 'curved' border is a custom border type
         -- not natively supported but implemented in this plugin.
-        border = 'double',         -- single/double/shadow/curved
+        border = 'double', -- single/double/shadow/curved
         winblend = 15,
       },
       winbar = {
         enabled = false,
       },
       on_open = function(_term)
-        au.do_usercmd(au.user_autocmds.TermIsOpen)
+        au.do_useraucmd(au.user_autocmds.TermIsOpen_User)
         vim.cmd('startinsert!')
       end,
     })

@@ -3,7 +3,7 @@ local au = require('libs.runtime.au')
 return {
   'j-hui/fidget.nvim',
   event = {
-    au.user_autocmds.LspConfigDone,
+    au.user_autocmds.LspConfigDone_User,
   },
   enabled = vim.cfg.plugin__fidget_enable,
   config = function()

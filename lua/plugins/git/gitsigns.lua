@@ -7,7 +7,7 @@ local M = {
       'gh', '<cmd>lua require("plugins.workbench.workflow.hydra.git").open_git_signs_hydra()<cr>'
     }
   },
-  event = au.user_autocmds.FileOpened
+  event = au.user_autocmds.FileOpened_User
 }
 
 local gitsigns_current_blame_delay = 0

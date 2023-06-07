@@ -3,7 +3,7 @@ local au = require('libs.runtime.au')
 
 local M = {
   'nvim-treesitter/nvim-treesitter',
-  event = au.user_autocmds.FileOpened,
+  event = au.user_autocmds.FileOpened_User,
 }
 
 local disabled = function(lang, bufnr)

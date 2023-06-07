@@ -130,9 +130,15 @@ local function setup_basic()
   })
 end
 
+local function setup_git()
+  set('n', '<leader>gb', cmd([[require("libs.git.blame").open_blame()]]), {
+    desc = 'Git open blame',
+  })
+end
 
 function M.setup()
   setup_basic()
+  setup_git()
 end
 
 return M

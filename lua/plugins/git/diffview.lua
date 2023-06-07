@@ -1,5 +1,9 @@
 return {
   'sindrets/diffview.nvim',
+  keys = {
+    { '<leader>gD', '<cmd>require("libs.git.utils").toggle_file_history()<cr>',    desc = 'Git file history' },
+    { '<leader>gd', '<cmd>require("libs.git.utils").toggle_working_changes()<cr>', desc = 'Git changes' },
+  },
   cmd = {
     'DiffviewLog',
     'DiffviewOpen',

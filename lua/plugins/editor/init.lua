@@ -3,6 +3,9 @@ return {
     import = "plugins.editor.essential",
   },
   {
+    import = "plugins.editor.autocmp",
+  },
+  {
     import = "plugins.editor.lang"
   },
   {
@@ -14,9 +17,9 @@ return {
   -- {
   --   import = "plugins.editor.indent",
   -- },
-  -- {
-  --   import = "plugins.editor.folding",
-  -- },
+  {
+    import = "plugins.editor.folding",
+  },
   -- {
   --   import = "plugins.editor.readbility",
   -- }
