@@ -79,7 +79,7 @@ return {
         ']td', "<cmd>lua require('todo-comments').jump_next()<CR>", desc = 'Jump to next todo',
       },
       {
-        ']td', "<cmd>lua require('todo-comments').jump_prev()<CR>", desc = 'Jump to next todo',
+        '[td', "<cmd>lua require('todo-comments').jump_prev()<CR>", desc = 'Jump to next todo',
       }
     },
     event = au.user_autocmds.FileOpened_User,
