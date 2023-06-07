@@ -7,6 +7,30 @@ return {
     },
     {
       '<leader>wd', '<cmd>TroubleToggle workspace_diagnostics<cr>', desc = 'Toggle workspace diagnostics'
+    },
+    {
+      '<leader>tq',
+      function()
+        if require('trouble').is_open() then
+          require('trouble').close()
+          return
+        end
+        local buffers = vim.api.nvim_list_bufs()
+        local bufFound = false
+        for _, buffer in ipairs(buffers) do
+          local bufferType = vim.api.nvim_buf_get_option(buffer, 'buftype')
+          if bufferType == 'quickfix' then
+            bufFound = true
+            break
+          end
+        end
+        if not bufFound then
+          vim.api.nvim_command('botright copen 10')
+        else
+          vim.api.nvim_command('cclose')
+        end
+      end,
+      desc = 'Quick list'
     }
   },
   config = function()

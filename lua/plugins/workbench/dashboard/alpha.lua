@@ -23,16 +23,20 @@ return {
       insert(logo, line)
     end
 
+    local icons = require('libs.icons')
+
     dashboard.section.header.val = logo
     dashboard.section.buttons.val = {
-      dashboard.button("f", " " .. " Find file", ":Telescope find_files <CR>"),
-      dashboard.button("n", " " .. " New file", ":ene <BAR> startinsert <CR>"),
-      dashboard.button("r", " " .. " Recent files", ":Telescope oldfiles <CR>"),
-      dashboard.button("g", " " .. " Find text", ":Telescope live_grep <CR>"),
-      dashboard.button("c", " " .. " Config", ":e $MYVIMRC <CR>"),
-      dashboard.button("s", " " .. " Restore Session", [[:lua require("persistence").load() <cr>]]),
-      dashboard.button("l", "󰒲 " .. " Lazy", ":Lazy<CR>"),
-      dashboard.button("q", " " .. " Quit", ":qa<CR>"),
+      dashboard.button("/", icons.timer .. " Load session", '<cmd>SessionManager load_current_dir_session<CR>'),
+      dashboard.button('r',
+        icons.fileRecent .. ' ' .. 'Recents',
+        '<cmd>Telescope oldfiles cwd_only=true hidden=true<CR>'),
+      dashboard.button('f', icons.fileNoBg .. ' ' .. 'Find File',
+        '<cmd>lua require("libs.telescope.pickers").project_files()<CR>'),
+      dashboard.button('s', icons.t .. ' ' .. 'Search Content',
+        '<cmd>lua require("libs.telescope.multi-rg-picker")()<CR>'),
+      dashboard.button("p", " 󰒲 " .. " Lazy", ":Lazy<CR>"),
+      dashboard.button("q", icons.exit .. " Quit", ":qa<CR>"),
     }
     for _, button in ipairs(dashboard.section.buttons.val) do
       button.opts.hl = "AlphaButtons"

@@ -3,6 +3,24 @@ local au = require('libs.runtime.au')
 
 local M = {
   'nvim-treesitter/nvim-treesitter',
+  build = function()
+    if #vim.api.nvim_list_uis() == 0 then
+      -- update sync if running headless
+      vim.cmd.TSUpdateSync()
+    else
+      -- otherwise update async
+      vim.cmd.TSUpdate()
+    end
+  end,
+  dependencies = {
+    'yioneko/nvim-yati',
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    'RRethy/nvim-treesitter-textsubjects',
+    'nvim-treesitter/nvim-treesitter-refactor',
+    'JoosepAlviste/nvim-ts-context-commentstring',
+    'mrjones2014/nvim-ts-rainbow',
+    -- 'kiyoon/treesitter-indent-object.nvim',
+  },
   event = au.user_autocmds.FileOpened_User,
 }
 

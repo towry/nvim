@@ -7,7 +7,7 @@ local M = {
       'gh', '<cmd>lua require("plugins.workbench.workflow.hydra.git").open_git_signs_hydra()<cr>'
     }
   },
-  event = au.user_autocmds.FileOpened_User
+  event = au.user_autocmds.FileOpened_User,
 }
 
 local gitsigns_current_blame_delay = 0
@@ -15,6 +15,14 @@ local gitsigns_current_blame_delay = 0
 M.config = function()
   local signs = require('gitsigns')
   local autocmd = require('libs.runtime.au')
+
+  -- register legendary
+  autocmd.define_user_autocmd({
+    pattern = au.user_autocmds.LegendaryConfigDone,
+    callback = function()
+      require('legendary').commands(require('libs.legendary.commands.git'))
+    end,
+  })
 
   -- ╭──────────────────────────────────────────────────────────╮
   -- │ Setup                                                    │

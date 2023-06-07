@@ -10,15 +10,21 @@ capabilities.textDocument.foldingRange = {
 
 -- Settings
 
+local attach_colorizer_to_buffer = function(bufnr, opts)
+  local utils = require('libs.runtime.utils')
+  if utils.has_plugin('nvim-colorizer.lua') then
+    require('colorizer').attach_to_buffer(bufnr, opts)
+  end
+end
+
 local on_attach = function(client, bufnr)
-  local langsupport_config = require('ty.core.config').langsupport
   if client.server_capabilities.colorProvider then
-    require('ty.contrib.editing.lsp.utils.documentcolors').buf_attach(bufnr)
-    require('ty.contrib.langsupport.func').attach_colorizer_to_buffer(bufnr, {
+    require('libs.lspconfig.documentcolors').buf_attach(bufnr)
+    attach_colorizer_to_buffer(bufnr, {
       mode = 'background',
       css = true,
       names = false,
-      tailwind = langsupport_config:get('colorizer.enable_tailwind_color'),
+      tailwind = vim.cfg.editorExtend__colorizer_enable_tailwind_color,
     })
   end
 end

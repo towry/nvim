@@ -45,7 +45,7 @@ M.project_files = function(opts)
       local icon, iconhl = utils.get_devicons(tail_raw)
 
       return displayer({
-        { icon, iconhl },
+        { icon,            iconhl },
         tail,
         { path_to_display, 'TelescopeResultsComment' },
       })
@@ -210,7 +210,7 @@ function M.buffers()
   local builtin = require('telescope.builtin')
   local actions = require('telescope.actions')
   local actionstate = require('telescope.actions.state')
-  local Buffer = require('ty.core.buffer')
+  local Buffer = require('libs.runtime.buffer')
 
   builtin.buffers({
     ignore_current_buffer = true,
@@ -294,9 +294,9 @@ function M.gen_from_buffer(opts)
     })
 
     return displayer({
-      { entry.bufnr, 'TelescopeResultsNumber' },
+      { entry.bufnr,     'TelescopeResultsNumber' },
       { entry.indicator, 'TelescopeResultsComment' },
-      { icon, hl_group },
+      { icon,            hl_group },
       bufname_tail,
       { path_to_display .. ':' .. entry.lnum, 'TelescopeResultsComment' },
     })

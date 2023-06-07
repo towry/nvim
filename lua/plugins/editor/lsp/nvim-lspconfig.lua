@@ -78,7 +78,70 @@ local function setup_keybinding(client, buffer)
       desc = _('Rename file'),
     }))
   end
-  -- if cap.renameProvider then n('<leader>cr', _('Rename'), cmd([[lua Ty.Func.editing.rename_name()]], opts)) end
+
+  if cap.renameProvider then
+    set('n', '<leader>cr', func_call("rename_name()"), opts({
+      desc = _('Rename'),
+    }))
+  end
+
+  set('n', '<leader>cf', func_call("format_code(0, { async = true })"), opts({
+    desc = _('Format code'),
+  }))
+  set('n', '<leader>ct', func_call("peek_type_definition()"), opts({
+    desc = _('Peek type definition'),
+  }))
+  set('n', '<leader>cp', func_call("peek_definition()"), opts({
+    desc = _('Peek definition'),
+  }))
+  set('n', '<leader>cm', func_call("show_signature_help()"), opts({
+    desc = _('Show signature help'),
+  }))
+
+  -- gotos
+  set('n', 'gd', func_call("goto_definition()"), opts({
+    desc = _('Go to definition'),
+  }))
+  set('n', 'gt', func_call("goto_type_definition()"), opts({
+    desc = _('Go to type definition'),
+  }))
+  set('n', 'gdf', func_call("goto_definition_in_file()"), opts({
+    desc = _('Go find definition in file'),
+  }))
+  set('n', 'gdfx', func_call("goto_definition_in_file('split')"), opts({
+    desc = _('Go find definition in file in split'),
+  }))
+  set('n', 'gdfv', func_call("goto_definition_in_file('vsplit')"), opts({
+    desc = _('Go find definition in file in vsplit'),
+  }))
+
+  -- workspace.
+  set('n', '<leader>wa', cmdstr('lua vim.lsp.buf.add_workspace_folder()'), opts({
+    desc = _('Add workspace folder'),
+  }))
+  set('n', '<leader>wr', cmdstr('lua vim.lsp.buf.remove_workspace_folder()'), opts({
+    desc = _('Remove workspace folder'),
+  }))
+  set('n', '<leader>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, opts({
+    desc = _('List workspace folders'),
+  }))
+  set('n', '<leader>wd', cmdstr('TroubleToggle workspace_diagnostics'), opts({
+    desc = _('Toggle workspace diagnostics'),
+  }))
+
+  -- inline actions.
+  set('n', 'KK', func_call("hover_action()"), opts({
+    desc = _('Show hover or reveal UFO folding'),
+    nowait = true,
+  }))
+  set('n', 'KL', func_call("show_diagnostics('line')"), opts({
+    desc = _('Show diagnostics on current line'),
+  }))
+  set('n', 'KC', func_call("show_diagnostics('cursor')"), opts({
+    desc = _('Show diagnostics at cursor'),
+  }))
 end
 
 local function default_lspconfig_ui_options()
@@ -104,6 +167,10 @@ return {
     'williamboman/mason-lspconfig.nvim',
     'j-hui/fidget.nvim',
     'williamboman/mason.nvim',
+    {
+      'hrsh7th/nvim-gtd',
+      config = true,
+    },
   },
   config = function()
     local lspconfig = require('lspconfig')

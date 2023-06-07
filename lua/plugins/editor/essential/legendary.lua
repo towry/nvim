@@ -18,9 +18,8 @@ return {
     local lg = require("legendary");
     local au = require("libs.runtime.au")
     lg.setup({
-      -- keymaps = require("ty.contrib.keymaps.legendary.keymap").default_keymaps(),
-      -- funcs = require("ty.contrib.keymaps.legendary.functions").default_functions(),
-      -- commands = require("ty.contrib.keymaps.legendary.commands").default_commands(),
+      funcs = require('libs.legendary.funcs.migrate'),
+      commands = require("libs.legendary.commands.migrate"),
       -- autocmds =
       default_item_formatter = my_formatter,
       include_builtin = false,

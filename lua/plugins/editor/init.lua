@@ -20,7 +20,7 @@ return {
   {
     import = "plugins.editor.folding",
   },
-  -- {
-  --   import = "plugins.editor.readbility",
-  -- }
+  {
+    import = "plugins.editor.cmdline",
+  },
 }

@@ -3,7 +3,14 @@ return {
     -- https://github.com/dermoumi/dotfiles/blob/418de1a521e4f4ac6dc0aa10e75ffb890b0cb908/nvim/lua/plugins/copilot.lua#L4
     'github/copilot.vim',
     event = { 'InsertEnter' },
-    keys = { { '<C-/>', mode = 'i' } },
+    keys = {
+      { '<C-/>', mode = 'i' },
+      {
+        '<leader>zp',
+        '<cmd>Copilot panel<cr>',
+        desc = 'Open Copilot panel'
+      }
+    },
     cmd = { 'Copilot' },
     config = function()
       -- <C-/>

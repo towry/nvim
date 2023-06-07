@@ -9,4 +9,8 @@ return {
   {
     'MunifTanjim/nui.nvim',
   },
+  {
+    'tpope/vim-repeat',
+    keys = { '.' },
+  }
 }

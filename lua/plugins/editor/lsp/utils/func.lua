@@ -7,7 +7,7 @@ local lspsaga_enable = vim.cfg.plugin__lspsaga_enable
 --- @param severity string {"ERROR"|"WARN"|"INFO"|"HINT"}
 function M.diagnostic_goto(next, severity)
   local enable_lspasaga_jump = lspsaga_enable
-  local has_lspsaga = enable_lspasaga_jump and require('ty.core.utils').has_plugin('lspsaga.nvim')
+  local has_lspsaga = enable_lspasaga_jump and require('libs.runtime.utils').has_plugin('lspsaga.nvim')
 
   local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
   local sev = severity and vim.diagnostic.severity[severity] or nil

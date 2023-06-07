@@ -3,6 +3,8 @@ local au = require('libs.runtime.au')
 local M = {}
 
 function M.load_on_startup()
+  local current_timeoutlen = vim.opt.timeoutlen:get() or 400
+
   local definitions = {
     -- taken from AstroNvim
     -- Emit `User FileOpened` event, used by the plugins.
@@ -74,6 +76,33 @@ function M.load_on_startup()
         end
       }
     },
+    {
+      { 'BufRead', 'BufNewFile' },
+      {
+        group = '_no_lsp_diagnostic_inside_folders',
+        pattern = '*/node_modules/*',
+        command = 'lua vim.diagnostic.disable(0)',
+      }
+    },
+    ------------------------------------
+    {
+      { 'InsertEnter' },
+      {
+        group = 'no_insert_delay',
+        callback = function()
+          vim.opt.timeoutlen = 0
+        end
+      }
+    },
+    {
+      { 'InsertLeave' },
+      {
+        group = 'no_insert_delay',
+        callback = function()
+          vim.opt.timeoutlen = current_timeoutlen
+        end
+      }
+    }
   }
 
   au.define_autocmds(definitions)
