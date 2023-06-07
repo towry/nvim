@@ -2,6 +2,10 @@ local au = require('libs.runtime.au')
 
 return {
   {
+    'kwkarlwang/bufresize.nvim',
+    config = true,
+  },
+  {
     'echasnovski/mini.bufremove',
     keys = {
       {
@@ -32,5 +36,43 @@ return {
       lastplace_ignore_filetype = { 'spectre_panel', 'gitcommit', 'gitrebase', 'svn', 'hgcommit' },
       lastplace_open_folds = true,
     }
+  },
+
+  --- auto close buffer after a time.
+  {
+    'chrisgrieser/nvim-early-retirement',
+    config = function()
+      require('early-retirement').setup({
+        retirementAgeMins = 15,
+        ignoreAltFile = true,
+        minimumBufferNum = 10,
+        ignoreUnsavedChangesBufs = true,
+        ignoreSpecialBuftypes = true,
+        ignoreVisibleBufs = true,
+        ignoreUnloadedBufs = false,
+        notificationOnAutoClose = true,
+      })
+    end,
+    init = function()
+      local loaded = false
+      au.define_autocmds({
+        {
+          au.user_autocmds.FileOpened_User,
+          {
+            group = "_plugin_load_early_retirement",
+            once = true,
+            callback = function()
+              if loaded then
+                return
+              end
+              loaded = true
+              vim.defer_fn(function()
+                vim.cmd("Lazy load nvim-early-retirement")
+              end, 2000)
+            end,
+          }
+        }
+      })
+    end,
   }
 }

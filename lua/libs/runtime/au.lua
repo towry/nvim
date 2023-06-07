@@ -13,7 +13,10 @@ M.events = {
   onLspAttach = "onLspAttach",
 }
 M.user_autocmds = setmetatable({
+  -- File is opened.
   FileOpened = "FileOpened",
+  -- Wait few moments after file is opened.
+  FileOpenedAfter = "FileOpenedAfter",
   LspConfigDone = "LspConfigDone",
   TermIsOpen = "TermIsOpen",
   TelescopeConfigDone = "TelescopeConfigDone",

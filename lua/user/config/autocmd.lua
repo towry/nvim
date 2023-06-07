@@ -16,6 +16,10 @@ function M.load_on_startup()
           if not (vim.fn.expand "%" == "" or buftype == "nofile") then
             vim.api.nvim_del_augroup_by_name("_file_opened")
             au.do_useraucmd(au.user_autocmds.FileOpened_User)
+
+            vim.defer_fn(function()
+              au.do_useraucmd(au.user_autocmds.FileOpenedAfter_User)
+            end, 30)
           end
         end,
       },

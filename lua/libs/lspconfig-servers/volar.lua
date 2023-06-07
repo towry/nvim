@@ -6,7 +6,7 @@ return function(opts)
       { 'vue', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' } or { 'vue' }
   require('lspconfig').volar.setup(vim.tbl_extend('force', opts, {
     filetypes = fts,
-    commands = require('user.plugins.lsp.commands'),
+    commands = require('libs.lsp-commands'),
     init_options = {
       typescript = {
         tsdk = node_util.get_typescript_server_path(node_root),
