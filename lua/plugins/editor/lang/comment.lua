@@ -71,6 +71,9 @@ return {
   },
   {
     'folke/todo-comments.nvim',
+    cmd = {
+      'TodoTrouble',
+    },
     keys = {
       {
         ']td', "<cmd>lua require('todo-comments').jump_next()<CR>", desc = 'Jump to next todo',
@@ -106,5 +109,5 @@ return {
         },
       })
     end,
-  }
+  },
 }

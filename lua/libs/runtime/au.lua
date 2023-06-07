@@ -80,6 +80,19 @@ function M.define_autocmds(definitions)
   end
 end
 
+--- Define User autocmd
+---@param opts {pattern?:string,once?:boolean,callback?:function,group?:string}
+function M.define_user_autocmd(opts)
+  if not opts then return end
+  if type(opts.group) == "string" and opts.group ~= "" then
+    local exists, _ = pcall(vim.api.nvim_get_autocmds, { group = opts.group })
+    if not exists then
+      vim.api.nvim_create_augroup(opts.group, {})
+    end
+  end
+  vim.api.nvim_create_autocmd("User", opts)
+end
+
 ---@param callback function(client:any, bufnr:number)
 function M.on_lsp_attach(callback)
   M.define_autocmds({
