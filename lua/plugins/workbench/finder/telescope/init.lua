@@ -176,6 +176,7 @@ return {
     -- colorscheme
     au.register_event(au.events.AfterColorschemeChanged, {
       name = "telescope_ui",
+      immediate = true,
       callback = function()
         vim.cmd('hi! link TelescopeBorder FloatBorder')
         vim.cmd('hi! link TelescopePromptNormal FloatBorder')

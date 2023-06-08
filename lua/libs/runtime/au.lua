@@ -135,6 +135,8 @@ function M.register_event(event_name, opts)
   -- fire immediately
   if opts.immediate ~= nil and opts.immediate == false and events_registry[event_name].count > 0 then
     opts.callback(events_registry[event_name].args)
+  elseif opts.immediate == true then
+    opts.callback(events_registry[event_name].args)
   end
 end
 

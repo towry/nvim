@@ -296,6 +296,20 @@ return {
         ignore = {},
         only_semantic_versions = true,
       })
+
+      -- hls
+      local au = require('libs.runtime.au')
+      au.register_event(au.events.AfterColorschemeChanged, {
+        name = 'update_cmp_hl',
+        immediate = true,
+        callback = function()
+          vim.api.nvim_set_hl(0, 'CmpMenuSel', {
+            bg = '#a7c080',
+            fg = '#ffffff',
+            bold = true,
+          })
+        end,
+      })
     end,
   }
 }

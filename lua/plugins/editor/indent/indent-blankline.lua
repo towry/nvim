@@ -27,9 +27,10 @@ return {
 
     au.register_event(au.events.AfterColorschemeChanged, {
       name = "update_indentline_hl",
+      immediate = true,
       callback = function()
-        local utils = require('libs.runtime.utils')
-        vim.api.nvim_set_hl(0, 'IndentBlanklineChar', utils.fg("FloatBorder"))
+        -- local utils = require('libs.runtime.utils')
+        -- vim.api.nvim_set_hl(0, 'IndentBlanklineChar', utils.fg("FloatBorder"))
       end,
     })
   end,

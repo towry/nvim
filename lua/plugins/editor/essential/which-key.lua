@@ -1,8 +1,10 @@
 return {
   'folke/which-key.nvim',
   keys = { "<leader>" },
+  cmd = { 'WhichKey' },
   config = function()
-    require('which-key').setup({
+    local wk = require('which-key')
+    wk.setup({
       plugins = {
         marks = true,     -- shows a list of your marks on ' and `
         registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
@@ -75,6 +77,55 @@ return {
         i = { 'j', 'k' },
         v = { 'j', 'k' },
       },
+    })
+
+    wk.register({
+      c = {
+        name = 'Code',
+      },
+      e = {
+        name = 'Explorer',
+      },
+      w = {
+        name = 'Git workspace',
+      },
+      ['/'] = {
+        name = 'Outline & Terms',
+      },
+      s = {
+        name = 'Search & Replace',
+      },
+      t = {
+        name = 'Tools',
+      },
+      z = {
+        name = 'Extended..',
+      },
+      g = {
+        name = 'Git',
+      },
+      b = {
+        name = "Buffers"
+      },
+    }, {
+      prefix = '<leader>'
+    })
+
+    wk.register({
+      g = {
+        d = {
+          name = 'Go to definition|...',
+          f = {
+            name = 'Go to definition in file|...',
+            x = {
+              'Go to definition in splited file',
+            },
+            v = {
+              'Go to definition in vertical splited file',
+            },
+          }
+        }
+      }
     })
   end,
 }

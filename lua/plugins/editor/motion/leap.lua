@@ -19,7 +19,7 @@ return {
     --- TODO: fix hl.
     local function update_hl()
       -- Greying out the search area
-      -- vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
+      vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
       -- -- lightspeed like hl
       -- vim.api.nvim_set_hl(0, 'LeapMatch', {
       --   fg = colors.leap_match_fg,
@@ -42,10 +42,9 @@ return {
       -- })
     end
 
-    update_hl()
-
     au.register_event(au.events.AfterColorschemeChanged, {
       name = 'update_leap_hl',
+      immediate = true,
       callback = function()
         update_hl()
       end,

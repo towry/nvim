@@ -21,6 +21,7 @@ return {
     local au = require('libs.runtime.au')
     au.register_event(au.events.AfterColorschemeChanged, {
       name = "update_marks_hl",
+      immediate = true,
       callback = function()
         vim.api.nvim_set_hl(0, 'MarkSignHL', {
           bg = 'red',
