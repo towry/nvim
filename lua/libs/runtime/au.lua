@@ -14,7 +14,7 @@ M.events = {
 }
 --- Some plugins depends on instant events to be working like lspconfig.
 M.builtin_autocmds = {
-  FileOpen = { "BufRead", "BufWinEnter", "BufNewFile" },
+  FileOpen = { "BufRead", "BufNewFile" },
 }
 M.user_autocmds = setmetatable({
   -- File is opened.

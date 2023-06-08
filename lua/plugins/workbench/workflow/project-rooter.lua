@@ -5,7 +5,7 @@ return {
       {
         'ahmedkhalf/project.nvim',
         name = 'project_nvim',
-        event = { 'VeryLazy' },
+        event = { 'BufRead', 'BufNewFile', 'BufWinEnter' },
         keys = {
           {
             '<leader>ep', '<Cmd>Telescope projects<CR>', desc = 'Projects',

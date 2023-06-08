@@ -15,7 +15,7 @@ end
 return {
   'neovim/nvim-lspconfig',
   name = 'lsp',
-  event = au.builtin_autocmds.FileOpen,
+  event = { 'BufRead', 'BufNewFile' },
   dependencies = {
     'jose-elias-alvarez/typescript.nvim',
     'hrsh7th/cmp-nvim-lsp',

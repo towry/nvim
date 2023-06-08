@@ -7,6 +7,7 @@ return {
     is_insert_mode = false,
     is_open_target_win = false,
   },
+  cmd = { 'Spectre' },
   keys = {
     {
       '<leader>sp',
