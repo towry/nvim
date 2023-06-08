@@ -35,7 +35,7 @@ return {
         '<cmd>lua require("libs.telescope.pickers").project_files()<CR>'),
       dashboard.button('s', icons.t .. ' ' .. 'Search Content',
         '<cmd>lua require("libs.telescope.multi-rg-picker")()<CR>'),
-      dashboard.button("p", " 󰒲 " .. " Lazy", ":Lazy<CR>"),
+      dashboard.button("l", " 󰒲 " .. " Lazy", ":Lazy<CR>"),
       dashboard.button("q", icons.exit .. " Quit", ":qa<CR>"),
     }
     for _, button in ipairs(dashboard.section.buttons.val) do
@@ -72,7 +72,6 @@ return {
       end,
     })
   end,
-
   init = function()
     -- listen enter dashboard event.
     local au = require('libs.runtime.au')
