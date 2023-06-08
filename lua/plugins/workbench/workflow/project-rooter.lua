@@ -8,7 +8,7 @@ return {
         event = { 'VeryLazy' },
         keys = {
           {
-            '<leader>fp', '<Cmd>Telescope projects<CR>', desc = 'Projects',
+            '<leader>ep', '<Cmd>Telescope projects<CR>', desc = 'Projects',
           }
         },
         config = function(_, opts)
