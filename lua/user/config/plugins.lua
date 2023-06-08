@@ -9,4 +9,5 @@ return {
   { import = "plugin-extras.coding.im-select" },
   { import = "plugins.debugger" },
   { import = "plugin-extras.ui.mini-animate" },
+  { import = "plugin-extras.workflow.messages" },
 }
