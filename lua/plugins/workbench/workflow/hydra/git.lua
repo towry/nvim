@@ -16,7 +16,7 @@ M.open_git_conflict_hydra = function()
     config = {
       color = 'blue',
       hint = {
-        border = Ty.Config.ui.float.border,
+        border = true,
       }
     },
     heads = {
@@ -45,7 +45,7 @@ M.open_git_signs_hydra = function()
       exit = true,
       color = 'blue',
       hint = {
-        border = Ty.Config.ui.float.border,
+        border = true,
       },
     },
     name = 'Gitsigns',

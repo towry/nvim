@@ -8,12 +8,12 @@ return {
     },
     {
       '<leader>gv',
-      '<cmd>require("libs.terminal.term-git").toggle_tig()<cr>',
+      '<cmd>lua require("libs.terminal.term-git").toggle_tig()<cr>',
       desc = 'Git commits',
     },
     {
       '<leader>gV',
-      '<cmd>require("libs.terminal.term-git").toggle_tig_file_history()<cr>',
+      '<cmd>lua require("libs.terminal.term-git").toggle_tig_file_history()<cr>',
       desc = "Git file history",
     }
   },
