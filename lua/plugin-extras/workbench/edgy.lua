@@ -5,7 +5,7 @@ return {
     event = "VeryLazy",
     keys = {
       -- stylua: ignore
-      { "<leader>ue", function() require("edgy").select() end, desc = "Edgy Select Window" },
+      { "<leader>ze", function() require("edgy").select() end, desc = "Edgy Select Window" },
     },
     opts = {
       bottom = {
@@ -32,37 +32,46 @@ return {
       },
       left = {
         {
-          title = "Neo-Tree",
-          ft = "neo-tree",
-          filter = function(buf)
-            return vim.b[buf].neo_tree_source == "filesystem"
-          end,
-          size = { height = 0.5 },
-        },
-        {
-          title = "Neo-Tree Git",
-          ft = "neo-tree",
-          filter = function(buf)
-            return vim.b[buf].neo_tree_source == "git_status"
-          end,
+          title = "File Explorer",
+          ft = 'NvimTree',
           pinned = true,
-          open = "Neotree position=right git_status",
-        },
-        {
-          title = "Neo-Tree Buffers",
-          ft = "neo-tree",
-          filter = function(buf)
-            return vim.b[buf].neo_tree_source == "buffers"
-          end,
-          pinned = true,
-          open = "Neotree position=top buffers",
         },
         {
           ft = "Outline",
-          pinned = true,
+          pinned = false,
           open = "SymbolsOutline",
+          size = {
+            height = 0.5,
+          }
         },
-        "neo-tree",
+      },
+      right = {
+        -- {
+        --   title = "Neo-Tree",
+        --   ft = "neo-tree",
+        --   filter = function(buf)
+        --     return vim.b[buf].neo_tree_source == "filesystem"
+        --   end,
+        --   size = { height = 0.5 },
+        -- },
+        -- {
+        --   title = "Neo-Tree Git",
+        --   ft = "neo-tree",
+        --   filter = function(buf)
+        --     return vim.b[buf].neo_tree_source == "git_status"
+        --   end,
+        --   pinned = true,
+        --   open = "Neotree position=right git_status",
+        -- },
+        -- {
+        --   title = "Neo-Tree Buffers",
+        --   ft = "neo-tree",
+        --   filter = function(buf)
+        --     return vim.b[buf].neo_tree_source == "buffers"
+        --   end,
+        --   pinned = true,
+        --   open = "Neotree position=top buffers",
+        -- },
       },
     },
   },
@@ -72,6 +81,13 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     optional = true,
     opts = function(_, opts)
+      opts.animate = opts.animate or {}
+      opts.animate.on_begin = function()
+        vim.g.minianimate_disable = true
+      end
+      opts.animate.on_end = function()
+        vim.g.minianimate_disable = false
+      end
       opts.open_files_do_not_replace_types = opts.open_files_do_not_replace_types
           or { "terminal", "Trouble", "qf", "Outline" }
       table.insert(opts.open_files_do_not_replace_types, "edgy")

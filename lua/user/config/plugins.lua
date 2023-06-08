@@ -10,4 +10,5 @@ return {
   { import = "plugins.debugger" },
   { import = "plugin-extras.ui.mini-animate" },
   { import = "plugin-extras.workflow.messages" },
+  { import = "plugin-extras.workbench.edgy" },
 }
