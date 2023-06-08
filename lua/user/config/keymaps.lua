@@ -127,7 +127,6 @@ local function setup_basic()
   --- buffers
   set('n', '<S-q>', function()
     vim.api.nvim_buf_delete(0, { force = false })
-    -- require('mini.bufremove').delete(0)
     if #require('libs.runtime.buffer').list_bufnrs() <= 0 then
       local cur_empty = require('libs.runtime.buffer').get_current_empty_buffer()
       if cur_empty then
