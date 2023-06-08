@@ -3,9 +3,16 @@ return {
   {
     "folke/edgy.nvim",
     event = "VeryLazy",
+    cond = function()
+      -- something wrong with the animation.
+      return false
+    end,
     keys = {
       -- stylua: ignore
       { "<leader>ze", function() require("edgy").select() end, desc = "Edgy Select Window" },
+    },
+    animate = {
+      enabled = false,
     },
     opts = {
       bottom = {
@@ -81,13 +88,6 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     optional = true,
     opts = function(_, opts)
-      opts.animate = opts.animate or {}
-      opts.animate.on_begin = function()
-        vim.g.minianimate_disable = true
-      end
-      opts.animate.on_end = function()
-        vim.g.minianimate_disable = false
-      end
       opts.open_files_do_not_replace_types = opts.open_files_do_not_replace_types
           or { "terminal", "Trouble", "qf", "Outline" }
       table.insert(opts.open_files_do_not_replace_types, "edgy")
