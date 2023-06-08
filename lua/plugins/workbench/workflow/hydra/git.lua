@@ -61,9 +61,19 @@ M.open_git_signs_hydra = function()
       { 'b', '<cmd>Gitsigns blame_line<cr>',                { desc = 'Blame line' } },
       { 'B', '<cmd>Gitsigns toggle_current_line_blame<cr>', { desc = 'Toggle current line blame' } },
       { 'x', '<cmd>Gitsigns select_hunk<cr>',               { desc = 'Select hunk' } },
-      { ']', '<cmd>lua Ty.Func.git.next_hunk()<CR>',        { desc = 'Next hunk' } },
-      { '[', '<cmd>lua Ty.Func.git.prev_hunk()<CR>',        { desc = 'Prev hunk' } },
-      { 'q', nil,                                           { exit = true, nowait = true, desc = 'Exit' } },
+      { ']', function()
+        local gs = require('gitsigns')
+        if vim.wo.diff then return end
+        vim.schedule(function() gs.next_hunk() end)
+      end, { desc = 'Next hunk' } },
+      { '[', function()
+        local gs = require('gitsigns')
+        if vim.wo.diff then return end
+        vim.schedule(function()
+          gs.prev_hunk()
+        end)
+      end, { desc = 'Prev hunk' } },
+      { 'q', nil, { exit = true, nowait = true, desc = 'Exit' } },
     },
   }):activate()
 end
