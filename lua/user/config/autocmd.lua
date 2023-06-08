@@ -126,10 +126,11 @@ end
 local function resize_kitty()
   local kitty_aug = vim.api.nvim_create_augroup('kitty_aug', { clear = true })
   local resized = false
-  vim.api.nvim_create_autocmd('User', {
+  vim.api.nvim_create_autocmd({ 'UIEnter' }, {
     group = kitty_aug,
-    pattern = 'DashboardDismiss',
+    pattern = '*',
     callback = function()
+      if resized then return end
       vim.schedule(function()
         resized = true
         vim.cmd(':silent !kitty @ --to=$KITTY_LISTEN_ON set-spacing padding=0 margin=0')
