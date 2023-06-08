@@ -188,6 +188,9 @@ return {
             's',
           }),
         }),
+        completion = {
+          completeopt = 'menu,menuone,noinsert',
+        },
         formatting = {
           format = function(entry, vim_item)
             vim_item.kind = lspkind.symbolic(vim_item.kind, { with_text = true })
@@ -250,7 +253,9 @@ return {
           }),
         },
         experimental = {
-          ghost_text = false,
+          ghost_text = {
+            hl_group = "LspCodeLens",
+          },
         },
       })
 

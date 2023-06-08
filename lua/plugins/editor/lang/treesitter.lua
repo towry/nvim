@@ -12,13 +12,39 @@ local M = {
       vim.cmd.TSUpdate()
     end
   end,
+  keys = {
+    { "<c-space>",  desc = "Increment selection" },
+    { "<bs>",       desc = "Decrement selection",                  mode = "x" },
+    { '<leader>cr', desc = 'Smart rename/nvim-treesitter-refactor' },
+  },
   dependencies = {
     'yioneko/nvim-yati',
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    'RRethy/nvim-treesitter-textsubjects',
+    {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+      init = function()
+        -- PERF: no need to load the plugin, if we only need its queries for mini.ai
+        local plugin = require("lazy.core.config").spec.plugins["nvim-treesitter"]
+        local opts = require("lazy.core.plugin").values(plugin, "opts", false)
+        local enabled = false
+        if opts.textobjects then
+          for _, mod in ipairs({ "move", "select", "swap", "lsp_interop" }) do
+            if opts.textobjects[mod] and opts.textobjects[mod].enable then
+              enabled = true
+              break
+            end
+          end
+        end
+        if not enabled then
+          require("lazy.core.loader").disable_rtp_plugin("nvim-treesitter-textobjects")
+        end
+      end,
+    },
     'nvim-treesitter/nvim-treesitter-refactor',
+    -- setting the commentstring option based on the cursor location in the file. The location is checked via treesitter queries.
+    -- Vue files can have many different sections, each of which can have a different style for comments.
     'JoosepAlviste/nvim-ts-context-commentstring',
     'mrjones2014/nvim-ts-rainbow',
+    -- vai to select current context!
     -- 'kiyoon/treesitter-indent-object.nvim',
   },
   event = au.user_autocmds.FileOpened_User,
@@ -54,10 +80,10 @@ function M.config()
       enable = vim.cfg.lang__treesitter_plugin_incremental_selection,
       disable = disabled,
       keymaps = {
-        init_selection = '<leader>gnn',
-        node_incremental = '<leader>gnr',
-        scope_incremental = '<leader>gne',
-        node_decremental = '<leader>gnt',
+        init_selection = "<C-space>",
+        node_incremental = "<C-space>",
+        scope_incremental = false,
+        node_decremental = "<bs>",
       },
     },
     indent = {
@@ -86,9 +112,15 @@ function M.config()
       max_file_lines = 8000,
     },
     refactor = {
+      highlight_definitions = {
+        enable = true,
+        -- Set to false if you have an `updatetime` of ~100.
+        clear_on_cursor_move = true,
+      },
+      highlight_current_scope = { enable = true },
       smart_rename = {
         enable = false,
-        client = {
+        keymaps = {
           smart_rename = '<leader>cr',
         },
       },

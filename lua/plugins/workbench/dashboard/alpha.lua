@@ -30,7 +30,7 @@ return {
       dashboard.button("/", icons.timer .. " Load session", '<cmd>SessionManager load_current_dir_session<CR>'),
       dashboard.button('r',
         icons.fileRecent .. ' ' .. 'Recents',
-        '<cmd>Telescope oldfiles cwd_only=true hidden=true<CR>'),
+        '<cmd>lua require("libs.telescope.pickers").project_files({cwd_only=true,oldfiles=true})<cr>'),
       dashboard.button('f', icons.fileNoBg .. ' ' .. 'Find File',
         '<cmd>lua require("libs.telescope.pickers").project_files()<CR>'),
       dashboard.button('s', icons.t .. ' ' .. 'Search Content',

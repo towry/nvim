@@ -70,20 +70,6 @@ return {
   -- prevent neo-tree from opening files in edgy windows
   {
     "nvim-neo-tree/neo-tree.nvim",
-    keys = {
-      -- toggle tree.
-      {
-        '<leader>et',
-      },
-      -- locate file.
-      {
-        '<leader>e.',
-      },
-      {
-        -- <cmd-b> locate file
-        '<Char-0xAC>',
-      }
-    },
     optional = true,
     opts = function(_, opts)
       opts.open_files_do_not_replace_types = opts.open_files_do_not_replace_types

@@ -18,6 +18,7 @@ M.project_files_toggle_between_git_and_fd = function()
 end
 
 M.project_files = function(opts)
+  local runtimeUtils = require('libs.runtime.utils')
   local make_entry = require('telescope.make_entry')
   local strings = require('plenary.strings')
   local utils = require('telescope.utils')
@@ -54,7 +55,7 @@ M.project_files = function(opts)
   end
 
   if not opts.cwd then
-    opts.cwd = vim.loop.cwd()
+    opts.cwd = runtimeUtils.get_root()
   end
 
   if opts and opts.oldfiles then
@@ -253,6 +254,7 @@ function M.buffers()
 end
 
 function M.gen_from_buffer(opts)
+  local runtimeUtils = require('libs.runtime.utils')
   local utils = require('telescope.utils')
   local strings = require('plenary.strings')
   local entry_display = require('telescope.pickers.entry_display')
@@ -269,7 +271,7 @@ function M.gen_from_buffer(opts)
     icon_width = strings.strdisplaywidth(icon)
   end
 
-  local cwd = vim.fn.expand(opts.cwd or vim.loop.cwd() or ".")
+  local cwd = vim.fn.expand(opts.cwd or runtimeUtils.get_root() or ".")
 
   local make_display = function(entry)
     -- bufnr_width + modes + icon + 3 spaces + : + lnum
@@ -310,8 +312,8 @@ function M.gen_from_buffer(opts)
     local hidden = entry.info.hidden == 1 and 'h' or 'a'
     -- local readonly = vim.api.nvim_buf_get_option(entry.bufnr, 'readonly') and '=' or ' '
     local readonly = vim.api.nvim_get_option_value('readonly', {
-      buf = entry.bufnr,
-    }) and '=' or ' '
+          buf = entry.bufnr,
+        }) and '=' or ' '
     local changed = entry.info.changed == 1 and '+' or ' '
     local indicator = entry.flag .. hidden .. readonly .. changed
     local lnum = 1

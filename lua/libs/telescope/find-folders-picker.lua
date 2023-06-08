@@ -7,7 +7,8 @@ local find_folders_cwd = nil
 
 --- TODO: add opt to customize the action when item is selected.
 return function()
-  if find_folders_cwd == nil then find_folders_cwd = vim.fn.getcwd() end
+  local runtimeUtils = require('libs.runtime.utils')
+  if find_folders_cwd == nil then find_folders_cwd = runtimeUtils.get_root() end
 
   local picker_opts = {
     cwd = find_folders_cwd,

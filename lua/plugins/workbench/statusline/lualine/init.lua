@@ -130,13 +130,19 @@ return {
             function()
               local icon = ' '
               if auto_format_disabled() then
-                icon = ' '
+                icon = ' '
               end
               return string.format('%s%s', icon, vim.b[0].formatter_name)
             end,
             cond = function()
               return vim.b[0].formatter_name ~= nil
             end
+          },
+          --- dap
+          {
+            function() return "  " .. require("dap").status() end,
+            cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
+            color = utils.fg("Debug"),
           },
           {
             'fileformat',

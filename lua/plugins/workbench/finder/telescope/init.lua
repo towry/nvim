@@ -16,8 +16,13 @@ return {
       desc =
       'Resume telescope pickers'
     },
-    { '<leader>er', cmd_modcall(pickers_mod, 'oldfiles({ cwd_only = true })'),              desc = 'Open recent files' },
-    { '<leader>el', cmd_modcall('find-folders-picker', '()'),                               desc = 'Find folders' },
+    {
+      '<leader>er',
+      cmd_modcall(pickers_mod, 'project_files({ cwd_only = true, oldfiles = true })'),
+      desc =
+      'Open recent files'
+    },
+    { '<leader>el', cmd_modcall('libs.telescope.find-folders-picker', '()'),                desc = 'Find folders' },
     { '<leader>es', cmd_modcall('telescope', 'extensions.live_grep_args.live_grep_args()'), desc = 'Grep search' }
   },
   dependencies = {
@@ -32,7 +37,6 @@ return {
     {
       'tknightz/telescope-termfinder.nvim',
     },
-    { 's1n7ax/nvim-window-picker' },
   },
   config = function()
     local au = require('libs.runtime.au')
@@ -167,7 +171,6 @@ return {
     require('telescope').load_extension('live_grep_args')
     require('telescope').load_extension('git_worktree')
     require('telescope').load_extension('termfinder')
-    if has_plugin('project.nvim') then require('telescope').load_extension('projects') end
     au.do_useraucmd(au.user_autocmds.TelescopeConfigDone_User)
 
     -- colorscheme
