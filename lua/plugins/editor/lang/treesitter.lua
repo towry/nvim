@@ -44,7 +44,7 @@ local M = {
     -- setting the commentstring option based on the cursor location in the file. The location is checked via treesitter queries.
     -- Vue files can have many different sections, each of which can have a different style for comments.
     'JoosepAlviste/nvim-ts-context-commentstring',
-    'mrjones2014/nvim-ts-rainbow',
+    'HiPhish/nvim-ts-rainbow2',
     -- vai to select current context!
     -- 'kiyoon/treesitter-indent-object.nvim',
   },
@@ -109,7 +109,9 @@ function M.config()
       disable = disabled,
       enable = vim.cfg.lang__treesitter_plugin_rainbow,
       -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
-      extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+      query = 'rainbow-parens',
+      -- Highlight the entire buffer all at once
+      strategy = require('ts-rainbow').strategy.global,
       max_file_lines = 8000,
     },
     refactor = {
