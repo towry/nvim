@@ -89,7 +89,8 @@ function M.config()
     },
     indent = {
       -- use yati.
-      enable = vim.cfg.lang__treesitter_plugin_indent,
+      -- enable = vim.cfg.lang__treesitter_plugin_indent,
+      enable = not vim.cfg.lang__treesitter_plugin_yati,
       disable = disabled,
     },
     yati = {
