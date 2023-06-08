@@ -126,14 +126,15 @@ local function setup_basic()
 
   --- buffers
   set('n', '<S-q>', function()
-    vim.api.nvim_buf_delete(0, { force = false })
+    require('mini.bufremove').delete(0)
     if #require('libs.runtime.buffer').list_bufnrs() <= 0 then
       local cur_empty = require('libs.runtime.buffer').get_current_empty_buffer()
       if cur_empty then
         -- request enter dashboard.
         require('libs.runtime.au').do_useraucmd("User DoEnterDashboard")
         vim.schedule(function()
-          vim.api.nvim_buf_delete(cur_empty, { force = false })
+          require('mini.bufremove').delete(cur_empty)
+          -- vim.api.nvim_buf_delete(cur_empty, { force = false })
         end)
       end
     end
