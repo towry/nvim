@@ -21,6 +21,7 @@ return {
   --- auto close buffer after a time.
   {
     'chrisgrieser/nvim-early-retirement',
+    enabled = false,
     config = function()
       require('early-retirement').setup({
         retirementAgeMins = 15,
