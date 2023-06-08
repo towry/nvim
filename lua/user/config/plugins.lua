@@ -11,4 +11,5 @@ return {
   { import = "plugin-extras.ui.mini-animate" },
   { import = "plugin-extras.workflow.messages" },
   { import = "plugin-extras.workbench.edgy" },
+  { import = "plugin-extras.ui.folke-noice" },
 }
