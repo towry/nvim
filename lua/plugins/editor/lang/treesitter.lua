@@ -13,8 +13,9 @@ local M = {
     end
   end,
   keys = {
-    { "<c-space>",  desc = "Increment selection" },
-    { "<bs>",       desc = "Decrement selection",                  mode = "x" },
+    { "<Enter>",    desc = "Init Increment selection" },
+    { "<Enter>",    desc = "node node incremental selection",      mode = "x" },
+    { "<BS>",       desc = "Decrement selection",                  mode = "x" },
     { '<leader>cr', desc = 'Smart rename/nvim-treesitter-refactor' },
   },
   dependencies = {
@@ -55,7 +56,7 @@ local disabled = function(lang, bufnr)
   local ft = vim.api.nvim_get_option_value("filetype", {
     buf = bufnr,
   })
-  if vim.tbl_contains(vim.cfg.lang__treesitter_plugin_disable_on_filetypes, ft) then
+  if vim.tbl_contains(vim.cfg.lang__treesitter_plugin_disable_on_filetypes or {}, ft) then
     return true
   end
   -- great than 100kb or lines great than 20000
@@ -80,10 +81,10 @@ function M.config()
       enable = vim.cfg.lang__treesitter_plugin_incremental_selection,
       disable = disabled,
       keymaps = {
-        init_selection = "<C-space>",
-        node_incremental = "<C-space>",
+        init_selection = "<Enter>",
+        node_incremental = "<Enter>",
         scope_incremental = false,
-        node_decremental = "<bs>",
+        node_decremental = "<BS>",
       },
     },
     indent = {
