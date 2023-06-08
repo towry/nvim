@@ -49,6 +49,7 @@ return {
       enable = false,
     },
     ui = {
+      title = true,
       border = 'rounded', -- single, double, rounded, solid, shadow.
       winblend = 1,
     },
