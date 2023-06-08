@@ -15,13 +15,13 @@ return {
     local Buffer               = require('libs.runtime.buffer')
     local terms                = require('libs.statusline.lualine.terminal_component')
 
-    local spectre_extension    = {
+    local spectre_extension = {
       sections = {
         lualine_a = { 'mode' },
       },
       filetypes = { 'spectre_panel' },
     }
-    local present, lualine     = pcall(require, 'lualine')
+    local present, lualine  = pcall(require, 'lualine')
 
     if not present then
       Ty.NOTIFY('lualine not installed')
@@ -39,7 +39,8 @@ return {
         globalstatus = true,
         -- component_separators = '│',
         component_separators = '',
-        section_separators = { left = '', right = '' },
+        -- section_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
         disabled_filetypes = { winbar = { 'lazy', 'alpha' }, statusline = { 'dashboard', 'lazy', 'alpha' } },
       },
       winbar = {
@@ -153,7 +154,7 @@ return {
           { 'filetype', colored = true, icon_only = true },
         },
         lualine_y = { 'filesize', 'progress' },
-        lualine_z = { { 'location', separator = { right = '' }, left_padding = 0 } },
+        lualine_z = { { 'location', separator = { right = '' }, left_padding = 0 } },
       },
       inactive_sections = {
         lualine_a = {},
