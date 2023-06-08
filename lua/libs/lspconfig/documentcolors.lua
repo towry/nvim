@@ -108,7 +108,7 @@ function M.buf_attach(bufnr, options)
 
   -- VSCode extension also does 200ms debouncing
   local trigger_update_highlight, timer =
-      require('ty.contrib.editing.lsp.utils.defer').debounce_trailing(M.update_highlight, options.debounce or 200, false)
+      require('libs.lspconfig.defer').debounce_trailing(M.update_highlight, options.debounce or 200, false)
 
   -- for the first request, the server needs some time before it's ready
   -- sometimes 200ms is not enough for this
