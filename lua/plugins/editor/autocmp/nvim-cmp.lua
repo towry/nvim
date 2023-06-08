@@ -189,7 +189,9 @@ return {
           }),
         }),
         completion = {
-          completeopt = 'menu,menuone,noinsert',
+          -- this is important
+          -- @see https://github.com/hrsh7th/nvim-cmp/discussions/1411
+          completeopt = 'menu,menuone,noinsert,noselect',
         },
         formatting = {
           format = function(entry, vim_item)
