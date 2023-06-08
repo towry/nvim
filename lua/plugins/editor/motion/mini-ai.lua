@@ -1,6 +1,6 @@
 return {
   'echasnovski/mini.ai',
-  event = { 'BufWinEnter', 'BufRead' },
+  event = { 'BufNewFile', 'BufRead' },
   opts = function()
     local ai = require("mini.ai")
     return {
