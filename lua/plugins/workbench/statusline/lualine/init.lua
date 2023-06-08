@@ -3,10 +3,10 @@ local utils = require('libs.runtime.utils')
 return {
   'nvim-lualine/lualine.nvim',
   dependencies = {
-    {
-      'pze/lualine-copilot',
-      dev = false,
-    },
+    -- {
+    --   'pze/lualine-copilot',
+    --   dev = false,
+    -- },
   },
   event = 'VeryLazy',
   config = function()
@@ -46,6 +46,8 @@ return {
       winbar = {
         lualine_a = {
           {
+            separator = { left = '', right = '' },
+            left_padding = 2,
             'filename',
             path = 1,
             symbols = {
@@ -58,6 +60,8 @@ return {
       inactive_winbar = {
         lualine_a = {
           {
+            separator = { left = '', right = '' },
+            left_padding = 2,
             'filename',
             path = 1,
             symbols = {
@@ -70,6 +74,8 @@ return {
       sections = {
         lualine_a = {
           {
+            separator = { left = '' },
+            right_padding = 2,
             function()
               local unsaved_count = #Buffer.unsaved_list()
               local has_modified = unsaved_count > 0
@@ -118,9 +124,9 @@ return {
         -- filename is displayed by the incline.
         lualine_c = { 'diff', 'diagnostics', },
         lualine_x = {
-          {
-            'copilot',
-          },
+          -- {
+          --   'copilot',
+          -- },
           {
             'encoding',
             cond = function()
@@ -154,7 +160,7 @@ return {
           { 'filetype', colored = true, icon_only = true },
         },
         lualine_y = { 'filesize', 'progress' },
-        lualine_z = { { 'location', separator = { right = '' }, left_padding = 0 } },
+        lualine_z = { { 'location', separator = { right = '', left = '' }, left_padding = 0 } },
       },
       inactive_sections = {
         lualine_a = {},
