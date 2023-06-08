@@ -234,13 +234,13 @@ return {
         sorting = {
           comparators = {
             deprioritize_snippet,
+            cmp.config.compare.score,
             cmp.config.compare.exact,
             cmp.config.compare.locality,
             cmp.config.compare.recently_used,
-            cmp.config.compare.score,
+            cmp.config.compare.order,
             cmp.config.compare.offset,
             cmp.config.compare.sort_text,
-            cmp.config.compare.order,
           },
         },
         confirmation = {
