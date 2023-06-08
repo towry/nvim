@@ -69,6 +69,7 @@ return {
     end
 
     au.do_useraucmd(au.user_autocmds.LspConfigDone_User)
+    require('plugins.editor.lsp.utils.diagnostic').setup()
   end,
   init = function()
     au.on_lsp_attach(function(client, bufnr)
