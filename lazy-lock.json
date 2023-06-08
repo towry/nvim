@@ -108,6 +108,7 @@
   "sniprun": { "branch": "master", "commit": "83791b87a8ede5275a2c060605bf1fec782205cc" },
   "splitjoin.nvim": { "branch": "main", "commit": "40adbcfbd99cd3d08d15a688191946546d95cedd" },
   "sqlite.lua": { "branch": "master", "commit": "b7e28c8463254c46a8e61c52d27d6a2040492fc3" },
+  "ssr.nvim": { "branch": "main", "commit": "e5768511518a397fa712f26389ba30d0404990de" },
   "statuscol.nvim": { "branch": "main", "commit": "7ee8d982331019fec3a90ec87b98d6b4405cacbe" },
   "stay-in-place.nvim": { "branch": "main", "commit": "0628b6db8970fc731abf9608d6f80659b58932c9" },
   "surround-ui.nvim": { "branch": "main", "commit": "f02b213506ac9f2cd0439d67e1d1ec8f8202d11d" },
