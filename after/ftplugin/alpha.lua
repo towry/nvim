@@ -1,3 +1,4 @@
+vim.b.minianimate_disable = true
 vim.cmd('set nocursorline')
 
 local bufnr = vim.api.nvim_get_current_buf()

@@ -1,5 +1,10 @@
 return {
   {
+    -- disable vim version.
+    'github/copilot.vim',
+    enabled = false,
+  },
+  {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     event = "InsertEnter",
@@ -18,6 +23,10 @@ return {
 
   {
     "zbirenbaum/copilot-cmp",
+    opts = {
+      event = { "InsertEnter", "LspAttach" },
+      fix_pairs = true,
+    },
     dependencies = {
       {
         'zbirenbaum/copilot.lua',
@@ -31,8 +40,8 @@ return {
         }
       }
     },
-    config = function()
-      require("copilot_cmp").setup()
+    config = function(_, opts)
+      require("copilot_cmp").setup(opts)
     end
   }
 }

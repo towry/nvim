@@ -4,6 +4,7 @@ return {
     lazy = true,
     dependencies = { 'rafamadriz/friendly-snippets', 'saadparwaiz1/cmp_luasnip' },
   },
+  { import = "plugin-extras.coding.copilot-nvim" },
   {
     'hrsh7th/nvim-cmp',
     event = { 'InsertEnter', 'CmdlineEnter' },
@@ -24,8 +25,20 @@ return {
       'saadparwaiz1/cmp_luasnip',
     },
     config = function()
+      local has_words_before = function()
+        local unpack_ = table.unpack or unpack
+        if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+        local line, col = unpack_(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
+      end
       local lspkind = require('lspkind')
       local icons = require('libs.icons')
+
+      lspkind.init({
+        symbol_map = {
+          Copilot = "",
+        },
+      })
 
       local cmp_tabnine_status_ok, tabnine = pcall(require, 'cmp_tabnine.config')
       if not cmp_tabnine_status_ok then return end
@@ -70,6 +83,7 @@ return {
         npm = icons.terminal .. 'NPM',
         cmp_tabnine = icons.light,
         codeium = icons.pie .. 'AI',
+        copilot = icons.copilot .. 'COP',
         nvim_lsp = icons.paragraph .. 'LSP',
         nvim_lsp_signature_help = icons.typeParameter .. 'ARG',
         buffer = icons.buffer .. 'BUF',
@@ -108,7 +122,8 @@ return {
           ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
           ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
           ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-          ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+          ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+          ['<C-f>'] = cmp.mapping.confirm({ select = true }),
           -- invoke complete
           ['<C-s>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
           ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
@@ -123,6 +138,7 @@ return {
           }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
           ['<Tab>'] = cmp.mapping(function(fallback)
             local entry = cmp.get_selected_entry()
+            -- copilot.vim
             if not entry and vim.b._copilot and vim.b._copilot.suggestions ~= nil then
               -- Make sure the suggestion exists and it does not start with whitespace
               -- This is to prevent the user from accidentally selecting a suggestion
@@ -130,7 +146,7 @@ return {
               local suggestion = vim.b._copilot.suggestions[1]
               if suggestion ~= nil then suggestion = suggestion.displayText end
               if suggestion == nil or (suggestion:find('^%s') ~= nil and suggestion:find('^\n') == nil) then
-                if cmp.visible() then
+                if cmp.visible() and has_words_before() then
                   cmp.select_next_item()
                 else
                   fallback()
@@ -138,8 +154,8 @@ return {
               else
                 vim.fn.feedkeys(vim.fn['copilot#Accept'](), '')
               end
-            elseif cmp.visible() then
-              cmp.select_next_item()
+            elseif cmp.visible() and has_words_before() then
+              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
             elseif luasnip.expandable() then
               luasnip.expand()
             elseif luasnip.expand_or_jumpable() then
@@ -215,12 +231,13 @@ return {
         },
         -- You should specify your *installed* sources.
         sources = {
-          { name = 'nvim_lsp',                priority = 50, max_item_count = 6 },
+          { name = 'nvim_lsp', priority = 50, max_item_count = 6 },
+          { name = "copilot", priority = 7, max_item_count = 2 },
           -- { name = 'codeium', priority = 7,   },
           { name = 'nvim_lsp_signature_help', priority = 40 },
-          { name = 'npm',                     priority = 3 },
-          { name = 'cmp_tabnine',             priority = 6,  max_item_count = 3 },
-          { name = 'luasnip',                 priority = 6,  max_item_count = 4 },
+          { name = 'npm', priority = 3 },
+          { name = 'cmp_tabnine', priority = 6, max_item_count = 3 },
+          { name = 'luasnip', priority = 6, max_item_count = 4 },
           {
             name = 'buffer',
             priority = 6,
@@ -228,11 +245,12 @@ return {
             option = buffer_option,
           },
           { name = 'nvim_lua', priority = 5, ft = 'lua' },
-          { name = 'path',     priority = 4 },
-          { name = 'calc',     priority = 3 },
+          { name = 'path', priority = 4 },
+          { name = 'calc', priority = 3 },
         },
         sorting = {
           comparators = {
+            require("copilot_cmp.comparators").prioritize,
             deprioritize_snippet,
             cmp.config.compare.score,
             cmp.config.compare.exact,

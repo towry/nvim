@@ -35,7 +35,7 @@ return {
         '<cmd>lua require("libs.telescope.pickers").project_files()<CR>'),
       dashboard.button('s', icons.t .. ' ' .. 'Search Content',
         '<cmd>lua require("libs.telescope.multi-rg-picker")()<CR>'),
-      dashboard.button("l", " 󰒲 " .. " Lazy", "<cmd>Lazy<CR>"),
+      dashboard.button("l", "󰒲 " .. " Lazy", "<cmd>Lazy<CR>"),
       dashboard.button("q", icons.exit .. " Quit", "<cmd>qa<CR>"),
     }
     for _, button in ipairs(dashboard.section.buttons.val) do
