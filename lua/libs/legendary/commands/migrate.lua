@@ -8,15 +8,6 @@ return {
     ':Copilot disable',
     description = 'Disable github copilot',
   },
-  -- troubles.
-  {
-    ':TodoTrouble',
-    description = 'Show todo in trouble',
-  },
-  {
-    [[:exe "TodoTrouble cwd=" . expand("%:p:h")]],
-    description = 'Show todo in trouble within current file directory',
-  },
   -- switch
   {
     ':Switch',
