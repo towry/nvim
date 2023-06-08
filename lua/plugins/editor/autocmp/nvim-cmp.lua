@@ -94,7 +94,7 @@ return {
 
       cmp.setup({
         performance = {
-          max_view_entries = 5,
+          max_view_entries = 10,
           -- debounce = 250,
           -- throttle = 2000,
           -- fetching_timeoul = 1400,
