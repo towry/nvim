@@ -215,12 +215,12 @@ return {
         },
         -- You should specify your *installed* sources.
         sources = {
-          { name = 'nvim_lsp',                priority = 8, max_item_count = 6 },
+          { name = 'nvim_lsp',                priority = 50, max_item_count = 6 },
           -- { name = 'codeium', priority = 7,   },
-          { name = 'nvim_lsp_signature_help', priority = 8 },
+          { name = 'nvim_lsp_signature_help', priority = 40 },
           { name = 'npm',                     priority = 3 },
-          { name = 'cmp_tabnine',             priority = 6, max_item_count = 3 },
-          { name = 'luasnip',                 priority = 6, max_item_count = 4 },
+          { name = 'cmp_tabnine',             priority = 6,  max_item_count = 3 },
+          { name = 'luasnip',                 priority = 6,  max_item_count = 4 },
           {
             name = 'buffer',
             priority = 6,
