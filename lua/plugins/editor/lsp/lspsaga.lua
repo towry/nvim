@@ -49,7 +49,7 @@ return {
       enable = false,
     },
     ui = {
-      border = vim.cfg.ui__float_border, -- single, double, rounded, solid, shadow.
+      border = 'rounded', -- single, double, rounded, solid, shadow.
       winblend = 1,
     },
   }
