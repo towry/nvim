@@ -11,9 +11,10 @@ end
 function M.enable()
   local ok, lsp_format = pcall(require, 'lsp-format')
   if not ok then
+    vim.notify("Fail to enable autoformat")
     return
   end
-  auto_format_disabled = true
+  auto_format_disabled = false
   lsp_format.enable({
     args = ""
   })

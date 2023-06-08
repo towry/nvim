@@ -159,7 +159,7 @@ end
 return {
   'neovim/nvim-lspconfig',
   name = 'lsp',
-  event = au.user_autocmds.FileOpened_User,
+  event = au.builtin_autocmds.FileOpen,
   dependencies = {
     'jose-elias-alvarez/typescript.nvim',
     'hrsh7th/cmp-nvim-lsp',

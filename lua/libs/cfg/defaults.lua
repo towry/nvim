@@ -30,7 +30,6 @@ return {
     "python3",
   },
   runtime__python3_host_prog = '/Users/towry/.pyenv/versions/3.8.2/bin/python3',
-
   ---editor stuff
   --enable relative number or not.
   editor__relative_number = true,
@@ -54,7 +53,6 @@ return {
     'less',
   },
   editorExtend__colorizer_enable_tailwind_color = true,
-
   ---languages
   lang__treesitter_ensure_installed = {
     'bash',
@@ -86,7 +84,6 @@ return {
   lang__treesitter_plugin_refactor = false,
   lang__treesitter_plugin_textobjects_move = true,
   lang__treesitter_plugin_textsubjects = true,
-
   lsp__log_level = "ERROR",
   lsp__enable_servers = {
     "tailwindcss",
@@ -96,7 +93,7 @@ return {
     "volar",
     "bashls",
     "html",
-    "tsserver",
+    -- "tsserver",
     "null_ls"
   },
   lsp__auto_install_servers = {
@@ -134,12 +131,10 @@ return {
     'scss',
   },
   lsp__plugin_lspsaga = true,
-
   ---User interfaces
   ui__theme_name = "default",
   ui__float_border = true,
   workbench__lualine_theme = "default",
-
   ---misc stuff.
   misc__buf_exclude = {
     "netrw",
@@ -159,10 +154,11 @@ return {
     "NvimTree",
     "qf",
   },
-
   ---plugins specific.
   plugin__fidget_enable = true,
   plugin__fidget_text_spinner = "pipe",
   plugin__fidget_text_done = '  ',
   plugin__fidget_debug_logging = false,
+  ---lspsaga
+  plugin__lspsaga_enable = true,
 }

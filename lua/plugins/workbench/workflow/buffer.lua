@@ -30,7 +30,7 @@ return {
   --- open buffer last place.
   {
     'ethanholz/nvim-lastplace',
-    event = au.user_autocmds.FileOpened_User,
+    event = au.builtin_autocmds.FileOpen,
     opts = {
       lastplace_ignore_buftype = { 'quickfix', 'nofile', 'help', 'alpha', 'NvimTree' },
       lastplace_ignore_filetype = { 'spectre_panel', 'gitcommit', 'gitrebase', 'svn', 'hgcommit' },

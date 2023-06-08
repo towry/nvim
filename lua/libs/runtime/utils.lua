@@ -1,5 +1,7 @@
 local M = {}
 
+M.root_patterns = { ".git", "lua", '.gitmodules', 'pnpm-workspace.yaml' }
+
 M.file_exists = function(path)
   local f = io.open(path, 'r')
   if f ~= nil then
@@ -115,8 +117,11 @@ end
 -- * lsp root_dir
 -- * root pattern of filename of the current buffer
 -- * root pattern of cwd
+---@param root_opts? {root_patterns?:table}
 ---@return string
-function M.get_root()
+function M.get_root(root_opts)
+  root_opts = root_opts or {}
+  local rootPatterns = vim.tbl_extend('force', M.root_patterns, root_opts.root_patterns or {})
   ---@type string?
   local path = vim.api.nvim_buf_get_name(0)
   path = path ~= "" and vim.loop.fs_realpath(path) or nil
@@ -144,7 +149,7 @@ function M.get_root()
   if not root then
     path = path and vim.fs.dirname(path) or vim.loop.cwd()
     ---@type string?
-    root = vim.fs.find(M.root_patterns, { path = path, upward = true })[1]
+    root = vim.fs.find(rootPatterns, { path = path, upward = true })[1]
     root = root and vim.fs.dirname(root) or vim.loop.cwd()
   end
   ---@cast root string
