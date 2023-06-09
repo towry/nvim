@@ -2,7 +2,7 @@ return {
   -- animations
   {
     "echasnovski/mini.animate",
-    event = "VeryLazy",
+    event = { 'BufWinEnter' },
     opts = function()
       -- don't use animate when scrolling with the mouse
       local mouse_scrolled = false
@@ -35,4 +35,3 @@ return {
     end,
   },
 }
-

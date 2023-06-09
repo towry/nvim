@@ -277,4 +277,8 @@ function M.extend_hl(name, def, ns)
   vim.api.nvim_set_hl(ns or 0, name, combined_def)
 end
 
+M.vim_starts_without_buffer = function()
+  return vim.fn.argc(-1) == 0
+end
+
 return M

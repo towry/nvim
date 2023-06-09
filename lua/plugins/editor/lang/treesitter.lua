@@ -48,7 +48,7 @@ local M = {
     -- vai to select current context!
     -- 'kiyoon/treesitter-indent-object.nvim',
   },
-  event = au.builtin_autocmds.FileOpen,
+  event = { 'BufReadPost', 'BufNewFile' },
 }
 
 local disabled = function(lang, bufnr)

@@ -102,10 +102,19 @@ function M.load_on_startup()
           vim.opt.timeoutlen = current_timeoutlen
         end
       }
+    },
+  }
+  local user_definitions = {
+    {
+      pattern = "AlphaClosed",
+      callback = function()
+        au.do_useraucmd(au.user_autocmds.OnLeaveDashboard_User)
+      end
     }
   }
 
   au.define_autocmds(definitions)
+  au.define_user_autocmds(user_definitions)
 end
 
 function M.setup_events_on_startup()

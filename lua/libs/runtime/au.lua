@@ -26,7 +26,10 @@ M.user_autocmds = setmetatable({
   TelescopeConfigDone = "TelescopeConfigDone",
   LegendaryConfigDone = "LegendaryConfigDone",
   on_git_blame_done = "on_git_blame_done",
+  -- do open dashboard
   DoEnterDashboard = 'DoEnterDashboard',
+  -- dashboard is closed
+  OnLeaveDashboard = "OnLeaveDashboard",
 }, {
   __index = function(_, key)
     -- if key suffix with '_User' then return 'User_' .. <real key>.
@@ -95,6 +98,14 @@ function M.define_user_autocmd(opts)
     end
   end
   vim.api.nvim_create_autocmd("User", opts)
+end
+
+---use M.define_user_autocmd to define multiple user autocmds
+---@param definitions table List of defintiion.
+function M.define_user_autocmds(definitions)
+  for _, entry in ipairs(definitions) do
+    M.define_user_autocmd(entry)
+  end
 end
 
 ---@param callback function(client:any, bufnr:number)
