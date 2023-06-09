@@ -1,5 +1,6 @@
 return {
   ---runtime
+  runtime__starts_in_buffer = vim.fn.argc(-1) ~= 0,
   runtime__disable_builtin_plugins = {
     "gzip",
     "zip",
