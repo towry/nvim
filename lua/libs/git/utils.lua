@@ -1,6 +1,16 @@
 local utils = require('libs.runtime.utils')
 local M = {}
 
+--- Get git branch name.
+M.get_git_abbr_head = function()
+  local res = vim.fn.systemlist("git rev-parse --abbrev-ref HEAD")[1]
+  if vim.startswith(res, 'fatal:') then
+    return nil
+  else
+    return res
+  end
+end
+
 M.toggle_file_history = function()
   local lib = require('diffview.lib')
   local diffview = require('diffview')

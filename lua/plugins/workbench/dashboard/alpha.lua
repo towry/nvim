@@ -17,6 +17,7 @@ return {
   event = "VimEnter",
   opts = function()
     local dashboard = require("alpha.themes.dashboard")
+    local Path = require('libs.runtime.path')
     local logo = {}
     local insert = table.insert
     for line in header_static_str:gmatch('[^\r\n]+') do
@@ -24,7 +25,14 @@ return {
     end
 
     local icons = require('libs.icons')
-
+    local header_bottom = {
+      type = 'text',
+      val = " : " .. Path.home_to_tilde(vim.loop.cwd()),
+      opts = {
+        position = 'center',
+        hl = 'VirtualTextHint',
+      },
+    }
     dashboard.section.header.val = logo
     dashboard.section.buttons.val = {
       dashboard.button("/", icons.timer .. " Load session", '<cmd>SessionManager load_current_dir_session<CR>'),
@@ -45,7 +53,8 @@ return {
     dashboard.section.header.opts.hl = "AlphaHeader"
     dashboard.section.buttons.opts.hl = "AlphaButtons"
     dashboard.section.footer.opts.hl = "AlphaFooter"
-    dashboard.opts.layout[1].val = 8
+    dashboard.opts.layout[1].val = 2
+    table.insert(dashboard.opts.layout, 3, header_bottom)
     return dashboard
   end,
   config = function(_, dashboard)
@@ -65,9 +74,14 @@ return {
     vim.api.nvim_create_autocmd("User", {
       pattern = "LazyVimStarted",
       callback = function()
-        local stats = require("lazy").stats()
+        local lazy = require("lazy")
+        local git = require('libs.git.utils')
+        local stats = lazy.stats()
         local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
         dashboard.section.footer.val = "⚡ Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
+
+        dashboard.opts.layout[3].val = dashboard.opts.layout[3].val .. "   : " .. git.get_git_abbr_head()
+
         pcall(vim.cmd.AlphaRedraw)
       end,
     })
