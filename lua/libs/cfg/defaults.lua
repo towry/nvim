@@ -162,6 +162,8 @@ return {
     "Outline",
     "fugitive",
     "Git",
+    -- folke/noice
+    "noice",
   },
   ---plugins specific.
   plugin__fidget_enable = true,
