@@ -1,5 +1,6 @@
 return {
   'bennypowers/splitjoin.nvim',
+  enabled = false,
   keys = {
     {
       'gj',
