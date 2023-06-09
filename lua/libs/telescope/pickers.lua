@@ -59,9 +59,13 @@ M.project_files = function(opts)
   end
 
   if opts and opts.oldfiles then
+    local cache_opts = vim.tbl_deep_extend('force', {
+    }, opts)
     local cycle = require('libs.telescope.cycle')(
-      function()
-        require('telescope.builtin').find_files(opts)
+      function(income_opts)
+        require('telescope.builtin').find_files(vim.tbl_extend('force', cache_opts, {
+          results_title = '  All Files: ',
+        }, income_opts))
       end
     )
     opts = vim.tbl_extend('force', {
@@ -75,12 +79,18 @@ M.project_files = function(opts)
     return require('telescope.builtin').oldfiles(opts)
   end
 
+  local use_all_files = false
   if (opts and opts.no_gitfiles) or use_find_files_instead_of_git then
-    opts.results_title = '  Git Files: '
-    return require('telescope.builtin').find_files(opts)
+    use_all_files = true
   end
 
-  local ok = pcall(require('telescope.builtin').git_files, opts)
+
+  local ok = (function()
+    if use_all_files then return false end
+    opts.results_title = '  Git Files: '
+    local is_git_ok = pcall(require('telescope.builtin').git_files, opts)
+    return is_git_ok
+  end)()
   if not ok then
     opts.results_title = '  All Files: '
     require('telescope.builtin').find_files(opts)
