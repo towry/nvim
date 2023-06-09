@@ -59,15 +59,32 @@ M.project_files = function(opts)
   end
 
   if opts and opts.oldfiles then
+    local cycle = require('libs.telescope.cycle')(
+      function()
+        require('telescope.builtin').find_files(opts)
+      end
+    )
+    opts = vim.tbl_extend('force', {
+      results_title = '  Recent files: ',
+      prompt_title = '  Recent files',
+      attach_mappings = function(_, map)
+        map('i', '<C-b>', cycle.next, { noremap = true, silent = true })
+        return true
+      end
+    }, opts)
     return require('telescope.builtin').oldfiles(opts)
   end
 
   if (opts and opts.no_gitfiles) or use_find_files_instead_of_git then
+    opts.results_title = '  Git Files: '
     return require('telescope.builtin').find_files(opts)
   end
 
   local ok = pcall(require('telescope.builtin').git_files, opts)
-  if not ok then require('telescope.builtin').find_files(opts) end
+  if not ok then
+    opts.results_title = '  All Files: '
+    require('telescope.builtin').find_files(opts)
+  end
 end
 
 M.command_history = function()

@@ -66,6 +66,7 @@
   "neotest": { "branch": "master", "commit": "0207e4025e5558fdd0b3951f250689eede5c75b2" },
   "neotest-jest": { "branch": "main", "commit": "22b1050dda3ebd401780ec4b8e193cf52523a4da" },
   "neovim-session-manager": { "branch": "master", "commit": "fd92e73506601a48adb843cdc0a15f2e63513754" },
+  "noice.nvim": { "branch": "main", "commit": "acf47e2b863eb20f177aa1bd5398041513e731e1" },
   "nui.nvim": { "branch": "main", "commit": "d5a82aae64426a805e19d8ef5a379292f9dc55d3" },
   "null-ls.nvim": { "branch": "main", "commit": "a138b14099e9623832027ea12b4631ddd2a49256" },
   "numb.nvim": { "branch": "master", "commit": "2c89245d1185e02fec1494c45bc765a38b6b40b3" },

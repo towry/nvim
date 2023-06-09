@@ -140,6 +140,10 @@ return {
   misc__buf_exclude = {
     "netrw",
     "tutor",
+    'quickfix',
+    'nofile',
+    'help',
+    'prompt',
   },
   misc__ft_exclude = {
     "alpha",
@@ -154,6 +158,10 @@ return {
     "Trouble",
     "NvimTree",
     "qf",
+    "harpoon",
+    "Outline",
+    "fugitive",
+    "Git",
   },
   ---plugins specific.
   plugin__fidget_enable = true,
