@@ -135,7 +135,7 @@ return {
           },
           {
             function()
-              local icon = ' '
+              local icon = '  '
               if auto_format_disabled() then
                 icon = ' '
               end
