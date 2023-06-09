@@ -91,10 +91,10 @@ return {
         name = 'Git workspace',
       },
       ['/'] = {
-        name = 'Outline & Terms',
+        name = 'Outline|Terms',
       },
       s = {
-        name = 'Search & Replace',
+        name = 'Search|Replace',
       },
       t = {
         name = 'Tools',
@@ -109,13 +109,13 @@ return {
         name = "Buffers"
       },
       m = {
-        name = 'Motion | Modify',
+        name = 'Motion|Modify',
         j = {
           name = 'Join & Split'
         }
       },
       r = {
-        name = 'Debugger | Runner',
+        name = 'Debugger|Runner',
         f = {
           name = 'Sniprun',
         }
