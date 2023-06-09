@@ -80,7 +80,9 @@ return {
         local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
         dashboard.section.footer.val = "⚡ Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
 
-        dashboard.opts.layout[3].val = dashboard.opts.layout[3].val .. "   : " .. git.get_git_abbr_head()
+        local br = git.get_git_abbr_head() or 'Not git repo'
+
+        dashboard.opts.layout[3].val = dashboard.opts.layout[3].val .. "   : " .. br
 
         pcall(vim.cmd.AlphaRedraw)
       end,
