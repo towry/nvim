@@ -15,6 +15,7 @@ return {
     auto_close = true, -- auto close after selection
     keymaps = {
       close = { "<Esc>", "q", "Q", "<leader>x" },
+      focus_location = '<S-CR>',
     },
     lsp_blacklist = {
       "null-ls",
