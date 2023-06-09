@@ -79,6 +79,7 @@ return {
       },
     })
 
+    ---Groups
     wk.register({
       c = {
         name = 'Code',
@@ -107,6 +108,18 @@ return {
       b = {
         name = "Buffers"
       },
+      m = {
+        name = 'Motion | Modify',
+        j = {
+          name = 'Join & Split'
+        }
+      },
+      r = {
+        name = 'Debugger | Runner',
+        f = {
+          name = 'Sniprun',
+        }
+      }
     }, {
       prefix = '<leader>'
     })

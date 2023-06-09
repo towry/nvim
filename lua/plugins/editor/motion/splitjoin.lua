@@ -1,22 +1,27 @@
 return {
-  'bennypowers/splitjoin.nvim',
-  enabled = false,
-  keys = {
-    {
-      'gj',
-      function()
-        if vim.bo.buftype ~= "" then return end
-        require 'splitjoin'.join()
-      end,
-      desc = 'Join the object under cursor'
+  {
+    -- https://github.com/Wansmer/treesj
+    'Wansmer/treesj',
+    keys = {
+      {
+        '<leader>mjt',
+        '<cmd>lua require("treesj").toggle()<cr>',
+        desc = 'Toggle',
+      },
+      {
+        '<leader>mjs',
+        '<cmd>lua require("treesj").split()<cr>',
+        desc = 'Split',
+      },
+      {
+        '<leader>mjj',
+        '<cmd>lua require("treesj").join()<cr>',
+        desc = 'Join',
+      },
     },
-    {
-      'g,',
-      function()
-        if vim.bo.buftype ~= "" then return end
-        require 'splitjoin'.split()
-      end,
-      desc = 'Split the object under cursor'
-    },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    opts = {
+      use_default_keymaps = false,
+    }
   }
 }
