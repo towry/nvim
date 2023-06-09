@@ -8,9 +8,10 @@ function M.setup()
     signs = signs == false and false or true,
     underline = true,
     update_in_insert = false,
-    virtual_text = {
-      prefix = ' :',
-    },
+    virtual_text = false,
+    -- virtual_text = {
+    --   prefix = ' :',
+    -- },
   })
 
   if type(signs) == 'table' then
