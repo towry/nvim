@@ -3,7 +3,7 @@ local au = require('libs.runtime.au')
 return {
   {
     'kwkarlwang/bufresize.nvim',
-    event = 'BufWinEnter',
+    event = 'VeryLazy',
     config = true,
   },
 
