@@ -79,7 +79,8 @@ M.project_files = function(opts)
     return require('telescope.builtin').oldfiles(opts)
   end
 
-  local use_all_files = false
+  -- use find_files or git_files.
+  local use_all_files = opts.use_all_files or false
   if (opts and opts.no_gitfiles) or use_find_files_instead_of_git then
     use_all_files = true
   end

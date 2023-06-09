@@ -7,9 +7,10 @@ return {
   'nvim-telescope/telescope.nvim',
   cmd = { 'Telescope' },
   keys = {
-    { '<Tab>',      cmd_modcall(pickers_mod, 'buffers()'),       desc = "List Buffers" },
-    { '<leader>gB', cmdstr([[Telescope git_branches]]),          desc = 'Git branchs' },
-    { '<leader>ef', cmd_modcall(pickers_mod, 'project_files()'), desc = 'Open Project files' },
+    { '<Tab>',      cmd_modcall(pickers_mod, 'buffers()'),                           desc = "List Buffers" },
+    { '<leader>gB', cmdstr([[Telescope git_branches]]),                              desc = 'Git branchs' },
+    { '<leader>ef', cmd_modcall(pickers_mod, 'project_files()'),                     desc = 'Open Project files' },
+    { '<leader>eF', cmd_modcall(pickers_mod, 'project_files({use_all_files=true})'), desc = 'Open find all files' },
     {
       '<leader>ee',
       cmd_modcall('telescope.builtin', 'resume()'),
