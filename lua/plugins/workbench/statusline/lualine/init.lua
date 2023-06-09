@@ -37,8 +37,8 @@ return {
       options = {
         theme = vim.cfg.workbench__lualine_theme,
         globalstatus = true,
-        -- component_separators = '│',
-        component_separators = '',
+        component_separators = '│',
+        -- component_separators = '',
         -- section_separators = { left = '', right = '' },
         section_separators = { left = '', right = '' },
         disabled_filetypes = { winbar = { 'lazy', 'alpha' }, statusline = { 'dashboard', 'lazy', 'alpha' } },
