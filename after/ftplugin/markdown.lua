@@ -2,7 +2,7 @@
 vim.cmd([[setlocal nospell]])
 vim.b.miniindentscope_disable = true
 
-require('ty.core.utils').try(
+require('libs.runtime.utils').try(
   function()
     require('legendary').command({
       'MarkdownPreviewToggle',
@@ -12,7 +12,7 @@ require('ty.core.utils').try(
 )
 
 if vim.bo.buftype == "nofile" then
-  local Util = require('ty.core.utils')
+  local Util = require('libs.runtime.utils')
   -- NOTE: currently modified for theme everforest.
   -- fix lspsaga floating window hl.
   -- @see https://github.com/sainnhe/everforest/blob/master/colors/everforest.vim
