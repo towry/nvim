@@ -1,5 +1,5 @@
 vim.b.minianimate_disable = true
-vim.cmd('set nocursorline')
+vim.cmd('setlocal nocursorline')
 
 local bufnr = vim.api.nvim_get_current_buf()
 local fts = { 'fugitive' }
@@ -8,7 +8,6 @@ local fts = { 'fugitive' }
 vim.api.nvim_create_autocmd('BufWinEnter', {
   pattern = "*",
   callback = function(ctx)
-    -- local ft = vim.api.nvim_buf_get_option(ctx.buf, 'filetype')
     local ft = vim.api.nvim_get_option_value("filetype", {
       buf = ctx.buf,
     })

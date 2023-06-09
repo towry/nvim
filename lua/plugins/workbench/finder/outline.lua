@@ -10,6 +10,7 @@ return {
     -- https://github.com/simrat39/symbols-outline.nvim
     show_guides = true,
     auto_preview = false,
+    show_relative_numbers = true,
     autofold_depth = 2,
     width = 20,
     auto_close = true, -- auto close after selection
