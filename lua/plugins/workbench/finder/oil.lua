@@ -19,6 +19,13 @@ return {
       ["g."] = "actions.toggle_hidden",
     },
     use_default_keymaps = false,
+    float = {
+      padding = 3,
+      border = { "╔", "═", "╗", "║", "╝", "═", "╚", "║" },
+      win_options = {
+        winblend = 0,
+      }
+    }
   },
   keys = {
     {
