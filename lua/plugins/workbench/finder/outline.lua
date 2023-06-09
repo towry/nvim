@@ -3,7 +3,7 @@ return {
   keys = {
     { '<leader>/o',  '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
-    { '<Char-0xAO>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<Char-0xAF>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
   cmd = { 'SymbolsOutline', 'SymbolsOutlineOpen', 'SymbolsOutlineClose' },
   opts = {
