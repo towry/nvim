@@ -1,5 +1,7 @@
 return {
   'doums/dmap.nvim',
   event = { 'LspAttach' },
-  opts = {}
+  opts = {
+    ignore_filetypes = vim.cfg.misc__ft_exclude,
+  }
 }
