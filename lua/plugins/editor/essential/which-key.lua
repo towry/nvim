@@ -18,8 +18,8 @@ return {
           operators = true,    -- adds help for operators like d, y, ...
           motions = true,      -- adds help for motions
           text_objects = true, -- help for text objects triggered after entering an operator
-          windows = true,      -- default bindings on <c-w>
-          nav = true,          -- misc bindings to work with windows
+          windows = false,     -- default bindings on <c-w>, already taken care by hydra.
+          nav = false,         -- misc bindings to work with windows
           z = true,            -- bindings for folds, spelling and others prefixed with z
           g = true,            -- bindings for prefixed with g
         },
@@ -54,7 +54,7 @@ return {
       },
       ignore_missing = false,
       hidden = { '<CR>', '^:', '^ ', '^call ', '^lua ' }, -- hide mapping boilerplate
-      show_help = true,                                   -- show a help message in the command line for using WhichKey
+      show_help = false,                                  -- show a help message in the command line for using WhichKey
       show_keys = true,                                   -- show the currently pressed key and its label as a message in the command line
       triggers = 'auto',                                  -- automatically setup triggers
       triggers_nowait = {
