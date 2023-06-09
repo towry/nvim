@@ -6,6 +6,8 @@ return {
   },
   { import = "plugin-extras.coding.copilot-nvim" },
   {
+    -- this support max_item_count
+    commit = '950d0e3a93ba61c13b031c086d11eacf4bd48d24',
     'hrsh7th/nvim-cmp',
     event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
@@ -108,7 +110,7 @@ return {
 
       cmp.setup({
         performance = {
-          max_view_entries = 10,
+          max_view_entries = 15,
           -- debounce = 250,
           -- throttle = 2000,
           -- fetching_timeoul = 1400,
@@ -231,22 +233,23 @@ return {
         },
         -- You should specify your *installed* sources.
         sources = {
-          { name = 'nvim_lsp', priority = 50, max_item_count = 6 },
-          { name = "copilot", priority = 7, max_item_count = 2 },
+          { name = 'nvim_lsp',                priority = 50, max_item_count = 6 },
+          { name = "copilot",                 priority = 7,  max_item_count = 2 },
           -- { name = 'codeium', priority = 7,   },
-          { name = 'nvim_lsp_signature_help', priority = 40 },
-          { name = 'npm', priority = 3 },
-          { name = 'cmp_tabnine', priority = 6, max_item_count = 3 },
-          { name = 'luasnip', priority = 6, max_item_count = 4 },
+          { name = 'nvim_lsp_signature_help', priority = 40, max_item_count = 3 },
+          { name = 'npm',                     priority = 3 },
+          { name = 'cmp_tabnine',             priority = 6,  max_item_count = 3 },
+          { name = 'luasnip',                 priority = 6,  max_item_count = 2 },
           {
             name = 'buffer',
             priority = 6,
             keyword_length = 4,
             option = buffer_option,
+            max_item_count = 5,
           },
           { name = 'nvim_lua', priority = 5, ft = 'lua' },
-          { name = 'path', priority = 4 },
-          { name = 'calc', priority = 3 },
+          { name = 'path',     priority = 4 },
+          { name = 'calc',     priority = 3 },
         },
         sorting = {
           comparators = {
