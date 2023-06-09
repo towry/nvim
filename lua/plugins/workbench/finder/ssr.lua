@@ -8,9 +8,10 @@ return {
   module = "ssr",
   keys = {
     {
-      '<leader>sr', '<cmd>lua require("ssr").open()<cr>',
+      '<leader>sr',
+      '<cmd>lua require("ssr").open()<cr>',
       mode = { 'n', 'x' },
-      desc = 'Replace with TS',
+      desc = 'Replace with Treesitter structure(SSR)',
     }
   },
   opts = {
@@ -26,6 +27,5 @@ return {
       replace_confirm = "<cr>",
       replace_all = "<S-CR>",
     },
-
   },
 }

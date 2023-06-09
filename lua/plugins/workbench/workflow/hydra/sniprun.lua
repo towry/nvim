@@ -20,14 +20,14 @@ M.open = function()
       }
     },
     heads = {
-      { 'f', '<Plug>SnipRun', { desc = 'Snip run', silent = true } },
-      { 'F', '<Plug>SnipRunOperator', { desc = 'Snip run operator', silent = true } },
-      { 'i', '<Plug>SnipInfo', { desc = 'Snip info', silent = true } },
-      { 'r', '<Plug>SnipReset', { desc = 'Snip reset', silent = true } },
-      { 'c', '<Plug>SnipClose', { desc = 'Snip close', silent = true } },
+      { 'f', '<Plug>SnipRun',             { desc = 'Snip run', silent = true } },
+      { 'F', '<Plug>SnipRunOperator',     { desc = 'Snip run operator', silent = true } },
+      { 'i', '<Plug>SnipInfo',            { desc = 'Snip info', silent = true } },
+      { 'r', '<Plug>SnipReset',           { desc = 'Snip reset', silent = true } },
+      { 'c', '<Plug>SnipClose',           { desc = 'Snip close', silent = true } },
       { 'm', '<Plug>SnipReplMemoryClean', { desc = 'Snip repl memory clean', silent = true } },
-      { 'l', '<Plug>SnipLive', { desc = 'Snip live', silent = true } },
-      { 'q', nil, { exit = true, nowait = true, desc = 'exit' } },
+      { 'l', '<Plug>SnipLive',            { desc = 'Snip live', silent = true } },
+      { 'q', nil,                         { exit = true, nowait = true, desc = 'exit' } },
     },
   }):activate()
 end
@@ -50,9 +50,9 @@ M.open_visual = function()
       }
     },
     heads = {
-      { 'f', ":'<,'>SnipRun<cr>", { desc = 'Snip run', silent = true, } },
+      { 'f', ":SnipRun<cr>", { desc = 'Snip run', silent = true, } },
       { 'F', ":SnipRun<cr>", { desc = 'Snip run operator', silent = true, } },
-      { 'q', nil, { exit = true, nowait = true, desc = 'exit', } },
+      { 'q', nil,            { exit = true, nowait = true, desc = 'exit', } },
     },
   }):activate()
 end

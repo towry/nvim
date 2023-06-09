@@ -118,6 +118,9 @@ return {
         name = 'Debugger|Runner',
         f = {
           name = 'Sniprun',
+        },
+        o = {
+          name = "Overseer Runner"
         }
       }
     }, {

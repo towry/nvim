@@ -124,6 +124,7 @@ return {
         -- filename is displayed by the incline.
         lualine_c = { 'diff', 'diagnostics', },
         lualine_x = {
+          "overseer",
           -- copilot status
           require('copilot_status').status_string,
           -- {
