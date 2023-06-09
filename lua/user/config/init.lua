@@ -9,6 +9,7 @@ function M.setup()
   require('user.config.lazy').setup({
     spec = require('user.config.plugins')
   })
+  pcall(vim.cmd, 'colorscheme ' .. vim.cfg.ui__theme_name)
 
   require('user.config.autocmd').setup({
     resize_kitty = true

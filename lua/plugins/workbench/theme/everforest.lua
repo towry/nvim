@@ -1,7 +1,7 @@
 return {
   'sainnhe/everforest',
   lazy = vim.cfg.ui__theme_name ~= 'everforest',
-  enabled = vim.cfg.ui__theme_name == 'everforest',
+  cond = vim.cfg.ui__theme_name == 'everforest',
   priority = 1000,
   init = function()
     vim.g.everforest_background = 'medium'
@@ -15,7 +15,5 @@ return {
     vim.g.everforest_diagnostic_virtual_text = 'grey' -- "grey" | "colored"
     vim.g.everforest_diagnostic_text_highlight = 0
     vim.g.everforest_diagnostic_line_highlight = 0
-
-    vim.cmd('colorscheme everforest')
   end
 }
