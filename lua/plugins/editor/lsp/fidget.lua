@@ -2,6 +2,7 @@ local au = require('libs.runtime.au')
 
 return {
   'j-hui/fidget.nvim',
+  tag = 'legacy',
   event = {
     au.user_autocmds.LspConfigDone_User,
   },
@@ -14,7 +15,7 @@ return {
       },
       align = {
         bottom = true, -- align fidgets along bottom edge of buffer
-        right = true,  -- align fidgets along right edge of buffer
+        right = true, -- align fidgets along right edge of buffer
       },
       window = {
         relative = 'editor',
