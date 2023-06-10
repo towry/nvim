@@ -2,6 +2,14 @@ local au = require('libs.runtime.au')
 
 return {
   {
+    'kazhala/close-buffers.nvim',
+    module = 'close_buffers',
+    cmd = {
+      'BDelete',
+      'BWipeout',
+    }
+  },
+  {
     'kwkarlwang/bufresize.nvim',
     event = 'VeryLazy',
     config = true,
