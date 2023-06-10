@@ -10,7 +10,7 @@ M.open_window_hydra = function(is_manually)
   Rerange: _H_: ←    _J_: ↓    _K_: ↑    _L_: →
   Split:   _x_: Horizontal _v_: Vertical
   Close:   _c_: Close _q_: Close
-  Auto:    _a_: Toggle Auto Size
+  Auto:    _a_: Auto Size   _m_: Maximize  _f_: No auto size
   Other:   _w_: Next  _o_: Remain only|Maximize
            _p_: Last
   ]]
@@ -32,7 +32,9 @@ M.open_window_hydra = function(is_manually)
       { 'j', '<C-w>j' },
       { 'k', pcmd('wincmd k', 'E11', 'close') },
       { 'l', '<C-w>l' },
-      { 'a', '<cmd>WindowsToggleAutowidth<cr>', { exit = true, nowait = true, desc = 'Toggle auto size' } },
+      { 'a', '<cmd>WindowsEnableAutowidth<cr>', { exit = true, nowait = true, desc = 'Toggle auto size' } },
+      { 'm', '<cmd>WindowsMaximize<cr>', { exit = true, nowait = true, desc = 'maximize window' } },
+      { 'f', '<cmd>WindowsDisableAutowidth<cr>', { exit = true, nowait = true, desc = 'Disable auto size' } },
       { 'H', '<C-w>H', { exit = true } },
       { 'J', '<C-w>J', { exit = true } },
       { 'K', '<C-w>K', { exit = true } },

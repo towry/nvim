@@ -22,7 +22,8 @@ local function setup_basic()
     desc = 'I: Undo, no more background key',
   })
 
-  set('n', '<C-S-A-p>', cmd([[lua require('legendary').find({ filters = require('legendary.filters').current_mode() })]]),
+  set('n', '<C-S-A-p>', cmd([[lua require('legendary').find({ filters = require('legendary.filters').current_mode() })]])
+    ,
     {
       desc = 'Open Command Palette',
     })
@@ -153,7 +154,7 @@ local function setup_basic()
     desc = 'Close buffer and window'
   })
 
-  set('n', '<leader><space>', cmd([[normal! m\']]), {
+  set('n', '<leader><space><space>', cmd([[normal! m']]), {
     desc = 'Mark jump position',
     noremap = true,
     nowait = true,
