@@ -13,19 +13,22 @@ local function install_lazy_vim()
   vim.fn.system({ "git", "-C", lazypath, "checkout", "tags/stable" }) -- last stable release
 end
 
-
 local function setup(opts)
   opts = vim.tbl_deep_extend("force", {
     spec = {},
     defaults = { lazy = true },
     dev = { patterns = jit.os:find("Windows") and {} or {} },
-    install = { colorscheme = { vim.cfg.ui__theme_name } },
+    install = { missing = false, colorscheme = { vim.cfg.ui__theme_name } },
     ui = {
       icons = {
         lazy = ' ',
         plugin = ' ',
       },
     },
+    git = {
+      timeout = 60,
+    },
+    concurrency = 4,
     custom_keys = {
       -- open lazygit log
       ['<localleader>l'] = function(plugin)
