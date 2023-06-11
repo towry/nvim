@@ -3,5 +3,6 @@ return {
   keys = { 'u', '<C-r>' },
   opts = {
     hlgroup = 'IncSearch',
+    duration = 800,
   }
 }
