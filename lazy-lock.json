@@ -36,6 +36,7 @@
   "grapple.nvim": { "branch": "main", "commit": "ab274a3bfb674442d57fca05df866b71895853bc" },
   "guess-indent.nvim": { "branch": "main", "commit": "b8ae749fce17aa4c267eec80a6984130b94f80b2" },
   "gv.vim": { "branch": "master", "commit": "320cc8c477c5acc4fa0e52a460d87b2af54fa051" },
+  "highlight-undo.nvim": { "branch": "main", "commit": "8d824cf11f35c80248f8c2ab65badb2760d18566" },
   "hlargs.nvim": { "branch": "main", "commit": "bd16884ef4dd3553550313d767505a0f44a3a852" },
   "hydra.nvim": { "branch": "master", "commit": "3ced42c0b6a6c85583ff0f221635a7f4c1ab0dd0" },
   "im-select.nvim": { "branch": "master", "commit": "6da1f1902b51823768b0dd62c36d23cf666783df" },
