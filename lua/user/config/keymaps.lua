@@ -104,24 +104,20 @@ local function setup_basic()
     })
   end
 
-  -- n('H', 'Move to first non-blank character of the line', key('^'))
-  -- n('L', 'Move to last non-blank character of the line', key('$', { '+noremap' }))
-  -- n('Y', 'Yank to end of line', key('y$'))
-  -- x('K', 'Move selected line / block of text in visual mode up', key(":move '<-2<CR>gv-gv"))
-  -- x('J', 'Move selected line / block of text in visual mode down', key(":move '>+1<CR>gv-gv"))
   set('n', 'H', '^', {
     desc = 'Move to first non-blank character of the line',
   })
   set('n', 'L', '$', {
     desc = 'Move to last non-blank character of the line',
   })
+
   set('n', 'Y', 'y$', {
     desc = 'Yank to end of line',
   })
-  set('v', 'K', ":move '<-2<CR>gv-gv", {
+  set({ 'v', 'x' }, 'K', ":move '<-2<CR>gv-gv", {
     desc = 'Move selected line / block of text in visual mode up',
   })
-  set('v', 'J', ":move '>+1<CR>gv-gv", {
+  set({ 'v', 'x' }, 'J', ":move '>+1<CR>gv-gv", {
     desc = 'Move selected line / block of text in visual mode down',
   })
 

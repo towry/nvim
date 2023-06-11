@@ -32,13 +32,14 @@ local function override(colors)
   local theme = colors.theme
 
   local background = default.sumiInk1
-  local darker = true
+  local darker = false
   if darker then
     if type(darker) == "string" then
       background = vim.cfg.ui.darker_background
+    else
+      background = "#0d1117"
     end
 
-    background = "#0d1117"
   end
 
   local overrides = {
@@ -107,7 +108,6 @@ local function override(colors)
 
   return overrides
 end
-
 
 Spec.config = function(_, opts)
   opts.overrides = override
