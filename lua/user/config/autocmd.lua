@@ -102,6 +102,16 @@ function M.setup_events_on_startup()
       end
     end
   })
+
+  --- https://github.com/neovim/neovim/pull/23736#issuecomment-1586082961
+  au.register_event(au.events.onLspAttach, {
+    name = "refresh_inlay",
+    callback = function()
+      pcall(function()
+        require('vim.lsp._inlay_hint').refresh()
+      end)
+    end,
+  })
 end
 
 ---resize kitty window, no padding when neovim is present.
