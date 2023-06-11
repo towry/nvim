@@ -118,7 +118,7 @@ function M.setup_events_on_startup()
       end)
       au.define_autocmds({
         {
-          'BufWritePost',
+          { 'BufWritePost', 'InsertLeave', 'BufEnter' },
           {
             group = 'refresh_inlay_after_write',
             buffer = args.bufnr,
