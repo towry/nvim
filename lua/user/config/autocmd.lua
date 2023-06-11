@@ -104,12 +104,32 @@ function M.setup_events_on_startup()
   })
 
   --- https://github.com/neovim/neovim/pull/23736#issuecomment-1586082961
+  --- Inlay hint
   au.register_event(au.events.onLspAttach, {
     name = "refresh_inlay",
-    callback = function()
+    callback = function(args)
+      local client = args.client
+      local cap = client.server_capabilities
+      if not cap.inlayHintProvider then
+        return
+      end
       pcall(function()
         require('vim.lsp._inlay_hint').refresh()
       end)
+      au.define_autocmds({
+        {
+          'BufWritePost',
+          {
+            group = 'refresh_inlay_after_write',
+            buffer = args.bufnr,
+            callback = function()
+              pcall(function()
+                require('vim.lsp._inlay_hint').refresh()
+              end)
+            end,
+          }
+        }
+      })
     end,
   })
 end
