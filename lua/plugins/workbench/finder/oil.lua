@@ -32,14 +32,14 @@ return {
       '<leader>eO',
       function()
         local cwd = require('libs.runtime.utils').get_root()
-        require('oil').toggle_float(cwd)
+        require('oil').toggle(cwd)
       end,
       desc = 'Toggle oil(CWD) file browser in float',
     },
     {
       '<leader>eo',
       function()
-        require('oil').toggle_float()
+        require('oil').toggle()
       end,
       desc = 'Toggle oil(BUF) file browser in float',
     }
