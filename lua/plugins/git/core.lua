@@ -17,6 +17,7 @@ return {
       { '<leader>gg', ":Git<cr>",               desc = "Fugitive Git" },
       { '<leader>ga', cmdstr([[!git add %:p]]), desc = "Git add current" },
       { '<leader>gA', cmdstr([[!git add .]]),   desc = "Git add all" },
+      { '<leader>gm', cmdstr([[G commit]]),     desc = "Git commit" },
     },
     cmd = {
       'G',
@@ -31,6 +32,13 @@ return {
       'Gvdiffsplit',
       'Gedit',
       'Gsplit',
+      'Grevert',
+      'Grebase',
+      'Gblame',
+      'Gvdiff',
+      'Gsdiff',
+      'Gdiff',
+      'Gpedit',
     },
   },
   {
