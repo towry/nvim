@@ -34,14 +34,22 @@ return {
         local cwd = require('libs.runtime.utils').get_root()
         require('oil').open(cwd)
       end,
-      desc = 'Open oil(CWD) file browser in float',
+      desc = 'Open oil(CWD) file browser',
     },
     {
       '<leader>eo',
       function()
         require('oil').open()
       end,
-      desc = 'Open oil(BUF) file browser in float',
+      desc = 'Open oil(BUF) file browser',
+    },
+    {
+      -- Hyper+e
+      '<C-S-A-e>',
+      function()
+        require('oil').open()
+      end,
+      desc = 'Open oil(BUF) file browser'
     }
   }
 }

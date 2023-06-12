@@ -4,6 +4,13 @@ return {
     -- used for frecency sort
     'kkharji/sqlite.lua',
   },
+  keys = {
+    {
+      '<C-S-A-p>',
+      [[cmd lua require('legendary').find({ filters = require('legendary.filters').current_mode() })<cr>]],
+      desc = 'Open command palette',
+    }
+  },
   config = function()
     local function my_formatter(item)
       local default_columns = require('legendary.ui.format').default_format(item)
