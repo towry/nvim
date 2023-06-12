@@ -22,6 +22,16 @@ local function setup_basic()
     desc = 'I: Undo, no more background key',
   })
 
+
+  set(
+    'n',
+    '<C-S-A-p>',
+    cmd([[lua require('legendary').find({ filters = require('legendary.filters').current_mode() })]]),
+    {
+      desc = 'Open Command Palette',
+    }
+  )
+
   -- works with kitty
   set('n', '<Char-0xAA>', cmd('write'), {
     desc = 'N: Save current file by <command-s>',
