@@ -2,3 +2,4 @@ spell
 .DS_Store
 log.txt
 lua/settings_env.lua
+lua/user/prebundle.lua
