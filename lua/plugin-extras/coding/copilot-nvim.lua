@@ -2,11 +2,6 @@ local plug = require('libs.runtime.pack').plug
 
 return plug({
   {
-    -- disable vim version.
-    'github/copilot.vim',
-    enabled = false,
-  },
-  {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     event = "InsertEnter",

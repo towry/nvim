@@ -6,7 +6,6 @@ pack.plug({
     lazy = true,
     dependencies = { 'rafamadriz/friendly-snippets', 'saadparwaiz1/cmp_luasnip' },
   },
-  { import = "plugin-extras.coding.copilot-nvim" },
   {
     'hrsh7th/nvim-cmp',
     event = { 'InsertEnter', 'CmdlineEnter' },
@@ -426,6 +425,7 @@ pack.plug({
   {
     -- https://github.com/dermoumi/dotfiles/blob/418de1a521e4f4ac6dc0aa10e75ffb890b0cb908/nvim/lua/plugins/copilot.lua#L4
     'github/copilot.vim',
+    enabled = false,
     event = { 'InsertEnter' },
     keys = {
       { '<C-/>', mode = 'i' },
