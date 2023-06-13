@@ -15,7 +15,7 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
 
 plug({
   'goolord/alpha-nvim',
-  event = "VimEnter",
+  cmd = { 'Alpha', 'AlphaRedraw' },
   opts = function()
     local dashboard = require("alpha.themes.dashboard")
     local Path = require('libs.runtime.path')
@@ -70,24 +70,20 @@ plug({
       })
     end
 
+    local update_extra_info = function()
+      local lazy = require("lazy")
+      local git = require('libs.git.utils')
+      local stats = lazy.stats()
+      local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
+      dashboard.section.footer.val = "⚡ Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
+
+      local br = git.get_git_abbr_head() or 'Not git repo'
+
+      dashboard.opts.layout[3].val = dashboard.opts.layout[3].val .. "   : " .. br
+    end
+
+    update_extra_info()
     require("alpha").setup(dashboard.opts)
-
-    vim.api.nvim_create_autocmd("User", {
-      pattern = "LazyVimStarted",
-      callback = function()
-        local lazy = require("lazy")
-        local git = require('libs.git.utils')
-        local stats = lazy.stats()
-        local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-        dashboard.section.footer.val = "⚡ Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
-
-        local br = git.get_git_abbr_head() or 'Not git repo'
-
-        dashboard.opts.layout[3].val = dashboard.opts.layout[3].val .. "   : " .. br
-
-        pcall(vim.cmd.AlphaRedraw)
-      end,
-    })
   end,
   init = function()
     -- listen enter dashboard event.

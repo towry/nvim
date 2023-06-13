@@ -76,6 +76,17 @@ function M.load_on_startup()
         end
       }
     },
+    {
+      { 'BufWritePost' },
+      {
+        group = 'Notify about config change',
+        pattern = '*/lua/user/plugins/*',
+        callback = function()
+          -- may being called two times due to the auto format write.
+          vim.notify("Config changed, do not forget to run 'PrebundlePlugins' command!")
+        end,
+      }
+    },
   }
   local user_definitions = {
     {
@@ -83,6 +94,17 @@ function M.load_on_startup()
       callback = function()
         au.do_useraucmd(au.user_autocmds.OnLeaveDashboard_User)
       end
+    },
+
+    --- start dashboard
+    {
+      pattern = 'VeryLazy',
+      callback = function()
+        if vim.fn.argc(-1) ~= 0 then
+          return
+        end
+        au.do_useraucmd(au.user_autocmds.DoEnterDashboard_User)
+      end,
     }
   }
 

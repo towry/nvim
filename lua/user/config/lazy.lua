@@ -78,6 +78,7 @@ local function setup(opts)
     if vim.loader then
       vim.loader.reset()
     end
+    vim.notify("PrebundlePlugins DONE!")
   end, {})
 
   if not ok then

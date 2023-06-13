@@ -16,7 +16,7 @@ function M.setup()
   pcall(vim.cmd, 'colorscheme ' .. vim.cfg.ui__theme_name)
 
   require('user.config.autocmd').setup({
-    resize_kitty = true
+    resize_kitty = false
   })
 end
 
