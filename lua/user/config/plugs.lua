@@ -1,3 +1,5 @@
+--LuaCC code block
+
 require("user.plugins.essential")
 require("user.plugins.theme")
 require("user.plugins.dashboard")

@@ -68,6 +68,15 @@ local function setup(opts)
   }, opts or {})
 
   local ok = prepend_lazy()
+
+  vim.api.nvim_create_user_command("PrebundlePlugins", function()
+    require("libs.runtime.bundle").run_command({
+      main = "lua.user.config.plugs",
+      output = "lua/user/plug.bundle.lua",
+      glob_dir = "lua/user/plugins/*.lua",
+    })
+  end, {})
+
   if not ok then
     vim.api.nvim_create_user_command('InstallLazyVim', function()
       install_lazy_vim()
@@ -78,7 +87,9 @@ local function setup(opts)
       end
       require("lazy").setup(opts)
       vim.notify("lazy is ready to user")
-    end)
+    end, {
+
+    })
     -- we want user to decide wether to install or not.
     vim.notify("lazy plugin is not installed, please run :installLazyVim command to install")
     return
