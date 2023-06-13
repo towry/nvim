@@ -98,7 +98,7 @@ plug({
     'jose-elias-alvarez/null-ls.nvim',
   },
   {
-    'lukas-reineke/lsp-format.nvim',
+    'pze/lsp-format.nvim',
     opts = {
       sync = false,
     },
@@ -196,7 +196,7 @@ plug({
         },
         align = {
           bottom = true, -- align fidgets along bottom edge of buffer
-          right = true,  -- align fidgets along right edge of buffer
+          right = true, -- align fidgets along right edge of buffer
         },
         window = {
           relative = 'editor',
