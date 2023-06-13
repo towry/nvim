@@ -1,4 +1,6 @@
-return {
+local plug = require('libs.runtime.pack').plug
+
+return plug({
   {
     -- easily switch between word/text
     'AndrewRadev/switch.vim',
@@ -36,4 +38,4 @@ return {
       }
     end,
   }
-}
+})

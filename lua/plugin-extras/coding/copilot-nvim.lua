@@ -1,4 +1,6 @@
-return {
+local plug = require('libs.runtime.pack').plug
+
+return plug({
   {
     -- disable vim version.
     'github/copilot.vim',
@@ -43,5 +45,20 @@ return {
     config = function(_, opts)
       require("copilot_cmp").setup(opts)
     end
-  }
-}
+  },
+  {
+    "jonahgoldwastaken/copilot-status.nvim",
+    dependencies = { "zbirenbaum/copilot.lua" }, -- or "zbirenbaum/copilot.lua"
+    lazy = true,
+    opts = {
+      icons = {
+        idle = " ",
+        error = "✗ ",
+        offline = " ",
+        warning = "𥉉",
+        loading = " ",
+      },
+      debug = false,
+    }
+  },
+})

@@ -49,33 +49,6 @@ function M.load_on_startup()
         end,
       }
     },
-    -- show cursor line only in active window
-    {
-      { "InsertLeave", "WinEnter" },
-      {
-        group = '_cursorline_active_window',
-        callback = function()
-          local ok, cl = pcall(vim.api.nvim_win_get_var, 0, "auto-cursorline")
-          if ok and cl then
-            vim.wo.cursorline = true
-            vim.api.nvim_win_del_var(0, "auto-cursorline")
-          end
-        end
-      }
-    },
-    {
-      { "InsertEnter", "WinLeave" },
-      {
-        group = '_cursorline_active_window',
-        callback = function()
-          local cl = vim.wo.cursorline
-          if cl then
-            vim.api.nvim_win_set_var(0, "auto-cursorline", cl)
-            vim.wo.cursorline = false
-          end
-        end
-      }
-    },
     {
       { 'BufRead', 'BufNewFile' },
       {
@@ -128,6 +101,36 @@ function M.setup_events_on_startup()
         require('libs.lsp-format.autoformat').enable()
       end
     end
+  })
+
+  --- https://github.com/neovim/neovim/pull/23736#issuecomment-1586082961
+  --- Inlay hint
+  au.register_event(au.events.onLspAttach, {
+    name = "refresh_inlay",
+    callback = function(args)
+      local client = args.client
+      local cap = client.server_capabilities
+      if not cap.inlayHintProvider then
+        return
+      end
+      pcall(function()
+        require('vim.lsp._inlay_hint').refresh()
+      end)
+      au.define_autocmds({
+        {
+          { 'BufWritePost', 'InsertLeave', 'BufEnter' },
+          {
+            group = 'refresh_inlay_after_write',
+            buffer = args.bufnr,
+            callback = function()
+              pcall(function()
+                require('vim.lsp._inlay_hint').refresh()
+              end)
+            end,
+          }
+        }
+      })
+    end,
   })
 end
 

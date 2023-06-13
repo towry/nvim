@@ -13,19 +13,22 @@ local function install_lazy_vim()
   vim.fn.system({ "git", "-C", lazypath, "checkout", "tags/stable" }) -- last stable release
 end
 
-
 local function setup(opts)
   opts = vim.tbl_deep_extend("force", {
     spec = {},
     defaults = { lazy = true },
     dev = { patterns = jit.os:find("Windows") and {} or {} },
-    install = { colorscheme = { vim.cfg.ui__theme_name } },
+    install = { missing = false, colorscheme = { vim.cfg.ui__theme_name } },
     ui = {
       icons = {
         lazy = ' ',
         plugin = ' ',
       },
     },
+    git = {
+      timeout = 60,
+    },
+    concurrency = 4,
     custom_keys = {
       -- open lazygit log
       ['<localleader>l'] = function(plugin)
@@ -65,6 +68,18 @@ local function setup(opts)
   }, opts or {})
 
   local ok = prepend_lazy()
+
+  vim.api.nvim_create_user_command("PrebundlePlugins", function()
+    require("libs.runtime.bundle").run_command({
+      main = "user.config.plugs",
+      output = "user/plugins_bundle.lua",
+      glob_dir = "user/plugins/*.lua",
+    })
+    if vim.loader then
+      vim.loader.reset()
+    end
+  end, {})
+
   if not ok then
     vim.api.nvim_create_user_command('InstallLazyVim', function()
       install_lazy_vim()
@@ -75,7 +90,9 @@ local function setup(opts)
       end
       require("lazy").setup(opts)
       vim.notify("lazy is ready to user")
-    end)
+    end, {
+
+    })
     -- we want user to decide wether to install or not.
     vim.notify("lazy plugin is not installed, please run :installLazyVim command to install")
     return

@@ -1,6 +1,7 @@
 return {
   -- animations
   {
+    enabled = false,
     "echasnovski/mini.animate",
     event = { 'VeryLazy' },
     opts = function()

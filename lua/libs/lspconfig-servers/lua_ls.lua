@@ -6,8 +6,11 @@ M.settings = {
   },
   Lua = {
     diagnostics = {
-      globals = { 'vim', 'bit', 'packer_plugins' },
+      globals = { 'vim', 'bit', 'Ty' },
     },
+    hint = {
+      enable = true,
+    }
   },
 }
 

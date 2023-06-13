@@ -1,4 +1,6 @@
-return {
+local plug = require('libs.runtime.pack').plug
+
+return plug({
   {
     'pze/ChatGPT.nvim',
     cmd = { 'ChatGPT', 'ChatGPTActAs' },
@@ -31,4 +33,4 @@ return {
       },
     }
   }
-}
+})

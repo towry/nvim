@@ -1,5 +1,6 @@
 return {
   ---runtime
+  runtime__starts_in_buffer = vim.fn.argc(-1) ~= 0,
   runtime__disable_builtin_plugins = {
     "gzip",
     "zip",
@@ -140,6 +141,10 @@ return {
   misc__buf_exclude = {
     "netrw",
     "tutor",
+    'quickfix',
+    'nofile',
+    'help',
+    'prompt',
   },
   misc__ft_exclude = {
     "alpha",
@@ -154,6 +159,12 @@ return {
     "Trouble",
     "NvimTree",
     "qf",
+    "harpoon",
+    "Outline",
+    "fugitive",
+    "Git",
+    -- folke/noice
+    "noice",
   },
   ---plugins specific.
   plugin__fidget_enable = true,
