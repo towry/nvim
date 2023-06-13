@@ -52,7 +52,8 @@ plug({
   },
   {
     'kwkarlwang/bufresize.nvim',
-    event = 'VeryLazy',
+    event = 'WinResized',
+    lazy = true,
     config = true,
   },
 
@@ -509,7 +510,6 @@ plug({
         use_diagnostic_signs = false, -- enabling this will use the signs defined in your lsp client
       })
     end,
-
     init = function()
       local au = require('libs.runtime.au')
 
