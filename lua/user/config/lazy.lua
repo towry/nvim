@@ -71,10 +71,13 @@ local function setup(opts)
 
   vim.api.nvim_create_user_command("PrebundlePlugins", function()
     require("libs.runtime.bundle").run_command({
-      main = "lua.user.config.plugs",
-      output = "lua/user/plug.bundle.lua",
-      glob_dir = "lua/user/plugins/*.lua",
+      main = "user.config.plugs",
+      output = "user/plugins_bundle.lua",
+      glob_dir = "user/plugins/*.lua",
     })
+    if vim.loader then
+      vim.loader.reset()
+    end
   end, {})
 
   if not ok then

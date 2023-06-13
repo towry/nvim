@@ -84,11 +84,11 @@ plug({
       end
 
       au.do_useraucmd(au.user_autocmds.LspConfigDone_User)
-      require('plugins.editor.lsp.utils.diagnostic').setup()
+      require('libs.lspconfig.diagnostic').setup()
     end,
     init = function()
       au.on_lsp_attach(function(client, bufnr)
-        require('plugins.editor.lsp.utils.lsp-keymaps').setup_keybinding(client, bufnr)
+        require('libs.lspconfig.keymaps').setup_keybinding(client, bufnr)
       end)
     end,
   },
