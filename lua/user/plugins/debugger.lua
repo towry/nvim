@@ -397,7 +397,7 @@ pack.plug({
     'SnipLive',
   },
   keys = {
-    { '<leader>rf', '<cmd>lua require("plugins.workbench.workflow.hydra.sniprun").open()<cr>',
+    { '<leader>rf', '<cmd>lua require("libs.hydra.sniprun").open()<cr>',
       { desc = 'Open sniprun', mode = { 'n' } } },
   },
   -- https://michaelb.github.io/sniprun/sources/README.html#installation
@@ -408,7 +408,7 @@ pack.plug({
     },
   },
   init = function()
-    vim.keymap.set('v', 'f', '<cmd>lua require("plugins.workbench.workflow.hydra.sniprun").open_visual()<cr>', {
+    vim.keymap.set('v', 'f', '<cmd>lua require("libs.hydra.sniprun").open_visual()<cr>', {
       desc = 'Open sniprun'
     })
   end,

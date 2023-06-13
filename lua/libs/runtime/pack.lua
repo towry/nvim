@@ -1,6 +1,9 @@
 local repos = {}
 
 local function plugin(spec)
+  if spec and spec.enabled == false then
+    return
+  end
   table.insert(repos, spec)
 end
 ---@description Register spec into repos table, if spec is table[] type, recursively call this function
@@ -13,6 +16,8 @@ local function plug(spec)
   else
     plugin(spec)
   end
+
+  return spec
 end
 
 return {

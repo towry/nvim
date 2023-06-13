@@ -1,4 +1,6 @@
-return {
+local plug = require('libs.runtime.pack').plug
+
+return plug({
   {
     'keaising/im-select.nvim',
     event = { 'InsertEnter', 'CmdlineEnter', 'InsertLeave', },
@@ -13,4 +15,4 @@ return {
       })
     end,
   }
-}
+})

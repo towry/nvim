@@ -1,4 +1,6 @@
-return {
+local plug = require('libs.runtime.pack').plug
+
+return plug({
   {
     -- disable vim version.
     'github/copilot.vim',
@@ -59,4 +61,4 @@ return {
       debug = false,
     }
   },
-}
+})

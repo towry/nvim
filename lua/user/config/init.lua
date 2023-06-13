@@ -7,7 +7,7 @@ function M.setup()
   require('user.config.keymaps').setup()
 
   require('user.config.lazy').setup({
-    spec = require('user.config.plugins')
+    spec = require('user.config.plugs'),
   })
   pcall(vim.cmd, 'colorscheme ' .. vim.cfg.ui__theme_name)
 
