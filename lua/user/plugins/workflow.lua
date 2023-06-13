@@ -1,3 +1,4 @@
+-- local au = require('libs.runtime.au')
 local plug = require('libs.runtime.pack').plug
 local cmdstr = require('libs.runtime.keymap').cmdstr
 
@@ -135,7 +136,6 @@ plug({
     -- Convenience file operations for neovim, written in lua.
     "chrisgrieser/nvim-genghis",
     init = function()
-      local au = require('libs.runtime.au')
       au.define_user_autocmd({
         pattern = au.user_autocmds.LegendaryConfigDone,
         callback = function()
