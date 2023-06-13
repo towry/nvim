@@ -1,4 +1,4 @@
--- local au = require('libs.runtime.au')
+local au = require('libs.runtime.au')
 local plug = require('libs.runtime.pack').plug
 local cmdstr = require('libs.runtime.keymap').cmdstr
 
@@ -511,8 +511,6 @@ plug({
       })
     end,
     init = function()
-      local au = require('libs.runtime.au')
-
       au.define_user_autocmd({
         group = "setup_trouble_lg",
         pattern = au.user_autocmds.LegendaryConfigDone,

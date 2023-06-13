@@ -6,9 +6,11 @@ local original_virtual_text_function_show = vim.diagnostic.handlers.virtual_text
 
 local DiagSourceToIcon = {
   ['Lua Diagnostics'] = 'icon.lua',
+  ['ts'] = 'icon.ts',
 }
 local DiagSourceNameFormatMap = {
-  ['Lua Diagnostics'] = 'LuaLs',
+  ['Lua Diagnostics'] = 'lua_ls',
+  ['ts'] = 'ts',
 }
 local DiagSourceToIconCache = {}
 
