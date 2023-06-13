@@ -9,8 +9,8 @@ local function prepend_lazy()
 end
 
 local function install_lazy_vim()
-  vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", lazypath })
-  vim.fn.system({ "git", "-C", lazypath, "checkout", "tags/stable" }) -- last stable release
+  print(vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", lazypath }))
+  print(vim.fn.system({ "git", "-C", lazypath, "checkout", "tags/stable" })) -- last stable release
 end
 
 local function setup(opts)
