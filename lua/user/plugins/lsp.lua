@@ -100,7 +100,7 @@ plug({
   {
     'pze/lsp-format.nvim',
     opts = {
-      sync = false,
+      sync = true,
     },
   },
 
@@ -196,7 +196,7 @@ plug({
         },
         align = {
           bottom = true, -- align fidgets along bottom edge of buffer
-          right = true, -- align fidgets along right edge of buffer
+          right = true,  -- align fidgets along right edge of buffer
         },
         window = {
           relative = 'editor',
@@ -236,7 +236,6 @@ plug({
       local opts = {
         tools = {
           executor = require("rust-tools/executors").termopen,
-
           -- These apply to the default RustSetInlayHints command
           inlay_hints = {
             auto = true,
@@ -248,7 +247,6 @@ plug({
             right_align = false,
             right_align_padding = 7,
           },
-
           hover_actions = {
             auto_focus = true,
           },
