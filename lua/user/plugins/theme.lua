@@ -55,3 +55,13 @@ plug({
     end
   }
 })
+
+plug({
+  'projekt0n/github-nvim-theme',
+  lazy = not vim.startswith(vim.cfg.ui__theme_name, 'github'),
+  priority = 1000,
+  opts = {},
+  config = function(_, opts)
+    require('github-theme').setup(otps)
+  end
+})
