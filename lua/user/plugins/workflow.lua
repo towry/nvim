@@ -20,6 +20,7 @@ plug({
     dependencies = {
       'anuvyklack/middleclass',
     },
+    event = { 'WinLeave', 'WinNew' },
     opts = {},
     lazy = true,
     cmd = {
