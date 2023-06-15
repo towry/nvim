@@ -19,5 +19,6 @@ require("user.plugins.motion")
 require("user.plugins.workflow")
 require("plugin-extras.coding.copilot-nvim")
 require("plugin-extras.coding.word-switch")
+require("plugin-extras.workflow.zenmode")
 
 return require('libs.runtime.pack').repos
