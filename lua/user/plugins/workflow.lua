@@ -21,7 +21,12 @@ plug({
       'anuvyklack/middleclass',
     },
     event = { 'WinLeave', 'WinNew' },
-    opts = {},
+    opts = {
+      ignore = {
+        buftype = vim.cfg.misc__buf_exclude,
+        filetype = vim.cfg.misc__ft_exclude,
+      }
+    },
     lazy = true,
     cmd = {
       'WindowsMaximize',
