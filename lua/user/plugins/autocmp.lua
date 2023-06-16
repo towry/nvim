@@ -244,7 +244,7 @@ pack.plug({
           {
             name = 'buffer',
             priority = 6,
-            keyword_length = 4,
+            keyword_length = 3,
             option = buffer_option,
             max_item_count = 5,
           },
