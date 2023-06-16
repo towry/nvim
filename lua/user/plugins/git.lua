@@ -113,7 +113,8 @@ plug({
 
   {
     'akinsho/git-conflict.nvim',
-    tag = 'v1.0.0',
+    event = au.user_autocmds.FileOpened_User,
+    version = '*',
     keys = {
       {
         '<leader>gc',
