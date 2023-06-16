@@ -99,6 +99,7 @@ plug({
   },
   {
     'pze/lsp-format.nvim',
+    enabled = false,
     opts = {
       sync = true,
     },

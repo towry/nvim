@@ -53,7 +53,9 @@ function M.format(bufnr, opts)
     fmt_opts.name = name
   end
 
-  vim.api.nvim_echo({ { "format with " .. (name or "default"), "Comment" } }, true, {})
+  if not opts.auto then
+    vim.api.nvim_echo({ { "format with " .. (name or "default"), "Comment" } }, true, {})
+  end
   vim.lsp.buf.format(fmt_opts)
 end
 
