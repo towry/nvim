@@ -40,7 +40,7 @@ function M.toggle()
 end
 
 local function attach_autoformat_with_autocmd(_client, bufnr)
-  local formatter_name = require('libs.ls-format').current_formatter_name(bufnr)
+  local formatter_name = require('libs.lsp-format').current_formatter_name(bufnr)
   if not formatter_name then
     return
   end
