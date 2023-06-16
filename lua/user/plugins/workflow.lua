@@ -1,3 +1,4 @@
+local au = require('libs.runtime.au')
 local plug = require('libs.runtime.pack').plug
 local cmdstr = require('libs.runtime.keymap').cmdstr
 
@@ -19,6 +20,7 @@ plug({
     dependencies = {
       'anuvyklack/middleclass',
     },
+    event = { 'WinLeave', 'WinNew' },
     opts = {},
     lazy = true,
     cmd = {
@@ -52,7 +54,8 @@ plug({
   },
   {
     'kwkarlwang/bufresize.nvim',
-    event = 'VeryLazy',
+    event = 'WinResized',
+    lazy = true,
     config = true,
   },
 
@@ -134,7 +137,6 @@ plug({
     -- Convenience file operations for neovim, written in lua.
     "chrisgrieser/nvim-genghis",
     init = function()
-      local au = require('libs.runtime.au')
       au.define_user_autocmd({
         pattern = au.user_autocmds.LegendaryConfigDone,
         callback = function()
@@ -509,10 +511,7 @@ plug({
         use_diagnostic_signs = false, -- enabling this will use the signs defined in your lsp client
       })
     end,
-
     init = function()
-      local au = require('libs.runtime.au')
-
       au.define_user_autocmd({
         group = "setup_trouble_lg",
         pattern = au.user_autocmds.LegendaryConfigDone,

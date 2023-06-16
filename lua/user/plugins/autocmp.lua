@@ -6,7 +6,6 @@ pack.plug({
     lazy = true,
     dependencies = { 'rafamadriz/friendly-snippets', 'saadparwaiz1/cmp_luasnip' },
   },
-  { import = "plugin-extras.coding.copilot-nvim" },
   {
     'hrsh7th/nvim-cmp',
     event = { 'InsertEnter', 'CmdlineEnter' },
@@ -100,11 +99,13 @@ pack.plug({
       local buffer_option = {
         -- Complete from all visible buffers (splits)
         get_bufnrs = function()
-          local bufs = {}
-          for _, win in ipairs(vim.api.nvim_list_wins()) do
-            bufs[vim.api.nvim_win_get_buf(win)] = true
-          end
-          return vim.tbl_keys(bufs)
+          --- from all loaded buffers
+          return vim.api.nvim_list_bufs()
+          -- local bufs = {}
+          -- for _, win in ipairs(vim.api.nvim_list_wins()) do
+          --   bufs[vim.api.nvim_win_get_buf(win)] = true
+          -- end
+          -- return vim.tbl_keys(bufs)
         end,
       }
 
@@ -243,7 +244,7 @@ pack.plug({
           {
             name = 'buffer',
             priority = 6,
-            keyword_length = 4,
+            keyword_length = 3,
             option = buffer_option,
             max_item_count = 5,
           },
@@ -426,6 +427,7 @@ pack.plug({
   {
     -- https://github.com/dermoumi/dotfiles/blob/418de1a521e4f4ac6dc0aa10e75ffb890b0cb908/nvim/lua/plugins/copilot.lua#L4
     'github/copilot.vim',
+    enabled = false,
     event = { 'InsertEnter' },
     keys = {
       { '<C-/>', mode = 'i' },

@@ -20,12 +20,12 @@ M.open_git_conflict_hydra = function()
       }
     },
     heads = {
-      { 'b', '<cmd>GitConflictChooseBoth<CR>',   { desc = 'choose both' } },
-      { 'x', '<cmd>GitConflictChooseNone<CR>',   { desc = 'choose none' } },
-      { 'n', '<cmd>GitConflictNextConflict<CR>', { desc = 'move to next conflict', exit = true } },
-      { 'o', '<cmd>GitConflictChooseOurs<CR>',   { desc = 'choose ours' } },
-      { 'p', '<cmd>GitConflictPrevConflict<CR>', { desc = 'move to prev conflict', exit = true } },
-      { 't', '<cmd>GitConflictChooseTheirs<CR>', { desc = 'choose theirs' } },
+      { 'b', '<cmd>GitConflictChooseBoth<CR>',   { desc = 'choose both', exit = false, } },
+      { 'x', '<cmd>GitConflictChooseNone<CR>',   { desc = 'choose none', exit = true, } },
+      { 'n', '<cmd>GitConflictNextConflict<CR>', { desc = 'move to next conflict', exit = false } },
+      { 'o', '<cmd>GitConflictChooseOurs<CR>',   { desc = 'choose ours', exit = false, } },
+      { 'p', '<cmd>GitConflictPrevConflict<CR>', { desc = 'move to prev conflict', exit = false } },
+      { 't', '<cmd>GitConflictChooseTheirs<CR>', { desc = 'choose theirs', exit = false } },
       { 'q', nil,                                { exit = true, nowait = true, desc = 'exit' } },
     },
   }):activate()

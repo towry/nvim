@@ -286,7 +286,7 @@ plug({
       ["<C-t>"] = "actions.select_tab",
       ["<C-p>"] = "actions.preview",
       ["<C-c>"] = "actions.close",
-      ["<C-l>"] = "actions.refresh",
+      ["<C-r>"] = "actions.refresh",
       ["-"] = "actions.parent",
       ["_"] = "actions.open_cwd",
       ["`"] = "actions.cd",
@@ -461,9 +461,7 @@ plug({
     },
   },
   config = function()
-    local keymap = require('libs.runtime.keymap')
     local au = require('libs.runtime.au')
-    local has_plugin = require('libs.runtime.utils').has_plugin
     local actions = require('telescope.actions')
     local action_state = require('telescope.actions.state')
     local lga_actions = require('telescope-live-grep-args.actions')

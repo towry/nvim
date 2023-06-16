@@ -98,9 +98,10 @@ plug({
     'jose-elias-alvarez/null-ls.nvim',
   },
   {
-    'lukas-reineke/lsp-format.nvim',
+    'pze/lsp-format.nvim',
+    enabled = false,
     opts = {
-      sync = false,
+      sync = true,
     },
   },
 
@@ -236,7 +237,6 @@ plug({
       local opts = {
         tools = {
           executor = require("rust-tools/executors").termopen,
-
           -- These apply to the default RustSetInlayHints command
           inlay_hints = {
             auto = true,
@@ -248,7 +248,6 @@ plug({
             right_align = false,
             right_align_padding = 7,
           },
-
           hover_actions = {
             auto_focus = true,
           },

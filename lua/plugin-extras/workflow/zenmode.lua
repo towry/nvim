@@ -1,4 +1,6 @@
-return {
+local pack = require('libs.runtime.pack')
+
+return pack.plug({
   {
     "folke/zen-mode.nvim",
     cmd = { 'ZenMode' },
@@ -9,4 +11,4 @@ return {
     },
     opts = {}
   }
-}
+})
