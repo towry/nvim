@@ -14,6 +14,7 @@ plug({
   config = function()
     require('user.config.options').setup_statusline()
     local auto_format_disabled = require('libs.lsp-format.autoformat').disabled
+    local format_utils         = require('libs.lsp-format')
     local Buffer               = require('libs.runtime.buffer')
     local terms                = require('libs.statusline.lualine.terminal_component')
 
@@ -144,7 +145,8 @@ plug({
               if auto_format_disabled() then
                 icon = ' '
               end
-              return string.format('%s%s', icon, vim.b[0].formatter_name)
+              local ftr_name, specific_ftr_name = format_utils.current_formatter_name(0)
+              return string.format('%s%s', icon, specific_ftr_name or ftr_name)
             end,
             cond = function()
               return vim.b[0].formatter_name ~= nil
