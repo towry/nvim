@@ -41,13 +41,21 @@ end
 
 local function attach_autoformat_with_autocmd(_client, bufnr)
   local au = require('libs.runtime.au')
+  local group = vim.api.nvim_create_augroup('_lsp_format_' .. bufnr, {
+    clear = true,
+  })
+  vim.api.nvim_clear_autocmds({
+    group = group,
+    buffer = bufnr,
+  })
   au.define_autocmds({
     {
       { 'BufWritePre' },
       {
-        group = '_lsp_format',
+        group = group,
         buffer = bufnr,
         nested = false,
+        desc = "Auto format for buffer: " .. bufnr,
         callback = function()
           require('libs.lsp-format').format(bufnr, {
             auto = true,

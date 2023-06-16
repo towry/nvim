@@ -8,6 +8,7 @@ function M.choose_formatter_for_buf(client, buf)
   local ft = vim.api.nvim_get_option_value("filetype", {
     buf = buf,
   })
+
   if ft_formatter[ft] then
     vim.b[buf].formatter_name = ft_formatter[ft]
     return
@@ -54,7 +55,13 @@ function M.format(bufnr, opts)
   end
 
   if not opts.auto then
-    vim.api.nvim_echo({ { "format with " .. (name or "default"), "Comment" } }, true, {})
+    vim.api.nvim_echo({ { "format with " .. (name or "default"), "Comment" } }
+    , true, {})
+  else
+    vim.defer_fn(function()
+      vim.api.nvim_echo({ { " written! also format with " .. (name or "default"), "Comment" } }
+      , true, {})
+    end, 100)
   end
   vim.lsp.buf.format(fmt_opts)
 end

@@ -113,6 +113,7 @@ function M.load_on_startup()
 end
 
 function M.setup_events_on_startup()
+  -- will be fired at each client's attch
   au.register_event(au.events.onLspAttach, {
     name = "setup_formatter_on_buf",
     callback = function(args)
