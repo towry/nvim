@@ -66,8 +66,14 @@ function M.format(bufnr, opts)
   vim.lsp.buf.format(fmt_opts)
 end
 
+---@return string|nil
 function M.current_formatter_name(bufnr)
-  return vim.api.nvim_buf_get_var(bufnr or 0, 'formatter_name')
+  local ok, value = pcall(vim.api.nvim_buf_get_var, bufnr or 0, 'formatter_name')
+  if ok then
+    return value
+  else
+    return nil
+  end
 end
 
 return M
