@@ -41,14 +41,14 @@ plug({
         globalstatus = true,
         -- component_separators = '│',
         component_separators = '',
-        -- section_separators = { left = '', right = '' },
-        section_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
+        -- section_separators = { left = '', right = '' },
         disabled_filetypes = { winbar = { 'lazy', 'alpha' }, statusline = { 'dashboard', 'lazy', 'alpha' } },
       },
       winbar = {
         lualine_a = {
           {
-            separator = { left = '', right = '' },
+            separator = { right = '', left = '' },
             left_padding = 2,
             'filename',
             path = 1,
@@ -62,7 +62,7 @@ plug({
       inactive_winbar = {
         lualine_a = {
           {
-            separator = { left = '', right = '' },
+            separator = { left = '', right = '' },
             left_padding = 2,
             'filename',
             path = 1,
@@ -76,7 +76,7 @@ plug({
       sections = {
         lualine_a = {
           {
-            separator = { left = '' },
+            separator = { left = '', },
             right_padding = 2,
             function()
               local unsaved_count = #Buffer.unsaved_list()
@@ -142,7 +142,7 @@ plug({
             function()
               local icon = '  '
               if auto_format_disabled() then
-                icon = ' '
+                icon = ' '
               end
               return string.format('%s%s', icon, vim.b[0].formatter_name)
             end,
@@ -165,7 +165,7 @@ plug({
           { 'filetype', colored = true, icon_only = true },
         },
         lualine_y = { 'filesize', 'progress' },
-        lualine_z = { { 'location', separator = { right = '', left = '' }, left_padding = 0 } },
+        lualine_z = { { 'location', separator = { left = '', right = '' }, left_padding = 0 } },
       },
       inactive_sections = {
         lualine_a = {},
