@@ -345,6 +345,9 @@ pack.plug({
         },
         o = {
           name = "Overseer Runner"
+        },
+        t = {
+          name = 'Test runner',
         }
       }
     }, {
@@ -417,7 +420,6 @@ pack.plug({
       },
     })
   end,
-
   init = function()
     local au = require('libs.runtime.au')
     au.define_autocmds({

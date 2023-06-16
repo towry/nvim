@@ -1,3 +1,4 @@
+local cmdstr = require('libs.runtime.keymap').cmdstr
 local pack = require('libs.runtime.pack')
 
 ---- dap
@@ -250,6 +251,20 @@ pack.plug({
     'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter',
     'haydenmeade/neotest-jest',
+  },
+  keys = {
+    {
+      '<leader>rtn', cmdstr([[lua require("neotest").run.run()]]), desc = 'Run the nearest test'
+    },
+    {
+      '<leader>rtf', cmdstr([[lua require("neotest").run.run(vim.fn.expand("%"))]]), desc = 'Run the current file'
+    },
+    {
+      '<leader>rtd', cmdstr([[lua require("neotest").run({strategy = "dap"})]]), desc = 'Debug the nearest test'
+    },
+    {
+      '<leader>rtx', cmdstr([[lua require("neotest").stop()]]), desc = 'Stop the nearest test'
+    },
   },
   config = function()
     local present, neotest = pcall(require, 'neotest')
