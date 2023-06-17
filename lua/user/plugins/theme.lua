@@ -65,3 +65,16 @@ plug({
   priority = 1000,
   config = false
 })
+
+plug({
+  'ayu-theme/ayu-vim',
+  lazy = not string.match(vim.cfg.ui__theme_name, 'ayu'),
+  priority = 1000,
+  config = false,
+  init = function()
+    -- local clr = vim.opt.background:get()
+    -- local cmd = 'let ayucolor=' .. '"' .. clr .. '"'
+    -- vim.cmd(cmd)
+    -- vim.cmd('colorscheme ayu')
+  end,
+})
