@@ -148,12 +148,12 @@ plug({
               if auto_format_disabled() then
                 icon = ' '
               end
-              local ftr_name, specific_ftr_name = format_utils.current_formatter_name(0)
-              return string.format('%s%s', icon, specific_ftr_name or ftr_name)
+              local ftr_name, impl_ftr_name = format_utils.current_formatter_name(0)
+              if not ftr_name and not impl_ftr_name then
+                return ''
+              end
+              return string.format('%s%s', icon, impl_ftr_name or ftr_name)
             end,
-            cond = function()
-              return vim.b[0].formatter_name ~= nil
-            end
           },
           --- dap
           {
