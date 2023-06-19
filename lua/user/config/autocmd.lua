@@ -20,8 +20,10 @@ function M.load_on_startup()
             au.do_useraucmd(au.user_autocmds.FileOpened_User)
 
             vim.defer_fn(function()
-              au.do_useraucmd(au.user_autocmds.FileOpenedAfter_User)
-            end, 30)
+              vim.schedule(function()
+                au.do_useraucmd(au.user_autocmds.FileOpenedAfter_User)
+              end)
+            end, 10)
           end
         end,
       },

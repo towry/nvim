@@ -17,7 +17,7 @@ end
 plug({
   {
     'williamboman/mason.nvim',
-    cmd = { 'Mason', },
+    cmd = { 'Mason', 'MasonInstall', 'MasonLog', 'MasonUpdate', 'MasonUninstall', 'MasonUninstallAll' },
     opts = {
       PATH = 'prepend',
       ui = {

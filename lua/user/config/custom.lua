@@ -1,6 +1,6 @@
 local user_cfg = {
-  -- ui__theme_name = "Forestbones",
-  ui__theme_name = "ayu",
+  ui__theme_name = "Neobones",
+  -- ui__theme_name = "ayu",
   workbench__lualine_theme = 'auto',
 }
 

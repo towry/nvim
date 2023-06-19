@@ -17,6 +17,8 @@ M.builtin_autocmds = {
   FileOpen = { "BufRead", "BufNewFile" },
 }
 M.user_autocmds = setmetatable({
+  -- after bufreadpost and is verylazy.
+  BufVeryLazy = "BufVeryLazy",
   -- File is opened.
   FileOpened = "FileOpened",
   -- Wait few moments after file is opened.

@@ -50,7 +50,7 @@ plug({
       -- vai to select current context!
       -- 'kiyoon/treesitter-indent-object.nvim',
     },
-    event = { 'BufReadPost', 'BufNewFile' },
+    event = { 'BufRead', 'BufNewFile' },
     config = function()
       local Buffer = require('libs.runtime.buffer')
       local disabled = function(lang, bufnr)
@@ -309,7 +309,7 @@ plug({
         '[td', "<cmd>lua require('todo-comments').jump_prev()<CR>", desc = 'Jump to next todo',
       }
     },
-    event = au.user_autocmds.FileOpened_User,
+    event = au.user_autocmds.FileOpenedAfter_User,
     config = function()
       local todo_comments = require('todo-comments')
 
@@ -339,7 +339,7 @@ plug({
   },
   {
     'm-demare/hlargs.nvim',
-    event = 'BufReadPost',
+    event = au.user_autocmds.FileOpenedAfter_User,
     opts = {
       color = '#F7768E',
     }

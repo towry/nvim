@@ -53,7 +53,7 @@ plug({
   {
     -- git runtimes. ft etc.
     'tpope/vim-git',
-    event = au.user_autocmds.FileOpened_User,
+    event = au.user_autocmds.FileOpenedAfter_User,
     cond = function() return true end,
   },
   {
@@ -113,7 +113,7 @@ plug({
 
   {
     'akinsho/git-conflict.nvim',
-    event = au.user_autocmds.FileOpened_User,
+    event = au.user_autocmds.FileOpenedAfter_User,
     version = '*',
     keys = {
       {
@@ -218,7 +218,7 @@ plug({
         'gh', '<cmd>lua require("libs.hydra.git").open_git_signs_hydra()<cr>'
       }
     },
-    event = au.user_autocmds.FileOpened_User,
+    event = au.user_autocmds.FileOpenedAfter_User,
     config = function()
       local gitsigns_current_blame_delay = 0
 

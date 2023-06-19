@@ -16,7 +16,7 @@ plug({
     enabled = false,
     cond = vim.o.termguicolors == true,
     opts = {},
-    event = au.user_autocmds.FileOpened_User,
+    event = au.user_autocmds.FileOpenedAfter_User,
   },
 
   {

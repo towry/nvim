@@ -89,7 +89,7 @@ plug({
   --- open buffer last place.
   {
     'ethanholz/nvim-lastplace',
-    event = { 'BufRead', },
+    event = { 'User FileOpened', },
     opts = {
       lastplace_ignore_buftype = vim.cfg.misc__buf_exclude,
       lastplace_ignore_filetype = vim.cfg.misc__ft_exclude,
