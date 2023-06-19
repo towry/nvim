@@ -125,7 +125,10 @@ plug({
           'searchcount',
         },
         -- filename is displayed by the incline.
-        lualine_c = { 'diff', 'diagnostics', },
+        lualine_c = {
+          'diff',
+          { 'diagnostics', update_in_insert = false, symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' } }
+        },
         lualine_x = {
           "overseer",
           -- copilot status
