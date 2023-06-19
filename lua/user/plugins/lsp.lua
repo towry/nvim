@@ -105,15 +105,6 @@ plug({
     },
   },
 
-  ---- diagnostic map
-  {
-    'doums/dmap.nvim',
-    event = { 'LspAttach' },
-    opts = {
-      ignore_filetypes = vim.cfg.misc__ft_exclude,
-    }
-  },
-
   ---- lua
   {
     'mrjones2014/lua-gf.nvim',
