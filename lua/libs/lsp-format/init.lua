@@ -5,6 +5,7 @@ local buf_formatters = {}
 
 local M = {}
 
+--- @perf use ft instead of specific bufnr.
 function M.choose_formatter_for_buf(client, buf)
   if buf == 0 then
     buf = vim.api.nvim_get_current_buf()
