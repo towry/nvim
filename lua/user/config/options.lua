@@ -93,7 +93,7 @@ function M.init_interface()
   if vim.fn.executable('rg') then
     -- credit: https://github.com/nicknisi/dotfiles/blob/1360edda1bbb39168637d0dff13dd12c2a23d095/config/nvim/init.lua#L73
     -- if ripgrep installed, use that as a grepper
-    o.grepprg = "rg --vimgrep --no-heading --smart-case --"
+    o.grepprg = "rg --vimgrep --color=never --with-filename --line-number --no-heading --smart-case --"
     o.grepformat = "%f:%l:%c:%m,%f:%l:%m"
   end
 end

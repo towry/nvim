@@ -482,7 +482,7 @@ plug({
 
     require('telescope').setup({
       defaults = {
-        winblend = 15,
+        winblend = 0,
         cache_picker = {
           num_pickers = 5,
         },
