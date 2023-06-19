@@ -31,9 +31,9 @@ Ty.ToggleTheme = function(mode)
 
   if vim.o.background == 'light' then
     vim.o.background = 'dark'
-    Ty.NOTIFY('Light out 🙅')
+    Ty.NOTIFY('Light out 🌛 ')
   else
     vim.o.background = 'light'
-    Ty.NOTIFY('Light on 😛')
+    Ty.NOTIFY('Light on 🌞 ')
   end
 end
