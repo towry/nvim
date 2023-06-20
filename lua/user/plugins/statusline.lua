@@ -250,30 +250,19 @@ plug({
   },
 
   {
-    'echasnovski/mini.map',
+    'lewis6991/satellite.nvim',
     version = '*',
-    event = 'VeryLazy',
-    -- event = au.user_autocmds.FileOpenedAfter_User,
+    -- event = 'VeryLazy',
+    cmd = { 'SatelliteEnable', 'SatelliteDisable', 'SatelliteRefresh' },
+    event = au.user_autocmds.FileOpenedAfter_User,
     opts = {
-      -- Symbols used to display data
-      symbols = {
-        -- Encode symbols. See `:h MiniMap.config` for specification and
-        -- `:h MiniMap.gen_encode_symbols` for pre-built ones.
-        -- Default: solid blocks with 3x2 resolution.
-        encode = nil,
-        -- Scrollbar parts for view and line. Use empty string to disable any.
-        scroll_line = '█',
-        scroll_view = '┃',
-      },
-      window = {
-        focusable = false,
-        side = 'right',
-        width = 10,
-        winblend = 10,
-      }
+      current_only = false,
+      winblend = 50,
+      zindex = 40,
+      excluded_filetypes = vim.cfg.misc__ft_exclude,
     },
     config = function(_, opts)
-      require('mini.map').setup(opts)
+      require('satellite').setup(opts)
     end
   }
 })

@@ -24,12 +24,12 @@ local function setup_basic()
     desc = 'Start write cmd',
     expr = false,
   })
-  set('n', '<C-U>', '<C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y>', {
-    desc = "Smooth scrolling up"
-  })
-  set('n', '<C-D>', '<C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E>', {
-    desc = 'Smooth scrolling down',
-  })
+  -- set('n', '<C-U>', '<C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y>', {
+  --   desc = "Smooth scrolling up"
+  -- })
+  -- set('n', '<C-D>', '<C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E>', {
+  --   desc = 'Smooth scrolling down',
+  -- })
 
   set('i', '<C-e>', '<End>', {
     desc = 'Insert mode: move to end of line',
