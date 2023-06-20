@@ -10,6 +10,16 @@ local function setup_basic()
     expr = false,
     noremap = true,
   })
+  set('n', ';q', '<C-u>:q', {
+    desc = 'Start quit command',
+    expr = false,
+  })
+  set('n', ';;', '<C-u>:', {
+    desc = 'Start command line',
+    expr = false,
+    nowait = true,
+    noremap = false,
+  })
   set('n', '<C-U>', '<C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y>', {
     desc = "Smooth scrolling up"
   })
