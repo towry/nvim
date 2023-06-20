@@ -20,6 +20,10 @@ local function setup_basic()
     nowait = true,
     noremap = false,
   })
+  set('n', ';w', '<C-u>:w', {
+    desc = 'Start write cmd',
+    expr = false,
+  })
   set('n', '<C-U>', '<C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y>', {
     desc = "Smooth scrolling up"
   })
