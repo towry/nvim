@@ -5,6 +5,11 @@ local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 local M = {}
 
 local function setup_basic()
+  set('n', ';g', '<C-u>:G ', {
+    desc = 'Start Git command',
+    expr = false,
+    noremap = true,
+  })
   set('n', '<C-U>', '<C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y>', {
     desc = "Smooth scrolling up"
   })
