@@ -3,7 +3,7 @@ local o = vim.opt
 local g = vim.g
 
 function M.init_edit()
-  o.inccommand = 'nosplit'                   -- preview incremental substitute
+  o.inccommand = 'split'                     -- preview incremental substitute
   o.clipboard = { 'unnamed', 'unnamedplus' } --- Copy-paste between vim and everything else
   o.expandtab = true                         --- Use spaces instead of tabs
   o.ignorecase = true                        --- Needed for smartcase
@@ -34,6 +34,7 @@ function M.init_edit()
   o.fileencoding = 'utf-8'                         --- The encoding written to file
   o.incsearch = true                               --- Start searching before pressing enter
   o.switchbuf = 'usetab'                           -- Use already opened buffers when switching
+  o.diffopt:append { "algorithm:histogram", "indent-heuristic" }
 end
 
 function M.init_interface()
@@ -53,6 +54,7 @@ function M.init_interface()
   o.pumheight = 10                                   --- Max num of items in completion menu
   o.pumblend = 0                                     -- popup blend
   o.scrolloff = 2                                    --- Always keep space when scrolling to bottom/top edge
+  o.sidescroll = 2                                   --- Used only when 'wrap' option is off and the cursor is moved off the screen.
   o.mouse = 'a'                                      --- Enable mouse
   o.sidescrolloff = 8                                -- Columns of context
   o.lazyredraw = false                               --- Makes macros faster & prevent errors in complicated mappings
