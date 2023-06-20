@@ -285,5 +285,43 @@ plug({
       })
     end,
   },
+})
 
+---better commit view.
+plug({
+  'rhysd/committia.vim',
+  event = 'BufReadPre COMMIT_EDITMSG',
+  ft = { 'gitcommit' },
+  init = function()
+    -- See: https://github.com/rhysd/committia.vim#variables
+    vim.g.committia_min_window_width = 30
+    vim.g.committia_edit_window_width = 75
+  end,
+  config = function()
+    vim.g.committia_hooks = {
+      edit_open = function(info)
+        vim.cmd.resize(10)
+        local opts = {
+          buffer = vim.api.nvim_get_current_buf(),
+          silent = true,
+        }
+        local function imap(lhs, rhs)
+          vim.keymap.set({ 'i', 'n' }, lhs, rhs, opts)
+        end
+        imap('<C-d>', '<Plug>(committia-scroll-diff-down-half)')
+        imap('<C-u>', '<Plug>(committia-scroll-diff-up-half)')
+        imap('<C-f>', '<Plug>(committia-scroll-diff-down-page)')
+        imap('<C-b>', '<Plug>(committia-scroll-diff-up-page)')
+        imap('<C-j>', '<Plug>(committia-scroll-diff-down)')
+        imap('<C-k>', '<Plug>(committia-scroll-diff-up)')
+
+        -- if no commit message, start in insert mode.
+        if info.vcs == "git" and vim.fn.getline(1) == "" then
+          vim.schedule(function()
+            vim.cmd("normal! O")
+          end)
+        end
+      end,
+    }
+  end,
 })
