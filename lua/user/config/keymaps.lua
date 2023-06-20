@@ -5,22 +5,22 @@ local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 local M = {}
 
 local function setup_basic()
-  set('n', ';g', '<C-u>:G ', {
+  set('n', ';g', ':<C-u>G ', {
     desc = 'Start Git command',
     expr = false,
     noremap = true,
   })
-  set('n', ';q', '<C-u>:q', {
+  set('n', ';q', ':<C-u>q', {
     desc = 'Start quit command',
     expr = false,
   })
-  set('n', ';;', '<C-u>:', {
+  set('n', ';;', ':<C-u>', {
     desc = 'Start command line',
     expr = false,
     nowait = true,
     noremap = false,
   })
-  set('n', ';w', '<C-u>:w', {
+  set('n', ';w', ':<C-u>w', {
     desc = 'Start write cmd',
     expr = false,
   })

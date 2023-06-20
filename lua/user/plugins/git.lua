@@ -42,6 +42,21 @@ plug({
       'Gdiff',
       'Gpedit',
     },
+    init = function()
+      vim.api.nvim_create_autocmd('BufWinEnter', {
+        pattern = '*fugitive://*',
+        group = vim.api.nvim_create_augroup('_plug_fug_auto_jump_', { clear = true }),
+        callback = function()
+          vim.schedule(function()
+            local ft = vim.bo.filetype
+            if ft ~= 'fugitive' then
+              return
+            end
+            vim.cmd('normal! gg5j')
+          end)
+        end,
+      })
+    end,
   },
   {
     --
@@ -296,14 +311,19 @@ plug({
     vim.g.committia_edit_window_width = 75
     vim.g.committia_open_only_vim_starting = 1
 
-    vim.api.nvim_create_autocmd('BufReadPre', {
-      pattern = { 'COMMIT_EDITMSG', 'MERGE_MSG' },
-      group = vim.api.nvim_create_augroup('_gitcommit', { clear = true }),
-      callback = function()
-        require('libs.runtime.utils').load_plugins({ 'committia.vim' })
-        vim.fn['committia#open']('git')
-      end
-    })
+    vim.api.nvim_create_user_command('CommittiaOpenGit', function()
+      require('libs.runtime.utils').load_plugins({ 'committia.vim' })
+      vim.fn['committia#open']('git')
+    end, {})
+
+    -- vim.api.nvim_create_autocmd('BufReadPre', {
+    --   pattern = { 'MERGE_MSG' },
+    --   group = vim.api.nvim_create_augroup('_gitcommit', { clear = true }),
+    --   callback = function()
+    --     require('libs.runtime.utils').load_plugins({ 'committia.vim' })
+    --     vim.fn['committia#open']('git')
+    --   end
+    -- })
 
     vim.g.committia_hooks = {
       edit_open = function(info)

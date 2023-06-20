@@ -95,7 +95,7 @@ local function setup(opts)
 
     })
     -- we want user to decide wether to install or not.
-    vim.notify("lazy plugin is not installed, please run :installLazyVim command to install")
+    vim.notify("lazy plugin is not installed, please run :InstallLazyVim command to install")
     return
   end
 
