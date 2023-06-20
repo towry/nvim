@@ -1,5 +1,5 @@
 local user_cfg = {
-  ui__theme_name = "Neobones",
+  ui__theme_name = "forestbones",
   -- ui__theme_name = "ayu",
   workbench__lualine_theme = 'auto',
   --- treesitter
