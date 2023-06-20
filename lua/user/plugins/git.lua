@@ -159,6 +159,10 @@ plug({
           -- current = 'DiffAdd',
         },
       })
+
+      vim.schedule(function()
+        vim.cmd('GitConflictRefresh')
+      end)
     end,
   },
 
