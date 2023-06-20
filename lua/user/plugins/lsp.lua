@@ -85,6 +85,9 @@ plug({
 
       au.do_useraucmd(au.user_autocmds.LspConfigDone_User)
       require('libs.lspconfig.diagnostic').setup()
+      require('libs.lspconfig.inlayhints').setup({
+        enabled = true,
+      })
     end,
     init = function()
       au.on_lsp_attach(function(client, bufnr)
@@ -188,7 +191,7 @@ plug({
         },
         align = {
           bottom = true, -- align fidgets along bottom edge of buffer
-          right = true,  -- align fidgets along right edge of buffer
+          right = true, -- align fidgets along right edge of buffer
         },
         window = {
           relative = 'editor',
