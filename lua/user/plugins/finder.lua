@@ -607,12 +607,3 @@ plug({
     })
   end,
 })
-
-plug({
-  'gabrielpoca/replacer.nvim',
-  keys = {
-    {
-      '<leader>sf', ':lua require("replacer").run()<cr>', desc = 'Run replace or renmae on all files', silent = true,
-    }
-  }
-})
