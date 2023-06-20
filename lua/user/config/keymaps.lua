@@ -52,10 +52,10 @@ local function setup_basic()
   )
 
   -- works with kitty
-  set('n', '<Char-0xAA>', cmd('write'), {
+  set('n', '<Char-0xAA>', cmd('update'), {
     desc = 'N: Save current file by <command-s>',
   })
-  set('i', '<Char-0xAA>', '<ESC>:w<cr>', {
+  set('i', '<Char-0xAA>', '<ESC>:update<cr>', {
     desc = 'I: Save current file by <command-s>',
   })
 
