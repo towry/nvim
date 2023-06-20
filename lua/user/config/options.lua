@@ -19,21 +19,21 @@ function M.init_edit()
   o.timeoutlen = 400                         --- Key sequence wait time | Faster completion (cannot be lower than 200 because then commenting doesn't work)
   o.showcmd = false
   o.showcmdloc = 'statusline'
-  o.undofile = true                          --- Sets undo to file
-  o.updatetime = 250                         --- Faster completion
+  o.undofile = true                                --- Sets undo to file
+  o.updatetime = 250                               --- Faster completion
   -- o.viminfo        = "'1000" --- Increase the size of file history
-  o.wildignore = { '*node_modules/**' }      --- Don't search inside Node.js modules (works for gutentag)
-  o.wrap = false                             --- Display long lines as just one line
-  o.writebackup = false                      --- Not needed
-  o.autoindent = true                        --- Good auto indent
-  o.backspace = { 'indent', 'eol', 'start' } --- Making sure backspace works
-  o.backup = false                           --- Recommended by coc
-  o.conceallevel = 0                         --- Show `` in markdown files
-  o.encoding = 'utf-8'                       --- The encoding displayed
-  o.errorbells = false                       --- Disables sound effect for errors
-  o.fileencoding = 'utf-8'                   --- The encoding written to file
-  o.incsearch = true                         --- Start searching before pressing enter
-  o.switchbuf = 'usetab'                     -- Use already opened buffers when switching
+  o.wildignore = { '*node_modules/**', '.git/**' } --- Don't search inside Node.js modules (works for gutentag)
+  o.wrap = false                                   --- Display long lines as just one line
+  o.writebackup = false                            --- Not needed
+  o.autoindent = true                              --- Good auto indent
+  o.backspace = { 'indent', 'eol', 'start' }       --- Making sure backspace works
+  o.backup = false                                 --- Recommended by coc
+  o.conceallevel = 0                               --- Show `` in markdown files
+  o.encoding = 'utf-8'                             --- The encoding displayed
+  o.errorbells = false                             --- Disables sound effect for errors
+  o.fileencoding = 'utf-8'                         --- The encoding written to file
+  o.incsearch = true                               --- Start searching before pressing enter
+  o.switchbuf = 'usetab'                           -- Use already opened buffers when switching
 end
 
 function M.init_interface()

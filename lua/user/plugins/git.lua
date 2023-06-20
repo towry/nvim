@@ -290,14 +290,21 @@ plug({
 ---better commit view.
 plug({
   'rhysd/committia.vim',
-  event = 'BufReadPre COMMIT_EDITMSG',
   ft = { 'gitcommit' },
   init = function()
-    -- See: https://github.com/rhysd/committia.vim#variables
     vim.g.committia_min_window_width = 30
     vim.g.committia_edit_window_width = 75
-  end,
-  config = function()
+    vim.g.committia_open_only_vim_starting = 1
+
+    vim.api.nvim_create_autocmd('BufReadPre', {
+      pattern = { 'COMMIT_EDITMSG', 'MERGE_MSG' },
+      group = vim.api.nvim_create_augroup('_gitcommit', { clear = true }),
+      callback = function()
+        require('libs.runtime.utils').load_plugins({ 'committia.vim' })
+        vim.fn['committia#open']('git')
+      end
+    })
+
     vim.g.committia_hooks = {
       edit_open = function(info)
         vim.cmd.resize(10)
@@ -305,20 +312,21 @@ plug({
           buffer = vim.api.nvim_get_current_buf(),
           silent = true,
         }
-        local function imap(lhs, rhs)
-          vim.keymap.set({ 'i', 'n' }, lhs, rhs, opts)
+        local function imap(lhs, rhs, normal)
+          local modes = normal and { 'i', 'n' } or { 'i' }
+          vim.keymap.set(modes, lhs, rhs, opts)
         end
-        imap('<C-d>', '<Plug>(committia-scroll-diff-down-half)')
-        imap('<C-u>', '<Plug>(committia-scroll-diff-up-half)')
-        imap('<C-f>', '<Plug>(committia-scroll-diff-down-page)')
-        imap('<C-b>', '<Plug>(committia-scroll-diff-up-page)')
+        imap('<C-d>', '<Plug>(committia-scroll-diff-down-half)', true)
+        imap('<C-u>', '<Plug>(committia-scroll-diff-up-half)', true)
+        imap('<C-f>', '<Plug>(committia-scroll-diff-down-page)', true)
+        imap('<C-b>', '<Plug>(committia-scroll-diff-up-page)', true)
         imap('<C-j>', '<Plug>(committia-scroll-diff-down)')
         imap('<C-k>', '<Plug>(committia-scroll-diff-up)')
 
         -- if no commit message, start in insert mode.
         if info.vcs == "git" and vim.fn.getline(1) == "" then
           vim.schedule(function()
-            vim.cmd("normal! O")
+            vim.cmd.startinsert()
           end)
         end
       end,
