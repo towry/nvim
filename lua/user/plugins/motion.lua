@@ -1,10 +1,12 @@
 local plug = require('libs.runtime.pack').plug
 local cmd = require('libs.runtime.keymap').cmdstr
 local au = require('libs.runtime.au')
+local enable_flash = false
 
 plug({
   {
     'jinh0/eyeliner.nvim',
+    enabled = not enable_flash,
     keys = {
       'f',
       'F',
@@ -54,6 +56,7 @@ plug({
   {
     {
       'ggandor/leap.nvim',
+      enabled = not enable_flash,
       dependencies = {
         'tpope/vim-repeat',
       },
@@ -269,5 +272,32 @@ plug({
     enabled = function() return false end,
     keys = { { 'v', 'V' } },
     config = function() vim.g.VM_leader = '<space>' end,
+  },
+
+  {
+    'folke/flash.nvim',
+    enabled = enable_flash,
+    keys = {
+      {
+        "s",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").jump()
+        end,
+      },
+      {
+        "S",
+        mode = { "o", "x" },
+        function()
+          require("flash").treesitter()
+        end,
+      },
+    },
+    opts = {
+
+    },
+    config = function(_, opts)
+      require('flash').setup(opts)
+    end
   }
 })
