@@ -82,7 +82,7 @@ plug({
         local specs = lush.parse(function()
           return {
             -- darken cursorline
-            CursorLine { base.CursorLine, bg = '#374145' },
+            -- CursorLine { base.CursorLine, bg = '#374145' },
           }
         end)
         -- Apply specs using lush tool-chain

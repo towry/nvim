@@ -1,6 +1,5 @@
 local user_cfg = {
-  ui__theme_name = "forestbones",
-  -- ui__theme_name = "ayu",
+  ui__theme_name = "everforest",
   workbench__lualine_theme = 'auto',
   --- treesitter
   lang__treesitter_plugin_rainbow = true,
