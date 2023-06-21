@@ -25,7 +25,7 @@ plug({
     branch = 'main',
     tag = 'v2.2.1',
     config = function()
-      local au = require('libs.runtime.au')
+      -- local au = require('libs.runtime.au')
 
       require('toggleterm').setup({
         -- size can be a number or function which is passed the current terminal
@@ -104,8 +104,8 @@ plug({
             }, vim.bo.filetype) then
           return
         end
-        if vim.v.count <= 1 then
-          vim.cmd([[1ToggleTerm direction=float]])
+        if vim.v.count == 9 then
+          vim.cmd([[9ToggleTerm direction=float]])
         else
           vim.cmd(vim.v.count .. [[ToggleTerm direction=horizontal]])
         end

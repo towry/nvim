@@ -4,6 +4,7 @@ local M = {}
 M.opts = {
   enabled = false,
   highlight = 'Comment',
+  insert_only = false,
 }
 M.state = setmetatable({}, { __index = nil })
 
@@ -30,12 +31,13 @@ function M.setup(opts)
 
       local bufnr = args.buf
       local client = vim.lsp.get_client_by_id(args.data.client_id)
-      M.on_attach(client, bufnr)
+      M.on_attach(client, bufnr, opts)
     end,
   })
 end
 
-function M.on_attach(client, bufnr)
+---@param opts {insert_only?:boolean}
+function M.on_attach(client, bufnr, opts)
   if not client then
     vim.notify_once('LSP Inlayhints attached failed: nil client.', vim.log.levels.ERROR)
     return
@@ -50,7 +52,26 @@ function M.on_attach(client, bufnr)
 
   M.state[bufnr] = client.id
 
-  vim.lsp.buf.inlay_hint(bufnr)
+  if not opts.insert_only then
+    vim.lsp.buf.inlay_hint(bufnr, true)
+  end
+  if opts.insert_only then
+    local gr = vim.api.nvim_create_augroup('_inlayhint_buf_' .. bufnr, { clear = true })
+    vim.api.nvim_create_autocmd('InsertEnter', {
+      group = gr,
+      buffer = bufnr,
+      callback = function()
+        vim.lsp.buf.inlay_hint(bufnr, true)
+      end,
+    })
+    vim.api.nvim_create_autocmd('InsertLeave', {
+      group = gr,
+      buffer = bufnr,
+      callback = function()
+        vim.lsp.buf.inlay_hint(bufnr, false)
+      end,
+    })
+  end
 end
 
 return M

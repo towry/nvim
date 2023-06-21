@@ -60,7 +60,7 @@ plug({
       keys = { { 's' }, { 'S' }, { 'gs' }, { 'f' }, { 'F' }, { 'vs' }, { 'ds' } },
       config = function()
         local leap = require('leap')
-        local au = require('libs.runtime.au')
+        -- local au = require('libs.runtime.au')
 
         leap.opts.highlight_unlabeled_phase_one_targets = true
         leap.opts.substitute_chars = {
