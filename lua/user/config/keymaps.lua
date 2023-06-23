@@ -5,6 +5,12 @@ local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 local M = {}
 
 local function setup_basic()
+  --- tab is mapped to buffers, since tab&<c-i> has same func, we
+  --- need to map <c-i> to its original func.
+  set('n', '<C-i>', '<C-i>', {
+    noremap = true,
+    expr = false,
+  })
   set('n', ';g', ':<C-u>G ', {
     desc = 'Start Git command',
     expr = false,
