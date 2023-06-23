@@ -18,13 +18,13 @@ plug({
     local Buffer               = require('libs.runtime.buffer')
     local terms                = require('libs.statusline.lualine.terminal_component')
 
-    local spectre_extension    = {
+    local spectre_extension = {
       sections = {
         lualine_a = { 'mode' },
       },
       filetypes = { 'spectre_panel' },
     }
-    local present, lualine     = pcall(require, 'lualine')
+    local present, lualine  = pcall(require, 'lualine')
 
     if not present then
       Ty.NOTIFY('lualine not installed')
@@ -130,7 +130,6 @@ plug({
           { 'diagnostics', update_in_insert = false, symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' } }
         },
         lualine_x = {
-          "overseer",
           -- copilot status
           require('copilot_status').status_string,
           -- {
