@@ -28,4 +28,11 @@ return plug({
       desc = "Open mini.files (cwd)",
     },
   },
+  config = function(_, opts)
+    require('mini.files').setup(opts)
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'MiniFilesWindowUpdate',
+      callback = function(args) vim.wo[args.data.win_id].relativenumber = true end,
+    })
+  end
 })
