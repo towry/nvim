@@ -20,12 +20,12 @@ local function setup_basic()
   --   desc = 'Start quit command',
   --   expr = false,
   -- })
-  -- set('n', ';;', ':<C-u>', {
-  --   desc = 'Start command line',
-  --   expr = false,
-  --   nowait = true,
-  --   noremap = false,
-  -- })
+  set('n', '<CR>', ':<C-u>', {
+    desc = 'Start command line',
+    expr = false,
+    nowait = true,
+    noremap = false,
+  })
   -- set('n', ';w', ':<C-u>w', {
   --   desc = 'Start write cmd',
   --   expr = false,
