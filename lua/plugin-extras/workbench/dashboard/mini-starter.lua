@@ -18,7 +18,7 @@ return plug({
       local config = {
         evaluate_single = true,
         items = {
-          new_section("Session restore", [[<cmd>SessionManager load_current_dir_session<CR>]], "Session"),
+          new_section("Session restore", [[SessionManager load_current_dir_session]], "Session"),
           new_section("Find file", "Telescope find_files", "Telescope"),
           new_section("Recent files", "Telescope oldfiles", "Telescope"),
           new_section("Grep text", "Telescope live_grep", "Telescope"),
