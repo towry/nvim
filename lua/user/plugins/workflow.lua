@@ -355,6 +355,13 @@ plug({
   {
     'Shatur/neovim-session-manager',
     cmd = { 'SessionManager' },
+    keys = {
+      {
+        '<leader>/s',
+        '<cmd>SessionManager load_current_dir_session<CR>',
+        desc = 'Load current session',
+      }
+    },
     config = function()
       local session_manager = require('session_manager')
       local Path = require('plenary.path')
