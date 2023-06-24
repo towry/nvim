@@ -16,10 +16,10 @@ plug({
   {
     'tpope/vim-fugitive',
     keys = {
-      { '<leader>gg', ":Git<cr>",               desc = "Fugitive Git" },
+      { '<leader>gg', ":Git<cr>", desc = "Fugitive Git" },
       { '<leader>ga', cmdstr([[!git add %:p]]), desc = "Git add current" },
-      { '<leader>gA', cmdstr([[!git add .]]),   desc = "Git add all" },
-      { '<leader>gm', cmdstr([[G commit]]),     desc = "Git commit" },
+      { '<leader>gA', cmdstr([[!git add .]]), desc = "Git add all" },
+      { '<leader>gm', cmdstr([[G commit]]), desc = "Git commit" },
     },
     cmd = {
       'G',
@@ -83,7 +83,8 @@ plug({
   {
     'sindrets/diffview.nvim',
     keys = {
-      { '<leader>gD', '<cmd>lua require("libs.git.utils").toggle_file_history()<cr>',    desc = 'Git file history' },
+      { '<leader>gD', '<cmd>lua require("libs.git.utils").toggle_file_history()<cr>', desc = 'Git file history' },
+      ---FIXME: <Space>e keymap not reset when exist the diffview. it should be buffer local keymaps.
       { '<leader>gd', '<cmd>lua require("libs.git.utils").toggle_working_changes()<cr>', desc = 'Git changes' },
     },
     cmd = {
@@ -151,10 +152,10 @@ plug({
       local conflict = require('git-conflict')
 
       conflict.setup({
-        default_mappings = false,   -- disable buffer local mapping created by this plugin
+        default_mappings = false, -- disable buffer local mapping created by this plugin
         default_commands = true,
         disable_diagnostics = true, -- This will disable the diagnostics in a buffer whilst it is conflicted
-        highlights = {              -- They must have background color, otherwise the default color will be used
+        highlights = { -- They must have background color, otherwise the default color will be used
           -- incoming = 'DiffText',
           -- current = 'DiffAdd',
         },
@@ -179,11 +180,11 @@ plug({
       -- │ Setup                                                    │
       -- ╰──────────────────────────────────────────────────────────╯
       worktree.setup({
-        change_directory_command = 'cd',  -- default: "cd",
-        update_on_change = true,          -- default: true,
+        change_directory_command = 'cd', -- default: "cd",
+        update_on_change = true, -- default: true,
         update_on_change_command = 'e .', -- default: "e .",
-        clearjumps_on_change = true,      -- default: true,
-        autopush = false,                 -- default: false,
+        clearjumps_on_change = true, -- default: true,
+        autopush = false, -- default: false,
       })
 
       -- ╭──────────────────────────────────────────────────────────╮
@@ -265,8 +266,8 @@ plug({
           untracked = { hl = 'GitSignsAddNr', text = '┃', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
         },
         signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
-        numhl = false,     -- Toggle with `:Gitsigns toggle_numhl`
-        linehl = false,    -- Toggle with `:Gitsigns toggle_linehl`
+        numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
+        linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
         word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
         watch_gitdir = {
           interval = 1000,
@@ -340,6 +341,7 @@ plug({
           local modes = normal and { 'i', 'n' } or { 'i' }
           vim.keymap.set(modes, lhs, rhs, opts)
         end
+
         imap('<C-d>', '<Plug>(committia-scroll-diff-down-half)', true)
         imap('<C-u>', '<Plug>(committia-scroll-diff-up-half)', true)
         imap('<C-f>', '<Plug>(committia-scroll-diff-down-page)', true)

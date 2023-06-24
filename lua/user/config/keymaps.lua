@@ -11,32 +11,6 @@ local function setup_basic()
     noremap = true,
     expr = false,
   })
-  -- set('n', ';g', ':<C-u>G ', {
-  --   desc = 'Start Git command',
-  --   expr = false,
-  --   noremap = false,
-  -- })
-  -- set('n', ';q', ':<C-u>q', {
-  --   desc = 'Start quit command',
-  --   expr = false,
-  -- })
-  set('n', '<CR>', ':<C-u>', {
-    desc = 'Start command line',
-    expr = false,
-    nowait = true,
-    noremap = false,
-  })
-  -- set('n', ';w', ':<C-u>w', {
-  --   desc = 'Start write cmd',
-  --   expr = false,
-  -- })
-  -- set('n', '<C-U>', '<C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y>', {
-  --   desc = "Smooth scrolling up"
-  -- })
-  -- set('n', '<C-D>', '<C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E>', {
-  --   desc = 'Smooth scrolling down',
-  -- })
-
   set('i', '<C-e>', '<End>', {
     desc = 'Insert mode: move to end of line',
   })

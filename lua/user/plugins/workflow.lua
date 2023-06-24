@@ -68,18 +68,30 @@ plug({
     'echasnovski/mini.bufremove',
     keys = {
       {
+        '<leader>bx',
+        '<cmd>lua require("mini.bufremove").delete(0)<cr>',
+        desc = 'Close current buffer',
+      },
+      {
+        '<leader>bq',
+        function()
+          vim.cmd('q')
+        end,
+        desc = 'Close current buffer and window',
+      },
+      {
         '<S-q>',
         function()
           require('mini.bufremove').delete(0)
-          vim.schedule(function()
-            if #require('libs.runtime.buffer').list_bufnrs() <= 0 then
-              local cur_empty = require('libs.runtime.buffer').get_current_empty_buffer()
-              -- start_dashboard()
-              if cur_empty then
-                vim.api.nvim_buf_delete(cur_empty, { force = true })
-              end
-            end
-          end)
+          -- vim.schedule(function()
+          --   if #require('libs.runtime.buffer').list_bufnrs() <= 0 then
+          --     local cur_empty = require('libs.runtime.buffer').get_current_empty_buffer()
+          --     -- start_dashboard()
+          --     if cur_empty then
+          --       vim.api.nvim_buf_delete(cur_empty, { force = true })
+          --     end
+          --   end
+          -- end)
         end,
         desc = 'Quit current buffer',
       }
