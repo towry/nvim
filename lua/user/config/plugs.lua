@@ -1,6 +1,7 @@
 --LuaCC code block
 
 require("user.plugins.essential")
+--- basic
 require("user.plugins.theme")
 require("user.plugins.dashboard")
 require("user.plugins.cmdline")
@@ -17,9 +18,12 @@ require("user.plugins.lang")
 require("user.plugins.ui")
 require("user.plugins.motion")
 require("user.plugins.workflow")
+--- extras
 require("plugin-extras.coding.copilot-nvim")
 require("plugin-extras.coding.word-switch")
 require("plugin-extras.workflow.zenmode")
 require("plugin-extras.workflow.mini-files")
+require("plugin-extras.workbench.dashboard.mini-starter")
 
-return require('libs.runtime.pack').repos
+
+return require('libs.runtime.pack').repos()

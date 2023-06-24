@@ -357,7 +357,7 @@ plug({
         {
           name = "Projects",
           action = "Telescope projects",
-          section = string.rep(" ", 22) .. "Telescope",
+          section = string.rep(" ", 0) .. "Telescope",
         },
       }
       vim.list_extend(opts.items, items)
