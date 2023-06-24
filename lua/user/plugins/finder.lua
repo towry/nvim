@@ -12,6 +12,7 @@ plug({
     'NvimTreeFindFileToggle',
     'NvimTreeFindFile',
   },
+  enabled = false,
   keys = {
     {
       '<leader>et',
@@ -203,7 +204,18 @@ plug({
         always_show_folders = true,
       },
     })
-  end
+  end,
+  init = function()
+    require('libs.finder.hook').register_select_folder_action(function(cwd)
+      local nvim_tree_api = require('nvim-tree.api')
+      nvim_tree_api.tree.open({
+        update_root = false,
+        find_file = false,
+        current_window = false,
+      })
+      nvim_tree_api.tree.change_root(cwd)
+    end)
+  end,
 })
 
 plug({
@@ -274,6 +286,7 @@ plug({
 })
 
 plug({
+  enabled = false,
   'stevearc/oil.nvim',
   lazy = not vim.cfg.runtime__starts_in_buffer,
   opts = {
