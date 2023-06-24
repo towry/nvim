@@ -148,6 +148,7 @@ return {
   },
   misc__ft_exclude = {
     "alpha",
+    "starter",
     "lazy",
     "TelescopePrompt",
     "term",
