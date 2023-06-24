@@ -21,6 +21,5 @@ require("plugin-extras.coding.copilot-nvim")
 require("plugin-extras.coding.word-switch")
 require("plugin-extras.workflow.zenmode")
 require("plugin-extras.workflow.mini-files")
-require("plugin-extras.ui.folke-noice")
 
 return require('libs.runtime.pack').repos
