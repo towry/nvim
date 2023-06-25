@@ -73,6 +73,8 @@ Go to botom of border line        | ]i, you can do v]i
 ## neovim-dev
 Luasnip logging file path         | ~/.local/state/nvim/luasnip.log | ~/.cache/nvim/luasnip.log
 Luasnip not working               | make sure package.json file exists and is valid json file.
+Profile                           | profile start profile.log | profile func * | profile file *
+Profile done                      | profile pause | noau qall!
 
 ## vsc
 Git commit                       | :Git commit
