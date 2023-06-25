@@ -80,3 +80,6 @@ Git diff or git log              | :Git diff(Gdiffsplit|Gvdiffsplit) | :Git log
 Git blame                        | :Git blame
 Open commit browser              | :GV, (:GV! for current buffer)
 Motion - Select hunk             | ih
+
+## Edit tips
+<I>Quick move to correct indent  | <C-o>cc
