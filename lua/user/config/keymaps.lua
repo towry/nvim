@@ -24,6 +24,9 @@ local function setup_basic()
   set('i', '<C-z>', '<ESC> u', {
     desc = 'I: Undo, no more background key',
   })
+  set('n', '<leader>/q', ':qa<cr>', {
+    desc = 'Quit vim'
+  })
 
 
   set(
