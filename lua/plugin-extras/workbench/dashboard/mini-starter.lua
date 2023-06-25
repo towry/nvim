@@ -16,12 +16,16 @@ return plug({
       local starter = require("mini.starter")
       --stylua: ignore
       local config = {
+        silent = false,
         evaluate_single = true,
         items = {
-          new_section("Session restore", [[SessionManager load_current_dir_session]], "Session"),
           new_section("Find file", "Telescope find_files", "Telescope"),
           new_section("Recent files", "Telescope oldfiles", "Telescope"),
           new_section("Grep text", "Telescope live_grep", "Telescope"),
+          ---
+          new_section("Session load", [[SessionManager load_current_dir_session]], "Session"),
+          new_section("Session delete", [[SessionManager delete_session]], "Session"),
+          ---
           new_section("Lazy", "Lazy", "Built-in"),
           new_section("New file", "ene | startinsert", "Built-in"),
           new_section("Quit", "qa", "Built-in"),
@@ -57,6 +61,22 @@ return plug({
           starter.config.footer = pad_footer .. "⚡ Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
           pcall(starter.refresh)
         end,
+      })
+    end,
+    init = function()
+      -- listen enter dashboard event.
+      local au = require('libs.runtime.au')
+      au.define_autocmds({
+        {
+          "User",
+          {
+            group = '_plugin_enter_dashboard',
+            pattern = au.user_autocmds.DoEnterDashboard,
+            callback = function()
+              require('mini.starter').open()
+            end,
+          }
+        }
       })
     end,
   },
