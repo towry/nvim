@@ -21,7 +21,27 @@ Ty.SCROLL = function(...)
 end
 
 Ty.NOTIFY = function(...) require('notify').notify(...) end
-Ty.ECHO = function(...) vim.api.nvim_echo(...) end
+---@example
+---```lua
+---Ty.ECHO({{ 'hello', 'Comment'}})
+---Ty.ECHO("hello", 'comment')
+---```
+---@param chunks string|string[]
+---@param history? boolean
+---@param opts? {verbose?:boolean}
+Ty.ECHO = function(chunks, history, opts)
+  if type(chunks) == 'string' then
+    local hl = nil
+    if type(history) == 'string' then
+      hl = history
+      history = false
+    end
+    chunks = { { chunks, hl } }
+  elseif type(chunks) ~= 'table' then
+    error("invalid arguments")
+  end
+  vim.api.nvim_echo(chunks, history, opts or {})
+end
 
 Ty.TS_UTIL = function() return require('nvim-treesitter.ts_utils') end
 -- get node type at current cursor

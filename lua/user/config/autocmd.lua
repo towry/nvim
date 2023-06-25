@@ -81,7 +81,7 @@ function M.load_on_startup()
     {
       { 'BufWritePost' },
       {
-        group = 'Notify about config change',
+        group = 'Notify_about_config_change',
         pattern = '*/lua/user/plugins/*',
         callback = function()
           -- may being called two times due to the auto format write.
@@ -89,6 +89,17 @@ function M.load_on_startup()
         end,
       }
     },
+    {
+      { 'BufWinEnter' },
+      {
+        group = 'clear_search_hl_on_buf_enter',
+        callback = function()
+          vim.schedule(function()
+            vim.cmd('nohl')
+          end)
+        end
+      }
+    }
   }
   local user_definitions = {
     {

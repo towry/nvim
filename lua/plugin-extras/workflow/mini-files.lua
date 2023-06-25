@@ -17,17 +17,32 @@ return plug({
     {
       '<Char-0xAC>',
       function()
+        local path = nil
+        if vim.bo.buftype == 'nofile' then
+          path = require('libs.runtime.utils').get_root()
+        else
+          path = vim.api.nvim_buf_get_name(0)
+        end
         local mf = require("mini.files");
         local is_closed = mf.close()
         if is_closed == true then return end
-        require("mini.files").open(vim.api.nvim_buf_get_name(0), true)
+        require("mini.files").open(path, true)
       end,
       desc = "Open mini.files (directory of current file)",
     },
     {
       "<leader>eI",
       function()
-        require("mini.files").open(vim.api.nvim_buf_get_name(0), true)
+        local path = nil
+        if vim.bo.buftype == 'nofile' then
+          path = require('libs.runtime.utils').get_root()
+        else
+          path = vim.api.nvim_buf_get_name(0)
+        end
+        local mf = require("mini.files");
+        local is_closed = mf.close()
+        if is_closed == true then return end
+        require("mini.files").open(path, true)
       end,
       desc = "Open mini.files (directory of current file)",
     },
