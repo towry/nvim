@@ -281,4 +281,11 @@ M.vim_starts_without_buffer = function()
   return vim.fn.argc(-1) == 0
 end
 
+function M.pattern_match(str, pattern_list)
+  for _, pattern in ipairs(pattern_list) do
+    if str:find(pattern) then return true end
+  end
+  return false
+end
+
 return M

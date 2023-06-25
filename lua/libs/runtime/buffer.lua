@@ -1,4 +1,7 @@
+--- credits:
+--- see https://github.com/AstroNvim/AstroNvim/blob/377db3f7d6273779533c988dadc07a08e0e43f2e/lua/astronvim/utils/buffer.lua
 local Table = require('libs.runtime.table')
+local utils = require('libs.runtime.utils')
 local M = {}
 
 function M.set_options(buf, opts)
@@ -27,6 +30,14 @@ function M.list()
 
     return nrNameMap
   end, {}, valid_buffers)
+end
+
+--- Check if a buffer is valid
+---@param bufnr number The buffer to check
+---@return boolean # Whether the buffer is valid or not
+function M.is_valid(bufnr)
+  if not bufnr or bufnr < 1 then return false end
+  return vim.api.nvim_buf_is_valid(bufnr) and vim.bo[bufnr].buflisted
 end
 
 function M.list_bufnrs()
@@ -156,5 +167,24 @@ M.prev_unsaved_buf = function()
   -- vim.api.nvim_set_current_buf(prev_buf)
 end
 
+M.buf_matchers = {
+  filetype = function(pattern_list, bufnr) return utils.pattern_match(vim.bo[bufnr or 0].filetype, pattern_list) end,
+  buftype = function(pattern_list, bufnr) return utils.pattern_match(vim.bo[bufnr or 0].buftype, pattern_list) end,
+  bufname = function(pattern_list, bufnr)
+    return utils.pattern_match(vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr or 0), ":t"), pattern_list)
+  end,
+}
+
+--- A condition function if the buffer filetype,buftype,bufname match a pattern
+---@param patterns table the table of patterns to match
+---@param bufnr number of the buffer to match (Default: 0 [current])
+---@return boolean # whether or not LSP is attached
+-- @usage local heirline_component = { provider = "Example Provider", condition = function() return require("astronvim.utils.status").condition.buffer_matches { buftype = { "terminal" } } end }
+function M.buffer_matches(patterns, bufnr)
+  for kind, pattern_list in pairs(patterns) do
+    if M.buf_matchers[kind](pattern_list, bufnr) then return true end
+  end
+  return false
+end
 
 return M
