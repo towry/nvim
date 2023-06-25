@@ -18,13 +18,13 @@ plug({
     local Buffer               = require('libs.runtime.buffer')
     local terms                = require('libs.statusline.lualine.terminal_component')
 
-    local spectre_extension = {
+    local spectre_extension    = {
       sections = {
         lualine_a = { 'mode' },
       },
       filetypes = { 'spectre_panel' },
     }
-    local present, lualine  = pcall(require, 'lualine')
+    local present, lualine     = pcall(require, 'lualine')
 
     if not present then
       Ty.NOTIFY('lualine not installed')
@@ -126,7 +126,20 @@ plug({
         },
         -- filename is displayed by the incline.
         lualine_c = {
-          'diff',
+          function()
+            if not vim.b.gitsigns_head or vim.b.gitsigns_git_status or vim.o.columns < 120 then
+              return ""
+            end
+
+            local git_status = vim.b.gitsigns_status_dict
+
+            local added = (git_status.added and git_status.added ~= 0) and (" +" .. git_status.added) or ""
+            local changed = (git_status.changed and git_status.changed ~= 0) and (" ~" .. git_status.changed) or ""
+            local removed = (git_status.removed and git_status.removed ~= 0) and (" -" .. git_status.removed) or ""
+
+            return (added .. changed .. removed) ~= "" and (added .. changed .. removed) or ""
+          end,
+          -- 'diff',
           { 'diagnostics', update_in_insert = false, symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' } }
         },
         lualine_x = {
