@@ -18,12 +18,12 @@ local function setup_basic()
   set('i', '<C-e>', '<End>', {
     desc = 'Insert mode: move to end of line',
   })
-  set('n', '<C-z>', '<ESC> u', {
-    desc = 'N: Undo, no more background key',
-  })
-  set('i', '<C-z>', '<ESC> u', {
-    desc = 'I: Undo, no more background key',
-  })
+  -- set('n', '<C-z>', '<ESC> u', {
+  --   desc = 'N: Undo, no more background key',
+  -- })
+  -- set('i', '<C-z>', '<ESC> u', {
+  --   desc = 'I: Undo, no more background key',
+  -- })
   set('n', '<leader>/q', ':qa<cr>', {
     desc = 'Quit vim'
   })
