@@ -1,4 +1,6 @@
-return {
+local plug = require('libs.runtime.pack').plug
+
+return plug({
   {
     'dstein64/vim-startuptime',
     cond = function()
@@ -6,4 +8,4 @@ return {
     end,
     lazy = false,
   }
-}
+})

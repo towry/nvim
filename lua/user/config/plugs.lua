@@ -25,6 +25,7 @@ require("plugin-extras.workflow.zenmode")
 require("plugin-extras.workflow.mini-files")
 require("plugin-extras.workbench.dashboard.mini-starter")
 require("plugin-extras.workflow.cheatsheets")
+require("plugin-extras.tools.profile")
 
 
 return require('libs.runtime.pack').repos()
