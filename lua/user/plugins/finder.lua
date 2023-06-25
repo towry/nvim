@@ -12,7 +12,7 @@ plug({
     'NvimTreeFindFileToggle',
     'NvimTreeFindFile',
   },
-  enabled = false,
+  enabled = true,
   keys = {
     {
       '<leader>et',
