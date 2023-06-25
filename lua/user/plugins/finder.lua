@@ -33,7 +33,7 @@ plug({
   },
   config = function()
     local HEIGHT_RATIO = 0.8 -- You can change this
-    local WIDTH_RATIO = 0.5 -- You can change this too
+    local WIDTH_RATIO = 0.5  -- You can change this too
     local TREE_INIT_WIDTH = 40
 
 
@@ -219,6 +219,14 @@ plug({
 })
 
 plug({
+  'jremmen/vim-ripgrep',
+  cmd = { 'Rg', 'RgRoot' },
+  config = function()
+    vim.g.rg_binary = 'rg'
+  end,
+})
+
+plug({
   enabled = false,
   "nvim-neo-tree/neo-tree.nvim",
   cmd = "Neotree",
@@ -345,7 +353,7 @@ plug({
 plug({
   'simrat39/symbols-outline.nvim',
   keys = {
-    { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<leader>/o',  '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
     { '<Char-0xAF>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
@@ -441,9 +449,9 @@ plug({
   'nvim-telescope/telescope.nvim',
   cmd = { 'Telescope' },
   keys = {
-    { '<Tab>', cmd_modcall(pickers_mod, 'buffers()'), desc = "List Buffers" },
-    { '<leader>gB', cmdstr([[Telescope git_branches]]), desc = 'Git branchs' },
-    { '<leader>ef', cmd_modcall(pickers_mod, 'project_files()'), desc = 'Open Project files' },
+    { '<Tab>',      cmd_modcall(pickers_mod, 'buffers()'),                           desc = "List Buffers" },
+    { '<leader>gB', cmdstr([[Telescope git_branches]]),                              desc = 'Git branchs' },
+    { '<leader>ef', cmd_modcall(pickers_mod, 'project_files()'),                     desc = 'Open Project files' },
     { '<leader>eF', cmd_modcall(pickers_mod, 'project_files({use_all_files=true})'), desc = 'Open find all files' },
     {
       '<leader>ee',
@@ -457,7 +465,7 @@ plug({
       desc =
       'Open recent files'
     },
-    { '<leader>el', cmd_modcall('libs.telescope.find-folders-picker', '()'), desc = 'Find folders' },
+    { '<leader>el', cmd_modcall('libs.telescope.find-folders-picker', '()'),                desc = 'Find folders' },
     { '<leader>es', cmd_modcall('telescope', 'extensions.live_grep_args.live_grep_args()'), desc = 'Grep search' }
   },
   dependencies = {

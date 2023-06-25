@@ -28,7 +28,7 @@ return plug({
           ---
           new_section("Lazy", "Lazy", "Built-in"),
           new_section("New file", "ene | startinsert", "Built-in"),
-          new_section("Quit", "qa", "Built-in"),
+          new_section("Quit current", "q", "Built-in"),
         },
         content_hooks = {
           starter.gen_hook.adding_bullet(pad .. "░ ", false),
