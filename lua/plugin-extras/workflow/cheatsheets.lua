@@ -1,6 +1,7 @@
+local plug = require('libs.runtime.pack').plug
 local au = require('libs.runtime.au')
 
-return {
+return plug({
   {
     'pze/cheatsheet.nvim',
     dev = false,
@@ -31,4 +32,4 @@ return {
     },
     init = function() vim.g.cheat_default_window_layout = 'vertical_split' end,
   },
-}
+})
