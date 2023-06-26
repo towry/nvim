@@ -565,6 +565,15 @@ plug({
             ['<C-s>'] = actions.cycle_previewers_next,
             ['<C-a>'] = actions.cycle_previewers_prev,
             ['<C-h>'] = 'which_key',
+            ['<ESC>'] = function(prompt_bufnr)
+              local picker = action_state.get_current_picker(prompt_bufnr)
+              local prompt = picker:_get_prompt()
+              if not prompt or #prompt <= 0 then
+                actions.close(prompt_bufnr)
+                return
+              end
+              vim.cmd('stopinsert')
+            end,
             -- ['<ESC>'] = actions.close,
             ['<C-c>'] = function(prompt_bufnr)
               local picker = action_state.get_current_picker(prompt_bufnr)
