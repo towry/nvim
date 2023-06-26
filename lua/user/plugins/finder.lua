@@ -531,7 +531,7 @@ plug({
         file_ignore_patterns = { "node_modules", '.turbo', 'dist' },
         path_display = { 'truncate' },
         -- layout_strategy = 'flex',
-        layout_strategy = "bottom_pane",
+        layout_strategy = "vertical",
         file_sorter = require('telescope.sorters').get_fzy_sorter,
         prompt_prefix = '',
         color_devicons = true,
