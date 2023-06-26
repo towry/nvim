@@ -18,23 +18,23 @@ return plug({
         silent = true,
         evaluate_single = true,
         items = {
-          new_section("Find file", 'lua require("libs.telescope.pickers").project_files()', "Telescope"),
-          new_section("Recent files",
+          new_section("F ~ Find file", 'lua require("libs.telescope.pickers").project_files()', "Telescope"),
+          new_section("R ~ Recent files",
             'lua require("libs.telescope.pickers").project_files({cwd_only=true,oldfiles=true})', "Telescope"),
-          new_section("Grep text", 'lua require("libs.telescope.multi-rg-picker")()', "Telescope"),
+          new_section("S ~ Grep text", 'lua require("telescope").extensions.live_grep_args.live_grep_args()', "Telescope"),
           ---
-          new_section("Session load", [[SessionManager load_current_dir_session]], "Session"),
-          new_section("Session delete", [[SessionManager delete_session]], "Session"),
+          new_section("/ ~ Session load", [[SessionManager load_current_dir_session]], "Session"),
+          new_section("_ ~ Session delete", [[SessionManager delete_session]], "Session"),
           ---
-          new_section("Lazy", "Lazy", "Built-in"),
-          new_section("New file", "ene | startinsert", "Built-in"),
-          new_section("Quit current", "q", "Built-in"),
+          new_section("L ~ Lazy", "Lazy", "Built-in"),
+          new_section("N ~ New file", "ene | startinsert", "Built-in"),
+          new_section("Q ~ Quit current", "q", "Built-in"),
         },
         content_hooks = {
           starter.gen_hook.adding_bullet(pad .. "░ ", false),
           starter.gen_hook.aligning("center", "center"),
         },
-        query_updaters = 'abcdefghilmnopqrstuvwxyz0123456789_-.',
+        query_updaters = 'abcdefghilmnopqrstuvwxyz0123456789_-./',
       }
       return config
     end,
@@ -73,10 +73,9 @@ return plug({
           local stats = require("lazy").stats()
 
           local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-          local pad_footer = string.rep(" ", 0)
-          starter.config.footer = pad_footer .. "⚡ Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
-          starter.config.header = " " ..
-              Path.home_to_tilde(vim.loop.cwd()) .. '\n' .. (' ' .. (git.get_git_abbr_head() or '/'))
+          starter.config.footer = "░  Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
+          starter.config.header = "░    " ..
+              Path.home_to_tilde(vim.loop.cwd()) .. '\n' .. ('░    ' .. (git.get_git_abbr_head() or '/'))
           pcall(starter.refresh)
         end,
       })
