@@ -9,6 +9,10 @@ local function setup_basic()
     expr = false,
     noremap = true,
   })
+  set('i', '<C-;>', '<esc>:<C-u>', {
+    expr = false,
+    noremap = true,
+  })
   --- tab is mapped to buffers, since tab&<c-i> has same func, we
   --- need to map <c-i> to its original func.
   set('n', '<C-i>', '<C-i>', {
