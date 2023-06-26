@@ -451,6 +451,7 @@ plug({
   keys = {
     { '<Tab>',      cmd_modcall(pickers_mod, 'buffers()'),                           desc = "List Buffers" },
     { '<leader>gB', cmdstr([[Telescope git_branches]]),                              desc = 'Git branchs' },
+    { '<C-f>f',     cmd_modcall(pickers_mod, 'project_files()'),                     desc = 'Open Project files' },
     { '<leader>ef', cmd_modcall(pickers_mod, 'project_files()'),                     desc = 'Open Project files' },
     { '<leader>eF', cmd_modcall(pickers_mod, 'project_files({use_all_files=true})'), desc = 'Open find all files' },
     {
@@ -460,13 +461,20 @@ plug({
       'Resume telescope pickers'
     },
     {
+      '<C-f>r',
+      cmd_modcall(pickers_mod, 'project_files({ cwd_only = true, oldfiles = true })'),
+      desc =
+      'Open recent files'
+    },
+    {
       '<leader>er',
       cmd_modcall(pickers_mod, 'project_files({ cwd_only = true, oldfiles = true })'),
       desc =
       'Open recent files'
     },
     { '<leader>el', cmd_modcall('libs.telescope.find-folders-picker', '()'),                desc = 'Find folders' },
-    { '<leader>es', cmd_modcall('telescope', 'extensions.live_grep_args.live_grep_args()'), desc = 'Grep search' }
+    { '<C-f>s',     cmd_modcall('telescope', 'extensions.live_grep_args.live_grep_args()'), desc = 'Grep search' },
+    { '<leader>es', cmd_modcall('telescope', 'extensions.live_grep_args.live_grep_args()'), desc = 'Grep search' },
   },
   dependencies = {
     { 'nvim-lua/popup.nvim' },

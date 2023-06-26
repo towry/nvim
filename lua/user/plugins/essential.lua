@@ -221,7 +221,7 @@ pack.plug({
 --- which-key
 pack.plug({
   'folke/which-key.nvim',
-  keys = { "<leader>" },
+  keys = { "<leader>", "<C-f>" },
   cmd = { 'WhichKey' },
   config = function()
     local wk = require('which-key')
@@ -301,6 +301,19 @@ pack.plug({
     })
 
     ---Groups
+    wk.register({
+      f = {
+        name = 'Profject files',
+      },
+      r = {
+        name = 'Recent files',
+      },
+      s = {
+        name = 'Grep search content',
+      }
+    }, {
+      prefix = '<C-f>'
+    })
     wk.register({
       ['<space>'] = {
         name = 'Shortcuts',
