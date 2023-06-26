@@ -6,7 +6,6 @@ return plug({
   {
     "echasnovski/mini.starter",
     version = false, -- wait till new 0.7.0 release to put it back on semver
-    event = "VimEnter",
     opts = function()
       local pad = string.rep(" ", 0)
       local new_section = function(name, action, section)
@@ -55,11 +54,17 @@ return plug({
 
       vim.api.nvim_create_autocmd("User", {
         pattern = "LazyVimStarted",
+        once = true,
         callback = function()
+          local Path = require('libs.runtime.path')
+          local git = require('libs.git.utils')
           local stats = require("lazy").stats()
+
           local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
           local pad_footer = string.rep(" ", 0)
           starter.config.footer = pad_footer .. "⚡ Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
+          starter.config.header = " " ..
+              Path.home_to_tilde(vim.loop.cwd()) .. '\n' .. (' ' .. (git.get_git_abbr_head() or '/'))
           pcall(starter.refresh)
         end,
       })
@@ -74,7 +79,10 @@ return plug({
             group = '_plugin_enter_dashboard',
             pattern = au.user_autocmds.DoEnterDashboard,
             callback = function()
-              require('mini.starter').open()
+              pcall(function()
+                require('mini.starter').open()
+                vim.cmd('do User LazyVimStarted')
+              end)
             end,
           }
         }
