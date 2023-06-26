@@ -43,6 +43,7 @@ Ignore file with glob pattern     | -g '!package-lock.json'
 Quote search text                 | <c-k>
 Enter normal mode                 | <c-e>
 Rg help doc                       | https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md
+Search with rg                    | `-F`: literal string search.\n`-g`: use glob to filter files.
 
 ## jump-around-buffers
 Tag a file using grapple          | <space>m
@@ -83,5 +84,5 @@ Git blame                        | :Git blame
 Open commit browser              | :GV, (:GV! for current buffer)
 Motion - Select hunk             | ih
 
-## Edit tips
+## edit-tips
 <I>Quick move to correct indent  | <C-o>cc
