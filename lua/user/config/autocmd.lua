@@ -116,7 +116,11 @@ function M.load_on_startup()
         if vim.fn.argc(-1) ~= 0 then
           return
         end
-        au.do_useraucmd(au.user_autocmds.DoEnterDashboard_User)
+        au.exec_useraucmd(au.user_autocmds.DoEnterDashboard, {
+          data = {
+            in_vimenter = true,
+          }
+        })
       end,
     }
   }
