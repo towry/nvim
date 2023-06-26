@@ -26,24 +26,10 @@ M.project_files = function(opts)
   local devicons = require('nvim-web-devicons')
   local def_icon = devicons.get_icon('fname', { default = true })
   local iconwidth = strings.strdisplaywidth(def_icon)
-  local action_state = require('telescope.actions.state')
-  local action_set = require('telescope.actions.set')
-  local win_pick = require('window-picker')
 
   local map_i_actions = function(prompt_bufnr, map)
     map('i', '<C-o>', function()
-      local picker = action_state.get_current_picker(prompt_bufnr)
-      local win_picked = win_pick.pick_window({
-        autoselect_one = true,
-        include_current_win = false,
-      })
-      -- allow cancelling.
-      if not win_picked then return end
-      action_state
-          .get_current_history()
-          :append(action_state.get_current_line(), action_state.get_current_picker(prompt_bufnr))
-      picker.get_selection_window = function() return win_picked or 0 end
-      return action_set.select(prompt_bufnr, 'default')
+      require('libs.telescope.picker_keymaps').open_selected_in_window(prompt_bufnr)
     end, { noremap = true, silent = true })
   end
 

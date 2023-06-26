@@ -611,6 +611,9 @@ plug({
                 local prompt = picker:_get_prompt()
                 picker:set_prompt('--no-fixed-strings ' .. prompt)
               end,
+              ['<C-o>'] = function(prompt_bufnr)
+                return require('libs.telescope.picker_keymaps').open_selected_in_window(prompt_bufnr)
+              end
             },
             ['n'] = {
               -- your custom normal mode mappings
