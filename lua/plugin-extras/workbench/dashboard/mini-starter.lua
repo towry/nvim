@@ -74,8 +74,13 @@ return plug({
 
           local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
           starter.config.footer = "░  Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
-          starter.config.header = "░    " ..
-              Path.home_to_tilde(vim.loop.cwd()) .. '\n' .. ('░    ' .. (git.get_git_abbr_head() or '/'))
+          starter.config.header = table.concat({
+            "Hello, Towry",
+            " ",
+            ('%s · %s'):format("  " ..
+              Path.home_to_tilde(vim.loop.cwd()),
+              '  ' .. (git.get_git_abbr_head() or '/'))
+          }, '\n')
           pcall(starter.refresh)
         end,
       })
