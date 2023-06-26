@@ -472,9 +472,9 @@ plug({
       desc =
       'Open recent files'
     },
-    { '<leader>el', cmd_modcall('libs.telescope.find-folders-picker', '()'),                desc = 'Find folders' },
-    { '<C-f>s',     cmd_modcall('telescope', 'extensions.live_grep_args.live_grep_args()'), desc = 'Grep search' },
-    { '<leader>es', cmd_modcall('telescope', 'extensions.live_grep_args.live_grep_args()'), desc = 'Grep search' },
+    { '<leader>el', cmd_modcall('libs.telescope.find-folders-picker', '()'), desc = 'Find folders' },
+    { '<C-f>s',     cmd_modcall('libs.telescope.multi-rg-picker', '()'),     desc = 'Grep search' },
+    { '<leader>es', cmd_modcall('libs.telescope.multi-rg-picker', '()'),     desc = 'Grep search' },
   },
   dependencies = {
     { 'nvim-lua/popup.nvim' },

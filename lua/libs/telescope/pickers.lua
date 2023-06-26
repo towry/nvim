@@ -57,6 +57,8 @@ M.project_files = function(opts)
   if not opts.cwd then
     opts.cwd = runtimeUtils.get_root()
   end
+  local nicely_cwd = require('libs.runtime.path').home_to_tilde(opts.cwd)
+  opts.prompt_title = opts.prompt_title or nicely_cwd
 
   if opts and opts.oldfiles then
     local cache_opts = vim.tbl_deep_extend('force', {
