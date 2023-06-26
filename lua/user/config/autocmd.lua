@@ -165,7 +165,7 @@ local function resize_kitty()
   })
 end
 
----@param opts? {resize_kitty?: boolean}
+---@param opts? {resize_kitty?: boolean,on_very_lazy?:function}
 function M.setup(opts)
   opts = vim.tbl_deep_extend("force", {
     resize_kitty = false,
@@ -176,6 +176,15 @@ function M.setup(opts)
 
   if opts.resize_kitty then
     resize_kitty()
+  end
+  if type(opts.on_very_lazy) == 'function' then
+    vim.api.nvim_create_augroup('setup_on_very_lazy', { clear = true })
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'VeryLazy',
+      group = 'setup_on_very_lazy',
+      once = true,
+      callback = opts.on_very_lazy,
+    })
   end
 end
 

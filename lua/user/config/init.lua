@@ -4,7 +4,6 @@ function M.setup()
   require('libs.runtime.globals')
   require('user.config.custom').setup()
   require('user.config.options').setup()
-  require('user.config.keymaps').setup()
 
   local bundle_ok, spec = pcall(require, 'user.plugins_bundle')
   if not bundle_ok then
@@ -16,7 +15,10 @@ function M.setup()
   pcall(vim.cmd, 'colorscheme ' .. vim.cfg.ui__theme_name)
 
   require('user.config.autocmd').setup({
-    resize_kitty = false
+    resize_kitty = false,
+    on_very_lazy = function()
+      require('user.config.keymaps').setup()
+    end,
   })
 end
 
