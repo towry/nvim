@@ -1,12 +1,10 @@
-return {
+local plug = require('libs.runtime.pack').plug
+
+return plug({
   -- edgy
   {
     "folke/edgy.nvim",
     event = "VeryLazy",
-    cond = function()
-      -- something wrong with the animation.
-      return false
-    end,
     keys = {
       -- stylua: ignore
       { "<leader>ze", function() require("edgy").select() end, desc = "Edgy Select Window" },
@@ -93,4 +91,4 @@ return {
       table.insert(opts.open_files_do_not_replace_types, "edgy")
     end,
   },
-}
+})
