@@ -15,5 +15,9 @@ end
 M.list_all_session = function()
   vim.cmd([[SessionManager load_session]])
 end
+M.load_current_session = function()
+  vim.cmd([[SessionManager load_current_dir_session]])
+  Ty.NOTIFY("Session saved")
+end
 
 return M
