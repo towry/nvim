@@ -18,6 +18,8 @@ return plug({
         silent = true,
         evaluate_single = true,
         items = {
+          starter.sections.recent_files(4, true, false),
+
           new_section("F ~ Find file", 'lua require("libs.telescope.pickers").project_files()', "Telescope"),
           new_section("R ~ Recent files",
             'lua require("libs.telescope.pickers").project_files({cwd_only=true,oldfiles=true})', "Telescope"),
