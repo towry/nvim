@@ -472,9 +472,20 @@ plug({
       desc =
       'Open recent files'
     },
-    { '<leader>el', cmd_modcall('libs.telescope.find-folders-picker', '()'), desc = 'Find folders' },
-    { '<C-f>s',     cmd_modcall('libs.telescope.multi-rg-picker', '()'),     desc = 'Grep search' },
-    { '<leader>es', cmd_modcall('libs.telescope.multi-rg-picker', '()'),     desc = 'Grep search' },
+    { '<leader>el', cmd_modcall('libs.telescope.find-folders-picker', '()'),                desc = 'Find folders' },
+    { '<C-f>s',     cmd_modcall('telescope', 'extensions.live_grep_args.live_grep_args()'), desc = 'Grep search' },
+    { '<leader>es', cmd_modcall('telescope', 'extensions.live_grep_args.live_grep_args()'), desc = 'Grep search' },
+    {
+      '<C-f>S',
+      cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_visual_selection()'),
+      desc = 'Grep search on selection',
+      mode = { 'v', 'x' }
+    },
+    {
+      '<C-f>S',
+      cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_word_under_cursor()'),
+      desc = 'Grep search on selection',
+    },
   },
   dependencies = {
     { 'nvim-lua/popup.nvim' },
@@ -494,9 +505,6 @@ plug({
     local actions = require('telescope.actions')
     local action_state = require('telescope.actions.state')
     local lga_actions = require('telescope-live-grep-args.actions')
-
-    local win_pick = require('window-picker')
-    local action_set = require('telescope.actions.set')
     local icons = require('libs.icons')
 
     local git_icons = {
@@ -557,25 +565,10 @@ plug({
             ['<C-s>'] = actions.cycle_previewers_next,
             ['<C-a>'] = actions.cycle_previewers_prev,
             ['<C-h>'] = 'which_key',
-            ['<ESC>'] = actions.close,
+            -- ['<ESC>'] = actions.close,
             ['<C-c>'] = function(prompt_bufnr)
               local picker = action_state.get_current_picker(prompt_bufnr)
               picker:set_prompt('')
-            end,
-            -- open with pick window action.
-            ['<C-o>'] = function(prompt_bufnr)
-              local picker = action_state.get_current_picker(prompt_bufnr)
-              local win_picked = win_pick.pick_window({
-                autoselect_one = true,
-                include_current_win = false,
-              })
-              -- allow cancelling.
-              if not win_picked then return end
-              action_state
-                  .get_current_history()
-                  :append(action_state.get_current_line(), action_state.get_current_picker(prompt_bufnr))
-              picker.get_selection_window = function() return win_picked or 0 end
-              return action_set.select(prompt_bufnr, 'default')
             end,
           },
           n = {

@@ -26,6 +26,26 @@ M.project_files = function(opts)
   local devicons = require('nvim-web-devicons')
   local def_icon = devicons.get_icon('fname', { default = true })
   local iconwidth = strings.strdisplaywidth(def_icon)
+  local action_state = require('telescope.actions.state')
+  local action_set = require('telescope.actions.set')
+  local win_pick = require('window-picker')
+
+  local map_i_actions = function(prompt_bufnr, map)
+    map('i', '<C-o>', function()
+      local picker = action_state.get_current_picker(prompt_bufnr)
+      local win_picked = win_pick.pick_window({
+        autoselect_one = true,
+        include_current_win = false,
+      })
+      -- allow cancelling.
+      if not win_picked then return end
+      action_state
+          .get_current_history()
+          :append(action_state.get_current_line(), action_state.get_current_picker(prompt_bufnr))
+      picker.get_selection_window = function() return win_picked or 0 end
+      return action_set.select(prompt_bufnr, 'default')
+    end, { noremap = true, silent = true })
+  end
 
   opts = opts or {}
   local entry_make = make_entry.gen_from_file(opts)
@@ -60,6 +80,11 @@ M.project_files = function(opts)
   local nicely_cwd = require('libs.runtime.path').home_to_tilde(opts.cwd)
   opts.prompt_title = opts.prompt_title or nicely_cwd
 
+  opts.attach_mappings = function(_, map)
+    map_i_actions(_, map)
+    return true
+  end
+
   if opts and opts.oldfiles then
     local cache_opts = vim.tbl_deep_extend('force', {
     }, opts)
@@ -74,6 +99,7 @@ M.project_files = function(opts)
       results_title = '  Recent files: ',
       prompt_title = '  Recent files',
       attach_mappings = function(_, map)
+        map_i_actions(_, map)
         map('i', '<C-b>', cycle.next, { noremap = true, silent = true })
         return true
       end
