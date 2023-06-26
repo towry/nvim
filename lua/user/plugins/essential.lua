@@ -180,6 +180,7 @@ pack.plug({
 pack.plug({
   'mrjones2014/legendary.nvim',
   dependencies = {
+    'dressing.nvim',
     -- used for frecency sort
     'kkharji/sqlite.lua',
   },

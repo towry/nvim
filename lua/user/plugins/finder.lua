@@ -541,7 +541,6 @@ plug({
             -- When columns are less than this value, the preview will be disabled
             preview_cutoff = 10,
           },
-          prompt_position = 'bottom',
         },
         ---@see https://github.com/nvim-telescope/telescope.nvim/issues/522#issuecomment-1107441677
         file_ignore_patterns = { "node_modules", '.turbo', 'dist' },
