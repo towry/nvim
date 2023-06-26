@@ -14,10 +14,11 @@ local function install_lazy_vim()
 end
 
 local function setup(opts)
+  local is_window = jit.os:find('Windows')
   opts = vim.tbl_deep_extend("force", {
     spec = {},
     defaults = { lazy = true },
-    dev = { patterns = jit.os:find("Windows") and {} or {} },
+    dev = { patterns = is_window and {} or {}, path = is_window and "" or "~/workspace/git-repos" },
     install = { missing = false, colorscheme = { vim.cfg.ui__theme_name } },
     ui = {
       icons = {
