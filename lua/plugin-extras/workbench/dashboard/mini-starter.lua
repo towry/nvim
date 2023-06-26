@@ -19,10 +19,10 @@ return plug({
         silent = false,
         evaluate_single = true,
         items = {
-          new_section("Find file", '<cmd>require("libs.telescope.pickers").project_files()', "Telescope"),
+          new_section("Find file", 'require("libs.telescope.pickers").project_files()', "Telescope"),
           new_section("Recent files",
-            'lua require("libs.telescope.pickers").project_files({cwd_only=true,oldfiles=true})', "Telescope"),
-          new_section("Grep text", 'lua require("libs.telescope.multi-rg-picker")()', "Telescope"),
+            'require("libs.telescope.pickers").project_files({cwd_only=true,oldfiles=true})', "Telescope"),
+          new_section("Grep text", 'require("libs.telescope.multi-rg-picker")()', "Telescope"),
           ---
           new_section("Session load", [[SessionManager load_current_dir_session]], "Session"),
           new_section("Session delete", [[SessionManager delete_session]], "Session"),
