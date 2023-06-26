@@ -5,6 +5,7 @@ local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 local M = {}
 
 local function setup_basic()
+  --- quickly go into cmd
   set('n', '<C-;>', ':<C-u>', {
     expr = false,
     noremap = true,
@@ -13,6 +14,7 @@ local function setup_basic()
     expr = false,
     noremap = true,
   })
+  ---///
   --- tab is mapped to buffers, since tab&<c-i> has same func, we
   --- need to map <c-i> to its original func.
   set('n', '<C-i>', '<C-i>', {
