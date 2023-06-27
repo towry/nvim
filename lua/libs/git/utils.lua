@@ -43,6 +43,7 @@ local get_current_vcs_view_providers = function()
 end
 
 --- Close git views according the providers.
+--- TODO: if more than one providers, let use choose which to close.
 M.close_git_views = function()
   vim.schedule(function()
     local providers = get_current_vcs_view_providers()
