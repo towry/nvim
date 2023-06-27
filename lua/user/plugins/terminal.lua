@@ -18,7 +18,7 @@ plug({
       {
         '<leader>gV',
         '<cmd>lua require("libs.terminal.term-git").toggle_tig_file_history()<cr>',
-        desc = "Git file history",
+        desc = "Git current file history",
       }
     },
     cmd = { 'ToggleTerm', 'TermExec' },
