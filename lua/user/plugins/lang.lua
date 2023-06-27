@@ -53,13 +53,16 @@ plug({
     event = { 'BufRead', 'BufNewFile' },
     config = function()
       local Buffer = require('libs.runtime.buffer')
-      local disabled = function(lang, bufnr)
-        -- local ft = vim.api.nvim_buf_get_option(bufnr, 'ft')
+      local disabled = function(_lang, bufnr)
         local ft = vim.api.nvim_get_option_value("filetype", {
           buf = bufnr,
         })
         if vim.tbl_contains(vim.cfg.lang__treesitter_plugin_disable_on_filetypes or {}, ft) then
           return true
+        end
+        local is_can_modify = vim.api.nvim_get_option_value('modifiable', { buf = bufnr })
+        if not is_can_modify then
+          return true;
         end
         -- great than 100kb or lines great than 20000
         return vim.api.nvim_buf_line_count(bufnr) > 20000 or Buffer.getfsize(bufnr) > 100000
