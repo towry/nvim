@@ -60,6 +60,7 @@
   "mini.animate": { "branch": "main", "commit": "b0978ee3dd0dafd644d0bc6c37c396dbe8658342" },
   "mini.bufremove": { "branch": "main", "commit": "14805473144fffbd019d07e51bed2d176e065ee9" },
   "mini.files": { "branch": "main", "commit": "ebcba16b306cfeb67c90fb2ff11d3c1a67198fe9" },
+  "mini.fuzzy": { "branch": "main", "commit": "295763d73cbf580c27a4419364c47b09fc82e0f4" },
   "mini.indentscope": { "branch": "main", "commit": "f60e9b51a6214c73a170ffc5445ce91560981031" },
   "mini.starter": { "branch": "main", "commit": "9591477df06e71352a155823d0eb506ff9cae52b" },
   "mini.trailspace": { "branch": "main", "commit": "c41ab1035d184ff20c1aebd76639320c055afebe" },
