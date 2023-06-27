@@ -78,7 +78,7 @@ return plug({
             " " .. stats.count,
             " · ",
             " " .. ms .. "ms"
-          })
+          }, ' ')
           starter.config.header = table.concat({
             ('%s · %s'):format("  " ..
               Path.home_to_tilde(vim.loop.cwd()),
