@@ -1,7 +1,7 @@
 local plug = require('libs.runtime.pack').plug
 local cmd = require('libs.runtime.keymap').cmdstr
 local au = require('libs.runtime.au')
-local enable_flash = false
+local enable_flash = true
 
 plug({
   {
@@ -278,23 +278,39 @@ plug({
     'folke/flash.nvim',
     enabled = enable_flash,
     keys = {
+      ';',
+      ',',
+      'f',
+      'F',
+      't',
+      'T',
       {
-        "s",
-        mode = { "n", "x", "o" },
+        "<CR>",
+        mode = { "n" },
         function()
-          require("flash").jump()
+          require("flash").jump({
+            search = {
+              forward = true,
+            }
+          })
         end,
       },
       {
-        "S",
-        mode = { "o", "x" },
+        "<S-CR>",
+        mode = { 'n' },
         function()
-          require("flash").treesitter()
+          require("flash").jump({
+            search = {
+              forward = false,
+            }
+          })
         end,
       },
     },
     opts = {
-
+      search = {
+        forward = false,
+      }
     },
     config = function(_, opts)
       require('flash').setup(opts)
