@@ -33,7 +33,7 @@ return plug({
         },
         content_hooks = {
           starter.gen_hook.adding_bullet(pad .. "░ ", false),
-          starter.gen_hook.aligning("left", "top"),
+          starter.gen_hook.aligning("center", "center"),
         },
         query_updaters = 'abcdefghilmnopqrstuvwxyz0123456789_-./',
       }
@@ -74,9 +74,13 @@ return plug({
           local stats = require("lazy").stats()
 
           local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-          starter.config.footer = "░  Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
+          starter.config.footer = table.concat({
+            " " .. stats.count,
+            " · ",
+            " " .. ms .. "ms"
+          })
           starter.config.header = table.concat({
-            ('%s · %s'):format("  " ..
+            ('%s · %s'):format("  " ..
               Path.home_to_tilde(vim.loop.cwd()),
               '  ' .. (git.get_git_abbr_head() or '/'))
           }, '\n')
