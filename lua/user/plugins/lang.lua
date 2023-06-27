@@ -50,20 +50,38 @@ plug({
       -- vai to select current context!
       -- 'kiyoon/treesitter-indent-object.nvim',
     },
-    event = { 'BufRead', 'BufNewFile' },
+    init = function()
+      vim.api.nvim_create_augroup('_ts_file_opened', { clear = true })
+      vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
+        group = '_ts_file_opened',
+        nested = true,
+        callback = function(args)
+          local buftype = vim.api.nvim_get_option_value("buftype", { buf = args.buf })
+          if not (vim.fn.expand "%" == "" or buftype == "nofile") then
+            -- remove this event.
+            vim.api.nvim_del_augroup_by_name("_ts_file_opened")
+            --- wait for other plugins has ready.
+            vim.defer_fn(function()
+              vim.schedule(function()
+                vim.cmd('Lazy load nvim-treesitter')
+              end)
+            end, 2)
+          end
+        end,
+      })
+    end,
     config = function()
       local Buffer = require('libs.runtime.buffer')
       local disabled = function(_lang, bufnr)
+        --- must after buffer is read and loaded, otherwise some option is not available.
         local ft = vim.api.nvim_get_option_value("filetype", {
           buf = bufnr,
         })
         if vim.tbl_contains(vim.cfg.lang__treesitter_plugin_disable_on_filetypes or {}, ft) then
           return true
         end
-        local is_can_modify = vim.api.nvim_get_option_value('modifiable', { buf = bufnr })
-        if not is_can_modify then
-          return true;
-        end
+        local buftype = vim.api.nvim_get_option_value('buftype', { buf = bufnr })
+        if buftype ~= '' then return true end
         -- great than 100kb or lines great than 20000
         return vim.api.nvim_buf_line_count(bufnr) > 20000 or Buffer.getfsize(bufnr) > 100000
       end
