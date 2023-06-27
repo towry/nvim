@@ -288,28 +288,12 @@ plug({
         "<CR>",
         mode = { "n" },
         function()
-          require("flash").jump({
-            search = {
-              forward = true,
-            }
-          })
-        end,
-      },
-      {
-        "<S-CR>",
-        mode = { 'n' },
-        function()
-          require("flash").jump({
-            search = {
-              forward = false,
-            }
-          })
+          require("flash").jump()
         end,
       },
     },
     opts = {
       search = {
-        forward = false,
       }
     },
     config = function(_, opts)
