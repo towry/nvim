@@ -369,7 +369,7 @@ plug({
     opts = function(_, opts)
       local items = {
         {
-          name = "P ~ Projects",
+          name = "Projects",
           action = "Telescope projects",
           section = string.rep(" ", 0) .. "Telescope",
         },
