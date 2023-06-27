@@ -11,52 +11,65 @@ M.get_git_abbr_head = function()
   end
 end
 
-M.toggle_file_history = function()
+M.toggle_files_history = function(range, args)
   local lib = require('diffview.lib')
   local diffview = require('diffview')
 
-  local view = lib.get_current_view()
-  if view == nil then
-    diffview.file_history()
-    return
-  end
+  vim.schedule(function()
+    local view = lib.get_current_view()
+    if view == nil then
+      diffview.file_history(range, args)
+      return
+    end
 
-  if view then
-    view:close()
-    lib.dispose_view(view)
-  end
+    if view then
+      view:close()
+      lib.dispose_view(view)
+    end
+  end)
+end
+
+---@returns {diffview?:boolean}
+local get_current_vcs_view_providers = function()
+  return require('libs.runtime.buffer').reduce_bufnrs(function(carry, bufnr)
+    local name = vim.api.nvim_buf_get_name(bufnr)
+    if string.find(name, 'diffview://') ~= nil then
+      carry['diffview'] = true
+    elseif string.find(name, 'fugitive://') ~= nil then
+      carry['fugitive'] = true
+    end
+    return carry
+  end, {})
+end
+
+--- Close git views according the providers.
+M.close_git_views = function()
+  vim.schedule(function()
+    local providers = get_current_vcs_view_providers()
+    if providers.diffview == true then
+      vim.cmd('DiffviewClose')
+    elseif providers.fugitive == true then
+      vim.cmd('q')
+    end
+  end)
 end
 
 M.toggle_working_changes = function()
   local lib = require('diffview.lib')
   local diffview = require('diffview')
 
-  local view = lib.get_current_view()
-  if view == nil then
-    diffview.open()
-    return
-  end
+  vim.schedule(function()
+    local view = lib.get_current_view()
+    if view == nil then
+      diffview.open()
+      return
+    end
 
-  if view then
-    view:close()
-    lib.dispose_view(view)
-  end
-end
-
-M.toggle_status = function()
-  local lib = require('diffview.lib')
-  local diffview = require('diffview')
-
-  local view = lib.get_current_view()
-  if view == nil then
-    diffview.open()
-    return
-  end
-
-  if view then
-    view:close()
-    lib.dispose_view(view)
-  end
+    if view then
+      view:close()
+      lib.dispose_view(view)
+    end
+  end)
 end
 
 local function process_abbrev_head(gitdir, head_str, path)

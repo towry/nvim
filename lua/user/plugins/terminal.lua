@@ -13,12 +13,12 @@ plug({
       {
         '<leader>gv',
         '<cmd>lua require("libs.terminal.term-git").toggle_tig()<cr>',
-        desc = 'Git commits',
+        desc = 'Tig commits',
       },
       {
         '<leader>gV',
         '<cmd>lua require("libs.terminal.term-git").toggle_tig_file_history()<cr>',
-        desc = "Git current file history",
+        desc = "Tig current file history",
       }
     },
     cmd = { 'ToggleTerm', 'TermExec' },

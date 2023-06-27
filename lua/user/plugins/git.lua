@@ -17,9 +17,8 @@ plug({
     'tpope/vim-fugitive',
     keys = {
       { '<leader>gg', ":Git<cr>",               desc = "Fugitive Git" },
-      { '<leader>ga', cmdstr([[!git add %:p]]), desc = "Git add current" },
-      { '<leader>gA', cmdstr([[!git add .]]),   desc = "Git add all" },
-      { '<leader>gm', cmdstr([[G commit]]),     desc = "Git commit" },
+      { '<leader>ga', cmdstr([[!git add %:p]]), desc = "!Git add current" },
+      { '<leader>gA', cmdstr([[!git add .]]),   desc = "!Git add all" },
     },
     cmd = {
       'G',
@@ -83,10 +82,30 @@ plug({
   {
     'sindrets/diffview.nvim',
     keys = {
-      { '<leader>gD', '<cmd>lua require("libs.git.utils").toggle_file_history()<cr>',    desc = 'Git files history' },
+      {
+        '<leader>gf',
+        '<cmd>lua require("libs.git.utils").toggle_files_history()<cr>',
+        desc =
+        'Files history'
+      },
+      {
+        '<leader>gF',
+        [[<cmd>lua require("libs.git.utils").toggle_files_history(nil, '%')<cr>]],
+        desc =
+        'Current file history(diffview)'
+      },
       ---FIXME: <Space>e keymap not reset when exist the diffview. it should be buffer local keymaps.
-      { '<leader>gd', '<cmd>lua require("libs.git.utils").toggle_working_changes()<cr>', desc = 'Git changes' },
-      { '<leader>gS', '<cmd>lua require("libs.git.utils").toggle_status()<cr>',          desc = 'Git status' },
+      {
+        '<leader>gs',
+        '<cmd>lua require("libs.git.utils").toggle_working_changes()<cr>',
+        desc =
+        'Current status/changes'
+      },
+      {
+        '<leader>gq',
+        '<cmd>lua require("libs.git.utils").close_git_views()<cr>',
+        desc = 'Quite git views',
+      },
     },
     cmd = {
       'DiffviewLog',

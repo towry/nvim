@@ -44,6 +44,20 @@ function M.list_bufnrs()
   return valid_buffers
 end
 
+--- filter buffers
+function M.filter_bufnrs(filter)
+  local all_buffers = vim.api.nvim_list_bufs()
+  return Table.filter(function(b)
+    return filter(b)
+  end, all_buffers)
+end
+
+---@param callback function carry, bufnr
+function M.reduce_bufnrs(callback, carry)
+  local all_buffers = vim.api.nvim_list_bufs()
+  return Table.reduce(callback, carry, all_buffers)
+end
+
 ---@return table<number> list of buffer numbers
 function M.unsaved_list()
   local all_buffers = vim.api.nvim_list_bufs()

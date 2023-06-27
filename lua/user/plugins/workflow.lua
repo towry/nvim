@@ -323,7 +323,13 @@ plug({
         cmd = { 'ProjectRoot' },
         keys = {
           {
-            '<leader>ep', '<Cmd>Telescope projects<CR>', desc = 'Projects',
+            '<leader>ep',
+            function()
+              require('libs.runtime.utils').plugin_schedule('project_nvim', function()
+                vim.cmd('Telescope projects')
+              end)
+            end,
+            desc = 'Projects',
           }
         },
         config = function(_, opts)
@@ -370,7 +376,12 @@ plug({
       local items = {
         {
           name = "Projects",
-          action = "Telescope projects",
+          -- action = "Telescope projects",
+          action = function()
+            require('libs.runtime.utils').plugin_schedule('project_nvim', function()
+              vim.cmd('Telescope projects')
+            end)
+          end,
           section = string.rep(" ", 0) .. "Telescope",
         },
       }
