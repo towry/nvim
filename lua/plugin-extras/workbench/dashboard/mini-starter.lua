@@ -16,7 +16,7 @@ return plug({
       --stylua: ignore
       local config = {
         silent = true,
-        evaluate_single = true,
+        evaluate_single = false,
         items = {
           starter.sections.recent_files(4, true, false),
           new_section("F ~ Find file", 'lua require("libs.telescope.pickers").project_files()', "Telescope"),

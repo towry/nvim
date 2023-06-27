@@ -24,6 +24,11 @@ plug({
       },
       filetypes = { 'spectre_panel' },
     }
+    local dashboard_extension  = {
+      sections = {},
+      winbar = {},
+      filetypes = { 'starter', 'alpha' },
+    }
     local present, lualine     = pcall(require, 'lualine')
 
     if not present then
@@ -34,6 +39,7 @@ plug({
     lualine.setup({
       extensions = {
         spectre_extension,
+        dashboard_extension,
         'toggleterm',
         'nvim-tree',
       },

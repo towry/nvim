@@ -39,7 +39,7 @@ function M.list_bufnrs()
       return false
     end
 
-    return vim.api.nvim_buf_is_loaded(b)
+    return vim.api.nvim_buf_is_valid(b) and vim.api.nvim_buf_is_loaded(b)
   end, all_buffers)
   return valid_buffers
 end

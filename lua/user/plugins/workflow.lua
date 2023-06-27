@@ -86,6 +86,18 @@ plug({
             vim.cmd('q')
             return
           end
+          local valid_buf_count = #(require('libs.runtime.buffer').list_bufnrs())
+          if valid_buf_count <= 1 then
+            require('mini.bufremove').delete(0)
+            vim.schedule(function()
+              au.exec_useraucmd(au.user_autocmds.DoEnterDashboard, {
+                data = {
+                  in_vimenter = true,
+                }
+              })
+            end)
+            return
+          end
           require('mini.bufremove').delete(0)
         end,
         desc = 'Quit current buffer',
