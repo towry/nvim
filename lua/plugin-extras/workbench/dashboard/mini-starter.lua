@@ -27,6 +27,7 @@ return plug({
           new_section("/ ~ Session load", [[SessionManager load_current_dir_session]], "Session"),
           new_section("_ ~ Session delete", [[SessionManager delete_session]], "Session"),
           ---
+          new_section("B ~ Git Branchs", "Telescope git_branches show_remote_tracking_branches=false", "Built-in"),
           new_section("L ~ Lazy", "Lazy", "Built-in"),
           new_section("N ~ New file", "ene | startinsert", "Built-in"),
           new_section("- ~ Quit current", "q", "Built-in"),
