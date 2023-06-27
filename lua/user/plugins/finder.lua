@@ -573,7 +573,7 @@ plug({
               end
               vim.cmd('stopinsert')
             end,
-            -- ['<ESC>'] = actions.close,
+            ['<C-ESC>'] = actions.close,
             ['<C-c>'] = function(prompt_bufnr)
               local picker = action_state.get_current_picker(prompt_bufnr)
               picker:set_prompt('')

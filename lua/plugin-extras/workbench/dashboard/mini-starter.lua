@@ -22,7 +22,7 @@ return plug({
           new_section("F ~ Find file", 'lua require("libs.telescope.pickers").project_files()', "Telescope"),
           new_section("R ~ Recent files",
             'lua require("libs.telescope.pickers").project_files({cwd_only=true,oldfiles=true})', "Telescope"),
-          new_section("S ~ Grep text", 'lua require("telescope").extensions.live_grep_args.live_grep_args()', "Telescope"),
+          new_section("S ~ Grep text", 'lua require("libs.telescope.live_grep_call")()', "Telescope"),
           ---
           new_section("/ ~ Session load", [[SessionManager load_current_dir_session]], "Session"),
           new_section("_ ~ Session delete", [[SessionManager delete_session]], "Session"),
