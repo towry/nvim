@@ -16,14 +16,13 @@ return plug({
       --stylua: ignore
       local config = {
         silent = true,
-        evaluate_single = true,
+        evaluate_single = false,
         items = {
           starter.sections.recent_files(4, true, false),
-
           new_section("F ~ Find file", 'lua require("libs.telescope.pickers").project_files()', "Telescope"),
           new_section("R ~ Recent files",
             'lua require("libs.telescope.pickers").project_files({cwd_only=true,oldfiles=true})', "Telescope"),
-          new_section("S ~ Grep text", 'lua require("telescope").extensions.live_grep_args.live_grep_args()', "Telescope"),
+          new_section("S ~ Grep text", 'lua require("libs.telescope.live_grep_call")()', "Telescope"),
           ---
           new_section("/ ~ Session load", [[SessionManager load_current_dir_session]], "Session"),
           new_section("_ ~ Session delete", [[SessionManager delete_session]], "Session"),
@@ -75,11 +74,13 @@ return plug({
           local stats = require("lazy").stats()
 
           local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-          starter.config.footer = "░  Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
+          starter.config.footer = table.concat({
+            " " .. stats.count,
+            " · ",
+            " " .. ms .. "ms"
+          }, ' ')
           starter.config.header = table.concat({
-            "Hello, Towry",
-            " ",
-            ('%s · %s'):format("  " ..
+            ('%s · %s'):format("  " ..
               Path.home_to_tilde(vim.loop.cwd()),
               '  ' .. (git.get_git_abbr_head() or '/'))
           }, '\n')

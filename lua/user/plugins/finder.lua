@@ -472,9 +472,9 @@ plug({
       desc =
       'Open recent files'
     },
-    { '<leader>el', cmd_modcall('libs.telescope.find-folders-picker', '()'),                desc = 'Find folders' },
-    { '<C-f>s',     cmd_modcall('telescope', 'extensions.live_grep_args.live_grep_args()'), desc = 'Grep search' },
-    { '<leader>es', cmd_modcall('telescope', 'extensions.live_grep_args.live_grep_args()'), desc = 'Grep search' },
+    { '<leader>el', cmd_modcall('libs.telescope.find-folders-picker', '()'), desc = 'Find folders' },
+    { '<C-f>s',     cmd_modcall('libs.telescope.live_grep_call', '()'),      desc = 'Grep search' },
+    { '<leader>es', cmd_modcall('libs.telescope.live_grep_call', '()'),      desc = 'Grep search' },
     {
       '<C-f>S',
       cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_visual_selection()'),
@@ -573,7 +573,7 @@ plug({
               end
               vim.cmd('stopinsert')
             end,
-            -- ['<ESC>'] = actions.close,
+            ['<C-ESC>'] = actions.close,
             ['<C-c>'] = function(prompt_bufnr)
               local picker = action_state.get_current_picker(prompt_bufnr)
               picker:set_prompt('')
