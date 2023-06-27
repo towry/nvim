@@ -93,7 +93,7 @@ plug({
             vim.cmd('q')
             return
           end
-          local valid_buf_count = #(require('libs.runtime.buffer').list_bufnrs())
+          local valid_buf_count = #(require('libs.runtime.buffer').list_normal_bufnrs())
           if valid_buf_count <= 1 then
             require('mini.bufremove').delete(0)
             vim.schedule(function()
