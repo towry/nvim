@@ -82,6 +82,7 @@ return {
   lang__treesitter_plugin_disable_on_filetypes = {
     "NvimTree",
     "starter",
+    "git",
   },
   lang__treesitter_plugin_incremental_selection = true,
   lang__treesitter_plugin_highlight = true,
