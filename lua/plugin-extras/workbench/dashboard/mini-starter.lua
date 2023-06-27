@@ -65,6 +65,7 @@ return plug({
       vim.api.nvim_create_autocmd("User", {
         pattern = "MiniStarterOpened",
         callback = function(ctx)
+          vim.b.minianimate_disable = true
           if show_lazy_cb then
             require("lazy").show()
             show_lazy_cb = false
