@@ -9,8 +9,15 @@ plug({
     keys = {
       {
         '<C-w>',
-        cmdstr([[lua require("libs.hydra.window").open_window_hydra(true)]]),
+        function()
+          if vim.bo.filetype == 'TelescopePrompt' then
+            return '<C-w>';
+          end
+          return cmdstr([[lua require("libs.hydra.window").open_window_hydra(true)]])
+        end,
         desc = 'Window operations',
+        nowait = true,
+        expr = true,
       }
     }
   },

@@ -46,6 +46,20 @@ return plug({
         vim.cmd.close()
         show_lazy_cb = true
       end
+      local starter = require("mini.starter")
+      starter.setup(config)
+
+      local update_header_opts = function()
+        local Path = require('libs.runtime.path')
+        local git = require('libs.git.utils')
+
+        starter.config.header = table.concat({
+          ('%s · %s'):format("  " ..
+            Path.home_to_tilde(vim.loop.cwd()),
+            '  ' .. (git.get_git_abbr_head() or '/'))
+        }, '\n')
+      end
+
       vim.api.nvim_create_autocmd("User", {
         pattern = "MiniStarterOpened",
         callback = function(ctx)
@@ -59,18 +73,23 @@ return plug({
             { buffer = bufnr, nowait = true, silent = true })
           vim.keymap.set('n', 'j', [[<cmd>lua MiniStarter.update_current_item('next')<CR>]],
             { buffer = bufnr, nowait = true, silent = true })
+
+          vim.api.nvim_create_augroup('_dashboard_dir_changed', { clear = true })
+          vim.api.nvim_create_autocmd('DirChanged', {
+            group = '_dashboard_dir_changed',
+            buffer = bufnr,
+            callback = function()
+              update_header_opts()
+              pcall(starter.refresh)
+            end
+          })
         end,
       })
-
-      local starter = require("mini.starter")
-      starter.setup(config)
 
       vim.api.nvim_create_autocmd("User", {
         pattern = "LazyVimStarted",
         once = true,
         callback = function()
-          local Path = require('libs.runtime.path')
-          local git = require('libs.git.utils')
           local stats = require("lazy").stats()
 
           local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
@@ -79,11 +98,7 @@ return plug({
             " · ",
             " " .. ms .. "ms"
           }, ' ')
-          starter.config.header = table.concat({
-            ('%s · %s'):format("  " ..
-              Path.home_to_tilde(vim.loop.cwd()),
-              '  ' .. (git.get_git_abbr_head() or '/'))
-          }, '\n')
+          update_header_opts()
           pcall(starter.refresh)
         end,
       })
