@@ -75,6 +75,11 @@ return {
     description = "[Session] Load last session",
   },
   {
+    function() require('libs.session').load_current_session() end,
+    description = "[Session] Load current dir session",
+  },
+
+  {
     function() require('libs.session').remove_current_sesion() end,
     description = "[Session] Remove current session",
   },

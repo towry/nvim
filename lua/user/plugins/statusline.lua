@@ -14,6 +14,7 @@ plug({
   config = function()
     require('user.config.options').setup_statusline()
     local auto_format_disabled = require('libs.lsp-format.autoformat').disabled
+    local format_utils         = require('libs.lsp-format')
     local Buffer               = require('libs.runtime.buffer')
     local terms                = require('libs.statusline.lualine.terminal_component')
 
@@ -124,9 +125,24 @@ plug({
           'searchcount',
         },
         -- filename is displayed by the incline.
-        lualine_c = { 'diff', 'diagnostics', },
+        lualine_c = {
+          function()
+            if not vim.b.gitsigns_head or vim.b.gitsigns_git_status or vim.o.columns < 120 then
+              return ""
+            end
+
+            local git_status = vim.b.gitsigns_status_dict
+
+            local added = (git_status.added and git_status.added ~= 0) and (" +" .. git_status.added) or ""
+            local changed = (git_status.changed and git_status.changed ~= 0) and (" ~" .. git_status.changed) or ""
+            local removed = (git_status.removed and git_status.removed ~= 0) and (" -" .. git_status.removed) or ""
+
+            return (added .. changed .. removed) ~= "" and (added .. changed .. removed) or ""
+          end,
+          -- 'diff',
+          { 'diagnostics', update_in_insert = false, symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' } }
+        },
         lualine_x = {
-          "overseer",
           -- copilot status
           require('copilot_status').status_string,
           -- {
@@ -144,11 +160,12 @@ plug({
               if auto_format_disabled() then
                 icon = ' '
               end
-              return string.format('%s%s', icon, vim.b[0].formatter_name)
+              local ftr_name, impl_ftr_name = format_utils.current_formatter_name(0)
+              if not ftr_name and not impl_ftr_name then
+                return ''
+              end
+              return string.format('%s%s', icon, impl_ftr_name or ftr_name)
             end,
-            cond = function()
-              return vim.b[0].formatter_name ~= nil
-            end
           },
           --- dap
           {
@@ -244,5 +261,20 @@ plug({
     end,
   },
 
-
+  {
+    'lewis6991/satellite.nvim',
+    version = '*',
+    -- event = 'VeryLazy',
+    cmd = { 'SatelliteEnable', 'SatelliteDisable', 'SatelliteRefresh' },
+    event = au.user_autocmds.FileOpenedAfter_User,
+    opts = {
+      current_only = false,
+      winblend = 50,
+      zindex = 40,
+      excluded_filetypes = vim.cfg.misc__ft_exclude,
+    },
+    config = function(_, opts)
+      require('satellite').setup(opts)
+    end
+  }
 })

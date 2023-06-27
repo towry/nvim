@@ -36,8 +36,7 @@ return function()
   local pickers = require('telescope.pickers')
   local conf = require('telescope.config').values
   local finders = require('telescope.finders')
-  local nvim_tree_api = require('nvim-tree.api')
-  local nvim_tree_utils = require('nvim-tree.utils')
+  local libpath = require('libs.runtime.path')
   local actions = require('telescope.actions')
   local action_state = require('telescope.actions.state')
 
@@ -54,13 +53,8 @@ return function()
 
             local selected = selection[1]
 
-            local new_cwd = nvim_tree_utils.path_join({ find_folders_cwd, selected })
-            nvim_tree_api.tree.open({
-              update_root = false,
-              find_file = false,
-              current_window = false,
-            })
-            nvim_tree_api.tree.change_root(new_cwd)
+            local new_cwd = libpath.join(find_folders_cwd, selected)
+            require('libs.finder.hook').trigger_select_folder_action(new_cwd)
           end)
 
           -- search inside folder.

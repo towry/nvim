@@ -15,6 +15,7 @@ YJGS8P"Y888P"Y888P"Y888P"Y8888P
 
 plug({
   'goolord/alpha-nvim',
+  enabled = false,
   cmd = { 'Alpha', 'AlphaRedraw' },
   opts = function()
     local dashboard = require("alpha.themes.dashboard")

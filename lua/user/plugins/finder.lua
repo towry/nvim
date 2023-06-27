@@ -12,6 +12,7 @@ plug({
     'NvimTreeFindFileToggle',
     'NvimTreeFindFile',
   },
+  enabled = true,
   keys = {
     {
       '<leader>et',
@@ -203,7 +204,26 @@ plug({
         always_show_folders = true,
       },
     })
-  end
+  end,
+  init = function()
+    require('libs.finder.hook').register_select_folder_action(function(cwd)
+      local nvim_tree_api = require('nvim-tree.api')
+      nvim_tree_api.tree.open({
+        update_root = false,
+        find_file = false,
+        current_window = false,
+      })
+      nvim_tree_api.tree.change_root(cwd)
+    end)
+  end,
+})
+
+plug({
+  'jremmen/vim-ripgrep',
+  cmd = { 'Rg', 'RgRoot' },
+  config = function()
+    vim.g.rg_binary = 'rg'
+  end,
 })
 
 plug({
@@ -274,6 +294,7 @@ plug({
 })
 
 plug({
+  enabled = false,
   'stevearc/oil.nvim',
   lazy = not vim.cfg.runtime__starts_in_buffer,
   opts = {
@@ -430,6 +451,7 @@ plug({
   keys = {
     { '<Tab>',      cmd_modcall(pickers_mod, 'buffers()'),                           desc = "List Buffers" },
     { '<leader>gB', cmdstr([[Telescope git_branches]]),                              desc = 'Git branchs' },
+    { '<C-f>f',     cmd_modcall(pickers_mod, 'project_files()'),                     desc = 'Open Project files' },
     { '<leader>ef', cmd_modcall(pickers_mod, 'project_files()'),                     desc = 'Open Project files' },
     { '<leader>eF', cmd_modcall(pickers_mod, 'project_files({use_all_files=true})'), desc = 'Open find all files' },
     {
@@ -439,13 +461,31 @@ plug({
       'Resume telescope pickers'
     },
     {
+      '<C-f>r',
+      cmd_modcall(pickers_mod, 'project_files({ cwd_only = true, oldfiles = true })'),
+      desc =
+      'Open recent files'
+    },
+    {
       '<leader>er',
       cmd_modcall(pickers_mod, 'project_files({ cwd_only = true, oldfiles = true })'),
       desc =
       'Open recent files'
     },
     { '<leader>el', cmd_modcall('libs.telescope.find-folders-picker', '()'),                desc = 'Find folders' },
-    { '<leader>es', cmd_modcall('telescope', 'extensions.live_grep_args.live_grep_args()'), desc = 'Grep search' }
+    { '<C-f>s',     cmd_modcall('telescope', 'extensions.live_grep_args.live_grep_args()'), desc = 'Grep search' },
+    { '<leader>es', cmd_modcall('telescope', 'extensions.live_grep_args.live_grep_args()'), desc = 'Grep search' },
+    {
+      '<C-f>S',
+      cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_visual_selection()'),
+      desc = 'Grep search on selection',
+      mode = { 'v', 'x' }
+    },
+    {
+      '<C-f>S',
+      cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_word_under_cursor()'),
+      desc = 'Grep search on selection',
+    },
   },
   dependencies = {
     { 'nvim-lua/popup.nvim' },
@@ -465,9 +505,6 @@ plug({
     local actions = require('telescope.actions')
     local action_state = require('telescope.actions.state')
     local lga_actions = require('telescope-live-grep-args.actions')
-
-    local win_pick = require('window-picker')
-    local action_set = require('telescope.actions.set')
     local icons = require('libs.icons')
 
     local git_icons = {
@@ -482,7 +519,7 @@ plug({
 
     require('telescope').setup({
       defaults = {
-        winblend = 15,
+        winblend = 0,
         cache_picker = {
           num_pickers = 5,
         },
@@ -504,13 +541,12 @@ plug({
             -- When columns are less than this value, the preview will be disabled
             preview_cutoff = 10,
           },
-          prompt_position = 'bottom',
         },
         ---@see https://github.com/nvim-telescope/telescope.nvim/issues/522#issuecomment-1107441677
         file_ignore_patterns = { "node_modules", '.turbo', 'dist' },
         path_display = { 'truncate' },
         -- layout_strategy = 'flex',
-        layout_strategy = "bottom_pane",
+        layout_strategy = "vertical",
         file_sorter = require('telescope.sorters').get_fzy_sorter,
         prompt_prefix = '',
         color_devicons = true,
@@ -528,25 +564,19 @@ plug({
             ['<C-s>'] = actions.cycle_previewers_next,
             ['<C-a>'] = actions.cycle_previewers_prev,
             ['<C-h>'] = 'which_key',
-            ['<ESC>'] = actions.close,
+            ['<ESC>'] = function(prompt_bufnr)
+              local picker = action_state.get_current_picker(prompt_bufnr)
+              local prompt = picker:_get_prompt()
+              if not prompt or #prompt <= 0 then
+                actions.close(prompt_bufnr)
+                return
+              end
+              vim.cmd('stopinsert')
+            end,
+            -- ['<ESC>'] = actions.close,
             ['<C-c>'] = function(prompt_bufnr)
               local picker = action_state.get_current_picker(prompt_bufnr)
               picker:set_prompt('')
-            end,
-            -- open with pick window action.
-            ['<C-o>'] = function(prompt_bufnr)
-              local picker = action_state.get_current_picker(prompt_bufnr)
-              local win_picked = win_pick.pick_window({
-                autoselect_one = true,
-                include_current_win = false,
-              })
-              -- allow cancelling.
-              if not win_picked then return end
-              action_state
-                  .get_current_history()
-                  :append(action_state.get_current_line(), action_state.get_current_picker(prompt_bufnr))
-              picker.get_selection_window = function() return win_picked or 0 end
-              return action_set.select(prompt_bufnr, 'default')
             end,
           },
           n = {
@@ -557,9 +587,10 @@ plug({
       },
       extensions = {
         fzf = {
+          fuzzy = true,
           override_generic_sorter = true,
           override_file_sorter = true,
-          case_mode = 'ignore_case',
+          case_mode = 'smart_case',
         },
         live_grep_args = {
           disable_coordinates = true,
@@ -579,6 +610,9 @@ plug({
                 local prompt = picker:_get_prompt()
                 picker:set_prompt('--no-fixed-strings ' .. prompt)
               end,
+              ['<C-o>'] = function(prompt_bufnr)
+                return require('libs.telescope.picker_keymaps').open_selected_in_window(prompt_bufnr)
+              end
             },
             ['n'] = {
               -- your custom normal mode mappings
@@ -605,5 +639,4 @@ plug({
       end
     })
   end,
-}
-)
+})

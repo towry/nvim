@@ -21,6 +21,13 @@ function M.nvim_tree_find_file_direct() run_nvim_tree_toggle_cmd('NvimTreeFindFi
 
 M.nvim_tree_find_file = function(opts)
   opts = opts or {}
+  local treeview = require('nvim-tree.view')
+  local is_open = treeview.is_visible()
+  if is_open and opts.fallback then
+    -- close if is open.
+    run_nvim_tree_toggle_cmd('NvimTreeClose')
+    return
+  end
   local buf = vim.api.nvim_get_current_buf()
   -- if current buf is empty or not normal buf, then just return.
   -- local buftype = vim.api.nvim_buf_get_option(buf, 'buftype')

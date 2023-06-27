@@ -17,7 +17,7 @@ end
 plug({
   {
     'williamboman/mason.nvim',
-    cmd = { 'Mason', },
+    cmd = { 'Mason', 'MasonInstall', 'MasonLog', 'MasonUpdate', 'MasonUninstall', 'MasonUninstallAll' },
     opts = {
       PATH = 'prepend',
       ui = {
@@ -45,6 +45,7 @@ plug({
     },
     config = function()
       local lspconfig = require('lspconfig')
+      require('user.config.options').setup_lsp()
       require('mason')
       require('mason-lspconfig').setup({
         ensure_installed = vim.cfg.lsp__auto_install_servers,
@@ -85,6 +86,10 @@ plug({
 
       au.do_useraucmd(au.user_autocmds.LspConfigDone_User)
       require('libs.lspconfig.diagnostic').setup()
+      require('libs.lspconfig.inlayhints').setup({
+        enabled = false,
+        insert_only = true,
+      })
     end,
     init = function()
       au.on_lsp_attach(function(client, bufnr)
@@ -103,15 +108,6 @@ plug({
     opts = {
       sync = true,
     },
-  },
-
-  ---- diagnostic map
-  {
-    'doums/dmap.nvim',
-    event = { 'LspAttach' },
-    opts = {
-      ignore_filetypes = vim.cfg.misc__ft_exclude,
-    }
   },
 
   ---- lua

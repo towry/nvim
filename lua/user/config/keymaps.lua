@@ -5,21 +5,33 @@ local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 local M = {}
 
 local function setup_basic()
-  set('n', '<C-U>', '<C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y>', {
-    desc = "Smooth scrolling up"
+  --- quickly go into cmd
+  set('n', '<C-;>', ':<C-u>', {
+    expr = false,
+    noremap = true,
   })
-  set('n', '<C-D>', '<C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E>', {
-    desc = 'Smooth scrolling down',
+  set('i', '<C-;>', '<esc>:<C-u>', {
+    expr = false,
+    noremap = true,
   })
-
+  ---///
+  --- tab is mapped to buffers, since tab&<c-i> has same func, we
+  --- need to map <c-i> to its original func.
+  set('n', '<C-i>', '<C-i>', {
+    noremap = true,
+    expr = false,
+  })
   set('i', '<C-e>', '<End>', {
     desc = 'Insert mode: move to end of line',
   })
-  set('n', '<C-z>', '<ESC> u', {
-    desc = 'N: Undo, no more background key',
-  })
-  set('i', '<C-z>', '<ESC> u', {
-    desc = 'I: Undo, no more background key',
+  -- set('n', '<C-z>', '<ESC> u', {
+  --   desc = 'N: Undo, no more background key',
+  -- })
+  -- set('i', '<C-z>', '<ESC> u', {
+  --   desc = 'I: Undo, no more background key',
+  -- })
+  set('n', '<leader>/q', ':qa<cr>', {
+    desc = 'Quit vim'
   })
 
 
@@ -33,10 +45,10 @@ local function setup_basic()
   )
 
   -- works with kitty
-  set('n', '<Char-0xAA>', cmd('write'), {
+  set('n', '<Char-0xAA>', cmd('update'), {
     desc = 'N: Save current file by <command-s>',
   })
-  set('i', '<Char-0xAA>', '<ESC>:w<cr>', {
+  set('i', '<Char-0xAA>', '<ESC>:update<cr>', {
     desc = 'I: Save current file by <command-s>',
   })
 

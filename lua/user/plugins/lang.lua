@@ -14,8 +14,8 @@ plug({
       end
     end,
     keys = {
-      { "<Enter>",    desc = "Init Increment selection" },
-      { "<Enter>",    desc = "node node incremental selection",      mode = "x" },
+      -- { "<Enter>",    desc = "Init Increment selection" },
+      -- { "<Enter>",    desc = "node node incremental selection",      mode = "x" },
       { "<BS>",       desc = "Decrement selection",                  mode = "x" },
       { '<leader>cr', desc = 'Smart rename/nvim-treesitter-refactor' },
     },
@@ -50,7 +50,7 @@ plug({
       -- vai to select current context!
       -- 'kiyoon/treesitter-indent-object.nvim',
     },
-    event = { 'BufReadPost', 'BufNewFile' },
+    event = { 'BufRead', 'BufNewFile' },
     config = function()
       local Buffer = require('libs.runtime.buffer')
       local disabled = function(lang, bufnr)
@@ -75,14 +75,15 @@ plug({
           disable = disabled,
           enable = vim.cfg.lang__treesitter_plugin_highlight,
           -- disable = { "c", "rust" },  -- list of language that will be disabled
-          -- additional_vim_regex_highlighting = false,
+          additional_vim_regex_highlighting = false,
         },
         incremental_selection = {
           enable = vim.cfg.lang__treesitter_plugin_incremental_selection,
           disable = disabled,
           keymaps = {
-            init_selection = "<Enter>",
-            node_incremental = "<Enter>",
+            --TODO: fix me.
+            -- init_selection = "<Enter>",
+            -- node_incremental = "<Enter>",
             scope_incremental = false,
             node_decremental = "<BS>",
           },
@@ -309,7 +310,7 @@ plug({
         '[td', "<cmd>lua require('todo-comments').jump_prev()<CR>", desc = 'Jump to next todo',
       }
     },
-    event = au.user_autocmds.FileOpened_User,
+    event = au.user_autocmds.FileOpenedAfter_User,
     config = function()
       local todo_comments = require('todo-comments')
 
@@ -339,7 +340,7 @@ plug({
   },
   {
     'm-demare/hlargs.nvim',
-    event = 'BufReadPost',
+    event = au.user_autocmds.FileOpenedAfter_User,
     opts = {
       color = '#F7768E',
     }

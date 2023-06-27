@@ -16,10 +16,10 @@ plug({
   {
     'tpope/vim-fugitive',
     keys = {
-      { '<leader>gg', ":Git<cr>",               desc = "Fugitive Git" },
+      { '<leader>gg', ":Git<cr>", desc = "Fugitive Git" },
       { '<leader>ga', cmdstr([[!git add %:p]]), desc = "Git add current" },
-      { '<leader>gA', cmdstr([[!git add .]]),   desc = "Git add all" },
-      { '<leader>gm', cmdstr([[G commit]]),     desc = "Git commit" },
+      { '<leader>gA', cmdstr([[!git add .]]), desc = "Git add all" },
+      { '<leader>gm', cmdstr([[G commit]]), desc = "Git commit" },
     },
     cmd = {
       'G',
@@ -42,6 +42,21 @@ plug({
       'Gdiff',
       'Gpedit',
     },
+    init = function()
+      vim.api.nvim_create_autocmd('BufWinEnter', {
+        pattern = '*fugitive://*',
+        group = vim.api.nvim_create_augroup('_plug_fug_auto_jump_', { clear = true }),
+        callback = function()
+          vim.schedule(function()
+            local ft = vim.bo.filetype
+            if ft ~= 'fugitive' then
+              return
+            end
+            vim.cmd('normal! gg5j')
+          end)
+        end,
+      })
+    end,
   },
   {
     --
@@ -53,7 +68,7 @@ plug({
   {
     -- git runtimes. ft etc.
     'tpope/vim-git',
-    event = au.user_autocmds.FileOpened_User,
+    event = au.user_autocmds.FileOpenedAfter_User,
     cond = function() return true end,
   },
   {
@@ -68,7 +83,8 @@ plug({
   {
     'sindrets/diffview.nvim',
     keys = {
-      { '<leader>gD', '<cmd>lua require("libs.git.utils").toggle_file_history()<cr>',    desc = 'Git file history' },
+      { '<leader>gD', '<cmd>lua require("libs.git.utils").toggle_file_history()<cr>', desc = 'Git file history' },
+      ---FIXME: <Space>e keymap not reset when exist the diffview. it should be buffer local keymaps.
       { '<leader>gd', '<cmd>lua require("libs.git.utils").toggle_working_changes()<cr>', desc = 'Git changes' },
     },
     cmd = {
@@ -113,7 +129,7 @@ plug({
 
   {
     'akinsho/git-conflict.nvim',
-    event = au.user_autocmds.FileOpened_User,
+    event = au.user_autocmds.FileOpenedAfter_User,
     version = '*',
     keys = {
       {
@@ -136,14 +152,18 @@ plug({
       local conflict = require('git-conflict')
 
       conflict.setup({
-        default_mappings = false,   -- disable buffer local mapping created by this plugin
+        default_mappings = false, -- disable buffer local mapping created by this plugin
         default_commands = true,
         disable_diagnostics = true, -- This will disable the diagnostics in a buffer whilst it is conflicted
-        highlights = {              -- They must have background color, otherwise the default color will be used
+        highlights = { -- They must have background color, otherwise the default color will be used
           -- incoming = 'DiffText',
           -- current = 'DiffAdd',
         },
       })
+
+      vim.schedule(function()
+        vim.cmd('GitConflictRefresh')
+      end)
     end,
   },
 
@@ -160,11 +180,11 @@ plug({
       -- │ Setup                                                    │
       -- ╰──────────────────────────────────────────────────────────╯
       worktree.setup({
-        change_directory_command = 'cd',  -- default: "cd",
-        update_on_change = true,          -- default: true,
+        change_directory_command = 'cd', -- default: "cd",
+        update_on_change = true, -- default: true,
         update_on_change_command = 'e .', -- default: "e .",
-        clearjumps_on_change = true,      -- default: true,
-        autopush = false,                 -- default: false,
+        clearjumps_on_change = true, -- default: true,
+        autopush = false, -- default: false,
       })
 
       -- ╭──────────────────────────────────────────────────────────╮
@@ -218,7 +238,7 @@ plug({
         'gh', '<cmd>lua require("libs.hydra.git").open_git_signs_hydra()<cr>'
       }
     },
-    event = au.user_autocmds.FileOpened_User,
+    event = au.user_autocmds.FileOpenedAfter_User,
     config = function()
       local gitsigns_current_blame_delay = 0
 
@@ -246,8 +266,8 @@ plug({
           untracked = { hl = 'GitSignsAddNr', text = '┃', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
         },
         signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
-        numhl = false,     -- Toggle with `:Gitsigns toggle_numhl`
-        linehl = false,    -- Toggle with `:Gitsigns toggle_linehl`
+        numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
+        linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
         word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
         watch_gitdir = {
           interval = 1000,
@@ -285,5 +305,57 @@ plug({
       })
     end,
   },
+})
 
+---better commit view.
+plug({
+  'rhysd/committia.vim',
+  ft = { 'gitcommit' },
+  init = function()
+    vim.g.committia_min_window_width = 30
+    vim.g.committia_edit_window_width = 75
+    vim.g.committia_open_only_vim_starting = 1
+
+    vim.api.nvim_create_user_command('CommittiaOpenGit', function()
+      require('libs.runtime.utils').load_plugins({ 'committia.vim' })
+      vim.fn['committia#open']('git')
+    end, {})
+
+    -- vim.api.nvim_create_autocmd('BufReadPre', {
+    --   pattern = { 'MERGE_MSG' },
+    --   group = vim.api.nvim_create_augroup('_gitcommit', { clear = true }),
+    --   callback = function()
+    --     require('libs.runtime.utils').load_plugins({ 'committia.vim' })
+    --     vim.fn['committia#open']('git')
+    --   end
+    -- })
+
+    vim.g.committia_hooks = {
+      edit_open = function(info)
+        vim.cmd.resize(10)
+        local opts = {
+          buffer = vim.api.nvim_get_current_buf(),
+          silent = true,
+        }
+        local function imap(lhs, rhs, normal)
+          local modes = normal and { 'i', 'n' } or { 'i' }
+          vim.keymap.set(modes, lhs, rhs, opts)
+        end
+
+        imap('<C-d>', '<Plug>(committia-scroll-diff-down-half)', true)
+        imap('<C-u>', '<Plug>(committia-scroll-diff-up-half)', true)
+        imap('<C-f>', '<Plug>(committia-scroll-diff-down-page)', true)
+        imap('<C-b>', '<Plug>(committia-scroll-diff-up-page)', true)
+        imap('<C-j>', '<Plug>(committia-scroll-diff-down)')
+        imap('<C-k>', '<Plug>(committia-scroll-diff-up)')
+
+        -- if no commit message, start in insert mode.
+        if info.vcs == "git" and vim.fn.getline(1) == "" then
+          vim.schedule(function()
+            vim.cmd.startinsert()
+          end)
+        end
+      end,
+    }
+  end,
 })

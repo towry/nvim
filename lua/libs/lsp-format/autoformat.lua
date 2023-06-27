@@ -40,6 +40,10 @@ function M.toggle()
 end
 
 local function attach_autoformat_with_autocmd(_client, bufnr)
+  local formatter_name, _ = require('libs.lsp-format').current_formatter_name(bufnr)
+  if not formatter_name then
+    return
+  end
   local au = require('libs.runtime.au')
   local group = vim.api.nvim_create_augroup('_lsp_format_' .. bufnr, {
     clear = true,

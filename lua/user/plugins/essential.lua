@@ -18,7 +18,7 @@ pack.plug({
   },
   {
     'echasnovski/mini.trailspace',
-    event = require('libs.runtime.au').user_autocmds.FileOpened_User,
+    event = require('libs.runtime.au').user_autocmds.FileOpenedAfter_User,
     config = true,
   }
 })
@@ -180,6 +180,7 @@ pack.plug({
 pack.plug({
   'mrjones2014/legendary.nvim',
   dependencies = {
+    'dressing.nvim',
     -- used for frecency sort
     'kkharji/sqlite.lua',
   },
@@ -221,7 +222,7 @@ pack.plug({
 --- which-key
 pack.plug({
   'folke/which-key.nvim',
-  keys = { "<leader>" },
+  keys = { "<leader>", "<C-f>" },
   cmd = { 'WhichKey' },
   config = function()
     local wk = require('which-key')
@@ -302,6 +303,19 @@ pack.plug({
 
     ---Groups
     wk.register({
+      f = {
+        name = 'Profject files',
+      },
+      r = {
+        name = 'Recent files',
+      },
+      s = {
+        name = 'Grep search content',
+      }
+    }, {
+      prefix = '<C-f>'
+    })
+    wk.register({
       ['<space>'] = {
         name = 'Shortcuts',
       },
@@ -345,6 +359,9 @@ pack.plug({
         },
         o = {
           name = "Overseer Runner"
+        },
+        t = {
+          name = 'Test runner',
         }
       }
     }, {
@@ -417,7 +434,6 @@ pack.plug({
       },
     })
   end,
-
   init = function()
     local au = require('libs.runtime.au')
     au.define_autocmds({

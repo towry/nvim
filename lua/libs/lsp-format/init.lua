@@ -1,24 +1,30 @@
 local autoformat = require('libs.lsp-format.autoformat')
 
-local ft_formatter = {}
+---formatter name that corresponds to client name.
+local ft_client_formatter = {}
+---formatter name that the client use under the hood.
+local ft_impl_formatter = {}
 
 local M = {}
 
+--- @perf use ft instead of specific bufnr.
 function M.choose_formatter_for_buf(client, buf)
   local ft = vim.api.nvim_get_option_value("filetype", {
     buf = buf,
   })
 
-  if ft_formatter[ft] then
-    vim.b[buf].formatter_name = ft_formatter[ft]
+  if ft_client_formatter[ft] then
     return
   end
 
   local nls = require('libs.lspconfig-servers.null_ls.utils')
+  local nls_available_formatters = nls.get_available_formatters(ft)
+  local specific_formatter_name = nil
 
   local enable = false
-  if nls.has_formatter(ft) then
+  if nls.has_formatter(ft, nls_available_formatters) then
     enable = client.name == 'null-ls'
+    specific_formatter_name = nls.format_available_formatters(nls_available_formatters)
   else
     enable = client.server_capabilities.documentFormattingProvider and
         not vim.tbl_contains({ 'null-ls', 'tsserver' }, client.name)
@@ -26,8 +32,8 @@ function M.choose_formatter_for_buf(client, buf)
 
   -- format on save
   if enable then
-    ft_formatter[ft] = client.name
-    vim.b[buf].formatter_name = client.name or nil
+    ft_impl_formatter[ft] = specific_formatter_name
+    ft_client_formatter[ft] = client.name
   end
 end
 
@@ -45,7 +51,7 @@ function M.format(bufnr, opts)
 
   if autoformat.disabled() and opts.auto then return end
 
-  local name = vim.b[bufnr or vim.api.nvim_get_current_buf()].formatter_name or nil
+  local name, impl_formatter_name = M.current_formatter_name(bufnr or 0)
   local fmt_opts = {
     bufnr = bufnr,
     async = opts.async or false,
@@ -54,20 +60,27 @@ function M.format(bufnr, opts)
     fmt_opts.name = name
   end
 
+  vim.lsp.buf.format(fmt_opts)
   if not opts.auto then
-    vim.api.nvim_echo({ { "format with " .. (name or "default"), "Comment" } }
+    vim.api.nvim_echo({ { "format with " .. (impl_formatter_name or name or "default"), "Comment" } }
     , true, {})
   else
     vim.defer_fn(function()
-      vim.api.nvim_echo({ { " written! also format with " .. (name or "default"), "Comment" } }
+      vim.api.nvim_echo({ { " written! also format with " .. (impl_formatter_name or name or "default"), "Comment" } }
       , true, {})
     end, 100)
   end
-  vim.lsp.buf.format(fmt_opts)
 end
 
+---@return string|nil, string|nil
 function M.current_formatter_name(bufnr)
-  return vim.api.nvim_buf_get_var(bufnr or 0, 'formatter_name')
+  local ft = vim.api.nvim_get_option_value("filetype", {
+    buf = bufnr,
+  })
+
+  local impl_name = ft_impl_formatter[ft] or nil
+  local value = ft_client_formatter[ft] or nil
+  return value, impl_name
 end
 
 return M

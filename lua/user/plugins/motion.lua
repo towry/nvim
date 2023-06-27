@@ -1,10 +1,12 @@
 local plug = require('libs.runtime.pack').plug
 local cmd = require('libs.runtime.keymap').cmdstr
 local au = require('libs.runtime.au')
+local enable_flash = false
 
 plug({
   {
     'jinh0/eyeliner.nvim',
+    enabled = not enable_flash,
     keys = {
       'f',
       'F',
@@ -16,7 +18,7 @@ plug({
       dim = true
     },
     config = function(_, opts)
-      local au = require('libs.runtime.au')
+      -- local au = require('libs.runtime.au')
 
       require('eyeliner').setup(opts)
 
@@ -54,13 +56,14 @@ plug({
   {
     {
       'ggandor/leap.nvim',
+      enabled = not enable_flash,
       dependencies = {
         'tpope/vim-repeat',
       },
       keys = { { 's' }, { 'S' }, { 'gs' }, { 'f' }, { 'F' }, { 'vs' }, { 'ds' } },
       config = function()
         local leap = require('leap')
-        local au = require('libs.runtime.au')
+        -- local au = require('libs.runtime.au')
 
         leap.opts.highlight_unlabeled_phase_one_targets = true
         leap.opts.substitute_chars = {
@@ -108,7 +111,7 @@ plug({
   },
   {
     'chentoast/marks.nvim',
-    event = 'BufReadPost',
+    event = au.user_autocmds.FileOpenedAfter_User,
     config = function()
       require('marks').setup({
         default_mappings = false,
@@ -126,7 +129,7 @@ plug({
       })
 
       -- sync hl.
-      local au = require('libs.runtime.au')
+      -- local au = require('libs.runtime.au')
       au.register_event(au.events.AfterColorschemeChanged, {
         name = "update_marks_hl",
         immediate = true,
@@ -144,7 +147,7 @@ plug({
 
   {
     'echasnovski/mini.ai',
-    event = { 'BufNewFile', 'BufRead' },
+    event = au.user_autocmds.FileOpenedAfter_User,
     opts = function()
       local ai = require("mini.ai")
       return {
@@ -261,7 +264,7 @@ plug({
     }
   },
   ---prevent the cursor from moving when using shift and filter actions.
-  { 'gbprod/stay-in-place.nvim', config = true, event = 'BufReadPost' },
+  { 'gbprod/stay-in-place.nvim', config = true, event = au.user_autocmds.FileOpenedAfter_User },
 
   {
     -- https://github.com/mg979/vim-visual-multi/wiki/Quick-start
@@ -269,5 +272,32 @@ plug({
     enabled = function() return false end,
     keys = { { 'v', 'V' } },
     config = function() vim.g.VM_leader = '<space>' end,
+  },
+
+  {
+    'folke/flash.nvim',
+    enabled = enable_flash,
+    keys = {
+      {
+        "s",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").jump()
+        end,
+      },
+      {
+        "S",
+        mode = { "o", "x" },
+        function()
+          require("flash").treesitter()
+        end,
+      },
+    },
+    opts = {
+
+    },
+    config = function(_, opts)
+      require('flash').setup(opts)
+    end
   }
 })

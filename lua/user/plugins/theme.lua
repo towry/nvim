@@ -57,8 +57,46 @@ plug({
 })
 
 plug({
-  'EdenEast/nightfox.nvim',
-  lazy = not vim.startswith(vim.cfg.ui__theme_name, 'nightfox'),
+  'mcchrish/zenbones.nvim',
+  dependencies = {
+    'rktjmp/lush.nvim'
+  },
+  lazy = not string.match(vim.cfg.ui__theme_name, 'bones'),
   priority = 1000,
-  opts = {},
+  config = false,
+  init = function()
+    vim.g.forestbones = {
+      -- solid_line_nr = true,
+      darken_comments = 45,
+      solid_float_border = true,
+    }
+
+    vim.api.nvim_create_autocmd('ColorScheme', {
+      pattern = 'forestbones',
+      group = vim.api.nvim_create_augroup('_custom_forestbones_', { clear = true }),
+      callback = function()
+        local lush = require "lush"
+        local base = require "zenbones"
+
+        -- Create some specs
+        local specs = lush.parse(function()
+          return {
+            -- darken cursorline
+            -- CursorLine { base.CursorLine, bg = '#374145' },
+          }
+        end)
+        -- Apply specs using lush tool-chain
+        lush.apply(lush.compile(specs))
+      end
+    })
+  end,
+})
+
+plug({
+  'Luxed/ayu-vim',
+  lazy = not string.match(vim.cfg.ui__theme_name, 'ayu'),
+  priority = 1000,
+  config = false,
+  init = function()
+  end,
 })

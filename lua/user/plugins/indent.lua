@@ -19,7 +19,7 @@ pack.plug({
   ---Indent guides.
   {
     'lukas-reineke/indent-blankline.nvim',
-    event = au.user_autocmds.FileOpened_User,
+    event = au.user_autocmds.FileOpenedAfter_User,
     config = function()
       require('indent_blankline').setup({
         use_treesitter = true,
@@ -57,9 +57,7 @@ pack.plug({
   ---Indent scope.
   {
     'echasnovski/mini.indentscope',
-    event = {
-      'BufRead', 'BufNewFile',
-    },
+    event = au.user_autocmds.FileOpenedAfter_User,
     config = function()
       require('mini.indentscope').setup({
         symbol = '│',

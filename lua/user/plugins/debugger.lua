@@ -1,3 +1,4 @@
+local cmdstr = require('libs.runtime.keymap').cmdstr
 local pack = require('libs.runtime.pack')
 
 ---- dap
@@ -19,20 +20,20 @@ pack.plug({
     -- │ DAP Virtual Text Setup                                   │
     -- ╰──────────────────────────────────────────────────────────╯
     dap_vt.setup({
-      enabled = true,                        -- enable this plugin (the default)
-      enabled_commands = true,               -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
-      highlight_changed_variables = true,    -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
-      highlight_new_as_changed = false,      -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
-      show_stop_reason = true,               -- show stop reason when stopped for exceptions
-      commented = false,                     -- prefix virtual text with comment string
-      only_first_definition = true,          -- only show virtual text at first definition (if there are multiple)
-      all_references = false,                -- show virtual text on all all references of the variable (not only definitions)
+      enabled = true, -- enable this plugin (the default)
+      enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
+      highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
+      highlight_new_as_changed = false, -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
+      show_stop_reason = true, -- show stop reason when stopped for exceptions
+      commented = false, -- prefix virtual text with comment string
+      only_first_definition = true, -- only show virtual text at first definition (if there are multiple)
+      all_references = false, -- show virtual text on all all references of the variable (not only definitions)
       filter_references_pattern = '<module', -- filter references (not definitions) pattern when all_references is activated (Lua gmatch pattern, default filters out Python modules)
       -- Experimental Features:
-      virt_text_pos = 'eol',                 -- position of virtual text, see `:h nvim_buf_set_extmark()`
-      all_frames = false,                    -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
-      virt_lines = false,                    -- show virtual lines instead of virtual text (will flicker!)
-      virt_text_win_col = nil,               -- position the virtual text at a fixed window column (starting from the first text column) ,
+      virt_text_pos = 'eol', -- position of virtual text, see `:h nvim_buf_set_extmark()`
+      all_frames = false, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
+      virt_lines = false, -- show virtual lines instead of virtual text (will flicker!)
+      virt_text_win_col = nil, -- position the virtual text at a fixed window column (starting from the first text column) ,
     })
 
     -- ╭──────────────────────────────────────────────────────────╮
@@ -81,8 +82,8 @@ pack.plug({
         },
       },
       floating = {
-        max_height = nil,   -- These can be integers or a float between 0 and 1.
-        max_width = nil,    -- Floats will be treated as percentage of your screen.
+        max_height = nil, -- These can be integers or a float between 0 and 1.
+        max_width = nil, -- Floats will be treated as percentage of your screen.
         border = 'rounded', -- Border style. Can be "single", "double" or "rounded"
         mappings = {
           close = { 'q', '<Esc>' },
@@ -127,44 +128,44 @@ pack.plug({
     -- ╰──────────────────────────────────────────────────────────╯
     vim.api.nvim_set_keymap(
       'n',
-      '<Leader>db',
+      '<Leader>rdb',
       "<CMD>lua require('dap').toggle_breakpoint()<CR>",
       { noremap = true, silent = true }
     )
     vim.api.nvim_set_keymap(
       'n',
-      '<Leader>dc',
+      '<Leader>rdc',
       "<CMD>lua require('dap').continue()<CR>",
       { noremap = true, silent = true }
     )
     vim.api.nvim_set_keymap(
       'n',
-      '<Leader>dd',
+      '<Leader>rdd',
       "<CMD>lua require('dap').continue()<CR>",
       { noremap = true, silent = true }
     )
-    vim.api.nvim_set_keymap('n', '<Leader>dh', "<CMD>lua require('dapui').eval()<CR>", { noremap = true, silent = true })
+    vim.api.nvim_set_keymap('n', '<Leader>rdh', "<CMD>lua require('dapui').eval()<CR>", { noremap = true, silent = true })
     vim.api.nvim_set_keymap(
       'n',
-      '<Leader>di',
+      '<Leader>rdi',
       "<CMD>lua require('dap').step_into()<CR>",
       { noremap = true, silent = true }
     )
     vim.api.nvim_set_keymap(
       'n',
-      '<Leader>do',
+      '<Leader>rdo',
       "<CMD>lua require('dap').step_out()<CR>",
       { noremap = true, silent = true }
     )
     vim.api.nvim_set_keymap(
       'n',
-      '<Leader>dO',
+      '<Leader>rdO',
       "<CMD>lua require('dap').step_over()<CR>",
       { noremap = true, silent = true }
     )
     vim.api.nvim_set_keymap(
       'n',
-      '<Leader>dt',
+      '<Leader>rdt',
       "<CMD>lua require('dap').terminate()<CR>",
       { noremap = true, silent = true }
     )
@@ -250,6 +251,20 @@ pack.plug({
     'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter',
     'haydenmeade/neotest-jest',
+  },
+  keys = {
+    {
+      '<leader>rtn', cmdstr([[lua require("neotest").run.run()]]), desc = 'Run the nearest test'
+    },
+    {
+      '<leader>rtf', cmdstr([[lua require("neotest").run.run(vim.fn.expand("%"))]]), desc = 'Run the current file'
+    },
+    {
+      '<leader>rtd', cmdstr([[lua require("neotest").run({strategy = "dap"})]]), desc = 'Debug the nearest test'
+    },
+    {
+      '<leader>rtx', cmdstr([[lua require("neotest").stop()]]), desc = 'Stop the nearest test'
+    },
   },
   config = function()
     local present, neotest = pcall(require, 'neotest')
@@ -347,19 +362,19 @@ pack.plug({
     'OverseerDeleteBundle', 'OverseerRunCmd', 'OverseerInfo', 'OverseerBuild', 'OverseerQuickAction',
     'OverseerTaskAction', 'OverseerClearCache' },
   keys = {
-    { '<leader>rot', '<cmd>OverseerToggle!<cr>',      desc = 'Toggle' },
-    { '<leader>roo', '<cmd>OverseerOpen!<cr>',        desc = 'Open' },
-    { '<leader>ror', '<cmd>OverseerRun<cr>',          desc = 'Run' },
-    { '<leader>roR', '<cmd>OverseerRunCmd<cr>',       desc = 'Run cmd' },
-    { '<leader>roc', '<cmd>OverseerClose<cr>',        desc = 'Close' },
-    { '<leader>ros', '<cmd>OverseerSaveBundle<cr>',   desc = 'Save bundle' },
-    { '<leader>rol', '<cmd>OverseerLoadBundle<cr>',   desc = 'Load bundle' },
+    { '<leader>rot', '<cmd>OverseerToggle!<cr>', desc = 'Toggle' },
+    { '<leader>roo', '<cmd>OverseerOpen!<cr>', desc = 'Open' },
+    { '<leader>ror', '<cmd>OverseerRun<cr>', desc = 'Run' },
+    { '<leader>roR', '<cmd>OverseerRunCmd<cr>', desc = 'Run cmd' },
+    { '<leader>roc', '<cmd>OverseerClose<cr>', desc = 'Close' },
+    { '<leader>ros', '<cmd>OverseerSaveBundle<cr>', desc = 'Save bundle' },
+    { '<leader>rol', '<cmd>OverseerLoadBundle<cr>', desc = 'Load bundle' },
     { '<leader>rod', '<cmd>OverseerDeleteBundle<cr>', desc = 'Delete bundle' },
-    { '<leader>roi', '<cmd>OverseerInfo<cr>',         desc = 'Info' },
-    { '<leader>rob', '<cmd>OverseerBuild<cr>',        desc = 'Build' },
-    { '<leader>roq', '<cmd>OverseerQuickAction<cr>',  desc = 'Quick action' },
-    { '<leader>roT', '<cmd>OverseerTaskAction<cr>',   desc = 'Task action' },
-    { '<leader>roC', '<cmd>OverseerClearCache<cr>',   desc = 'Clear cache' },
+    { '<leader>roi', '<cmd>OverseerInfo<cr>', desc = 'Info' },
+    { '<leader>rob', '<cmd>OverseerBuild<cr>', desc = 'Build' },
+    { '<leader>roq', '<cmd>OverseerQuickAction<cr>', desc = 'Quick action' },
+    { '<leader>roT', '<cmd>OverseerTaskAction<cr>', desc = 'Task action' },
+    { '<leader>roC', '<cmd>OverseerClearCache<cr>', desc = 'Clear cache' },
   },
   opts = {
     -- https://github.com/stevearc/overseer.nvim/blob/master/doc/reference.md#setup-options
@@ -377,6 +392,7 @@ pack.plug({
     },
   },
   config = function(_, opts)
+    vim.g.plugin_overseer_loaded = 1
     local overseer = require("overseer")
     overseer.setup(opts)
     -- if has_dap then
@@ -403,7 +419,7 @@ pack.plug({
   -- https://michaelb.github.io/sniprun/sources/README.html#installation
   opts = {
     display = {
-      "Classic",       --# display results in the command-line  area
+      "Classic", --# display results in the command-line  area
       "VirtualTextOk", --# display ok results as virtual text (multiline is shortened)
     },
   },

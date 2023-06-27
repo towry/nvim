@@ -75,7 +75,8 @@ M.add_source_to_virtual_text_handler = function(namespace, bufnr, diagnostics, o
 end
 
 function M.setup()
-  local signs = { Error = '', Warn = '', Hint = '', Info = '' }
+  -- local signs = { Error = '', Warn = '', Hint = '', Info = '' }
+  local signs = { Error = 'E', Warn = 'W', Hint = 'H', Info = 'I' }
 
   vim.diagnostic.config({
     severity_sort = true,

@@ -20,7 +20,7 @@ local function is_string(t) return type(t) == 'string' end
 
 return function(opts)
   opts = opts or {}
-  opts.cwd = opts.cwd and vim.fn.expand(opts.cwd) or vim.loop.cwd()
+  opts.cwd = opts.cwd and vim.fn.expand(opts.cwd) or require("libs.runtime.utils").get_root()
   opts.shortcuts = opts.shortcuts
       or {
         ["c"] = "*.c",
@@ -44,6 +44,7 @@ return function(opts)
         ["xml"] = "*.xml",
       }
   opts.pattern = opts.pattern or "%s"
+  opts.prompt_title = opts.prompt_title or require("libs.runtime.path").home_to_tilde(opts.cwd)
 
   local custom_grep = finders.new_async_job {
     command_generator = function(prompt)
@@ -98,7 +99,7 @@ return function(opts)
 
   pickers.new(opts, {
     debounce = 100,
-    prompt_title = "Live Grep (with shortcuts)",
+    results_title = opts.results_title or " Live Grep (with shortcuts)",
     finder = custom_grep,
     previewer = conf.grep_previewer(opts),
     sorter = require("telescope.sorters").empty(),

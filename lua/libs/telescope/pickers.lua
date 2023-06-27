@@ -27,6 +27,12 @@ M.project_files = function(opts)
   local def_icon = devicons.get_icon('fname', { default = true })
   local iconwidth = strings.strdisplaywidth(def_icon)
 
+  local map_i_actions = function(prompt_bufnr, map)
+    map('i', '<C-o>', function()
+      require('libs.telescope.picker_keymaps').open_selected_in_window(prompt_bufnr)
+    end, { noremap = true, silent = true })
+  end
+
   opts = opts or {}
   local entry_make = make_entry.gen_from_file(opts)
   opts.entry_maker = function(line)
@@ -57,6 +63,13 @@ M.project_files = function(opts)
   if not opts.cwd then
     opts.cwd = runtimeUtils.get_root()
   end
+  local nicely_cwd = require('libs.runtime.path').home_to_tilde(opts.cwd)
+  opts.prompt_title = opts.prompt_title or nicely_cwd
+
+  opts.attach_mappings = function(_, map)
+    map_i_actions(_, map)
+    return true
+  end
 
   if opts and opts.oldfiles then
     local cache_opts = vim.tbl_deep_extend('force', {
@@ -72,6 +85,7 @@ M.project_files = function(opts)
       results_title = '  Recent files: ',
       prompt_title = '  Recent files',
       attach_mappings = function(_, map)
+        map_i_actions(_, map)
         map('i', '<C-b>', cycle.next, { noremap = true, silent = true })
         return true
       end

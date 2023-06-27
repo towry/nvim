@@ -20,8 +20,10 @@ function M.load_on_startup()
             au.do_useraucmd(au.user_autocmds.FileOpened_User)
 
             vim.defer_fn(function()
-              au.do_useraucmd(au.user_autocmds.FileOpenedAfter_User)
-            end, 30)
+              vim.schedule(function()
+                au.do_useraucmd(au.user_autocmds.FileOpenedAfter_User)
+              end)
+            end, 10)
           end
         end,
       },
@@ -79,7 +81,7 @@ function M.load_on_startup()
     {
       { 'BufWritePost' },
       {
-        group = 'Notify about config change',
+        group = 'Notify_about_config_change',
         pattern = '*/lua/user/plugins/*',
         callback = function()
           -- may being called two times due to the auto format write.
@@ -87,6 +89,17 @@ function M.load_on_startup()
         end,
       }
     },
+    {
+      { 'BufWinEnter' },
+      {
+        group = 'clear_search_hl_on_buf_enter',
+        callback = function()
+          vim.schedule(function()
+            vim.cmd('nohl')
+          end)
+        end
+      }
+    }
   }
   local user_definitions = {
     {
@@ -103,7 +116,11 @@ function M.load_on_startup()
         if vim.fn.argc(-1) ~= 0 then
           return
         end
-        au.do_useraucmd(au.user_autocmds.DoEnterDashboard_User)
+        au.exec_useraucmd(au.user_autocmds.DoEnterDashboard, {
+          data = {
+            in_vimenter = true,
+          }
+        })
       end,
     }
   }
@@ -125,36 +142,6 @@ function M.setup_events_on_startup()
       end
     end
   })
-
-  --- https://github.com/neovim/neovim/pull/23736#issuecomment-1586082961
-  --- Inlay hint
-  -- au.register_event(au.events.onLspAttach, {
-  --   name = "refresh_inlay",
-  --   callback = function(args)
-  --     local client = args.client
-  --     local cap = client.server_capabilities
-  --     if not cap.inlayHintProvider then
-  --       return
-  --     end
-  --     pcall(function()
-  --       require('vim.lsp._inlay_hint').refresh()
-  --     end)
-  --     au.define_autocmds({
-  --       {
-  --         { 'BufWritePost', 'InsertLeave', 'BufEnter' },
-  --         {
-  --           group = 'refresh_inlay_after_write',
-  --           buffer = args.bufnr,
-  --           callback = function()
-  --             pcall(function()
-  --               require('vim.lsp._inlay_hint').refresh()
-  --             end)
-  --           end,
-  --         }
-  --       }
-  --     })
-  --   end,
-  -- })
 end
 
 ---resize kitty window, no padding when neovim is present.
@@ -182,7 +169,7 @@ local function resize_kitty()
   })
 end
 
----@param opts? {resize_kitty?: boolean}
+---@param opts? {resize_kitty?: boolean,on_very_lazy?:function}
 function M.setup(opts)
   opts = vim.tbl_deep_extend("force", {
     resize_kitty = false,
@@ -193,6 +180,15 @@ function M.setup(opts)
 
   if opts.resize_kitty then
     resize_kitty()
+  end
+  if type(opts.on_very_lazy) == 'function' then
+    vim.api.nvim_create_augroup('setup_on_very_lazy', { clear = true })
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'VeryLazy',
+      group = 'setup_on_very_lazy',
+      once = true,
+      callback = opts.on_very_lazy,
+    })
   end
 end
 

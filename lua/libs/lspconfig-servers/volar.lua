@@ -3,28 +3,18 @@ local M = {}
 M.settings = {
   typescript = {
     inlayHints = {
-      includeInlayParameterNameHints = "all",
-      includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-      includeInlayFunctionParameterTypeHints = true,
-      includeInlayVariableTypeHints = false,
-      includeInlayPropertyDeclarationTypeHints = true,
-      includeInlayFunctionLikeReturnTypeHints = false,
-      includeInlayEnumMemberValueHints = true,
-    },
-    suggest = {
-      includeCompletionsForModuleExports = true,
-    },
-  },
-  javascript = {
-    inlayHints = {
-      includeInlayParameterNameHints = "all",
-      includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-      includeInlayFunctionParameterTypeHints = true,
-      includeInlayVariableTypeHints = true,
-      includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-      includeInlayPropertyDeclarationTypeHints = true,
-      includeInlayFunctionLikeReturnTypeHints = true,
-      includeInlayEnumMemberValueHints = true,
+      functionLikeReturnTypes = {
+        enabled = true,
+      },
+      propertyDeclarationTypes = {
+        enabled = true,
+      },
+      parameterTypes = {
+        enabled = true,
+      },
+      variableTypes = {
+        enabled = true,
+      },
     },
   },
 }
