@@ -29,7 +29,8 @@ function M.list()
   end, {}, valid_buffers)
 end
 
-function M.list_bufnrs()
+---@param extra_filter? function bufnr
+function M.list_bufnrs(extra_filter)
   local all_buffers = vim.api.nvim_list_bufs()
   local valid_buffers = Table.filter(function(b)
     if b == 0 then
@@ -39,9 +40,38 @@ function M.list_bufnrs()
       return false
     end
 
+    if extra_filter and extra_filter(b) == false then
+      return false
+    end
+
     return vim.api.nvim_buf_is_valid(b) and vim.api.nvim_buf_is_loaded(b)
   end, all_buffers)
   return valid_buffers
+end
+
+--- Get buf numbers of normal files.
+function M.list_normal_bufnrs()
+  return M.list_bufnrs(function(b)
+    if vim.api.nvim_get_option_value('buftype', {
+          buf = b,
+        }) ~= '' then
+      return false
+    end
+  end)
+end
+
+--- filter buffers
+function M.filter_bufnrs(filter)
+  local all_buffers = vim.api.nvim_list_bufs()
+  return Table.filter(function(b)
+    return filter(b)
+  end, all_buffers)
+end
+
+---@param callback function carry, bufnr
+function M.reduce_bufnrs(callback, carry)
+  local all_buffers = vim.api.nvim_list_bufs()
+  return Table.reduce(callback, carry, all_buffers)
 end
 
 ---@return table<number> list of buffer numbers

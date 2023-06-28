@@ -1,3 +1,4 @@
+local _unpack = table.unpack or unpack
 local M = {}
 
 M.root_patterns = { ".git", "lua", '.gitmodules', 'pnpm-workspace.yaml' }
@@ -170,6 +171,29 @@ M.load_plugins = function(plugins)
     plugins = { plugins }
   end
   require('lazy').load({ plugins = plugins })
+end
+
+---Safely call plugin.
+---@param plugins table|string
+---@param cb function
+M.plugin_schedule = function(plugins, cb)
+  M.load_plugins(plugins)
+  vim.schedule(cb)
+end
+
+---Wrap a callback with plugins.
+---@param plugins table|string
+---@param cb function
+---@return function
+M.plugin_schedule_wrap = function(plugins, cb)
+  return function(...)
+    local args = ...
+    if type(cb) ~= 'function' then return end
+    M.load_plugins(plugins)
+    vim.schedule(function()
+      cb(_unpack(args))
+    end)
+  end
 end
 
 ---@see LazyVim

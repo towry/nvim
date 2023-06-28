@@ -3,8 +3,8 @@ local plug = require('libs.runtime.pack').plug
 plug({
   {
     'rebelot/kanagawa.nvim',
-    lazy = not vim.startswith(vim.cfg.ui__theme_name, 'kanagawa'),
-    cond = vim.cfg.ui__theme_name == "kanagawa",
+    event = 'User LazyTheme',
+    enabled = vim.cfg.ui__theme_name == "kanagawa",
     opts = {
       undercurl = true, -- enable undercurls
       commentStyle = { italic = true },
@@ -37,9 +37,8 @@ plug({
   ----- everforest
   {
     'sainnhe/everforest',
-    lazy = vim.cfg.ui__theme_name ~= 'everforest',
-    cond = vim.cfg.ui__theme_name == 'everforest',
-    priority = 1000,
+    event = 'User LazyTheme',
+    enabled = vim.cfg.ui__theme_name == 'everforest',
     init = function()
       vim.g.everforest_background = 'medium'
       vim.g.everforest_ui_contrast = 'high'
@@ -61,8 +60,8 @@ plug({
   dependencies = {
     'rktjmp/lush.nvim'
   },
-  lazy = not string.match(vim.cfg.ui__theme_name, 'bones'),
-  priority = 1000,
+  event = 'User LazyTheme',
+  enabled = string.match(vim.cfg.ui__theme_name, 'bones') ~= nil,
   config = false,
   init = function()
     vim.g.forestbones = {
@@ -92,11 +91,11 @@ plug({
   end,
 })
 
+
 plug({
   'Luxed/ayu-vim',
-  lazy = not string.match(vim.cfg.ui__theme_name, 'ayu'),
-  priority = 1000,
+  event = 'User LazyTheme',
+  lazy = false,
+  enabled = string.match(vim.cfg.ui__theme_name, 'ayu') ~= nil,
   config = false,
-  init = function()
-  end,
 })

@@ -234,13 +234,13 @@ pack.plug({
         },
         -- You should specify your *installed* sources.
         sources = {
-          { name = 'nvim_lsp',                priority = 50, max_item_count = 6 },
-          { name = "copilot",                 priority = 20, max_item_count = 3 },
+          { name = 'nvim_lsp', priority = 50, max_item_count = 6 },
+          { name = "copilot", priority = 20, max_item_count = 3 },
           -- { name = 'codeium', priority = 7,   },
           { name = 'nvim_lsp_signature_help', priority = 40, max_item_count = 3 },
-          { name = 'npm',                     priority = 3 },
-          { name = 'cmp_tabnine',             priority = 6,  max_item_count = 3 },
-          { name = 'luasnip',                 priority = 6,  max_item_count = 2 },
+          { name = 'npm', priority = 3 },
+          { name = 'cmp_tabnine', priority = 6, max_item_count = 3 },
+          { name = 'luasnip', priority = 6, max_item_count = 2 },
           {
             name = 'buffer',
             priority = 6,
@@ -249,20 +249,34 @@ pack.plug({
             max_item_count = 5,
           },
           { name = 'nvim_lua', priority = 5, ft = 'lua' },
-          { name = 'path',     priority = 4 },
-          { name = 'calc',     priority = 3 },
+          { name = 'path', priority = 4 },
+          { name = 'calc', priority = 3 },
         },
         sorting = {
           comparators = {
-            require("copilot_cmp.comparators").prioritize,
-            deprioritize_snippet,
-            cmp.config.compare.score,
-            cmp.config.compare.exact,
-            cmp.config.compare.locality,
-            cmp.config.compare.recently_used,
-            cmp.config.compare.order,
             cmp.config.compare.offset,
+            cmp.config.compare.exact,
+            cmp.config.compare.score,
+
+            deprioritize_snippet,
+            require("copilot_cmp.comparators").prioritize,
+            function(entry1, entry2)
+              local _, entry1_under = entry1.completion_item.label:find "^_+"
+              local _, entry2_under = entry2.completion_item.label:find "^_+"
+              entry1_under = entry1_under or 0
+              entry2_under = entry2_under or 0
+              if entry1_under > entry2_under then
+                return false
+              elseif entry1_under < entry2_under then
+                return true
+              end
+            end,
+            cmp.config.compare.recently_used,
+            cmp.config.compare.kind,
             cmp.config.compare.sort_text,
+            cmp.config.compare.length,
+            cmp.config.compare.order,
+            cmp.config.compare.locality,
           },
         },
         confirmation = {
@@ -373,8 +387,7 @@ pack.plug({
       if commit_character ~= nil then return end
       -- do not add pairs if in jsx.
       local ts_current_line_node_type = Ty.TS_GET_NODE_TYPE()
-      if
-          vim.tbl_contains({ 'jsx_self_closing_element', 'jsx_opening_element' }, ts_current_line_node_type)
+      if vim.tbl_contains({ 'jsx_self_closing_element', 'jsx_opening_element' }, ts_current_line_node_type)
           and (item.kind == Kind.Function or item.kind == Kind.Method)
       then
         return
@@ -468,4 +481,5 @@ pack.plug({
         end,
       })
     end
-  } })
+  }
+})

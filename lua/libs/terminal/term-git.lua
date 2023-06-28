@@ -34,6 +34,7 @@ M.toggle_tig = function()
   tig:toggle()
 end
 
+--- View current file history by using tig.
 M.toggle_tig_file_history = function()
   local bufnr = vim.api.nvim_get_current_buf()
   local tig = tig_pool[bufnr]

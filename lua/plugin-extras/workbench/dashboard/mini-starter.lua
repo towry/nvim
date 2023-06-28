@@ -18,18 +18,20 @@ return plug({
         silent = true,
         evaluate_single = false,
         items = {
-          starter.sections.recent_files(4, true, false),
-          new_section("F ~ Find file", 'lua require("libs.telescope.pickers").project_files()', "Telescope"),
-          new_section("R ~ Recent files",
+          new_section("Find file", 'lua require("libs.telescope.pickers").project_files()', "Telescope"),
+          new_section("Recent files",
             'lua require("libs.telescope.pickers").project_files({cwd_only=true,oldfiles=true})', "Telescope"),
-          new_section("S ~ Grep text", 'lua require("libs.telescope.live_grep_call")()', "Telescope"),
+          new_section("Grep text", 'lua require("libs.telescope.live_grep_call")()', "Telescope"),
           ---
-          new_section("/ ~ Session load", [[SessionManager load_current_dir_session]], "Session"),
-          new_section("_ ~ Session delete", [[SessionManager delete_session]], "Session"),
+          new_section("Session load", [[SessionManager load_current_dir_session]], "Session"),
+          new_section("Session delete", [[SessionManager delete_session]], "Session"),
           ---
-          new_section("L ~ Lazy", "Lazy", "Built-in"),
-          new_section("N ~ New file", "ene | startinsert", "Built-in"),
-          new_section("Q ~ Quit current", "q", "Built-in"),
+          new_section("Git Branchs", "Telescope git_branches show_remote_tracking_branches=false", "Built-in"),
+          new_section("Lazy", "Lazy", "Built-in"),
+          new_section("New file", "ene | startinsert", "Built-in"),
+          new_section("Quit current", "q", "Built-in"),
+          --- last.
+          starter.sections.recent_files(4, true, false),
         },
         content_hooks = {
           starter.gen_hook.adding_bullet(pad .. "░ ", false),
@@ -46,9 +48,24 @@ return plug({
         vim.cmd.close()
         show_lazy_cb = true
       end
+      local starter = require("mini.starter")
+      starter.setup(config)
+
+      local update_header_opts = function()
+        local Path = require('libs.runtime.path')
+        local git = require('libs.git.utils')
+
+        starter.config.header = table.concat({
+          ('%s · %s'):format("  " ..
+            Path.home_to_tilde(vim.loop.cwd()),
+            '  ' .. (git.get_git_abbr_head() or '/'))
+        }, '\n')
+      end
+
       vim.api.nvim_create_autocmd("User", {
         pattern = "MiniStarterOpened",
         callback = function(ctx)
+          vim.b.minianimate_disable = true
           if show_lazy_cb then
             require("lazy").show()
             show_lazy_cb = false
@@ -59,18 +76,23 @@ return plug({
             { buffer = bufnr, nowait = true, silent = true })
           vim.keymap.set('n', 'j', [[<cmd>lua MiniStarter.update_current_item('next')<CR>]],
             { buffer = bufnr, nowait = true, silent = true })
+
+          vim.api.nvim_create_augroup('_dashboard_dir_changed', { clear = true })
+          vim.api.nvim_create_autocmd('DirChanged', {
+            group = '_dashboard_dir_changed',
+            buffer = bufnr,
+            callback = function()
+              update_header_opts()
+              pcall(starter.refresh)
+            end
+          })
         end,
       })
-
-      local starter = require("mini.starter")
-      starter.setup(config)
 
       vim.api.nvim_create_autocmd("User", {
         pattern = "LazyVimStarted",
         once = true,
         callback = function()
-          local Path = require('libs.runtime.path')
-          local git = require('libs.git.utils')
           local stats = require("lazy").stats()
 
           local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
@@ -79,11 +101,7 @@ return plug({
             " · ",
             " " .. ms .. "ms"
           }, ' ')
-          starter.config.header = table.concat({
-            ('%s · %s'):format("  " ..
-              Path.home_to_tilde(vim.loop.cwd()),
-              '  ' .. (git.get_git_abbr_head() or '/'))
-          }, '\n')
+          update_header_opts()
           pcall(starter.refresh)
         end,
       })

@@ -132,6 +132,12 @@ plug({
         },
         -- filename is displayed by the incline.
         lualine_c = {
+          {
+            function()
+              return require('libs.runtime.path').home_to_tilde(require('libs.runtime.utils').get_root())
+            end,
+          },
+
           function()
             if not vim.b.gitsigns_head or vim.b.gitsigns_git_status or vim.o.columns < 120 then
               return ""

@@ -9,8 +9,15 @@ plug({
     keys = {
       {
         '<C-w>',
-        cmdstr([[lua require("libs.hydra.window").open_window_hydra(true)]]),
+        function()
+          if vim.bo.filetype == 'TelescopePrompt' then
+            return '<C-w>';
+          end
+          return cmdstr([[lua require("libs.hydra.window").open_window_hydra(true)]])
+        end,
         desc = 'Window operations',
+        nowait = true,
+        expr = true,
       }
     }
   },
@@ -20,7 +27,7 @@ plug({
     dependencies = {
       'anuvyklack/middleclass',
     },
-    event = { 'WinLeave', 'WinNew' },
+    event = { 'WinNew' },
     opts = {
       ignore = {
         buftype = vim.cfg.misc__buf_exclude,
@@ -86,7 +93,7 @@ plug({
             vim.cmd('q')
             return
           end
-          local valid_buf_count = #(require('libs.runtime.buffer').list_bufnrs())
+          local valid_buf_count = #(require('libs.runtime.buffer').list_normal_bufnrs())
           if valid_buf_count <= 1 then
             require('mini.bufremove').delete(0)
             vim.schedule(function()
@@ -316,7 +323,13 @@ plug({
         cmd = { 'ProjectRoot' },
         keys = {
           {
-            '<leader>ep', '<Cmd>Telescope projects<CR>', desc = 'Projects',
+            '<leader>ep',
+            function()
+              require('libs.runtime.utils').plugin_schedule('project_nvim', function()
+                vim.cmd('Telescope projects')
+              end)
+            end,
+            desc = 'Projects',
           }
         },
         config = function(_, opts)
@@ -362,8 +375,13 @@ plug({
     opts = function(_, opts)
       local items = {
         {
-          name = "P ~ Projects",
-          action = "Telescope projects",
+          name = "Projects",
+          -- action = "Telescope projects",
+          action = function()
+            require('libs.runtime.utils').plugin_schedule('project_nvim', function()
+              vim.cmd('Telescope projects')
+            end)
+          end,
           section = string.rep(" ", 0) .. "Telescope",
         },
       }
