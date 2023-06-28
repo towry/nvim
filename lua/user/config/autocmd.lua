@@ -101,6 +101,7 @@ function M.load_on_startup()
       }
     },
     {
+      --- NOTE: if neovim going to background then re-appear, the UIEnter will trigger again.
       { 'UIEnter' },
       {
         group = '_lazy_ui_enter',
