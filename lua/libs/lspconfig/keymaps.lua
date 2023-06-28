@@ -102,13 +102,13 @@ function M.setup_keybinding(client, buffer)
   }))
 
   -- gotos
-  set('n', 'gd', func_call("goto_definition()"), opts({
-    desc = _('Go to definition'),
-  }))
+  -- set('n', 'gd', func_call("goto_definition()"), opts({
+  --   desc = _('Go to definition'),
+  -- }))
   set('n', 'gt', func_call("goto_type_definition()"), opts({
     desc = _('Go to type definition'),
   }))
-  set('n', 'gdf', func_call("goto_definition_in_file()"), opts({
+  set('n', 'gd', func_call("goto_definition_in_file()"), opts({
     desc = _('Go find definition in file'),
   }))
   set('n', 'gdfx', func_call("goto_definition_in_file('split')"), opts({
