@@ -149,5 +149,13 @@ return {
       end)
     end,
     description = "Discard changes",
+  },
+  {
+    function()
+      vim.notify("Build start")
+      require("zenbones.shipwright").run()
+      vim.notify("Build done")
+    end,
+    description = "Build zenbones",
   }
 }
