@@ -65,7 +65,7 @@ plug({
   config = false,
   init = function()
     vim.g.neobones = {
-      solid_float_border = true,
+      solid_float_border = false,
       colorize_diagnostic_underline_text = true,
       transparent_background = false,
       -- light
@@ -79,7 +79,7 @@ plug({
       darkness = 'warm',
     }
     vim.g.forestbones = {
-      solid_float_border = true,
+      solid_float_border = false,
       colorize_diagnostic_underline_text = true,
       transparent_background = false,
       -- light

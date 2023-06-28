@@ -16,7 +16,7 @@ function M.init_edit()
   o.splitright = true                        --- Vertical splits will automatically be to the right
   o.swapfile = false                         --- Swap not needed
   o.tabstop = 2                              --- Insert 2 spaces for a tab
-  o.timeoutlen = 350                         --- Key sequence wait time | Faster completion (cannot be lower than 200 because then commenting doesn't work)
+  o.timeoutlen = 400                         --- Key sequence wait time | Faster completion (cannot be lower than 200 because then commenting doesn't work)
   o.showcmd = false
   o.showcmdloc = 'last'
   o.undofile = true                                --- Sets undo to file
