@@ -56,7 +56,9 @@ plug({
 })
 
 plug({
-  'mcchrish/zenbones.nvim',
+  -- 'mcchrish/zenbones.nvim',
+  "towry/zenbones.nvim",
+  dev = false,
   dependencies = {
     'rktjmp/lush.nvim'
   },
@@ -100,4 +102,10 @@ plug({
   event = 'User LazyTheme',
   enabled = string.match(vim.cfg.ui__theme_name, 'ayu') ~= nil,
   config = false,
+})
+
+plug({
+  cmd = { 'Shipwright' },
+  'rktjmp/shipwright.nvim',
+  lazy = true,
 })
