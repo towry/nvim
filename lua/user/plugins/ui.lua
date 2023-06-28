@@ -53,7 +53,7 @@ plug({
   },
 
   {
-    enabled = true,
+    enabled = false,
     "echasnovski/mini.animate",
     event = vim.cfg.runtime__starts_in_buffer and { 'User LazyUIEnter' } or { 'User DoEnterDashboard' },
     opts = function()
