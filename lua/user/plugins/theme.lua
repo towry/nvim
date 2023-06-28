@@ -61,7 +61,7 @@ plug({
     'rktjmp/lush.nvim'
   },
   event = 'User LazyTheme',
-  enabled = string.match(vim.cfg.ui__theme_name, 'bones') ~= nil,
+  cond = string.match(vim.cfg.ui__theme_name, 'bones') ~= nil,
   config = false,
   init = function()
     vim.g.neobones = {
@@ -79,29 +79,19 @@ plug({
       darkness = 'warm',
     }
     vim.g.forestbones = {
-      -- solid_line_nr = true,
-      darken_comments = 45,
       solid_float_border = true,
+      colorize_diagnostic_underline_text = true,
+      transparent_background = false,
+      -- light
+      -- darken_comments = 30,
+      lightness = 'dim',
+      darken_cursor_line = 10,
+      --- dark
+      lighten_cursor_line = 15,
+      -- lighten_comments = 30,
+      lighten_non_text = 22,
+      darkness = 'warm',
     }
-
-    vim.api.nvim_create_autocmd('ColorScheme', {
-      pattern = 'forestbones',
-      group = vim.api.nvim_create_augroup('_custom_forestbones_', { clear = true }),
-      callback = function()
-        local lush = require "lush"
-        local base = require "zenbones"
-
-        -- Create some specs
-        local specs = lush.parse(function()
-          return {
-            -- darken cursorline
-            -- CursorLine { base.CursorLine, bg = '#374145' },
-          }
-        end)
-        -- Apply specs using lush tool-chain
-        lush.apply(lush.compile(specs))
-      end
-    })
   end,
 })
 
@@ -109,7 +99,6 @@ plug({
 plug({
   'Luxed/ayu-vim',
   event = 'User LazyTheme',
-  lazy = false,
   enabled = string.match(vim.cfg.ui__theme_name, 'ayu') ~= nil,
   config = false,
 })
