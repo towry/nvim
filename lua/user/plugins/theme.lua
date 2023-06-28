@@ -64,6 +64,20 @@ plug({
   enabled = string.match(vim.cfg.ui__theme_name, 'bones') ~= nil,
   config = false,
   init = function()
+    vim.g.neobones = {
+      solid_float_border = true,
+      colorize_diagnostic_underline_text = true,
+      transparent_background = false,
+      -- light
+      -- darken_comments = 30,
+      lightness = 'dim',
+      darken_cursor_line = 10,
+      --- dark
+      lighten_cursor_line = 15,
+      -- lighten_comments = 30,
+      lighten_non_text = 22,
+      -- darkness = 'stark',
+    }
     vim.g.forestbones = {
       -- solid_line_nr = true,
       darken_comments = 45,
