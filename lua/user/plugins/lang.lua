@@ -138,12 +138,13 @@ plug({
           max_file_lines = 8000,
         },
         refactor = {
+          --- cause slowness.
           highlight_definitions = {
             is_supported = function(lang)
               local queries = require("nvim-treesitter.query")
               return not disabled(lang, vim.api.nvim_get_current_buf()) and queries.has_locals(lang)
             end,
-            enable = true,
+            enable = false,
             -- Set to false if you have an `updatetime` of ~100.
             clear_on_cursor_move = true,
           },
