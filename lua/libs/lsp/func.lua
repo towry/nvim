@@ -84,12 +84,13 @@ end
 --- Depends on ufo plugin
 function M.hover_action()
   local has_ufo = require('libs.runtime.utils').has_plugin('nvim-ufo')
+  local use_lspsaga = false
 
   local winid = nil
   if has_ufo then winid = require('ufo').peekFoldedLinesUnderCursor() end
 
   if not winid then
-    local has_lspsaga = require('libs.runtime.utils').has_plugin('lspsaga.nvim')
+    local has_lspsaga = use_lspsaga and require('libs.runtime.utils').has_plugin('lspsaga.nvim') or false
     if has_lspsaga then
       vim.schedule(function()
         vim.cmd('Lspsaga hover_doc ++quiet')
@@ -121,10 +122,11 @@ end
 function M.format_code(bufnr, opts) require('libs.lsp-format').format(bufnr, opts) end
 
 function M.open_code_action()
+  local use_lspsaga = false
   local has_lspsaga = require('libs.runtime.utils').has_plugin('lspsaga.nvim')
   local mode = vim.api.nvim_get_mode().mode
   if mode == 'v' then vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-U>', true, false, true)) end
-  if has_lspsaga then
+  if use_lspsaga and has_lspsaga then
     require('lspsaga.codeaction'):code_action()
   else
     vim.lsp.buf.code_action()
@@ -132,10 +134,11 @@ function M.open_code_action()
 end
 
 function M.open_source_action()
+  local use_lspsaga = false
   local has_lspsaga = require('libs.runtime.utils').has_plugin('lspsaga.nvim')
   local mode = vim.api.nvim_get_mode().mode
   if mode == 'v' then vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-U>', true, false, true)) end
-  if has_lspsaga then
+  if use_lspsaga and has_lspsaga then
     require('lspsaga.codeaction'):code_action({ context = { only = "source" } })
   else
     vim.lsp.buf.code_action({ context = { only = "source" } })
