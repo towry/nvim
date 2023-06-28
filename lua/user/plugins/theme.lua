@@ -47,7 +47,7 @@ plug({
       vim.g.everforest_disable_italic_comment = false
       vim.g.everforest_transparent_background = false
       vim.g.everforest_dim_inactive_windows = false
-      vim.g.everforest_sign_column_background = 'none'  -- "none" | "grey"
+      vim.g.everforest_sign_column_background = 'none' -- "none" | "grey"
       vim.g.everforest_diagnostic_virtual_text = 'grey' -- "grey" | "colored"
       vim.g.everforest_diagnostic_text_highlight = 0
       vim.g.everforest_diagnostic_line_highlight = 0
@@ -76,7 +76,7 @@ plug({
       lighten_cursor_line = 15,
       -- lighten_comments = 30,
       lighten_non_text = 22,
-      darkness = 'warm',
+      darkness = 'stark',
     }
     vim.g.forestbones = {
       solid_float_border = false,
@@ -90,7 +90,6 @@ plug({
       lighten_cursor_line = 15,
       -- lighten_comments = 30,
       lighten_non_text = 22,
-      darkness = 'warm',
     }
   end,
 })
