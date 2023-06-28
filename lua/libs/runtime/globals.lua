@@ -57,3 +57,13 @@ Ty.ToggleTheme = function(mode)
     Ty.NOTIFY('Light on 🌞 ')
   end
 end
+---@param opts? {filename?:string, flame?:boolean}
+Ty.StartProfile = function(opts)
+  opts = opts or {}
+  require('plenary.profile').start(opts.filename or 'profile.log', {
+    flame = opts.flame
+  })
+end
+Ty.StopProfile = function()
+  require('plenary.profile').stop()
+end

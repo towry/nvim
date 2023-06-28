@@ -139,11 +139,21 @@ plug({
         },
         refactor = {
           highlight_definitions = {
+            is_supported = function(lang)
+              local queries = require("nvim-treesitter.query")
+              return not disabled(lang, vim.api.nvim_get_current_buf()) and queries.has_locals(lang)
+            end,
             enable = true,
             -- Set to false if you have an `updatetime` of ~100.
             clear_on_cursor_move = true,
           },
-          highlight_current_scope = { enable = false },
+          highlight_current_scope = {
+            enable = false,
+            is_supported = function(lang)
+              local queries = require("nvim-treesitter.query")
+              return not disabled(lang, vim.api.nvim_get_current_buf()) and queries.has_locals(lang)
+            end,
+          },
           smart_rename = {
             enable = false,
             keymaps = {

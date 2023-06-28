@@ -105,6 +105,13 @@ function M.setup()
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = '' })
     end
   end
+
+  vim.api.nvim_create_user_command('UserLspDiagnosticDisable', function()
+    vim.diagnostic.disable()
+  end, {})
+  vim.api.nvim_create_user_command('UserLspDiagnosticEnable', function()
+    vim.diagnostic.enable()
+  end, {})
 end
 
 return M
