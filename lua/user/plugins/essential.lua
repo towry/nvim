@@ -155,24 +155,6 @@ pack.plug({
         end,
       },
     })
-
-    local is_inited = false
-    ---@diagnostic disable-next-line: duplicate-set-field
-    vim.ui.select = function(...)
-      if not is_inited then
-        require('lazy').load({ plugins = { 'dressing.nvim' } })
-        is_inited = true
-      end
-      return vim.ui.select(...)
-    end
-    ---@diagnostic disable-next-line: duplicate-set-field
-    vim.ui.input = function(...)
-      if not is_inited then
-        require('lazy').load({ plugins = { 'dressing.nvim' } })
-        is_inited = true
-      end
-      return vim.ui.input(...)
-    end
   end,
 })
 
