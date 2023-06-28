@@ -105,13 +105,24 @@ function M.load_on_startup()
       {
         group = '_lazy_ui_enter',
         callback = function(ctx)
-          vim.schedule(function()
+          local should_defer = not vim.cfg.runtime__starts_in_buffer
+          if not should_defer then
             au.exec_useraucmd(au.user_autocmds.LazyTheme, {
               data = ctx.data,
             })
             au.exec_useraucmd(au.user_autocmds.LazyUIEnterPre, {
               data = ctx.data,
             })
+          end
+          vim.schedule(function()
+            if should_defer then
+              au.exec_useraucmd(au.user_autocmds.LazyTheme, {
+                data = ctx.data,
+              })
+              au.exec_useraucmd(au.user_autocmds.LazyUIEnterPre, {
+                data = ctx.data,
+              })
+            end
             au.exec_useraucmd(au.user_autocmds.LazyUIEnter, {
               data = ctx.data,
             })
@@ -122,7 +133,7 @@ function M.load_on_startup()
                   data = ctx.data,
                 })
               end)
-            end, 5)
+            end, 1)
           end)
         end,
       }
