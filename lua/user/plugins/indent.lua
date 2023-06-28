@@ -58,7 +58,7 @@ pack.plug({
   {
     'echasnovski/mini.indentscope',
     event = au.user_autocmds.FileOpenedAfter_User,
-    enabled = false,
+    enabled = true,
     config = function()
       require('mini.indentscope').setup({
         symbol = '│',
