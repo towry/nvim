@@ -59,6 +59,8 @@ Move inside tags                  | cit
 ## Repeat-actions
 Repeat last fFtT command          | ;
 Repeat last search                | ,
+Repeat last cmd-line              | @:
+Multiple repeat                   | :g[lobal]/<pattern>/command
 
 ## ts-textobjects
 Go to next start/end of function  | ]], ][
