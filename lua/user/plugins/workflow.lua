@@ -27,7 +27,7 @@ plug({
     dependencies = {
       'anuvyklack/middleclass',
     },
-    event = { 'WinLeave', 'WinNew' },
+    event = { 'WinNew' },
     opts = {
       ignore = {
         buftype = vim.cfg.misc__buf_exclude,

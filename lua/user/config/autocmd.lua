@@ -99,8 +99,37 @@ function M.load_on_startup()
           end)
         end
       }
-    }
+    },
+    {
+      { 'UIEnter' },
+      {
+        group = '_lazy_ui_enter',
+        callback = function(ctx)
+          vim.schedule(function()
+            au.exec_useraucmd(au.user_autocmds.LazyTheme, {
+              data = ctx.data,
+            })
+            au.exec_useraucmd(au.user_autocmds.LazyUIEnterPre, {
+              data = ctx.data,
+            })
+            au.exec_useraucmd(au.user_autocmds.LazyUIEnter, {
+              data = ctx.data,
+            })
+
+            vim.defer_fn(function()
+              vim.schedule(function()
+                au.exec_useraucmd(au.user_autocmds.LazyUIEnterPost, {
+                  data = ctx.data,
+                })
+              end)
+            end, 5)
+          end)
+        end,
+      }
+    },
   }
+
+  ---////// user autocmds.
   local user_definitions = {
     {
       pattern = "AlphaClosed",
@@ -108,19 +137,27 @@ function M.load_on_startup()
         au.do_useraucmd(au.user_autocmds.OnLeaveDashboard_User)
       end
     },
-
-    --- start dashboard
     {
-      pattern = 'VeryLazy',
+      pattern = au.user_autocmds.LazyUIEnterPre,
+      once = true,
+      callback = function()
+        pcall(vim.cmd, 'colorscheme ' .. vim.cfg.ui__theme_name)
+      end,
+    },
+    {
+      --- start dashboard
+      pattern = au.user_autocmds.LazyUIEnter,
       callback = function()
         if vim.fn.argc(-1) ~= 0 then
           return
         end
-        au.exec_useraucmd(au.user_autocmds.DoEnterDashboard, {
-          data = {
-            in_vimenter = true,
-          }
-        })
+        vim.schedule(function()
+          au.exec_useraucmd(au.user_autocmds.DoEnterDashboard, {
+            data = {
+              in_vimenter = true,
+            }
+          })
+        end)
       end,
     }
   }

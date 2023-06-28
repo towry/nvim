@@ -3,6 +3,7 @@ local keymap = require('libs.runtime.keymap')
 local cmdstr = keymap.cmdstr
 local cmd_modcall = keymap.cmd_modcall
 local pickers_mod = 'libs.telescope.pickers'
+local au = require('libs.runtime.au')
 
 
 plug({
@@ -33,7 +34,7 @@ plug({
   },
   config = function()
     local HEIGHT_RATIO = 0.8 -- You can change this
-    local WIDTH_RATIO = 0.5 -- You can change this too
+    local WIDTH_RATIO = 0.5  -- You can change this too
     local TREE_INIT_WIDTH = 40
 
 
@@ -206,15 +207,20 @@ plug({
     })
   end,
   init = function()
-    require('libs.finder.hook').register_select_folder_action(function(cwd)
-      local nvim_tree_api = require('nvim-tree.api')
-      nvim_tree_api.tree.open({
-        update_root = false,
-        find_file = false,
-        current_window = false,
-      })
-      nvim_tree_api.tree.change_root(cwd)
-    end)
+    au.define_user_autocmd({
+      pattern = 'LazyUIEnter',
+      callback = function()
+        require('libs.finder.hook').register_select_folder_action(function(cwd)
+          local nvim_tree_api = require('nvim-tree.api')
+          nvim_tree_api.tree.open({
+            update_root = false,
+            find_file = false,
+            current_window = false,
+          })
+          nvim_tree_api.tree.change_root(cwd)
+        end)
+      end,
+    })
   end,
 })
 
@@ -353,7 +359,7 @@ plug({
 plug({
   'simrat39/symbols-outline.nvim',
   keys = {
-    { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<leader>/o',  '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
     { '<Char-0xAF>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
@@ -449,11 +455,11 @@ plug({
   'nvim-telescope/telescope.nvim',
   cmd = { 'Telescope' },
   keys = {
-    { '<Tab>', cmd_modcall(pickers_mod, 'buffers()'), desc = "List Buffers" },
+    { '<Tab>',      cmd_modcall(pickers_mod, 'buffers()'),                                  desc = "List Buffers" },
     { '<leader>gB', cmdstr([[Telescope git_branches show_remote_tracking_branches=false]]), desc = 'Git branchs' },
-    { '<C-f>f', cmd_modcall(pickers_mod, 'project_files()'), desc = 'Open Project files' },
-    { '<leader>ef', cmd_modcall(pickers_mod, 'project_files()'), desc = 'Open Project files' },
-    { '<leader>eF', cmd_modcall(pickers_mod, 'project_files({use_all_files=true})'), desc = 'Open find all files' },
+    { '<C-f>f',     cmd_modcall(pickers_mod, 'project_files()'),                            desc = 'Open Project files' },
+    { '<leader>ef', cmd_modcall(pickers_mod, 'project_files()'),                            desc = 'Open Project files' },
+    { '<leader>eF', cmd_modcall(pickers_mod, 'project_files({use_all_files=true})'),        desc = 'Open find all files' },
     {
       '<leader>ee',
       cmd_modcall('telescope.builtin', 'resume()'),
@@ -473,8 +479,8 @@ plug({
       'Open recent files'
     },
     { '<leader>el', cmd_modcall('libs.telescope.find-folders-picker', '()'), desc = 'Find folders' },
-    { '<C-f>s', cmd_modcall('libs.telescope.live_grep_call', '()'), desc = 'Grep search' },
-    { '<leader>es', cmd_modcall('libs.telescope.live_grep_call', '()'), desc = 'Grep search' },
+    { '<C-f>s',     cmd_modcall('libs.telescope.live_grep_call', '()'),      desc = 'Grep search' },
+    { '<leader>es', cmd_modcall('libs.telescope.live_grep_call', '()'),      desc = 'Grep search' },
     {
       '<C-f>S',
       cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_visual_selection()'),
@@ -491,7 +497,7 @@ plug({
     { 'nvim-lua/popup.nvim' },
     { 'nvim-lua/plenary.nvim' },
     { 'ThePrimeagen/git-worktree.nvim' },
-    { 'echasnovski/mini.fuzzy' },
+    -- { 'echasnovski/mini.fuzzy' },
     { 'nvim-telescope/telescope-live-grep-args.nvim' },
     {
       'nvim-telescope/telescope-fzf-native.nvim',
@@ -502,7 +508,7 @@ plug({
     },
   },
   config = function()
-    local au = require('libs.runtime.au')
+    -- local au = require('libs.runtime.au')
     local actions = require('telescope.actions')
     local action_state = require('telescope.actions.state')
     local lga_actions = require('telescope-live-grep-args.actions')
@@ -543,7 +549,7 @@ plug({
             preview_cutoff = 10,
           },
         },
-        generic_sorter = require('mini.fuzzy').get_telescope_sorter,
+        -- generic_sorter = require('mini.fuzzy').get_telescope_sorter,
         ---@see https://github.com/nvim-telescope/telescope.nvim/issues/522#issuecomment-1107441677
         file_ignore_patterns = { "node_modules", '.turbo', 'dist' },
         path_display = { 'truncate' },
@@ -590,8 +596,8 @@ plug({
       extensions = {
         fzf = {
           fuzzy = true,
-          override_generic_sorter = false,
-          override_file_sorter = false,
+          override_generic_sorter = true,
+          override_file_sorter = true,
           case_mode = 'smart_case',
         },
         live_grep_args = {

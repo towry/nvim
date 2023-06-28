@@ -32,6 +32,14 @@ M.user_autocmds = setmetatable({
   DoEnterDashboard = 'DoEnterDashboard',
   -- dashboard is closed
   OnLeaveDashboard = "OnLeaveDashboard",
+  ------ layered events
+  --- after ui enter.
+  LazyUIEnter = "LazyUIEnter",
+  --- after LazyUIEnter
+  LazyUIEnterPost = "LazyUIEnterPost",
+  LazyUIEnterPre = "LazyUIEnterPre",
+  -- before UIEnterPre
+  LazyTheme = "LazyTheme",
 }, {
   __index = function(_, key)
     -- if key suffix with '_User' then return 'User_' .. <real key>.

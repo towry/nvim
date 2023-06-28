@@ -7,7 +7,7 @@ plug({
     keys = { 'u', '<C-r>' },
     opts = {
       hlgroup = 'IncSearch',
-      duration = 800,
+      duration = 200,
     }
   },
 
@@ -21,6 +21,7 @@ plug({
 
   {
     'rcarriga/nvim-notify',
+    event = 'User LazyUIEnter',
     config = function()
       require('notify').setup({
         timeout = '3000',
@@ -36,8 +37,7 @@ plug({
           require('notify.render')[style](...)
         end,
       })
-    end,
-    init = function()
+
       local banned_msgs = {
         'No information available',
         'LSP[tsserver] Inlay Hints request failed. File not opened in the editor.',
@@ -55,7 +55,7 @@ plug({
   {
     enabled = true,
     "echasnovski/mini.animate",
-    event = vim.cfg.runtime__starts_in_buffer and { 'VeryLazy' } or { 'User DoEnterDashboard' },
+    event = vim.cfg.runtime__starts_in_buffer and { 'User LazyUIEnter' } or { 'User DoEnterDashboard' },
     opts = function()
       -- don't use animate when scrolling with the mouse
       local mouse_scrolled = false
