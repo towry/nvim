@@ -76,7 +76,7 @@ plug({
       lighten_cursor_line = 15,
       -- lighten_comments = 30,
       lighten_non_text = 22,
-      -- darkness = 'stark',
+      darkness = 'warm',
     }
     vim.g.forestbones = {
       -- solid_line_nr = true,
