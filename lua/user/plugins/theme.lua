@@ -4,7 +4,7 @@ plug({
   {
     'rebelot/kanagawa.nvim',
     event = 'User LazyTheme',
-    enabled = vim.cfg.ui__theme_name == "kanagawa",
+    cond = vim.cfg.ui__theme_name == "kanagawa",
     opts = {
       undercurl = true, -- enable undercurls
       commentStyle = { italic = true },
@@ -24,8 +24,8 @@ plug({
         },
       },
       background = {
-        -- dark = "wave",
-        dark = 'dragon',
+        dark = "wave",
+        -- dark = 'dragon',
         light = "lotus",
       },
     },
