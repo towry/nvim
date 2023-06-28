@@ -31,7 +31,7 @@ return plug({
     --   desc = "Open mini.files (directory of current file)",
     -- },
     {
-      "<leader>eI",
+      "<leader>fI",
       function()
         local path = nil
         if vim.bo.buftype == 'nofile' then
@@ -47,7 +47,7 @@ return plug({
       desc = "Open mini.files (directory of current file)",
     },
     {
-      "<leader>ei",
+      "<leader>fi",
       function()
         require("mini.files").open(vim.loop.cwd(), true)
       end,

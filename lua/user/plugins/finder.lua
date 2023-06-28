@@ -16,12 +16,12 @@ plug({
   enabled = true,
   keys = {
     {
-      '<leader>et',
+      '<leader>ft',
       cmd_modcall('libs.plugin-nvim-tree', 'toggle_nvim_tree()'),
       desc = 'Toggle explore tree',
     },
     {
-      '<leader>e.',
+      '<leader>f.',
       cmd_modcall('libs.plugin-nvim-tree', 'nvim_tree_find_file({fallback=true})'),
       desc = 'Locate current file in tree',
     },
@@ -238,14 +238,14 @@ plug({
   cmd = "Neotree",
   keys = {
     {
-      "<leader>et",
+      "<leader>ft",
       function()
         require("neo-tree.command").execute({ toggle = true, dir = require("libs.runtime.utils").get_root() })
       end,
       desc = "Explorer NeoTree (root dir)",
     },
     {
-      "<leader>eT",
+      "<leader>fT",
       function()
         require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
       end,
@@ -331,7 +331,7 @@ plug({
   },
   keys = {
     {
-      '<leader>eO',
+      '<leader>fO',
       function()
         local cwd = require('libs.runtime.utils').get_root()
         require('oil').open(cwd)
@@ -339,7 +339,7 @@ plug({
       desc = 'Open oil(CWD) file browser',
     },
     {
-      '<leader>eo',
+      '<leader>fo',
       function()
         require('oil').open()
       end,
@@ -458,10 +458,10 @@ plug({
     { '<Tab>',      cmd_modcall(pickers_mod, 'buffers()'),                                  desc = "List Buffers" },
     { '<leader>gB', cmdstr([[Telescope git_branches show_remote_tracking_branches=false]]), desc = 'Git branchs' },
     { '<C-f>f',     cmd_modcall(pickers_mod, 'project_files()'),                            desc = 'Open Project files' },
-    { '<leader>ef', cmd_modcall(pickers_mod, 'project_files()'),                            desc = 'Open Project files' },
-    { '<leader>eF', cmd_modcall(pickers_mod, 'project_files({use_all_files=true})'),        desc = 'Open find all files' },
+    { '<leader>ff', cmd_modcall(pickers_mod, 'project_files()'),                            desc = 'Open Project files' },
+    { '<leader>fF', cmd_modcall(pickers_mod, 'project_files({use_all_files=true})'),        desc = 'Open find all files' },
     {
-      '<leader>ee',
+      '<leader>fe',
       cmd_modcall('telescope.builtin', 'resume()'),
       desc =
       'Resume telescope pickers'
@@ -473,14 +473,14 @@ plug({
       'Open recent files'
     },
     {
-      '<leader>er',
+      '<leader>fr',
       cmd_modcall(pickers_mod, 'project_files({ cwd_only = true, oldfiles = true })'),
       desc =
       'Open recent files'
     },
-    { '<leader>el', cmd_modcall('libs.telescope.find-folders-picker', '()'), desc = 'Find folders' },
+    { '<leader>fl', cmd_modcall('libs.telescope.find-folders-picker', '()'), desc = 'Find folders' },
     { '<C-f>s',     cmd_modcall('libs.telescope.live_grep_call', '()'),      desc = 'Grep search' },
-    { '<leader>es', cmd_modcall('libs.telescope.live_grep_call', '()'),      desc = 'Grep search' },
+    { '<leader>fs', cmd_modcall('libs.telescope.live_grep_call', '()'),      desc = 'Grep search' },
     {
       '<C-f>S',
       cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_visual_selection()'),

@@ -309,12 +309,12 @@ plug({
     "imNel/monorepo.nvim",
     keys = {
       {
-        '<leader>em',
+        '<leader>fm',
         [[<cmd>lua require("telescope").extensions.monorepo.monorepo()<cr>]],
         desc = 'Manage monorepo',
       },
       {
-        '<leader>e$',
+        '<leader>f$',
         [[<cmd>lua require("monorepo").toggle_project()<cr>]],
         desc = 'Toggle cwd as project'
       },
@@ -333,7 +333,7 @@ plug({
         cmd = { 'ProjectRoot' },
         keys = {
           {
-            '<leader>ep',
+            '<leader>fp',
             function()
               require('libs.runtime.utils').plugin_schedule('project_nvim', function()
                 vim.cmd('Telescope projects')
