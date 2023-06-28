@@ -138,6 +138,15 @@ function M.load_on_startup()
         end,
       }
     },
+    {
+      { 'WinLeave' },
+      {
+        group = '_win_manage_win_leave',
+        callback = function()
+          print("llll")
+        end,
+      }
+    }
   }
 
   ---////// user autocmds.
