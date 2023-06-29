@@ -47,7 +47,7 @@ plug({
       vim.g.everforest_disable_italic_comment = false
       vim.g.everforest_transparent_background = false
       vim.g.everforest_dim_inactive_windows = false
-      vim.g.everforest_sign_column_background = 'none' -- "none" | "grey"
+      vim.g.everforest_sign_column_background = 'none'  -- "none" | "grey"
       vim.g.everforest_diagnostic_virtual_text = 'grey' -- "grey" | "colored"
       vim.g.everforest_diagnostic_text_highlight = 0
       vim.g.everforest_diagnostic_line_highlight = 0
@@ -58,7 +58,7 @@ plug({
 plug({
   -- 'mcchrish/zenbones.nvim',
   "towry/zenbones.nvim",
-  dev = true,
+  dev = false,
   dependencies = {
     'rktjmp/lush.nvim'
   },
