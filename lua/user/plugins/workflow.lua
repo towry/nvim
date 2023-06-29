@@ -392,7 +392,7 @@ plug({
               vim.cmd('Telescope projects')
             end)
           end,
-          section = string.rep(" ", 0) .. "Telescope",
+          section = string.rep(" ", 0) .. "Finder",
         },
       }
       vim.list_extend(opts.items, items)
