@@ -159,6 +159,7 @@ function M.load_on_startup()
     {
       --- start dashboard
       pattern = au.user_autocmds.LazyUIEnter,
+      once = true,
       callback = function()
         if vim.fn.argc(-1) ~= 0 then
           return
