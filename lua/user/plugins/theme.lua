@@ -1,70 +1,23 @@
 local plug = require('libs.runtime.pack').plug
 
+----- everforest
 plug({
-  {
-    'rebelot/kanagawa.nvim',
-    event = 'User LazyTheme',
-    cond = vim.cfg.ui__theme_name == "kanagawa",
-    opts = {
-      undercurl = true, -- enable undercurls
-      commentStyle = { italic = true },
-      functionStyle = { bold = true },
-      keywordStyle = { italic = true },
-      statementStyle = { bold = true },
-      typeStyle = { bold = true },
-      variablebuiltinStyle = { italic = true },
-      globalStatus = true,
-      colors = {
-        theme = {
-          all = {
-            ui = {
-              bg_gutter = "none",
-            },
-          },
-        },
-      },
-      background = {
-        dark = "wave",
-        -- dark = 'dragon',
-        light = "lotus",
-      },
-    },
-    config = function(_, opts)
-      require('kanagawa').setup(opts)
-    end
-  },
-
-  ----- everforest
-  {
-    'sainnhe/everforest',
-    event = 'User LazyTheme',
-    enabled = vim.cfg.ui__theme_name == 'everforest',
-    init = function()
-      vim.g.everforest_background = 'medium'
-      vim.g.everforest_ui_contrast = 'high'
-      vim.g.everforest_better_performance = 1
-      vim.g.everforest_enable_italic = 1
-      vim.g.everforest_disable_italic_comment = false
-      vim.g.everforest_transparent_background = false
-      vim.g.everforest_dim_inactive_windows = false
-      vim.g.everforest_sign_column_background = 'none'  -- "none" | "grey"
-      vim.g.everforest_diagnostic_virtual_text = 'grey' -- "grey" | "colored"
-      vim.g.everforest_diagnostic_text_highlight = 0
-      vim.g.everforest_diagnostic_line_highlight = 0
-    end
-  }
-})
-
-plug({
-  "rktjmp/lush.nvim",
-  cmd = {
-    ---which will give you a few-minute overview of Lush's creation features
-    'LushRunQuickstart',
-    ---a more in-depth guide through various ways to apply Lush.
-    'LushRunTutorial',
-    'Lushify',
-    'LushImport',
-  }
+  'sainnhe/everforest',
+  event = 'User LazyTheme',
+  enabled = vim.cfg.ui__theme_name == 'everforest',
+  init = function()
+    vim.g.everforest_background = 'medium'
+    vim.g.everforest_ui_contrast = 'high'
+    vim.g.everforest_better_performance = 0
+    vim.g.everforest_enable_italic = 1
+    vim.g.everforest_disable_italic_comment = false
+    vim.g.everforest_transparent_background = false
+    vim.g.everforest_dim_inactive_windows = false
+    vim.g.everforest_sign_column_background = 'none'  -- "none" | "grey"
+    vim.g.everforest_diagnostic_virtual_text = 'grey' -- "grey" | "colored"
+    vim.g.everforest_diagnostic_text_highlight = 1
+    vim.g.everforest_diagnostic_line_highlight = 1
+  end
 })
 
 plug({
@@ -72,10 +25,15 @@ plug({
   -- "towry/zenbones.nvim",
   -- dev = true,
   dependencies = {
-    'rktjmp/lush.nvim'
+    'rktjmp/lush.nvim',
+    {
+      cmd = { 'Shipwright' },
+      'rktjmp/shipwright.nvim',
+      lazy = true,
+    },
   },
   event = 'User LazyTheme',
-  cond = string.match(vim.cfg.ui__theme_name, 'bones') ~= nil,
+  enabled = string.match(vim.cfg.ui__theme_name, 'bones') ~= nil,
   config = false,
   init = function()
     vim.g.neobones = {
@@ -105,18 +63,4 @@ plug({
       lighten_non_text = 22,
     }
   end,
-})
-
-
-plug({
-  'Luxed/ayu-vim',
-  event = 'User LazyTheme',
-  enabled = string.match(vim.cfg.ui__theme_name, 'ayu') ~= nil,
-  config = false,
-})
-
-plug({
-  cmd = { 'Shipwright' },
-  'rktjmp/shipwright.nvim',
-  lazy = true,
 })
