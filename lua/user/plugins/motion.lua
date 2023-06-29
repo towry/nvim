@@ -178,7 +178,7 @@ plug({
     },
     config = function(_, opts)
       require('flash').setup(opts)
-      vim.cmd('hi! link FlashCurrent ErrorMsg')
+      vim.cmd('hi! link FlashLabel ErrorFloat')
     end
   }
 })
