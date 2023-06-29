@@ -526,6 +526,7 @@ plug({
 
     require('telescope').setup({
       defaults = {
+        wrap_results = true,
         winblend = 0,
         cache_picker = {
           num_pickers = 5,

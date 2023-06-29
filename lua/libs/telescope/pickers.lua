@@ -34,6 +34,19 @@ M.project_files = function(opts)
   end
 
   opts = opts or {}
+  if not opts.cwd then
+    opts.cwd = require('libs.telescope.utils').get_cwd_relative_to_buf(0, level_up)
+  end
+
+  local nicely_cwd = require('libs.runtime.path').home_to_tilde(opts.cwd)
+  opts.prompt_title = opts.prompt_title or nicely_cwd
+
+  opts.attach_mappings = function(_, map)
+    map_i_actions(_, map)
+    return true
+  end
+
+  --- //////// item stylish.
   local entry_make = make_entry.gen_from_file(opts)
   opts.entry_maker = function(line)
     local entry = entry_make(line)
@@ -59,17 +72,7 @@ M.project_files = function(opts)
     end
     return entry
   end
-
-  if not opts.cwd then
-    opts.cwd = require('libs.telescope.utils').get_cwd_relative_to_buf(0, level_up)
-  end
-  local nicely_cwd = require('libs.runtime.path').home_to_tilde(opts.cwd)
-  opts.prompt_title = opts.prompt_title or nicely_cwd
-
-  opts.attach_mappings = function(_, map)
-    map_i_actions(_, map)
-    return true
-  end
+  ---/// end item stylish
 
   if opts and opts.oldfiles then
     local cache_opts = vim.tbl_deep_extend('force', {
