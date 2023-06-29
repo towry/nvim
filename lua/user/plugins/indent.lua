@@ -20,6 +20,7 @@ pack.plug({
   {
     'lukas-reineke/indent-blankline.nvim',
     event = au.user_autocmds.FileOpenedAfter_User,
+    enabled = false,
     config = function()
       require('indent_blankline').setup({
         use_treesitter = true,
