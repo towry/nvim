@@ -22,7 +22,7 @@ plug({
     },
     {
       '<leader>f.',
-      cmd_modcall('libs.plugin-nvim-tree', 'nvim_tree_find_file({fallback=true})'),
+      cmd_modcall('libs.plugin-nvim-tree', 'nvim_tree_find_file_direct()'),
       desc = 'Locate current file in tree',
     },
     {
@@ -455,7 +455,7 @@ plug({
   'nvim-telescope/telescope.nvim',
   cmd = { 'Telescope' },
   keys = {
-    { '<Tab>',      cmd_modcall(pickers_mod, 'buffers()'),                                  desc = "List Buffers" },
+    { '<Tab>',      cmd_modcall(pickers_mod, 'buffers_or_recent()'),                        desc = "List Buffers" },
     { '<leader>gB', cmdstr([[Telescope git_branches show_remote_tracking_branches=false]]), desc = 'Git branchs' },
     { '<C-f>f',     cmd_modcall(pickers_mod, 'project_files()'),                            desc = 'Open Project files' },
     { '<leader>ff', cmd_modcall(pickers_mod, 'project_files()'),                            desc = 'Open Project files' },

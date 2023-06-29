@@ -68,9 +68,9 @@ plug({
 })
 
 plug({
-  -- 'mcchrish/zenbones.nvim',
-  "towry/zenbones.nvim",
-  dev = true,
+  'mcchrish/zenbones.nvim',
+  -- "towry/zenbones.nvim",
+  -- dev = true,
   dependencies = {
     'rktjmp/lush.nvim'
   },

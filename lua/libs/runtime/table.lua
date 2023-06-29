@@ -1,3 +1,4 @@
+--- https://github.com/premake/premake-core/blob/master/src/base/table.lua
 local M = {}
 
 function M.concat(tables)

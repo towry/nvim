@@ -165,8 +165,8 @@ plug({
       't',
       'T',
       {
-        "<CR>",
-        mode = { "n" },
+        "s",
+        mode = { "n", "x", "o" },
         function()
           require("flash").jump()
         end,
