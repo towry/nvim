@@ -22,6 +22,7 @@ Press * on a word (or visual selection), | *
 Delete "whatever" from every open buffer | bufdo exe ":%g/whatever/d" | w
 change around brackets                   | cab
 change in brackets                       | cib
+Go to first/[v] occurrence of target     | gg[v]n
 
 ## surround
 you surround in word              | ysiw)

@@ -56,9 +56,21 @@ plug({
 })
 
 plug({
+  "rktjmp/lush.nvim",
+  cmd = {
+    ---which will give you a few-minute overview of Lush's creation features
+    'LushRunQuickstart',
+    ---a more in-depth guide through various ways to apply Lush.
+    'LushRunTutorial',
+    'Lushify',
+    'LushImport',
+  }
+})
+
+plug({
   -- 'mcchrish/zenbones.nvim',
   "towry/zenbones.nvim",
-  dev = false,
+  dev = true,
   dependencies = {
     'rktjmp/lush.nvim'
   },
