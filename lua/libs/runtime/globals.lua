@@ -3,7 +3,7 @@ _G.Ty = {}
 ---see `require`
 
 Ty.P = function(v)
-  print(vim.pretty_print(v))
+  vim.print(v)
   return v
 end
 
@@ -27,7 +27,7 @@ Ty.NOTIFY = function(...) require('notify').notify(...) end
 ---Ty.ECHO("hello", 'comment')
 ---```
 ---@param chunks string|string[]
----@param history? boolean
+---@param history? boolean|string
 ---@param opts? {verbose?:boolean}
 Ty.ECHO = function(chunks, history, opts)
   if type(chunks) == 'string' then
@@ -57,13 +57,14 @@ Ty.ToggleTheme = function(mode)
     Ty.NOTIFY('Light on 🌞 ')
   end
 end
----@param opts? {filename?:string, flame?:boolean}
-Ty.StartProfile = function(opts)
+
+
+---@param filename? string
+---@param opts? {flame?:boolean}
+Ty.StartProfile = function(filename, opts)
   opts = opts or {}
-  require('plenary.profile').start(opts.filename or 'profile.log', {
-    flame = opts.flame
-  })
+  require('libs.profile').start(filename or 'profile.log', opts)
 end
 Ty.StopProfile = function()
-  require('plenary.profile').stop()
+  require('libs.profile').stop()
 end
