@@ -90,7 +90,6 @@ plug({
       lighten_cursor_line = 15,
       -- lighten_comments = 30,
       lighten_non_text = 22,
-      darkness = 'stark',
     }
     vim.g.forestbones = {
       solid_float_border = false,
