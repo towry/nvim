@@ -153,8 +153,14 @@ return {
   {
     function()
       vim.notify("Build start")
-      require("zenbones.shipwright").run()
-      vim.notify("Build done")
+      if vim.loader then
+        vim.loader.reset()
+        vim.loader.disable()
+      end
+      vim.schedule(function()
+        require("zenbones.shipwright").run()
+        vim.notify("Build done")
+      end)
     end,
     description = "Build zenbones",
   }
