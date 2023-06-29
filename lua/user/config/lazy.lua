@@ -75,7 +75,7 @@ local function setup(lazy_opts, opts)
     require("libs.runtime.bundle").run_command({
       main = "user.config.plugs",
       output = "user/plugins_bundle.lua",
-      glob_dir = "user/plugins/*.lua",
+      glob_dir = { "user/plugins/*.lua", "plugin-extras/**/*.lua", },
     })
     if vim.loader then
       vim.loader.reset()

@@ -24,21 +24,37 @@ local function get_bundle_files(glob_path)
   return files
 end
 
+---@param glob_dir string|string[]
+local function get_glob_files(glob_dir)
+  local Table = require('libs.runtime.table')
+  if type(glob_dir) == 'string' then
+    glob_dir = { glob_dir }
+  end
+  local lists = {}
+  --- loop glob_dir
+  for _, dir in ipairs(glob_dir) do
+    local files = get_bundle_files(dir)
+    --- replace lua/user/abc to lua.user.abc
+    local next_files = vim.tbl_map(function(x) return string.gsub(x, '/', '.') end, files)
+    for _, f in ipairs(next_files) do
+      table.insert(lists, f)
+    end
+  end
+
+  return lists
+end
+
 ---@see https://github.com/mihacooper/luacc
 ---<br />
 ---Generate the bundled plugin module
 --- Do not forget the position string.
 ---`{ main = 'user/plug.lua', output = 'user/plug.bundle.lua', glob_dir = 'user/plugins/**' }`
----@param opts {main:string, output:string, glob_dir:string}
+---@param opts {main:string, output:string, glob_dir:string|string[]}
 M.run_command = function(opts)
   local Path = require('libs.runtime.path')
   opts = opts or {}
-  local files = get_bundle_files(opts.glob_dir)
   --- replace lua/user/abc to lua.user.abc
-  local files_as_module = vim.tbl_map(function(x) return string.gsub(x, '/', '.') end, files)
-  if #files_as_module == 0 then
-    error("no files found")
-  end
+  local files_as_module = get_glob_files(opts.glob_dir)
   local user_config_path = vim.fn.stdpath("config")
   local cmds = {
     "luacc",
