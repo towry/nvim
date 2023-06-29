@@ -204,7 +204,7 @@ pack.plug({
 --- which-key
 pack.plug({
   'folke/which-key.nvim',
-  keys = { "<leader>", "<C-f>" },
+  keys = { "<leader>", "<localleader>" },
   cmd = { 'WhichKey' },
   config = function()
     local wk = require('which-key')
@@ -304,8 +304,8 @@ pack.plug({
       c = {
         name = 'Code',
       },
-      e = {
-        name = 'Explorer',
+      f = {
+        name = 'Finder',
       },
       w = {
         name = 'Git workspace',
@@ -348,6 +348,17 @@ pack.plug({
       }
     }, {
       prefix = '<leader>'
+    })
+
+    wk.register({
+      f = {
+        name = 'Search files',
+      },
+      s = {
+        name = 'Search string',
+      }
+    }, {
+      prefix = '<localleader>'
     })
 
     wk.register({

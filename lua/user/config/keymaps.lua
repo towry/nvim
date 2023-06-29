@@ -151,9 +151,6 @@ local function setup_basic()
   })
 
   --- buffers
-  set('n', '<S-Tab>', ':e #<cr>', {
-    desc = 'Go to previous edited Buffer',
-  })
   set('n', '<leader>b]', cmd_modcall('libs.runtime.buffer', 'next_unsaved_buf()'), {
     desc = 'Next unsaved buffer'
   })
