@@ -11,14 +11,13 @@ M.get_path_and_tail = function(filename)
   return bufname_tail, path_to_display
 end
 
-local use_find_files_instead_of_git = false
+local use_find_files_instead_of_git = true
 
 M.project_files_toggle_between_git_and_fd = function()
   use_find_files_instead_of_git = not use_find_files_instead_of_git
 end
 
 M.project_files = function(opts)
-  local runtimeUtils = require('libs.runtime.utils')
   local make_entry = require('telescope.make_entry')
   local strings = require('plenary.strings')
   local utils = require('telescope.utils')
@@ -26,6 +25,7 @@ M.project_files = function(opts)
   local devicons = require('nvim-web-devicons')
   local def_icon = devicons.get_icon('fname', { default = true })
   local iconwidth = strings.strdisplaywidth(def_icon)
+  local level_up = vim.v.count
 
   local map_i_actions = function(prompt_bufnr, map)
     map('i', '<C-o>', function()
@@ -34,6 +34,19 @@ M.project_files = function(opts)
   end
 
   opts = opts or {}
+  if not opts.cwd then
+    opts.cwd = require('libs.telescope.utils').get_cwd_relative_to_buf(0, level_up)
+  end
+
+  local nicely_cwd = require('libs.runtime.path').home_to_tilde(opts.cwd)
+  opts.prompt_title = opts.prompt_title or nicely_cwd
+
+  opts.attach_mappings = function(_, map)
+    map_i_actions(_, map)
+    return true
+  end
+
+  --- //////// item stylish.
   local entry_make = make_entry.gen_from_file(opts)
   opts.entry_maker = function(line)
     local entry = entry_make(line)
@@ -59,17 +72,7 @@ M.project_files = function(opts)
     end
     return entry
   end
-
-  if not opts.cwd then
-    opts.cwd = runtimeUtils.get_root()
-  end
-  local nicely_cwd = require('libs.runtime.path').home_to_tilde(opts.cwd)
-  opts.prompt_title = opts.prompt_title or nicely_cwd
-
-  opts.attach_mappings = function(_, map)
-    map_i_actions(_, map)
-    return true
-  end
+  ---/// end item stylish
 
   if opts and opts.oldfiles then
     local cache_opts = vim.tbl_deep_extend('force', {
@@ -247,6 +250,19 @@ M.my_git_bcommits = function(opts)
   }
 
   builtin.git_bcommits(opts)
+end
+
+function M.buffers_or_recent()
+  local count = #vim.fn.getbufinfo({ buflisted = 1 })
+  if count <= 1 then
+    --- open recent.
+    M.project_files({
+      cwd_only = true,
+      oldfiles = true,
+    })
+    return
+  end
+  return M.buffers()
 end
 
 function M.buffers()

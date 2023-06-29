@@ -13,9 +13,10 @@ local function install_lazy_vim()
   print(vim.fn.system({ "git", "-C", lazypath, "checkout", "tags/stable" })) -- last stable release
 end
 
-local function setup(opts)
+---@param opts {getspec:function}
+local function setup(lazy_opts, opts)
   local is_window = jit.os:find('Windows')
-  opts = vim.tbl_deep_extend("force", {
+  lazy_opts = vim.tbl_deep_extend("force", {
     spec = {},
     defaults = { lazy = true },
     dev = { patterns = is_window and {} or {}, path = is_window and "" or "~/workspace/git-repos" },
@@ -66,7 +67,7 @@ local function setup(opts)
       },
     },
     debug = false,
-  }, opts or {})
+  }, lazy_opts or {})
 
   local ok = prepend_lazy()
 
@@ -90,7 +91,7 @@ local function setup(opts)
         vim.notify("... something is wrong when installing the lazy plugin")
         return
       end
-      require("lazy").setup(opts)
+      require("lazy").setup(lazy_opts)
       vim.notify("lazy is ready to user")
     end, {
 
@@ -100,7 +101,11 @@ local function setup(opts)
     return
   end
 
-  require("lazy").setup(opts)
+  if opts and type(opts.getspec) == 'function' then
+    lazy_opts.spec = opts.getspec()
+  end
+
+  require("lazy").setup(lazy_opts)
 end
 
 return {

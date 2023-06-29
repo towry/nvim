@@ -72,30 +72,40 @@ plug({
   },
 
   {
-    'echasnovski/mini.bufremove',
+    'pze/mini.bufremove',
+    dev = false,
     keys = {
       {
         '<leader>bx',
-        '<cmd>lua require("mini.bufremove").delete(0)<cr>',
+        '<cmd>lua require("mini.bufremove").wipeout(0)<cr>',
         desc = 'Close current buffer',
       },
       {
         '<leader>bq',
         function()
+          require('mini.bufremove').wipeout(0)
           vim.cmd('q')
         end,
         desc = 'Close current buffer and window',
       },
       {
+        '<leader>b-',
+        function()
+          require('mini.bufremove').unshow(0)
+        end,
+        desc = 'Unshow current buffer',
+      },
+      {
         '<S-q>',
         function()
           if vim.bo.buftype ~= "" then
+            require('mini.bufremove').wipeout(0)
             vim.cmd('q')
             return
           end
           local valid_buf_count = #(require('libs.runtime.buffer').list_normal_bufnrs())
           if valid_buf_count <= 1 then
-            require('mini.bufremove').delete(0)
+            require('mini.bufremove').wipeout(0)
             vim.schedule(function()
               au.exec_useraucmd(au.user_autocmds.DoEnterDashboard, {
                 data = {
@@ -105,7 +115,7 @@ plug({
             end)
             return
           end
-          require('mini.bufremove').delete(0)
+          require('mini.bufremove').wipeout(0)
         end,
         desc = 'Quit current buffer',
       }
@@ -299,12 +309,12 @@ plug({
     "imNel/monorepo.nvim",
     keys = {
       {
-        '<leader>em',
+        '<leader>fm',
         [[<cmd>lua require("telescope").extensions.monorepo.monorepo()<cr>]],
         desc = 'Manage monorepo',
       },
       {
-        '<leader>e$',
+        '<leader>f$',
         [[<cmd>lua require("monorepo").toggle_project()<cr>]],
         desc = 'Toggle cwd as project'
       },
@@ -323,7 +333,7 @@ plug({
         cmd = { 'ProjectRoot' },
         keys = {
           {
-            '<leader>ep',
+            '<leader>fp',
             function()
               require('libs.runtime.utils').plugin_schedule('project_nvim', function()
                 vim.cmd('Telescope projects')
@@ -382,7 +392,7 @@ plug({
               vim.cmd('Telescope projects')
             end)
           end,
-          section = string.rep(" ", 0) .. "Telescope",
+          section = string.rep(" ", 0) .. "Finder",
         },
       }
       vim.list_extend(opts.items, items)

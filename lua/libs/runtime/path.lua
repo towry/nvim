@@ -1,5 +1,9 @@
 local uv = vim.loop
+local Table = require('libs.runtime.table')
+local unpack = table.unpack or unpack
 local is_windows = uv.os_uname().version:match 'Windows'
+local path_separator = is_windows and '\\' or '/'
+
 
 local function escape_wildcards(path)
   return path:gsub('([%[%]%?%*])', '\\%1')
@@ -68,7 +72,41 @@ local function dirname(path)
 end
 
 local function path_join(...)
-  return table.concat(vim.tbl_flatten { ... }, '/')
+  local args = ...
+  if args and args[1] and type(args[1]) == 'table' then
+    return table.concat(vim.tbl_flatten(args[1]), path_separator)
+  end
+
+  return table.concat(vim.tbl_flatten { ... }, path_separator)
+end
+
+---@param path_string string
+local function path_split(path_string)
+  local pat = "[^" .. path_separator .. "]+"
+  local result = {}
+  for part in string.gmatch(path_string, pat) do
+    table.insert(result, part)
+  end
+  return result
+end
+
+--- level up a path by level_number
+---@param level_number number
+---@return string
+local function level_up_by(path_string, level_number)
+  if type(path_string) ~= 'string' then return '/tmp/error/level_up_by' end
+  if level_number <= 0 or level_number >= 20 then
+    return path_string
+  end
+  local parts = path_split(path_string)
+  local head_num = #parts - level_number - 1
+  if head_num <= 0 then head_num = 1 end
+  local results = Table.head(head_num, parts)
+
+  --- path_split removed the first `/` in path_string, add it back.
+  --- FIXME: buggy
+  if is_windows then return path_join(results) end
+  return path_join('', unpack(results))
 end
 
 -- Traverse the path calling cb along the way.
@@ -142,8 +180,6 @@ local function is_descendant(root, path)
   return dir == root
 end
 
-local path_separator = is_windows and ';' or ':'
-
 return {
   escape_wildcards = escape_wildcards,
   is_dir = is_dir,
@@ -152,6 +188,9 @@ return {
   exists = exists,
   dirname = dirname,
   join = path_join,
+  path_join = path_join,
+  path_split = path_split,
+  level_up_by = level_up_by,
   sanitize = sanitize,
   traverse_parents = traverse_parents,
   iterate_parents = iterate_parents,

@@ -5,34 +5,6 @@ local enable_flash = true
 
 plug({
   {
-    'jinh0/eyeliner.nvim',
-    enabled = not enable_flash,
-    keys = {
-      'f',
-      'F',
-      't',
-      'T',
-    },
-    opts = {
-      highlight_on_key = true, -- show highlights only after keypress
-      dim = true
-    },
-    config = function(_, opts)
-      -- local au = require('libs.runtime.au')
-
-      require('eyeliner').setup(opts)
-
-      au.register_event(au.events.AfterColorschemeChanged, {
-        name = 'update_eyeliner_hl',
-        immediate = true,
-        callback = function()
-          vim.api.nvim_set_hl(0, 'EyelinerPrimary', { bold = true, underline = true })
-          vim.api.nvim_set_hl(0, 'EyelinerSecondary', { underline = true })
-        end,
-      })
-    end,
-  },
-  {
     -- jump html tags.
     'harrisoncramer/jump-tag',
     keys = {
@@ -53,98 +25,6 @@ plug({
       'nvim-treesitter/nvim-treesitter',
     },
   },
-  {
-    {
-      'ggandor/leap.nvim',
-      enabled = not enable_flash,
-      dependencies = {
-        'tpope/vim-repeat',
-      },
-      keys = { { 's' }, { 'S' }, { 'gs' }, { 'f' }, { 'F' }, { 'vs' }, { 'ds' } },
-      config = function()
-        local leap = require('leap')
-        -- local au = require('libs.runtime.au')
-
-        leap.opts.highlight_unlabeled_phase_one_targets = true
-        leap.opts.substitute_chars = {
-          ['\r'] = '',
-          [' '] = '␣',
-        }
-        leap.add_default_mappings()
-        leap.init_highlight(true)
-
-        --- TODO: fix hl.
-        local function update_hl()
-          -- Greying out the search area
-          vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' })
-          -- -- lightspeed like hl
-          -- vim.api.nvim_set_hl(0, 'LeapMatch', {
-          --   fg = colors.leap_match_fg,
-          --   bold = true,
-          --   italic = true,
-          --   undercurl = false,
-          --   underline = true,
-          -- })
-          -- vim.api.nvim_set_hl(0, 'LeapLabelPrimary', {
-          --   bg = colors.leap_label_primary_bg,
-          --   fg = colors.leap_label_primary_fg,
-          --   bold = false,
-          -- })
-          -- vim.api.nvim_set_hl(0, 'LeapLabelSecondary', {
-          --   bg = colors.leap_label_secondary,
-          --   fg = '#ffffff',
-          --   bold = true,
-          --   undercurl = true,
-          --   underline = false,
-          -- })
-        end
-
-        au.register_event(au.events.AfterColorschemeChanged, {
-          name = 'update_leap_hl',
-          immediate = true,
-          callback = function()
-            update_hl()
-          end,
-        })
-      end,
-    },
-  },
-  {
-    'chentoast/marks.nvim',
-    event = au.user_autocmds.FileOpenedAfter_User,
-    config = function()
-      require('marks').setup({
-        default_mappings = false,
-        builtin_marks = {},
-        refresh_interval = 600,
-        excluded_filetypes = { 'oil', 'expJABS', 'NvimTree' },
-        -- keymaps for marks.
-        mappings = {
-          preview = 'm:',
-          toggle = 'm<space>',
-          next = 'm,',
-          prev = 'm.',
-          delete_buf = 'm<bs>',
-        },
-      })
-
-      -- sync hl.
-      -- local au = require('libs.runtime.au')
-      au.register_event(au.events.AfterColorschemeChanged, {
-        name = "update_marks_hl",
-        immediate = true,
-        callback = function()
-          vim.api.nvim_set_hl(0, 'MarkSignHL', {
-            bg = 'red',
-            fg = '#ffffff',
-            bold = true,
-            italic = true,
-          })
-        end,
-      })
-    end,
-  },
-
   {
     'echasnovski/mini.ai',
     event = au.user_autocmds.FileOpenedAfter_User,
@@ -285,8 +165,8 @@ plug({
       't',
       'T',
       {
-        "<CR>",
-        mode = { "n" },
+        "s",
+        mode = { "n", "x", "o" },
         function()
           require("flash").jump()
         end,

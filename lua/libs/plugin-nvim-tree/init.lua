@@ -17,7 +17,23 @@ function M.toggle_nvim_tree() run_nvim_tree_toggle_cmd('NvimTreeToggle') end
 
 function M.toggle_nvim_tree_find_file() run_nvim_tree_toggle_cmd('NvimTreeFindFileToggle') end
 
-function M.nvim_tree_find_file_direct() run_nvim_tree_toggle_cmd('NvimTreeFindFile') end
+function M.nvim_tree_find_file_direct()
+  local level_up = vim.v.count
+  if level_up > 0 then
+    local cwd = require('libs.telescope.utils').get_cwd_relative_to_buf(0, level_up, false)
+    if cwd then
+      local tree_api = require('nvim-tree.api')
+      tree_api.tree.open({
+        update_root = false,
+        find_file = true,
+        current_window = false,
+      })
+      tree_api.tree.change_root(cwd)
+      return
+    end
+  end
+  vim.cmd('NvimTreeFindFile')
+end
 
 M.nvim_tree_find_file = function(opts)
   opts = opts or {}

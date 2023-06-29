@@ -10,7 +10,7 @@ plug({
     --   dev = false,
     -- },
   },
-  event = { 'BufNewFile', 'BufReadPost', 'User OnLeaveDashboard' },
+  event = { 'User LazyUIEnterPost', 'User OnLeaveDashboard' },
   config = function()
     require('user.config.options').setup_statusline()
     local auto_format_disabled = require('libs.lsp-format.autoformat').disabled

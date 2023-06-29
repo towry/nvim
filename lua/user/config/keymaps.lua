@@ -5,6 +5,19 @@ local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 local M = {}
 
 local function setup_basic()
+  --- smart insert with auto indent.
+  set('n', 'i', function()
+    if vim.bo.buftype ~= '' then
+      return 'i'
+    end
+    if #vim.fn.getline('.') == 0 then
+      return [["_cc]]
+    end
+    return 'i'
+  end, {
+    expr = true,
+    nowait = true,
+  })
   --- quickly go into cmd
   set('n', '<C-;>', ':<C-u>', {
     expr = false,

@@ -18,10 +18,11 @@ return plug({
         silent = true,
         evaluate_single = false,
         items = {
-          new_section("Find file", 'lua require("libs.telescope.pickers").project_files()', "Telescope"),
+          new_section("Tree", 'NvimTreeToggle', "Finder"),
+          new_section("Find file", 'lua require("libs.telescope.pickers").project_files()', "Finder"),
           new_section("Recent files",
-            'lua require("libs.telescope.pickers").project_files({cwd_only=true,oldfiles=true})', "Telescope"),
-          new_section("Grep text", 'lua require("libs.telescope.live_grep_call")()', "Telescope"),
+            'lua require("libs.telescope.pickers").project_files({cwd_only=true,oldfiles=true})', "Finder"),
+          new_section("Grep text", 'lua require("libs.telescope.live_grep_call")()', "Finder"),
           ---
           new_section("Session load", [[SessionManager load_current_dir_session]], "Session"),
           new_section("Session delete", [[SessionManager delete_session]], "Session"),
