@@ -3,7 +3,6 @@
 require("user.plugins.essential")
 --- basic
 require("user.plugins.theme")
-require("user.plugins.dashboard")
 require("user.plugins.cmdline")
 require("user.plugins.autocmp")
 require("user.plugins.debugger")

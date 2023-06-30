@@ -19,21 +19,15 @@ return plug({
         silent = true,
         evaluate_single = false,
         items = {
-          new_section("Tree", 'NvimTreeToggle', "Finder"),
-          new_section("Find file", 'lua require("libs.telescope.pickers").project_files()', "Finder"),
-          new_section("Recent files",
-            'lua require("libs.telescope.pickers").project_files({cwd_only=true,oldfiles=true})', "Finder"),
-          new_section("Grep text", 'lua require("libs.telescope.live_grep_call")()', "Finder"),
           ---
           new_section("Session load", [[SessionManager load_current_dir_session]], "Session"),
           new_section("Session delete", [[SessionManager delete_session]], "Session"),
           ---
           new_section("Git Branchs", "Telescope git_branches show_remote_tracking_branches=false", "Built-in"),
           new_section("Lazy", "Lazy", "Built-in"),
-          new_section("New file", "ene | startinsert", "Built-in"),
           new_section("Quit current", "q", "Built-in"),
           --- last.
-          starter.sections.recent_files(4, true, false),
+          starter.sections.recent_files(9, true, false),
         },
         content_hooks = {
           starter.gen_hook.adding_bullet(pad .. "░ ", false),
