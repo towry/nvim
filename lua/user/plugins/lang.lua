@@ -16,7 +16,7 @@ plug({
     keys = {
       -- { "<Enter>",    desc = "Init Increment selection" },
       -- { "<Enter>",    desc = "node node incremental selection",      mode = "x" },
-      { "<BS>",       desc = "Decrement selection",                  mode = "x" },
+      { "<BS>", desc = "Decrement selection", mode = "x" },
       { '<leader>cr', desc = 'Smart rename/nvim-treesitter-refactor' },
     },
     dependencies = {
@@ -89,9 +89,9 @@ plug({
       require('nvim-treesitter.configs').setup({
         -- parser_install_dir = parser_install_dir,
         ensure_installed = vim.cfg.lang__treesitter_ensure_installed, -- one of "all", or a list of languages
-        sync_install = false,                                         -- install languages synchronously (only applied to `ensure_installed`)
+        sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
         auto_install = false,
-        ignore_install = { 'all' },                                   -- list of parsers to ignore installing
+        ignore_install = { 'all' }, -- list of parsers to ignore installing
         highlight = {
           disable = disabled,
           enable = vim.cfg.lang__treesitter_plugin_highlight,
@@ -262,73 +262,29 @@ plug({
   },
 
   {
+    'echasnovski/mini.comment',
+    keys = {
+      {
+        'gc',
+        mode = { 'n', 'v' }
+      },
+      {
+        'gcc',
+        mode = { 'n', 'v' }
+      },
+    },
+    opts = {
+
+    }
+  },
+
+  {
     'danymat/neogen',
     cmd = 'Neogen',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = true,
   },
-  {
-    'numToStr/Comment.nvim',
-    keys = {
-      { "gcc", mode = { 'n', 'v' } },
-      { "gc",  mode = { 'n', 'v' } },
-      { "gcb", mode = { 'n', 'v' } },
-      { "gco", mode = { 'n', 'v' } },
-      { "gcO", mode = { 'n', 'v' } },
-      { "gcA", mode = { 'n', 'v' } },
-      { "g>",  mode = { 'n', 'v' } },
-      { "g<",  mode = { 'n', 'v' } },
-      { "gb",  mode = { 'n', 'v' } }
-    },
-    dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
-    config = function()
-      require('Comment').setup({
-        ---Add a space b/w comment and the line
-        ---@type boolean
-        padding = true,
-        ---Lines to be ignored while comment/uncomment.
-        ---Could be a regex string or a function that returns a regex string.
-        ---Example: Use '^$' to ignore empty lines
-        ---@type string|function
-        ignore = nil,
-        ---Create basic (operator-pending) and extended mappings for NORMAL + VISUAL mode
-        ---@type table
-        mappings = {
-          ---operator-pending mapping
-          ---Includes `gcc`, `gcb`, `gc[count]{motion}` and `gb[count]{motion}`
-          basic = true,
-          ---extra mapping
-          ---Includes `gco`, `gcO`, `gcA`
-          extra = true,
-          ---extended mapping
-          ---Includes `g>`, `g<`, `g>[count]{motion}` and `g<[count]{motion}`
-          extended = false,
-        },
-        ---LHS of toggle mapping in NORMAL + VISUAL mode
-        ---@type table
-        toggler = {
-          ---line-comment keymap
-          line = 'gcc',
-          ---block-comment keymap
-          block = 'gbc',
-        },
-        ---LHS of operator-pending mapping in NORMAL + VISUAL mode
-        ---@type table
-        opleader = {
-          ---line-comment keymap
-          line = 'gc',
-          ---block-comment keymap
-          block = 'gb',
-        },
-        ---Pre-hook, called before commenting the line
-        ---@type function|nil
-        pre_hook = function(ctx) return require('ts_context_commentstring.internal').calculate_commentstring() end,
-        ---Post-hook, called after commenting is done
-        ---@type function|nil
-        post_hook = nil,
-      })
-    end,
-  },
+
   {
     'folke/todo-comments.nvim',
     cmd = {
@@ -347,7 +303,7 @@ plug({
       local todo_comments = require('todo-comments')
 
       todo_comments.setup({
-        signs = false,     -- show icons in the signs column
+        signs = false, -- show icons in the signs column
         sign_priority = 8, -- sign priority
         -- keywords recognized as todo comments
         keywords = {
@@ -358,14 +314,14 @@ plug({
           PERF = { alt = { 'OPTIM', 'PERFORMANCE', 'OPTIMIZE' } },
         },
         highlight = {
-          before = '',                     -- "fg" or "bg" or empty
+          before = '', -- "fg" or "bg" or empty
           -- keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
-          keyword = 'wide',                -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
-          after = '',                      -- "fg" or "bg" or empty
+          keyword = 'wide', -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
+          after = '', -- "fg" or "bg" or empty
           pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
-          comments_only = true,            -- uses treesitter to match keywords in comments only
-          max_line_len = 1500,             -- ignore lines longer than this
-          exclude = {},                    -- list of file types to exclude highlighting
+          comments_only = true, -- uses treesitter to match keywords in comments only
+          max_line_len = 1500, -- ignore lines longer than this
+          exclude = {}, -- list of file types to exclude highlighting
         },
       })
     end,
@@ -393,17 +349,17 @@ plug({
       require('package-info').setup({
         colors = {
           up_to_date = '#3C4048', -- Text color for up to date package virtual text
-          outdated = '#fc514e',   -- Text color for outdated package virtual text
+          outdated = '#fc514e', -- Text color for outdated package virtual text
         },
         icons = {
-          enable = true,                    -- Whether to display icons
+          enable = true, -- Whether to display icons
           style = {
             up_to_date = icons.checkSquare, -- Icon for up to date packages
-            outdated = icons.gitRemove,     -- Icon for outdated packages
+            outdated = icons.gitRemove, -- Icon for outdated packages
           },
         },
-        autostart = true,              -- Whether to autostart when `package.json` is opened
-        hide_up_to_date = true,        -- It hides up to date versions when displaying virtual text
+        autostart = true, -- Whether to autostart when `package.json` is opened
+        hide_up_to_date = true, -- It hides up to date versions when displaying virtual text
         hide_unstable_versions = true, -- It hides unstable versions from version list e.g next-11.1.3-canary3
         -- Can be `npm` or `yarn`. Used for `delete`, `install` etc...
         -- The plugin will try to auto-detect the package manager based on
