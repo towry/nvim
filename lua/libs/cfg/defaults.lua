@@ -175,11 +175,6 @@ return {
     -- folke/noice
     "noice",
   },
+
   ---plugins specific.
-  plugin__fidget_enable = true,
-  plugin__fidget_text_spinner = "pipe",
-  plugin__fidget_text_done = '  ',
-  plugin__fidget_debug_logging = false,
-  ---lspsaga
-  plugin__lspsaga_enable = true,
 }

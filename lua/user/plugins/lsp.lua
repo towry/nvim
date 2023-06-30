@@ -29,14 +29,12 @@ plug({
 
   {
     'neovim/nvim-lspconfig',
-    name = 'lsp',
     event = { 'BufRead', 'BufNewFile' },
     dependencies = {
       'jose-elias-alvarez/typescript.nvim',
       'hrsh7th/cmp-nvim-lsp',
       'jose-elias-alvarez/null-ls.nvim',
       'williamboman/mason-lspconfig.nvim',
-      'j-hui/fidget.nvim',
       'williamboman/mason.nvim',
       {
         'hrsh7th/nvim-gtd',
@@ -118,111 +116,6 @@ plug({
   {
     'folke/neodev.nvim',
   },
-
-  --- lspsaga
-  {
-    'nvimdev/lspsaga.nvim',
-    cmd = { 'Lspsaga', },
-    dependencies = {
-      --Please make sure you install markdown and markdown_inline parser
-      { 'nvim-treesitter/nvim-treesitter' },
-    },
-    opts = {
-      request_timeout = 1500,
-      code_action = {
-        num_shortcut = true,
-        show_server_name = true,
-        extend_gitsigns = true,
-        keys = {
-          -- string | table type
-          quit = '<ESC>',
-          exec = '<CR>',
-        },
-      },
-      lightbulb = {
-        enable = false,
-        enable_in_insert = false,
-        sign = true,
-        sign_priority = 40,
-        virtual_text = true,
-      },
-      diagnostic = {
-        on_insert = false,
-        on_insert_follow = false,
-        show_virt_line = false,
-        border_follow = true,
-        text_hl_follow = true,
-        show_code_action = false,
-        keys = {
-          quit = '<ESC>',
-        },
-      },
-      callhierarchy = {
-        keys = {
-          quit = '<ESC>',
-          vsplit = 'v',
-          split = 'x',
-        },
-      },
-      symbol_in_winbar = {
-        enable = false,
-      },
-      beacon = {
-        enable = false,
-      },
-      ui = {
-        title = true,
-        border = 'rounded', -- single, double, rounded, solid, shadow.
-        winblend = 1,
-      },
-    }
-  },
-  ---- progress ui.
-  {
-    'j-hui/fidget.nvim',
-    tag = 'legacy',
-    event = {
-      au.user_autocmds.LspConfigDone_User,
-    },
-    enabled = vim.cfg.plugin__fidget_enable,
-    config = function()
-      require('fidget').setup({
-        text = {
-          spinner = 'pipe',
-          done = '  ',
-        },
-        align = {
-          bottom = true, -- align fidgets along bottom edge of buffer
-          right = true,  -- align fidgets along right edge of buffer
-        },
-        window = {
-          relative = 'editor',
-          zindex = 100,
-          border = 'rounded',
-          blend = 0,
-        },
-        sources = {
-          ['null-ls'] = {
-            ignore = true,
-          },
-          ['tailwindcss'] = {
-            ignore = true,
-          },
-        },
-        timer = {
-          spinner_rate = 60,
-          -- how long to keep around empty fidget, in ms
-          fidget_decay = 2000,
-          -- how long to keep around completed task, in ms
-          task_decay = 1000,
-        },
-        debug = {
-          logging = false,
-        },
-      })
-    end
-  },
-
   {
     'simrat39/rust-tools.nvim',
     dependencies = {
