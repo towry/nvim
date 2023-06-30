@@ -12,9 +12,10 @@ local function setup_basic()
   })
   set('n', '<localleader>n', function()
     vim.ui.input({
-      prompt = ':normal! ',
+      prompt = '   normal keys: ',
+      completion = "mapping",
     }, function(input)
-      input = string.gsub(vim.trim(input), '%s*', '')
+      input = string.gsub(vim.trim(input or ''), '%s*', '')
       if input == '' then return end
       local key = vim.api.nvim_replace_termcodes(input, true, false, true)
       vim.api.nvim_feedkeys(key, 'n', false)

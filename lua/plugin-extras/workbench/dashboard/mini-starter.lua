@@ -33,7 +33,6 @@ return plug({
           starter.gen_hook.adding_bullet(pad .. "░ ", false),
           starter.gen_hook.aligning("center", "center"),
         },
-        query_updaters = 'abcdefghilmnopqrstuvwxyz0123456789_-./',
       }
       return config
     end,
@@ -68,9 +67,9 @@ return plug({
           end
           local bufnr = ctx.buf
           if not bufnr then return end
-          vim.keymap.set('n', 'k', [[<cmd>lua MiniStarter.update_current_item('prev')<CR>]],
+          vim.keymap.set('n', 'K', [[<cmd>lua MiniStarter.update_current_item('prev')<CR>]],
             { buffer = bufnr, nowait = true, silent = true })
-          vim.keymap.set('n', 'j', [[<cmd>lua MiniStarter.update_current_item('next')<CR>]],
+          vim.keymap.set('n', 'J', [[<cmd>lua MiniStarter.update_current_item('next')<CR>]],
             { buffer = bufnr, nowait = true, silent = true })
 
           vim.api.nvim_create_augroup('_dashboard_dir_changed', { clear = true })
