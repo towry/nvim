@@ -51,6 +51,7 @@ plug({
       -- 'kiyoon/treesitter-indent-object.nvim',
     },
     init = function()
+      vim.opt.smartindent = false
       vim.api.nvim_create_augroup('_ts_file_opened', { clear = true })
       vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
         group = '_ts_file_opened',
@@ -110,8 +111,6 @@ plug({
           },
         },
         indent = {
-          -- use yati.
-          -- enable = vim.cfg.lang__treesitter_plugin_indent,
           enable = not vim.cfg.lang__treesitter_plugin_yati,
           disable = disabled,
         },
@@ -126,7 +125,6 @@ plug({
         },
         context_commentstring = {
           enable = vim.cfg.lang__treesitter_plugin_context_commentstring,
-          enable_autocmd = false,
         },
         rainbow = {
           disable = disabled,

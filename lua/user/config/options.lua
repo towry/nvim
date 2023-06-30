@@ -10,7 +10,7 @@ function M.init_edit()
   o.shiftwidth = 2 --- Change a number of space characeters inseted for indentation
   o.shiftround = true -- round indent.
   o.smartcase = true --- Uses case in search
-  o.smartindent = false --- Makes indenting smart
+  o.smartindent = true --- Makes indenting smart
   o.smarttab = true --- Makes tabbing smarter will realize you have 2 vs 4
   o.softtabstop = 2 --- Insert 2 spaces for a tab
   o.splitright = true --- Vertical splits will automatically be to the right
