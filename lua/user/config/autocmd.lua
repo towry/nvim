@@ -3,7 +3,7 @@ local au = require('libs.runtime.au')
 local M = {}
 
 function M.load_on_startup()
-  local current_timeoutlen = vim.opt.timeoutlen:get() or 400
+  -- local current_timeoutlen = vim.opt.timeoutlen:get() or 400
 
   local definitions = {
     -- taken from AstroNvim
@@ -60,24 +60,24 @@ function M.load_on_startup()
       }
     },
     ------------------------------------
-    {
-      { 'InsertEnter' },
-      {
-        group = 'no_insert_delay',
-        callback = function()
-          vim.opt.timeoutlen = 0
-        end
-      }
-    },
-    {
-      { 'InsertLeave' },
-      {
-        group = 'no_insert_delay',
-        callback = function()
-          vim.opt.timeoutlen = current_timeoutlen
-        end
-      }
-    },
+    -- {
+    --   { 'InsertEnter' },
+    --   {
+    --     group = 'no_insert_delay',
+    --     callback = function()
+    --       vim.opt.timeoutlen = 0
+    --     end
+    --   }
+    -- },
+    -- {
+    --   { 'InsertLeave' },
+    --   {
+    --     group = 'no_insert_delay',
+    --     callback = function()
+    --       vim.opt.timeoutlen = current_timeoutlen
+    --     end
+    --   }
+    -- },
     {
       { 'BufWritePost' },
       {
