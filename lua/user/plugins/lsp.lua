@@ -228,7 +228,6 @@ plug({
     dependencies = {
       'neovim/nvim-lspconfig',
     },
-    ft = { 'rust', 'toml' },
     config = function()
       local opts = {
         tools = {
@@ -270,8 +269,19 @@ plug({
       }
 
       require("rust-tools").setup(opts)
-      require("lspconfig")["rust_analyzer"].manager.try_add()
     end,
+    event = 'BufReadPre Cargo.toml,*.rs',
+  },
+
+  {
+    'saecki/crates.nvim',
+    event = 'BufRead Cargo.toml',
+    opts = {
+      popup = {
+        autofocus = true,
+        border = "single",
+      },
+    }
   }
 
 })

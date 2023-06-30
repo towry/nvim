@@ -92,7 +92,7 @@ function M.define_autocmds(definitions)
 end
 
 ---@param event string | string[]
----@param opts {group:string,pattern?:any,callback?:function,cmd?:string,once?:boolean}
+---@param opts {group:string,pattern?:any,callback?:function,command?:string,once?:boolean}
 function M.define_autocmd(event, opts)
   if type(opts.group) == "string" and opts.group ~= "" then
     local exists, _ = pcall(vim.api.nvim_get_autocmds, { group = opts.group })
