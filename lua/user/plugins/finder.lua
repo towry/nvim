@@ -466,14 +466,26 @@ plug({
   'nvim-telescope/telescope.nvim',
   cmd = { 'Telescope' },
   keys = {
-    { '<Tab>',          cmd_modcall(pickers_mod, 'buffers_or_recent()'),                        desc = "List Buffers" },
-    { '<leader>gB',     cmdstr([[Telescope git_branches show_remote_tracking_branches=false]]), desc = 'Git branchs' },
-    { '<localleader>f', cmd_modcall(pickers_mod, 'project_files()'),                            desc =
-    'Open Project files' },
-    { '<leader>ff',     cmd_modcall(pickers_mod, 'project_files()'),                            desc =
-    'Open Project files' },
-    { '<leader>fF',     cmd_modcall(pickers_mod, 'project_files({use_all_files=true})'),        desc =
-    'Open find all files' },
+    { '<Tab>',      cmd_modcall(pickers_mod, 'buffers_or_recent()'),                        desc = "List Buffers" },
+    { '<leader>gB', cmdstr([[Telescope git_branches show_remote_tracking_branches=false]]), desc = 'Git branchs' },
+    {
+      '<localleader>f',
+      cmd_modcall(pickers_mod, 'project_files()'),
+      desc =
+      'Open Project files'
+    },
+    {
+      '<leader>ff',
+      cmd_modcall(pickers_mod, 'project_files()'),
+      desc =
+      'Open Project files'
+    },
+    {
+      '<leader>fF',
+      cmd_modcall(pickers_mod, 'project_files({use_all_files=true})'),
+      desc =
+      'Open find all files'
+    },
     {
       '<leader>fe',
       cmd_modcall('telescope.builtin', 'resume()'),
@@ -481,7 +493,7 @@ plug({
       'Resume telescope pickers'
     },
     {
-      '<S-Tab>',
+      '<localleader-Tab>',
       cmd_modcall(pickers_mod, 'project_files({ cwd_only = true, oldfiles = true })'),
       desc =
       'Open recent files'
