@@ -11,19 +11,16 @@ local function setup_basic()
     noremap = true,
   })
   set('n', '<localleader>n', function()
-    vim.ui.input({
-      prompt = '   normal keys: ',
-      completion = "mapping",
-    }, function(input)
-      input = string.gsub(vim.trim(input or ''), '%s*', '')
-      if input == '' then return end
-      local key = vim.api.nvim_replace_termcodes(input, true, false, true)
-      vim.api.nvim_feedkeys(key, 'n', false)
-    end)
+    require('libs.workflow.run-normal-keys')()
   end, {
     noremap = true,
     silent = false,
     desc = 'execute normal keys',
+  })
+  set('n', '<leader>rs', ':lua require("libs.workflow.run-shell-cmd")()<cr>', {
+    silent = true,
+    noremap = true,
+    desc = 'run shell command',
   })
   set('i', '<C-;>', '<esc>:<C-u>', {
     expr = false,
