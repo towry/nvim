@@ -1,3 +1,4 @@
+local au = require('libs.runtime.au')
 local plug = require('libs.runtime.pack').plug
 
 -- start screen
@@ -86,6 +87,12 @@ return plug({
               update_header_opts()
               pcall(starter.refresh)
             end
+          })
+
+          au.define_autocmd({ 'VimResized', 'WinResized' }, {
+            group = '_refresh_starter',
+            buffer = bufnr,
+            command = 'lua MiniStarter.refresh(1)',
           })
         end,
       })
