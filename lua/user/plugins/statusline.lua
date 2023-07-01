@@ -18,18 +18,18 @@ plug({
     local Buffer               = require('libs.runtime.buffer')
     local terms                = require('libs.statusline.lualine.terminal_component')
 
-    local spectre_extension    = {
+    local spectre_extension   = {
       sections = {
         lualine_a = { 'mode' },
       },
       filetypes = { 'spectre_panel' },
     }
-    local dashboard_extension  = {
+    local dashboard_extension = {
       sections = {},
       winbar = {},
       filetypes = { 'starter', 'alpha' },
     }
-    local present, lualine     = pcall(require, 'lualine')
+    local present, lualine    = pcall(require, 'lualine')
 
     if not present then
       Ty.NOTIFY('lualine not installed')
@@ -46,16 +46,16 @@ plug({
       options = {
         theme = vim.cfg.workbench__lualine_theme,
         globalstatus = true,
-        -- component_separators = '│',
-        component_separators = '',
-        section_separators = { left = '', right = '' },
-        -- section_separators = { left = '', right = '' },
+        component_separators = '│',
+        -- component_separators = '',
+        -- section_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
         disabled_filetypes = { winbar = { 'lazy', 'alpha' }, statusline = { 'dashboard', 'lazy', 'alpha' } },
       },
       winbar = {
         lualine_a = {
           {
-            separator = { right = '', left = '' },
+            separator = { right = '', left = '' },
             left_padding = 2,
             'filename',
             path = 1,
@@ -69,7 +69,7 @@ plug({
       inactive_winbar = {
         lualine_a = {
           {
-            separator = { left = '', right = '' },
+            separator = { left = '', right = '' },
             left_padding = 2,
             'filename',
             path = 1,
@@ -194,7 +194,7 @@ plug({
           { 'filetype', colored = true, icon_only = true },
         },
         lualine_y = { 'filesize', 'progress' },
-        lualine_z = { { 'location', separator = { left = '', right = '' }, left_padding = 0 } },
+        lualine_z = { { 'location', separator = { left = '', right = '' }, left_padding = 0 } },
       },
       inactive_sections = {
         lualine_a = {},
