@@ -160,6 +160,7 @@ return {
     "lazy",
     "TelescopePrompt",
     "term",
+    "toggleterm",
     "nofile",
     "spectre_panel",
     "help",
