@@ -493,7 +493,7 @@ plug({
       'Resume telescope pickers'
     },
     {
-      '<localleader-Tab>',
+      '<localleader><Tab>',
       cmd_modcall(pickers_mod, 'project_files({ cwd_only = true, oldfiles = true })'),
       desc =
       'Open recent files'

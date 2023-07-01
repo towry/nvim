@@ -133,15 +133,15 @@ plug({
       })
 
       -- kill all at exits.
-      vim.api.nvim_create_autocmd('VimLeavePre', {
-        pattern = '*',
-        callback = function()
-          local is_shut = require('libs.terminal.toggleterm_kill_all')()
-          if is_shut then
-            Ty.ECHO({ { 'Shutting down all terminals', 'WarningMsg' } }, false, {})
-          end
-        end
-      })
+      -- vim.api.nvim_create_autocmd('VimLeavePre', {
+      --   pattern = '*',
+      --   callback = function()
+      --     local is_shut = require('libs.terminal.toggleterm_kill_all')()
+      --     if is_shut then
+      --       Ty.ECHO({ { 'Shutting down all terminals', 'WarningMsg' } }, false, {})
+      --     end
+      --   end
+      -- })
     end,
   },
 
