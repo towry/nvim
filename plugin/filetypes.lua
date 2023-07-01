@@ -1,5 +1,8 @@
 vim.filetype.add({
   extension = {
+    ['es6'] = 'javascript',
+    ['code-snippets'] = 'json',
+    ['handlebars'] = 'html'
   },
   filename = {
     ['.envrc'] = 'bash',
@@ -7,8 +10,5 @@ vim.filetype.add({
   },
   pattern = {
     ['.*ignore$'] = "gitignore",
-    ['.es6$'] = "javascript",
-    ['.code-snippets'] = 'json',
-    ['.handlebars'] = 'html'
   }
 })
