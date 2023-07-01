@@ -50,7 +50,7 @@ plug({
         -- component_separators = '',
         -- section_separators = { left = '', right = '' },
         section_separators = { left = '', right = '' },
-        disabled_filetypes = { winbar = { 'lazy', 'alpha' }, statusline = { 'dashboard', 'lazy', 'alpha' } },
+        disabled_filetypes = { winbar = { 'lazy', 'alpha', 'toggleterm' }, statusline = { 'dashboard', 'lazy', 'alpha' } },
       },
       winbar = {
         lualine_a = {
