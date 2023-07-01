@@ -106,6 +106,11 @@ function M.load_on_startup()
       {
         group = '_lazy_ui_enter',
         callback = function(ctx)
+          if not vim.g.lazy_ui_enter_tick then
+            vim.g.lazy_ui_enter_tick = 1
+          else
+            vim.g.lazy_ui_enter_tick = vim.g.lazy_ui_enter_tick + 1
+          end
           local should_defer = not vim.cfg.runtime__starts_in_buffer
           if not should_defer then
             au.exec_useraucmd(au.user_autocmds.LazyTheme, {
