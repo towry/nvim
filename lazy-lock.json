@@ -22,7 +22,7 @@
   "crates.nvim": { "branch": "main", "commit": "258961973c2cbef5717d4a726c68a0730fb0f94b" },
   "diffview.nvim": { "branch": "main", "commit": "766a4f210e67e522659302dc6bd8a8d3b8c08c54" },
   "dressing.nvim": { "branch": "master", "commit": "f19cbd56f7f8cad212c58a7285d09c5d9c273896" },
-  "everforest": { "branch": "master", "commit": "1db527e770deb8cbb3b5b60d8921f80bd2a4c12c" },
+  "everforest": { "branch": "master", "commit": "9a9e0bef763cfb31cd59ff1f6f59a8cee12cc805" },
   "flash.nvim": { "branch": "main", "commit": "ebc57ab1a1eb05ac6e8a40eaec8b4b267ac7cd58" },
   "flatten.nvim": { "branch": "main", "commit": "d92c93959e9ac52a00002d6fd64c2d2ca5dd7192" },
   "friendly-snippets": { "branch": "main", "commit": "ef6547d2f586e08e071efeebac835e545f3015cc" },
