@@ -212,13 +212,15 @@ plug({
 plug({
   {
     'luukvbaal/statuscol.nvim',
-    event = au.user_autocmds.FileOpened_User,
+    event = 'User LazyUIEnter',
     cond = function() return vim.fn.has('nvim-0.9.0') == 1 end,
     config = function()
       local statuscol = require('statuscol')
       local builtin = require('statuscol.builtin')
 
       statuscol.setup({
+        ft_ignore = vim.cfg.misc__ft_exclude,
+        buf_ignore = vim.cfg.misc__buf_exclude,
         separator = '│',
         relculright = true,
         setopt = true,

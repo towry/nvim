@@ -1,1 +1,1 @@
-vim.b[0].signcolumn = "no"
+vim.cmd('setlocal signcolumn=no')
