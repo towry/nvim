@@ -281,8 +281,9 @@ plug({
     event = au.user_autocmds.FileOpenedAfter_User,
     opts = {
       current_only = false,
-      winblend = 50,
+      winblend = 8,
       zindex = 40,
+      width = 4,
       excluded_filetypes = vim.cfg.misc__ft_exclude,
     },
     config = function(_, opts)
