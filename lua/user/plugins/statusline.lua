@@ -18,18 +18,29 @@ plug({
     local Buffer               = require('libs.runtime.buffer')
     local terms                = require('libs.statusline.lualine.terminal_component')
 
-    local spectre_extension   = {
+    local spectre_extension    = {
       sections = {
         lualine_a = { 'mode' },
       },
       filetypes = { 'spectre_panel' },
     }
-    local dashboard_extension = {
+    local dashboard_extension  = {
       sections = {},
       winbar = {},
       filetypes = { 'starter', 'alpha' },
     }
-    local present, lualine    = pcall(require, 'lualine')
+    local toggleterm_extension = {
+      winbar = {},
+      sections = {
+        lualine_a = {
+          function()
+            return ' ' .. vim.b.toggle_number
+          end
+        }
+      },
+      filetypes = { 'toggleterm' }
+    }
+    local present, lualine     = pcall(require, 'lualine')
 
     if not present then
       Ty.NOTIFY('lualine not installed')
@@ -40,7 +51,7 @@ plug({
       extensions = {
         spectre_extension,
         dashboard_extension,
-        'toggleterm',
+        toggleterm_extension,
         'nvim-tree',
       },
       options = {
