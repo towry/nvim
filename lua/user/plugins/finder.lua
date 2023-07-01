@@ -207,6 +207,17 @@ plug({
     })
   end,
   init = function()
+    au.define_autocmd('UILeave', {
+      group = '_nvim_tree_hide_on_ui_hide',
+      callback = function()
+        local nvim_tree_api = require('nvim-tree.api')
+        local treeview = require('nvim-tree.view')
+        local is_open = treeview.is_visible()
+        if is_open then
+          nvim_tree_api.close()
+        end
+      end
+    })
     au.define_user_autocmd({
       pattern = 'LazyUIEnter',
       callback = function()
@@ -457,9 +468,24 @@ plug({
   keys = {
     { '<Tab>',      cmd_modcall(pickers_mod, 'buffers_or_recent()'),                        desc = "List Buffers" },
     { '<leader>gB', cmdstr([[Telescope git_branches show_remote_tracking_branches=false]]), desc = 'Git branchs' },
-    { '<C-f>f',     cmd_modcall(pickers_mod, 'project_files()'),                            desc = 'Open Project files' },
-    { '<leader>ff', cmd_modcall(pickers_mod, 'project_files()'),                            desc = 'Open Project files' },
-    { '<leader>fF', cmd_modcall(pickers_mod, 'project_files({use_all_files=true})'),        desc = 'Open find all files' },
+    {
+      '<localleader>f',
+      cmd_modcall(pickers_mod, 'project_files()'),
+      desc =
+      'Open Project files'
+    },
+    {
+      '<leader>ff',
+      cmd_modcall(pickers_mod, 'project_files()'),
+      desc =
+      'Open Project files'
+    },
+    {
+      '<leader>fF',
+      cmd_modcall(pickers_mod, 'project_files({use_all_files=true})'),
+      desc =
+      'Open find all files'
+    },
     {
       '<leader>fe',
       cmd_modcall('telescope.builtin', 'resume()'),
@@ -467,28 +493,21 @@ plug({
       'Resume telescope pickers'
     },
     {
-      '<C-f>r',
+      '<localleader-Tab>',
       cmd_modcall(pickers_mod, 'project_files({ cwd_only = true, oldfiles = true })'),
       desc =
       'Open recent files'
     },
+    { '<leader>fl',     cmd_modcall('libs.telescope.find-folders-picker', '()'), desc = 'Find folders' },
+    { '<localleader>s', cmd_modcall('libs.telescope.live_grep_call', '()'),      desc = 'Grep search' },
     {
-      '<leader>fr',
-      cmd_modcall(pickers_mod, 'project_files({ cwd_only = true, oldfiles = true })'),
-      desc =
-      'Open recent files'
-    },
-    { '<leader>fl', cmd_modcall('libs.telescope.find-folders-picker', '()'), desc = 'Find folders' },
-    { '<C-f>s',     cmd_modcall('libs.telescope.live_grep_call', '()'),      desc = 'Grep search' },
-    { '<leader>fs', cmd_modcall('libs.telescope.live_grep_call', '()'),      desc = 'Grep search' },
-    {
-      '<C-f>S',
+      '<localleader>s',
       cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_visual_selection()'),
       desc = 'Grep search on selection',
       mode = { 'v', 'x' }
     },
     {
-      '<C-f>S',
+      '<localleader>S',
       cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_word_under_cursor()'),
       desc = 'Grep search on selection',
     },

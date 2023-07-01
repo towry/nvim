@@ -29,6 +29,7 @@ local function setup(lazy_opts, opts)
     },
     git = {
       timeout = 60,
+      url_format = "https://ghproxy.com/https://github.com/%s.git",
     },
     concurrency = 4,
     custom_keys = {
@@ -75,7 +76,7 @@ local function setup(lazy_opts, opts)
     require("libs.runtime.bundle").run_command({
       main = "user.config.plugs",
       output = "user/plugins_bundle.lua",
-      glob_dir = "user/plugins/*.lua",
+      glob_dir = { "user/plugins/*.lua", "plugin-extras/**/*.lua", },
     })
     if vim.loader then
       vim.loader.reset()

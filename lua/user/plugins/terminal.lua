@@ -84,16 +84,34 @@ plug({
       })
     end,
     init = function()
-      local nvim_buf_set_keymap = vim.api.nvim_buf_set_keymap
+      local nvim_buf_set_keymap = vim.keymap.set
       _G._plugin_set_terminal_keymaps = function()
-        local opts = { noremap = true }
-        nvim_buf_set_keymap(0, 't', '<C-\\>', [[<C-\><C-n>:ToggleTerm<CR>]], opts)
-        nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>:ToggleTerm<CR>]], opts)
-        nvim_buf_set_keymap(0, 't', '<C-e>', [[<C-\><C-n>:]], opts)
-        nvim_buf_set_keymap(0, 't', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
-        nvim_buf_set_keymap(0, 't', '<C-j>', [[<C-\><C-n><C-W>j]], opts)
-        nvim_buf_set_keymap(0, 't', '<C-k>', [[<C-\><C-n><C-W>k]], opts)
-        nvim_buf_set_keymap(0, 't', '<C-l>', [[<C-\><C-n><C-W>l]], opts)
+        local buffer = vim.api.nvim_get_current_buf()
+        local opts = { noremap = true, buffer = buffer, nowait = true }
+        nvim_buf_set_keymap('t', '<C-\\>', [[<C-\><C-n>:ToggleTerm<CR>]], opts)
+        -- close term if is in normal mode otherwise enter normal mode.
+        nvim_buf_set_keymap('t', '<C-q>', function()
+          -- if vim.fn.mode() == 'n' then
+          --   return [[<C-\><C-n>:ToggleTerm<CR>]]
+          -- end
+          vim.cmd('noau stopinsert')
+        end, {
+          nowait = true,
+          noremap = true,
+          expr = true,
+          buffer = buffer
+        })
+        --- switch windows
+        nvim_buf_set_keymap('t', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
+        nvim_buf_set_keymap('t', '<C-j>', [[<C-\><C-n><C-W>j]], opts)
+        nvim_buf_set_keymap('t', '<C-k>', [[<C-\><C-n><C-W>k]], opts)
+        nvim_buf_set_keymap('t', '<C-l>', [[<C-\><C-n><C-W>l]], opts)
+
+        --- resize
+        nvim_buf_set_keymap('t', '<A-h>', [[<C-\><C-n><A-h>]], opts)
+        nvim_buf_set_keymap('t', '<A-j>', [[<C-\><C-n><A-j>]], opts)
+        nvim_buf_set_keymap('t', '<A-k>', [[<C-\><C-n><A-k>]], opts)
+        nvim_buf_set_keymap('t', '<A-l>', [[<C-\><C-n><A-l>]], opts)
       end
 
       vim.cmd('autocmd! TermOpen term://* lua _plugin_set_terminal_keymaps()')

@@ -5,23 +5,22 @@ local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 local M = {}
 
 local function setup_basic()
-  --- smart insert with auto indent.
-  set('n', 'i', function()
-    if vim.bo.buftype ~= '' then
-      return 'i'
-    end
-    if #vim.fn.getline('.') == 0 then
-      return [["_cc]]
-    end
-    return 'i'
-  end, {
-    expr = true,
-    nowait = true,
-  })
   --- quickly go into cmd
   set('n', '<C-;>', ':<C-u>', {
     expr = false,
     noremap = true,
+  })
+  set('n', '<localleader>n', function()
+    require('libs.workflow.run-normal-keys')()
+  end, {
+    noremap = true,
+    silent = false,
+    desc = 'execute normal keys',
+  })
+  set('n', '<leader>rs', ':lua require("libs.workflow.run-shell-cmd")()<cr>', {
+    silent = true,
+    noremap = true,
+    desc = 'run shell command',
   })
   set('i', '<C-;>', '<esc>:<C-u>', {
     expr = false,
@@ -151,9 +150,6 @@ local function setup_basic()
   })
 
   --- buffers
-  set('n', '<S-Tab>', ':e #<cr>', {
-    desc = 'Go to previous edited Buffer',
-  })
   set('n', '<leader>b]', cmd_modcall('libs.runtime.buffer', 'next_unsaved_buf()'), {
     desc = 'Next unsaved buffer'
   })

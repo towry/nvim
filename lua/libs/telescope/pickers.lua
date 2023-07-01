@@ -37,6 +37,7 @@ M.project_files = function(opts)
   if not opts.cwd then
     opts.cwd = require('libs.telescope.utils').get_cwd_relative_to_buf(0, level_up)
   end
+  opts.hidden = true
 
   local nicely_cwd = require('libs.runtime.path').home_to_tilde(opts.cwd)
   opts.prompt_title = opts.prompt_title or nicely_cwd
@@ -65,7 +66,7 @@ M.project_files = function(opts)
       local icon, iconhl = utils.get_devicons(tail_raw)
 
       return displayer({
-        { icon,            iconhl },
+        { icon, iconhl },
         tail,
         { path_to_display, 'TelescopeResultsComment' },
       })
@@ -354,9 +355,9 @@ function M.gen_from_buffer(opts)
     })
 
     return displayer({
-      { entry.bufnr,     'TelescopeResultsNumber' },
+      { entry.bufnr, 'TelescopeResultsNumber' },
       { entry.indicator, 'TelescopeResultsComment' },
-      { icon,            hl_group },
+      { icon, hl_group },
       bufname_tail,
       { path_to_display .. ':' .. entry.lnum, 'TelescopeResultsComment' },
     })
@@ -370,8 +371,8 @@ function M.gen_from_buffer(opts)
     local hidden = entry.info.hidden == 1 and 'h' or 'a'
     -- local readonly = vim.api.nvim_buf_get_option(entry.bufnr, 'readonly') and '=' or ' '
     local readonly = vim.api.nvim_get_option_value('readonly', {
-          buf = entry.bufnr,
-        }) and '=' or ' '
+      buf = entry.bufnr,
+    }) and '=' or ' '
     local changed = entry.info.changed == 1 and '+' or ' '
     local indicator = entry.flag .. hidden .. readonly .. changed
     local lnum = 1

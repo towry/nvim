@@ -91,30 +91,13 @@ plug({
   },
 
   {
-    {
-      "roobert/surround-ui.nvim",
-      dependencies = {
-        "kylechui/nvim-surround",
-        "folke/which-key.nvim",
+    'kylechui/nvim-surround',
+    version = "*",
+    event = au.user_autocmds.FileOpened_User,
+    opts = {
+      keymaps = {
+        delete = 'dz',
       },
-      config = function()
-        require("surround-ui").setup({
-          root_key = "S"
-        })
-      end,
-    },
-    {
-      'kylechui/nvim-surround',
-      version = "*",
-      event = au.user_autocmds.FileOpened_User,
-      opts = {
-        keymaps = {
-          delete = 'dz',
-        },
-      },
-      dependencies = {
-        'roobert/surround-ui.nvim',
-      }
     },
   },
 
@@ -178,6 +161,7 @@ plug({
     },
     config = function(_, opts)
       require('flash').setup(opts)
+      vim.cmd('hi! link FlashLabel ErrorFloat')
     end
   }
 })

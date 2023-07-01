@@ -9,6 +9,11 @@ local function plugin(spec)
     table.insert(optional_repos, spec)
     return
   end
+  if spec.enabled == false then
+    return
+  elseif spec.enabled and type(spec.enabled) == 'function' and spec.enabled() == false then
+    return
+  end
   table.insert(repos, spec)
 end
 
@@ -30,7 +35,7 @@ return {
   repos = function()
     if merged ~= nil then return merged end
     merged = repos
-    for _,v in ipairs(optional_repos) do 
+    for _, v in ipairs(optional_repos) do
       table.insert(merged, v)
     end
     return merged
