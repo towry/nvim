@@ -10,7 +10,7 @@ plug({
     --   dev = false,
     -- },
   },
-  event = { 'User LazyUIEnterPost', 'User OnLeaveDashboard' },
+  event = { 'User LazyUIEnterOncePost', 'User OnLeaveDashboard' },
   config = function()
     require('user.config.options').setup_statusline()
     local auto_format_disabled = require('libs.lsp-format.autoformat').disabled
@@ -76,6 +76,28 @@ plug({
             }
           }
         },
+        lualine_b = {
+          {
+            function()
+              local idx = require('harpoon.mark').status()
+              return idx
+            end,
+            cond = function()
+              local harpoon_has = utils.pkg_loaded('harpoon')
+              if not harpoon_has then
+                return false
+              end
+              local idx = require('harpoon.mark').status()
+              return idx and idx ~= ''
+            end,
+            icon = {
+              '',
+              color = {
+                fg = 'red',
+              }
+            }
+          },
+        }
       },
       inactive_winbar = {
         lualine_a = {
@@ -122,22 +144,6 @@ plug({
           {
             'branch',
             icon = " "
-          },
-          {
-            function()
-              -- local key = require('grapple').key()
-              -- return ' [' .. key .. ']'
-              local idx = require('harpoon.mark').status()
-              return ' [' .. idx .. ']'
-            end,
-            cond = function()
-              local harpoon_has = utils.has_plugin('harpoon')
-              if not harpoon_has then
-                return false
-              end
-              local idx = require('harpoon.mark').status()
-              return idx and idx ~= ''
-            end
           },
           'searchcount',
         },

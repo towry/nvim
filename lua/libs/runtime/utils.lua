@@ -107,6 +107,10 @@ M.add_whitespaces = function(number) return string.rep(' ', number) end
 -- has_plugin("noice.nvim")
 M.has_plugin = function(plugin_name_string) return require('lazy.core.config').plugins[plugin_name_string] ~= nil end
 
+M.pkg_loaded = function(mod_path)
+  return package.loaded[mod_path] ~= nil
+end
+
 function M.normname(name)
   local ret = name:lower():gsub('^n?vim%-', ''):gsub('%.n?vim$', ''):gsub('%.lua', ''):gsub('[^a-z]+', '')
   return ret
@@ -132,8 +136,8 @@ function M.get_root(root_opts)
     for _, client in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
       local workspace = client.config.workspace_folders
       local paths = workspace and vim.tbl_map(function(ws)
-            return vim.uri_to_fname(ws.uri)
-          end, workspace) or client.config.root_dir and { client.config.root_dir } or {}
+        return vim.uri_to_fname(ws.uri)
+      end, workspace) or client.config.root_dir and { client.config.root_dir } or {}
       for _, p in ipairs(paths) do
         local r = vim.loop.fs_realpath(p)
         if path:find(r, 1, true) then

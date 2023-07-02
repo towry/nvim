@@ -569,5 +569,45 @@ plug({
       autoselect_one = true,
       selection_chars = "ABCDEFGHIJKLMNOPQRSTUVW"
     }
+  },
+
+  {
+    'ThePrimeagen/harpoon',
+    event = 'User LazyUIEnterOncePost',
+    keys = {
+      {
+        '<localleader>h',
+        '<cmd>lua require("harpoon.ui").toggle_quick_menu()<cr>',
+        desc = 'Toggle harpoon UI',
+      },
+      --- marks as m also create harpoon mark.
+      {
+        'mm',
+        function()
+          require('harpoon.mark').add_file()
+          return 'mm'
+        end,
+        expr = true,
+        nowait = true,
+        silent = false,
+      },
+      {
+        '<localleader>m',
+        '<cmd>lua require("harpoon.ui").nav_next()<cr>',
+        desc = 'Harpoon next',
+        silent = false,
+      },
+      {
+        '<localleader>M',
+        '<cmd>lua require("harpoon.ui").nav_prev()<cr>',
+        desc = 'Harpoon prev',
+        silent = false,
+      }
+    },
+    opts = {
+      global_settings = {
+        excluded_filetypes = vim.cfg.misc__ft_exclude,
+      }
+    }
   }
 })
