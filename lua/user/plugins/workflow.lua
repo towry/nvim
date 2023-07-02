@@ -604,10 +604,15 @@ plug({
         silent = false,
       }
     },
-    opts = {
-      global_settings = {
-        excluded_filetypes = vim.cfg.misc__ft_exclude,
+    opts = function()
+      return {
+        menu = {
+          width = vim.api.nvim_win_get_width(0) - 6,
+        },
+        global_settings = {
+          excluded_filetypes = vim.cfg.misc__ft_exclude,
+        }
       }
-    }
+    end
   }
 })
