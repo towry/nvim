@@ -2,6 +2,10 @@
 
 Works without plugins.
 
+## TODO
+
+[ ] Improve format.
+
 ## Commands
 
 ### `PrebundlePlugins`
