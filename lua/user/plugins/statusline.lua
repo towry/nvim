@@ -102,7 +102,7 @@ plug({
       inactive_winbar = {
         lualine_a = {
           {
-            separator = { left = '', right = '' },
+            separator = { left = '', right = '' },
             left_padding = 2,
             'filename',
             path = 1,
