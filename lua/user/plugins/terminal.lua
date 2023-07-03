@@ -3,7 +3,8 @@ local au = require('libs.runtime.au')
 
 plug({
   {
-    'akinsho/nvim-toggleterm.lua',
+    'akinsho/toggleterm.nvim',
+    dev = false,
     keys = {
       {
         '<leader>//',
@@ -133,23 +134,17 @@ plug({
       })
 
       -- kill all at exits.
-      vim.api.nvim_create_autocmd('VimLeavePre', {
-        pattern = '*',
+      au.define_autocmd('VimLeavePre', {
+        group = '_kill_terms_on_leave',
         callback = function()
-          local is_shut = require('libs.terminal.toggleterm_kill_all')()
-          if is_shut then
-            Ty.ECHO({ { 'Shutting down all terminals', 'WarningMsg' } }, false, {})
-          end
-        end
+          require('libs.terminal.toggleterm_kill_all')()
+        end,
       })
     end,
   },
 
   {
     'willothy/flatten.nvim',
-    dependencies = {
-      'akinsho/nvim-toggleterm.lua',
-    },
     event = {
       au.user_autocmds.TermIsOpen_User,
     },

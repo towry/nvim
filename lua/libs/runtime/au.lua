@@ -38,6 +38,9 @@ M.user_autocmds = setmetatable({
   --- after LazyUIEnter
   LazyUIEnterPost = "LazyUIEnterPost",
   LazyUIEnterPre = "LazyUIEnterPre",
+  LazyUIEnterOnce = "LazyUIEnterOnce",
+  LazyUIEnterOncePre = "LazyUIEnterOncePre",
+  LazyUIEnterOncePost = "LazyUIEnterOncePost",
   -- before UIEnterPre
   LazyTheme = "LazyTheme",
 }, {

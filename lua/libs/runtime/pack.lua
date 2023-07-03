@@ -14,6 +14,7 @@ local function plugin(spec)
   elseif spec.enabled and type(spec.enabled) == 'function' and spec.enabled() == false then
     return
   end
+  spec.enabled = nil
   table.insert(repos, spec)
 end
 

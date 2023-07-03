@@ -33,6 +33,8 @@ return plug({
           starter.gen_hook.adding_bullet(pad .. "░ ", false),
           starter.gen_hook.aligning("center", "center"),
         },
+        -- remove number from query since we need it as v:count
+        query_updaters = 'abcdefghijklmnopqrstuvwxyz_-.'
       }
       return config
     end,

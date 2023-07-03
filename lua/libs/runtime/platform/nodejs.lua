@@ -4,7 +4,6 @@ local stdpath = vim.fn.stdpath
 local Path = require('libs.runtime.path')
 
 ---@diagnostic disable-next-line: deprecated
-local table_unpack = table.unpack == nil and unpack or table.unpack
 local M = {}
 
 -- Some path utilities
@@ -69,7 +68,7 @@ M.resolve_path_in_node_modules = function(root_dir, path_segs)
 
   local found_ts = nil
   local function check_dir(path)
-    found_ts = Path.join(path, table_unpack(path_segs))
+    found_ts = Path.join(path, unpack(path_segs))
     if Path.exists(found_ts) then return found_ts end
   end
 
@@ -86,9 +85,9 @@ M.get_mason_node_cmd = function(options)
   local node_path = options.node_path or nil
   if not node_path then
     -- defaults
-    return { bin_full_name, table_unpack(args) }
+    return { bin_full_name, unpack(args) }
   else
-    return { node_path, bin_full_name, table_unpack(args) }
+    return { node_path, bin_full_name, unpack(args) }
   end
 end
 

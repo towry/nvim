@@ -101,17 +101,16 @@ function M.load_on_startup()
       }
     },
     {
-      --- NOTE: if neovim going to background then re-appear, the UIEnter will trigger again.
-      { 'UIEnter' },
+      'UIEnter',
       {
-        group = '_lazy_ui_enter',
+        once = true,
         callback = function(ctx)
           local should_defer = not vim.cfg.runtime__starts_in_buffer
           if not should_defer then
             au.exec_useraucmd(au.user_autocmds.LazyTheme, {
               data = ctx.data,
             })
-            au.exec_useraucmd(au.user_autocmds.LazyUIEnterPre, {
+            au.exec_useraucmd(au.user_autocmds.LazyUIEnterOncePre, {
               data = ctx.data,
             })
           end
@@ -120,6 +119,41 @@ function M.load_on_startup()
               au.exec_useraucmd(au.user_autocmds.LazyTheme, {
                 data = ctx.data,
               })
+              au.exec_useraucmd(au.user_autocmds.LazyUIEnterOncePre, {
+                data = ctx.data,
+              })
+            end
+            au.exec_useraucmd(au.user_autocmds.LazyUIEnterOnce, {
+              data = ctx.data,
+            })
+            --- maybe post event should be fired inside above event.
+            vim.defer_fn(function()
+              au.exec_useraucmd(au.user_autocmds.LazyUIEnterOncePost, {
+                data = ctx.data,
+              })
+            end, 1)
+          end)
+        end
+      }
+    },
+    {
+      { 'UIEnter' },
+      {
+        group = '_lazy_ui_enter',
+        callback = function(ctx)
+          if not vim.g.lazy_ui_enter_tick then
+            vim.g.lazy_ui_enter_tick = 1
+          else
+            vim.g.lazy_ui_enter_tick = vim.g.lazy_ui_enter_tick + 1
+          end
+          local should_defer = not vim.cfg.runtime__starts_in_buffer
+          if not should_defer then
+            au.exec_useraucmd(au.user_autocmds.LazyUIEnterPre, {
+              data = ctx.data,
+            })
+          end
+          vim.schedule(function()
+            if should_defer then
               au.exec_useraucmd(au.user_autocmds.LazyUIEnterPre, {
                 data = ctx.data,
               })
@@ -127,13 +161,10 @@ function M.load_on_startup()
             au.exec_useraucmd(au.user_autocmds.LazyUIEnter, {
               data = ctx.data,
             })
-
             vim.defer_fn(function()
-              vim.schedule(function()
-                au.exec_useraucmd(au.user_autocmds.LazyUIEnterPost, {
-                  data = ctx.data,
-                })
-              end)
+              au.exec_useraucmd(au.user_autocmds.LazyUIEnterPost, {
+                data = ctx.data,
+              })
             end, 1)
           end)
         end,

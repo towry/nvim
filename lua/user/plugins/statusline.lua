@@ -10,7 +10,7 @@ plug({
     --   dev = false,
     -- },
   },
-  event = { 'User LazyUIEnterPost', 'User OnLeaveDashboard' },
+  event = { 'User LazyUIEnterOncePost', 'User OnLeaveDashboard' },
   config = function()
     require('user.config.options').setup_statusline()
     local auto_format_disabled = require('libs.lsp-format.autoformat').disabled
@@ -29,6 +29,17 @@ plug({
       winbar = {},
       filetypes = { 'starter', 'alpha' },
     }
+    local toggleterm_extension = {
+      winbar = {},
+      sections = {
+        lualine_a = {
+          function()
+            return ' ' .. vim.b.toggle_number
+          end
+        }
+      },
+      filetypes = { 'toggleterm' }
+    }
     local present, lualine     = pcall(require, 'lualine')
 
     if not present then
@@ -40,22 +51,22 @@ plug({
       extensions = {
         spectre_extension,
         dashboard_extension,
-        'toggleterm',
+        toggleterm_extension,
         'nvim-tree',
       },
       options = {
         theme = vim.cfg.workbench__lualine_theme,
         globalstatus = true,
-        -- component_separators = '│',
-        component_separators = '',
-        section_separators = { left = '', right = '' },
-        -- section_separators = { left = '', right = '' },
-        disabled_filetypes = { winbar = { 'lazy', 'alpha' }, statusline = { 'dashboard', 'lazy', 'alpha' } },
+        component_separators = '│',
+        -- component_separators = '',
+        -- section_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
+        disabled_filetypes = { winbar = vim.cfg.misc__ft_exclude, statusline = { 'dashboard', 'lazy', 'alpha' } },
       },
       winbar = {
         lualine_a = {
           {
-            separator = { right = '', left = '' },
+            separator = { right = '', left = '' },
             left_padding = 2,
             'filename',
             path = 1,
@@ -65,11 +76,33 @@ plug({
             }
           }
         },
+        lualine_b = {
+          {
+            function()
+              local idx = require('harpoon.mark').status()
+              return idx
+            end,
+            cond = function()
+              local harpoon_has = utils.pkg_loaded('harpoon')
+              if not harpoon_has then
+                return false
+              end
+              local idx = require('harpoon.mark').status()
+              return idx and idx ~= ''
+            end,
+            icon = {
+              '',
+              color = {
+                fg = 'red',
+              }
+            }
+          },
+        }
       },
       inactive_winbar = {
         lualine_a = {
           {
-            separator = { left = '', right = '' },
+            separator = { left = '', right = '' },
             left_padding = 2,
             'filename',
             path = 1,
@@ -111,22 +144,6 @@ plug({
           {
             'branch',
             icon = " "
-          },
-          {
-            function()
-              -- local key = require('grapple').key()
-              -- return ' [' .. key .. ']'
-              local idx = require('harpoon.mark').status()
-              return ' [' .. idx .. ']'
-            end,
-            cond = function()
-              local harpoon_has = utils.has_plugin('harpoon')
-              if not harpoon_has then
-                return false
-              end
-              local idx = require('harpoon.mark').status()
-              return idx and idx ~= ''
-            end
           },
           'searchcount',
         },
@@ -194,7 +211,7 @@ plug({
           { 'filetype', colored = true, icon_only = true },
         },
         lualine_y = { 'filesize', 'progress' },
-        lualine_z = { { 'location', separator = { left = '', right = '' }, left_padding = 0 } },
+        lualine_z = { { 'location', separator = { left = '', right = '' }, left_padding = 0 } },
       },
       inactive_sections = {
         lualine_a = {},
@@ -212,23 +229,21 @@ plug({
 plug({
   {
     'luukvbaal/statuscol.nvim',
-    event = au.user_autocmds.FileOpened_User,
+    event = 'User LazyUIEnterOnce',
     cond = function() return vim.fn.has('nvim-0.9.0') == 1 end,
     config = function()
       local statuscol = require('statuscol')
       local builtin = require('statuscol.builtin')
 
       statuscol.setup({
+        ft_ignore = vim.cfg.misc__ft_exclude,
+        buf_ignore = vim.cfg.misc__buf_exclude,
         separator = '│',
         relculright = true,
         setopt = true,
         segments = {
           {
-            sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 1, auto = false },
-            click = 'v:lua.ScSa',
-          },
-          {
-            sign = { name = { 'Diagnostic' }, maxwidth = 1, auto = false },
+            sign = { name = { 'Diagnostic' }, maxwidth = 1, auto = true },
             click = 'v:lua.ScSa',
           },
           {
@@ -236,6 +251,10 @@ plug({
           },
           { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
           { text = { builtin.foldfunc, ' ' }, click = 'v:lua.ScFa' },
+          {
+            sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 1, auto = true },
+            click = 'v:lua.ScSa',
+          },
         },
       })
     end,
@@ -281,8 +300,9 @@ plug({
     event = au.user_autocmds.FileOpenedAfter_User,
     opts = {
       current_only = false,
-      winblend = 50,
+      winblend = 8,
       zindex = 40,
+      width = 4,
       excluded_filetypes = vim.cfg.misc__ft_exclude,
     },
     config = function(_, opts)

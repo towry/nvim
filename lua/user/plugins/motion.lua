@@ -31,6 +31,7 @@ plug({
     opts = function()
       local ai = require("mini.ai")
       return {
+        search_method = "cover_or_nearest",
         n_lines = 500,
         custom_textobjects = {
           o = ai.gen_spec.treesitter({
@@ -153,6 +154,31 @@ plug({
         function()
           require("flash").jump()
         end,
+        desc = "Flash",
+      },
+      {
+        ".s",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").treesitter()
+        end,
+        desc = "Flash treesitter",
+      },
+      {
+        "r",
+        mode = "o",
+        function()
+          require("flash").remote()
+        end,
+        desc = "Remote Flash",
+      },
+      {
+        "R",
+        mode = { "o", "x" },
+        function()
+          require("flash").treesitter_search()
+        end,
+        desc = "Treesitter Search",
       },
     },
     opts = {
@@ -161,7 +187,52 @@ plug({
     },
     config = function(_, opts)
       require('flash').setup(opts)
-      vim.cmd('hi! link FlashLabel ErrorFloat')
     end
+  },
+  {
+    "nvim-telescope/telescope.nvim",
+    optional = true,
+    --- see https://github.com/folke/flash.nvim#%EF%B8%8F-configuration
+    opts = function(_, opts)
+      local function flash(prompt_bufnr)
+        require("flash").jump({
+          pattern = "^",
+          label = {
+            after = { 0, 0 },
+          },
+          highlight = {
+            backdrop = true,
+          },
+          search = {
+            mode = "search",
+            exclude = {
+              function(win)
+                return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= "TelescopeResults"
+              end,
+            },
+          },
+          action = function(match)
+            local picker = require("telescope.actions.state").get_current_picker(prompt_bufnr)
+            picker:set_selection(match.pos[1] - 1)
+          end,
+        })
+      end
+      opts.defaults = vim.tbl_deep_extend("force", opts.defaults or {}, {
+        mappings = {
+          n = { ['-'] = flash },
+          i = { ["<c-->"] = flash },
+        },
+      })
+    end,
+  },
+
+  {
+    --- Readline keybindings,
+    --- C-e, C-f, etc.
+    'tpope/vim-rsi',
+    event = {
+      'InsertEnter',
+      'CmdlineEnter'
+    },
   }
 })

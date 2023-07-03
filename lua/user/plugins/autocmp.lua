@@ -7,6 +7,24 @@ pack.plug({
     dependencies = { 'rafamadriz/friendly-snippets', 'saadparwaiz1/cmp_luasnip' },
   },
   {
+    'petertriho/cmp-git',
+    ft = 'gitcommit',
+    dependencies = {
+      'hrsh7th/nvim-cmp',
+      'hrsh7th/cmp-buffer',
+    },
+    config = function()
+      local cmp = require('cmp')
+      cmp.setup.filetype('gitcommit', {
+        sources = cmp.config.sources({
+          { name = 'git' }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
+        }, {
+          { name = 'buffer' },
+        })
+      })
+    end,
+  },
+  {
     'hrsh7th/nvim-cmp',
     event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
@@ -27,9 +45,8 @@ pack.plug({
     },
     config = function()
       local has_words_before = function()
-        local unpack_ = table.unpack or unpack
         if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
-        local line, col = unpack_(vim.api.nvim_win_get_cursor(0))
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
       end
       local lspkind = require('lspkind')
@@ -108,6 +125,9 @@ pack.plug({
           -- return vim.tbl_keys(bufs)
         end,
       }
+      local select_option = {
+        behavior = cmp.SelectBehavior.Insert,
+      }
 
       cmp.setup({
         performance = {
@@ -122,8 +142,8 @@ pack.plug({
           expand = function(args) luasnip.lsp_expand(args.body) end,
         },
         mapping = cmp.mapping.preset.insert({
-          ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-          ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+          ['<C-p>'] = cmp.mapping.select_prev_item(select_option),
+          ['<C-n>'] = cmp.mapping.select_next_item(select_option),
           ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
           ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
           ['<C-f>'] = cmp.mapping.confirm({ select = true }),
@@ -150,7 +170,7 @@ pack.plug({
               if suggestion ~= nil then suggestion = suggestion.displayText end
               if suggestion == nil or (suggestion:find('^%s') ~= nil and suggestion:find('^\n') == nil) then
                 if cmp.visible() and has_words_before() then
-                  cmp.select_next_item()
+                  cmp.select_next_item(select_option)
                 else
                   fallback()
                 end
@@ -158,7 +178,7 @@ pack.plug({
                 vim.fn.feedkeys(vim.fn['copilot#Accept'](), '')
               end
             elseif cmp.visible() and has_words_before() then
-              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+              cmp.select_next_item(select_option)
             elseif luasnip.expandable() then
               luasnip.expand()
             elseif luasnip.expand_or_jumpable() then
@@ -311,7 +331,10 @@ pack.plug({
       })
       -- `:` cmdline setup.
       cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline(),
+        mapping = cmp.mapping.preset.cmdline({
+          ['<C-p>'] = cmp.config.disable,
+          ['<C-n>'] = cmp.config.disable,
+        }),
         sources = cmp.config.sources({
           { name = 'path' },
         }, {

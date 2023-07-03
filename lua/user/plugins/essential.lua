@@ -285,19 +285,6 @@ pack.plug({
 
     ---Groups
     wk.register({
-      f = {
-        name = 'Profject files',
-      },
-      r = {
-        name = 'Recent files',
-      },
-      s = {
-        name = 'Grep search content',
-      }
-    }, {
-      prefix = '<C-f>'
-    })
-    wk.register({
       ['<space>'] = {
         name = 'Shortcuts',
       },
@@ -358,7 +345,7 @@ pack.plug({
         name = 'Search string',
       }
     }, {
-      prefix = '<localleader>'
+      prefix = ','
     })
 
     wk.register({

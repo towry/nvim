@@ -2,7 +2,7 @@ local plug = require('libs.runtime.pack').plug
 
 ----- everforest
 plug({
-  'sainnhe/everforest',
+  'towry/everforest',
   event = 'User LazyTheme',
   enabled = vim.cfg.ui__theme_name == 'everforest',
   init = function()

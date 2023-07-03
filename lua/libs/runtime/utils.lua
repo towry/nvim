@@ -1,7 +1,7 @@
-local _unpack = table.unpack or unpack
 local M = {}
 
-M.root_patterns = { ".git", "lua", '.gitmodules', 'pnpm-workspace.yaml' }
+M.root_patterns = { '.git', '_darcs', '.bzr', '.svn', '.vscode', '.gitmodules', 'pnpm-workspace.yaml' }
+M.root_lsp_ignore = { 'null-ls', 'tailwindcss' }
 
 M.file_exists = function(path)
   local f = io.open(path, 'r')
@@ -107,6 +107,10 @@ M.add_whitespaces = function(number) return string.rep(' ', number) end
 -- has_plugin("noice.nvim")
 M.has_plugin = function(plugin_name_string) return require('lazy.core.config').plugins[plugin_name_string] ~= nil end
 
+M.pkg_loaded = function(mod_path)
+  return package.loaded[mod_path] ~= nil
+end
+
 function M.normname(name)
   local ret = name:lower():gsub('^n?vim%-', ''):gsub('%.n?vim$', ''):gsub('%.lua', ''):gsub('[^a-z]+', '')
   return ret
@@ -118,11 +122,15 @@ end
 -- * lsp root_dir
 -- * root pattern of filename of the current buffer
 -- * root pattern of cwd
----@param root_opts? {root_patterns?:table}
+---@param root_opts? {root_patterns?:table,lsp_ignore?:table}
 ---@return string
 function M.get_root(root_opts)
-  root_opts = root_opts or {}
-  local rootPatterns = vim.tbl_extend('force', M.root_patterns, root_opts.root_patterns or {})
+  root_opts = vim.tbl_extend('force', {
+    root_patterns = M.root_patterns,
+    lsp_ignore = M.root_lsp_ignore,
+  }, root_opts or {})
+  local rootPatterns = root_opts.root_patterns
+  local lsp_ignore = root_opts.lsp_ignore or {}
   ---@type string?
   local path = vim.api.nvim_buf_get_name(0)
   path = path ~= "" and vim.loop.fs_realpath(path) or nil
@@ -130,14 +138,16 @@ function M.get_root(root_opts)
   local roots = {}
   if path then
     for _, client in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
-      local workspace = client.config.workspace_folders
-      local paths = workspace and vim.tbl_map(function(ws)
-            return vim.uri_to_fname(ws.uri)
-          end, workspace) or client.config.root_dir and { client.config.root_dir } or {}
-      for _, p in ipairs(paths) do
-        local r = vim.loop.fs_realpath(p)
-        if path:find(r, 1, true) then
-          roots[#roots + 1] = r
+      if not vim.tbl_contains(lsp_ignore, client.name or "") then
+        local workspace = client.config.workspace_folders
+        local paths = workspace and vim.tbl_map(function(ws)
+              return vim.uri_to_fname(ws.uri)
+            end, workspace) or client.config.root_dir and { client.config.root_dir } or {}
+        for _, p in ipairs(paths) do
+          local r = vim.loop.fs_realpath(p)
+          if path:find(r, 1, true) then
+            roots[#roots + 1] = r
+          end
         end
       end
     end

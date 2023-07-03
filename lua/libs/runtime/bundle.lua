@@ -8,7 +8,6 @@
   3. call the command using vim or lua system api.
 ]]
 local M = {}
-local unpack = table.unpack or unpack
 
 ---@param glob_path string for example `user/plugins/*.lua`
 ---@return table for example ['user/plugins/ui']
