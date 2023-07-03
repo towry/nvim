@@ -219,4 +219,14 @@ plug({
       })
     end,
   },
+
+  {
+    --- Readline keybindings,
+    --- C-e, C-f, etc.
+    'tpope/vim-rsi',
+    event = {
+      'InsertEnter',
+      'CmdlineEnter'
+    },
+  }
 })
