@@ -328,7 +328,10 @@ pack.plug({
       })
       -- `:` cmdline setup.
       cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline(),
+        mapping = cmp.mapping.preset.cmdline({
+          ['<C-p>'] = cmp.config.disable,
+          ['<C-n>'] = cmp.config.disable,
+        }),
         sources = cmp.config.sources({
           { name = 'path' },
         }, {
