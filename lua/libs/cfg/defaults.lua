@@ -154,8 +154,10 @@ return {
     'help',
     'prompt',
     "terminal",
+    "nowrite",
   },
   misc__ft_exclude = {
+    "diff",
     "alpha",
     "starter",
     "lazy",
@@ -173,9 +175,9 @@ return {
     "Outline",
     "fugitive",
     "Git",
+    "undotree",
     -- folke/noice
     "noice",
   },
-
   ---plugins specific.
 }
