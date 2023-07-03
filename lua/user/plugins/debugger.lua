@@ -350,7 +350,7 @@ pack.plug({
   end,
 })
 
----overseer
+---overseer|task runner
 pack.plug({
   -- https://github.com/stevearc/overseer.nvim
   'stevearc/overseer.nvim',
@@ -402,6 +402,7 @@ pack.plug({
 })
 
 pack.plug({
+  enabled = false,
   'michaelb/sniprun',
   build = 'sh ./install.sh',
   cmd = {
