@@ -34,7 +34,7 @@ plug({
   },
   config = function()
     local HEIGHT_RATIO = 0.8 -- You can change this
-    local WIDTH_RATIO = 0.5 -- You can change this too
+    local WIDTH_RATIO = 0.5  -- You can change this too
     local TREE_INIT_WIDTH = 40
 
 
@@ -219,7 +219,7 @@ plug({
       end
     })
     au.define_user_autocmd({
-      pattern = 'LazyUIEnter',
+      pattern = 'LazyUIEnterOnce',
       callback = function()
         require('libs.finder.hook').register_select_folder_action(function(cwd)
           local nvim_tree_api = require('nvim-tree.api')
@@ -240,73 +240,6 @@ plug({
   cmd = { 'Rg', 'RgRoot' },
   config = function()
     vim.g.rg_binary = 'rg'
-  end,
-})
-
-plug({
-  enabled = false,
-  "nvim-neo-tree/neo-tree.nvim",
-  cmd = "Neotree",
-  keys = {
-    {
-      "<leader>ft",
-      function()
-        require("neo-tree.command").execute({ toggle = true, dir = require("libs.runtime.utils").get_root() })
-      end,
-      desc = "Explorer NeoTree (root dir)",
-    },
-    {
-      "<leader>fT",
-      function()
-        require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
-      end,
-      desc = "Explorer NeoTree (cwd)",
-    },
-  },
-  deactivate = function()
-    vim.cmd([[Neotree close]])
-  end,
-  init = function()
-    vim.g.neo_tree_remove_legacy_commands = 1
-    if vim.fn.argc() == 1 then
-      local stat = vim.loop.fs_stat(vim.fn.argv(0))
-      if stat and stat.type == "directory" then
-        require("neo-tree")
-      end
-    end
-  end,
-  opts = {
-    sources = { "filesystem", "buffers", "git_status", "document_symbols" },
-    open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "Outline" },
-    filesystem = {
-      bind_to_cwd = false,
-      follow_current_file = true,
-      use_libuv_file_watcher = true,
-    },
-    window = {
-      mappings = {
-        ["<space>"] = "none",
-      },
-    },
-    default_component_configs = {
-      indent = {
-        with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
-        expander_collapsed = "",
-        expander_expanded = "",
-        expander_highlight = "NeoTreeExpander",
-      },
-    },
-  },
-  config = function(_, opts)
-    require("neo-tree").setup(opts)
-    vim.api.nvim_create_autocmd("TermClose", {
-      pattern = "*lazygit",
-      callback = function()
-        if package.loaded["neo-tree.sources.git_status"] then
-          require("neo-tree.sources.git_status").refresh()
-        end
-      end,
-    })
   end,
 })
 
@@ -370,7 +303,7 @@ plug({
 plug({
   'simrat39/symbols-outline.nvim',
   keys = {
-    { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<leader>/o',  '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
     { '<Char-0xAF>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
@@ -466,7 +399,7 @@ plug({
   'nvim-telescope/telescope.nvim',
   cmd = { 'Telescope' },
   keys = {
-    { '<Tab>', cmd_modcall(pickers_mod, 'buffers_or_recent()'), desc = "List Buffers" },
+    { '<Tab>',      cmd_modcall(pickers_mod, 'buffers_or_recent()'),                        desc = "List Buffers" },
     { '<leader>gB', cmdstr([[Telescope git_branches show_remote_tracking_branches=false]]), desc = 'Git branchs' },
     {
       '<localleader>f',
@@ -498,8 +431,8 @@ plug({
       desc =
       'Open recent files'
     },
-    { '<leader>fl', cmd_modcall('libs.telescope.find-folders-picker', '()'), desc = 'Find folders' },
-    { '<localleader>s', cmd_modcall('libs.telescope.live_grep_call', '()'), desc = 'Grep search' },
+    { '<leader>fl',     cmd_modcall('libs.telescope.find-folders-picker', '()'), desc = 'Find folders' },
+    { '<localleader>s', cmd_modcall('libs.telescope.live_grep_call', '()'),      desc = 'Grep search' },
     {
       '<localleader>s',
       cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_visual_selection()'),
@@ -526,7 +459,25 @@ plug({
       'tknightz/telescope-termfinder.nvim',
     },
   },
-  config = function()
+  config = function(_, opts)
+    require('telescope').setup(opts)
+    require('telescope').load_extension('fzf')
+    require('telescope').load_extension('live_grep_args')
+    require('telescope').load_extension('git_worktree')
+    require('telescope').load_extension('termfinder')
+    au.do_useraucmd(au.user_autocmds.TelescopeConfigDone_User)
+
+    -- colorscheme
+    au.register_event(au.events.AfterColorschemeChanged, {
+      name = "telescope_ui",
+      immediate = true,
+      callback = function()
+        vim.cmd('hi! link TelescopeNormal NormalFloat')
+        vim.cmd('hi! link TelescopeBorder NormalFloat')
+      end
+    })
+  end,
+  opts = function()
     -- local au = require('libs.runtime.au')
     local actions = require('telescope.actions')
     local action_state = require('telescope.actions.state')
@@ -543,7 +494,7 @@ plug({
       untracked = '?',
     }
 
-    require('telescope').setup({
+    return {
       defaults = {
         wrap_results = true,
         winblend = 0,
@@ -649,22 +600,6 @@ plug({
           },
         },
       },
-    })
-
-    require('telescope').load_extension('fzf')
-    require('telescope').load_extension('live_grep_args')
-    require('telescope').load_extension('git_worktree')
-    require('telescope').load_extension('termfinder')
-    au.do_useraucmd(au.user_autocmds.TelescopeConfigDone_User)
-
-    -- colorscheme
-    au.register_event(au.events.AfterColorschemeChanged, {
-      name = "telescope_ui",
-      immediate = true,
-      callback = function()
-        vim.cmd('hi! link TelescopeNormal NormalFloat')
-        vim.cmd('hi! link TelescopeBorder NormalFloat')
-      end
-    })
+    }
   end,
 })

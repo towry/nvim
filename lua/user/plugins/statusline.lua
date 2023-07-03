@@ -229,7 +229,7 @@ plug({
 plug({
   {
     'luukvbaal/statuscol.nvim',
-    event = 'User LazyUIEnter',
+    event = 'User LazyUIEnterOnce',
     cond = function() return vim.fn.has('nvim-0.9.0') == 1 end,
     config = function()
       local statuscol = require('statuscol')
@@ -242,17 +242,17 @@ plug({
         relculright = true,
         setopt = true,
         segments = {
-          { text = { builtin.foldfunc, ' ' }, click = 'v:lua.ScFa' },
           {
-            sign = { name = { 'Diagnostic' }, maxwidth = 1, auto = false },
+            sign = { name = { 'Diagnostic' }, maxwidth = 1, auto = true },
             click = 'v:lua.ScSa',
           },
           {
             sign = { name = { '.*' }, maxwidth = 1, colwidth = 1, auto = true },
           },
           { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
+          { text = { builtin.foldfunc, ' ' }, click = 'v:lua.ScFa' },
           {
-            sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 1, auto = false },
+            sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 1, auto = true },
             click = 'v:lua.ScSa',
           },
         },
