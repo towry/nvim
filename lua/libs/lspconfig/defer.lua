@@ -1,6 +1,3 @@
----@diagnostic disable-next-line: deprecated
-local unpack = table.unpack or unpack
-
 -- Source: https://gist.github.com/runiq/31aa5c4bf00f8e0843cd267880117201
 -- This function is used in towry/utils/lsp/documentcolors to make them work in tailwindcss
 local M = {}

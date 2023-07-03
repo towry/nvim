@@ -1,6 +1,5 @@
 local uv = vim.loop
 local Table = require('libs.runtime.table')
-local unpack = table.unpack or unpack
 local is_windows = uv.os_uname().version:match 'Windows'
 local path_separator = is_windows and '\\' or '/'
 

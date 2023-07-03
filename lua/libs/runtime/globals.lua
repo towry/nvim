@@ -1,3 +1,4 @@
+_G.unpack = _G.unpack or table.unpack
 _G.Ty = {}
 
 ---see `require`
