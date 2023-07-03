@@ -354,11 +354,11 @@ plug({
           require('telescope').load_extension('projects')
         end,
         opts = {
-          patterns = { '.git', '_darcs', '.bzr', '.svn', '.vscode', '.gitmodules', 'pnpm-workspace.yaml' },
+          patterns = require('libs.runtime.utils').root_patterns,
           manual_mode = false,
           -- Table of lsp clients to ignore by name
           -- eg: { "efm", ... }
-          ignore_lsp = {},
+          ignore_lsp = require('libs.runtime.utils').root_lsp_ignore,
           -- Don't calculate root dir on specific directories
           -- Ex: { "~/.cargo/*", ... }
           exclude_dirs = {},
