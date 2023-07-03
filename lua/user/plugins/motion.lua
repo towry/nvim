@@ -157,7 +157,7 @@ plug({
         desc = "Flash",
       },
       {
-        ".S",
+        ".s",
         mode = { "n", "x", "o" },
         function()
           require("flash").treesitter()
@@ -165,7 +165,7 @@ plug({
         desc = "Flash treesitter",
       },
       {
-        ".r",
+        "r",
         mode = "o",
         function()
           require("flash").remote()
@@ -173,7 +173,7 @@ plug({
         desc = "Remote Flash",
       },
       {
-        ".R",
+        "R",
         mode = { "o", "x" },
         function()
           require("flash").treesitter_search()
