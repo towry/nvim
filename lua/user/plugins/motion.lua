@@ -192,11 +192,17 @@ plug({
   {
     "nvim-telescope/telescope.nvim",
     optional = true,
+    --- see https://github.com/folke/flash.nvim#%EF%B8%8F-configuration
     opts = function(_, opts)
       local function flash(prompt_bufnr)
         require("flash").jump({
           pattern = "^",
-          highlight = { label = { after = { 0, 0 } } },
+          label = {
+            after = { 0, 0 },
+          },
+          highlight = {
+            backdrop = true,
+          },
           search = {
             mode = "search",
             exclude = {

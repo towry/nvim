@@ -56,15 +56,15 @@ plug({
         },
         shade_filetypes = { 'none' },
         shade_terminals = true,
-        shading_factor = 1, -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
+        shading_factor = 1,     -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
         start_in_insert = true,
         insert_mappings = true, -- whether or not the open mapping applies in insert mode
         persist_size = false,
         persist_mode = false,
         auto_scroll = false,
         direction = 'horizontal', -- | 'horizontal' | 'window' | 'float',
-        close_on_exit = true, -- close the terminal window when the process exits
-        shell = vim.o.shell, -- change the default shell
+        close_on_exit = true,     -- close the terminal window when the process exits
+        shell = vim.o.shell,      -- change the default shell
         -- This field is only relevant if direction is set to 'float'
         float_opts = {
           -- The border key is *almost* the same as 'nvim_win_open'
@@ -117,9 +117,9 @@ plug({
       vim.cmd('autocmd! TermOpen term://* lua _plugin_set_terminal_keymaps()')
       vim.keymap.set('n', '<C-\\>', function()
         if vim.tbl_contains({
-          'NvimTree',
-          'lazy',
-        }, vim.bo.filetype) then
+              'NvimTree',
+              'lazy',
+            }, vim.bo.filetype) then
           return
         end
         if vim.v.count == 9 then
@@ -133,15 +133,12 @@ plug({
       })
 
       -- kill all at exits.
-      -- vim.api.nvim_create_autocmd('VimLeavePre', {
-      --   pattern = '*',
-      --   callback = function()
-      --     local is_shut = require('libs.terminal.toggleterm_kill_all')()
-      --     if is_shut then
-      --       Ty.ECHO({ { 'Shutting down all terminals', 'WarningMsg' } }, false, {})
-      --     end
-      --   end
-      -- })
+      au.define_autocmd('VimLeavePre', {
+        group = '_kill_terms_on_leave',
+        callback = function()
+          require('libs.terminal.toggleterm_kill_all')()
+        end,
+      })
     end,
   },
 
