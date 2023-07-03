@@ -3,7 +3,8 @@ local au = require('libs.runtime.au')
 
 plug({
   {
-    'akinsho/nvim-toggleterm.lua',
+    'akinsho/toggleterm.nvim',
+    dev = false,
     keys = {
       {
         '<leader>//',
@@ -144,9 +145,6 @@ plug({
 
   {
     'willothy/flatten.nvim',
-    dependencies = {
-      'akinsho/nvim-toggleterm.lua',
-    },
     event = {
       au.user_autocmds.TermIsOpen_User,
     },
