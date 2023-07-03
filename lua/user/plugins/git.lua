@@ -5,7 +5,7 @@ local cmdstr = require('libs.runtime.keymap').cmdstr
 
 plug({
   'mbbill/undotree',
-  cmd = 'UndotreeToggle',
+  cmd = { 'UndotreeToggle' },
   init = function()
     local g = vim.g
     g.undotree_WindowLayout = 1

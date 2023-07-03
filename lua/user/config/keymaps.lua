@@ -25,7 +25,14 @@ local function setup_basic()
   set('i', '<C-;>', '<esc>:<C-u>', {
     expr = false,
     noremap = true,
-    desc = "Enter command-line easily"
+    desc = "Enter cmdline easily"
+  })
+  set('c', '<C-;>', function()
+    return vim.api.nvim_replace_termcodes('<C-u><C-p>', true, false, true)
+  end, {
+    expr = true,
+    noremap = false,
+    desc = 'Previous command in cmdline',
   })
   ---///
   --- tab is mapped to buffers, since tab&<c-i> has same func, we
