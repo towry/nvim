@@ -125,6 +125,9 @@ pack.plug({
           -- return vim.tbl_keys(bufs)
         end,
       }
+      local select_option = {
+        behavior = cmp.SelectBehavior.Insert,
+      }
 
       cmp.setup({
         performance = {
@@ -139,8 +142,8 @@ pack.plug({
           expand = function(args) luasnip.lsp_expand(args.body) end,
         },
         mapping = cmp.mapping.preset.insert({
-          ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-          ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+          ['<C-p>'] = cmp.mapping.select_prev_item(select_option),
+          ['<C-n>'] = cmp.mapping.select_next_item(select_option),
           ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
           ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
           ['<C-f>'] = cmp.mapping.confirm({ select = true }),
@@ -167,7 +170,7 @@ pack.plug({
               if suggestion ~= nil then suggestion = suggestion.displayText end
               if suggestion == nil or (suggestion:find('^%s') ~= nil and suggestion:find('^\n') == nil) then
                 if cmp.visible() and has_words_before() then
-                  cmp.select_next_item()
+                  cmp.select_next_item(select_option)
                 else
                   fallback()
                 end
@@ -175,7 +178,7 @@ pack.plug({
                 vim.fn.feedkeys(vim.fn['copilot#Accept'](), '')
               end
             elseif cmp.visible() and has_words_before() then
-              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+              cmp.select_next_item(select_option)
             elseif luasnip.expandable() then
               luasnip.expand()
             elseif luasnip.expand_or_jumpable() then
