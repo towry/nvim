@@ -34,6 +34,13 @@ local function setup_basic()
     noremap = false,
     desc = 'Previous command in cmdline',
   })
+  set('c', '<C-/>', function()
+    return vim.api.nvim_replace_termcodes('<C-r>*', true, false, true)
+  end, {
+    expr = true,
+    noremap = false,
+    desc = 'Insert selection register into search',
+  })
   ---///
   --- tab is mapped to buffers, since tab&<c-i> has same func, we
   --- need to map <c-i> to its original func.
