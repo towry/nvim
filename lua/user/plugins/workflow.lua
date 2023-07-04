@@ -340,6 +340,11 @@ plug({
         cmd = { 'ProjectRoot' },
         keys = {
           {
+            '<leader>fP',
+            '<cmd>ProjectRoot<cr>',
+            desc = 'Call project root',
+          },
+          {
             '<leader>fp',
             function()
               require('libs.runtime.utils').plugin_schedule('project_nvim', function()
@@ -355,7 +360,7 @@ plug({
         end,
         opts = {
           patterns = require('libs.runtime.utils').root_patterns,
-          manual_mode = false,
+          manual_mode = true,
           -- Table of lsp clients to ignore by name
           -- eg: { "efm", ... }
           ignore_lsp = require('libs.runtime.utils').root_lsp_ignore,
