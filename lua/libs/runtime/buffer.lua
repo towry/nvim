@@ -53,8 +53,8 @@ end
 function M.list_normal_bufnrs()
   return M.list_bufnrs(function(b)
     if vim.api.nvim_get_option_value('buftype', {
-          buf = b,
-        }) ~= '' then
+      buf = b,
+    }) ~= '' then
       return false
     end
   end)
@@ -74,9 +74,12 @@ function M.reduce_bufnrs(callback, carry)
   return Table.reduce(callback, carry, all_buffers)
 end
 
+---@param opts? {perf?:boolean}
 ---@return table<number> list of buffer numbers
-function M.unsaved_list()
+function M.unsaved_list(opts)
+  opts = opts or {}
   local all_buffers = vim.api.nvim_list_bufs()
+  if opts.perf and #all_buffers > 40 then return {} end
   local valid_buffers = Table.filter(function(b)
     if b == 0 then
       return false

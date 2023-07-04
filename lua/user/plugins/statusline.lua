@@ -119,7 +119,7 @@ plug({
             separator = { left = '', },
             right_padding = 2,
             function()
-              local unsaved_count = #Buffer.unsaved_list()
+              local unsaved_count = #Buffer.unsaved_list({ perf = true })
               local has_modified = unsaved_count > 0
               local unsaved_count_text = unsaved_count > 0 and (':' .. unsaved_count) or ''
               vim.b['has_modified_file'] = has_modified
