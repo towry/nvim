@@ -131,14 +131,6 @@ plug({
   { 'gbprod/stay-in-place.nvim', config = true, event = au.user_autocmds.FileOpenedAfter_User },
 
   {
-    -- https://github.com/mg979/vim-visual-multi/wiki/Quick-start
-    'mg979/vim-visual-multi',
-    enabled = function() return false end,
-    keys = { { 'v', 'V' } },
-    config = function() vim.g.VM_leader = '<space>' end,
-  },
-
-  {
     'folke/flash.nvim',
     enabled = enable_flash,
     keys = {
