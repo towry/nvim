@@ -24,7 +24,7 @@ plug({
     },
     cmd = { 'ToggleTerm', 'TermExec' },
     branch = 'main',
-    tag = 'v2.2.1',
+    -- tag = 'v2.2.1',
     config = function()
       -- local au = require('libs.runtime.au')
 
