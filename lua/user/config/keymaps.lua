@@ -66,14 +66,6 @@ local function setup_basic()
     }
   )
 
-  -- works with kitty
-  set('n', '<Char-0xAA>', cmd('update'), {
-    desc = 'N: Save current file by <command-s>',
-  })
-  set('i', '<Char-0xAA>', '<ESC>:update<cr>', {
-    desc = 'I: Save current file by <command-s>',
-  })
-
   set('n', '<ESC>', cmd('noh'), {
     desc = 'Clear search highlight',
   })
@@ -200,7 +192,7 @@ end
 
 function M.setup()
   setup_basic()
-  setup_git()
+  -- setup_git()
 end
 
 return M
