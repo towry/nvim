@@ -1,6 +1,6 @@
 local M = {}
 
-M.root_patterns = { '.git', '_darcs', '.bzr', '.svn', '.vscode', '.gitmodules', 'pnpm-workspace.yaml' }
+M.root_patterns = { '.git', '_darcs', '.bzr', '.svn', '.vscode', '.gitmodules', 'pnpm-workspace.yaml', 'Cargo.toml' }
 M.root_lsp_ignore = { 'null-ls', 'tailwindcss' }
 
 M.file_exists = function(path)
@@ -141,8 +141,8 @@ function M.get_root(root_opts)
       if not vim.tbl_contains(lsp_ignore, client.name or "") then
         local workspace = client.config.workspace_folders
         local paths = workspace and vim.tbl_map(function(ws)
-              return vim.uri_to_fname(ws.uri)
-            end, workspace) or client.config.root_dir and { client.config.root_dir } or {}
+          return vim.uri_to_fname(ws.uri)
+        end, workspace) or client.config.root_dir and { client.config.root_dir } or {}
         for _, p in ipairs(paths) do
           local r = vim.loop.fs_realpath(p)
           if path:find(r, 1, true) then
