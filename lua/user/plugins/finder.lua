@@ -399,7 +399,12 @@ plug({
   'nvim-telescope/telescope.nvim',
   cmd = { 'Telescope' },
   keys = {
-    { '<Tab>',          cmd_modcall(pickers_mod, 'buffers_or_recent()'),         desc = "List Buffers" },
+    {
+      '<Tab>',
+      cmd_modcall(pickers_mod, 'buffers_or_recent()'),
+      desc =
+      "List Buffers"
+    },
     {
       '<leader>gb',
       function()
@@ -434,7 +439,7 @@ plug({
     },
     {
       '<leader>fF',
-      cmd_modcall(pickers_mod, 'project_files({use_all_files=true})'),
+      cmd_modcall(pickers_mod, 'project_files({use_all_files=true, cwd=vim.cfg.runtime__starts_cwd})'),
       desc =
       'Open find all files'
     },
@@ -446,12 +451,35 @@ plug({
     },
     {
       '<localleader><Tab>',
-      cmd_modcall(pickers_mod, 'project_files({ cwd_only = true, oldfiles = true })'),
+      cmd_modcall(pickers_mod, 'project_files({ cwd_only = true, oldfiles = true, cwd = vim.cfg.runtime__starts_cwd })'),
       desc =
       'Open recent files'
     },
-    { '<leader>fl',     cmd_modcall('libs.telescope.find-folders-picker', '()'), desc = 'Find folders' },
-    { '<localleader>s', cmd_modcall('libs.telescope.live_grep_call', '()'),      desc = 'Grep search' },
+    {
+      '<leader>fl',
+      function()
+        require('libs.telescope.find-folders-picker')({
+          cwd = vim.cfg.runtime__starts_cwd,
+        })
+      end,
+      desc =
+      'Find folders'
+    },
+    {
+      '<leader>fs',
+      function()
+        require('libs.telescope.live_grep_call')({
+          cwd = vim.cfg.runtime__starts_cwd,
+        })
+      end,
+      desc = 'Grep search'
+    },
+    {
+      '<localleader>s',
+      cmd_modcall('libs.telescope.live_grep_call', '()'),
+      desc =
+      'Grep search'
+    },
     {
       '<localleader>s',
       cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_visual_selection()'),

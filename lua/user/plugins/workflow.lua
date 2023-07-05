@@ -360,7 +360,7 @@ plug({
         end,
         opts = {
           patterns = require('libs.runtime.utils').root_patterns,
-          manual_mode = true,
+          manual_mode = false,
           -- Table of lsp clients to ignore by name
           -- eg: { "efm", ... }
           ignore_lsp = require('libs.runtime.utils').root_lsp_ignore,

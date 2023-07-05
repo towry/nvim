@@ -2,13 +2,11 @@
 --- after folder is selected, we can choose to reveal it
 --- on nvim-tree etc.
 
--- current cwd for the picker.
-local find_folders_cwd = nil
-
 --- TODO: add opt to customize the action when item is selected.
-return function()
+return function(opts)
+  opts = opts or {}
   local runtimeUtils = require('libs.runtime.utils')
-  if find_folders_cwd == nil then find_folders_cwd = runtimeUtils.get_root() end
+  local find_folders_cwd = opts.cwd or runtimeUtils.get_root()
 
   local picker_opts = {
     cwd = find_folders_cwd,
