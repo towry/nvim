@@ -174,6 +174,7 @@ return {
     "harpoon",
     "Outline",
     "fugitive",
+    "fugitiveblame",
     "Git",
     "undotree",
     -- folke/noice

@@ -34,7 +34,7 @@ plug({
   },
   config = function()
     local HEIGHT_RATIO = 0.8 -- You can change this
-    local WIDTH_RATIO = 0.5 -- You can change this too
+    local WIDTH_RATIO = 0.5  -- You can change this too
     local TREE_INIT_WIDTH = 40
 
 
@@ -143,7 +143,7 @@ plug({
         },
       },
       git = {
-        enable = true,
+        enable = false,
         ignore = true,
         timeout = 300,
       },
@@ -162,8 +162,8 @@ plug({
             enable = true,
             chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890',
             exclude = {
-              filetype = { 'notify', 'packer', 'qf', 'diff', 'fugitive', 'fugitiveblame' },
-              buftype = { 'nofile', 'terminal', 'help' },
+              filetype = vim.cfg.misc__ft_exclude,
+              buftype = vim.cfg.misc__buf_exclude,
             },
           },
         },
@@ -303,7 +303,7 @@ plug({
 plug({
   'simrat39/symbols-outline.nvim',
   keys = {
-    { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<leader>/o',  '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
     { '<Char-0xAF>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
@@ -399,7 +399,7 @@ plug({
   'nvim-telescope/telescope.nvim',
   cmd = { 'Telescope' },
   keys = {
-    { '<Tab>', cmd_modcall(pickers_mod, 'buffers_or_recent()'), desc = "List Buffers" },
+    { '<Tab>',          cmd_modcall(pickers_mod, 'buffers_or_recent()'),         desc = "List Buffers" },
     {
       '<leader>gb',
       function()
@@ -450,8 +450,8 @@ plug({
       desc =
       'Open recent files'
     },
-    { '<leader>fl', cmd_modcall('libs.telescope.find-folders-picker', '()'), desc = 'Find folders' },
-    { '<localleader>s', cmd_modcall('libs.telescope.live_grep_call', '()'), desc = 'Grep search' },
+    { '<leader>fl',     cmd_modcall('libs.telescope.find-folders-picker', '()'), desc = 'Find folders' },
+    { '<localleader>s', cmd_modcall('libs.telescope.live_grep_call', '()'),      desc = 'Grep search' },
     {
       '<localleader>s',
       cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_visual_selection()'),
