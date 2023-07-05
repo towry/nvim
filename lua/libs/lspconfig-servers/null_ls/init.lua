@@ -16,8 +16,8 @@ return function()
     -- builtins.code_actions.gitsigns,
     -- require("typescript.extensions.null-ls.code-actions"), -- disabled on volar take over mode.
     -- eslint.
-    builtins.code_actions.eslint,
-    builtins.diagnostics.eslint,
+    builtins.code_actions.eslint_d,
+    builtins.diagnostics.eslint_d,
   }
 
   nls.setup({
@@ -28,6 +28,6 @@ return function()
     save_after_format = false,
     sources = sources,
     update_in_insert = false,
-    root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", ".git", "Makefile", ".vscode"),
+    root_dir = require("null-ls.utils").root_pattern(unpack(require('libs.runtime.utils').root_patterns)),
   })
 end
