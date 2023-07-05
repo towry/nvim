@@ -341,6 +341,7 @@ plug({
 
   {
     'vuki656/package-info.nvim',
+    enabled = false,
     event = 'BufEnter package.json',
     config = function()
       local icons = require('libs.icons')

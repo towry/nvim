@@ -91,7 +91,6 @@
   "nvim-window-picker": { "branch": "main", "commit": "2c8200c5cbcdaac01dfe2c049997a1ca178506d8" },
   "nvim-yati": { "branch": "main", "commit": "c4307e6855f17ff89f0132787e2daba27495d254" },
   "overseer.nvim": { "branch": "master", "commit": "5564d0d1b7c956be5c51f4945ebbde7408a48043" },
-  "package-info.nvim": { "branch": "master", "commit": "4d98c8cc90d970d87c472c04bf7ca712336cc753" },
   "plenary.nvim": { "branch": "master", "commit": "102c02903c74b93c705406bf362049383abc87c8" },
   "popfix": { "branch": "master", "commit": "bf3cc436df63cd535350d5ef1b951c91554d4b01" },
   "popup.nvim": { "branch": "master", "commit": "b7404d35d5d3548a82149238289fa71f7f6de4ac" },
