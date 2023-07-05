@@ -28,6 +28,9 @@ return function()
     save_after_format = false,
     sources = sources,
     update_in_insert = false,
+    -- root_dir = function()
+    --   return require('libs.runtime.utils').get_root()
+    -- end
     root_dir = require("null-ls.utils").root_pattern(unpack(require('libs.runtime.utils').root_patterns)),
   })
 end
