@@ -387,7 +387,7 @@ plug({
     keys = {
       {
         '<leader>/s',
-        '<cmd>SessionManager load_current_dir_session<CR>',
+        '<cmd>SessionManager load_session<CR>',
         desc = 'Load current session',
       }
     },
@@ -625,6 +625,9 @@ plug({
           excluded_filetypes = vim.cfg.misc__ft_exclude,
         }
       }
-    end
+    end,
+    init = function()
+      vim.g.harpoon_log_level = 'warn'
+    end,
   }
 })
