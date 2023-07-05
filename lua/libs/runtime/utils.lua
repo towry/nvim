@@ -133,7 +133,7 @@ function M.get_root(root_opts)
   local lsp_ignore = root_opts.lsp_ignore or {}
   ---@type string?
   local path = vim.api.nvim_buf_get_name(0)
-  path = path ~= "" and vim.loop.fs_realpath(path) or nil
+  path = path ~= "" and vim.uv.fs_realpath(path) or nil
   ---@type string[]
   local roots = {}
   if path then
@@ -144,7 +144,7 @@ function M.get_root(root_opts)
           return vim.uri_to_fname(ws.uri)
         end, workspace) or client.config.root_dir and { client.config.root_dir } or {}
         for _, p in ipairs(paths) do
-          local r = vim.loop.fs_realpath(p)
+          local r = vim.uv.fs_realpath(p)
           if path:find(r, 1, true) then
             roots[#roots + 1] = r
           end
@@ -158,10 +158,10 @@ function M.get_root(root_opts)
   ---@type string?
   local root = roots[1]
   if not root then
-    path = path and vim.fs.dirname(path) or vim.loop.cwd()
+    path = path and vim.fs.dirname(path) or vim.uv.cwd()
     ---@type string?
     root = vim.fs.find(rootPatterns, { path = path, upward = true })[1]
-    root = root and vim.fs.dirname(root) or vim.loop.cwd()
+    root = root and vim.fs.dirname(root) or vim.uv.cwd()
   end
   ---@cast root string
   return root

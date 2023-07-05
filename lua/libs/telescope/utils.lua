@@ -18,7 +18,7 @@ function M.get_cwd_relative_to_buf(bufnr, level_number, fallback)
     -- use loop cwd instead of pattern matched root.
     -- User may start vim inside a subfolde of workspace/git folder, the root pattern returns the workspace/git root instead of
     -- the start pwd.
-    return vim.loop.cwd()
+    return vim.uv.cwd()
   end
 
   return require('libs.runtime.utils').get_root()

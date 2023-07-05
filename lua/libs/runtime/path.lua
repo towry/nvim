@@ -1,4 +1,4 @@
-local uv = vim.loop
+local uv = vim.uv
 local Table = require('libs.runtime.table')
 local is_windows = uv.os_uname().version:match 'Windows'
 local path_separator = is_windows and '\\' or '/'
@@ -9,7 +9,7 @@ local function escape_wildcards(path)
 end
 
 local function home_to_tilde(path)
-  local home = vim.loop.os_homedir()
+  local home = vim.uv.os_homedir()
   if path:sub(1, #home) == home then
     return '~' .. path:sub(#home + 1)
   end

@@ -33,7 +33,7 @@ return plug({
     {
       "<leader>fi",
       function()
-        require("mini.files").open(vim.loop.cwd(), true)
+        require("mini.files").open(vim.uv.cwd(), true)
       end,
       desc = "Open mini.files (cwd)",
     },

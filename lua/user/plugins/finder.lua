@@ -350,7 +350,7 @@ plug({
       '<leader>sP',
       function()
         local path = vim.fn.fnameescape(vim.fn.expand('%:p:.'))
-        if vim.loop.os_uname().sysname == 'Windows_NT' then path = vim.fn.substitute(path, '\\', '/', 'g') end
+        if vim.uv.os_uname().sysname == 'Windows_NT' then path = vim.fn.substitute(path, '\\', '/', 'g') end
         require('spectre').open({
           path = path,
           is_close = true,

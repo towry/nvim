@@ -75,7 +75,7 @@ pack.plug({
       require('luasnip.loaders.from_vscode').lazy_load({
         paths = {
           './user-snippets',
-          vim.loop.cwd() .. '/.vscode',
+          vim.uv.cwd() .. '/.vscode',
         },
       })
 

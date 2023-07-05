@@ -1,7 +1,7 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 local function prepend_lazy()
-  if not vim.loop.fs_stat(lazypath) then
+  if not vim.uv.fs_stat(lazypath) then
     return false
   end
   vim.opt.rtp:prepend(lazypath)

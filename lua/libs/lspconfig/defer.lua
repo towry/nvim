@@ -12,7 +12,7 @@ local M = {}
 --@returns (function, timer) Debounced function and timer. Remember to call
 ---`timer:close()` at the end or you will leak memory!
 function M.debounce_trailing(fn, ms, first)
-  local timer = vim.loop.new_timer()
+  local timer = vim.uv.new_timer()
   local wrapped_fn
 
   if not first then

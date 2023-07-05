@@ -54,7 +54,7 @@ return plug({
 
         starter.config.header = table.concat({
           ('%s · %s'):format("  " ..
-            Path.home_to_tilde(vim.loop.cwd()),
+            Path.home_to_tilde(vim.uv.cwd()),
             '  ' .. (git.get_git_abbr_head() or '/'))
         }, '\n')
       end
