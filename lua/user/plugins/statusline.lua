@@ -151,8 +151,15 @@ plug({
         lualine_c = {
           {
             function()
-              return require('libs.runtime.path').home_to_tilde(require('libs.runtime.utils').get_root())
+              return require('libs.runtime.path').home_to_tilde(vim.uv.cwd())
+              -- return require('libs.runtime.path').home_to_tilde(require('libs.runtime.utils').get_root())
             end,
+            icon = {
+              " ",
+              color = 'Whitespace'
+            },
+            color = 'Comment',
+            maxwidth = 20
           },
 
           function()
