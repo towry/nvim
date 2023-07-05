@@ -132,7 +132,6 @@ plug({
 
   {
     'folke/flash.nvim',
-    enabled = enable_flash,
     keys = {
       ';',
       ',',
