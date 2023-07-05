@@ -360,7 +360,7 @@ plug({
         end,
         opts = {
           patterns = require('libs.runtime.utils').root_patterns,
-          manual_mode = false,
+          manual_mode = true,
           -- Table of lsp clients to ignore by name
           -- eg: { "efm", ... }
           ignore_lsp = require('libs.runtime.utils').root_lsp_ignore,
@@ -371,7 +371,7 @@ plug({
           show_hidden = false,
           -- When set to false, you will get a message when project.nvim changes your
           -- directory.
-          silent_chdir = true,
+          silent_chdir = false,
           -- What scope to change the directory, valid options are
           -- * global (default)
           -- * tab
