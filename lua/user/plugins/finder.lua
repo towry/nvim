@@ -34,7 +34,7 @@ plug({
   },
   config = function()
     local HEIGHT_RATIO = 0.8 -- You can change this
-    local WIDTH_RATIO = 0.5  -- You can change this too
+    local WIDTH_RATIO = 0.5 -- You can change this too
     local TREE_INIT_WIDTH = 40
 
 
@@ -303,7 +303,7 @@ plug({
 plug({
   'simrat39/symbols-outline.nvim',
   keys = {
-    { '<leader>/o',  '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
     { '<Char-0xAF>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
@@ -499,6 +499,9 @@ plug({
     {
       'tknightz/telescope-termfinder.nvim',
     },
+    {
+      'nvim-telescope/telescope-file-browser.nvim',
+    },
   },
   config = function(_, opts)
     require('telescope').setup(opts)
@@ -506,6 +509,9 @@ plug({
     require('telescope').load_extension('live_grep_args')
     require('telescope').load_extension('git_worktree')
     require('telescope').load_extension('termfinder')
+    --- https://github.com/nvim-telescope/telescope-file-browser.nvim
+    --- Telescope file_browser files=false
+    require("telescope").load_extension("file_browser")
     au.do_useraucmd(au.user_autocmds.TelescopeConfigDone_User)
 
     -- colorscheme
