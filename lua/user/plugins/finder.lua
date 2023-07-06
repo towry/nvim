@@ -34,7 +34,7 @@ plug({
   },
   config = function()
     local HEIGHT_RATIO = 0.8 -- You can change this
-    local WIDTH_RATIO = 0.5 -- You can change this too
+    local WIDTH_RATIO = 0.5  -- You can change this too
     local TREE_INIT_WIDTH = 40
 
 
@@ -303,7 +303,7 @@ plug({
 plug({
   'simrat39/symbols-outline.nvim',
   keys = {
-    { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<leader>/o',  '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
     { '<Char-0xAF>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
@@ -452,7 +452,9 @@ plug({
     {
       '<leader>fl',
       function()
-        require('userlib.telescope.find-folders-picker')({
+        --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
+        require('telescope').extensions.file_browser.file_browser({
+          files = false,
           cwd = vim.cfg.runtime__starts_cwd,
         })
       end,
@@ -612,6 +614,17 @@ plug({
         },
       },
       extensions = {
+        file_browser = {
+          mappings = {
+            i = {
+              ['<CR>'] = function()
+                local entry_path = action_state.get_selected_entry().Path
+                local new_cwd = entry_path:is_dir() and entry_path:absolute() or entry_path:parent():absolute()
+                require('userlib.finder.legendary.folder-action')(new_cwd)
+              end,
+            }
+          }
+        },
         fzf = {
           fuzzy = true,
           override_generic_sorter = true,

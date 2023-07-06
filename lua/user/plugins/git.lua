@@ -267,6 +267,7 @@ plug({
     event = au.user_autocmds.FileOpenedAfter_User,
     config = function()
       local gitsigns_current_blame_delay = 0
+      local autocmd = require('userlib.runtime.au')
 
       local signs = require('gitsigns')
       require('userlib.legendary').pre_hook('git_lg', function(lg)

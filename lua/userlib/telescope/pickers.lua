@@ -18,6 +18,7 @@ M.project_files_toggle_between_git_and_fd = function()
 end
 
 M.project_files = function(opts)
+  local action_state = require('telescope.actions.state')
   local make_entry = require('telescope.make_entry')
   local strings = require('plenary.strings')
   local utils = require('telescope.utils')
@@ -27,15 +28,29 @@ M.project_files = function(opts)
   local iconwidth = strings.strdisplaywidth(def_icon)
   local level_up = vim.v.count
 
-  local map_i_actions = function(prompt_bufnr, map)
-    map('i', '<C-o>', function()
+  local map_i_actions = function(_, map)
+    map('i', '<C-o>', function(prompt_bufnr)
       require('userlib.telescope.picker_keymaps').open_selected_in_window(prompt_bufnr)
     end, { noremap = true, silent = true })
+    --- not working.
+    --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/master/lua/telescope/_extensions/file_browser/actions.lua#L598
+    map('i', '<C-g>', function(prompt_bufnr)
+      local current_picker = action_state.get_current_picker(prompt_bufnr)
+      local finder = current_picker.finder
+      finder.path = vim.cfg.runtime__starts_cwd
+      finder.cwd = finder.path
+      current_picker:refresh(finder, {
+        reset_prompt = true,
+        multi = current_picker._multi,
+      })
+    end, {
+      desc = 'Go to home dir',
+    })
   end
 
   opts = opts or {}
   if not opts.cwd then
-    opts.cwd = require('userlib.telescope.utils').get_cwd_relative_to_buf(0, level_up)
+    opts.cwd = require('userlib.telescope.helpers').get_cwd_relative_to_buf(0, level_up)
   end
   opts.hidden = true
 
@@ -66,7 +81,7 @@ M.project_files = function(opts)
       local icon, iconhl = utils.get_devicons(tail_raw)
 
       return displayer({
-        { icon, iconhl },
+        { icon,            iconhl },
         tail,
         { path_to_display, 'TelescopeResultsComment' },
       })
@@ -355,9 +370,9 @@ function M.gen_from_buffer(opts)
     })
 
     return displayer({
-      { entry.bufnr, 'TelescopeResultsNumber' },
+      { entry.bufnr,     'TelescopeResultsNumber' },
       { entry.indicator, 'TelescopeResultsComment' },
-      { icon, hl_group },
+      { icon,            hl_group },
       bufname_tail,
       { path_to_display .. ':' .. entry.lnum, 'TelescopeResultsComment' },
     })
@@ -371,8 +386,8 @@ function M.gen_from_buffer(opts)
     local hidden = entry.info.hidden == 1 and 'h' or 'a'
     -- local readonly = vim.api.nvim_buf_get_option(entry.bufnr, 'readonly') and '=' or ' '
     local readonly = vim.api.nvim_get_option_value('readonly', {
-      buf = entry.bufnr,
-    }) and '=' or ' '
+          buf = entry.bufnr,
+        }) and '=' or ' '
     local changed = entry.info.changed == 1 and '+' or ' '
     local indicator = entry.flag .. hidden .. readonly .. changed
     local lnum = 1

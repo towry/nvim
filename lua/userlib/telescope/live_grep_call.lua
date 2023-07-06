@@ -1,7 +1,7 @@
 --- You can use v:count to search inside folder relative to current buf.
 return function(opts)
   opts = vim.tbl_extend('force', {}, opts or {})
-  opts.cwd = opts.cwd or require('userlib.telescope.utils').get_cwd_relative_to_buf(0, vim.v.count)
+  opts.cwd = opts.cwd or require('userlib.telescope.helpers').get_cwd_relative_to_buf(0, vim.v.count)
   local prompt_title = table.concat({
     '-F(literal)',
     '-g(glob)',
