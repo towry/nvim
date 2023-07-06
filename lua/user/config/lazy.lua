@@ -73,7 +73,7 @@ local function setup(lazy_opts, opts)
   local ok = prepend_lazy()
 
   vim.api.nvim_create_user_command("PrebundlePlugins", function()
-    require("libs.runtime.bundle").run_command({
+    require("userlib.runtime.bundle").run_command({
       main = "user.config.plugs",
       output = "user/plugins_bundle.lua",
       glob_dir = { "user/plugins/*.lua", "plugin-extras/**/*.lua", },

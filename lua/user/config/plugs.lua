@@ -27,4 +27,4 @@ require("plugin-extras.workflow.cheatsheets")
 require("plugin-extras.tools.profile")
 require("plugin-extras.tools.games")
 
-return require('libs.runtime.pack').repos()
+return require('userlib.runtime.pack').repos()

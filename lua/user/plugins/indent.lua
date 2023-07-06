@@ -1,5 +1,5 @@
-local pack = require('libs.runtime.pack')
-local au = require('libs.runtime.au')
+local pack = require('userlib.runtime.pack')
+local au = require('userlib.runtime.au')
 
 ---=================================
 ---Identation.
@@ -47,7 +47,7 @@ pack.plug({
         name = "update_indentline_hl",
         immediate = true,
         callback = function()
-          -- local utils = require('libs.runtime.utils')
+          -- local utils = require('userlib.runtime.utils')
           -- vim.api.nvim_set_hl(0, 'IndentBlanklineChar', utils.fg("FloatBorder"))
         end,
       })

@@ -1,6 +1,6 @@
-local plug = require('libs.runtime.pack').plug
-local utils = require('libs.runtime.utils')
-local au = require('libs.runtime.au')
+local plug = require('userlib.runtime.pack').plug
+local utils = require('userlib.runtime.utils')
+local au = require('userlib.runtime.au')
 
 plug({
   'nvim-lualine/lualine.nvim',
@@ -13,10 +13,10 @@ plug({
   event = { 'User LazyUIEnterOncePost', 'User OnLeaveDashboard' },
   config = function()
     require('user.config.options').setup_statusline()
-    local auto_format_disabled = require('libs.lsp-format.autoformat').disabled
-    local format_utils         = require('libs.lsp-format')
-    local Buffer               = require('libs.runtime.buffer')
-    local terms                = require('libs.statusline.lualine.terminal_component')
+    local auto_format_disabled = require('userlib.lsp-format.autoformat').disabled
+    local format_utils         = require('userlib.lsp-format')
+    local Buffer               = require('userlib.runtime.buffer')
+    local terms                = require('userlib.statusline.lualine.terminal_component')
 
     local spectre_extension    = {
       sections = {
@@ -151,8 +151,8 @@ plug({
         lualine_c = {
           {
             function()
-              return require('libs.runtime.path').home_to_tilde(vim.uv.cwd())
-              -- return require('libs.runtime.path').home_to_tilde(require('libs.runtime.utils').get_root())
+              return require('userlib.runtime.path').home_to_tilde(vim.uv.cwd())
+              -- return require('userlib.runtime.path').home_to_tilde(require('userlib.runtime.utils').get_root())
             end,
             icon = {
               " ",

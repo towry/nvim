@@ -1,4 +1,4 @@
-local pack = require('libs.runtime.pack')
+local pack = require('userlib.runtime.pack')
 
 pack.plug({
   {
@@ -50,7 +50,7 @@ pack.plug({
         return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
       end
       local lspkind = require('lspkind')
-      local icons = require('libs.icons')
+      local icons = require('userlib.icons')
 
       lspkind.init({
         symbol_map = {
@@ -361,7 +361,7 @@ pack.plug({
       })
 
       -- hls
-      local au = require('libs.runtime.au')
+      local au = require('userlib.runtime.au')
       au.register_event(au.events.AfterColorschemeChanged, {
         name = 'update_cmp_hl',
         immediate = true,
@@ -437,7 +437,7 @@ pack.plug({
     local allowed_rules = {
       'auto_jsx_closing',
     }
-    local rules = require('libs.autopairs-rules')
+    local rules = require('userlib.autopairs-rules')
     for _, rule in ipairs(allowed_rules) do
       -- if rule exist in module and is a function, call it.
       if rules[rule] and type(rules[rule]) == 'function' then rules[rule]() end

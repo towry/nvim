@@ -1,6 +1,6 @@
-local plug = require('libs.runtime.pack').plug
-local au = require('libs.runtime.au')
-local cmdstr = require('libs.runtime.keymap').cmdstr
+local plug = require('userlib.runtime.pack').plug
+local au = require('userlib.runtime.au')
+local cmdstr = require('userlib.runtime.keymap').cmdstr
 
 
 plug({
@@ -90,26 +90,26 @@ plug({
     keys = {
       {
         '<leader>gf',
-        '<cmd>lua require("libs.git.utils").toggle_files_history()<cr>',
+        '<cmd>lua require("userlib.git.utils").toggle_files_history()<cr>',
         desc =
         'Files history'
       },
       {
         '<leader>gF',
-        [[<cmd>lua require("libs.git.utils").toggle_files_history(nil, '%')<cr>]],
+        [[<cmd>lua require("userlib.git.utils").toggle_files_history(nil, '%')<cr>]],
         desc =
         'Current file history(diffview)'
       },
       ---FIXME: <Space>e keymap not reset when exist the diffview. it should be buffer local keymaps.
       {
         '<leader>gs',
-        '<cmd>lua require("libs.git.utils").toggle_working_changes()<cr>',
+        '<cmd>lua require("userlib.git.utils").toggle_working_changes()<cr>',
         desc =
         'Current status/changes'
       },
       {
         '<leader>gq',
-        '<cmd>lua require("libs.git.utils").close_git_views()<cr>',
+        '<cmd>lua require("userlib.git.utils").close_git_views()<cr>',
         desc = 'Quite git views',
       },
     },
@@ -135,13 +135,13 @@ plug({
       },
       hooks = {
         diff_buf_read = function(bufnr)
-          local autocmd = require('libs.runtime.au')
+          local autocmd = require('userlib.runtime.au')
           autocmd.fire_event(autocmd.events.onGitDiffviewBufRead, {
             bufnr = bufnr,
           })
         end,
         view_opened = function(view)
-          local autocmd = require('libs.runtime.au')
+          local autocmd = require('userlib.runtime.au')
           autocmd.fire_event(autocmd.events.onGitDiffviewOpen, {
             view = view,
           })
@@ -160,7 +160,7 @@ plug({
     keys = {
       {
         '<leader>gc',
-        '<cmd>lua require("libs.hydra.git").open_git_conflict_hydra()<cr>',
+        '<cmd>lua require("userlib.hydra.git").open_git_conflict_hydra()<cr>',
         desc = 'Open git conflict menus',
       }
     },
@@ -199,8 +199,8 @@ plug({
       local present, worktree = pcall(require, 'git-worktree')
       if not present then return end
 
-      local utils = require('libs.runtime.utils')
-      local au = require('libs.runtime.au')
+      local utils = require('userlib.runtime.utils')
+      local au = require('userlib.runtime.au')
 
       -- ╭──────────────────────────────────────────────────────────╮
       -- │ Setup                                                    │
@@ -261,7 +261,7 @@ plug({
     'lewis6991/gitsigns.nvim',
     keys = {
       {
-        'gh', '<cmd>lua require("libs.hydra.git").open_git_signs_hydra()<cr>'
+        'gh', '<cmd>lua require("userlib.hydra.git").open_git_signs_hydra()<cr>'
       }
     },
     event = au.user_autocmds.FileOpenedAfter_User,
@@ -269,15 +269,9 @@ plug({
       local gitsigns_current_blame_delay = 0
 
       local signs = require('gitsigns')
-      local autocmd = require('libs.runtime.au')
-
-      -- register legendary
-      autocmd.define_user_autocmd({
-        pattern = au.user_autocmds.LegendaryConfigDone,
-        callback = function()
-          require('legendary').commands(require('libs.legendary.commands.git'))
-        end,
-      })
+      require('userlib.legendary').pre_hook('git_lg', function(lg)
+        lg.commands(require('userlib.legendary.commands.git'))
+      end)
 
       -- ╭──────────────────────────────────────────────────────────╮
       -- │ Setup                                                    │
@@ -343,7 +337,7 @@ plug({
     vim.g.committia_open_only_vim_starting = 1
 
     vim.api.nvim_create_user_command('CommittiaOpenGit', function()
-      require('libs.runtime.utils').load_plugins({ 'committia.vim' })
+      require('userlib.runtime.utils').load_plugins({ 'committia.vim' })
       vim.fn['committia#open']('git')
     end, {})
 
@@ -351,7 +345,7 @@ plug({
     --   pattern = { 'MERGE_MSG' },
     --   group = vim.api.nvim_create_augroup('_gitcommit', { clear = true }),
     --   callback = function()
-    --     require('libs.runtime.utils').load_plugins({ 'committia.vim' })
+    --     require('userlib.runtime.utils').load_plugins({ 'committia.vim' })
     --     vim.fn['committia#open']('git')
     --   end
     -- })

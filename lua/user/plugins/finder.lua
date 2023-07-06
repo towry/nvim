@@ -1,9 +1,9 @@
-local plug = require('libs.runtime.pack').plug
-local keymap = require('libs.runtime.keymap')
+local plug = require('userlib.runtime.pack').plug
+local keymap = require('userlib.runtime.keymap')
 local cmdstr = keymap.cmdstr
 local cmd_modcall = keymap.cmd_modcall
-local pickers_mod = 'libs.telescope.pickers'
-local au = require('libs.runtime.au')
+local pickers_mod = 'userlib.telescope.pickers'
+local au = require('userlib.runtime.au')
 
 
 plug({
@@ -17,18 +17,18 @@ plug({
   keys = {
     {
       '<leader>ft',
-      cmd_modcall('libs.plugin-nvim-tree', 'toggle_nvim_tree()'),
+      cmd_modcall('userlib.plugin-nvim-tree', 'toggle_nvim_tree()'),
       desc = 'Toggle explore tree',
     },
     {
       '<leader>f.',
-      cmd_modcall('libs.plugin-nvim-tree', 'nvim_tree_find_file_direct()'),
+      cmd_modcall('userlib.plugin-nvim-tree', 'nvim_tree_find_file_direct()'),
       desc = 'Locate current file in tree',
     },
     {
       -- <cmd-b> to find file.
       '<Char-0xAC>',
-      cmd_modcall('libs.plugin-nvim-tree', 'nvim_tree_find_file({fallback=true})'),
+      cmd_modcall('userlib.plugin-nvim-tree', 'nvim_tree_find_file({fallback=true})'),
       desc = 'Locate current file in tree',
     }
   },
@@ -73,7 +73,7 @@ plug({
     end
 
     require('nvim-tree').setup({
-      on_attach = require('libs.plugin-nvim-tree.attach').on_attach,
+      on_attach = require('userlib.plugin-nvim-tree.attach').on_attach,
       -- disables netrw completely
       disable_netrw = true,
       -- hijack netrw window on startup
@@ -221,7 +221,7 @@ plug({
     au.define_user_autocmd({
       pattern = 'LazyUIEnterOnce',
       callback = function()
-        require('libs.finder.hook').register_select_folder_action(function(cwd)
+        require('userlib.finder.hook').register_select_folder_action(function(cwd)
           local nvim_tree_api = require('nvim-tree.api')
           nvim_tree_api.tree.open({
             update_root = false,
@@ -277,7 +277,7 @@ plug({
     {
       '<leader>fO',
       function()
-        local cwd = require('libs.runtime.utils').get_root()
+        local cwd = require('userlib.runtime.utils').get_root()
         require('oil').open(cwd)
       end,
       desc = 'Open oil(CWD) file browser',
@@ -408,7 +408,7 @@ plug({
     {
       '<leader>gb',
       function()
-        require('libs.ui.select')({
+        require('userlib.ui.select')({
           'Git branches',
           'Git branches with remote',
         }, {
@@ -452,7 +452,7 @@ plug({
     {
       '<leader>fl',
       function()
-        require('libs.telescope.find-folders-picker')({
+        require('userlib.telescope.find-folders-picker')({
           cwd = vim.cfg.runtime__starts_cwd,
         })
       end,
@@ -462,7 +462,7 @@ plug({
     {
       '<leader>fs',
       function()
-        require('libs.telescope.live_grep_call')({
+        require('userlib.telescope.live_grep_call')({
           cwd = vim.cfg.runtime__starts_cwd,
         })
       end,
@@ -470,7 +470,7 @@ plug({
     },
     {
       '<localleader>s',
-      cmd_modcall('libs.telescope.live_grep_call', '()'),
+      cmd_modcall('userlib.telescope.live_grep_call', '()'),
       desc =
       'Grep search'
     },
@@ -525,11 +525,11 @@ plug({
     })
   end,
   opts = function()
-    -- local au = require('libs.runtime.au')
+    -- local au = require('userlib.runtime.au')
     local actions = require('telescope.actions')
     local action_state = require('telescope.actions.state')
     local lga_actions = require('telescope-live-grep-args.actions')
-    local icons = require('libs.icons')
+    local icons = require('userlib.icons')
 
     local git_icons = {
       added = icons.gitAdd,
@@ -637,7 +637,7 @@ plug({
                 picker:set_prompt('--no-fixed-strings ' .. prompt)
               end,
               ['<C-o>'] = function(prompt_bufnr)
-                return require('libs.telescope.picker_keymaps').open_selected_in_window(prompt_bufnr)
+                return require('userlib.telescope.picker_keymaps').open_selected_in_window(prompt_bufnr)
               end
             },
             ['n'] = {

@@ -1,4 +1,4 @@
-local plug = require('libs.runtime.pack').plug
+local plug = require('userlib.runtime.pack').plug
 
 return plug({
   "echasnovski/mini.files",
@@ -19,7 +19,7 @@ return plug({
       function()
         local path = nil
         if vim.bo.buftype == 'nofile' then
-          path = require('libs.runtime.utils').get_root()
+          path = require('userlib.runtime.utils').get_root()
         else
           path = vim.api.nvim_buf_get_name(0)
         end
@@ -46,7 +46,7 @@ return plug({
     })
   end,
   init = function()
-    -- require('libs.finder.hook').register_select_folder_action(function(cwd)
+    -- require('userlib.finder.hook').register_select_folder_action(function(cwd)
     --   require('mini.files').open(cwd, false)
     -- end)
   end

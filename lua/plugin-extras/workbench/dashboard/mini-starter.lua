@@ -1,5 +1,5 @@
-local au = require('libs.runtime.au')
-local plug = require('libs.runtime.pack').plug
+local au = require('userlib.runtime.au')
+local plug = require('userlib.runtime.pack').plug
 
 -- start screen
 return plug({
@@ -49,8 +49,8 @@ return plug({
       starter.setup(config)
 
       local update_header_opts = function()
-        local Path = require('libs.runtime.path')
-        local git = require('libs.git.utils')
+        local Path = require('userlib.runtime.path')
+        local git = require('userlib.git.utils')
 
         starter.config.header = table.concat({
           ('%s · %s'):format("  " ..
@@ -111,7 +111,7 @@ return plug({
     end,
     init = function()
       -- listen enter dashboard event.
-      local au = require('libs.runtime.au')
+      local au = require('userlib.runtime.au')
       au.define_autocmds({
         {
           "User",

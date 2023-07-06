@@ -1,7 +1,7 @@
 local M = {}
 
 function M.setup()
-  require('libs.runtime.globals')
+  require('userlib.runtime.globals')
   require('user.config.custom').setup()
   require('user.config.options').setup()
 

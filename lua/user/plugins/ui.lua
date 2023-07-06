@@ -1,5 +1,5 @@
-local plug = require('libs.runtime.pack').plug
-local au = require('libs.runtime.au')
+local plug = require('userlib.runtime.pack').plug
+local au = require('userlib.runtime.au')
 
 plug({
   {

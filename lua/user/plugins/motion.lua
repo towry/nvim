@@ -1,6 +1,6 @@
-local plug = require('libs.runtime.pack').plug
-local cmd = require('libs.runtime.keymap').cmdstr
-local au = require('libs.runtime.au')
+local plug = require('userlib.runtime.pack').plug
+local cmd = require('userlib.runtime.keymap').cmdstr
+local au = require('userlib.runtime.au')
 local enable_flash = true
 
 plug({
@@ -46,7 +46,7 @@ plug({
     config = function(_, opts)
       require("mini.ai").setup(opts)
       -- register all text objects with which-key
-      if require("libs.runtime.utils").has_plugin("which-key.nvim") then
+      if require("userlib.runtime.utils").has_plugin("which-key.nvim") then
         ---@type table<string, string|table>
         local i = {
           [" "] = "Whitespace",

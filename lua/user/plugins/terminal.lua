@@ -1,5 +1,5 @@
-local plug = require('libs.runtime.pack').plug
-local au = require('libs.runtime.au')
+local plug = require('userlib.runtime.pack').plug
+local au = require('userlib.runtime.au')
 
 plug({
   {
@@ -13,12 +13,12 @@ plug({
       },
       {
         '<leader>gv',
-        '<cmd>lua require("libs.terminal.term-git").toggle_tig()<cr>',
+        '<cmd>lua require("userlib.terminal.term-git").toggle_tig()<cr>',
         desc = 'Tig commits',
       },
       {
         '<leader>gV',
-        '<cmd>lua require("libs.terminal.term-git").toggle_tig_file_history()<cr>',
+        '<cmd>lua require("userlib.terminal.term-git").toggle_tig_file_history()<cr>',
         desc = "Tig current file history",
       }
     },
@@ -26,7 +26,7 @@ plug({
     branch = 'main',
     -- tag = 'v2.2.1',
     config = function()
-      -- local au = require('libs.runtime.au')
+      -- local au = require('userlib.runtime.au')
 
       require('toggleterm').setup({
         -- size can be a number or function which is passed the current terminal
@@ -137,7 +137,7 @@ plug({
       au.define_autocmd('VimLeavePre', {
         group = '_kill_terms_on_leave',
         callback = function()
-          require('libs.terminal.toggleterm_kill_all')()
+          require('userlib.terminal.toggleterm_kill_all')()
         end,
       })
     end,

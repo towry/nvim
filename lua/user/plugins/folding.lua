@@ -1,5 +1,5 @@
-local pack = require('libs.runtime.pack')
-local cmd_modcall = require('libs.runtime.keymap').cmd_modcall
+local pack = require('userlib.runtime.pack')
+local cmd_modcall = require('userlib.runtime.keymap').cmd_modcall
 
 pack.plug({
   'kevinhwang91/nvim-ufo',
@@ -22,7 +22,7 @@ pack.plug({
     local ufo = require('ufo')
 
     ufo.setup({
-      fold_virt_text_handler = require('libs.folding').ufo_handler,
+      fold_virt_text_handler = require('userlib.folding').ufo_handler,
       -- close_fold_kinds = { "imports" }
     })
   end

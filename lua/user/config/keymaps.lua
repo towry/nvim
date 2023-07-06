@@ -1,5 +1,5 @@
-local au = require('libs.runtime.au')
-local keymap = require('libs.runtime.keymap')
+local au = require('userlib.runtime.au')
+local keymap = require('userlib.runtime.keymap')
 local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 
 local M = {}
@@ -11,13 +11,13 @@ local function setup_basic()
     noremap = true,
   })
   set('n', '<localleader>n', function()
-    require('libs.workflow.run-normal-keys')()
+    require('userlib.workflow.run-normal-keys')()
   end, {
     noremap = true,
     silent = false,
     desc = 'execute normal keys',
   })
-  set('n', '<leader>rs', ':lua require("libs.workflow.run-shell-cmd")()<cr>', {
+  set('n', '<leader>rs', ':lua require("userlib.workflow.run-shell-cmd")()<cr>', {
     silent = true,
     noremap = true,
     desc = 'run shell command',
@@ -152,10 +152,10 @@ local function setup_basic()
   })
 
   --- buffers
-  set('n', '<leader>b]', cmd_modcall('libs.runtime.buffer', 'next_unsaved_buf()'), {
+  set('n', '<leader>b]', cmd_modcall('userlib.runtime.buffer', 'next_unsaved_buf()'), {
     desc = 'Next unsaved buffer'
   })
-  set('n', '<leader>b[', cmd_modcall('libs.runtime.buffer', 'prev_unsaved_buf()'), {
+  set('n', '<leader>b[', cmd_modcall('userlib.runtime.buffer', 'prev_unsaved_buf()'), {
     desc = 'Next unsaved buffer'
   })
   set('n', '<leader>bd', [[:e!<CR>]], {
@@ -164,8 +164,8 @@ local function setup_basic()
   set('n', '<leader>bx', function()
     vim.cmd('bdelete')
     vim.schedule(function()
-      if #require('libs.runtime.buffer').list_bufnrs() <= 0 then
-        local cur_empty = require('libs.runtime.buffer').get_current_empty_buffer()
+      if #require('userlib.runtime.buffer').list_bufnrs() <= 0 then
+        local cur_empty = require('userlib.runtime.buffer').get_current_empty_buffer()
         -- start_dashboard()
         au.do_useraucmd(au.user_autocmds.DoEnterDashboard_User)
         if cur_empty then
@@ -185,7 +185,7 @@ local function setup_basic()
 end
 
 local function setup_git()
-  set('n', '<leader>gb', cmd([[require("libs.git.blame").open_blame()]]), {
+  set('n', '<leader>gb', cmd([[require("userlib.git.blame").open_blame()]]), {
     desc = 'Git open blame',
   })
 end

@@ -1,5 +1,5 @@
-local plug = require('libs.runtime.pack').plug
-local au = require('libs.runtime.au')
+local plug = require('userlib.runtime.pack').plug
+local au = require('userlib.runtime.au')
 
 plug({
   {
@@ -72,7 +72,7 @@ plug({
       })
     end,
     config = function()
-      local Buffer = require('libs.runtime.buffer')
+      local Buffer = require('userlib.runtime.buffer')
       local disabled = function(_lang, bufnr)
         --- must after buffer is read and loaded, otherwise some option is not available.
         local ft = vim.api.nvim_get_option_value("filetype", {
@@ -344,7 +344,7 @@ plug({
     enabled = false,
     event = 'BufEnter package.json',
     config = function()
-      local icons = require('libs.icons')
+      local icons = require('userlib.icons')
       require('package-info').setup({
         colors = {
           up_to_date = '#3C4048', -- Text color for up to date package virtual text
