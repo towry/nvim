@@ -456,7 +456,7 @@ plug({
     },
     {
       '<leader>ff',
-      cmd_modcall(pickers_mod, 'project_files({use_all_files=true, cwd=vim.cfg.runtime__starts_cwd})'),
+      cmd_modcall(pickers_mod, 'project_files({use_all_files=false, cwd=vim.cfg.runtime__starts_cwd})'),
       desc =
       'Open find all files'
     },
