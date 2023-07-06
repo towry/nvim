@@ -40,7 +40,7 @@ plug({
   },
   config = function()
     local HEIGHT_RATIO = 0.8 -- You can change this
-    local WIDTH_RATIO = 0.5  -- You can change this too
+    local WIDTH_RATIO = 0.5 -- You can change this too
     local TREE_INIT_WIDTH = 40
 
 
@@ -110,6 +110,7 @@ plug({
         highlight_git = true,
         highlight_opened_files = 'all',
         root_folder_modifier = ':~',
+        indent_width = 1,
         indent_markers = {
           enable = true,
           icons = {
@@ -148,6 +149,12 @@ plug({
           '^.git$',
         },
       },
+      filesystem_watchers = {
+        enable = true,
+        debounce_delay = 500,
+        ignore_dirs = vim.cfg.runtime__folder_holes_inregex,
+      },
+      select_prompts = true,
       git = {
         enable = false,
         ignore = true,
@@ -175,15 +182,25 @@ plug({
         },
       },
       view = {
+        preserve_window_proportions = true,
+        signcolumn = 'no',
         -- width of the window, can be either a number (columns) or a string in `%`
-        width = function()
-          return enable_float_when_gui_narrow() and math.floor(vim.opt.columns:get() * WIDTH_RATIO) or TREE_INIT_WIDTH
-        end,
+        -- width = function()
+        --   return enable_float_when_gui_narrow() and math.floor(vim.opt.columns:get() * WIDTH_RATIO) or {
+        --     max = TREE_INIT_WIDTH * 1.5,
+        --     min = TREE_INIT_WIDTH * 0.8,
+        --   }
+        -- end,
+        width = {
+          max = TREE_INIT_WIDTH * 1.5,
+          min = TREE_INIT_WIDTH * 0.8,
+        },
         hide_root_folder = false,
         -- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
         side = 'left',
         number = false,
         relativenumber = true,
+        debounce_delay = 500,
         centralize_selection = true,
         adaptive_size = true,
         float = {
@@ -309,7 +326,7 @@ plug({
 plug({
   'simrat39/symbols-outline.nvim',
   keys = {
-    { '<leader>/o',  '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
     { '<Char-0xAF>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },

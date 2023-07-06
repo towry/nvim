@@ -1,5 +1,12 @@
 return {
   ---runtime
+  runtime__folder_holes_inregex = {
+    'node_modules/',
+    '.git/',
+    '.turbo/',
+    'dist/',
+    '.cargo/',
+  },
   runtime__starts_in_buffer = vim.fn.argc(-1) ~= 0,
   runtime__starts_cwd = vim.uv.cwd(),
   runtime__disable_builtin_plugins = {
