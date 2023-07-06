@@ -28,7 +28,13 @@ plug({
     {
       -- <cmd-b> to find file.
       '<Char-0xAC>',
-      cmd_modcall('userlib.plugin-nvim-tree', 'nvim_tree_find_file({fallback=true})'),
+      -- cmd_modcall('userlib.plugin-nvim-tree', 'nvim_tree_find_file({fallback=true})'),
+      cmd_modcall('userlib.plugin-nvim-tree', 'toggle_nvim_tree()'),
+      desc = 'Locate current file in tree',
+    },
+    {
+      '<F1>',
+      '<cmd>NvimTreeFindFile<cr>',
       desc = 'Locate current file in tree',
     }
   },
