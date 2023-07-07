@@ -90,10 +90,11 @@ plug({
       hijack_cursor = true,
       -- updates the root directory of the tree on `DirChanged` (when your run `:cd` usually)
       update_cwd = true,
+      sync_root_with_cwd = true,
       -- opens in place of the unnamed buffer if it's empty
       hijack_unnamed_buffer_when_opening = false,
       --false by default, will change cwd of nvim-tree to that of new buffer's when opening nvim-tree
-      respect_buf_cwd = false,
+      respect_buf_cwd = true,
       -- show lsp diagnostics in the signcolumn
       diagnostics = {
         enable = false,

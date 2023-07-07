@@ -185,6 +185,11 @@ local function setup_basic()
     noremap = true,
     nowait = true,
   })
+  set('n', '<leader><space>q', cmd([[:qa]]), {
+    desc = 'Quit all',
+    noremap = true,
+    nowait = true,
+  })
 end
 
 local function setup_git()

@@ -125,10 +125,19 @@ end
 ---@param root_opts? {root_patterns?:table,lsp_ignore?:table}
 ---@return string
 function M.get_root(root_opts)
+  local has_root_patterns_opt = root_opts and root_opts.root_patterns ~= nil
   root_opts = vim.tbl_extend('force', {
     root_patterns = M.root_patterns,
     lsp_ignore = M.root_lsp_ignore,
   }, root_opts or {})
+  if not has_root_patterns_opt and M.has_plugin('project_nvim') then
+    local is_ok, project_nvim = pcall(require, 'project_nvim.project')
+    if is_ok then
+      local project_root, _ = project_nvim.get_project_root()
+      return project_root
+    end
+  end
+
   local rootPatterns = root_opts.root_patterns
   local lsp_ignore = root_opts.lsp_ignore or {}
   ---@type string?
@@ -141,8 +150,8 @@ function M.get_root(root_opts)
       if not vim.tbl_contains(lsp_ignore, client.name or "") then
         local workspace = client.config.workspace_folders
         local paths = workspace and vim.tbl_map(function(ws)
-              return vim.uri_to_fname(ws.uri)
-            end, workspace) or client.config.root_dir and { client.config.root_dir } or {}
+          return vim.uri_to_fname(ws.uri)
+        end, workspace) or client.config.root_dir and { client.config.root_dir } or {}
         for _, p in ipairs(paths) do
           local r = vim.uv.fs_realpath(p)
           if path:find(r, 1, true) then
