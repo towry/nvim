@@ -1,5 +1,5 @@
-local plug = require('libs.runtime.pack').plug
-local au = require('libs.runtime.au')
+local plug = require('userlib.runtime.pack').plug
+local au = require('userlib.runtime.au')
 
 plug({
   {
@@ -13,20 +13,20 @@ plug({
       },
       {
         '<leader>gv',
-        '<cmd>lua require("libs.terminal.term-git").toggle_tig()<cr>',
+        '<cmd>lua require("userlib.terminal.term-git").toggle_tig()<cr>',
         desc = 'Tig commits',
       },
       {
         '<leader>gV',
-        '<cmd>lua require("libs.terminal.term-git").toggle_tig_file_history()<cr>',
+        '<cmd>lua require("userlib.terminal.term-git").toggle_tig_file_history()<cr>',
         desc = "Tig current file history",
       }
     },
     cmd = { 'ToggleTerm', 'TermExec' },
     branch = 'main',
-    tag = 'v2.2.1',
+    -- tag = 'v2.2.1',
     config = function()
-      -- local au = require('libs.runtime.au')
+      -- local au = require('userlib.runtime.au')
 
       require('toggleterm').setup({
         -- size can be a number or function which is passed the current terminal
@@ -47,7 +47,7 @@ plug({
             link = 'Normal',
           },
           NormalFloat = {
-            link = 'Normal',
+            link = 'NormalFloat',
           },
           FloatBorder = {
             -- guifg = <VALUE-HERE>,
@@ -57,15 +57,15 @@ plug({
         },
         shade_filetypes = { 'none' },
         shade_terminals = true,
-        shading_factor = 1,     -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
+        shading_factor = 1, -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
         start_in_insert = true,
         insert_mappings = true, -- whether or not the open mapping applies in insert mode
         persist_size = false,
         persist_mode = false,
         auto_scroll = false,
         direction = 'horizontal', -- | 'horizontal' | 'window' | 'float',
-        close_on_exit = true,     -- close the terminal window when the process exits
-        shell = vim.o.shell,      -- change the default shell
+        close_on_exit = true, -- close the terminal window when the process exits
+        shell = vim.o.shell, -- change the default shell
         -- This field is only relevant if direction is set to 'float'
         float_opts = {
           -- The border key is *almost* the same as 'nvim_win_open'
@@ -90,6 +90,8 @@ plug({
         local buffer = vim.api.nvim_get_current_buf()
         local opts = { noremap = true, buffer = buffer, nowait = true }
         nvim_buf_set_keymap('t', '<C-\\>', [[<C-\><C-n>:ToggleTerm<CR>]], opts)
+        nvim_buf_set_keymap('t', '<C-S-\\>', [[<C-\><C-n>:ToggleTerm<CR>]], opts)
+
         -- close term if is in normal mode otherwise enter normal mode.
         nvim_buf_set_keymap('t', '<C-q>', function()
           -- if vim.fn.mode() == 'n' then
@@ -116,11 +118,32 @@ plug({
       end
 
       vim.cmd('autocmd! TermOpen term://* lua _plugin_set_terminal_keymaps()')
+      --- open in workspace root.
       vim.keymap.set('n', '<C-\\>', function()
         if vim.tbl_contains({
-              'NvimTree',
-              'lazy',
-            }, vim.bo.filetype) then
+          'NvimTree',
+          'lazy',
+        }, vim.bo.filetype) then
+          vim.notify('please open in normal buffer')
+          return
+        end
+        if vim.v.count == 9 then
+          vim.cmd(([[9ToggleTerm direction=float dir=%s]]):format(vim.cfg.runtime__starts_cwd))
+        else
+          vim.cmd((vim.v.count .. [[ToggleTerm direction=horizontal dir=%s]]):format(vim.cfg.runtime__starts_cwd))
+        end
+      end, {
+        desc = 'toggle term',
+        silent = true,
+      })
+      --- open in current project root.
+      --- super+ctrl+/
+      vim.keymap.set('n', vim.api.nvim_replace_termcodes('<C-S-\\>', true, true, false), function()
+        if vim.tbl_contains({
+          'NvimTree',
+          'lazy',
+        }, vim.bo.filetype) then
+          vim.notify('please open in normal buffer')
           return
         end
         if vim.v.count == 9 then
@@ -133,11 +156,12 @@ plug({
         silent = true,
       })
 
+
       -- kill all at exits.
       au.define_autocmd('VimLeavePre', {
         group = '_kill_terms_on_leave',
         callback = function()
-          require('libs.terminal.toggleterm_kill_all')()
+          require('userlib.terminal.toggleterm_kill_all')()
         end,
       })
     end,

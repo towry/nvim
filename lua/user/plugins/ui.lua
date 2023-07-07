@@ -1,10 +1,10 @@
-local plug = require('libs.runtime.pack').plug
-local au = require('libs.runtime.au')
+local plug = require('userlib.runtime.pack').plug
+local au = require('userlib.runtime.au')
 
 plug({
   {
     'tzachar/highlight-undo.nvim',
-    keys = { 'u', '<C-r>' },
+    cmd = { 'UndotreeToggle' },
     opts = {
       hlgroup = 'IncSearch',
       duration = 200,

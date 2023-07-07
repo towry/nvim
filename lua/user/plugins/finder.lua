@@ -1,9 +1,9 @@
-local plug = require('libs.runtime.pack').plug
-local keymap = require('libs.runtime.keymap')
+local plug = require('userlib.runtime.pack').plug
+local keymap = require('userlib.runtime.keymap')
 local cmdstr = keymap.cmdstr
 local cmd_modcall = keymap.cmd_modcall
-local pickers_mod = 'libs.telescope.pickers'
-local au = require('libs.runtime.au')
+local pickers_mod = 'userlib.telescope.pickers'
+local au = require('userlib.runtime.au')
 
 
 plug({
@@ -17,24 +17,32 @@ plug({
   keys = {
     {
       '<leader>ft',
-      cmd_modcall('libs.plugin-nvim-tree', 'toggle_nvim_tree()'),
+      cmd_modcall('userlib.plugin-nvim-tree', 'toggle_nvim_tree()'),
       desc = 'Toggle explore tree',
     },
     {
       '<leader>f.',
-      cmd_modcall('libs.plugin-nvim-tree', 'nvim_tree_find_file_direct()'),
+      cmd_modcall('userlib.plugin-nvim-tree', 'nvim_tree_find_file_direct()'),
       desc = 'Locate current file in tree',
     },
     {
       -- <cmd-b> to find file.
       '<Char-0xAC>',
-      cmd_modcall('libs.plugin-nvim-tree', 'nvim_tree_find_file({fallback=true})'),
+      cmd_modcall('userlib.plugin-nvim-tree', 'nvim_tree_find_file({fallback=true})'),
+      -- cmd_modcall('userlib.plugin-nvim-tree', 'toggle_nvim_tree()'),
       desc = 'Locate current file in tree',
-    }
+    },
+    {
+      '<localleader>b',
+      cmd_modcall('userlib.plugin-nvim-tree', 'nvim_tree_find_file({fallback=true})'),
+      -- cmd_modcall('userlib.plugin-nvim-tree', 'toggle_nvim_tree()'),
+      desc = 'Locate current file in tree',
+
+    },
   },
   config = function()
     local HEIGHT_RATIO = 0.8 -- You can change this
-    local WIDTH_RATIO = 0.5  -- You can change this too
+    local WIDTH_RATIO = 0.5 -- You can change this too
     local TREE_INIT_WIDTH = 40
 
 
@@ -73,7 +81,7 @@ plug({
     end
 
     require('nvim-tree').setup({
-      on_attach = require('libs.plugin-nvim-tree.attach').on_attach,
+      on_attach = require('userlib.plugin-nvim-tree.attach').on_attach,
       -- disables netrw completely
       disable_netrw = true,
       -- hijack netrw window on startup
@@ -84,10 +92,11 @@ plug({
       hijack_cursor = true,
       -- updates the root directory of the tree on `DirChanged` (when your run `:cd` usually)
       update_cwd = true,
+      sync_root_with_cwd = true,
       -- opens in place of the unnamed buffer if it's empty
       hijack_unnamed_buffer_when_opening = false,
       --false by default, will change cwd of nvim-tree to that of new buffer's when opening nvim-tree
-      respect_buf_cwd = false,
+      respect_buf_cwd = true,
       -- show lsp diagnostics in the signcolumn
       diagnostics = {
         enable = false,
@@ -104,8 +113,9 @@ plug({
         highlight_git = true,
         highlight_opened_files = 'all',
         root_folder_modifier = ':~',
+        indent_width = 1,
         indent_markers = {
-          enable = true,
+          enable = false,
           icons = {
             corner = '└ ',
             edge = '│ ',
@@ -142,8 +152,14 @@ plug({
           '^.git$',
         },
       },
-      git = {
+      filesystem_watchers = {
         enable = true,
+        debounce_delay = 500,
+        ignore_dirs = vim.cfg.runtime__folder_holes_inregex,
+      },
+      select_prompts = true,
+      git = {
+        enable = false,
         ignore = true,
         timeout = 300,
       },
@@ -162,22 +178,32 @@ plug({
             enable = true,
             chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890',
             exclude = {
-              filetype = { 'notify', 'packer', 'qf', 'diff', 'fugitive', 'fugitiveblame' },
-              buftype = { 'nofile', 'terminal', 'help' },
+              filetype = vim.cfg.misc__ft_exclude,
+              buftype = vim.cfg.misc__buf_exclude,
             },
           },
         },
       },
       view = {
+        preserve_window_proportions = true,
+        signcolumn = 'no',
         -- width of the window, can be either a number (columns) or a string in `%`
-        width = function()
-          return enable_float_when_gui_narrow() and math.floor(vim.opt.columns:get() * WIDTH_RATIO) or TREE_INIT_WIDTH
-        end,
+        -- width = function()
+        --   return enable_float_when_gui_narrow() and math.floor(vim.opt.columns:get() * WIDTH_RATIO) or {
+        --     max = TREE_INIT_WIDTH * 1.5,
+        --     min = TREE_INIT_WIDTH * 0.8,
+        --   }
+        -- end,
+        width = {
+          max = TREE_INIT_WIDTH * 1.5,
+          min = TREE_INIT_WIDTH * 0.8,
+        },
         hide_root_folder = false,
         -- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
         side = 'left',
         number = false,
         relativenumber = true,
+        debounce_delay = 500,
         centralize_selection = true,
         adaptive_size = true,
         float = {
@@ -217,20 +243,6 @@ plug({
           nvim_tree_api.close()
         end
       end
-    })
-    au.define_user_autocmd({
-      pattern = 'LazyUIEnterOnce',
-      callback = function()
-        require('libs.finder.hook').register_select_folder_action(function(cwd)
-          local nvim_tree_api = require('nvim-tree.api')
-          nvim_tree_api.tree.open({
-            update_root = false,
-            find_file = false,
-            current_window = false,
-          })
-          nvim_tree_api.tree.change_root(cwd)
-        end)
-      end,
     })
   end,
 })
@@ -277,7 +289,7 @@ plug({
     {
       '<leader>fO',
       function()
-        local cwd = require('libs.runtime.utils').get_root()
+        local cwd = require('userlib.runtime.utils').get_root()
         require('oil').open(cwd)
       end,
       desc = 'Open oil(CWD) file browser',
@@ -303,7 +315,7 @@ plug({
 plug({
   'simrat39/symbols-outline.nvim',
   keys = {
-    { '<leader>/o',  '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
     { '<Char-0xAF>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
@@ -350,7 +362,7 @@ plug({
       '<leader>sP',
       function()
         local path = vim.fn.fnameescape(vim.fn.expand('%:p:.'))
-        if vim.loop.os_uname().sysname == 'Windows_NT' then path = vim.fn.substitute(path, '\\', '/', 'g') end
+        if vim.uv.os_uname().sysname == 'Windows_NT' then path = vim.fn.substitute(path, '\\', '/', 'g') end
         require('spectre').open({
           path = path,
           is_close = true,
@@ -399,8 +411,34 @@ plug({
   'nvim-telescope/telescope.nvim',
   cmd = { 'Telescope' },
   keys = {
-    { '<Tab>',      cmd_modcall(pickers_mod, 'buffers_or_recent()'),                        desc = "List Buffers" },
-    { '<leader>gB', cmdstr([[Telescope git_branches show_remote_tracking_branches=false]]), desc = 'Git branchs' },
+    {
+      '<Tab>',
+      cmd_modcall(pickers_mod, 'buffers_or_recent()'),
+      desc =
+      "List Buffers"
+    },
+    {
+      '<leader>gb',
+      function()
+        require('userlib.ui.dropdown').select({
+          items = {
+            {
+              label = 'Git branches',
+              hint = 'local',
+              'Telescope git_branches show_remote_tracking_branches=false',
+            },
+            {
+              label = 'Git branches',
+              hint = 'remotes',
+              'Telescope git_branches',
+            },
+          }
+        }, {
+          prompt_title = 'Select action',
+        })
+      end,
+      desc = 'Git branches'
+    },
     {
       '<localleader>f',
       cmd_modcall(pickers_mod, 'project_files()'),
@@ -409,13 +447,7 @@ plug({
     },
     {
       '<leader>ff',
-      cmd_modcall(pickers_mod, 'project_files()'),
-      desc =
-      'Open Project files'
-    },
-    {
-      '<leader>fF',
-      cmd_modcall(pickers_mod, 'project_files({use_all_files=true})'),
+      cmd_modcall(pickers_mod, 'project_files({use_all_files=false, cwd=vim.cfg.runtime__starts_cwd})'),
       desc =
       'Open find all files'
     },
@@ -427,12 +459,53 @@ plug({
     },
     {
       '<localleader><Tab>',
-      cmd_modcall(pickers_mod, 'project_files({ cwd_only = true, oldfiles = true })'),
+      cmd_modcall(pickers_mod, 'project_files({ cwd_only = true, oldfiles = true, cwd = vim.cfg.runtime__starts_cwd })'),
       desc =
       'Open recent files'
     },
-    { '<leader>fl',     cmd_modcall('libs.telescope.find-folders-picker', '()'), desc = 'Find folders' },
-    { '<localleader>s', cmd_modcall('libs.telescope.live_grep_call', '()'),      desc = 'Grep search' },
+    {
+      '<leader>fl',
+      function()
+        --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
+        require('telescope').extensions.file_browser.file_browser({
+          files = false,
+          use_fd = true,
+          hide_parent_dir = true,
+          cwd = vim.cfg.runtime__starts_cwd,
+        })
+      end,
+      desc =
+      'Find folders'
+    },
+    {
+      '<localleader>l',
+      function()
+        --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
+        require('telescope').extensions.file_browser.file_browser({
+          files = false,
+          use_fd = true,
+          hide_parent_dir = true,
+          cwd = require('userlib.runtime.utils').get_root(),
+        })
+      end,
+      desc =
+      'Find folders'
+    },
+    {
+      '<leader>fs',
+      function()
+        require('userlib.telescope.live_grep_call')({
+          cwd = vim.cfg.runtime__starts_cwd,
+        })
+      end,
+      desc = 'Grep search'
+    },
+    {
+      '<localleader>s',
+      cmd_modcall('userlib.telescope.live_grep_call', '()'),
+      desc =
+      'Grep search'
+    },
     {
       '<localleader>s',
       cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_visual_selection()'),
@@ -458,6 +531,9 @@ plug({
     {
       'tknightz/telescope-termfinder.nvim',
     },
+    {
+      'nvim-telescope/telescope-file-browser.nvim',
+    },
   },
   config = function(_, opts)
     require('telescope').setup(opts)
@@ -465,6 +541,9 @@ plug({
     require('telescope').load_extension('live_grep_args')
     require('telescope').load_extension('git_worktree')
     require('telescope').load_extension('termfinder')
+    --- https://github.com/nvim-telescope/telescope-file-browser.nvim
+    --- Telescope file_browser files=false
+    require("telescope").load_extension("file_browser")
     au.do_useraucmd(au.user_autocmds.TelescopeConfigDone_User)
 
     -- colorscheme
@@ -478,11 +557,11 @@ plug({
     })
   end,
   opts = function()
-    -- local au = require('libs.runtime.au')
+    -- local au = require('userlib.runtime.au')
     local actions = require('telescope.actions')
     local action_state = require('telescope.actions.state')
     local lga_actions = require('telescope-live-grep-args.actions')
-    local icons = require('libs.icons')
+    local icons = require('userlib.icons')
 
     local git_icons = {
       added = icons.gitAdd,
@@ -565,6 +644,18 @@ plug({
         },
       },
       extensions = {
+        file_browser = {
+          use_fd = true,
+          mappings = {
+            i = {
+              ['<CR>'] = function()
+                local entry_path = action_state.get_selected_entry().Path
+                local new_cwd = entry_path:is_dir() and entry_path:absolute() or entry_path:parent():absolute()
+                require('userlib.finder.legendary.folder-action')(new_cwd)
+              end,
+            }
+          }
+        },
         fzf = {
           fuzzy = true,
           override_generic_sorter = true,
@@ -590,7 +681,7 @@ plug({
                 picker:set_prompt('--no-fixed-strings ' .. prompt)
               end,
               ['<C-o>'] = function(prompt_bufnr)
-                return require('libs.telescope.picker_keymaps').open_selected_in_window(prompt_bufnr)
+                return require('userlib.telescope.picker_keymaps').open_selected_in_window(prompt_bufnr)
               end
             },
             ['n'] = {

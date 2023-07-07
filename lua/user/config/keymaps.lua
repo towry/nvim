@@ -1,5 +1,5 @@
-local au = require('libs.runtime.au')
-local keymap = require('libs.runtime.keymap')
+local au = require('userlib.runtime.au')
+local keymap = require('userlib.runtime.keymap')
 local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 
 local M = {}
@@ -11,13 +11,13 @@ local function setup_basic()
     noremap = true,
   })
   set('n', '<localleader>n', function()
-    require('libs.workflow.run-normal-keys')()
+    require('userlib.workflow.run-normal-keys')()
   end, {
     noremap = true,
     silent = false,
     desc = 'execute normal keys',
   })
-  set('n', '<leader>rs', ':lua require("libs.workflow.run-shell-cmd")()<cr>', {
+  set('n', '<leader>rs', ':lua require("userlib.workflow.run-shell-cmd")()<cr>', {
     silent = true,
     noremap = true,
     desc = 'run shell command',
@@ -66,14 +66,6 @@ local function setup_basic()
     }
   )
 
-  -- works with kitty
-  set('n', '<Char-0xAA>', cmd('update'), {
-    desc = 'N: Save current file by <command-s>',
-  })
-  set('i', '<Char-0xAA>', '<ESC>:update<cr>', {
-    desc = 'I: Save current file by <command-s>',
-  })
-
   set('n', '<ESC>', cmd('noh'), {
     desc = 'Clear search highlight',
   })
@@ -87,8 +79,11 @@ local function setup_basic()
     desc = 'Case change in visual mode'
   })
 
-  set({ 'v', 'i' }, '<F1>', cmd('wa'), {
+  set({ 'v', 'i' }, '<F1>', cmd('bufdo update'), {
     desc = 'Save all files',
+  })
+  set('n', '<localleader>w', cmd('update'), {
+    desc = 'Save current buffer',
   })
 
   -- yanks
@@ -160,10 +155,10 @@ local function setup_basic()
   })
 
   --- buffers
-  set('n', '<leader>b]', cmd_modcall('libs.runtime.buffer', 'next_unsaved_buf()'), {
+  set('n', '<leader>b]', cmd_modcall('userlib.runtime.buffer', 'next_unsaved_buf()'), {
     desc = 'Next unsaved buffer'
   })
-  set('n', '<leader>b[', cmd_modcall('libs.runtime.buffer', 'prev_unsaved_buf()'), {
+  set('n', '<leader>b[', cmd_modcall('userlib.runtime.buffer', 'prev_unsaved_buf()'), {
     desc = 'Next unsaved buffer'
   })
   set('n', '<leader>bd', [[:e!<CR>]], {
@@ -172,8 +167,8 @@ local function setup_basic()
   set('n', '<leader>bx', function()
     vim.cmd('bdelete')
     vim.schedule(function()
-      if #require('libs.runtime.buffer').list_bufnrs() <= 0 then
-        local cur_empty = require('libs.runtime.buffer').get_current_empty_buffer()
+      if #require('userlib.runtime.buffer').list_bufnrs() <= 0 then
+        local cur_empty = require('userlib.runtime.buffer').get_current_empty_buffer()
         -- start_dashboard()
         au.do_useraucmd(au.user_autocmds.DoEnterDashboard_User)
         if cur_empty then
@@ -190,17 +185,19 @@ local function setup_basic()
     noremap = true,
     nowait = true,
   })
-end
-
-local function setup_git()
-  set('n', '<leader>gb', cmd([[require("libs.git.blame").open_blame()]]), {
-    desc = 'Git open blame',
+  set('n', 'qq', cmd([[:qa]]), {
+    desc = 'Quit all',
+    noremap = true,
+    nowait = true,
+  })
+  set('c', '<C-q>', ('<C-u>qa<CR>'), {
+    desc = 'Make sure <C-q> do not insert weird chars',
+    nowait = true,
   })
 end
 
 function M.setup()
   setup_basic()
-  setup_git()
 end
 
 return M

@@ -1,6 +1,6 @@
-local plug = require('libs.runtime.pack').plug
-local utils = require('libs.runtime.utils')
-local au = require('libs.runtime.au')
+local plug = require('userlib.runtime.pack').plug
+local utils = require('userlib.runtime.utils')
+local au = require('userlib.runtime.au')
 
 plug({
   'nvim-lualine/lualine.nvim',
@@ -13,10 +13,10 @@ plug({
   event = { 'User LazyUIEnterOncePost', 'User OnLeaveDashboard' },
   config = function()
     require('user.config.options').setup_statusline()
-    local auto_format_disabled = require('libs.lsp-format.autoformat').disabled
-    local format_utils         = require('libs.lsp-format')
-    local Buffer               = require('libs.runtime.buffer')
-    local terms                = require('libs.statusline.lualine.terminal_component')
+    local auto_format_disabled = require('userlib.lsp-format.autoformat').disabled
+    local format_utils         = require('userlib.lsp-format')
+    local Buffer               = require('userlib.runtime.buffer')
+    local terms                = require('userlib.statusline.lualine.terminal_component')
 
     local spectre_extension    = {
       sections = {
@@ -119,7 +119,7 @@ plug({
             separator = { left = '', },
             right_padding = 2,
             function()
-              local unsaved_count = #Buffer.unsaved_list()
+              local unsaved_count = #Buffer.unsaved_list({ perf = true })
               local has_modified = unsaved_count > 0
               local unsaved_count_text = unsaved_count > 0 and (':' .. unsaved_count) or ''
               vim.b['has_modified_file'] = has_modified
@@ -151,8 +151,15 @@ plug({
         lualine_c = {
           {
             function()
-              return require('libs.runtime.path').home_to_tilde(require('libs.runtime.utils').get_root())
+              return require('userlib.runtime.path').home_to_tilde(vim.uv.cwd())
+              -- return require('userlib.runtime.path').home_to_tilde(require('userlib.runtime.utils').get_root())
             end,
+            icon = {
+              " ",
+              color = 'Whitespace'
+            },
+            color = 'Comment',
+            maxwidth = 20
           },
 
           function()
@@ -243,16 +250,16 @@ plug({
         setopt = true,
         segments = {
           {
-            sign = { name = { 'Diagnostic' }, maxwidth = 1, auto = true },
-            click = 'v:lua.ScSa',
-          },
-          {
             sign = { name = { '.*' }, maxwidth = 1, colwidth = 1, auto = true },
           },
           { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
           { text = { builtin.foldfunc, ' ' }, click = 'v:lua.ScFa' },
+          -- {
+          --   sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 1, auto = true },
+          --   click = 'v:lua.ScSa',
+          -- },
           {
-            sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 1, auto = true },
+            sign = { name = { 'Diagnostic' }, maxwidth = 1, auto = false },
             click = 'v:lua.ScSa',
           },
         },
@@ -299,6 +306,9 @@ plug({
     cmd = { 'SatelliteEnable', 'SatelliteDisable', 'SatelliteRefresh' },
     event = au.user_autocmds.FileOpenedAfter_User,
     opts = {
+      gitsigns = {
+        enable = false,
+      },
       current_only = false,
       winblend = 8,
       zindex = 40,

@@ -1,5 +1,5 @@
-local au = require('libs.runtime.au')
-local plug = require('libs.runtime.pack').plug
+local au = require('userlib.runtime.au')
+local plug = require('userlib.runtime.pack').plug
 
 -- start screen
 return plug({
@@ -21,7 +21,7 @@ return plug({
         items = {
           ---
           new_section("Session load", [[SessionManager load_current_dir_session]], "Session"),
-          new_section("Session delete", [[SessionManager delete_session]], "Session"),
+          new_section("Session list", [[SessionManager load_session]], "Session"),
           ---
           new_section("Git Branchs", "Telescope git_branches show_remote_tracking_branches=false", "Built-in"),
           new_section("Lazy", "Lazy", "Built-in"),
@@ -49,12 +49,12 @@ return plug({
       starter.setup(config)
 
       local update_header_opts = function()
-        local Path = require('libs.runtime.path')
-        local git = require('libs.git.utils')
+        local Path = require('userlib.runtime.path')
+        local git = require('userlib.git.utils')
 
         starter.config.header = table.concat({
           ('%s · %s'):format("  " ..
-            Path.home_to_tilde(vim.loop.cwd()),
+            Path.home_to_tilde(vim.uv.cwd()),
             '  ' .. (git.get_git_abbr_head() or '/'))
         }, '\n')
       end
@@ -111,7 +111,7 @@ return plug({
     end,
     init = function()
       -- listen enter dashboard event.
-      local au = require('libs.runtime.au')
+      local au = require('userlib.runtime.au')
       au.define_autocmds({
         {
           "User",

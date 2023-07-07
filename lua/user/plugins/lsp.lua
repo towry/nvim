@@ -1,5 +1,5 @@
-local plug = require('libs.runtime.pack').plug
-local au = require('libs.runtime.au')
+local plug = require('userlib.runtime.pack').plug
+local au = require('userlib.runtime.au')
 
 
 local function default_lspconfig_ui_options()
@@ -49,9 +49,9 @@ plug({
         ensure_installed = vim.cfg.lsp__auto_install_servers,
         automatic_installation = vim.cfg.lsp__automatic_installation,
       })
-      local servers_path = "libs.lspconfig-servers."
-      local handlers = require('libs.lspconfig.handlers')
-      local capabilities = require('libs.lspconfig.capbilities')(require('cmp_nvim_lsp').default_capabilities())
+      local servers_path = "userlib.lspconfig-servers."
+      local handlers = require('userlib.lspconfig.handlers')
+      local capabilities = require('userlib.lspconfig.capbilities')(require('cmp_nvim_lsp').default_capabilities())
       local lsp_flags = {
         debounce_text_changes = 600,
         allow_incremental_sync = false,
@@ -83,15 +83,15 @@ plug({
       end
 
       au.do_useraucmd(au.user_autocmds.LspConfigDone_User)
-      require('libs.lspconfig.diagnostic').setup()
-      require('libs.lspconfig.inlayhints').setup({
+      require('userlib.lspconfig.diagnostic').setup()
+      require('userlib.lspconfig.inlayhints').setup({
         enabled = false,
         insert_only = true,
       })
     end,
     init = function()
       au.on_lsp_attach(function(client, bufnr)
-        require('libs.lspconfig.keymaps').setup_keybinding(client, bufnr)
+        require('userlib.lspconfig.keymaps').setup_keybinding(client, bufnr)
       end)
     end,
   },

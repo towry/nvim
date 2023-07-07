@@ -1,4 +1,4 @@
-local au = require('libs.runtime.au')
+local au = require('userlib.runtime.au')
 
 local M = {}
 
@@ -215,11 +215,11 @@ function M.setup_events_on_startup()
   au.register_event(au.events.onLspAttach, {
     name = "setup_formatter_on_buf",
     callback = function(args)
-      require('libs.lsp-format').choose_formatter_for_buf(args.client, args.bufnr)
-      require('libs.lsp-format.autoformat').attach(args.client, args.bufnr)
+      require('userlib.lsp-format').choose_formatter_for_buf(args.client, args.bufnr)
+      require('userlib.lsp-format.autoformat').attach(args.client, args.bufnr)
       local is_auto_format_enable_config = true
       if is_auto_format_enable_config then
-        require('libs.lsp-format.autoformat').enable()
+        require('userlib.lsp-format.autoformat').enable()
       end
     end
   })

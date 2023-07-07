@@ -1,5 +1,5 @@
-local cmdstr = require('libs.runtime.keymap').cmdstr
-local pack = require('libs.runtime.pack')
+local cmdstr = require('userlib.runtime.keymap').cmdstr
+local pack = require('userlib.runtime.pack')
 
 ---- dap
 pack.plug({
@@ -414,7 +414,7 @@ pack.plug({
     'SnipLive',
   },
   keys = {
-    { '<leader>rf', '<cmd>lua require("libs.hydra.sniprun").open()<cr>',
+    { '<leader>rf', '<cmd>lua require("userlib.hydra.sniprun").open()<cr>',
       { desc = 'Open sniprun', mode = { 'n' } } },
   },
   -- https://michaelb.github.io/sniprun/sources/README.html#installation
@@ -425,7 +425,7 @@ pack.plug({
     },
   },
   init = function()
-    vim.keymap.set('v', 'f', '<cmd>lua require("libs.hydra.sniprun").open_visual()<cr>', {
+    vim.keymap.set('v', 'f', '<cmd>lua require("userlib.hydra.sniprun").open_visual()<cr>', {
       desc = 'Open sniprun'
     })
   end,

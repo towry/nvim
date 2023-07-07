@@ -1,16 +1,29 @@
-local plug = require('libs.runtime.pack').plug
-local au = require('libs.runtime.au')
-local cmdstr = require('libs.runtime.keymap').cmdstr
+local plug = require('userlib.runtime.pack').plug
+local au = require('userlib.runtime.au')
+local cmdstr = require('userlib.runtime.keymap').cmdstr
 
 
 plug({
   'mbbill/undotree',
+  keys = {
+    {
+      'u',
+      '<cmd>:UndotreeToggle<cr>',
+      desc = 'Toggle undo tree',
+    },
+    {
+      'U',
+      '<cmd>:UndotreeToggle<cr>',
+      desc = 'Toggle undo tree',
+    }
+  },
   cmd = { 'UndotreeToggle' },
   init = function()
     local g = vim.g
     g.undotree_WindowLayout = 1
     g.undotree_SetFocusWhenToggle = 1
-    g.undotree_SplitWidth = 30
+    g.undotree_SplitWidth = 20
+    g.undotree_DiffAutoOpen = 0
   end
 })
 
@@ -27,9 +40,9 @@ plug({
   {
     'tpope/vim-fugitive',
     keys = {
-      { '<leader>gg', ":Git<cr>",               desc = "Fugitive Git" },
+      { '<leader>gg', ":Git<cr>", desc = "Fugitive Git" },
       { '<leader>ga', cmdstr([[!git add %:p]]), desc = "!Git add current" },
-      { '<leader>gA', cmdstr([[!git add .]]),   desc = "!Git add all" },
+      { '<leader>gA', cmdstr([[!git add .]]), desc = "!Git add all" },
     },
     cmd = {
       'G',
@@ -90,26 +103,26 @@ plug({
     keys = {
       {
         '<leader>gf',
-        '<cmd>lua require("libs.git.utils").toggle_files_history()<cr>',
+        '<cmd>lua require("userlib.git.utils").toggle_files_history()<cr>',
         desc =
         'Files history'
       },
       {
         '<leader>gF',
-        [[<cmd>lua require("libs.git.utils").toggle_files_history(nil, '%')<cr>]],
+        [[<cmd>lua require("userlib.git.utils").toggle_files_history(nil, '%')<cr>]],
         desc =
         'Current file history(diffview)'
       },
       ---FIXME: <Space>e keymap not reset when exist the diffview. it should be buffer local keymaps.
       {
         '<leader>gs',
-        '<cmd>lua require("libs.git.utils").toggle_working_changes()<cr>',
+        '<cmd>lua require("userlib.git.utils").toggle_working_changes()<cr>',
         desc =
         'Current status/changes'
       },
       {
         '<leader>gq',
-        '<cmd>lua require("libs.git.utils").close_git_views()<cr>',
+        '<cmd>lua require("userlib.git.utils").close_git_views()<cr>',
         desc = 'Quite git views',
       },
     },
@@ -135,13 +148,13 @@ plug({
       },
       hooks = {
         diff_buf_read = function(bufnr)
-          local autocmd = require('libs.runtime.au')
+          local autocmd = require('userlib.runtime.au')
           autocmd.fire_event(autocmd.events.onGitDiffviewBufRead, {
             bufnr = bufnr,
           })
         end,
         view_opened = function(view)
-          local autocmd = require('libs.runtime.au')
+          local autocmd = require('userlib.runtime.au')
           autocmd.fire_event(autocmd.events.onGitDiffviewOpen, {
             view = view,
           })
@@ -160,7 +173,7 @@ plug({
     keys = {
       {
         '<leader>gc',
-        '<cmd>lua require("libs.hydra.git").open_git_conflict_hydra()<cr>',
+        '<cmd>lua require("userlib.hydra.git").open_git_conflict_hydra()<cr>',
         desc = 'Open git conflict menus',
       }
     },
@@ -178,10 +191,10 @@ plug({
       local conflict = require('git-conflict')
 
       conflict.setup({
-        default_mappings = false,   -- disable buffer local mapping created by this plugin
+        default_mappings = false, -- disable buffer local mapping created by this plugin
         default_commands = true,
         disable_diagnostics = true, -- This will disable the diagnostics in a buffer whilst it is conflicted
-        highlights = {              -- They must have background color, otherwise the default color will be used
+        highlights = { -- They must have background color, otherwise the default color will be used
           -- incoming = 'DiffText',
           -- current = 'DiffAdd',
         },
@@ -199,18 +212,18 @@ plug({
       local present, worktree = pcall(require, 'git-worktree')
       if not present then return end
 
-      local utils = require('libs.runtime.utils')
-      local au = require('libs.runtime.au')
+      local utils = require('userlib.runtime.utils')
+      local au = require('userlib.runtime.au')
 
       -- ╭──────────────────────────────────────────────────────────╮
       -- │ Setup                                                    │
       -- ╰──────────────────────────────────────────────────────────╯
       worktree.setup({
-        change_directory_command = 'cd',  -- default: "cd",
-        update_on_change = true,          -- default: true,
+        change_directory_command = 'cd', -- default: "cd",
+        update_on_change = true, -- default: true,
         update_on_change_command = 'e .', -- default: "e .",
-        clearjumps_on_change = true,      -- default: true,
-        autopush = false,                 -- default: false,
+        clearjumps_on_change = true, -- default: true,
+        autopush = false, -- default: false,
       })
 
       -- ╭──────────────────────────────────────────────────────────╮
@@ -261,23 +274,18 @@ plug({
     'lewis6991/gitsigns.nvim',
     keys = {
       {
-        'gh', '<cmd>lua require("libs.hydra.git").open_git_signs_hydra()<cr>'
+        'gh', '<cmd>lua require("userlib.hydra.git").open_git_signs_hydra()<cr>'
       }
     },
     event = au.user_autocmds.FileOpenedAfter_User,
     config = function()
       local gitsigns_current_blame_delay = 0
+      local autocmd = require('userlib.runtime.au')
 
       local signs = require('gitsigns')
-      local autocmd = require('libs.runtime.au')
-
-      -- register legendary
-      autocmd.define_user_autocmd({
-        pattern = au.user_autocmds.LegendaryConfigDone,
-        callback = function()
-          require('legendary').commands(require('libs.legendary.commands.git'))
-        end,
-      })
+      require('userlib.legendary').pre_hook('git_lg', function(lg)
+        lg.commands(require('userlib.legendary.commands.git'))
+      end)
 
       -- ╭──────────────────────────────────────────────────────────╮
       -- │ Setup                                                    │
@@ -292,8 +300,8 @@ plug({
           untracked = { hl = 'GitSignsAddNr', text = '┃', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
         },
         signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
-        numhl = false,     -- Toggle with `:Gitsigns toggle_numhl`
-        linehl = false,    -- Toggle with `:Gitsigns toggle_linehl`
+        numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
+        linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
         word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
         watch_gitdir = {
           interval = 1000,
@@ -343,7 +351,7 @@ plug({
     vim.g.committia_open_only_vim_starting = 1
 
     vim.api.nvim_create_user_command('CommittiaOpenGit', function()
-      require('libs.runtime.utils').load_plugins({ 'committia.vim' })
+      require('userlib.runtime.utils').load_plugins({ 'committia.vim' })
       vim.fn['committia#open']('git')
     end, {})
 
@@ -351,7 +359,7 @@ plug({
     --   pattern = { 'MERGE_MSG' },
     --   group = vim.api.nvim_create_augroup('_gitcommit', { clear = true }),
     --   callback = function()
-    --     require('libs.runtime.utils').load_plugins({ 'committia.vim' })
+    --     require('userlib.runtime.utils').load_plugins({ 'committia.vim' })
     --     vim.fn['committia#open']('git')
     --   end
     -- })
