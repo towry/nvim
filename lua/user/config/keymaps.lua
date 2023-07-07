@@ -79,8 +79,11 @@ local function setup_basic()
     desc = 'Case change in visual mode'
   })
 
-  set({ 'v', 'i' }, '<F1>', cmd('wa'), {
+  set({ 'v', 'i' }, '<F1>', cmd('bufdo update'), {
     desc = 'Save all files',
+  })
+  set('n', '<localleader>w', cmd('update'), {
+    desc = 'Save current buffer',
   })
 
   -- yanks

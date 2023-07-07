@@ -161,6 +161,7 @@ pack.plug({
 --- legendary
 pack.plug({
   'mrjones2014/legendary.nvim',
+  branch = 'mrj/390/select-from-root-group',
   dependencies = {
     'dressing.nvim',
     -- used for frecency sort

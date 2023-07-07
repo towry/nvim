@@ -39,7 +39,7 @@
   "jump-tag": { "branch": "main", "commit": "b323cf42472d774f4e3564398d9a502254776de1" },
   "lazy.nvim": { "branch": "main", "commit": "f8611632d0f9c6818e8eb54f9bcd1dad122b5a7f" },
   "lazygit.nvim": { "branch": "main", "commit": "3466e48439601445e26c65635421625886f2d0c0" },
-  "legendary.nvim": { "branch": "master", "commit": "09beae8257a821a0ad4cc3f9178c3ba80067258c" },
+  "legendary.nvim": { "branch": "mrj/390/select-from-root-group", "commit": "d3ed8644099cf9df2f47bbd5bfaa59676d44b8e8" },
   "lspkind-nvim": { "branch": "master", "commit": "57610d5ab560c073c465d6faf0c19f200cb67e6e" },
   "lua-gf.nvim": { "branch": "master", "commit": "97bdb8ec51c4f3a75bf4f44b0825698d5d8773ff" },
   "lualine.nvim": { "branch": "master", "commit": "05d78e9fd0cdfb4545974a5aa14b1be95a86e9c9" },
