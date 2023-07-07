@@ -2,12 +2,6 @@ return function(cwd)
   local select_prompt = 'Folder action under: ' .. require('userlib.runtime.path').home_to_tilde(cwd)
   local funcs = {
     {
-      label = 'Open with mini.files',
-      function()
-        require('mini.files').open(cwd, true)
-      end,
-    },
-    {
       label = 'Open with NVimTree',
       function()
         local nvim_tree_api = require('nvim-tree.api')
@@ -17,6 +11,12 @@ return function(cwd)
           current_window = false,
         })
         nvim_tree_api.tree.change_root(cwd)
+      end,
+    },
+    {
+      label = 'Open with mini.files',
+      function()
+        require('mini.files').open(cwd, true)
       end,
     },
     {

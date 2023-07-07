@@ -189,5 +189,18 @@ M.prev_unsaved_buf = function()
   -- vim.api.nvim_set_current_buf(prev_buf)
 end
 
+function M.preserve_window(callback, ...)
+  local win = vim.api.nvim_get_current_win()
+  callback(...)
+  if win ~= vim.api.nvim_get_current_win() then vim.cmd.wincmd('p') end
+end
+
+--- Autosize horizontal split to match its minimum content
+--- https://vim.fandom.com/wiki/Automatically_fitting_a_quickfix_window_height
+---@param min_height number
+---@param max_height number
+function M.adjust_split_height(min_height, max_height)
+  vim.api.nvim_win_set_height(0, math.max(math.min(vim.fn.line('$'), max_height), min_height))
+end
 
 return M

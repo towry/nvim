@@ -94,6 +94,7 @@ plug({
 
         -- close term if is in normal mode otherwise enter normal mode.
         nvim_buf_set_keymap('t', '<C-q>', function()
+          print(vim.fn.mode(1));
           -- if vim.fn.mode() == 'n' then
           --   return [[<C-\><C-n>:ToggleTerm<CR>]]
           -- end

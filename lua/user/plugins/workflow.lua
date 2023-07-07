@@ -491,22 +491,16 @@ plug({
             require('trouble').close()
             return
           end
-          local buffers = vim.api.nvim_list_bufs()
-          local bufFound = false
-          for _, buffer in ipairs(buffers) do
-            local bufferType = vim.api.nvim_buf_get_option(buffer, 'buftype')
-            if bufferType == 'quickfix' then
-              bufFound = true
-              break
-            end
-          end
-          if not bufFound then
-            vim.api.nvim_command('botright copen 10')
-          else
-            vim.api.nvim_command('cclose')
-          end
+          require('userlib.runtime.qf').toggle_qf()
         end,
-        desc = 'Quick list'
+        desc = 'Toggle Quickfix'
+      },
+      {
+        '<leader>tl',
+        function()
+          require('userlib.runtime.qf').toggle_loc()
+        end,
+        desc = 'Toggle loclist',
       }
     },
     config = function()
