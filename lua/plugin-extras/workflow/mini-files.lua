@@ -45,9 +45,4 @@ return plug({
       callback = function(args) vim.wo[args.data.win_id].relativenumber = true end,
     })
   end,
-  init = function()
-    -- require('userlib.finder.hook').register_select_folder_action(function(cwd)
-    --   require('mini.files').open(cwd, false)
-    -- end)
-  end
 })

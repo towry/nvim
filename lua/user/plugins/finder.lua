@@ -40,7 +40,7 @@ plug({
   },
   config = function()
     local HEIGHT_RATIO = 0.8 -- You can change this
-    local WIDTH_RATIO = 0.5  -- You can change this too
+    local WIDTH_RATIO = 0.5 -- You can change this too
     local TREE_INIT_WIDTH = 40
 
 
@@ -241,20 +241,6 @@ plug({
         end
       end
     })
-    au.define_user_autocmd({
-      pattern = 'LazyUIEnterOnce',
-      callback = function()
-        require('userlib.finder.hook').register_select_folder_action(function(cwd)
-          local nvim_tree_api = require('nvim-tree.api')
-          nvim_tree_api.tree.open({
-            update_root = false,
-            find_file = false,
-            current_window = false,
-          })
-          nvim_tree_api.tree.change_root(cwd)
-        end)
-      end,
-    })
   end,
 })
 
@@ -326,7 +312,7 @@ plug({
 plug({
   'simrat39/symbols-outline.nvim',
   keys = {
-    { '<leader>/o',  '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
     { '<Char-0xAF>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
@@ -431,20 +417,22 @@ plug({
     {
       '<leader>gb',
       function()
-        require('userlib.ui.select')({
-          'Git branches',
-          'Git branches with remote',
+        require('userlib.ui.dropdown').select({
+          items = {
+            {
+              label = 'Git branches',
+              hint = 'local',
+              'Telescope git_branches show_remote_tracking_branches=false',
+            },
+            {
+              label = 'Git branches',
+              hint = 'remotes',
+              'Telescope git_branches',
+            },
+          }
         }, {
-          prompt = 'Which to call'
-        }, function(choice)
-          if choice == 'Git branches' then
-            vim.cmd('Telescope git_branches show_remote_tracking_branches=false')
-          elseif choice == "Git branches with remote" then
-            vim.cmd('Telescope git_branches')
-          else
-            return
-          end
-        end)
+          prompt_title = 'Select action',
+        })
       end,
       desc = 'Git branches'
     },
@@ -643,7 +631,7 @@ plug({
               ['<CR>'] = function()
                 local entry_path = action_state.get_selected_entry().Path
                 local new_cwd = entry_path:is_dir() and entry_path:absolute() or entry_path:parent():absolute()
-                require('userlib.finder.legendary.folder-action').enter(new_cwd).then_folder_action()
+                require('userlib.finder.legendary.folder-action')(new_cwd)
               end,
             }
           }
