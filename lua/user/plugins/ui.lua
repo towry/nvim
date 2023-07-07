@@ -4,7 +4,7 @@ local au = require('userlib.runtime.au')
 plug({
   {
     'tzachar/highlight-undo.nvim',
-    keys = { 'u', '<C-r>' },
+    cmd = { 'UndotreeToggle' },
     opts = {
       hlgroup = 'IncSearch',
       duration = 200,

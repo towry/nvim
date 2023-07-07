@@ -28,15 +28,17 @@ plug({
     {
       -- <cmd-b> to find file.
       '<Char-0xAC>',
-      -- cmd_modcall('userlib.plugin-nvim-tree', 'nvim_tree_find_file({fallback=true})'),
-      cmd_modcall('userlib.plugin-nvim-tree', 'toggle_nvim_tree()'),
+      cmd_modcall('userlib.plugin-nvim-tree', 'nvim_tree_find_file({fallback=true})'),
+      -- cmd_modcall('userlib.plugin-nvim-tree', 'toggle_nvim_tree()'),
       desc = 'Locate current file in tree',
     },
     {
-      '<F1>',
-      '<cmd>NvimTreeFindFile<cr>',
+      '<localleader>b',
+      cmd_modcall('userlib.plugin-nvim-tree', 'nvim_tree_find_file({fallback=true})'),
+      -- cmd_modcall('userlib.plugin-nvim-tree', 'toggle_nvim_tree()'),
       desc = 'Locate current file in tree',
-    }
+
+    },
   },
   config = function()
     local HEIGHT_RATIO = 0.8 -- You can change this
@@ -113,7 +115,7 @@ plug({
         root_folder_modifier = ':~',
         indent_width = 1,
         indent_markers = {
-          enable = true,
+          enable = false,
           icons = {
             corner = '└ ',
             edge = '│ ',
@@ -468,6 +470,18 @@ plug({
         require('telescope').extensions.file_browser.file_browser({
           files = false,
           cwd = vim.cfg.runtime__starts_cwd,
+        })
+      end,
+      desc =
+      'Find folders'
+    },
+    {
+      '<localleader>l',
+      function()
+        --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
+        require('telescope').extensions.file_browser.file_browser({
+          files = false,
+          cwd = require('userlib.runtime.utils').get_root(),
         })
       end,
       desc =

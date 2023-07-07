@@ -185,22 +185,19 @@ local function setup_basic()
     noremap = true,
     nowait = true,
   })
-  set('n', '<leader><space>q', cmd([[:qa]]), {
+  set('n', 'qq', cmd([[:qa]]), {
     desc = 'Quit all',
     noremap = true,
     nowait = true,
   })
-end
-
-local function setup_git()
-  set('n', '<leader>gb', cmd([[require("userlib.git.blame").open_blame()]]), {
-    desc = 'Git open blame',
+  set('c', '<C-q>', ('<C-u>qa<CR>'), {
+    desc = 'Make sure <C-q> do not insert weird chars',
+    nowait = true,
   })
 end
 
 function M.setup()
   setup_basic()
-  -- setup_git()
 end
 
 return M
