@@ -469,6 +469,7 @@ plug({
         --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
         require('telescope').extensions.file_browser.file_browser({
           files = false,
+          use_fd = true,
           cwd = vim.cfg.runtime__starts_cwd,
         })
       end,
@@ -481,6 +482,7 @@ plug({
         --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
         require('telescope').extensions.file_browser.file_browser({
           files = false,
+          use_fd = true,
           cwd = require('userlib.runtime.utils').get_root(),
         })
       end,

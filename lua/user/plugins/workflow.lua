@@ -371,6 +371,8 @@ plug({
             "~/.local/*",
             "~/.cache/*",
             "/dist/*",
+            "/node_modules/*",
+            "/.pnpm/*"
           },
           -- Show hidden files in telescope
           show_hidden = false,
