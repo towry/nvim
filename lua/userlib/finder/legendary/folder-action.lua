@@ -45,6 +45,18 @@ return function(cwd)
           cwd = cwd,
         })
       end,
+    },
+    {
+      label = 'Find folders',
+      function()
+        require('telescope').extensions.file_browser.file_browser({
+          files = false,
+          use_fd = true,
+          cwd = cwd,
+          depth = 1,
+          respect_gitignore = false,
+        })
+      end,
     }
   }
 

@@ -470,6 +470,7 @@ plug({
         require('telescope').extensions.file_browser.file_browser({
           files = false,
           use_fd = true,
+          hide_parent_dir = true,
           cwd = vim.cfg.runtime__starts_cwd,
         })
       end,
@@ -483,6 +484,7 @@ plug({
         require('telescope').extensions.file_browser.file_browser({
           files = false,
           use_fd = true,
+          hide_parent_dir = true,
           cwd = require('userlib.runtime.utils').get_root(),
         })
       end,
