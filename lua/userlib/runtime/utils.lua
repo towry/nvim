@@ -213,7 +213,7 @@ M.plugin_schedule_wrap = function(plugins, cb)
     if type(cb) ~= 'function' then return end
     M.load_plugins(plugins)
     vim.schedule(function()
-      cb(_unpack(args))
+      cb(unpack(args))
     end)
   end
 end
