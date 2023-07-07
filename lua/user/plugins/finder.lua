@@ -641,6 +641,7 @@ plug({
       },
       extensions = {
         file_browser = {
+          use_fd = true,
           mappings = {
             i = {
               ['<CR>'] = function()

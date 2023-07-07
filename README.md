@@ -4,7 +4,7 @@ Works without plugins.
 
 ## TODO
 
-[ ] Improve format.
+- [ ] Improve format.
 
 ## Commands
 
