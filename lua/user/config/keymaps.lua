@@ -27,8 +27,10 @@ local function setup_basic()
     noremap = true,
     desc = "Enter cmdline easily"
   })
+  --- command line history.
   set('c', '<C-;>', function()
-    return vim.api.nvim_replace_termcodes('<C-u><C-p>', true, false, true)
+    return [[lua require('userlib.telescope.pickers').command_history()<CR>]]
+    --   return vim.api.nvim_replace_termcodes('<C-u><C-p>', true, false, true)
   end, {
     expr = true,
     noremap = false,

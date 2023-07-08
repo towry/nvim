@@ -132,6 +132,7 @@ M.project_files = function(opts)
   end
 end
 
+--- - <C-e>: open the command line with the text of the selected.
 M.command_history = function()
   local builtin = require('telescope.builtin')
 
@@ -139,7 +140,7 @@ M.command_history = function()
     color_devicons = true,
     winblend = 4,
     layout_config = {
-      width = function(_, max_columns, _) return math.min(max_columns, 150) end,
+      width = function(_, max_columns, _) return math.min(max_columns, 100) end,
       height = function(_, _, max_lines) return math.min(max_lines, 15) end,
     },
   }))
