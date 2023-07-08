@@ -117,7 +117,7 @@ plug({
         lualine_a = {
           {
             separator = { left = '', },
-            right_padding = 2,
+            right_padding = 0,
             function()
               local unsaved_count = #Buffer.unsaved_list({ perf = true })
               local has_modified = unsaved_count > 0
@@ -143,7 +143,7 @@ plug({
         lualine_b = {
           {
             'branch',
-            icon = " "
+            icon = ""
           },
           'searchcount',
         },
@@ -152,13 +152,12 @@ plug({
           {
             function()
               return require('userlib.runtime.path').home_to_tilde(vim.uv.cwd())
-              -- return require('userlib.runtime.path').home_to_tilde(require('userlib.runtime.utils').get_root())
             end,
             icon = {
               " ",
-              color = 'Whitespace'
+              -- color = 'Type'
             },
-            color = 'Comment',
+            -- color = 'NormalNC',
             maxwidth = 20
           },
 
