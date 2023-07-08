@@ -13,3 +13,4 @@
 local mapopts = { nowait = true, noremap = true, silent = true, buffer = 0 }
 vim.keymap.set('n', 'l', '<cmd>wincmd l<cr>', mapopts)
 vim.keymap.set('n', 'h', '<cmd>wincmd l<cr>', mapopts)
+vim.keymap.set('n', '<ESC>', ':UndotreeHide<cr>', mapopts)
