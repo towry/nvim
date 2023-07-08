@@ -105,11 +105,12 @@ plug({
       {
         '<S-q>',
         function()
-          if vim.bo.buftype ~= "" then
+          local buftype = vim.bo.buftype
+          if buftype ~= "" then
             require('mini.bufremove').wipeout(0)
             if not vim.tbl_contains({
               'terminal',
-            }, vim.bo.buftype) then
+            }, buftype) then
               vim.cmd('q')
             end
             return
