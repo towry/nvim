@@ -90,15 +90,15 @@ function M.setup()
     },
   })
 
-  vim.diagnostic.handlers.underline = {
-    show = M.remove_multiline_underline_handler,
-    hide = vim.diagnostic.handlers.underline.hide,
-  }
+  -- vim.diagnostic.handlers.underline = {
+  --   show = M.remove_multiline_underline_handler,
+  --   hide = vim.diagnostic.handlers.underline.hide,
+  -- }
 
-  vim.diagnostic.handlers.virtual_text = {
-    show = M.add_source_to_virtual_text_handler,
-    hide = vim.diagnostic.handlers.virtual_text.hide,
-  }
+  -- vim.diagnostic.handlers.virtual_text = {
+  --   show = M.add_source_to_virtual_text_handler,
+  --   hide = vim.diagnostic.handlers.virtual_text.hide,
+  -- }
 
   if type(signs) == 'table' then
     for type, icon in pairs(signs) do
