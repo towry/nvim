@@ -96,7 +96,7 @@ plug({
         desc = 'Close current buffer and window',
       },
       {
-        '<leader>b-',
+        '<leader>bh',
         function()
           require('mini.bufremove').unshow(0)
         end,
