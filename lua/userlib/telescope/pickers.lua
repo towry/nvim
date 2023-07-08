@@ -143,6 +143,17 @@ M.command_history = function()
       width = function(_, max_columns, _) return math.min(max_columns, 100) end,
       height = function(_, _, max_lines) return math.min(max_lines, 15) end,
     },
+    filter_fn = function(cmd)
+      return not vim.tbl_contains({
+        'h',
+        ':',
+        'w',
+        'wa',
+        'q',
+        'qa',
+        'qa!',
+      }, vim.trim(cmd))
+    end
   }))
 end
 
