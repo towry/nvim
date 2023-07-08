@@ -44,7 +44,6 @@ local function get_formal_source_name(source_name)
   return format
 end
 
-
 M.remove_multiline_underline_handler = function(namespace, bufnr, diagnostics, opts)
   local buf_lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
 
@@ -83,10 +82,12 @@ function M.setup()
     signs = signs == false and false or true,
     underline = true,
     update_in_insert = false,
-    virtual_text = false,
-    -- virtual_text = {
-    --   prefix = '■',
-    -- },
+    -- virtual_text = false,
+    virtual_text = {
+      severity = vim.diagnostic.severity.ERROR,
+      spacing = 2,
+      prefix = '■',
+    },
   })
 
   vim.diagnostic.handlers.underline = {
