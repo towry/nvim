@@ -2,7 +2,7 @@ return function(cwd)
   local select_prompt = 'Folder action under: ' .. require('userlib.runtime.path').home_to_tilde(cwd)
   local funcs = {
     {
-      label = 'Open with NVimTree',
+      label = '  Open NVimTree',
       function()
         local nvim_tree_api = require('nvim-tree.api')
         nvim_tree_api.tree.open({
@@ -14,13 +14,14 @@ return function(cwd)
       end,
     },
     {
-      label = 'Open with mini.files',
+      label = '  Open mini.files',
       function()
         require('mini.files').open(cwd, true)
       end,
     },
     {
-      label = 'Find files with telescope',
+      label = '  Find files',
+      hint = 'Telescope',
       function()
         require('userlib.telescope.pickers').project_files({
           cwd = cwd,
@@ -29,7 +30,8 @@ return function(cwd)
       end,
     },
     {
-      label = 'Recent files',
+      label = '  Recent files',
+      hint = 'Telescope',
       function()
         require('userlib.telescope.pickers').project_files({
           oldfiles = true,
@@ -39,7 +41,8 @@ return function(cwd)
       end,
     },
     {
-      label = 'Search content',
+      label = '  Search content',
+      hint = 'Telescope rig',
       function()
         require('userlib.telescope.live_grep_call')({
           cwd = cwd,
@@ -47,7 +50,8 @@ return function(cwd)
       end,
     },
     {
-      label = 'Find folders',
+      label = '  Find folders',
+      hint = 'Telescope',
       function()
         require('telescope').extensions.file_browser.file_browser({
           files = false,

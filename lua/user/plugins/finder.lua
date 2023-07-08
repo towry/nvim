@@ -412,6 +412,11 @@ plug({
   cmd = { 'Telescope' },
   keys = {
     {
+      '<leader>fb',
+      cmd_modcall(pickers_mod, 'curbuf()'),
+      desc = 'Fuzzy search in current buffer',
+    },
+    {
       '<Tab>',
       cmd_modcall(pickers_mod, 'buffers_or_recent()'),
       desc =
