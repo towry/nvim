@@ -174,8 +174,9 @@ function M.curbuf()
   local themes = require('telescope.themes')
 
   local opts = themes.get_dropdown({
+    skip_empty_lines = true,
     winblend = 10,
-    previewer = false,
+    previewer = true,
     shorten_path = false,
     borderchars = {
       prompt = { '─', '│', ' ', '│', '╭', '╮', '│', '│' },
@@ -184,8 +185,7 @@ function M.curbuf()
     },
     border = {},
     layout_config = {
-      width = 0.45,
-      prompt_position = 'top',
+      width = 0.55,
     },
   })
   builtin.current_buffer_fuzzy_find(opts)
@@ -211,61 +211,6 @@ M.edit_neovim = function()
       prompt_position = 'top',
     },
   }))
-end
-
--- Implement delta as previewer for diffs
-
-M.my_git_commits = function(opts)
-  local builtin = require('telescope.builtin')
-  local previewers = require('telescope.previewers')
-  local delta = previewers.new_termopen_previewer({
-    get_command = function(entry)
-      return { 'git', '-c', 'core.pager=delta', '-c', 'delta.side-by-side=false', 'diff', entry.value .. '^!' }
-    end,
-  })
-
-  if not previewers then
-    Ty.NOTIFY('telescope config error')
-    return
-  end
-  opts = opts or {}
-  opts.previewer = {
-    delta,
-    previewers.git_commit_message.new(opts),
-    previewers.git_commit_diff_as_was.new(opts),
-  }
-
-  builtin.git_commits(opts)
-end
-
-M.my_git_bcommits = function(opts)
-  local previewers = require('telescope.previewers')
-  local builtin = require('telescope.builtin')
-
-  local delta_bcommits = previewers.new_termopen_previewer({
-    get_command = function(entry)
-      return {
-        'git',
-        '-c',
-        'core.pager=delta',
-        '-c',
-        'delta.side-by-side=false',
-        'diff',
-        entry.value .. '^!',
-        '--',
-        entry.current_file,
-      }
-    end,
-  })
-
-  opts = opts or {}
-  opts.previewer = {
-    delta_bcommits,
-    previewers.git_commit_message.new(opts),
-    previewers.git_commit_diff_as_was.new(opts),
-  }
-
-  builtin.git_bcommits(opts)
 end
 
 function M.buffers_or_recent()

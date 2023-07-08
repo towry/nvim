@@ -17,12 +17,12 @@ plug({
       desc = 'Toggle undo tree',
     }
   },
-  cmd = { 'UndotreeToggle' },
+  cmd = { 'UndotreeToggle', 'UndotreeHide', 'UndotreeShow' },
   init = function()
     local g = vim.g
     g.undotree_WindowLayout = 1
     g.undotree_SetFocusWhenToggle = 1
-    g.undotree_SplitWidth = 20
+    g.undotree_SplitWidth = 30
     g.undotree_DiffAutoOpen = 0
   end
 })

@@ -174,6 +174,7 @@ plug({
     },
     opts = {
       search = {
+        exclude = vim.cfg.misc__ft_exclude,
       }
     },
     config = function(_, opts)
@@ -208,6 +209,7 @@ plug({
           end,
         })
       end
+
       opts.defaults = vim.tbl_deep_extend("force", opts.defaults or {}, {
         mappings = {
           n = { ['-'] = flash },

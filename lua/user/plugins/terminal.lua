@@ -93,14 +93,20 @@ plug({
         nvim_buf_set_keymap('t', '<C-S-\\>', [[<C-\><C-n>:ToggleTerm<CR>]], opts)
 
         -- close term if is in normal mode otherwise enter normal mode.
-        nvim_buf_set_keymap('t', '<C-q>', function()
-          -- if vim.fn.mode() == 'n' then
-          --   return [[<C-\><C-n>:ToggleTerm<CR>]]
-          -- end
+        nvim_buf_set_keymap({ 't' }, '<ESC>', function()
           vim.cmd('noau stopinsert')
         end, {
           nowait = true,
           noremap = true,
+          expr = true,
+          buffer = buffer
+        })
+        nvim_buf_set_keymap('n', '<ESC>', function()
+          if vim.api.nvim_get_mode().mode == 'nt' then
+            return [[<C-\><C-n>:ToggleTerm<CR>]]
+          end
+        end, {
+          nowait = true,
           expr = true,
           buffer = buffer
         })

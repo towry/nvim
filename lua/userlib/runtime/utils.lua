@@ -1,7 +1,8 @@
 local M = {}
 
 M.root_patterns = { '.git', '_darcs', '.bzr', '.svn', '.vscode', '.gitmodules', 'pnpm-workspace.yaml', 'Cargo.toml' }
-M.root_lsp_ignore = { 'null-ls', 'tailwindcss' }
+--- ignore jsonls: inside package.json, it give root to parent root.
+M.root_lsp_ignore = { 'null-ls', 'tailwindcss', 'jsonls' }
 
 M.file_exists = function(path)
   local f = io.open(path, 'r')
@@ -213,7 +214,7 @@ M.plugin_schedule_wrap = function(plugins, cb)
     if type(cb) ~= 'function' then return end
     M.load_plugins(plugins)
     vim.schedule(function()
-      cb(_unpack(args))
+      cb(unpack(args))
     end)
   end
 end
