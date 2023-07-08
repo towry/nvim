@@ -107,7 +107,11 @@ plug({
         function()
           if vim.bo.buftype ~= "" then
             require('mini.bufremove').wipeout(0)
-            vim.cmd('q')
+            if not vim.tbl_contains({
+              'terminal',
+            }, vim.bo.buftype) then
+              vim.cmd('q')
+            end
             return
           end
           local valid_buf_count = #(require('userlib.runtime.buffer').list_normal_bufnrs())

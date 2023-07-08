@@ -107,7 +107,8 @@ M.project_files = function(opts)
         map_i_actions(_, map)
         map('i', '<C-b>', cycle.next, { noremap = true, silent = true })
         return true
-      end
+      end,
+      only_cwd = false,
     }, opts)
     return require('telescope.builtin').oldfiles(opts)
   end
