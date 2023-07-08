@@ -173,9 +173,15 @@ plug({
     },
     opts = {
       search = {
-        enable = false,
         exclude = vim.cfg.misc__ft_exclude,
-      }
+      },
+      modes = {
+        -- options used when flash is activated through
+        -- a regular search with `/` or `?`
+        search = {
+          enabled = false,
+        }
+      },
     },
     config = function(_, opts)
       require('flash').setup(opts)
