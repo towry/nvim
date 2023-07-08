@@ -154,8 +154,7 @@ plug({
               return require('userlib.runtime.path').home_to_tilde(vim.uv.cwd())
             end,
             icon = {
-              " ",
-              -- color = 'Type'
+              "",
             },
             -- color = 'NormalNC',
             maxwidth = 20
