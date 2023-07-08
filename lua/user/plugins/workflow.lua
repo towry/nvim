@@ -360,7 +360,8 @@ plug({
         end,
         opts = {
           patterns = require('userlib.runtime.utils').root_patterns,
-          detection_methods = { 'pattern' },
+          --- order matters
+          detection_methods = { 'pattern', 'lsp' },
           manual_mode = false,
           -- Table of lsp clients to ignore by name
           -- eg: { "efm", ... }
