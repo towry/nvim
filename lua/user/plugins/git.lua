@@ -7,15 +7,10 @@ plug({
   'mbbill/undotree',
   keys = {
     {
-      'u',
+      '<leader>bu',
       '<cmd>:UndotreeToggle<cr>',
       desc = 'Toggle undo tree',
     },
-    {
-      'U',
-      '<cmd>:UndotreeToggle<cr>',
-      desc = 'Toggle undo tree',
-    }
   },
   cmd = { 'UndotreeToggle', 'UndotreeHide', 'UndotreeShow' },
   init = function()
