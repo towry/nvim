@@ -85,7 +85,7 @@ function M.setup()
     -- virtual_text = false,
     virtual_text = {
       severity = vim.diagnostic.severity.ERROR,
-      spacing = 2,
+      spacing = 1,
       prefix = '■',
     },
   })
