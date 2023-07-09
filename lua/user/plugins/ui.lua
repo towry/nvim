@@ -3,6 +3,7 @@ local au = require('userlib.runtime.au')
 
 plug({
   {
+    -- TODO: ignore on readonly
     'tzachar/highlight-undo.nvim',
     cmd = { 'UndotreeToggle' },
     keys = { 'u', '<C-r>' },
