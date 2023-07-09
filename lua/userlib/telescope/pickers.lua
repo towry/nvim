@@ -250,7 +250,7 @@ function M.buffers()
     ignore_current_buffer = true,
     sort_mru = true,
     -- layout_strategy = 'vertical',
-    layout_strategy = "bottom_pane",
+    -- layout_strategy = "bottom_pane",
     entry_maker = M.gen_from_buffer({
       bufnr_width = 2,
       sort_mru = true,
