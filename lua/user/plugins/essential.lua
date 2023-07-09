@@ -1,4 +1,7 @@
 local pack = require('userlib.runtime.pack')
+local function t(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
 
 ---- core
 pack.plug({
@@ -394,25 +397,39 @@ pack.plug({
       'y', '<Plug>(YankyYank)', mode = { 'n', 'x', }, desc = 'Yanky yank',
     },
     {
-      'p', '<Plug>(YankyPutAfter)', mode = { 'n', 'x', }, desc = 'Yanky put after',
+      'p', function()
+        vim.fn.feedkeys(t('<Plug>(YankyPutAfter)'))
+        require('userlib.hydra.yanky').open_yanky_ring_hydra()
+      end, mode = { 'n', 'x', }, desc = 'Yanky put after',
     },
     {
-      'P', '<Plug>(YankyPutBefore)', mode = { 'n', 'x', }, desc = 'Yanky put before',
+      'P', function()
+        vim.fn.feedkeys(t('<Plug>(YankyPutBefore)'))
+        require('userlib.hydra.yanky').open_yanky_ring_hydra()
+      end, mode = { 'n', 'x', }, desc = 'Yanky put before',
     },
     {
-      'gp', '<Plug>(YankyGPutAfter)', mode = { 'n', 'x', }, desc = 'Yanky gput after',
+      'gp', function()
+        vim.fn.feedkeys(t('<Plug>(YankyGPutAfter)'))
+        require('userlib.hydra.yanky').open_yanky_ring_hydra()
+      end, mode = { 'n', 'x', }, desc = 'Yanky gput after',
     },
     {
-      'gP', '<Plug>(YankyGPutBefore)', mode = { 'n', 'x', }, desc = 'Yanky gput before',
+      'gP', function()
+        vim.fn.feedkeys(t('<Plug>(YankyGPutBefore)'))
+        require('userlib.hydra.yanky').open_yanky_ring_hydra()
+      end, mode = { 'n', 'x', }, desc = 'Yanky gput before',
     },
   },
   config = function()
     require('yanky').setup({
       highlight = {
-        timer = 150,
+        timer = 900,
       },
+      --- cycle history when paste with shortcuts.
       ring = {
-        history_length = 30,
+        --- number of items used for ring.
+        history_length = 50,
         storage = 'shada',
       },
     })

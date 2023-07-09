@@ -121,12 +121,12 @@ local function setup_basic()
   set('v', 'X', '"_X', {
     desc = 'Cut chars and do not yank to register',
   })
-  set('v', 'p', '"_dP', {
-    desc = 'Do not yank on visual paste',
-  })
-  set('x', 'p', '"_dP', {
-    desc = 'Do not yank on select paste',
-  })
+  -- set('v', 'p', '"_dP', {
+  --   desc = 'Do not yank on visual paste',
+  -- })
+  -- set('x', 'p', '"_dP', {
+  --   desc = 'Do not yank on select paste',
+  -- })
 
   ---gx
   if vim.fn.has('macunix') == 1 then

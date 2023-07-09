@@ -5,6 +5,7 @@ Works without plugins.
 ## TODO
 
 - [ ] Improve format.
+- [ ] Remeber last edited window and buffer.
 
 ## Commands
 
