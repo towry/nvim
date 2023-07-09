@@ -5,9 +5,10 @@ plug({
   {
     'tzachar/highlight-undo.nvim',
     cmd = { 'UndotreeToggle' },
+    keys = { 'u', '<C-r>' },
     opts = {
       hlgroup = 'IncSearch',
-      duration = 200,
+      duration = 400,
     }
   },
 
