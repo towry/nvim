@@ -20,8 +20,9 @@ return plug({
         evaluate_single = false,
         items = {
           ---
-          new_section("Session load", [[SessionManager load_current_dir_session]], "Session"),
+          new_section("Session last", [[SessionManager load_last_session]], "Session"),
           new_section("Session list", [[SessionManager load_session]], "Session"),
+          new_section("Session load", [[SessionManager load_current_dir_session]], "Session"),
           ---
           new_section("Git Branchs", "Telescope git_branches show_remote_tracking_branches=false", "Built-in"),
           new_section("Lazy", "Lazy", "Built-in"),
