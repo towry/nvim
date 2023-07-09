@@ -1,3 +1,4 @@
+--- https://github.dev/tjdevries/config_manager/blob/master/xdg_config/nvim/plugin/options.lua
 local M = {}
 
 M.get_path_and_tail = function(filename)

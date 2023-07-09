@@ -16,6 +16,20 @@ pack.plug({
     'MunifTanjim/nui.nvim',
   },
   {
+    'nvim-telescope/telescope-ui-select.nvim',
+    dependencies = {
+      'nvim-telescope/telescope.nvim',
+    },
+    init = function()
+      require('userlib.runtime.au').define_user_autocmd({
+        pattern = 'TelescopeConfigDone',
+        callback = function()
+          require('telescope').load_extension('ui-select')
+        end,
+      })
+    end,
+  },
+  {
     'tpope/vim-repeat',
     keys = { '.' },
   },
@@ -147,7 +161,7 @@ pack.plug({
         get_config = function(opts)
           if opts.kind == 'codeaction' then
             return {
-              backend = 'builtin',
+              backend = 'telescope',
               nui = {
                 relative = 'cursor',
                 max_width = 80,

@@ -649,6 +649,11 @@ plug({
         },
       },
       extensions = {
+        ["ui-select"] = {
+          require("telescope.themes").get_dropdown {
+            -- even more opts
+          }
+        },
         file_browser = {
           use_fd = true,
           mappings = {

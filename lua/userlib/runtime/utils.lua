@@ -181,11 +181,15 @@ function M.get_root(root_opts)
   return root
 end
 
-M.use_plugin = function(plugin_name, callback)
-  local ok, plugin = require(plugin_name)
+M.use_plugin = function(plugin_name, callback, on_fail)
+  local ok, plugin = pcall(require, plugin_name)
   if not ok then
+    if on_fail then
+      on_fail()
+      return
+    end
     M.log('Error loading plugin: ' .. plugin_name)
-    return
+    return false
   end
   callback(plugin)
 end
