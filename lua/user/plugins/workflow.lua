@@ -66,6 +66,7 @@ plug({
   {
     'kazhala/close-buffers.nvim',
     module = 'close_buffers',
+    --- BDelete regex=term://
     cmd = {
       'BDelete',
       'BWipeout',
