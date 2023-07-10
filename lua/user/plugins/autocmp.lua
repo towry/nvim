@@ -274,7 +274,7 @@ pack.plug({
         },
         sorting = {
           comparators = {
-            require("copilot_cmp.comparators").prioritize,
+            -- require("copilot_cmp.comparators").prioritize,
             cmp.config.compare.offset,
             cmp.config.compare.exact,
             cmp.config.compare.score,
@@ -463,7 +463,7 @@ pack.plug({
   {
     -- https://github.com/dermoumi/dotfiles/blob/418de1a521e4f4ac6dc0aa10e75ffb890b0cb908/nvim/lua/plugins/copilot.lua#L4
     'github/copilot.vim',
-    enabled = false,
+    enabled = true,
     event = { 'InsertEnter' },
     keys = {
       { '<C-/>', mode = 'i' },

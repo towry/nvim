@@ -5,10 +5,10 @@ local au = require('userlib.runtime.au')
 plug({
   'nvim-lualine/lualine.nvim',
   dependencies = {
-    -- {
-    --   'pze/lualine-copilot',
-    --   dev = false,
-    -- },
+    {
+      'pze/lualine-copilot',
+      dev = false,
+    },
   },
   event = { 'User LazyUIEnterOncePost', 'User OnLeaveDashboard' },
   config = function()
@@ -178,10 +178,10 @@ plug({
         },
         lualine_x = {
           -- copilot status
-          require('copilot_status').status_string,
-          -- {
-          --   'copilot',
-          -- },
+          -- require('copilot_status').status_string,
+          {
+            'copilot',
+          },
           {
             'encoding',
             cond = function()
