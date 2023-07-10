@@ -37,12 +37,11 @@ plug({
       cmd_modcall('userlib.plugin-nvim-tree', 'nvim_tree_find_file({fallback=true})'),
       -- cmd_modcall('userlib.plugin-nvim-tree', 'toggle_nvim_tree()'),
       desc = 'Locate current file in tree',
-
     },
   },
   config = function()
     local HEIGHT_RATIO = 0.8 -- You can change this
-    local WIDTH_RATIO = 0.5 -- You can change this too
+    local WIDTH_RATIO = 0.5  -- You can change this too
     local TREE_INIT_WIDTH = 40
 
 
@@ -315,7 +314,7 @@ plug({
 plug({
   'simrat39/symbols-outline.nvim',
   keys = {
-    { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<leader>/o',  '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
     { '<Char-0xAF>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
@@ -659,10 +658,11 @@ plug({
           use_fd = true,
           mappings = {
             i = {
-              ['<CR>'] = function()
+              ['<CR>'] = function(prompt_buf)
                 local entry_path = action_state.get_selected_entry().Path
                 local new_cwd = entry_path:is_dir() and entry_path:absolute() or entry_path:parent():absolute()
-                require('userlib.finder.legendary.folder-action')(new_cwd)
+
+                require('userlib.hydra.folder-action').open(new_cwd, prompt_buf)
               end,
             }
           }
