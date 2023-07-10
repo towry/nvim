@@ -255,7 +255,7 @@ pack.plug({
         -- You should specify your *installed* sources.
         sources = {
           { name = 'nvim_lsp',                priority = 50, max_item_count = 6 },
-          { name = "copilot",                 priority = 30, max_item_count = 2 },
+          { name = "copilot",                 priority = 30, max_item_count = 4 },
           -- { name = 'codeium', priority = 7,   },
           { name = 'nvim_lsp_signature_help', priority = 40, max_item_count = 3 },
           { name = 'npm',                     priority = 3 },
