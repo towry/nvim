@@ -13,7 +13,7 @@ M.open = function(cwd, buffer)
   if not ok then return end
 
   local hydra = Hydra({
-    name = ' -> ',
+    name = '',
     mode = { 'n', 'i' },
     config = {
       buffer = buffer,
@@ -27,16 +27,16 @@ M.open = function(cwd, buffer)
           current_window = false,
         })
         nvim_tree_api.tree.change_root(cwd)
-      end), { private = true, desc = "NvimTree", exit = true } },
+      end), { private = true, desc = "Tree", exit = true } },
       {
         "m",
         _(function()
-          require('mini.files').open(cwd, true)
+          require('M.files').open(cwd, true)
         end),
         {
           private = true,
           nowait = true,
-          desc = "Mini.Files",
+          desc = "Files",
           exit = true,
         },
       },
@@ -51,7 +51,7 @@ M.open = function(cwd, buffer)
         {
           private = true,
           exit = true,
-          desc = 'Find files',
+          desc = 'Files',
         }
       },
       {
@@ -67,7 +67,7 @@ M.open = function(cwd, buffer)
         end),
         {
           private = true,
-          desc = 'Find folders',
+          desc = 'Folders',
           exit = true,
         },
       },
@@ -79,7 +79,7 @@ M.open = function(cwd, buffer)
           })
         end),
         {
-          desc = 'Search content',
+          desc = 'Content',
           private = true,
           exit = true,
         }
@@ -95,7 +95,19 @@ M.open = function(cwd, buffer)
         end),
         {
           private = true,
-          desc = 'Recent files',
+          desc = 'Recent',
+          exit = true,
+        }
+      },
+      {
+        "w",
+        _(function()
+          vim.uv.chdir(cwd)
+          vim.notify(('New cwd: %s'):format(require('userlib.runtime.path').home_to_tilde(cwd)), vim.log.levels.INFO)
+        end),
+        {
+          private = true,
+          desc = 'Cwd',
           exit = true,
         }
       }
