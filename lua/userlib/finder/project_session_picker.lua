@@ -55,7 +55,18 @@ local function session_projects(opts)
     finder = create_finder(),
     previewer = false,
     sorter = telescope_config.generic_sorter(opts),
-    attach_mappings = function(prompt_bufnr, _map)
+    attach_mappings = function(prompt_bufnr, map)
+      map('i', '<C-g>', function()
+        -- open folders picker.
+        actions.close(prompt_bufnr)
+        require('telescope').extensions.file_browser.file_browser({
+          files = false,
+          use_fd = true,
+          hide_parent_dir = true,
+          previewer = false,
+          cwd = vim.cfg.runtime__starts_cwd,
+        })
+      end)
       local on_project_selected = function()
         local entry_path = state.get_selected_entry().value
         if not entry_path then return end
