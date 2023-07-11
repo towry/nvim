@@ -131,13 +131,8 @@ plug({
 
   {
     'folke/flash.nvim',
+    event = 'User LazyUIEnterOncePost',
     keys = {
-      ';',
-      ',',
-      'f',
-      'F',
-      't',
-      'T',
       {
         "s",
         mode = { "n", "x", "o" },
