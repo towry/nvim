@@ -31,12 +31,12 @@ M.open = function(cwd, buffer)
       {
         "m",
         _(function()
-          require('M.files').open(cwd, true)
+          require('mini.files').open(cwd, true)
         end),
         {
           private = true,
           nowait = true,
-          desc = "Files",
+          desc = "M.Files",
           exit = true,
         },
       },
@@ -51,7 +51,7 @@ M.open = function(cwd, buffer)
         {
           private = true,
           exit = true,
-          desc = 'Files',
+          desc = 'T.Files',
         }
       },
       {

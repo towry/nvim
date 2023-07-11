@@ -3,25 +3,6 @@ local au = require('userlib.runtime.au')
 
 plug({
   {
-    -- TODO: ignore on readonly
-    'tzachar/highlight-undo.nvim',
-    cmd = { 'UndotreeToggle' },
-    keys = { 'u', '<C-r>' },
-    opts = {
-      hlgroup = 'IncSearch',
-      duration = 400,
-    }
-  },
-
-  {
-    'mawkler/modicator.nvim',
-    enabled = false,
-    cond = vim.o.termguicolors == true,
-    opts = {},
-    event = au.user_autocmds.FileOpenedAfter_User,
-  },
-
-  {
     'rcarriga/nvim-notify',
     event = 'User LazyUIEnter',
     config = function()
