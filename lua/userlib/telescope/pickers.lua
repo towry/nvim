@@ -82,7 +82,7 @@ M.project_files = function(opts)
       local icon, iconhl = utils.get_devicons(tail_raw)
 
       return displayer({
-        { icon, iconhl },
+        { icon,            iconhl },
         tail,
         { path_to_display, 'TelescopeResultsComment' },
       })
@@ -92,26 +92,22 @@ M.project_files = function(opts)
   ---/// end item stylish
 
   if opts and opts.oldfiles then
-    local cache_opts = vim.tbl_deep_extend('force', {
-    }, opts)
-    local cycle = require('userlib.telescope.cycle')(
-      function(income_opts)
-        require('telescope.builtin').find_files(vim.tbl_extend('force', cache_opts, {
-          results_title = '  All Files: ',
-        }, income_opts))
+    opts.results_title = '  Recent files: '
+    opts.include_current_session = true
+    --- we want recent files inside monorepo root folder, not a sub project root.
+    --- see https://github.com/nvim-telescope/telescope.nvim/blob/276362a8020c6e94c7a76d49aa00d4923b0c02f3/lua/telescope/builtin/__internal.lua#L533C61-L533C61
+    --- NOTE: dirty hack.
+    local vim_cwd_fn = vim.loop.cwd
+    if opts.cwd_only and opts.cwd then
+      vim.loop.cwd = function()
+        return opts.cwd
       end
-    )
-    opts = vim.tbl_extend('force', {
-      results_title = '  Recent files: ',
-      prompt_title = '  Recent files',
-      attach_mappings = function(_, map)
-        map_i_actions(_, map)
-        map('i', '<C-b>', cycle.next, { noremap = true, silent = true })
-        return true
-      end,
-      only_cwd = false,
-    }, opts)
-    return require('telescope.builtin').oldfiles(opts)
+    end
+    pcall(function()
+      require('telescope.builtin').oldfiles(opts)
+    end)
+    vim.loop.cwd = vim_cwd_fn
+    return
   end
 
   -- use find_files or git_files.
@@ -329,9 +325,9 @@ function M.gen_from_buffer(opts)
     })
 
     return displayer({
-      { entry.bufnr, 'TelescopeResultsNumber' },
+      { entry.bufnr,     'TelescopeResultsNumber' },
       { entry.indicator, 'TelescopeResultsComment' },
-      { icon, hl_group },
+      { icon,            hl_group },
       bufname_tail,
       { path_to_display .. ':' .. entry.lnum, 'TelescopeResultsComment' },
     })
@@ -345,8 +341,8 @@ function M.gen_from_buffer(opts)
     local hidden = entry.info.hidden == 1 and 'h' or 'a'
     -- local readonly = vim.api.nvim_buf_get_option(entry.bufnr, 'readonly') and '=' or ' '
     local readonly = vim.api.nvim_get_option_value('readonly', {
-      buf = entry.bufnr,
-    }) and '=' or ' '
+          buf = entry.bufnr,
+        }) and '=' or ' '
     local changed = entry.info.changed == 1 and '+' or ' '
     local indicator = entry.flag .. hidden .. readonly .. changed
     local lnum = 1
