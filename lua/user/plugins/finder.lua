@@ -41,7 +41,7 @@ plug({
   },
   config = function()
     local HEIGHT_RATIO = 0.8 -- You can change this
-    local WIDTH_RATIO = 0.5  -- You can change this too
+    local WIDTH_RATIO = 0.5 -- You can change this too
     local TREE_INIT_WIDTH = 40
 
 
@@ -314,7 +314,7 @@ plug({
 plug({
   'simrat39/symbols-outline.nvim',
   keys = {
-    { '<leader>/o',  '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
     { '<Char-0xAF>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
@@ -671,8 +671,8 @@ plug({
         },
         fzf = {
           fuzzy = true,
-          override_generic_sorter = true,
-          override_file_sorter = true,
+          override_generic_sorter = false,
+          override_file_sorter = false,
           case_mode = 'smart_case',
         },
         live_grep_args = {
