@@ -146,8 +146,30 @@ pack.plug({
           ['<C-n>'] = cmp.mapping.select_next_item(select_option),
           ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
           ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-          ['<C-f>'] = cmp.mapping.confirm({ select = true }),
-          -- invoke complete
+          ['<C-f>'] = cmp.mapping(function(fallback)
+            local entry = cmp.get_selected_entry()
+            -- copilot.vim
+            if not entry and vim.b._copilot and vim.b._copilot.suggestions ~= nil then
+              -- Make sure the suggestion exists and it does not start with whitespace
+              -- This is to prevent the user from accidentally selecting a suggestion
+              -- when trying to indent
+              local suggestion = vim.b._copilot.suggestions[1]
+              if suggestion ~= nil then suggestion = suggestion.displayText end
+              if suggestion == nil or (suggestion:find('^%s') ~= nil and suggestion:find('^\n') == nil) then
+                if cmp.visible() and has_words_before() then
+                  cmp.confirm({ select = true })
+                else
+                  fallback()
+                end
+              else
+                vim.fn.feedkeys(vim.fn['copilot#Accept'](), '')
+              end
+            elseif cmp.visible() and has_words_before() then
+              cmp.confirm({ select = true })
+            else
+              fallback()
+            end
+          end),                           -- invoke complete
           ['<C-s>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
           ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
           ['<C-e>'] = cmp.mapping({
@@ -160,24 +182,7 @@ pack.plug({
             select = true,
           }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
           ['<Tab>'] = cmp.mapping(function(fallback)
-            local entry = cmp.get_selected_entry()
-            -- copilot.vim
-            if not entry and vim.b._copilot and vim.b._copilot.suggestions ~= nil then
-              -- Make sure the suggestion exists and it does not start with whitespace
-              -- This is to prevent the user from accidentally selecting a suggestion
-              -- when trying to indent
-              local suggestion = vim.b._copilot.suggestions[1]
-              if suggestion ~= nil then suggestion = suggestion.displayText end
-              if suggestion == nil or (suggestion:find('^%s') ~= nil and suggestion:find('^\n') == nil) then
-                if cmp.visible() and has_words_before() then
-                  cmp.select_next_item(select_option)
-                else
-                  fallback()
-                end
-              else
-                vim.fn.feedkeys(vim.fn['copilot#Accept'](), '')
-              end
-            elseif cmp.visible() and has_words_before() then
+            if cmp.visible() and has_words_before() then
               cmp.select_next_item(select_option)
             elseif luasnip.expandable() then
               luasnip.expand()
