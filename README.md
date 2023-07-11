@@ -1,6 +1,10 @@
 # Towry's hand crafted NeoVim config
 
-Works without plugins.
+## Features
+
+- Works without plugins.
+- Lazy load plugins.
+- Works well with monorepo projects (Search files, folders etc).
 
 ## TODO
 
