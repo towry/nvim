@@ -338,7 +338,8 @@ plug({
     dependencies = {
       {
         'pze/project.nvim',
-        dev = true,
+        branch = 'feat/more-api',
+        dev = false,
         name = 'project_nvim',
         cmd = { 'ProjectRoot' },
         event = {
