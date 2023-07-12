@@ -594,7 +594,8 @@ plug({
   },
 
   {
-    'ThePrimeagen/harpoon',
+    'pze/harpoon',
+    dev = false,
     event = 'User LazyUIEnterOncePost',
     keys = {
       {
@@ -635,12 +636,12 @@ plug({
           excluded_filetypes = vim.cfg.misc__ft_exclude,
         },
         mark_branch = true,
+        get_project_key = function()
+          return vim.cfg.runtime__starts_cwd
+        end,
       }
     end,
     config = function(_, opts)
-      require('harpoon.utils').project_key = function()
-        return vim.cfg.runtime__starts_cwd
-      end
       require('harpoon').setup(opts)
     end,
     init = function()
