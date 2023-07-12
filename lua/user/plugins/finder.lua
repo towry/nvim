@@ -258,7 +258,7 @@ plug({
 })
 
 plug({
-  enabled = false,
+  enabled = true,
   'stevearc/oil.nvim',
   lazy = not vim.cfg.runtime__starts_in_buffer,
   opts = {
@@ -291,8 +291,7 @@ plug({
     {
       '<leader>fO',
       function()
-        local cwd = require('userlib.runtime.utils').get_root()
-        require('oil').open(cwd)
+        require('oil').open(vim.g.cwd)
       end,
       desc = 'Open oil(CWD) file browser',
     },
@@ -304,13 +303,12 @@ plug({
       desc = 'Open oil(BUF) file browser',
     },
     {
-      -- Hyper+e
-      '<C-S-A-e>',
+      '<localleader>e',
       function()
         require('oil').open()
       end,
-      desc = 'Open oil(BUF) file browser'
-    }
+      desc = 'Open oil(BUF) file browser',
+    },
   }
 })
 

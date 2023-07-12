@@ -111,6 +111,17 @@ M.open = function(cwd, buffer)
           desc = 'Cwd',
           exit = true,
         }
+      },
+      {
+        "o",
+        _(function()
+          require('oil').open(cwd)
+        end),
+        {
+          private = true,
+          desc = 'Oil',
+          exit = true,
+        }
       }
     }
   })
