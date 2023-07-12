@@ -27,7 +27,7 @@ plug({
     dependencies = {
       'anuvyklack/middleclass',
     },
-    enabled = false,
+    enabled = true,
     event = 'User LazyUIEnterOnce',
     opts = {
       ignore = {
