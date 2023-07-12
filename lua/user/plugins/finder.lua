@@ -289,14 +289,14 @@ plug({
   },
   keys = {
     {
-      '<leader>fO',
+      '<leader>fo',
       function()
-        require('oil').open(vim.g.cwd)
+        require('oil').open(vim.cfg.runtime__starts_cwd)
       end,
-      desc = 'Open oil(CWD) file browser',
+      desc = 'Open oil(Root) file browser',
     },
     {
-      '<leader>fo',
+      '<leader>fO',
       function()
         require('oil').open()
       end,
@@ -305,9 +305,9 @@ plug({
     {
       '<localleader>e',
       function()
-        require('oil').open()
+        require('oil').open(vim.g.cwd)
       end,
-      desc = 'Open oil(BUF) file browser',
+      desc = 'Open oil file browser',
     },
   }
 })
