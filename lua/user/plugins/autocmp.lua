@@ -155,7 +155,8 @@ pack.plug({
               -- when trying to indent
               local suggestion = vim.b._copilot.suggestions[1]
               if suggestion ~= nil then suggestion = suggestion.displayText end
-              if suggestion == nil or (suggestion:find('^%s') ~= nil and suggestion:find('^\n') == nil) then
+              -- if suggestion == nil or (suggestion:find('^%s') ~= nil and suggestion:find('^\n') == nil) then
+              if suggestion == nil then
                 if cmp.visible() and has_words_before() then
                   cmp.confirm({ select = true })
                 else

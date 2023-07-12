@@ -41,7 +41,7 @@ plug({
   },
   config = function()
     local HEIGHT_RATIO = 0.8 -- You can change this
-    local WIDTH_RATIO = 0.5 -- You can change this too
+    local WIDTH_RATIO = 0.5  -- You can change this too
     local TREE_INIT_WIDTH = 40
 
 
@@ -247,10 +247,10 @@ plug({
 })
 
 plug({
-  'jremmen/vim-ripgrep',
-  cmd = { 'Rg', 'RgRoot' },
+  'kyoh86/vim-ripgrep',
+  cmd = { 'Rg' },
   config = function()
-    vim.g.rg_binary = 'rg'
+    vim.cmd([[command! -nargs=+ -complete=file Rg :call ripgrep#search(<q-args>)]])
   end,
 })
 
@@ -314,7 +314,7 @@ plug({
 plug({
   'simrat39/symbols-outline.nvim',
   keys = {
-    { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<leader>/o',  '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
     { '<Char-0xAF>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },

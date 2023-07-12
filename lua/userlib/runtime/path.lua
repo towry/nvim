@@ -11,6 +11,7 @@ end
 --- thanks @mrjones2014
 --- https://github.com/mrjones2014/legendary.nvim/issues/390#issuecomment-1625225191
 local function home_to_tilde(path)
+  if not path then return '/tmp/wonderland' end
   local home = vim.loop.os_homedir()
   if path:sub(1, #home) == home then
     return '~' .. path:sub(#home + 1)
