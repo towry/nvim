@@ -31,7 +31,7 @@ plug({
             function()
               return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
             end,
-            icon = '',
+            icon = '',
           }
         },
         lualine_b = {
@@ -166,7 +166,7 @@ plug({
         lualine_c = {
           {
             function()
-              return require('userlib.runtime.path').home_to_tilde(vim.uv.cwd())
+              return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
             end,
             icon = {
               "",
