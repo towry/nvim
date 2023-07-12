@@ -633,8 +633,15 @@ plug({
         },
         global_settings = {
           excluded_filetypes = vim.cfg.misc__ft_exclude,
-        }
+        },
+        mark_branch = true,
       }
+    end,
+    config = function(_, opts)
+      require('harpoon.utils').project_key = function()
+        return vim.cfg.runtime__starts_cwd
+      end
+      require('harpoon').setup(opts)
     end,
     init = function()
       vim.g.harpoon_log_level = 'warn'
