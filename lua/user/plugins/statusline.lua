@@ -25,7 +25,22 @@ plug({
       filetypes = { 'spectre_panel' },
     }
     local dashboard_extension  = {
-      sections = {},
+      sections = {
+        lualine_a = {
+          {
+            function()
+              return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
+            end,
+            icon = '',
+          }
+        },
+        lualine_b = {
+          {
+            'branch',
+            icon = ""
+          },
+        }
+      },
       winbar = {},
       filetypes = { 'starter', 'alpha' },
     }
