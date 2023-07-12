@@ -249,7 +249,10 @@ plug({
 plug({
   'kyoh86/vim-ripgrep',
   cmd = { 'Rg' },
-  config = function()
+  init = function()
+    --- https://github.dev/qalshidi/vim-bettergrep
+    -- abbr rg to Rg
+    vim.cmd([[cnoreabbrev <expr> rg (getcmdtype() ==# ':' && getcmdline() ==# 'rg')  ? 'Rg' : 'rg']])
     vim.cmd([[command! -nargs=+ -complete=file Rg :call ripgrep#search(<q-args>)]])
   end,
 })
