@@ -22,7 +22,7 @@ function TermsComponent.update_status(self)
     self.count = terms_count()
   end
   self.tick = self.tick + 1
-  if self.tick >= 10 then
+  if self.tick >= 20 then
     self.tick = 0
   end
 
