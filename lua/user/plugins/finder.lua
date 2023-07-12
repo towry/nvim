@@ -248,7 +248,7 @@ plug({
 
 plug({
   'kyoh86/vim-ripgrep',
-  cmd = { 'Rg' },
+  event = 'User LazyUIEnterOncePost',
   init = function()
     --- https://github.dev/qalshidi/vim-bettergrep
     -- abbr rg to Rg
