@@ -46,7 +46,6 @@ local function create_finder()
   })
 end
 
-
 local function session_projects(opts)
   opts = opts or {}
 
@@ -61,6 +60,7 @@ local function session_projects(opts)
         actions.close(prompt_bufnr)
         require('telescope').extensions.file_browser.file_browser({
           files = false,
+          display_stat = false,
           use_fd = true,
           hide_parent_dir = true,
           previewer = false,

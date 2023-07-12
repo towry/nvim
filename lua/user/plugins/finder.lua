@@ -475,13 +475,14 @@ plug({
       '<leader>fl',
       function()
         --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
-        require('telescope').extensions.file_browser.file_browser({
+        require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
           files = false,
           use_fd = true,
+          display_stat = false,
           hide_parent_dir = true,
           previewer = false,
           cwd = vim.cfg.runtime__starts_cwd,
-        })
+        }))
       end,
       desc =
       'Find folders'
@@ -490,13 +491,14 @@ plug({
       '<localleader>l',
       function()
         --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
-        require('telescope').extensions.file_browser.file_browser({
+        require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
           files = false,
           use_fd = true,
           previewer = false,
           hide_parent_dir = true,
+          display_stat = false,
           cwd = require('userlib.runtime.utils').get_root(),
-        })
+        }))
       end,
       desc =
       'Find folders'
