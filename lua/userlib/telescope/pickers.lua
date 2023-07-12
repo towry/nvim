@@ -220,11 +220,12 @@ function M.buffers_or_recent()
   local count = #vim.fn.getbufinfo({ buflisted = 1 })
   if count <= 1 then
     --- open recent.
-    M.project_files({
+    M.project_files(require('telescope.themes').get_dropdown({
       cwd_only = false,
       cwd = vim.cfg.runtime__starts_cwd,
       oldfiles = true,
-    })
+      previewer = false,
+    }))
     return
   end
   return M.buffers()

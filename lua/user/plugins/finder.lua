@@ -466,7 +466,8 @@ plug({
     },
     {
       '<localleader><Tab>',
-      cmd_modcall(pickers_mod, 'project_files({ cwd_only = false, oldfiles = true, cwd = vim.cfg.runtime__starts_cwd })'),
+      cmd_modcall(pickers_mod,
+        [[project_files(require('telescope.themes').get_dropdown({ previewer = false, cwd_only = false, oldfiles = true, cwd = vim.cfg.runtime__starts_cwd }))]]),
       desc =
       'Open recent files'
     },
