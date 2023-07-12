@@ -30,6 +30,7 @@
   "gitsigns.nvim": { "branch": "main", "commit": "dc2962f7fce953a2a98e7c6d3d7fc4c1d1f66758" },
   "grapple.nvim": { "branch": "main", "commit": "ab274a3bfb674442d57fca05df866b71895853bc" },
   "guess-indent.nvim": { "branch": "main", "commit": "b8ae749fce17aa4c267eec80a6984130b94f80b2" },
+  "harpoon": { "branch": "master", "commit": "b2a852a98cff59b7b502e7f7aa2e431edb51d02b" },
   "hlargs.nvim": { "branch": "main", "commit": "c7b8b94f5525e1bf40f691a906c729f8d18ce8c5" },
   "hydra.nvim": { "branch": "master", "commit": "3ced42c0b6a6c85583ff0f221635a7f4c1ab0dd0" },
   "jump-tag": { "branch": "main", "commit": "b323cf42472d774f4e3564398d9a502254776de1" },
