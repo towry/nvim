@@ -345,7 +345,9 @@ plug({
       group = '_oil_change_cwd',
       pattern = 'oil:///*',
       callback = function(ctx)
-        vim.cmd.lcd(require('oil').get_current_dir())
+        vim.g.cwd = require('oil').get_current_dir()
+        vim.g.cwd_short = require('userlib.runtime.path').home_to_tilde(vim.g.cwd)
+        vim.cmd.lcd(vim.g.cwd)
       end,
     })
   end,
