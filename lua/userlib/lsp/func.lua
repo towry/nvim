@@ -24,7 +24,7 @@ function M.goto_type_definition()
 end
 
 function M.goto_code_references()
-  vim.lsp.buf.references()
+  require('userlib.telescope.lsp').lsp_references()
 end
 
 function M.show_signature_help()

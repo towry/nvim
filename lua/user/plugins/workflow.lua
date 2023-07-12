@@ -66,6 +66,7 @@ plug({
   {
     'kazhala/close-buffers.nvim',
     module = 'close_buffers',
+    --- BDelete regex=term://
     cmd = {
       'BDelete',
       'BWipeout',
@@ -96,7 +97,7 @@ plug({
         desc = 'Close current buffer and window',
       },
       {
-        '<leader>b-',
+        '<leader>bh',
         function()
           require('mini.bufremove').unshow(0)
         end,
@@ -105,9 +106,14 @@ plug({
       {
         '<S-q>',
         function()
-          if vim.bo.buftype ~= "" then
+          local buftype = vim.bo.buftype
+          if buftype ~= "" then
             require('mini.bufremove').wipeout(0)
-            vim.cmd('q')
+            if not vim.tbl_contains({
+              'terminal',
+            }, buftype) then
+              vim.cmd('q')
+            end
             return
           end
           local valid_buf_count = #(require('userlib.runtime.buffer').list_normal_bufnrs())
@@ -331,7 +337,9 @@ plug({
     'telescope.nvim',
     dependencies = {
       {
-        'ahmedkhalf/project.nvim',
+        'pze/project.nvim',
+        branch = 'feat/more-api',
+        dev = false,
         name = 'project_nvim',
         cmd = { 'ProjectRoot' },
         event = {
@@ -339,6 +347,11 @@ plug({
           'BufNewFile',
         },
         keys = {
+          {
+            '<localleader>p',
+            [[<cmd>lua require('userlib.finder.project_session_picker').session_projects()<cr>]],
+            desc = 'Session projects',
+          },
           {
             '<leader>fP',
             '<cmd>ProjectRoot<cr>',
@@ -360,6 +373,8 @@ plug({
         end,
         opts = {
           patterns = require('userlib.runtime.utils').root_patterns,
+          --- order matters
+          detection_methods = { 'pattern', 'lsp' },
           manual_mode = false,
           -- Table of lsp clients to ignore by name
           -- eg: { "efm", ... }

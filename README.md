@@ -1,10 +1,16 @@
 # Towry's hand crafted NeoVim config
 
-Works without plugins.
+## Features
+
+- Works without plugins.
+- Lazy load plugins.
+- Works well with monorepo projects (Search files, folders etc).
 
 ## TODO
 
 - [ ] Improve format.
+- [ ] Remeber last edited window and buffer.
+- [ ] refactor the `userlib.ui.dropdown` to use telescope-ui-select extension.
 
 ## Commands
 

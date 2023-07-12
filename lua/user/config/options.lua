@@ -39,6 +39,7 @@ function M.init_edit()
   o.incsearch = true                               --- Start searching before pressing enter
   o.switchbuf = 'usetab'                           -- Use already opened buffers when switching
   o.diffopt:append { "algorithm:histogram", "indent-heuristic" }
+  o.shellcmdflag = '-ic'                           --- Make shell alias works.
 end
 
 function M.init_interface()
@@ -72,6 +73,7 @@ function M.init_interface()
   o.foldcolumn = 'auto'                              -- Folding
   o.list = true
   o.listchars:append('tab:⇢ ')
+  o.listchars:append('eol:↲')
   o.listchars:append('extends:»')
   o.listchars:append('nbsp:␣')
   o.listchars:append('precedes:«')

@@ -20,8 +20,8 @@ return plug({
         evaluate_single = false,
         items = {
           ---
-          new_section("Session load", [[SessionManager load_current_dir_session]], "Session"),
           new_section("Session list", [[SessionManager load_session]], "Session"),
+          new_section("Session load", [[SessionManager load_current_dir_session]], "Session"),
           ---
           new_section("Git Branchs", "Telescope git_branches show_remote_tracking_branches=false", "Built-in"),
           new_section("Lazy", "Lazy", "Built-in"),
@@ -48,17 +48,6 @@ return plug({
       local starter = require("mini.starter")
       starter.setup(config)
 
-      local update_header_opts = function()
-        local Path = require('userlib.runtime.path')
-        local git = require('userlib.git.utils')
-
-        starter.config.header = table.concat({
-          ('%s · %s'):format("  " ..
-            Path.home_to_tilde(vim.uv.cwd()),
-            '  ' .. (git.get_git_abbr_head() or '/'))
-        }, '\n')
-      end
-
       vim.api.nvim_create_autocmd("User", {
         pattern = "MiniStarterOpened",
         callback = function(ctx)
@@ -73,16 +62,6 @@ return plug({
             { buffer = bufnr, nowait = true, silent = true })
           vim.keymap.set('n', 'J', [[<cmd>lua MiniStarter.update_current_item('next')<CR>]],
             { buffer = bufnr, nowait = true, silent = true })
-
-          vim.api.nvim_create_augroup('_dashboard_dir_changed', { clear = true })
-          vim.api.nvim_create_autocmd('DirChanged', {
-            group = '_dashboard_dir_changed',
-            buffer = bufnr,
-            callback = function()
-              update_header_opts()
-              pcall(starter.refresh)
-            end
-          })
 
           au.define_autocmd({ 'VimResized', 'WinResized' }, {
             group = '_refresh_starter',
@@ -104,14 +83,12 @@ return plug({
             " · ",
             " " .. ms .. "ms"
           }, ' ')
-          update_header_opts()
           pcall(starter.refresh)
         end,
       })
     end,
     init = function()
       -- listen enter dashboard event.
-      local au = require('userlib.runtime.au')
       au.define_autocmds({
         {
           "User",

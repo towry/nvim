@@ -1,3 +1,5 @@
+local cwd = vim.uv.cwd()
+
 return {
   ---runtime
   runtime__folder_holes_inregex = {
@@ -8,7 +10,8 @@ return {
     '.cargo/',
   },
   runtime__starts_in_buffer = vim.fn.argc(-1) ~= 0,
-  runtime__starts_cwd = vim.uv.cwd(),
+  runtime__starts_cwd = cwd,
+  runtime__starts_cwd_short = require('userlib.runtime.path').home_to_tilde(cwd),
   runtime__disable_builtin_plugins = {
     "gzip",
     "zip",

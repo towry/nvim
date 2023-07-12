@@ -5,6 +5,12 @@ local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 local M = {}
 
 local function setup_basic()
+  set('n', '<BS>', ':bprevious<CR>', {
+    desc = 'Previous buffer',
+  })
+  set('n', '-', ':bnext<cr>', {
+    desc = 'Next buffer',
+  })
   --- quickly go into cmd
   set('n', '<C-;>', ':<C-u>', {
     expr = false,
@@ -27,8 +33,10 @@ local function setup_basic()
     noremap = true,
     desc = "Enter cmdline easily"
   })
+  --- command line history.
   set('c', '<C-;>', function()
-    return vim.api.nvim_replace_termcodes('<C-u><C-p>', true, false, true)
+    return [[lua require('userlib.telescope.pickers').command_history()<CR>]]
+    --   return vim.api.nvim_replace_termcodes('<C-u><C-p>', true, false, true)
   end, {
     expr = true,
     noremap = false,
@@ -87,43 +95,22 @@ local function setup_basic()
   })
 
   -- yanks
-  set('n', 'd', '"xd', {
+  set({ 'n', 'v' }, 'd', '"xd', {
     desc = 'Delete char and yank to register x',
   })
-  set('n', 'D', '"xD', {
+  set({ 'n', 'v' }, 'D', '"xD', {
     desc = 'Delete to end of line and yank to register x',
   })
-  set('v', 'd', '"xd', {
-    desc = 'Delete char and yank to register x',
-  })
-  set('v', 'D', '"xD', {
-    desc = 'Delete to end of line and yank to register x',
-  })
-  set('n', '<Char-0xAB>', '"*x', {
+  set({ 'n', 'v' }, '<Char-0xAB>', '"*x', {
     desc = 'Cut chars and yank to register *',
     remap = false,
   })
-  set('v', '<Char-0xAB>', '"*x', {
-    desc = 'Cut chars and yank to register *',
-    remap = false,
-  })
+  --- do not cut on normal mode.
   set('n', 'x', '"_x', {
     desc = 'Cut chars and do not yank to register',
   })
   set('n', 'X', '"_X', {
     desc = 'Cut chars and do not yank to register',
-  })
-  set('v', 'x', '"_x', {
-    desc = 'Cut chars and do not yank to register',
-  })
-  set('v', 'X', '"_X', {
-    desc = 'Cut chars and do not yank to register',
-  })
-  set('v', 'p', '"_dP', {
-    desc = 'Do not yank on visual paste',
-  })
-  set('x', 'p', '"_dP', {
-    desc = 'Do not yank on select paste',
   })
 
   ---gx

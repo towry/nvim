@@ -1,3 +1,4 @@
+--- https://github.dev/tjdevries/config_manager/blob/master/xdg_config/nvim/plugin/options.lua
 local M = {}
 
 M.get_path_and_tail = function(filename)
@@ -50,7 +51,8 @@ M.project_files = function(opts)
 
   opts = opts or {}
   if not opts.cwd then
-    opts.cwd = require('userlib.telescope.helpers').get_cwd_relative_to_buf(0, level_up)
+    -- opts.cwd = require('userlib.telescope.helpers').get_cwd_relative_to_buf(0, level_up)
+    opts.cwd = vim.uv.cwd()
   end
   opts.hidden = true
 
@@ -91,25 +93,15 @@ M.project_files = function(opts)
   ---/// end item stylish
 
   if opts and opts.oldfiles then
-    local cache_opts = vim.tbl_deep_extend('force', {
-    }, opts)
-    local cycle = require('userlib.telescope.cycle')(
-      function(income_opts)
-        require('telescope.builtin').find_files(vim.tbl_extend('force', cache_opts, {
-          results_title = '  All Files: ',
-        }, income_opts))
-      end
-    )
-    opts = vim.tbl_extend('force', {
-      results_title = '  Recent files: ',
-      prompt_title = '  Recent files',
-      attach_mappings = function(_, map)
-        map_i_actions(_, map)
-        map('i', '<C-b>', cycle.next, { noremap = true, silent = true })
-        return true
-      end
-    }, opts)
-    return require('telescope.builtin').oldfiles(opts)
+    opts.results_title = '  Recent files: '
+    opts.include_current_session = true
+    --- we want recent files inside monorepo root folder, not a sub project root.
+    --- see https://github.com/nvim-telescope/telescope.nvim/blob/276362a8020c6e94c7a76d49aa00d4923b0c02f3/lua/telescope/builtin/__internal.lua#L533C61-L533C61
+    if opts.cwd then
+      opts.cwd_only = false
+    end
+    require('telescope.builtin').oldfiles(opts)
+    return
   end
 
   -- use find_files or git_files.
@@ -131,6 +123,7 @@ M.project_files = function(opts)
   end
 end
 
+--- - <C-e>: open the command line with the text of the selected.
 M.command_history = function()
   local builtin = require('telescope.builtin')
 
@@ -138,9 +131,20 @@ M.command_history = function()
     color_devicons = true,
     winblend = 4,
     layout_config = {
-      width = function(_, max_columns, _) return math.min(max_columns, 150) end,
+      width = function(_, max_columns, _) return math.min(max_columns, 100) end,
       height = function(_, _, max_lines) return math.min(max_lines, 15) end,
     },
+    filter_fn = function(cmd)
+      return not vim.tbl_contains({
+        'h',
+        ':',
+        'w',
+        'wa',
+        'q',
+        'qa',
+        'qa!',
+      }, vim.trim(cmd))
+    end
   }))
 end
 
@@ -217,10 +221,12 @@ function M.buffers_or_recent()
   local count = #vim.fn.getbufinfo({ buflisted = 1 })
   if count <= 1 then
     --- open recent.
-    M.project_files({
-      cwd_only = true,
+    M.project_files(require('telescope.themes').get_dropdown({
+      cwd_only = false,
+      cwd = vim.cfg.runtime__starts_cwd,
       oldfiles = true,
-    })
+      previewer = false,
+    }))
     return
   end
   return M.buffers()
@@ -236,7 +242,7 @@ function M.buffers()
     ignore_current_buffer = true,
     sort_mru = true,
     -- layout_strategy = 'vertical',
-    layout_strategy = "bottom_pane",
+    -- layout_strategy = "bottom_pane",
     entry_maker = M.gen_from_buffer({
       bufnr_width = 2,
       sort_mru = true,

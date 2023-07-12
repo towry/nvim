@@ -1,6 +1,6 @@
 local plug = require('userlib.runtime.pack').plug
 local keymap = require('userlib.runtime.keymap')
-local cmdstr = keymap.cmdstr
+-- local cmdstr = keymap.cmdstr
 local cmd_modcall = keymap.cmd_modcall
 local pickers_mod = 'userlib.telescope.pickers'
 local au = require('userlib.runtime.au')
@@ -37,7 +37,6 @@ plug({
       cmd_modcall('userlib.plugin-nvim-tree', 'nvim_tree_find_file({fallback=true})'),
       -- cmd_modcall('userlib.plugin-nvim-tree', 'toggle_nvim_tree()'),
       desc = 'Locate current file in tree',
-
     },
   },
   config = function()
@@ -248,15 +247,18 @@ plug({
 })
 
 plug({
-  'jremmen/vim-ripgrep',
-  cmd = { 'Rg', 'RgRoot' },
-  config = function()
-    vim.g.rg_binary = 'rg'
+  'kyoh86/vim-ripgrep',
+  event = 'User LazyUIEnterOncePost',
+  init = function()
+    --- https://github.dev/qalshidi/vim-bettergrep
+    -- abbr rg to Rg
+    vim.cmd([[cnoreabbrev <expr> rg (getcmdtype() ==# ':' && getcmdline() ==# 'rg')  ? 'Rg' : 'rg']])
+    vim.cmd([[command! -nargs=+ -complete=file Rg :call ripgrep#search(<q-args>)]])
   end,
 })
 
 plug({
-  enabled = false,
+  enabled = true,
   'stevearc/oil.nvim',
   lazy = not vim.cfg.runtime__starts_in_buffer,
   opts = {
@@ -270,8 +272,38 @@ plug({
       ["<C-p>"] = "actions.preview",
       ["<C-c>"] = "actions.close",
       ["<C-r>"] = "actions.refresh",
+      ["<C-o>"] = function()
+        local oil = require('oil')
+        -- type: file|directory
+        local current = require('oil').get_cursor_entry()
+        local lcwd = oil.get_current_dir()
+        local file, folder = nil, nil
+        if not current or current.type == 'directory' then
+          file = nil
+          folder = lcwd .. current.name
+        elseif current.type == 'file' then
+          folder = nil
+          file = lcwd .. current.name
+        end
+
+        if folder then
+          require('userlib.hydra.folder-action').open(folder, 0);
+        else
+          require('userlib.hydra.file-action').open(file, 0);
+        end
+      end,
+      ["y"] = "actions.copy_entry_path",
       ["-"] = "actions.parent",
-      ["_"] = "actions.open_cwd",
+      ["_"] = function()
+        if vim.w.oil_lcwd ~= nil then
+          require('oil').open(vim.w.oil_lcwd)
+          vim.w.oil_lcwd = nil
+        else
+          vim.w.oil_lcwd = require('oil').get_current_dir()
+          --- toggle with current and project root.
+          require('oil').open(require('userlib.runtime.utils').get_root())
+        end
+      end,
       ["`"] = "actions.cd",
       ["~"] = "actions.tcd",
       ["g."] = "actions.toggle_hidden",
@@ -287,29 +319,38 @@ plug({
   },
   keys = {
     {
-      '<leader>fO',
-      function()
-        local cwd = require('userlib.runtime.utils').get_root()
-        require('oil').open(cwd)
-      end,
-      desc = 'Open oil(CWD) file browser',
-    },
-    {
       '<leader>fo',
       function()
-        require('oil').open()
+        require('oil').open(vim.cfg.runtime__starts_cwd)
+      end,
+      desc = 'Open oil(Root) file browser',
+    },
+    {
+      '<leader>fO',
+      function()
+        require('oil').open(require('userlib.runtime.utils').get_root())
       end,
       desc = 'Open oil(BUF) file browser',
     },
     {
-      -- Hyper+e
-      '<C-S-A-e>',
+      '<localleader>e',
       function()
         require('oil').open()
       end,
-      desc = 'Open oil(BUF) file browser'
-    }
-  }
+      desc = 'Open oil file browser(buf)',
+    },
+  },
+  init = function()
+    au.define_autocmd('BufEnter', {
+      group = '_oil_change_cwd',
+      pattern = 'oil:///*',
+      callback = function(ctx)
+        vim.g.cwd = require('oil').get_current_dir()
+        vim.g.cwd_short = require('userlib.runtime.path').home_to_tilde(vim.g.cwd)
+        vim.cmd.lcd(vim.g.cwd)
+      end,
+    })
+  end,
 })
 
 plug({
@@ -464,7 +505,8 @@ plug({
     },
     {
       '<localleader><Tab>',
-      cmd_modcall(pickers_mod, 'project_files({ cwd_only = true, oldfiles = true, cwd = vim.cfg.runtime__starts_cwd })'),
+      cmd_modcall(pickers_mod,
+        [[project_files(require('telescope.themes').get_dropdown({ previewer = false, cwd_only = false, oldfiles = true, cwd = vim.cfg.runtime__starts_cwd }))]]),
       desc =
       'Open recent files'
     },
@@ -472,12 +514,14 @@ plug({
       '<leader>fl',
       function()
         --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
-        require('telescope').extensions.file_browser.file_browser({
+        require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
           files = false,
           use_fd = true,
+          display_stat = false,
           hide_parent_dir = true,
+          previewer = false,
           cwd = vim.cfg.runtime__starts_cwd,
-        })
+        }))
       end,
       desc =
       'Find folders'
@@ -486,12 +530,15 @@ plug({
       '<localleader>l',
       function()
         --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
-        require('telescope').extensions.file_browser.file_browser({
+        require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
+          results_title = vim.g.cwd_short,
           files = false,
           use_fd = true,
+          previewer = false,
           hide_parent_dir = true,
+          display_stat = false,
           cwd = require('userlib.runtime.utils').get_root(),
-        })
+        }))
       end,
       desc =
       'Find folders'
@@ -581,7 +628,8 @@ plug({
     return {
       defaults = {
         wrap_results = true,
-        winblend = 0,
+        --- give some opacity so we can see the window picker marks.
+        winblend = 10,
         cache_picker = {
           num_pickers = 5,
         },
@@ -649,22 +697,28 @@ plug({
         },
       },
       extensions = {
+        ["ui-select"] = {
+          require("telescope.themes").get_dropdown {
+            -- even more opts
+          }
+        },
         file_browser = {
           use_fd = true,
           mappings = {
             i = {
-              ['<CR>'] = function()
+              ['<CR>'] = function(prompt_buf)
                 local entry_path = action_state.get_selected_entry().Path
                 local new_cwd = entry_path:is_dir() and entry_path:absolute() or entry_path:parent():absolute()
-                require('userlib.finder.legendary.folder-action')(new_cwd)
+
+                require('userlib.hydra.folder-action').open(new_cwd, prompt_buf)
               end,
             }
           }
         },
         fzf = {
           fuzzy = true,
-          override_generic_sorter = true,
-          override_file_sorter = true,
+          override_generic_sorter = false,
+          override_file_sorter = false,
           case_mode = 'smart_case',
         },
         live_grep_args = {

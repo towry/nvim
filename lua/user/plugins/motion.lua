@@ -1,7 +1,6 @@
 local plug = require('userlib.runtime.pack').plug
 local cmd = require('userlib.runtime.keymap').cmdstr
 local au = require('userlib.runtime.au')
-local enable_flash = true
 
 plug({
   {
@@ -132,13 +131,8 @@ plug({
 
   {
     'folke/flash.nvim',
+    event = 'User LazyUIEnterOncePost',
     keys = {
-      ';',
-      ',',
-      'f',
-      'F',
-      't',
-      'T',
       {
         "s",
         mode = { "n", "x", "o" },
@@ -175,7 +169,14 @@ plug({
     opts = {
       search = {
         exclude = vim.cfg.misc__ft_exclude,
-      }
+      },
+      modes = {
+        -- options used when flash is activated through
+        -- a regular search with `/` or `?`
+        search = {
+          enabled = false,
+        }
+      },
     },
     config = function(_, opts)
       require('flash').setup(opts)

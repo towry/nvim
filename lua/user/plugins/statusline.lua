@@ -5,10 +5,10 @@ local au = require('userlib.runtime.au')
 plug({
   'nvim-lualine/lualine.nvim',
   dependencies = {
-    -- {
-    --   'pze/lualine-copilot',
-    --   dev = false,
-    -- },
+    {
+      'pze/lualine-copilot',
+      dev = false,
+    },
   },
   event = { 'User LazyUIEnterOncePost', 'User OnLeaveDashboard' },
   config = function()
@@ -25,7 +25,22 @@ plug({
       filetypes = { 'spectre_panel' },
     }
     local dashboard_extension  = {
-      sections = {},
+      sections = {
+        lualine_a = {
+          {
+            function()
+              return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
+            end,
+            icon = '',
+          }
+        },
+        lualine_b = {
+          {
+            'branch',
+            icon = ""
+          },
+        }
+      },
       winbar = {},
       filetypes = { 'starter', 'alpha' },
     }
@@ -117,7 +132,7 @@ plug({
         lualine_a = {
           {
             separator = { left = '', },
-            right_padding = 2,
+            right_padding = 0,
             function()
               local unsaved_count = #Buffer.unsaved_list({ perf = true })
               local has_modified = unsaved_count > 0
@@ -143,7 +158,7 @@ plug({
         lualine_b = {
           {
             'branch',
-            icon = " "
+            icon = ""
           },
           'searchcount',
         },
@@ -151,14 +166,12 @@ plug({
         lualine_c = {
           {
             function()
-              return require('userlib.runtime.path').home_to_tilde(vim.uv.cwd())
-              -- return require('userlib.runtime.path').home_to_tilde(require('userlib.runtime.utils').get_root())
+              return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
             end,
             icon = {
-              " ",
-              color = 'Whitespace'
+              "",
             },
-            color = 'Comment',
+            -- color = 'NormalNC',
             maxwidth = 20
           },
 
@@ -180,10 +193,10 @@ plug({
         },
         lualine_x = {
           -- copilot status
-          require('copilot_status').status_string,
-          -- {
-          --   'copilot',
-          -- },
+          -- require('copilot_status').status_string,
+          {
+            'copilot',
+          },
           {
             'encoding',
             cond = function()

@@ -67,7 +67,6 @@ M.run_command = function(opts)
     unpack(files_as_module),
   }
   local output = vim.fn.system(cmds)
-  vim.print(output)
 end
 
 return M

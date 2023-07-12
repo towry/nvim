@@ -1,6 +1,7 @@
 local M = {}
 
-M.root_patterns = { '.git', '_darcs', '.bzr', '.svn', '.vscode', '.gitmodules', 'pnpm-workspace.yaml', 'Cargo.toml' }
+M.root_patterns = { '_darcs', '.bzr', '.vscode', 'package.json', 'pnpm-workspace.yaml', 'Cargo.toml', '.git',
+  '.gitmodules', '.svn' }
 --- ignore jsonls: inside package.json, it give root to parent root.
 M.root_lsp_ignore = { 'null-ls', 'tailwindcss', 'jsonls' }
 
@@ -131,11 +132,12 @@ function M.get_root(root_opts)
     root_patterns = M.root_patterns,
     lsp_ignore = M.root_lsp_ignore,
   }, root_opts or {})
+  local is_normal_buf = vim.bo.buftype == ''
   if not has_root_patterns_opt and M.has_plugin('project_nvim') then
     local is_ok, project_nvim = pcall(require, 'project_nvim.project')
     if is_ok then
       local project_root, _ = project_nvim.get_project_root()
-      return project_root
+      if project_root ~= nil then return project_root end
     end
   end
 
@@ -180,11 +182,15 @@ function M.get_root(root_opts)
   return root
 end
 
-M.use_plugin = function(plugin_name, callback)
-  local ok, plugin = require(plugin_name)
+M.use_plugin = function(plugin_name, callback, on_fail)
+  local ok, plugin = pcall(require, plugin_name)
   if not ok then
+    if on_fail then
+      on_fail()
+      return
+    end
     M.log('Error loading plugin: ' .. plugin_name)
-    return
+    return false
   end
   callback(plugin)
 end
