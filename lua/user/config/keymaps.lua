@@ -5,6 +5,12 @@ local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 local M = {}
 
 local function setup_basic()
+  set('n', '<BS>', ':bprevious<CR>', {
+    desc = 'Previous buffer',
+  })
+  set('n', '-', ':bnext<cr>', {
+    desc = 'Next buffer',
+  })
   --- quickly go into cmd
   set('n', '<C-;>', ':<C-u>', {
     expr = false,

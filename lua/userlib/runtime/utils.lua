@@ -132,11 +132,12 @@ function M.get_root(root_opts)
     root_patterns = M.root_patterns,
     lsp_ignore = M.root_lsp_ignore,
   }, root_opts or {})
+  local is_normal_buf = vim.bo.buftype == ''
   if not has_root_patterns_opt and M.has_plugin('project_nvim') then
     local is_ok, project_nvim = pcall(require, 'project_nvim.project')
     if is_ok then
       local project_root, _ = project_nvim.get_project_root()
-      return project_root
+      if project_root ~= nil then return project_root end
     end
   end
 

@@ -272,8 +272,38 @@ plug({
       ["<C-p>"] = "actions.preview",
       ["<C-c>"] = "actions.close",
       ["<C-r>"] = "actions.refresh",
+      ["<C-o>"] = function()
+        local oil = require('oil')
+        -- type: file|directory
+        local current = require('oil').get_cursor_entry()
+        local lcwd = oil.get_current_dir()
+        local file, folder = nil, nil
+        if not current or current.type == 'directory' then
+          file = nil
+          folder = lcwd .. current.name
+        elseif current.type == 'file' then
+          folder = nil
+          file = lcwd .. current.name
+        end
+
+        if folder then
+          require('userlib.hydra.folder-action').open(folder, 0);
+        else
+          require('userlib.hydra.file-action').open(file, 0);
+        end
+      end,
+      ["y"] = "actions.copy_entry_path",
       ["-"] = "actions.parent",
-      ["_"] = "actions.open_cwd",
+      ["_"] = function()
+        if vim.w.oil_lcwd ~= nil then
+          require('oil').open(vim.w.oil_lcwd)
+          vim.w.oil_lcwd = nil
+        else
+          vim.w.oil_lcwd = require('oil').get_current_dir()
+          --- toggle with current and project root.
+          require('oil').open(require('userlib.runtime.utils').get_root())
+        end
+      end,
       ["`"] = "actions.cd",
       ["~"] = "actions.tcd",
       ["g."] = "actions.toggle_hidden",
@@ -298,16 +328,16 @@ plug({
     {
       '<leader>fO',
       function()
-        require('oil').open()
+        require('oil').open(require('userlib.runtime.utils').get_root())
       end,
       desc = 'Open oil(BUF) file browser',
     },
     {
       '<localleader>e',
       function()
-        require('oil').open(vim.g.cwd)
+        require('oil').open()
       end,
-      desc = 'Open oil file browser',
+      desc = 'Open oil file browser(buf)',
     },
   }
 })
@@ -490,6 +520,7 @@ plug({
       function()
         --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
         require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
+          results_title = vim.g.cwd_short,
           files = false,
           use_fd = true,
           previewer = false,

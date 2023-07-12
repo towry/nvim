@@ -28,18 +28,18 @@ M.open = function(cwd, buffer)
         })
         nvim_tree_api.tree.change_root(cwd)
       end), { private = true, desc = "Tree", exit = true } },
-      {
-        "m",
-        _(function()
-          require('mini.files').open(cwd, true)
-        end),
-        {
-          private = true,
-          nowait = true,
-          desc = "M.Files",
-          exit = true,
-        },
-      },
+      -- {
+      --   "m",
+      --   _(function()
+      --     require('mini.files').open(cwd, true)
+      --   end),
+      --   {
+      --     private = true,
+      --     nowait = true,
+      --     desc = "M.Files",
+      --     exit = true,
+      --   },
+      -- },
       {
         "f",
         _(function()
@@ -89,7 +89,7 @@ M.open = function(cwd, buffer)
         _(function()
           require('userlib.telescope.pickers').project_files({
             oldfiles = true,
-            cwd_only = true,
+            cwd_only = false,
             cwd = cwd,
           })
         end),
@@ -113,8 +113,9 @@ M.open = function(cwd, buffer)
         }
       },
       {
-        "o",
+        "<CR>",
         _(function()
+          vim.cmd('lcd ' .. cwd)
           require('oil').open(cwd)
         end),
         {
