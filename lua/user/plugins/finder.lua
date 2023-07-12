@@ -41,7 +41,7 @@ plug({
   },
   config = function()
     local HEIGHT_RATIO = 0.8 -- You can change this
-    local WIDTH_RATIO = 0.5  -- You can change this too
+    local WIDTH_RATIO = 0.5 -- You can change this too
     local TREE_INIT_WIDTH = 40
 
 
@@ -317,7 +317,7 @@ plug({
 plug({
   'simrat39/symbols-outline.nvim',
   keys = {
-    { '<leader>/o',  '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
     { '<Char-0xAF>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
@@ -466,7 +466,7 @@ plug({
     },
     {
       '<localleader><Tab>',
-      cmd_modcall(pickers_mod, 'project_files({ cwd_only = true, oldfiles = true, cwd = vim.cfg.runtime__starts_cwd })'),
+      cmd_modcall(pickers_mod, 'project_files({ cwd_only = false, oldfiles = true, cwd = vim.cfg.runtime__starts_cwd })'),
       desc =
       'Open recent files'
     },

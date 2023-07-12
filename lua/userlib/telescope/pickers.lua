@@ -82,7 +82,7 @@ M.project_files = function(opts)
       local icon, iconhl = utils.get_devicons(tail_raw)
 
       return displayer({
-        { icon,            iconhl },
+        { icon, iconhl },
         tail,
         { path_to_display, 'TelescopeResultsComment' },
       })
@@ -221,7 +221,8 @@ function M.buffers_or_recent()
   if count <= 1 then
     --- open recent.
     M.project_files({
-      cwd_only = true,
+      cwd_only = false,
+      cwd = vim.cfg.runtime__starts_cwd,
       oldfiles = true,
     })
     return
@@ -318,9 +319,9 @@ function M.gen_from_buffer(opts)
     })
 
     return displayer({
-      { entry.bufnr,     'TelescopeResultsNumber' },
+      { entry.bufnr, 'TelescopeResultsNumber' },
       { entry.indicator, 'TelescopeResultsComment' },
-      { icon,            hl_group },
+      { icon, hl_group },
       bufname_tail,
       { path_to_display .. ':' .. entry.lnum, 'TelescopeResultsComment' },
     })
@@ -334,8 +335,8 @@ function M.gen_from_buffer(opts)
     local hidden = entry.info.hidden == 1 and 'h' or 'a'
     -- local readonly = vim.api.nvim_buf_get_option(entry.bufnr, 'readonly') and '=' or ' '
     local readonly = vim.api.nvim_get_option_value('readonly', {
-          buf = entry.bufnr,
-        }) and '=' or ' '
+      buf = entry.bufnr,
+    }) and '=' or ' '
     local changed = entry.info.changed == 1 and '+' or ' '
     local indicator = entry.flag .. hidden .. readonly .. changed
     local lnum = 1
