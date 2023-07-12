@@ -96,17 +96,10 @@ M.project_files = function(opts)
     opts.include_current_session = true
     --- we want recent files inside monorepo root folder, not a sub project root.
     --- see https://github.com/nvim-telescope/telescope.nvim/blob/276362a8020c6e94c7a76d49aa00d4923b0c02f3/lua/telescope/builtin/__internal.lua#L533C61-L533C61
-    --- NOTE: dirty hack.
-    local vim_cwd_fn = vim.loop.cwd
-    if opts.cwd_only and opts.cwd then
-      vim.loop.cwd = function()
-        return opts.cwd
-      end
+    if opts.cwd then
+      opts.cwd_only = false
     end
-    pcall(function()
-      require('telescope.builtin').oldfiles(opts)
-    end)
-    vim.loop.cwd = vim_cwd_fn
+    require('telescope.builtin').oldfiles(opts)
     return
   end
 
