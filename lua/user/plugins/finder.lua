@@ -1,6 +1,6 @@
 local plug = require('userlib.runtime.pack').plug
 local keymap = require('userlib.runtime.keymap')
-local cmdstr = keymap.cmdstr
+-- local cmdstr = keymap.cmdstr
 local cmd_modcall = keymap.cmd_modcall
 local pickers_mod = 'userlib.telescope.pickers'
 local au = require('userlib.runtime.au')
@@ -339,7 +339,16 @@ plug({
       end,
       desc = 'Open oil file browser(buf)',
     },
-  }
+  },
+  init = function()
+    au.define_autocmd('BufEnter', {
+      group = '_oil_change_cwd',
+      pattern = 'oil:///*',
+      callback = function(ctx)
+        vim.cmd.lcd(require('oil').get_current_dir())
+      end,
+    })
+  end,
 })
 
 plug({

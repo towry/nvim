@@ -63,6 +63,7 @@ function M.load_on_startup()
     {
       { "DirChanged" },
       {
+        pattern = '*',
         group = '_set_dir_on_change_',
         callback = function(ctx)
           local new_cwd = ctx.file
