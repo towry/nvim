@@ -11,6 +11,7 @@
 - [ ] Improve format.
 - [ ] Remeber last edited window and buffer.
 - [ ] refactor the `userlib.ui.dropdown` to use telescope-ui-select extension.
+- [ ] fix lsp keymaps binding.
 
 ## Commands
 
