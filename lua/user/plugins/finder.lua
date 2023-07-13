@@ -627,7 +627,7 @@ plug({
 
     return {
       defaults = {
-        wrap_results = true,
+        wrap_results = false,
         --- give some opacity so we can see the window picker marks.
         winblend = 10,
         cache_picker = {
