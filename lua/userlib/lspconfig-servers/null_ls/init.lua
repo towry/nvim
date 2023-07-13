@@ -16,8 +16,9 @@ return function()
     -- builtins.code_actions.gitsigns,
     -- require("typescript.extensions.null-ls.code-actions"), -- disabled on volar take over mode.
     -- eslint.
-    builtins.code_actions.eslint,
-    builtins.diagnostics.eslint,
+    -- Make sure do not use the version of mason.
+    builtins.code_actions.eslint_d,
+    builtins.diagnostics.eslint_d,
   }
 
   nls.setup({
