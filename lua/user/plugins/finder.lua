@@ -667,7 +667,15 @@ plug({
             ['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
             ['<C-s>'] = actions.cycle_previewers_next,
             ['<C-a>'] = actions.cycle_previewers_prev,
-            ['<C-h>'] = 'which_key',
+            ['<C-h>'] = function()
+              if vim.fn.mode() == 'n' then return end
+              -- jump between WORD
+              vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>gEa', true, true, true), 'n', false)
+            end,
+            ['<C-l>'] = function()
+              if vim.fn.mode() == 'n' then return end
+              vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>Ea', true, true, true), 'n', false)
+            end,
             ['<ESC>'] = function(prompt_bufnr)
               local picker = action_state.get_current_picker(prompt_bufnr)
               local prompt = picker:_get_prompt()
@@ -686,6 +694,7 @@ plug({
           n = {
             ['<C-s>'] = actions.cycle_previewers_next,
             ['<C-a>'] = actions.cycle_previewers_prev,
+            ['<C-h>'] = 'which_key',
           },
         },
       },
