@@ -760,11 +760,6 @@ plug({
             -- extend mappings
             i = {
               ['<C-k>'] = lga_actions.quote_prompt(),
-              ['<C-r>'] = function(prompt_bufnr)
-                local picker = action_state.get_current_picker(prompt_bufnr)
-                local prompt = picker:_get_prompt()
-                picker:set_prompt('--no-fixed-strings ' .. prompt)
-              end,
               ['<C-o>'] = function(prompt_bufnr)
                 return require('userlib.telescope.picker_keymaps').open_selected_in_window(prompt_bufnr)
               end
