@@ -328,7 +328,19 @@ plug({
     {
       '-',
       function()
-        require('oil').open()
+        local wid = require('window-picker').pick_window({
+          hint = 'floating-big-letter',
+          filter_rules = {
+            include_current_win = true,
+          }
+        })
+        if not wid then
+          return
+        end
+        vim.api.nvim_set_current_win(wid)
+        vim.schedule(function()
+          require('oil').open()
+        end)
       end,
       desc = 'Open oil file browser(buf)',
     },

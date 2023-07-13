@@ -602,7 +602,17 @@ plug({
   {
     's1n7ax/nvim-window-picker',
     opts = {
-      autoselect_one = true,
+      filter_rules = {
+        autoselect_one = true,
+        include_current_win = false,
+        bo = {
+          -- if the file type is one of following, the window will be ignored
+          filetype = vim.cfg.misc__ft_exclude,
+
+          -- if the file type is one of following, the window will be ignored
+          buftype = vim.cfg.misc__buf_exclude
+        },
+      },
       selection_chars = "ABCDEFGHIJKLMNOPQRSTUVW"
     }
   },
