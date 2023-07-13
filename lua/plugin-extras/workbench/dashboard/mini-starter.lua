@@ -34,7 +34,7 @@ return plug({
           starter.gen_hook.aligning("center", "center"),
         },
         -- remove number from query since we need it as v:count
-        query_updaters = 'abcdefghijklmnopqrstuvwxyz_.'
+        query_updaters = 'abcdefghijklmnopqrstuvwxyz.'
       }
       return config
     end,

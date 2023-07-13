@@ -333,7 +333,7 @@ plug({
       desc = 'Open oil file browser(buf)',
     },
     {
-      '-',
+      '_',
       function()
         require('oil').open_float()
       end,
