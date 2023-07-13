@@ -405,6 +405,17 @@ pack.plug({
       'y', '<Plug>(YankyYank)', mode = { 'n', 'x', }, desc = 'Yanky yank',
     },
     {
+      '<C-v>',
+      function()
+        -- TODO: fixe me
+        -- TODO: use telescope to select the register contents.
+        vim.cmd.stopinsert()
+        vim.fn.feedkeys(t('p'))
+      end,
+      mode = { 'i' },
+      desc = 'Yanky put after in insert',
+    },
+    {
       'p',
       function()
         vim.fn.feedkeys(t(('"%s<Plug>(YankyPutAfter)'):format(vim.v.register)))
