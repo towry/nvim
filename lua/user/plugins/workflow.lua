@@ -667,6 +667,14 @@ plug({
     end,
     config = function(_, opts)
       require('harpoon').setup(opts)
+      au.register_event(au.events.AfterColorschemeChanged, {
+        name = "harpoon_ui",
+        immediate = true,
+        callback = function()
+          vim.cmd('hi! link HarpoonWindow NormalFloat')
+          vim.cmd('hi! link HarpoonBorder NormalFloat')
+        end
+      })
     end,
     init = function()
       vim.g.harpoon_log_level = 'warn'
