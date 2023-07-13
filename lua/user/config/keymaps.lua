@@ -8,7 +8,7 @@ local function setup_basic()
   set('n', '<BS>', ':bprevious<CR>', {
     desc = 'Previous buffer',
   })
-  set('n', '-', ':bnext<cr>', {
+  set('n', '<S-BS>', ':bnext<cr>', {
     desc = 'Next buffer',
   })
   --- quickly go into cmd
