@@ -3,6 +3,7 @@ local o = vim.opt
 local g = vim.g
 
 function M.init_edit()
+  o.cpoptions:append(">")                    -- append to register with line break
   o.inccommand = 'split'                     -- preview incremental substitute
   o.clipboard = { 'unnamed', 'unnamedplus' } --- Copy-paste between vim and everything else
   o.expandtab = true                         --- Use spaces instead of tabs
@@ -45,7 +46,6 @@ end
 function M.init_interface()
   o.colorcolumn =
   '+1'                                               -- Draw colored column one step to the right of desired maximum width
-
   o.showmode = false                                 --- Don't show things like -- INSERT -- anymore
   o.modeline = true                                  -- Allow modeline
   o.ruler = false                                    -- Always show cursor position

@@ -407,9 +407,11 @@ pack.plug({
     {
       'p',
       function()
-        vim.fn.feedkeys(t('<Plug>(YankyPutAfter)'))
-        if vim.bo.buftype ~= '' then return end
-        require('userlib.hydra.yanky').open_yanky_ring_hydra()
+        vim.fn.feedkeys(t(('"%s<Plug>(YankyPutAfter)'):format(vim.v.register)))
+        local reg = vim.v.register
+        vim.schedule(function()
+          require('userlib.hydra.yanky').open_yanky_ring_hydra(reg)
+        end)
       end,
       mode = { 'n', 'x', },
       desc = 'Yanky put after',
@@ -417,9 +419,8 @@ pack.plug({
     {
       'P',
       function()
-        vim.fn.feedkeys(t('<Plug>(YankyPutBefore)'))
-        if vim.bo.buftype ~= '' then return end
-        require('userlib.hydra.yanky').open_yanky_ring_hydra()
+        vim.fn.feedkeys(t(('"%s<Plug>(YankyPutBefore)'):format(vim.v.register)))
+        require('userlib.hydra.yanky').open_yanky_ring_hydra(vim.v.register)
       end,
       mode = { 'n', 'x', },
       desc = 'Yanky put before',
@@ -427,8 +428,7 @@ pack.plug({
     {
       'gp',
       function()
-        vim.fn.feedkeys(t('<Plug>(YankyGPutAfter)'))
-        if vim.bo.buftype ~= '' then return end
+        vim.fn.feedkeys(t(('"%s<Plug>(YankyGPutAfter)'):format(vim.v.register)))
         require('userlib.hydra.yanky').open_yanky_ring_hydra()
       end,
       mode = { 'n', 'x', },
@@ -437,12 +437,29 @@ pack.plug({
     {
       'gP',
       function()
-        vim.fn.feedkeys(t('<Plug>(YankyGPutBefore)'))
-        if vim.bo.buftype ~= '' then return end
+        vim.fn.feedkeys(t(('"%s<Plug>(YankyGPutBefore)'):format(vim.v.register)))
         require('userlib.hydra.yanky').open_yanky_ring_hydra()
       end,
       mode = { 'n', 'x', },
       desc = 'Yanky gput before',
+    },
+    {
+      ']p',
+      function()
+        vim.fn.feedkeys(t(('"%s<Plug>(YankyPutIndentAfter)'):format(vim.v.register)))
+        require('userlib.hydra.yanky').open_yanky_ring_hydra()
+      end,
+      mode = { 'n', 'x', },
+      desc = 'Yanky put after with indent',
+    },
+    {
+      '[p',
+      function()
+        vim.fn.feedkeys(t(('"%s<Plug>(YankyPutIndentAfter)'):format(vim.v.register)))
+        require('userlib.hydra.yanky').open_yanky_ring_hydra()
+      end,
+      mode = { 'n', 'x', },
+      desc = 'Yanky put before with indent',
     },
   },
   config = function()

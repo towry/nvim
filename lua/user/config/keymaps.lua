@@ -95,21 +95,37 @@ local function setup_basic()
   })
 
   -- yanks
-  set({ 'n', 'v' }, 'd', '"xd', {
-    desc = 'Delete char and yank to register x',
+  set({ 'n', 'v' }, 'd', function()
+    -- NOTE: add different char for different buffer, for example, in oil, use o|O
+    if vim.v.register == 'd' or vim.v.register == 'D' then
+      return '"' .. vim.v.register .. 'd'
+    end
+    return '"dd'
+  end, {
+    desc = 'Delete char and yank to register d',
+    expr = true,
   })
-  set({ 'n', 'v' }, 'D', '"xD', {
-    desc = 'Delete to end of line and yank to register x',
-  })
-  set({ 'n', 'v' }, '<Char-0xAB>', '"*x', {
-    desc = 'Cut chars and yank to register *',
-    remap = false,
+  set({ 'n', 'v' }, 'D', '"dD', {
+    desc = 'Delete to end of line and yank to register d',
+    expr = true,
   })
   --- do not cut on normal mode.
-  set('n', 'x', '"_x', {
+  set({ 'n', 'v' }, 'x', function()
+    if vim.v.register == 'x' or vim.v.register == 'X' then
+      return '"' .. vim.v.register .. 'x'
+    end
+    return '"xx'
+  end, {
+    expr = true,
     desc = 'Cut chars and do not yank to register',
   })
-  set('n', 'X', '"_X', {
+  set({ 'n', 'v' }, 'X', function()
+    if vim.v.register == 'x' or vim.v.register == 'X' then
+      return '"' .. vim.v.register .. 'X'
+    end
+    return '"xX'
+  end, {
+    expr = true,
     desc = 'Cut chars and do not yank to register',
   })
 
