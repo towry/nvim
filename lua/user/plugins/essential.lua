@@ -407,8 +407,6 @@ pack.plug({
     {
       '<C-v>',
       function()
-        -- TODO: fixe me
-        -- TODO: use telescope to select the register contents.
         vim.cmd.stopinsert()
         vim.fn.feedkeys(t('p'))
       end,
@@ -484,9 +482,23 @@ pack.plug({
     },
   },
   config = function()
+    local mappings = require("yanky.telescope.mapping")
+    local utils = require("yanky.utils")
     require('yanky').setup({
       highlight = {
         timer = 300,
+      },
+      picker = {
+        telescope = {
+          use_default_mappings = false,
+          mappings = {
+            default = mappings.put("p"),
+            i = {
+              ["<c-x>"] = mappings.delete(),
+              ["<c-r>"] = mappings.set_register(utils.get_default_register()),
+            }
+          }
+        }
       },
       --- cycle history when paste with shortcuts.
       ring = {
@@ -495,6 +507,7 @@ pack.plug({
         storage = 'shada',
       },
     })
+    require("telescope").load_extension("yank_history")
   end,
   init = function()
     require('userlib.legendary').pre_hook('setup_yanky_lg', setup_yanky_legendary)
