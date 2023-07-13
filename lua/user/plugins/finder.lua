@@ -332,6 +332,13 @@ plug({
       end,
       desc = 'Open oil file browser(buf)',
     },
+    {
+      '-',
+      function()
+        require('oil').open_float()
+      end,
+      desc = 'Open oil file browser(buf|float)',
+    },
   },
   init = function()
     au.define_autocmd('BufEnter', {
