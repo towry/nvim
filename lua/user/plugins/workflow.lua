@@ -659,7 +659,7 @@ plug({
         global_settings = {
           excluded_filetypes = vim.cfg.misc__ft_exclude,
         },
-        mark_branch = true,
+        mark_branch = false,
         get_project_key = function()
           return vim.cfg.runtime__starts_cwd
         end,
