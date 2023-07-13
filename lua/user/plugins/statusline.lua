@@ -81,6 +81,12 @@ plug({
       winbar = {
         lualine_a = {
           {
+            function()
+              return vim.api.nvim_win_get_number(0)
+            end,
+            icon = ''
+          },
+          {
             separator = { right = '', left = '' },
             left_padding = 2,
             'filename',
@@ -116,6 +122,12 @@ plug({
       },
       inactive_winbar = {
         lualine_a = {
+          {
+            function()
+              return vim.api.nvim_win_get_number(0)
+            end,
+            icon = ''
+          },
           {
             separator = { left = '', right = '' },
             left_padding = 2,
