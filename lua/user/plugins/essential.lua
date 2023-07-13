@@ -351,7 +351,7 @@ pack.plug({
         t = {
           name = 'Test runner',
         }
-      }
+      },
     }, {
       prefix = '<leader>'
     })

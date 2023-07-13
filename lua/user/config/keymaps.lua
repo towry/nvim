@@ -187,6 +187,12 @@ local function setup_basic()
     desc = 'Close buffer and window'
   })
 
+  for i = 1, 9 do
+    set('n', '<space>' .. i, cmd(i .. 'wincmd w'), {
+      desc = 'which_key_ignore',
+    })
+  end
+
   set('n', '<leader><space><space>', cmd([[normal! m']]), {
     desc = 'Mark jump position',
     noremap = true,
