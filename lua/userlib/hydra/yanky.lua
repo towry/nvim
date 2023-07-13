@@ -15,10 +15,12 @@ M.open_yanky_ring_hydra = function(reg)
           {
             private = true,
             desc = "Put before line wise",
+            silent = true,
           } },
         { "<C-j>", ([[u!<esc>%s<Plug>(YankyPutAfterLinewise)]]):format(reg and ('"' .. reg) or ''),
           {
             private = true,
+            silent = true,
             desc = "Put before line wise",
           } },
 
