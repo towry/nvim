@@ -520,6 +520,7 @@ plug({
           display_stat = false,
           hide_parent_dir = true,
           previewer = false,
+          depth = 3,
           cwd = vim.cfg.runtime__starts_cwd,
         }))
       end,
@@ -535,6 +536,7 @@ plug({
           files = false,
           use_fd = true,
           previewer = false,
+          depth = 5,
           hide_parent_dir = true,
           display_stat = false,
           cwd = require('userlib.runtime.utils').get_root(),
@@ -584,7 +586,8 @@ plug({
       'tknightz/telescope-termfinder.nvim',
     },
     {
-      'nvim-telescope/telescope-file-browser.nvim',
+      'pze/telescope-file-browser.nvim',
+      dev = false,
     },
   },
   config = function(_, opts)
