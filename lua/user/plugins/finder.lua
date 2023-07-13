@@ -662,7 +662,12 @@ plug({
         qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
         mappings = {
           i = {
-            ['<C-e>'] = function() vim.cmd('stopinsert') end,
+            ['<S-BS>'] = function()
+              --- delete previous W
+              if vim.fn.mode() == 'n' then return end
+              vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>gEldEa', true, true, true), 'n', false)
+            end,
+            -- ['<C-e>'] = function() vim.cmd('stopinsert') end,
             -- ["<C-x>"] = false,
             ['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
             ['<C-s>'] = actions.cycle_previewers_next,
