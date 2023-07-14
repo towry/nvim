@@ -90,7 +90,7 @@ function M.init_interface()
   o.foldlevel = 99      --- Using ufo provider need a large value
   o.foldlevelstart = 99 --- Expand all folds by default
   -- vim.o.statuscolumn     = '%=%l%s%{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "-" : "+") : "│") : " " }'
-  o.laststatus = 0      --- Have a global statusline at the bottom instead of one for each window
+  o.laststatus = 3      --- Have a global statusline at the bottom instead of one for each window
   o.shortmess:append({ W = true, I = true, c = true, F = true })
   if vim.fn.has('nvim-0.9.0') == 1 then
     o.splitkeep = 'cursor'
