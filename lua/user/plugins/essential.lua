@@ -416,24 +416,26 @@ pack.plug({
     {
       'p',
       function()
-        vim.fn.feedkeys(t(('"%s<Plug>(YankyPutAfter)'):format(vim.v.register)))
+        local ynk_mtd = vim.api.nvim_get_mode().mode == 'n' and 'YankyPutAfter' or 'YankyPutAfterCharwise'
+        vim.fn.feedkeys(t(('"%s<Plug>(%s)'):format(vim.v.register, ynk_mtd)))
         local reg = vim.v.register
         vim.schedule(function()
           require('userlib.hydra.yanky').open_yanky_ring_hydra(reg)
         end)
       end,
-      mode = { 'n', 'x', },
+      mode = { 'n', 'v', },
       desc = 'Yanky put after',
     },
     {
       'P',
       function()
-        vim.fn.feedkeys(t(('"%s<Plug>(YankyPutBefore)'):format(vim.v.register)))
+        local ynk_mtd = vim.api.nvim_get_mode().mode == 'n' and 'YankyPutBefore' or 'YankyPutAfterCharwise'
+        vim.fn.feedkeys(t(('"%s<Plug>(%s)'):format(vim.v.register, ynk_mtd)))
         vim.schedule(function()
           require('userlib.hydra.yanky').open_yanky_ring_hydra(vim.v.register)
         end)
       end,
-      mode = { 'n', 'x', },
+      mode = { 'n', 'v', },
       desc = 'Yanky put before',
     },
     {
