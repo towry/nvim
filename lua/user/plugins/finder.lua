@@ -338,6 +338,11 @@ plug({
       cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_word_under_cursor()'),
       desc = 'Grep search on selection',
     },
+    {
+      '<leader>g.',
+      '<cmd>Telescope git_bcommits<cr>',
+      desc = 'Show commits for current buffer with diff preview',
+    }
   },
   dependencies = {
     { 'nvim-lua/popup.nvim' },

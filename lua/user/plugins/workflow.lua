@@ -627,7 +627,7 @@ plug({
   },
 
   {
-    'pze/harpoon',
+    'ThePrimeagen/harpoon',
     dev = false,
     event = 'User LazyUIEnterOncePost',
     keys = {
@@ -647,18 +647,6 @@ plug({
         nowait = true,
         silent = false,
       },
-      -- {
-      --   '<localleader>m',
-      --   '<cmd>lua require("harpoon.ui").nav_next()<cr>',
-      --   desc = 'Harpoon next',
-      --   silent = false,
-      -- },
-      -- {
-      --   '<localleader>M',
-      --   '<cmd>lua require("harpoon.ui").nav_prev()<cr>',
-      --   desc = 'Harpoon prev',
-      --   silent = false,
-      -- }
     },
     opts = function()
       return {
@@ -669,9 +657,9 @@ plug({
           excluded_filetypes = vim.cfg.misc__ft_exclude,
         },
         mark_branch = false,
-        get_project_key = function()
-          return vim.cfg.runtime__starts_cwd
-        end,
+        -- get_project_key = function()
+        --   return vim.cfg.runtime__starts_cwd
+        -- end,
       }
     end,
     config = function(_, opts)
