@@ -8,10 +8,9 @@ local gr = vim.api.nvim_create_augroup('outline_exit', { clear = true })
 vim.api.nvim_create_autocmd('BufWinLeave', {
   group = gr,
   buffer = 0,
-  callback = function(ctx)
-    local bufnr = ctx.buf
+  callback = function()
     vim.schedule(function()
-      vim.api.nvim_buf_delete(bufnr, { force = true })
+      vim.cmd('SymbolsOutlineClose')
     end)
   end,
 })
