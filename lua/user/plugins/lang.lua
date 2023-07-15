@@ -411,7 +411,8 @@ plug({
     enabled = true,
     opts = {
       max_lines = 3,
-      mode = "cursor"
+      mode = "cursor",
+      min_window_height = 5,
     },
     keys = {
       {

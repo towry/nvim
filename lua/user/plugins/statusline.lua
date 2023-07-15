@@ -68,6 +68,7 @@ plug({
         dashboard_extension,
         toggleterm_extension,
         'nvim-tree',
+        'quickfix',
       },
       options = {
         theme = vim.cfg.workbench__lualine_theme,
@@ -95,9 +96,16 @@ plug({
               modified = '',
               readonly = '',
             }
-          }
+          },
         },
         lualine_b = {
+          {
+            function()
+              local alternate = vim.fn.fnamemodify(vim.fn.bufname('#'), ':t:h')
+              local direction_icon = vim.fn.bufnr('#') > vim.fn.bufnr('%') and '[S]' or '[B]'
+              return direction_icon .. ' ' .. alternate
+            end,
+          },
           {
             function()
               local idx = require('harpoon.mark').status()
@@ -200,7 +208,7 @@ plug({
             return (added .. changed .. removed) ~= "" and (added .. changed .. removed) or ""
           end,
           -- 'diff',
-          { 'diagnostics', update_in_insert = false, symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' } }
+          { 'diagnostics', update_in_insert = false, symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' } },
         },
         lualine_x = {
           -- copilot status
