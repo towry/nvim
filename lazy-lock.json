@@ -1,4 +1,5 @@
 {
+  "Comment.nvim": { "branch": "master", "commit": "176e85eeb63f1a5970d6b88f1725039d85ca0055" },
   "LuaSnip": { "branch": "master", "commit": "105b5f7f72c13e682a3aa5d29eac2408ae513b22" },
   "blackjack.nvim": { "branch": "main", "commit": "4145567d7c38cd3c693f3a07b6d713ce4c5a42aa" },
   "bufresize.nvim": { "branch": "master", "commit": "3b19527ab936d6910484dcc20fb59bdb12322d8b" },
@@ -28,7 +29,6 @@
   "git-conflict.nvim": { "branch": "main", "commit": "8d962d83cae924a314965f738ed1e05a4000d682" },
   "git-worktree.nvim": { "branch": "master", "commit": "d7f4e2584e81670154f07ca9fa5dd791d9c1b458" },
   "gitsigns.nvim": { "branch": "main", "commit": "dc2962f7fce953a2a98e7c6d3d7fc4c1d1f66758" },
-  "grapple.nvim": { "branch": "main", "commit": "ab274a3bfb674442d57fca05df866b71895853bc" },
   "guess-indent.nvim": { "branch": "main", "commit": "b8ae749fce17aa4c267eec80a6984130b94f80b2" },
   "harpoon": { "branch": "master", "commit": "618f766dd3aed9d5563251965268f42f65deb707" },
   "hlargs.nvim": { "branch": "main", "commit": "c7b8b94f5525e1bf40f691a906c729f8d18ce8c5" },
@@ -48,7 +48,6 @@
   "middleclass": { "branch": "master", "commit": "9fab4d5bca67262614960960ca35c4740eb2be2c" },
   "mini.ai": { "branch": "main", "commit": "5218ea75e635df78a807bc9d5a7162594fb76d02" },
   "mini.bufremove": { "branch": "main", "commit": "803be19cba6df93f3e2c76b9f9b8da59fac90b6b" },
-  "mini.comment": { "branch": "main", "commit": "877acea5b2a32ff55f808fc0ebe9aa898648318c" },
   "mini.indentscope": { "branch": "main", "commit": "f60e9b51a6214c73a170ffc5445ce91560981031" },
   "mini.starter": { "branch": "main", "commit": "9591477df06e71352a155823d0eb506ff9cae52b" },
   "mini.trailspace": { "branch": "main", "commit": "c41ab1035d184ff20c1aebd76639320c055afebe" },
