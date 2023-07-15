@@ -244,8 +244,8 @@ plug({
     cmd = { 'Portal' },
     keys = {
 
-      { "<leader>i", "<cmd>Portal jumplist forward<cr>", desc = "Portal forward" },
-      { "<leader>o", "<cmd>Portal jumplist backward<cr>", desc = "Portal backward" },
+      { "<leader>i", "<cmd>Portal jumplist forward max_results=3<cr>", desc = "Portal forward" },
+      { "<leader>o", "<cmd>Portal jumplist backward max_results=3<cr>", desc = "Portal backward" },
       -- {
       --   '<localleader>m',
       --   function()
@@ -284,7 +284,7 @@ plug({
         log_level = 'error',
         window_options = {
           relative = "cursor",
-          width = 60,
+          width = 80,
           height = 5,
           col = 2,
           focusable = false,
