@@ -82,9 +82,7 @@ plug({
         lualine_a = {
           {
             function()
-              local workspace_fold = vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short or nil
-              local wf = workspace_fold and vim.fn.fnamemodify(workspace_fold, ':t') .. '#' or nil
-              return wf .. vim.api.nvim_win_get_number(0)
+              return vim.api.nvim_win_get_number(0)
             end,
             icon = ''
           },
@@ -126,9 +124,7 @@ plug({
         lualine_a = {
           {
             function()
-              local workspace_fold = vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short or nil
-              local wf = workspace_fold and vim.fn.fnamemodify(workspace_fold, ':t') .. '#' or nil
-              return wf .. vim.api.nvim_win_get_number(0)
+              return vim.api.nvim_win_get_number(0)
             end,
             icon = ''
           },
