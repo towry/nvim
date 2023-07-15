@@ -244,40 +244,41 @@ plug({
     cmd = { 'Portal' },
     keys = {
 
-      { "<leader>i", "<cmd>Portal jumplist forward max_results=3<cr>", desc = "Portal forward" },
-      { "<leader>o", "<cmd>Portal jumplist backward max_results=3<cr>", desc = "Portal backward" },
-      -- {
-      --   '<localleader>m',
-      --   function()
-      --     local builtins = require('portal.builtin')
-      --     local opts = {
-      --       direction = 'backward',
-      --       max_results = 3,
-      --     }
-      --
-      --     local jumplist = builtins.jumplist.query(opts)
-      --     local harpoon = builtins.harpoon.query(opts)
-      --
-      --     require('portal').tunnel({ jumplist, harpoon })
-      --   end,
-      --   desc = 'Portal jump backward',
-      -- },
-      -- {
-      --   '<localleader>M',
-      --   function()
-      --     local builtins = require('portal.builtin')
-      --     local opts = {
-      --       direction = 'forward',
-      --       max_results = 3,
-      --     }
-      --
-      --     local jumplist = builtins.jumplist.query(opts)
-      --     local harpoon = builtins.harpoon.query(opts)
-      --
-      --     require('portal').tunnel({ jumplist, harpoon })
-      --   end,
-      --   desc = 'Portal jump forward',
-      -- }
+      {
+        '<leader>o',
+        function()
+          local builtins = require('portal.builtin')
+
+          local jumplist = builtins.jumplist.query({
+            direction = 'backward',
+            max_results = 3,
+          })
+          local harpoon = builtins.harpoon.query({
+            direction = 'backward',
+            max_results = 1,
+          })
+          require('portal').tunnel({ jumplist, harpoon })
+        end,
+        desc = 'Portal jump backward',
+      },
+      {
+        '<leader>i',
+        function()
+          local builtins = require('portal.builtin')
+
+          local jumplist = builtins.jumplist.query({
+            direction = 'forward',
+            max_results = 3,
+          })
+          local harpoon = builtins.harpoon.query({
+            direction = 'forward',
+            max_results = 1,
+          })
+
+          require('portal').tunnel({ jumplist, harpoon })
+        end,
+        desc = 'Portal jump forward',
+      }
     },
     config = function()
       require('portal').setup({
@@ -285,7 +286,7 @@ plug({
         window_options = {
           relative = "cursor",
           width = 80,
-          height = 5,
+          height = 3,
           col = 2,
           focusable = false,
           border = "single",
