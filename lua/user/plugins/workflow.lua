@@ -246,38 +246,38 @@ plug({
 
       { "<leader>i", "<cmd>Portal jumplist forward<cr>", desc = "Portal forward" },
       { "<leader>o", "<cmd>Portal jumplist backward<cr>", desc = "Portal backward" },
-      {
-        '<localleader>m',
-        function()
-          local builtins = require('portal.builtin')
-          local opts = {
-            direction = 'backward',
-            max_results = 3,
-          }
-
-          local jumplist = builtins.jumplist.query(opts)
-          local harpoon = builtins.harpoon.query(opts)
-
-          require('portal').tunnel({ jumplist, harpoon })
-        end,
-        desc = 'Portal jump backward',
-      },
-      {
-        '<localleader>M',
-        function()
-          local builtins = require('portal.builtin')
-          local opts = {
-            direction = 'forward',
-            max_results = 3,
-          }
-
-          local jumplist = builtins.jumplist.query(opts)
-          local harpoon = builtins.harpoon.query(opts)
-
-          require('portal').tunnel({ jumplist, harpoon })
-        end,
-        desc = 'Portal jump forward',
-      }
+      -- {
+      --   '<localleader>m',
+      --   function()
+      --     local builtins = require('portal.builtin')
+      --     local opts = {
+      --       direction = 'backward',
+      --       max_results = 3,
+      --     }
+      --
+      --     local jumplist = builtins.jumplist.query(opts)
+      --     local harpoon = builtins.harpoon.query(opts)
+      --
+      --     require('portal').tunnel({ jumplist, harpoon })
+      --   end,
+      --   desc = 'Portal jump backward',
+      -- },
+      -- {
+      --   '<localleader>M',
+      --   function()
+      --     local builtins = require('portal.builtin')
+      --     local opts = {
+      --       direction = 'forward',
+      --       max_results = 3,
+      --     }
+      --
+      --     local jumplist = builtins.jumplist.query(opts)
+      --     local harpoon = builtins.harpoon.query(opts)
+      --
+      --     require('portal').tunnel({ jumplist, harpoon })
+      --   end,
+      --   desc = 'Portal jump forward',
+      -- }
     },
     config = function()
       require('portal').setup({

@@ -358,7 +358,7 @@ plug({
   keys = {
     { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
-    { '<Char-0xAF>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<D-o>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
   cmd = { 'SymbolsOutline', 'SymbolsOutlineOpen', 'SymbolsOutlineClose' },
   opts = {
