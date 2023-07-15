@@ -168,14 +168,7 @@ plug({
           }
         },
         lualine_b = {
-          {
-            'branch',
-            icon = ""
-          },
           'searchcount',
-        },
-        -- filename is displayed by the incline.
-        lualine_c = {
           {
             function()
               return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
@@ -186,7 +179,13 @@ plug({
             -- color = 'NormalNC',
             maxwidth = 20
           },
-
+        },
+        -- filename is displayed by the incline.
+        lualine_c = {
+          {
+            'branch',
+            icon = ""
+          },
           function()
             if not vim.b.gitsigns_head or vim.b.gitsigns_git_status or vim.o.columns < 120 then
               return ""
