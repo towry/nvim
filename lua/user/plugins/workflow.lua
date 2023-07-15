@@ -289,7 +289,7 @@ plug({
           height = 3,
           col = 2,
           focusable = false,
-          border = "single",
+          border = vim.cfg.ui__float_border,
           noautocmd = true,
         },
         wrap = true,
