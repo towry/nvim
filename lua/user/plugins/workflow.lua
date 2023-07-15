@@ -19,7 +19,11 @@ plug({
         nowait = true,
         expr = true,
       }
-    }
+    },
+    config = function()
+      vim.cmd('hi! link HydraHint NormalFloat')
+      vim.cmd('hi! link HydraBorder NormalFloat')
+    end,
   },
 
   {
