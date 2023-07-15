@@ -168,21 +168,12 @@ local function setup_basic()
   set('n', '<leader>b[', cmd_modcall('userlib.runtime.buffer', 'prev_unsaved_buf()'), {
     desc = 'Next unsaved buffer'
   })
-  set('n', '<leader>bd', [[:e!<CR>]], {
+  set('n', '<leader>bu', [[:earlier 1f<cr>]], {
     desc = 'Discard buffer changes'
   })
-  set('n', '<leader>bx', function()
+  set('n', '<leader>bd', function()
+    -- TODO: select next buffer.
     vim.cmd('bdelete')
-    vim.schedule(function()
-      if #require('userlib.runtime.buffer').list_bufnrs() <= 0 then
-        local cur_empty = require('userlib.runtime.buffer').get_current_empty_buffer()
-        -- start_dashboard()
-        au.do_useraucmd(au.user_autocmds.DoEnterDashboard_User)
-        if cur_empty then
-          vim.api.nvim_buf_delete(cur_empty, { force = true })
-        end
-      end
-    end)
   end, {
     desc = 'Close buffer and window'
   })
