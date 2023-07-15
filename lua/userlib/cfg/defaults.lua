@@ -153,8 +153,7 @@ return {
   lsp__plugin_lspsaga = true,
   ---User interfaces
   ui__theme_name = "default",
-  ui__float_border = 'rounded',
-  -- ui__float_border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+  ui__float_border = 'single',
   workbench__lualine_theme = "default",
   ---misc stuff.
   misc__buf_exclude = {

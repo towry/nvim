@@ -31,7 +31,7 @@ return plug({
         },
         content_hooks = {
           starter.gen_hook.adding_bullet(pad .. "░ ", false),
-          starter.gen_hook.aligning("center", "center"),
+          starter.gen_hook.aligning("left", "top"),
         },
         -- remove number from query since we need it as v:count
         query_updaters = 'abcdefghijklmnopqrstuvwxyz.'
