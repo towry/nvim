@@ -16,13 +16,24 @@ pack.plug({
     },
     {
       'zr', cmd_modcall('ufo', 'openFoldsExceptKinds()'), desc = 'Open folds except kinds',
+    },
+    {
+      'zr', cmd_modcall('ufo', 'closeFoldsWith()'), desc = 'Close folds with',
     }
   },
   config = function()
     local ufo = require('ufo')
+    local ftMap = {
+      vim = 'indent',
+      python = { 'indent' },
+      git = ''
+    }
 
     ufo.setup({
       fold_virt_text_handler = require('userlib.folding').ufo_handler,
+      provider_selector = function(bufnr, filetype, buftype)
+        return ftMap[filetype] or { 'treesitter', 'indent' }
+      end
       -- close_fold_kinds = { "imports" }
     })
   end
