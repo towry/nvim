@@ -102,6 +102,7 @@ plug({
           {
             function()
               local alternate = vim.fn.fnamemodify(vim.fn.bufname('#'), ':t:h')
+              if alternate == '' then return '' end
               local direction_icon = vim.fn.bufnr('#') > vim.fn.bufnr('%') and '[S]' or '[B]'
               return direction_icon .. ' ' .. alternate
             end,
