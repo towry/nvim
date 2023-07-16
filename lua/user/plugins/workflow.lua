@@ -290,7 +290,7 @@ plug({
         window_options = {
           relative = "cursor",
           width = 80,
-          height = 3,
+          height = 4,
           col = 2,
           focusable = false,
           border = vim.cfg.ui__float_border,
