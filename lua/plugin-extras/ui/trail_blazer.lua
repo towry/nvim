@@ -68,22 +68,22 @@ return plug({
   init = function()
     local set = vim.keymap.set
     set('n', '<BS>', '<cmd>TrailBlazerTrackBack %<cr>', {
-      silent = false,
+      silent = true,
       noremap = true,
       desc = 'Trace back in buf'
     })
     set('n', '<S-BS>', '<cmd>TrailBlazerTrackBack<cr>', {
-      silent = false,
+      silent = true,
       noremap = true,
       desc = 'Trace back global'
     })
     set('n', '<D-j>', '<cmd>TrailBlazerPeekMoveNextDown %<cr>', {
-      silent = false,
+      silent = true,
       noremap = true,
       desc = 'Trail next in buf',
     })
     set('n', '<D-k>', '<cmd>TrailBlazerPeekMovePreviousUp %<cr>', {
-      silent = false,
+      silent = true,
       noremap = true,
       desc = 'Trail pre in buf',
     })
