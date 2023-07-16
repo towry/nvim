@@ -15,9 +15,11 @@ local function setup_basic()
   })
   set('n', '[b', ':bprevious<CR>', {
     desc = 'Previous buffer',
+    noremap = true,
   })
   set('n', ']b', ':bnext<cr>', {
     desc = 'Next buffer',
+    noremap = true,
   })
   --- quickly go into cmd
   set('n', '<C-;>', ':<C-u>', {
