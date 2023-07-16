@@ -409,9 +409,9 @@ plug({
           -- Don't calculate root dir on specific directories
           -- Ex: { "~/.cargo/*", ... }
           exclude_dirs = {
-            "~/.cargo/*",
-            "~/.local/*",
-            "~/.cache/*",
+            "**/.cargo/*",
+            "**/.local/*",
+            "**/.cache/*",
             "/dist/*",
             "/node_modules/*",
             "/.pnpm/*"
