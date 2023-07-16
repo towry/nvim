@@ -128,14 +128,7 @@ end
 function M.setup_statusline()
   vim.opt.showtabline = 0 --- Always show tabs
   vim.opt.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
-  require('userlib.runtime.au').define_autocmd('OptionSet', {
-    group = 'throw_err_when_laststatus_change',
-    once = true,
-    pattern = 'laststatus',
-    callback = function(ctx)
-      error("do not change")
-    end,
-  })
+  -- in nvim-tree or windows picker, the laststatus will be modified
 end
 
 --- need to lazy setup, otherwise bunch mods needed to be load.
