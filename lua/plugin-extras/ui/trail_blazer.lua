@@ -47,9 +47,11 @@ end
 return plug({
   'LeonHeidelbach/trailblazer.nvim',
   keys = {
-    '<D-l>',
+    '<leader><space>',
+    '<BS>',
     '<leader>m,',
     '<leader>m.',
+    '<leader>mt',
     { '<leader>ma', add_trail_mark_stack, desc = 'trailblazer: add stack' },
     { '<leader>md', delete_trail_mark_stack, desc = 'trailblazer: delete stack' },
     { '<leader>mg', function() get_available_stacks(true) end, desc = 'trailblazer: get stacks' },
@@ -61,9 +63,17 @@ return plug({
     auto_save_trailblazer_state_on_exit = false,
     auto_load_trailblazer_state_on_enter = false,
     trail_options = {
+      trail_mark_priority = 10001,
       --- Available modes to cycle through.
       available_trail_mark_modes = {
+        "global_chron",
+        "global_buf_line_sorted",
+        "global_fpath_line_sorted",
+        "global_chron_buf_line_sorted",
+        "global_chron_fpath_line_sorted",
         "global_chron_buf_switch_group_chron",
+        "global_chron_buf_switch_group_line_sorted",
+        "buffer_local_chron",
         "buffer_local_line_sorted"
       },
       current_trail_mark_mode = "global_chron_buf_switch_group_chron",
