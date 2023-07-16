@@ -67,12 +67,12 @@ return plug({
   },
   init = function()
     local set = vim.keymap.set
-    set('n', '<BS>', '<cmd>TrailBlazerTrackBack %<cr>', {
-      silent = true,
-      noremap = true,
-      desc = 'Trace back in buf'
-    })
-    set('n', '<S-BS>', '<cmd>TrailBlazerTrackBack<cr>', {
+    -- set('n', '<BS>', '<cmd>TrailBlazerTrackBack %<cr>', {
+    --   silent = true,
+    --   noremap = true,
+    --   desc = 'Trace back in buf'
+    -- })
+    set('n', '<BS>', '<cmd>TrailBlazerTrackBack<cr>', {
       silent = true,
       noremap = true,
       desc = 'Trace back global'
