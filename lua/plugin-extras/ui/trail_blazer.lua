@@ -49,6 +49,8 @@ return plug({
   keys = {
     '<leader><space>',
     '<BS>',
+    '<S-BS>',
+    '<localleader>m',
     '<leader>m,',
     '<leader>m.',
     '<leader>mt',
@@ -108,11 +110,11 @@ return plug({
     force_mappings = {
       nv = {
         motions = {
-          peek_move_next_down = '<D-k>',
-          peek_move_previous_up = '<D-j>',
+          peek_move_next_down = '<S-BS>',
+          peek_move_previous_up = '<BS>',
           new_trail_mark = '<leader><space>',
-          track_back = '<BS>',
-          move_to_nearest = '<D-n>',
+          track_back = '<D-n>',
+          move_to_nearest = '<localleader>m',
           toggle_trail_mark_list = '<leader>mt',
         },
         actions = {
