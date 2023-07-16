@@ -46,13 +46,18 @@ end
 --- https://github.com/FelixKratz/dotfiles/blob/6a84fc7882c31a60268386da0d67c7d39fc7ff55/.config/nvim/lua/plugins/trailblazer.lua#L16
 return plug({
   'LeonHeidelbach/trailblazer.nvim',
+  cmd = {
+    'TrailBlazerTrackBack',
+    'TrailBlazerMoveToNearest',
+    'TrailBlazerPeekMovePreviousUp',
+    'TrailBlazerPeekMoveNextDown',
+  },
   keys = {
     '<leader><space>',
     '<BS>',
-    '<S-BS>',
-    '<localleader>m',
     '<leader>m,',
     '<leader>m.',
+    { '<leader>mn', '<cmd>TrailBlazerMoveToNearest<cr>', desc = 'trail nearest' },
     '<leader>mt',
     { '<leader>ma', add_trail_mark_stack, desc = 'trailblazer: add stack' },
     { '<leader>md', delete_trail_mark_stack, desc = 'trailblazer: delete stack' },
@@ -60,6 +65,39 @@ return plug({
     { '<leader>ms', '<Cmd>TrailBlazerSaveSession<CR>', desc = 'trailblazer: save session' },
     { '<leader>ml', '<Cmd>TrailBlazerLoadSession<CR>', desc = 'trailblazer: load session' },
   },
+  init = function()
+    local set = vim.keymap.set
+    set('n', '<BS>', '<cmd>TrailBlazerTrackBack %<cr>', {
+      silent = false,
+      noremap = true,
+      desc = 'Trace back in buf'
+    })
+    set('n', '<S-BS>', '<cmd>TrailBlazerTrackBack<cr>', {
+      silent = false,
+      noremap = true,
+      desc = 'Trace back global'
+    })
+    set('n', '<D-j>', '<cmd>TrailBlazerPeekMoveNextDown %<cr>', {
+      silent = false,
+      noremap = true,
+      desc = 'Trail next in buf',
+    })
+    set('n', '<D-k>', '<cmd>TrailBlazerPeekMovePreviousUp %<cr>', {
+      silent = false,
+      noremap = true,
+      desc = 'Trail pre in buf',
+    })
+    set('n', '<D-S-j>', '<cmd>TrailBlazerPeekMoveNextDown<cr>', {
+      silent = true,
+      noremap = true,
+      desc = 'Trail next global',
+    })
+    set('n', '<D-S-k>', '<cmd>TrailBlazerPeekMovePreviousUp<cr>', {
+      silent = true,
+      noremap = true,
+      desc = 'Trail pre global',
+    })
+  end,
   opts = {
     -- hl_groups = {
     --
@@ -110,11 +148,7 @@ return plug({
     force_mappings = {
       nv = {
         motions = {
-          peek_move_next_down = '<S-BS>',
-          peek_move_previous_up = '<BS>',
           new_trail_mark = '<leader><space>',
-          track_back = '<D-n>',
-          move_to_nearest = '<localleader>m',
           toggle_trail_mark_list = '<leader>mt',
         },
         actions = {
