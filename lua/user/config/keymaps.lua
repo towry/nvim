@@ -5,10 +5,10 @@ local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 local M = {}
 
 local function setup_basic()
-  set('n', '<BS>', ':bprevious<CR>', {
+  set('n', '[b', ':bprevious<CR>', {
     desc = 'Previous buffer',
   })
-  set('n', '<S-BS>', ':bnext<cr>', {
+  set('n', ']b', ':bnext<cr>', {
     desc = 'Next buffer',
   })
   --- quickly go into cmd
@@ -89,6 +89,12 @@ local function setup_basic()
 
   set({ 'v', 'i' }, '<F1>', cmd('bufdo update'), {
     desc = 'Save all files',
+  })
+  set({ 'n', 'i' }, '<D-S>', cmd('bufdo update'), {
+    desc = 'Save all files',
+  })
+  set({ 'n', 'i' }, '<D-s>', cmd('update'), {
+    desc = 'Save current buffer',
   })
   set('n', '<localleader>w', cmd('update'), {
     desc = 'Save current buffer',
@@ -184,11 +190,6 @@ local function setup_basic()
     })
   end
 
-  set('n', '<leader><space><space>', cmd([[normal! m']]), {
-    desc = 'Mark jump position',
-    noremap = true,
-    nowait = true,
-  })
   set('n', 'qq', cmd([[:qa]]), {
     desc = 'Quit all',
     noremap = true,

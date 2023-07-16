@@ -104,7 +104,7 @@ plug({
               local alternate = vim.fn.fnamemodify(vim.fn.bufname('#'), ':t:h')
               if alternate == '' then return '' end
               local direction_icon = vim.fn.bufnr('#') > vim.fn.bufnr('%') and '[S]' or '[B]'
-              return direction_icon .. ' ' .. alternate
+              return direction_icon .. '' .. alternate
             end,
           },
           {
@@ -283,7 +283,7 @@ plug({
         setopt = true,
         segments = {
           {
-            sign = { name = { '.*' }, maxwidth = 1, colwidth = 1, auto = true },
+            sign = { name = { '.*' }, maxwidth = 2, colwidth = 1, auto = true },
           },
           { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
           { text = { builtin.foldfunc, ' ' }, click = 'v:lua.ScFa' },
