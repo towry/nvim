@@ -59,6 +59,9 @@ return plug({
     { '<leader>ml', '<Cmd>TrailBlazerLoadSession<CR>', desc = 'trailblazer: load session' },
   },
   opts = {
+    -- hl_groups = {
+    --
+    -- },
     lang = "en",
     auto_save_trailblazer_state_on_exit = false,
     auto_load_trailblazer_state_on_enter = false,
