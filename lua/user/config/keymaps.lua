@@ -4,7 +4,15 @@ local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 
 local M = {}
 
+
 local function setup_basic()
+  set('i', "<C-'>", function()
+    vim.cmd('stopinsert')
+    vim.fn.feedkeys(vim.api.nvim_replace_termcodes('"', true, false, true))
+  end, {
+    silent = true,
+    desc = 'Pick register from insert mode',
+  })
   set('n', '[b', ':bprevious<CR>', {
     desc = 'Previous buffer',
   })
