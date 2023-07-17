@@ -286,7 +286,7 @@ plug({
             sign = { name = { '.*' }, maxwidth = 2, colwidth = 1, auto = true },
           },
           { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
-          { text = { builtin.foldfunc, ' ' }, click = 'v:lua.ScFa' },
+          { text = { builtin.foldfunc, '' },  click = 'v:lua.ScFa' },
           -- {
           --   sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 1, auto = true },
           --   click = 'v:lua.ScSa',
@@ -294,6 +294,9 @@ plug({
           {
             sign = { name = { 'Diagnostic' }, maxwidth = 1, auto = false },
             click = 'v:lua.ScSa',
+          },
+          {
+            sign = { namespace = { '.*' }, maxwidth = 1, colwidth = 2, auto = true },
           },
         },
       })
