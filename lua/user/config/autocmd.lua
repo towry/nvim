@@ -67,7 +67,6 @@ function M.load_on_startup()
         group = '_set_dir_on_change_',
         callback = function(ctx)
           local new_cwd = ctx.file
-          vim.notify("dir changed")
           vim.g.cwd = new_cwd
           vim.g.cwd_short = require('userlib.runtime.path').home_to_tilde(new_cwd)
         end,
