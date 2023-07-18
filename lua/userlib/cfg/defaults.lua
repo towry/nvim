@@ -41,7 +41,7 @@ return {
     "python",
     "python3",
   },
-  runtime__python3_host_prog = '/Users/towry/.pyenv/versions/3.8.2/bin/python3',
+  runtime__python3_host_prog = '$HOME/.pyenv/shims/python',
   ---editor stuff
   --enable relative number or not.
   editor__relative_number = true,
@@ -104,7 +104,7 @@ return {
   lang__treesitter_plugin_refactor = true,
   lang__treesitter_plugin_textobjects_move = true,
   lang__treesitter_plugin_textsubjects = true,
-  lsp__log_level = "ERROR",
+  lsp__log_level = "INFO",
   lsp__enable_servers = {
     "tailwindcss",
     "cssls",
