@@ -94,9 +94,8 @@ plug({
         auto_install = false,
         ignore_install = { 'all' },                                   -- list of parsers to ignore installing
         highlight = {
-          -- disable = disabled,
-          -- enable = vim.cfg.lang__treesitter_plugin_highlight,
-          enable = false,
+          disable = disabled,
+          enable = vim.cfg.lang__treesitter_plugin_highlight,
           -- disable = { "c", "rust" },  -- list of language that will be disabled
           additional_vim_regex_highlighting = false,
         },
