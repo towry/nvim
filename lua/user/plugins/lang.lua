@@ -125,7 +125,8 @@ plug({
         },
         context_commentstring = {
           -- enable = vim.cfg.lang__treesitter_plugin_context_commentstring,
-          enable = true
+          enable = true,
+          enable_autocmd = false,
         },
         rainbow = {
           disable = disabled,
@@ -305,8 +306,10 @@ plug({
         },
         ---Pre-hook, called before commenting the line
         ---@type function|nil
-        pre_hook = function(ctx) return require('ts_context_commentstring.internal').calculate_commentstring() or
-          vim.bo.commentstring end,
+        pre_hook = function(ctx)
+          return require('ts_context_commentstring.internal').calculate_commentstring() or
+              vim.bo.commentstring
+        end,
         ---Post-hook, called after commenting is done
         ---@type function|nil
         post_hook = nil,
