@@ -73,7 +73,7 @@ function M.init_interface()
   o.foldcolumn = 'auto'                              -- Folding
   o.list = true
   o.listchars:append('tab:⇢ ')
-  o.listchars:append('eol:↲')
+  -- o.listchars:append('eol:↲')
   o.listchars:append('extends:»')
   o.listchars:append('nbsp:␣')
   o.listchars:append('precedes:«')
