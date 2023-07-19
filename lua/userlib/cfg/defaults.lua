@@ -99,7 +99,7 @@ return {
   lang__treesitter_plugin_highlight = true,
   lang__treesitter_plugin_indent = true,
   lang__treesitter_plugin_yati = true,
-  lang__treesitter_plugin_rainbow = false,
+  lang__treesitter_plugin_rainbow = true,
   lang__treesitter_plugin_context_commentstring = true,
   lang__treesitter_plugin_refactor = true,
   lang__treesitter_plugin_textobjects_move = true,

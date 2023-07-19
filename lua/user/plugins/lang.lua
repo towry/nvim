@@ -124,8 +124,7 @@ plug({
           suppress_conflict_warning = true,
         },
         context_commentstring = {
-          -- enable = vim.cfg.lang__treesitter_plugin_context_commentstring,
-          enable = true,
+          enable = vim.cfg.lang__treesitter_plugin_context_commentstring,
           enable_autocmd = false,
         },
         rainbow = {
