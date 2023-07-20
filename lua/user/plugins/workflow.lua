@@ -409,12 +409,14 @@ plug({
           -- Don't calculate root dir on specific directories
           -- Ex: { "~/.cargo/*", ... }
           exclude_dirs = {
-            "**/.cargo/*",
-            "**/.local/*",
-            "**/.cache/*",
-            "/dist/*",
-            "/node_modules/*",
-            "/.pnpm/*"
+            ".cargo/",
+            "~/.local",
+            "~/.cache",
+            "Library/",
+            ".cache/",
+            "dist/",
+            "node_modules/",
+            ".pnpm/"
           },
           -- Show hidden files in telescope
           show_hidden = false,
