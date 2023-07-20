@@ -6,9 +6,9 @@ return plug({
   lazy = not vim.cfg.runtime__starts_in_buffer,
   opts = {
     windows = {
-      preview = true,
+      preview = false,
       width_nofocus = 10,
-      width_preview = 20,
+      width_preview = 30,
     },
     options = {
       -- Whether to use for editing directories
