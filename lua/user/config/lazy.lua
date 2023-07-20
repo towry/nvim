@@ -29,7 +29,6 @@ local function setup(lazy_opts, opts)
     },
     git = {
       timeout = 60,
-      url_format = "https://ghproxy.com/https://github.com/%s.git",
     },
     concurrency = 4,
     custom_keys = {

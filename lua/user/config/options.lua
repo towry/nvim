@@ -73,7 +73,7 @@ function M.init_interface()
   o.foldcolumn = 'auto'                              -- Folding
   o.list = true
   o.listchars:append('tab:⇢ ')
-  o.listchars:append('eol:↲')
+  -- o.listchars:append('eol:↲')
   o.listchars:append('extends:»')
   o.listchars:append('nbsp:␣')
   o.listchars:append('precedes:«')
@@ -93,7 +93,7 @@ function M.init_interface()
   o.laststatus = 3      --- Have a global statusline at the bottom instead of one for each window
   o.shortmess:append({ W = true, I = true, c = true, F = true })
   if vim.fn.has('nvim-0.9.0') == 1 then
-    o.splitkeep = 'cursor'
+    o.splitkeep = 'screen'
     o.shortmess:append({ C = true })
   end
   o.formatoptions:remove('c')
@@ -128,6 +128,7 @@ end
 function M.setup_statusline()
   vim.opt.showtabline = 0 --- Always show tabs
   vim.opt.laststatus = 3  --- Have a global statusline at the bottom instead of one for each window
+  -- in nvim-tree or windows picker, the laststatus will be modified
 end
 
 --- need to lazy setup, otherwise bunch mods needed to be load.

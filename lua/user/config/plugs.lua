@@ -27,5 +27,6 @@ require("plugin-extras.workbench.dashboard.mini-starter")
 require("plugin-extras.workflow.cheatsheets")
 require("plugin-extras.tools.profile")
 require("plugin-extras.tools.games")
+require('plugin-extras.ui.trail_blazer')
 
 return require('userlib.runtime.pack').repos()

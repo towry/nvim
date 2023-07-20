@@ -24,25 +24,6 @@ return {
     function() vim.cmd('e ' .. vim.fs.dirname(vim.fn.expand('$MYVIMRC')) .. '/lua/ty/contrib/editing/switch_rc.lua') end,
     description = 'Edit switch definitions',
   },
-  {
-    function()
-      local config = require('gitsigns.config').config
-      if config.current_line_blame then
-        -- disable
-        config.current_line_blame = false
-        vim.api.nvim_create_augroup('gitsigns_blame', {
-          clear = true,
-        })
-        Ty.NOTIFY('line blame OFF')
-      else
-        -- enable.
-        config.current_line_blame = true
-        require('gitsigns.current_line_blame').setup()
-        Ty.NOTIFY('line blame ON')
-      end
-    end,
-    description = 'Gitsigns toggle line blame',
-  },
   -- dismiss notify
   {
     function() require('notify').dismiss() end,
@@ -128,13 +109,6 @@ return {
       vim.cmd('ColorizerToggle')
     end,
     description = 'Toggle colorizer',
-  },
-  {
-    function()
-      require('userlib.telescope.pickers').project_files_toggle_between_git_and_fd()
-      Ty.NOTIFY("Toggle between git and fd done", vim.log.levels.INFO)
-    end,
-    description = "Toggle telescope project files source, git or find files",
   },
   {
     function()

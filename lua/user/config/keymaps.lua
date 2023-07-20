@@ -4,12 +4,22 @@ local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 
 local M = {}
 
+
 local function setup_basic()
-  set('n', '<BS>', ':bprevious<CR>', {
-    desc = 'Previous buffer',
+  set('i', "<C-'>", function()
+    vim.cmd('stopinsert')
+    vim.fn.feedkeys(vim.api.nvim_replace_termcodes('"', true, false, true))
+  end, {
+    silent = true,
+    desc = 'Pick register from insert mode',
   })
-  set('n', '<S-BS>', ':bnext<cr>', {
+  set('n', '[b', ':bprevious<CR>', {
+    desc = 'Previous buffer',
+    noremap = true,
+  })
+  set('n', ']b', ':bnext<cr>', {
     desc = 'Next buffer',
+    noremap = true,
   })
   --- quickly go into cmd
   set('n', '<C-;>', ':<C-u>', {
@@ -90,6 +100,12 @@ local function setup_basic()
   set({ 'v', 'i' }, '<F1>', cmd('bufdo update'), {
     desc = 'Save all files',
   })
+  set({ 'n', 'i' }, '<D-S>', cmd('bufdo update'), {
+    desc = 'Save all files',
+  })
+  set({ 'n', 'i' }, '<D-s>', cmd('update'), {
+    desc = 'Save current buffer',
+  })
   set('n', '<localleader>w', cmd('update'), {
     desc = 'Save current buffer',
   })
@@ -168,21 +184,12 @@ local function setup_basic()
   set('n', '<leader>b[', cmd_modcall('userlib.runtime.buffer', 'prev_unsaved_buf()'), {
     desc = 'Next unsaved buffer'
   })
-  set('n', '<leader>bd', [[:e!<CR>]], {
+  set('n', '<leader>bu', [[:earlier 1f<cr>]], {
     desc = 'Discard buffer changes'
   })
-  set('n', '<leader>bx', function()
+  set('n', '<leader>bd', function()
+    -- TODO: select next buffer.
     vim.cmd('bdelete')
-    vim.schedule(function()
-      if #require('userlib.runtime.buffer').list_bufnrs() <= 0 then
-        local cur_empty = require('userlib.runtime.buffer').get_current_empty_buffer()
-        -- start_dashboard()
-        au.do_useraucmd(au.user_autocmds.DoEnterDashboard_User)
-        if cur_empty then
-          vim.api.nvim_buf_delete(cur_empty, { force = true })
-        end
-      end
-    end)
   end, {
     desc = 'Close buffer and window'
   })
@@ -193,11 +200,6 @@ local function setup_basic()
     })
   end
 
-  set('n', '<leader><space><space>', cmd([[normal! m']]), {
-    desc = 'Mark jump position',
-    noremap = true,
-    nowait = true,
-  })
   set('n', 'qq', cmd([[:qa]]), {
     desc = 'Quit all',
     noremap = true,

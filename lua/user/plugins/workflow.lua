@@ -19,7 +19,11 @@ plug({
         nowait = true,
         expr = true,
       }
-    }
+    },
+    config = function()
+      vim.cmd('hi! link HydraHint NormalFloat')
+      vim.cmd('hi! link HydraBorder NormalFloat')
+    end,
   },
 
   {
@@ -60,6 +64,10 @@ plug({
     dependencies = {
       { 'junegunn/fzf', build = function() vim.fn['fzf#install']() end },
     },
+    config = function()
+      vim.cmd('hi! link BqfPreviewBorder NormalFloat')
+      vim.cmd('hi! link BqfPreviewFloat NormalFloat')
+    end,
   },
 
   ----- buffers
@@ -240,35 +248,36 @@ plug({
     cmd = { 'Portal' },
     keys = {
 
-      { "<leader>i", "<cmd>Portal jumplist forward<cr>", desc = "Portal forward" },
-      { "<leader>o", "<cmd>Portal jumplist backward<cr>", desc = "Portal backward" },
       {
-        '<localleader>m',
+        '<leader>o',
         function()
           local builtins = require('portal.builtin')
-          local opts = {
+
+          local jumplist = builtins.jumplist.query({
             direction = 'backward',
             max_results = 3,
-          }
-
-          local jumplist = builtins.jumplist.query(opts)
-          local harpoon = builtins.harpoon.query(opts)
-
+          })
+          local harpoon = builtins.harpoon.query({
+            direction = 'backward',
+            max_results = 1,
+          })
           require('portal').tunnel({ jumplist, harpoon })
         end,
         desc = 'Portal jump backward',
       },
       {
-        '<localleader>M',
+        '<leader>i',
         function()
           local builtins = require('portal.builtin')
-          local opts = {
+
+          local jumplist = builtins.jumplist.query({
             direction = 'forward',
             max_results = 3,
-          }
-
-          local jumplist = builtins.jumplist.query(opts)
-          local harpoon = builtins.harpoon.query(opts)
+          })
+          local harpoon = builtins.harpoon.query({
+            direction = 'forward',
+            max_results = 1,
+          })
 
           require('portal').tunnel({ jumplist, harpoon })
         end,
@@ -280,11 +289,11 @@ plug({
         log_level = 'error',
         window_options = {
           relative = "cursor",
-          width = 60,
-          height = 5,
+          width = 80,
+          height = 4,
           col = 2,
           focusable = false,
-          border = "single",
+          border = vim.cfg.ui__float_border,
           noautocmd = true,
         },
         wrap = true,
@@ -400,9 +409,9 @@ plug({
           -- Don't calculate root dir on specific directories
           -- Ex: { "~/.cargo/*", ... }
           exclude_dirs = {
-            "~/.cargo/*",
-            "~/.local/*",
-            "~/.cache/*",
+            "**/.cargo/*",
+            "**/.local/*",
+            "**/.cache/*",
             "/dist/*",
             "/node_modules/*",
             "/.pnpm/*"
@@ -449,8 +458,8 @@ plug({
             'term',
             'nvimtree'
           }, vim.cfg.misc__ft_exclude),
-        autosave_only_in_session = true, -- Always autosaves session. If true, only autosaves after a session is active.
-        max_path_length = 80, -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
+        autosave_only_in_session = false, -- Always autosaves session. If true, only autosaves after a session is active.
+        max_path_length = 0, -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
       })
     end,
   },
@@ -622,7 +631,7 @@ plug({
   },
 
   {
-    'pze/harpoon',
+    'ThePrimeagen/harpoon',
     dev = false,
     event = 'User LazyUIEnterOncePost',
     keys = {
@@ -642,18 +651,6 @@ plug({
         nowait = true,
         silent = false,
       },
-      -- {
-      --   '<localleader>m',
-      --   '<cmd>lua require("harpoon.ui").nav_next()<cr>',
-      --   desc = 'Harpoon next',
-      --   silent = false,
-      -- },
-      -- {
-      --   '<localleader>M',
-      --   '<cmd>lua require("harpoon.ui").nav_prev()<cr>',
-      --   desc = 'Harpoon prev',
-      --   silent = false,
-      -- }
     },
     opts = function()
       return {
@@ -664,9 +661,9 @@ plug({
           excluded_filetypes = vim.cfg.misc__ft_exclude,
         },
         mark_branch = false,
-        get_project_key = function()
-          return vim.cfg.runtime__starts_cwd
-        end,
+        -- get_project_key = function()
+        --   return vim.cfg.runtime__starts_cwd
+        -- end,
       }
     end,
     config = function(_, opts)
