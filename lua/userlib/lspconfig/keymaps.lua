@@ -65,8 +65,7 @@ function M.setup_keybinding(client, buffer)
       opts({
         desc = _('Code Action'),
       }))
-    -- <CMD-.> on kitty
-    set('n', '<Char-0xAD>', func_call("open_code_action()"),
+    set('n', '<D-.>', func_call("open_code_action()"),
       opts({
         desc = _('Code Action'),
       }))

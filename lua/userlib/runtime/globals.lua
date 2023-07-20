@@ -69,3 +69,14 @@ end
 Ty.StopProfile = function()
   require('userlib.profile').stop()
 end
+
+Ty.find_string = function(tab, str)
+  local found = false
+  for _, v in pairs(tab) do
+    if v == str then
+      found = true
+      break
+    end
+  end
+  return found
+end

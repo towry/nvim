@@ -4,7 +4,7 @@ local pickers = require("telescope.pickers")
 local telescope_config = require("telescope.config").values
 local actions = require("telescope.actions")
 local state = require("telescope.actions.state")
-local builtin = require("telescope.builtin")
+-- local builtin = require("telescope.builtin")
 local entry_display = require("telescope.pickers.entry_display")
 local history = require("project_nvim.utils.history")
 

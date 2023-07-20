@@ -68,6 +68,7 @@ plug({
         dashboard_extension,
         toggleterm_extension,
         'nvim-tree',
+        'quickfix',
       },
       options = {
         theme = vim.cfg.workbench__lualine_theme,
@@ -81,6 +82,12 @@ plug({
       winbar = {
         lualine_a = {
           {
+            function()
+              return vim.api.nvim_win_get_number(0)
+            end,
+            icon = ''
+          },
+          {
             separator = { right = '', left = '' },
             left_padding = 2,
             'filename',
@@ -89,9 +96,17 @@ plug({
               modified = '',
               readonly = '',
             }
-          }
+          },
         },
         lualine_b = {
+          {
+            function()
+              local alternate = vim.fn.fnamemodify(vim.fn.bufname('#'), ':t:h')
+              if alternate == '' then return '' end
+              local direction_icon = vim.fn.bufnr('#') > vim.fn.bufnr('%') and '[N]' or '[P]'
+              return direction_icon .. '' .. alternate
+            end,
+          },
           {
             function()
               local idx = require('harpoon.mark').status()
@@ -116,6 +131,12 @@ plug({
       },
       inactive_winbar = {
         lualine_a = {
+          {
+            function()
+              return vim.api.nvim_win_get_number(0)
+            end,
+            icon = ''
+          },
           {
             separator = { left = '', right = '' },
             left_padding = 2,
@@ -156,14 +177,7 @@ plug({
           }
         },
         lualine_b = {
-          {
-            'branch',
-            icon = ""
-          },
           'searchcount',
-        },
-        -- filename is displayed by the incline.
-        lualine_c = {
           {
             function()
               return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
@@ -174,7 +188,13 @@ plug({
             -- color = 'NormalNC',
             maxwidth = 20
           },
-
+        },
+        -- filename is displayed by the incline.
+        lualine_c = {
+          {
+            'branch',
+            icon = ""
+          },
           function()
             if not vim.b.gitsigns_head or vim.b.gitsigns_git_status or vim.o.columns < 120 then
               return ""
@@ -189,7 +209,7 @@ plug({
             return (added .. changed .. removed) ~= "" and (added .. changed .. removed) or ""
           end,
           -- 'diff',
-          { 'diagnostics', update_in_insert = false, symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' } }
+          { 'diagnostics', update_in_insert = false, symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' } },
         },
         lualine_x = {
           -- copilot status
@@ -263,10 +283,13 @@ plug({
         setopt = true,
         segments = {
           {
-            sign = { name = { '.*' }, maxwidth = 1, colwidth = 1, auto = true },
+            sign = { name = { '.*' }, maxwidth = 2, colwidth = 1, auto = true },
+          },
+          {
+            sign = { namespace = { '.*' }, maxwidth = 2, colwidth = 2, auto = true },
           },
           { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
-          { text = { builtin.foldfunc, ' ' }, click = 'v:lua.ScFa' },
+          { text = { builtin.foldfunc, '' },  click = 'v:lua.ScFa' },
           -- {
           --   sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 1, auto = true },
           --   click = 'v:lua.ScSa',

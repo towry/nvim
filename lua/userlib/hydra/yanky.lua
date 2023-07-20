@@ -2,7 +2,7 @@ local M = {}
 
 local yanky_hydra = nil
 
-M.open_yanky_ring_hydra = function()
+M.open_yanky_ring_hydra = function(reg)
   local ok, Hydra = pcall(require, 'hydra')
   if not ok then return end
 
@@ -11,10 +11,35 @@ M.open_yanky_ring_hydra = function()
       name = 'Yank ring',
       mode = 'n',
       heads = {
-        { "p", "<Plug>(YankyPutAfter)", { desc = "After" } },
-        { "P", "<Plug>(YankyPutBefore)", { desc = "Before" } },
-        { "<C-n>", "<Plug>(YankyCycleForward)", { private = true, desc = "↓" } },
+        { "<C-k>", ([[u!<esc>%s<Plug>(YankyPutIndentBeforeLinewise)]]):format(reg and ('"' .. reg) or ''),
+          {
+            private = true,
+            desc = "Put before line wise",
+            silent = true,
+          } },
+        { "<C-j>", ([[u!<esc>%s<Plug>(YankyPutIndentAfterLinewise)]]):format(reg and ('"' .. reg) or ''),
+          {
+            private = true,
+            silent = true,
+            desc = "Put before line wise",
+          } },
+
+        { "<C-n>", "<Plug>(YankyCycleForward)",  { private = true, desc = "↓" } },
         { "<C-p>", "<Plug>(YankyCycleBackward)", { private = true, desc = "↑" } },
+        {
+          "<C-f>",
+          function()
+            vim.schedule(function()
+              require("telescope").extensions.yank_history.yank_history()
+            end)
+          end,
+          {
+            private = true,
+            desc = 'History',
+            -- must exit,
+            exit = true,
+          }
+        }
       }
     })
   end

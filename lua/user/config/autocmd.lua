@@ -59,19 +59,6 @@ function M.load_on_startup()
         command = 'lua vim.diagnostic.disable(0)',
       }
     },
-
-    {
-      { "DirChanged" },
-      {
-        pattern = '*',
-        group = '_set_dir_on_change_',
-        callback = function(ctx)
-          local new_cwd = ctx.file
-          vim.g.cwd = new_cwd
-          vim.g.cwd_short = require('userlib.runtime.path').home_to_tilde(new_cwd)
-        end,
-      }
-    },
     ------------------------------------
     -- {
     --   { 'InsertEnter' },
@@ -188,6 +175,19 @@ function M.load_on_startup()
   ---////// user autocmds.
   local user_definitions = {
     {
+      pattern = 'ProjectNvimSetPwd',
+      group = '_set_dir_on_change_',
+      callback = function(ctx)
+        local data = ctx.data or {}
+        local new_cwd = data.dir or nil
+        if not new_cwd then
+          new_cwd = vim.uv.get_cwd()
+        end
+        vim.g.cwd = new_cwd
+        vim.g.cwd_short = require('userlib.runtime.path').home_to_tilde(new_cwd)
+      end,
+    },
+    {
       pattern = "AlphaClosed",
       callback = function()
         au.do_useraucmd(au.user_autocmds.OnLeaveDashboard_User)
@@ -221,6 +221,25 @@ function M.load_on_startup()
 
   au.define_autocmds(definitions)
   au.define_user_autocmds(user_definitions)
+
+  vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
+    callback = function()
+      local ok, cl = pcall(vim.api.nvim_win_get_var, 0, "auto-cursorline")
+      if ok and cl then
+        vim.wo.cursorline = true
+        vim.api.nvim_win_del_var(0, "auto-cursorline")
+      end
+    end,
+  })
+  vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
+    callback = function()
+      local cl = vim.wo.cursorline
+      if cl then
+        vim.api.nvim_win_set_var(0, "auto-cursorline", cl)
+        vim.wo.cursorline = false
+      end
+    end,
+  })
 end
 
 function M.setup_events_on_startup()

@@ -19,7 +19,11 @@ plug({
         nowait = true,
         expr = true,
       }
-    }
+    },
+    config = function()
+      vim.cmd('hi! link HydraHint NormalFloat')
+      vim.cmd('hi! link HydraBorder NormalFloat')
+    end,
   },
 
   {
@@ -27,7 +31,7 @@ plug({
     dependencies = {
       'anuvyklack/middleclass',
     },
-    enabled = false,
+    enabled = true,
     event = 'User LazyUIEnterOnce',
     opts = {
       ignore = {
@@ -60,6 +64,10 @@ plug({
     dependencies = {
       { 'junegunn/fzf', build = function() vim.fn['fzf#install']() end },
     },
+    config = function()
+      vim.cmd('hi! link BqfPreviewBorder NormalFloat')
+      vim.cmd('hi! link BqfPreviewFloat NormalFloat')
+    end,
   },
 
   ----- buffers
@@ -110,8 +118,8 @@ plug({
           if buftype ~= "" then
             require('mini.bufremove').wipeout(0)
             if not vim.tbl_contains({
-              'terminal',
-            }, buftype) then
+                  'terminal',
+                }, buftype) then
               vim.cmd('q')
             end
             return
@@ -239,70 +247,75 @@ plug({
     'cbochs/portal.nvim',
     cmd = { 'Portal' },
     keys = {
+
       {
-        '<M-o>',
+        '<leader>o',
         function()
           local builtins = require('portal.builtin')
-          local opts = {
+
+          local jumplist = builtins.jumplist.query({
             direction = 'backward',
-            max_results = 2,
-          }
-
-          local jumplist = builtins.jumplist.query(opts)
-          -- local harpoon = builtins.harpoon.query(opts)
-          local grapples = builtins.grapple.query(opts)
-
-          require('portal').tunnel({ jumplist, grapples })
+            max_results = 3,
+          })
+          local harpoon = builtins.harpoon.query({
+            direction = 'backward',
+            max_results = 1,
+          })
+          require('portal').tunnel({ jumplist, harpoon })
         end,
         desc = 'Portal jump backward',
       },
       {
-        '<M-i>',
+        '<leader>i',
         function()
           local builtins = require('portal.builtin')
-          local opts = {
+
+          local jumplist = builtins.jumplist.query({
             direction = 'forward',
-            max_results = 2,
-          }
+            max_results = 3,
+          })
+          local harpoon = builtins.harpoon.query({
+            direction = 'forward',
+            max_results = 1,
+          })
 
-          local jumplist = builtins.jumplist.query(opts)
-          -- local harpoon = builtins.harpoon.query(opts)
-          local grapples = builtins.grapple.query(opts)
-
-          require('portal').tunnel({ jumplist, grapples })
+          require('portal').tunnel({ jumplist, harpoon })
         end,
         desc = 'Portal jump forward',
       }
     },
-    dependencies = {
-      'cbochs/grapple.nvim',
-    },
     config = function()
-      -- local nvim_set_hl = vim.api.nvim_set_hl
       require('portal').setup({
         log_level = 'error',
         window_options = {
           relative = "cursor",
-          width = 40,
-          height = 2,
-          col = 1,
+          width = 80,
+          height = 4,
+          col = 2,
           focusable = false,
-          border = "rounded",
+          border = vim.cfg.ui__float_border,
           noautocmd = true,
+        },
+        wrap = true,
+        select_first = true,
+        escape = {
+          ['<esc>'] = true,
+          ['<C-c>'] = true,
+          ['q'] = true,
+          ['<C-j>'] = true,
         }
       })
 
-      -- FIXME: colors.
-      -- nvim_set_hl(0, 'PortalBorderForward', { fg = colors.portal_border_forward })
-      -- nvim_set_hl(0, 'PortalBorderNone', { fg = colors.portal_border_none })
+      vim.cmd('hi! link PortalBorder NormalFloat')
     end,
   },
   {
+    enabled = false,
     'cbochs/grapple.nvim',
     keys = {
       { '<leader>bg', '<cmd>GrappleToggle<cr>', desc = 'Toggle grapple' },
-      { '<leader>bp', '<cmd>GrapplePopup<cr>', desc = 'Popup grapple' },
-      { '<leader>bc', '<cmd>GrappleCycle<cr>', desc = 'Cycle grapple' },
+      { '<leader>bp', '<cmd>GrapplePopup<cr>',  desc = 'Popup grapple' },
+      { '<leader>bc', '<cmd>GrappleCycle<cr>',  desc = 'Cycle grapple' },
     },
     cmd = { 'GrappleToggle', 'GrapplePopup', 'GrappleCycle' },
     opts = {
@@ -360,8 +373,22 @@ plug({
           {
             '<leader>fp',
             function()
+              local actions = require("telescope.actions")
+              local state = require("telescope.actions.state")
               require('userlib.runtime.utils').plugin_schedule('project_nvim', function()
-                vim.cmd('Telescope projects')
+                require('telescope').extensions.projects.projects(require('telescope.themes').get_dropdown({
+                  attach_mappings = function(prompt_bufnr, _map)
+                    local on_project_selected = function()
+                      local entry_path = state.get_selected_entry().value
+                      if not entry_path then return end
+                      local new_cwd = entry_path
+
+                      require('userlib.hydra.folder-action').open(new_cwd, prompt_bufnr)
+                    end
+                    actions.select_default:replace(on_project_selected)
+                    return true
+                  end,
+                }))
               end)
             end,
             desc = 'Projects',
@@ -382,9 +409,9 @@ plug({
           -- Don't calculate root dir on specific directories
           -- Ex: { "~/.cargo/*", ... }
           exclude_dirs = {
-            "~/.cargo/*",
-            "~/.local/*",
-            "~/.cache/*",
+            "**/.cargo/*",
+            "**/.local/*",
+            "**/.cache/*",
             "/dist/*",
             "/node_modules/*",
             "/.pnpm/*"
@@ -418,21 +445,21 @@ plug({
       local Path = require('plenary.path')
 
       session_manager.setup({
-        sessions_dir = Path:new(vim.fn.stdpath('data'), 'sessions'), -- The directory where the session files will be saved.
-        path_replacer = '__', -- The character to which the path separator will be replaced for session files.
-        colon_replacer = '++', -- The character to which the colon symbol will be replaced for session files.
+        sessions_dir = Path:new(vim.fn.stdpath('data'), 'sessions'),             -- The directory where the session files will be saved.
+        path_replacer = '__',                                                    -- The character to which the path separator will be replaced for session files.
+        colon_replacer = '++',                                                   -- The character to which the colon symbol will be replaced for session files.
         autoload_mode = require('session_manager.config').AutoloadMode.Disabled, -- Define what to do when Neovim is started without arguments. Possible values: Disabled, CurrentDir, LastSession
-        autosave_last_session = true, -- Automatically save last session on exit and on session switch.
-        autosave_ignore_not_normal = true, -- Plugin will not save a session when no buffers are opened, or all of them aren't writable or listed.
+        autosave_last_session = true,                                            -- Automatically save last session on exit and on session switch.
+        autosave_ignore_not_normal = true,                                       -- Plugin will not save a session when no buffers are opened, or all of them aren't writable or listed.
         autosave_ignore_filetypes = vim.tbl_extend('force',
-          { -- All buffers of these file types will be closed before the session is saved.
+          {                                                                      -- All buffers of these file types will be closed before the session is saved.
             'gitcommit',
             'toggleterm',
             'term',
             'nvimtree'
           }, vim.cfg.misc__ft_exclude),
-        autosave_only_in_session = true, -- Always autosaves session. If true, only autosaves after a session is active.
-        max_path_length = 80, -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
+        autosave_only_in_session = false, -- Always autosaves session. If true, only autosaves after a session is active.
+        max_path_length = 0,              -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
       })
     end,
   },
@@ -444,13 +471,13 @@ plug({
   {
     'mrjones2014/smart-splits.nvim',
     keys = {
-      { '<A-h>', cmdstr([[lua require("smart-splits").resize_left()]]), desc = 'Resize window to left' },
-      { '<A-j>', cmdstr([[lua require("smart-splits").resize_down()]]), desc = 'Resize window to down' },
-      { '<A-k>', cmdstr([[lua require("smart-splits").resize_up()]]), desc = 'Resize window to up' },
-      { '<A-l>', cmdstr([[lua require("smart-splits").resize_right()]]), desc = 'Resize window to right' },
-      { '<C-h>', cmdstr([[lua require("smart-splits").move_cursor_left()]]), desc = 'Move cursor to left window' },
-      { '<C-j>', cmdstr([[lua require("smart-splits").move_cursor_down()]]), desc = 'Move cursor to down window' },
-      { '<C-k>', cmdstr([[lua require("smart-splits").move_cursor_up()]]), desc = 'Move cursor to up window' },
+      { '<A-h>', cmdstr([[lua require("smart-splits").resize_left()]]),       desc = 'Resize window to left' },
+      { '<A-j>', cmdstr([[lua require("smart-splits").resize_down()]]),       desc = 'Resize window to down' },
+      { '<A-k>', cmdstr([[lua require("smart-splits").resize_up()]]),         desc = 'Resize window to up' },
+      { '<A-l>', cmdstr([[lua require("smart-splits").resize_right()]]),      desc = 'Resize window to right' },
+      { '<C-h>', cmdstr([[lua require("smart-splits").move_cursor_left()]]),  desc = 'Move cursor to left window' },
+      { '<C-j>', cmdstr([[lua require("smart-splits").move_cursor_down()]]),  desc = 'Move cursor to down window' },
+      { '<C-k>', cmdstr([[lua require("smart-splits").move_cursor_up()]]),    desc = 'Move cursor to up window' },
       { '<C-l>', cmdstr([[lua require("smart-splits").move_cursor_right()]]), desc = 'Move cursor to right window' },
     },
     dependencies = {
@@ -521,42 +548,42 @@ plug({
     config = function()
       local icons = require('userlib.icons')
       require('trouble').setup({
-        position = 'bottom', -- position of the list can be: bottom, top, left, right
-        height = 10, -- height of the trouble list when position is top or bottom
-        width = 50, -- width of the list when position is left or right
-        icons = true, -- use devicons for filenames
+        position = 'bottom',           -- position of the list can be: bottom, top, left, right
+        height = 10,                   -- height of the trouble list when position is top or bottom
+        width = 50,                    -- width of the list when position is left or right
+        icons = true,                  -- use devicons for filenames
         mode = 'document_diagnostics', -- "workspace_diagnostics", "document_diagnostics", "quickfix", "lsp_references", "loclist"
-        fold_open = '', -- icon used for open folds
-        fold_closed = '', -- icon used for closed folds
-        group = true, -- group results by file
-        padding = true, -- add an extra new line on top of the list
+        fold_open = '',             -- icon used for open folds
+        fold_closed = '',           -- icon used for closed folds
+        group = true,                  -- group results by file
+        padding = true,                -- add an extra new line on top of the list
         action_keys = {
           -- key mappings for actions in the trouble list
           -- map to {} to remove a mapping, for example:
           -- close = {},
-          close = 'q', -- close the list
-          cancel = '<esc>', -- cancel the preview and get back to your last window / buffer / cursor
-          refresh = 'r', -- manually refresh
-          jump = { '<cr>', '<tab>' }, -- jump to the diagnostic or open / close folds
-          open_split = { '<c-x>' }, -- open buffer in new split
-          open_vsplit = { '<c-v>' }, -- open buffer in new vsplit
-          open_tab = { '<c-t>' }, -- open buffer in new tab
-          jump_close = { 'o' }, -- jump to the diagnostic and close the list
-          toggle_mode = 'm', -- toggle between "workspace" and "document" diagnostics mode
-          toggle_preview = 'P', -- toggle auto_preview
-          hover = 'K', -- opens a small popup with the full multiline message
-          preview = 'p', -- preview the diagnostic location
-          close_folds = { 'zM', 'zm' }, -- close all folds
-          open_folds = { 'zR', 'zr' }, -- open all folds
-          toggle_fold = { 'zA', 'za' }, -- toggle fold of current file
-          previous = 'k', -- preview item
-          next = 'j', -- next item
+          close = 'q',                     -- close the list
+          cancel = '<esc>',                -- cancel the preview and get back to your last window / buffer / cursor
+          refresh = 'r',                   -- manually refresh
+          jump = { '<cr>', '<tab>' },      -- jump to the diagnostic or open / close folds
+          open_split = { '<c-x>' },        -- open buffer in new split
+          open_vsplit = { '<c-v>' },       -- open buffer in new vsplit
+          open_tab = { '<c-t>' },          -- open buffer in new tab
+          jump_close = { 'o' },            -- jump to the diagnostic and close the list
+          toggle_mode = 'm',               -- toggle between "workspace" and "document" diagnostics mode
+          toggle_preview = 'P',            -- toggle auto_preview
+          hover = 'K',                     -- opens a small popup with the full multiline message
+          preview = 'p',                   -- preview the diagnostic location
+          close_folds = { 'zM', 'zm' },    -- close all folds
+          open_folds = { 'zR', 'zr' },     -- open all folds
+          toggle_fold = { 'zA', 'za' },    -- toggle fold of current file
+          previous = 'k',                  -- preview item
+          next = 'j',                      -- next item
         },
-        indent_lines = true, -- add an indent guide below the fold icons
-        auto_open = false, -- automatically open the list when you have diagnostics
-        auto_close = false, -- automatically close the list when you have no diagnostics
-        auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
-        auto_fold = false, -- automatically fold a file trouble list at creation
+        indent_lines = true,               -- add an indent guide below the fold icons
+        auto_open = false,                 -- automatically open the list when you have diagnostics
+        auto_close = false,                -- automatically close the list when you have no diagnostics
+        auto_preview = true,               -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
+        auto_fold = false,                 -- automatically fold a file trouble list at creation
         auto_jump = { 'lsp_definitions' }, -- for the given modes, automatically jump if there is only a single result
         signs = {
           -- icons / text used for a diagnostic
@@ -588,13 +615,24 @@ plug({
   {
     's1n7ax/nvim-window-picker',
     opts = {
-      autoselect_one = true,
+      filter_rules = {
+        autoselect_one = true,
+        include_current_win = false,
+        bo = {
+          -- if the file type is one of following, the window will be ignored
+          filetype = vim.cfg.misc__ft_exclude,
+
+          -- if the file type is one of following, the window will be ignored
+          buftype = vim.cfg.misc__buf_exclude
+        },
+      },
       selection_chars = "ABCDEFGHIJKLMNOPQRSTUVW"
     }
   },
 
   {
     'ThePrimeagen/harpoon',
+    dev = false,
     event = 'User LazyUIEnterOncePost',
     keys = {
       {
@@ -613,18 +651,6 @@ plug({
         nowait = true,
         silent = false,
       },
-      {
-        '<localleader>m',
-        '<cmd>lua require("harpoon.ui").nav_next()<cr>',
-        desc = 'Harpoon next',
-        silent = false,
-      },
-      {
-        '<localleader>M',
-        '<cmd>lua require("harpoon.ui").nav_prev()<cr>',
-        desc = 'Harpoon prev',
-        silent = false,
-      }
     },
     opts = function()
       return {
@@ -633,8 +659,23 @@ plug({
         },
         global_settings = {
           excluded_filetypes = vim.cfg.misc__ft_exclude,
-        }
+        },
+        mark_branch = false,
+        -- get_project_key = function()
+        --   return vim.cfg.runtime__starts_cwd
+        -- end,
       }
+    end,
+    config = function(_, opts)
+      require('harpoon').setup(opts)
+      au.register_event(au.events.AfterColorschemeChanged, {
+        name = "harpoon_ui",
+        immediate = true,
+        callback = function()
+          vim.cmd('hi! link HarpoonWindow NormalFloat')
+          vim.cmd('hi! link HarpoonBorder NormalFloat')
+        end
+      })
     end,
     init = function()
       vim.g.harpoon_log_level = 'warn'

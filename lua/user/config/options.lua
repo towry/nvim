@@ -3,6 +3,7 @@ local o = vim.opt
 local g = vim.g
 
 function M.init_edit()
+  o.cpoptions:append(">")                    -- append to register with line break
   o.inccommand = 'split'                     -- preview incremental substitute
   o.clipboard = { 'unnamed', 'unnamedplus' } --- Copy-paste between vim and everything else
   o.expandtab = true                         --- Use spaces instead of tabs
@@ -45,7 +46,6 @@ end
 function M.init_interface()
   o.colorcolumn =
   '+1'                                               -- Draw colored column one step to the right of desired maximum width
-
   o.showmode = false                                 --- Don't show things like -- INSERT -- anymore
   o.modeline = true                                  -- Allow modeline
   o.ruler = false                                    -- Always show cursor position
@@ -73,7 +73,7 @@ function M.init_interface()
   o.foldcolumn = 'auto'                              -- Folding
   o.list = true
   o.listchars:append('tab:⇢ ')
-  o.listchars:append('eol:↲')
+  -- o.listchars:append('eol:↲')
   o.listchars:append('extends:»')
   o.listchars:append('nbsp:␣')
   o.listchars:append('precedes:«')
@@ -90,10 +90,10 @@ function M.init_interface()
   o.foldlevel = 99      --- Using ufo provider need a large value
   o.foldlevelstart = 99 --- Expand all folds by default
   -- vim.o.statuscolumn     = '%=%l%s%{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "-" : "+") : "│") : " " }'
-  o.laststatus = 0      --- Have a global statusline at the bottom instead of one for each window
+  o.laststatus = 3      --- Have a global statusline at the bottom instead of one for each window
   o.shortmess:append({ W = true, I = true, c = true, F = true })
   if vim.fn.has('nvim-0.9.0') == 1 then
-    o.splitkeep = 'cursor'
+    o.splitkeep = 'screen'
     o.shortmess:append({ C = true })
   end
   o.formatoptions:remove('c')
@@ -128,6 +128,7 @@ end
 function M.setup_statusline()
   vim.opt.showtabline = 0 --- Always show tabs
   vim.opt.laststatus = 3  --- Have a global statusline at the bottom instead of one for each window
+  -- in nvim-tree or windows picker, the laststatus will be modified
 end
 
 --- need to lazy setup, otherwise bunch mods needed to be load.

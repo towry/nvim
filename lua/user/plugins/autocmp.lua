@@ -147,6 +147,7 @@ pack.plug({
           ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
           ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
           ['<C-f>'] = cmp.mapping(function(fallback)
+            if vim.bo.buftype == 'prompt' then return fallback() end
             local entry = cmp.get_selected_entry()
             -- copilot.vim
             if not entry and vim.b._copilot and vim.b._copilot.suggestions ~= nil then

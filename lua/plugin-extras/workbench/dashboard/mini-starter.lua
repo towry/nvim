@@ -23,18 +23,18 @@ return plug({
           new_section("Session list", [[SessionManager load_session]], "Session"),
           new_section("Session load", [[SessionManager load_current_dir_session]], "Session"),
           ---
+          starter.sections.recent_files(9, true, false),
+          --- last.
           new_section("Git Branchs", "Telescope git_branches show_remote_tracking_branches=false", "Built-in"),
           new_section("Lazy", "Lazy", "Built-in"),
           new_section("Quit current", "q", "Built-in"),
-          --- last.
-          starter.sections.recent_files(9, true, false),
         },
         content_hooks = {
           starter.gen_hook.adding_bullet(pad .. "░ ", false),
-          starter.gen_hook.aligning("center", "center"),
+          starter.gen_hook.aligning("left", "top"),
         },
         -- remove number from query since we need it as v:count
-        query_updaters = 'abcdefghijklmnopqrstuvwxyz_-.'
+        query_updaters = 'abcdefghijklmnopqrstuvwxyz.'
       }
       return config
     end,

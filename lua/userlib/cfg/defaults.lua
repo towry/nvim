@@ -41,7 +41,7 @@ return {
     "python",
     "python3",
   },
-  runtime__python3_host_prog = '/Users/towry/.pyenv/versions/3.8.2/bin/python3',
+  runtime__python3_host_prog = '$HOME/.pyenv/shims/python',
   ---editor stuff
   --enable relative number or not.
   editor__relative_number = true,
@@ -99,12 +99,12 @@ return {
   lang__treesitter_plugin_highlight = true,
   lang__treesitter_plugin_indent = true,
   lang__treesitter_plugin_yati = true,
-  lang__treesitter_plugin_rainbow = false,
+  lang__treesitter_plugin_rainbow = true,
   lang__treesitter_plugin_context_commentstring = true,
   lang__treesitter_plugin_refactor = true,
   lang__treesitter_plugin_textobjects_move = true,
   lang__treesitter_plugin_textsubjects = true,
-  lsp__log_level = "ERROR",
+  lsp__log_level = "INFO",
   lsp__enable_servers = {
     "tailwindcss",
     "cssls",
@@ -153,8 +153,7 @@ return {
   lsp__plugin_lspsaga = true,
   ---User interfaces
   ui__theme_name = "default",
-  ui__float_border = 'rounded',
-  -- ui__float_border = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" },
+  ui__float_border = 'single',
   workbench__lualine_theme = "default",
   ---misc stuff.
   misc__buf_exclude = {
