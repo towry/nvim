@@ -1,4 +1,3 @@
-local au = require('userlib.runtime.au')
 local keymap = require('userlib.runtime.keymap')
 local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 
@@ -195,7 +194,7 @@ local function setup_basic()
   })
 
   for i = 1, 9 do
-    set('n', '<space>' .. i, cmd(i .. 'wincmd w'), {
+    set('n', '<space>' .. i, cmd(i .. 'tabnext'), {
       desc = 'which_key_ignore',
     })
   end

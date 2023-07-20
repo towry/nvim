@@ -25,27 +25,6 @@ M.open = function(cwd, buffer, pre_hook)
       buffer = buffer,
     },
     heads = {
-      { "t", _(function()
-        local nvim_tree_api = require('nvim-tree.api')
-        nvim_tree_api.tree.open({
-          update_root = false,
-          find_file = false,
-          current_window = false,
-        })
-        nvim_tree_api.tree.change_root(cwd)
-      end), { private = true, desc = "Tree", exit = true } },
-      -- {
-      --   "m",
-      --   _(function()
-      --     require('mini.files').open(cwd, true)
-      --   end),
-      --   {
-      --     private = true,
-      --     nowait = true,
-      --     desc = "M.Files",
-      --     exit = true,
-      --   },
-      -- },
       {
         "f",
         _(function()
@@ -67,8 +46,7 @@ M.open = function(cwd, buffer, pre_hook)
             files = false,
             use_fd = true,
             cwd = cwd,
-            depth = 1,
-            respect_gitignore = false,
+            respect_gitignore = true,
           })
         end),
         {
@@ -126,6 +104,17 @@ M.open = function(cwd, buffer, pre_hook)
         {
           private = true,
           desc = 'MiniFiles',
+          exit = true,
+        }
+      },
+      {
+        't',
+        _(function()
+          vim.cmd('tabfind ' .. cwd)
+        end),
+        {
+          private = true,
+          desc = 'Open in tab',
           exit = true,
         }
       }

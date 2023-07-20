@@ -7,7 +7,8 @@ local key = vim.keymap.set
 local keyopts = {
   noremap = true,
   silent = true,
-  buffer = bufnr
+  buffer = bufnr,
+  nowait = true
 }
 local show_dotfiles = true
 local filter_show = function(fs_entry) return true end
@@ -23,11 +24,7 @@ end
 local get_current_dir = function()
   local fsentry = MF.get_fs_entry()
   if not fsentry then return nil end
-  if fsentry.fs_type == 'file' then
-    return vim.fn.fnamemodify(fsentry.path, ':h')
-  else
-    return fsentry.path
-  end
+  return vim.fs.dirname(fsentry.path)
 end
 
 local tabpage = vim.api.nvim_get_current_tabpage()
@@ -37,7 +34,7 @@ end
 --------------------
 
 key('n', '-', function()
-  MF.open(nil, false)
+  MF.go_out()
 end, keyopts)
 
 key('n', '_', function()

@@ -362,6 +362,9 @@ plug({
       branch = 'feat/max-results',
       dev = false,
     },
+    {
+      'jvgrootveld/telescope-zoxide',
+    }
   },
   config = function(_, opts)
     require('telescope').setup(opts)
@@ -369,6 +372,7 @@ plug({
     require('telescope').load_extension('live_grep_args')
     require('telescope').load_extension('git_worktree')
     require('telescope').load_extension('termfinder')
+    require("telescope").load_extension('zoxide')
     --- https://github.com/nvim-telescope/telescope-file-browser.nvim
     --- Telescope file_browser files=false
     require("telescope").load_extension("file_browser")
@@ -534,6 +538,25 @@ plug({
             },
           },
         },
+        zoxide = {
+          --- https://github.com/jvgrootveld/telescope-zoxide
+          prompt_title = "Zz...",
+          mappings = {
+            default = {
+              after_action = function(selection)
+                print("Update to (" .. selection.z_score .. ") " .. selection.path)
+              end
+            },
+            -- ["<C-s>"] = {
+            --   before_action = function(selection) print("before C-s") end,
+            --   action = function(selection)
+            --     vim.cmd.edit(selection.path)
+            --   end
+            -- },
+            -- -- Opens the selected entry in a new split
+            -- ["<C-v>"] = { action = z_utils.create_basic_command("split") },
+          },
+        }
       },
     }
   end,

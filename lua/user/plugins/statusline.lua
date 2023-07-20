@@ -101,14 +101,6 @@ plug({
         lualine_b = {
           {
             function()
-              local alternate = vim.fn.fnamemodify(vim.fn.bufname('#'), ':t:h')
-              if alternate == '' then return '' end
-              local direction_icon = vim.fn.bufnr('#') > vim.fn.bufnr('%') and '[N]' or '[P]'
-              return direction_icon .. '' .. alternate
-            end,
-          },
-          {
-            function()
               local idx = require('harpoon.mark').status()
               return idx
             end,
@@ -177,24 +169,21 @@ plug({
           }
         },
         lualine_b = {
-          'searchcount',
           {
-            function()
-              return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
-            end,
-            icon = {
-              "",
-            },
-            -- color = 'NormalNC',
-            maxwidth = 20
+            'tabs',
+            max_length = vim.o.columns / 3,
+            mode = 0,
+            use_mode_colors = true,
           },
-        },
-        -- filename is displayed by the incline.
-        lualine_c = {
+          'searchcount',
           {
             'branch',
             icon = ""
           },
+
+        },
+        -- filename is displayed by the incline.
+        lualine_c = {
           function()
             if not vim.b.gitsigns_head or vim.b.gitsigns_git_status or vim.o.columns < 120 then
               return ""
@@ -289,7 +278,7 @@ plug({
             sign = { namespace = { '.*' }, maxwidth = 2, colwidth = 2, auto = true },
           },
           { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
-          { text = { builtin.foldfunc, '' },  click = 'v:lua.ScFa' },
+          { text = { builtin.foldfunc, '' }, click = 'v:lua.ScFa' },
           -- {
           --   sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 1, auto = true },
           --   click = 'v:lua.ScSa',
@@ -305,15 +294,15 @@ plug({
   {
     'b0o/incline.nvim',
     event = { 'BufReadPost', 'BufNewFile', 'BufWinEnter' },
-    enabled = false,
+    enabled = true,
     config = function()
       if vim.g.started_by_firenvim then return end
 
       require('incline').setup({
         hide = {
           cursorline = true,
-          focused_win = true,
-          only_win = true,
+          focused_win = false,
+          only_win = false,
         },
         window = {
           margin = {
@@ -321,14 +310,12 @@ plug({
             horizontal = 0,
           },
         },
-        render = function(props)
-          -- local bufid = props.buf
-          local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
-          local icon, color = require('nvim-web-devicons').get_icon_color(filename)
+        render = function()
+          local path = vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
+          local icon = ' '
           return {
-            -- { '[' .. bufid .. '] ' },
-            { icon .. ' ', guifg = color },
-            { filename },
+            { icon },
+            { path },
           }
         end,
       })
