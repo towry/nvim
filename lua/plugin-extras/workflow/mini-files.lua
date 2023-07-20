@@ -7,7 +7,7 @@ return plug({
   opts = {
     windows = {
       preview = false,
-      width_nofocus = 10,
+      width_nofocus = 30,
       width_preview = 30,
     },
     options = {
