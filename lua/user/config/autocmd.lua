@@ -59,19 +59,6 @@ function M.load_on_startup()
         command = 'lua vim.diagnostic.disable(0)',
       }
     },
-
-    {
-      { "DirChanged" },
-      {
-        pattern = '*',
-        group = '_set_dir_on_change_',
-        callback = function(ctx)
-          local new_cwd = ctx.file
-          vim.g.cwd = new_cwd
-          vim.g.cwd_short = require('userlib.runtime.path').home_to_tilde(new_cwd)
-        end,
-      }
-    },
     ------------------------------------
     -- {
     --   { 'InsertEnter' },
@@ -187,6 +174,19 @@ function M.load_on_startup()
 
   ---////// user autocmds.
   local user_definitions = {
+    {
+      pattern = 'ProjectNvimSetPwd',
+      group = '_set_dir_on_change_',
+      callback = function(ctx)
+        local data = ctx.data or {}
+        local new_cwd = data.dir or nil
+        if not new_cwd then
+          new_cwd = vim.uv.get_cwd()
+        end
+        vim.g.cwd = new_cwd
+        vim.g.cwd_short = require('userlib.runtime.path').home_to_tilde(new_cwd)
+      end,
+    },
     {
       pattern = "AlphaClosed",
       callback = function()

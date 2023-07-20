@@ -68,3 +68,27 @@ key('n', 'g.', toggle_dotfiles, keyopts)
 key('n', '<C-c>', function()
   MF.close()
 end, keyopts)
+
+---- open in split.
+local map_split = function(buf_id, lhs, direction)
+  local rhs = function()
+    local fsentry = MF.get_fs_entry()
+    if fsentry.fs_type ~= 'file' then return end
+    -- Make new window and set it as target
+    local new_target_window
+    vim.api.nvim_win_call(MF.get_target_window(), function()
+      vim.cmd(direction .. ' split')
+      new_target_window = vim.api.nvim_get_current_win()
+    end)
+
+    MF.set_target_window(new_target_window)
+    MF.go_in()
+    MF.close()
+  end
+
+  -- Adding `desc` will result into `show_help` entries
+  local desc = 'Split ' .. direction
+  vim.keymap.set('n', lhs, rhs, { buffer = buf_id, desc = desc })
+end
+map_split(bufnr, '<C-x>', 'belowright horizontal')
+map_split(bufnr, '<C-v>', 'belowright vertical')
