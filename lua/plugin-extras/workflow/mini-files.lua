@@ -66,5 +66,6 @@ return plug({
       pattern = 'MiniFilesWindowUpdate',
       callback = function(args) vim.wo[args.data.win_id].relativenumber = true end,
     })
+    vim.cmd('hi! link MiniFilesBorder NormalFloat')
   end,
 })
