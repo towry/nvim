@@ -1,16 +1,20 @@
 local M = {}
 
-local _ = function(callback)
-  return function()
-    vim.cmd('wincmd w')
-    vim.schedule(callback)
-  end
-end
 
-
-M.open = function(file_path, buffer)
+M.open = function(file_path, buffer, pre_hook)
   local ok, Hydra = pcall(require, 'hydra')
   if not ok then return end
+
+  local _ = function(callback)
+    return function()
+      if pre_hook then
+        pre_hook()
+      else
+        vim.cmd('wincmd w')
+      end
+      vim.schedule(callback)
+    end
+  end
 
   local hydra = Hydra({
     name = '',
