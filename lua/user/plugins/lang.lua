@@ -105,7 +105,7 @@ plug({
           keymaps = {
             init_selection = "<S-Enter>",
             node_incremental = "<Enter>",
-            scope_incremental = false,
+            scope_incremental = "<S-Enter>",
             node_decremental = "<BS>",
           },
         },
