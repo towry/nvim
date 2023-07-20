@@ -103,9 +103,8 @@ plug({
           enable = vim.cfg.lang__treesitter_plugin_incremental_selection,
           disable = disabled,
           keymaps = {
-            --TODO: fix me.
-            -- init_selection = "<Enter>",
-            -- node_incremental = "<Enter>",
+            init_selection = "<S-Enter>",
+            node_incremental = "<Enter>",
             scope_incremental = false,
             node_decremental = "<BS>",
           },
