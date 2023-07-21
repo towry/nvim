@@ -73,8 +73,8 @@ plug({
       options = {
         theme = vim.cfg.workbench__lualine_theme,
         globalstatus = true,
-        component_separators = '│',
-        -- component_separators = '',
+        -- component_separators = '│',
+        component_separators = '',
         -- section_separators = { left = '', right = '' },
         section_separators = { left = '', right = '' },
         disabled_filetypes = { winbar = vim.cfg.misc__ft_exclude, statusline = { 'dashboard', 'lazy', 'alpha' } },
@@ -143,12 +143,6 @@ plug({
       },
       sections = {
         lualine_a = {
-          {
-            'tabs',
-            max_length = vim.o.columns / 3,
-            mode = 0,
-            use_mode_colors = true,
-          },
           { 'mode', fmt = function(str) return str:sub(1, 1) end },
           {
             -- separator = { left = '', },
@@ -184,6 +178,12 @@ plug({
         },
         -- filename is displayed by the incline.
         lualine_c = {
+          {
+            'tabs',
+            max_length = vim.o.columns / 3,
+            mode = 0,
+            use_mode_colors = true,
+          },
           function()
             if not vim.b.gitsigns_head or vim.b.gitsigns_git_status or vim.o.columns < 120 then
               return ""
