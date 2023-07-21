@@ -1,3 +1,5 @@
+vim.uv = vim.uv or vim.loop
+
 _G.unpack = _G.unpack or table.unpack
 _G.Ty = {}
 
