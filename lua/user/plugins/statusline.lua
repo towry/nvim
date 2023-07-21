@@ -278,7 +278,7 @@ plug({
             sign = { namespace = { '.*' }, maxwidth = 2, colwidth = 2, auto = true },
           },
           { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
-          { text = { builtin.foldfunc, '' }, click = 'v:lua.ScFa' },
+          { text = { builtin.foldfunc, '' },  click = 'v:lua.ScFa' },
           -- {
           --   sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 1, auto = true },
           --   click = 'v:lua.ScSa',
@@ -324,6 +324,7 @@ plug({
 
   {
     'lewis6991/satellite.nvim',
+    enabled = vim.list_contains ~= nil,
     version = '*',
     -- event = 'VeryLazy',
     cmd = { 'SatelliteEnable', 'SatelliteDisable', 'SatelliteRefresh' },
