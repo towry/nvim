@@ -65,6 +65,25 @@ key('n', 'g.', toggle_dotfiles, keyopts)
 key('n', '<C-c>', function()
   MF.close()
 end, keyopts)
+key('n', 's', function()
+  require('flash').jump({
+    pattern = "^",
+    label = { after = { 0, 0 } },
+    search = {
+      mode = "search",
+      exclude = {
+        function(win)
+          return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= "minifiles"
+        end,
+      }
+    },
+    action = function(match)
+      if not match then return end
+      local winid = match.win
+      vim.api.nvim_win_set_cursor(winid, match.pos)
+    end,
+  })
+end, keyopts)
 
 ---- open in split.
 local map_split = function(buf_id, lhs, direction)
