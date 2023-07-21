@@ -119,6 +119,14 @@ plug({
               }
             }
           },
+        },
+        lualine_z = {
+          {
+            function()
+              return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
+            end,
+            icon = '',
+          }
         }
       },
       inactive_winbar = {
@@ -140,6 +148,14 @@ plug({
             }
           }
         },
+        lualine_z = {
+          {
+            function()
+              return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
+            end,
+            icon = '',
+          }
+        }
       },
       sections = {
         lualine_a = {
@@ -294,7 +310,7 @@ plug({
   {
     'b0o/incline.nvim',
     event = { 'BufReadPost', 'BufNewFile', 'BufWinEnter' },
-    enabled = true,
+    enabled = false,
     config = function()
       if vim.g.started_by_firenvim then return end
 
