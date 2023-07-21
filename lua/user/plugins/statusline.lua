@@ -144,16 +144,23 @@ plug({
       sections = {
         lualine_a = {
           {
-            separator = { left = '', },
-            right_padding = 0,
+            'tabs',
+            max_length = vim.o.columns / 3,
+            mode = 0,
+            use_mode_colors = true,
+          },
+          { 'mode', fmt = function(str) return str:sub(1, 1) end },
+          {
+            -- separator = { left = '', },
+            -- right_padding = 0,
             function()
               local unsaved_count = #Buffer.unsaved_list({ perf = true })
               local has_modified = unsaved_count > 0
               local unsaved_count_text = unsaved_count > 0 and (':' .. unsaved_count) or ''
               vim.b['has_modified_file'] = has_modified
-              local icon = has_modified and ' ' or ' '
-              return icon .. #vim.fn.getbufinfo({ buflisted = 1 }) .. unsaved_count_text
+              return #vim.fn.getbufinfo({ buflisted = 1 }) .. unsaved_count_text
             end,
+            icon = '',
             color = function()
               if vim.b['has_modified_file'] then
                 return {
@@ -163,18 +170,11 @@ plug({
               end
             end,
           },
-          { 'mode' },
           {
             terms,
           }
         },
         lualine_b = {
-          {
-            'tabs',
-            max_length = vim.o.columns / 3,
-            mode = 0,
-            use_mode_colors = true,
-          },
           'searchcount',
           {
             'branch',
@@ -191,9 +191,9 @@ plug({
 
             local git_status = vim.b.gitsigns_status_dict
 
-            local added = (git_status.added and git_status.added ~= 0) and (" +" .. git_status.added) or ""
-            local changed = (git_status.changed and git_status.changed ~= 0) and (" ~" .. git_status.changed) or ""
-            local removed = (git_status.removed and git_status.removed ~= 0) and (" -" .. git_status.removed) or ""
+            local added = (git_status.added and git_status.added ~= 0) and ("+" .. git_status.added) or ""
+            local changed = (git_status.changed and git_status.changed ~= 0) and ("~" .. git_status.changed) or ""
+            local removed = (git_status.removed and git_status.removed ~= 0) and ("-" .. git_status.removed) or ""
 
             return (added .. changed .. removed) ~= "" and (added .. changed .. removed) or ""
           end,
@@ -239,7 +239,7 @@ plug({
           },
           { 'filetype', colored = true, icon_only = true },
         },
-        lualine_y = { 'filesize', 'progress' },
+        lualine_y = { 'filesize' },
         lualine_z = { { 'location', separator = { left = '', right = '' }, left_padding = 0 } },
       },
       inactive_sections = {
