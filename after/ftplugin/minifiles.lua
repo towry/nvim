@@ -67,21 +67,17 @@ key('n', '<C-c>', function()
 end, keyopts)
 key('n', 's', function()
   require('flash').jump({
-    pattern = "^",
-    label = { after = { 0, 0 } },
     search = {
       mode = "search",
+      max_length = 0,
       exclude = {
         function(win)
           return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= "minifiles"
         end,
       }
     },
-    action = function(match)
-      if not match then return end
-      local winid = match.win
-      vim.api.nvim_win_set_cursor(winid, match.pos)
-    end,
+    label = { after = { 0, 0 } },
+    pattern = "^"
   })
 end, keyopts)
 
