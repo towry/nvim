@@ -6,7 +6,7 @@ return plug({
   lazy = not vim.cfg.runtime__starts_in_buffer,
   opts = {
     windows = {
-      preview = false,
+      preview = true,
       width_nofocus = 30,
       width_preview = 30,
     },
