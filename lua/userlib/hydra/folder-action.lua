@@ -86,9 +86,7 @@ M.open = function(cwd, buffer, pre_hook)
       {
         "w",
         _(function()
-          -- only change for current window.
-          vim.cmd('lcd ' .. cwd)
-          vim.notify(('New cwd: %s'):format(require('userlib.runtime.path').home_to_tilde(cwd)), vim.log.levels.INFO)
+          require('userlib.runtime.utils').change_cwd(cwd, 'lcd')
         end),
         {
           private = true,

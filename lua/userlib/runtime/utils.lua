@@ -334,4 +334,11 @@ M.vim_starts_without_buffer = function()
   return vim.fn.argc(-1) == 0
 end
 
+function M.change_cwd(cwd, cmd)
+  vim.cmd((cmd or 'cd') .. ' ' .. cwd)
+  vim.g.cwd = cwd
+  vim.g.cwd_short = require('userlib.runtime.path').home_to_tilde(cwd)
+  vim.notify(('New cwd: %s'):format(vim.g.cwd_short), vim.log.levels.INFO)
+end
+
 return M

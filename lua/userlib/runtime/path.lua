@@ -18,7 +18,7 @@ local function home_to_tilde(path)
   -- end
   -- return path
   -- below not work for some case.
-  return vim.fn.fnamemodify(path, ':~:.')
+  return vim.fn.fnamemodify(path, ':~')
 end
 
 local function sanitize(path)
