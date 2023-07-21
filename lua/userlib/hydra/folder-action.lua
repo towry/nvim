@@ -1,8 +1,5 @@
 local M = {}
 
-
-
-
 M.open = function(cwd, buffer, pre_hook)
   local ok, Hydra = pcall(require, 'hydra')
   if not ok then return end

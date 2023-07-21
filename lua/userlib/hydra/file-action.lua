@@ -1,6 +1,5 @@
 local M = {}
 
-
 M.open = function(file_path, buffer, pre_hook)
   local ok, Hydra = pcall(require, 'hydra')
   if not ok then return end
@@ -26,6 +25,17 @@ M.open = function(file_path, buffer, pre_hook)
       { "y", _(function()
         vim.fn.setreg('+', file_path)
       end), { private = true, desc = "Copy", exit = true } },
+      {
+        "Y", _(function()
+        local relative_path = vim.fn.fnamemodify(file_path, ':~:.')
+        vim.fn.setreg('+', relative_path)
+      end),
+        {
+          private = true,
+          desc = 'Copy relative',
+          exit = true,
+        }
+      }
     }
   })
 
