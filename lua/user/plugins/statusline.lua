@@ -288,19 +288,15 @@ plug({
         setopt = true,
         segments = {
           {
-            sign = { name = { '.*' }, maxwidth = 2, colwidth = 1, auto = true },
+            sign = { name = { '.*' }, maxwidth = 2, colwidth = 2, auto = true },
+          },
+          {
+            sign = { namespace = { '.*' }, maxwidth = 2, colwidth = 3, auto = true },
           },
           { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
           { text = { builtin.foldfunc, '' }, click = 'v:lua.ScFa' },
           {
             sign = { name = { 'Diagnostic' }, maxwidth = 1, auto = false },
-            click = 'v:lua.ScSa',
-          },
-          {
-            sign = { namespace = { '.*' }, maxwidth = 2, colwidth = 3, auto = true },
-          },
-          {
-            sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 2, auto = false },
             click = 'v:lua.ScSa',
           },
         },
