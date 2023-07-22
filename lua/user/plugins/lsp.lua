@@ -31,7 +31,6 @@ plug({
     'neovim/nvim-lspconfig',
     event = { 'BufRead', 'BufNewFile' },
     dependencies = {
-      'jose-elias-alvarez/typescript.nvim',
       'hrsh7th/cmp-nvim-lsp',
       'jose-elias-alvarez/null-ls.nvim',
       'williamboman/mason-lspconfig.nvim',
@@ -92,6 +91,12 @@ plug({
     init = function()
       au.on_lsp_attach(function(client, bufnr)
         require('userlib.lspconfig.keymaps').setup_keybinding(client, bufnr)
+        require('userlib.lsp-format').choose_formatter_for_buf(client, bufnr)
+        require('userlib.lsp-format.autoformat').attach(client, bufnr)
+        local is_auto_format_enable_config = true
+        if is_auto_format_enable_config then
+          require('userlib.lsp-format.autoformat').enable()
+        end
       end)
     end,
   },
@@ -99,13 +104,6 @@ plug({
   ---- formats
   {
     'jose-elias-alvarez/null-ls.nvim',
-  },
-  {
-    'pze/lsp-format.nvim',
-    enabled = false,
-    opts = {
-      sync = true,
-    },
   },
 
   ---- lua
@@ -172,7 +170,7 @@ plug({
     opts = {
       popup = {
         autofocus = true,
-        border = "single",
+        border = vim.cfg.ui__float_border,
       },
     }
   }

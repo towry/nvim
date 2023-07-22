@@ -3,8 +3,6 @@ local au = require('userlib.runtime.au')
 local M = {}
 
 function M.load_on_startup()
-  -- local current_timeoutlen = vim.opt.timeoutlen:get() or 400
-
   local definitions = {
     -- taken from AstroNvim
     -- Emit `User FileOpened` event, used by the plugins.
@@ -59,25 +57,6 @@ function M.load_on_startup()
         command = 'lua vim.diagnostic.disable(0)',
       }
     },
-    ------------------------------------
-    -- {
-    --   { 'InsertEnter' },
-    --   {
-    --     group = 'no_insert_delay',
-    --     callback = function()
-    --       vim.opt.timeoutlen = 0
-    --     end
-    --   }
-    -- },
-    -- {
-    --   { 'InsertLeave' },
-    --   {
-    --     group = 'no_insert_delay',
-    --     callback = function()
-    --       vim.opt.timeoutlen = current_timeoutlen
-    --     end
-    --   }
-    -- },
     {
       { 'BufWritePost' },
       {
@@ -242,18 +221,6 @@ function M.load_on_startup()
 end
 
 function M.setup_events_on_startup()
-  -- will be fired at each client's attch
-  au.register_event(au.events.onLspAttach, {
-    name = "setup_formatter_on_buf",
-    callback = function(args)
-      require('userlib.lsp-format').choose_formatter_for_buf(args.client, args.bufnr)
-      require('userlib.lsp-format.autoformat').attach(args.client, args.bufnr)
-      local is_auto_format_enable_config = true
-      if is_auto_format_enable_config then
-        require('userlib.lsp-format.autoformat').enable()
-      end
-    end
-  })
 end
 
 ---resize kitty window, no padding when neovim is present.
@@ -294,8 +261,7 @@ function M.setup(opts)
     resize_kitty()
   end
   if type(opts.on_very_lazy) == 'function' then
-    vim.api.nvim_create_augroup('setup_on_very_lazy', { clear = true })
-    vim.api.nvim_create_autocmd('User', {
+    au.define_user_autocmd({
       pattern = 'VeryLazy',
       group = 'setup_on_very_lazy',
       once = true,
