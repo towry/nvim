@@ -197,7 +197,7 @@ plug({
           {
             'tabs',
             max_length = vim.o.columns / 3,
-            mode = 2,
+            mode = 0,
             use_mode_colors = true,
           },
           function()
