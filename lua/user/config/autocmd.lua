@@ -183,8 +183,7 @@ function M.load_on_startup()
         if not new_cwd then
           new_cwd = vim.uv.get_cwd()
         end
-        vim.g.cwd = new_cwd
-        vim.g.cwd_short = require('userlib.runtime.path').home_to_tilde(new_cwd)
+        require('userlib.runtime.utils').update_cwd_env(new_cwd)
       end,
     },
     {

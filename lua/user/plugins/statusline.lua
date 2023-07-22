@@ -197,7 +197,7 @@ plug({
           {
             'tabs',
             max_length = vim.o.columns / 3,
-            mode = 0,
+            mode = 2,
             use_mode_colors = true,
           },
           function()
@@ -294,7 +294,7 @@ plug({
             sign = { namespace = { '.*' }, maxwidth = 2, colwidth = 2, auto = true },
           },
           { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
-          { text = { builtin.foldfunc, '' },  click = 'v:lua.ScFa' },
+          { text = { builtin.foldfunc, '' }, click = 'v:lua.ScFa' },
           -- {
           --   sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 1, auto = true },
           --   click = 'v:lua.ScSa',
