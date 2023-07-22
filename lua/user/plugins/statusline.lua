@@ -297,10 +297,10 @@ plug({
             click = 'v:lua.ScSa',
           },
           {
-            sign = { namespace = { '.*' }, maxwidth = 2, colwidth = 2, auto = true },
+            sign = { namespace = { '.*' }, maxwidth = 2, colwidth = 3, auto = true },
           },
           {
-            sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 1, auto = false },
+            sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 2, auto = false },
             click = 'v:lua.ScSa',
           },
         },
