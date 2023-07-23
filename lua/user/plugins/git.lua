@@ -75,8 +75,8 @@ plug({
   {
     -- git runtimes. ft etc.
     'tpope/vim-git',
-    event = au.user_autocmds.FileOpenedAfter_User,
-    enabled = false,
+    event = { 'BufReadPre' },
+    enabled = true,
     cond = function() return true end,
   },
   {
