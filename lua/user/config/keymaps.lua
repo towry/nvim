@@ -96,9 +96,6 @@ local function setup_basic()
     desc = 'Case change in visual mode'
   })
 
-  set({ 'v', 'i' }, '<F1>', cmd('bufdo update'), {
-    desc = 'Save all files',
-  })
   set({ 'n', 'i' }, '<D-S>', cmd('bufdo update'), {
     desc = 'Save all files',
   })
