@@ -120,14 +120,7 @@ plug({
             }
           },
         },
-        lualine_z = {
-          {
-            function()
-              return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
-            end,
-            icon = '',
-          }
-        }
+        lualine_z = {}
       },
       inactive_winbar = {
         lualine_a = {
@@ -149,12 +142,6 @@ plug({
           }
         },
         lualine_z = {
-          {
-            function()
-              return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
-            end,
-            icon = '',
-          }
         }
       },
       sections = {
@@ -256,7 +243,15 @@ plug({
           { 'filetype', colored = true, icon_only = true },
         },
         lualine_y = { 'filesize' },
-        lualine_z = { { 'location', separator = { left = '', right = '' }, left_padding = 0 } },
+        lualine_z = {
+          { 'location', left_padding = 0 },
+          {
+            function()
+              return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
+            end,
+            icon = '',
+          }
+        },
       },
       inactive_sections = {
         lualine_a = {},
@@ -294,7 +289,7 @@ plug({
             sign = { namespace = { '.*' }, maxwidth = 2, colwidth = 3, auto = true },
           },
           { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
-          { text = { builtin.foldfunc, '' }, click = 'v:lua.ScFa' },
+          { text = { builtin.foldfunc, '' },  click = 'v:lua.ScFa' },
           {
             sign = { name = { 'Diagnostic' }, maxwidth = 1, auto = false },
             click = 'v:lua.ScSa',
