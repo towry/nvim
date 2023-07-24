@@ -13,7 +13,7 @@ pack.plug(
     {
       'nacro90/numb.nvim',
       event = 'CmdLineEnter',
-      config = true,
+      config = false,
     },
   }
 )
