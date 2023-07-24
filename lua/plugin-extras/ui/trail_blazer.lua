@@ -73,8 +73,7 @@ return plug({
     --   desc = 'Trace back in buf'
     -- })
     set('n', '<BS>', '<cmd>TrailBlazerTrackBack<cr>', {
-      silent = true,
-      noremap = true,
+      silent = false,
       desc = 'Trace back global'
     })
     set('n', '<D-j>', '<cmd>TrailBlazerPeekMoveNextDown %<cr>', {
