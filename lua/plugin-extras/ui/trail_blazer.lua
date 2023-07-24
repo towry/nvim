@@ -72,7 +72,7 @@ return plug({
     --   noremap = true,
     --   desc = 'Trace back in buf'
     -- })
-    set('n', '<BS>', '<cmd>TrailBlazerTrackBack<cr>', {
+    set('n', '<D-h>', '<cmd>TrailBlazerTrackBack<cr>', {
       silent = false,
       desc = 'Trace back global'
     })
