@@ -47,8 +47,8 @@ return plug({
       "-",
       function()
         local path = nil
-        if vim.bo.buftype == 'nofile' then
-          path = require('userlib.runtime.utils').get_root()
+        if require('userlib.runtime.buffer').is_empty_buffer(0) then
+          path = vim.uv.cwd()
         else
           path = vim.api.nvim_buf_get_name(0)
         end

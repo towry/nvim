@@ -1,6 +1,17 @@
 local Table = require('userlib.runtime.table')
 local M = {}
 
+function M.is_empty_buffer(bufnr)
+  bufnr = bufnr or 0
+  local buftype = vim.api.nvim_get_option_value('buftype', {
+    buf = bufnr
+  })
+  if buftype == 'nofile' then return true end
+
+  local filename = vim.api.nvim_buf_get_name(bufnr)
+  return filename == ""
+end
+
 function M.set_options(buf, opts)
   for k, v in pairs(opts) do
     vim.api.nvim_buf_set_option(buf, k, v)
@@ -53,8 +64,8 @@ end
 function M.list_normal_bufnrs()
   return M.list_bufnrs(function(b)
     if vim.api.nvim_get_option_value('buftype', {
-      buf = b,
-    }) ~= '' then
+          buf = b,
+        }) ~= '' then
       return false
     end
   end)
