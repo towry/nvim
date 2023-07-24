@@ -157,7 +157,7 @@ plug({
               vim.b['has_modified_file'] = has_modified
               return #vim.fn.getbufinfo({ buflisted = 1 }) .. unsaved_count_text
             end,
-            icon = '',
+            icon = ' ',
             color = function()
               if vim.b['has_modified_file'] then
                 return {
