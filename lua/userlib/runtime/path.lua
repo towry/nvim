@@ -3,6 +3,14 @@ local Table = require('userlib.runtime.table')
 local is_windows = uv.os_uname().version:match 'Windows'
 local path_separator = is_windows and '\\' or '/'
 
+local function remove_path_last_separator(path)
+  if not path then return '' end
+  if path:sub(#path) == path_separator then
+    return path:sub(1, #path - 1)
+  end
+  return path
+end
+
 
 local function escape_wildcards(path)
   return path:gsub('([%[%]%?%*])', '\\%1')
@@ -191,6 +199,7 @@ local function is_descendant(root, path)
 end
 
 return {
+  remove_path_last_separator = remove_path_last_separator,
   escape_wildcards = escape_wildcards,
   is_dir = is_dir,
   is_file = is_file,

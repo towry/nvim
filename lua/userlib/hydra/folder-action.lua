@@ -3,6 +3,7 @@ local M = {}
 M.open = function(cwd, buffer, pre_hook)
   local ok, Hydra = pcall(require, 'hydra')
   if not ok then return end
+  cwd = require('userlib.runtime.path').remove_path_last_separator(cwd)
 
   local _ = function(callback)
     return function()
