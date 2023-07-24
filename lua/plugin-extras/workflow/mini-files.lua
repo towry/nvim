@@ -8,7 +8,7 @@ return plug({
     windows = {
       preview = true,
       width_nofocus = 30,
-      width_preview = 40,
+      width_preview = 60,
     },
     options = {
       -- Whether to use for editing directories
