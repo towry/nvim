@@ -157,15 +157,16 @@ plug({
               vim.b['has_modified_file'] = has_modified
               return #vim.fn.getbufinfo({ buflisted = 1 }) .. unsaved_count_text
             end,
-            icon = ' ',
-            color = function()
-              if vim.b['has_modified_file'] then
-                return {
-                  bg = '#C20505',
-                  fg = '#ffffff',
-                }
-              end
-            end,
+            icon = {
+              ' ',
+              color = function()
+                if vim.b['has_modified_file'] then
+                  return {
+                    fg = '#C20505',
+                  }
+                end
+              end,
+            },
           },
           {
             terms,
