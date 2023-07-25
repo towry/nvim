@@ -183,6 +183,7 @@ function M.get_root(root_opts)
 end
 
 M.use_plugin = function(plugin_name, callback, on_fail)
+  if not callback then return end
   local ok, plugin = pcall(require, plugin_name)
   if not ok then
     if on_fail then
@@ -194,6 +195,7 @@ M.use_plugin = function(plugin_name, callback, on_fail)
   end
   callback(plugin)
 end
+
 ---@usage load_plugins({'dression.nvim'})
 M.load_plugins = function(plugins)
   if type(plugins) ~= 'table' then
@@ -223,42 +225,6 @@ M.plugin_schedule_wrap = function(plugins, cb)
       cb(unpack(args))
     end)
   end
-end
-
----@see LazyVim
----@param opts? string|{msg:string, on_error:fun(msg)}
-function M.try(fn, opts)
-  opts = type(opts) == 'string' and { msg = opts } or opts or {}
-  local msg = opts.msg
-  -- error handler
-  local error_handler = function(err)
-    local trace = {}
-    local level = 1
-    while true do
-      local info = debug.getinfo(level, 'Sln')
-      if not info then break end
-      if info.what ~= 'C' and not info.source:find('lazy.nvim') then
-        local source = info.source:sub(2)
-        source = vim.fn.fnamemodify(source, ':p:~:.')
-        local line = '  - ' .. source .. ':' .. info.currentline
-        if info.name then line = line .. ' _in_ **' .. info.name .. '**' end
-        table.insert(trace, line)
-      end
-      level = level + 1
-    end
-    msg = (msg and (msg .. '\n\n') or '') .. err
-    if #trace > 0 then msg = msg .. '\n\n# stacktrace:\n' .. table.concat(trace, '\n') end
-    if opts.on_error then
-      opts.on_error(msg)
-    else
-      vim.schedule(function() M.errorlog(msg) end)
-    end
-    return err
-  end
-
-  ---@type boolean, any
-  local ok, result = xpcall(fn, error_handler)
-  return ok and result or nil
 end
 
 ---Parse the `style` string into nvim_set_hl options
