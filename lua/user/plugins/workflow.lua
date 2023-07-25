@@ -118,8 +118,8 @@ plug({
           if buftype ~= "" then
             require('mini.bufremove').wipeout(0)
             if not vim.tbl_contains({
-              'terminal',
-            }, buftype) then
+                  'terminal',
+                }, buftype) then
               vim.cmd('q')
             end
             return
@@ -226,8 +226,8 @@ plug({
     'cbochs/grapple.nvim',
     keys = {
       { '<leader>bg', '<cmd>GrappleToggle<cr>', desc = 'Toggle grapple' },
-      { '<leader>bp', '<cmd>GrapplePopup<cr>', desc = 'Popup grapple' },
-      { '<leader>bc', '<cmd>GrappleCycle<cr>', desc = 'Cycle grapple' },
+      { '<leader>bp', '<cmd>GrapplePopup<cr>',  desc = 'Popup grapple' },
+      { '<leader>bc', '<cmd>GrappleCycle<cr>',  desc = 'Cycle grapple' },
     },
     cmd = { 'GrappleToggle', 'GrapplePopup', 'GrappleCycle' },
     opts = {
@@ -253,7 +253,7 @@ plug({
         },
         keys = {
           {
-            '<localleader>p',
+            '<leader>f[',
             [[<cmd>lua require('userlib.finder.project_session_picker').session_projects()<cr>]],
             desc = 'Session projects',
           },
@@ -339,21 +339,21 @@ plug({
       local Path = require('plenary.path')
 
       session_manager.setup({
-        sessions_dir = Path:new(vim.fn.stdpath('data'), 'sessions'), -- The directory where the session files will be saved.
-        path_replacer = '__', -- The character to which the path separator will be replaced for session files.
-        colon_replacer = '++', -- The character to which the colon symbol will be replaced for session files.
+        sessions_dir = Path:new(vim.fn.stdpath('data'), 'sessions'),             -- The directory where the session files will be saved.
+        path_replacer = '__',                                                    -- The character to which the path separator will be replaced for session files.
+        colon_replacer = '++',                                                   -- The character to which the colon symbol will be replaced for session files.
         autoload_mode = require('session_manager.config').AutoloadMode.Disabled, -- Define what to do when Neovim is started without arguments. Possible values: Disabled, CurrentDir, LastSession
-        autosave_last_session = true, -- Automatically save last session on exit and on session switch.
-        autosave_ignore_not_normal = true, -- Plugin will not save a session when no buffers are opened, or all of them aren't writable or listed.
+        autosave_last_session = true,                                            -- Automatically save last session on exit and on session switch.
+        autosave_ignore_not_normal = true,                                       -- Plugin will not save a session when no buffers are opened, or all of them aren't writable or listed.
         autosave_ignore_filetypes = vim.tbl_extend('force',
-          { -- All buffers of these file types will be closed before the session is saved.
+          {                                                                      -- All buffers of these file types will be closed before the session is saved.
             'gitcommit',
             'toggleterm',
             'term',
             'nvimtree'
           }, vim.cfg.misc__ft_exclude),
         autosave_only_in_session = false, -- Always autosaves session. If true, only autosaves after a session is active.
-        max_path_length = 0, -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
+        max_path_length = 0,              -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
       })
     end,
   },
@@ -361,13 +361,13 @@ plug({
   {
     'mrjones2014/smart-splits.nvim',
     keys = {
-      { '<A-h>', cmdstr([[lua require("smart-splits").resize_left()]]), desc = 'Resize window to left' },
-      { '<A-j>', cmdstr([[lua require("smart-splits").resize_down()]]), desc = 'Resize window to down' },
-      { '<A-k>', cmdstr([[lua require("smart-splits").resize_up()]]), desc = 'Resize window to up' },
-      { '<A-l>', cmdstr([[lua require("smart-splits").resize_right()]]), desc = 'Resize window to right' },
-      { '<C-h>', cmdstr([[lua require("smart-splits").move_cursor_left()]]), desc = 'Move cursor to left window' },
-      { '<C-j>', cmdstr([[lua require("smart-splits").move_cursor_down()]]), desc = 'Move cursor to down window' },
-      { '<C-k>', cmdstr([[lua require("smart-splits").move_cursor_up()]]), desc = 'Move cursor to up window' },
+      { '<A-h>', cmdstr([[lua require("smart-splits").resize_left()]]),       desc = 'Resize window to left' },
+      { '<A-j>', cmdstr([[lua require("smart-splits").resize_down()]]),       desc = 'Resize window to down' },
+      { '<A-k>', cmdstr([[lua require("smart-splits").resize_up()]]),         desc = 'Resize window to up' },
+      { '<A-l>', cmdstr([[lua require("smart-splits").resize_right()]]),      desc = 'Resize window to right' },
+      { '<C-h>', cmdstr([[lua require("smart-splits").move_cursor_left()]]),  desc = 'Move cursor to left window' },
+      { '<C-j>', cmdstr([[lua require("smart-splits").move_cursor_down()]]),  desc = 'Move cursor to down window' },
+      { '<C-k>', cmdstr([[lua require("smart-splits").move_cursor_up()]]),    desc = 'Move cursor to up window' },
       { '<C-l>', cmdstr([[lua require("smart-splits").move_cursor_right()]]), desc = 'Move cursor to right window' },
     },
     dependencies = {
