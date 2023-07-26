@@ -1,15 +1,15 @@
+local bufnr = vim.api.nvim_get_current_buf()
+local key = require('userlib.runtime.keymap').map_buf_thunk(bufnr)
 vim.b.minianimate_disable = true
 vim.opt.spell = true
 
 local MF = require('mini.files')
-local bufnr = vim.api.nvim_get_current_buf()
-local key = vim.keymap.set
 local keyopts = {
   noremap = true,
   silent = true,
-  buffer = bufnr,
   nowait = true
 }
+
 local show_dotfiles = true
 local filter_show = function(fs_entry) return true end
 local filter_hide = function(fs_entry)
