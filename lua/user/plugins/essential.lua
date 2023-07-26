@@ -1,3 +1,4 @@
+local au = require('userlib.runtime.au')
 local pack = require('userlib.runtime.pack')
 local function t(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -223,7 +224,7 @@ pack.plug({
 --- which-key
 pack.plug({
   'folke/which-key.nvim',
-  keys = { "<leader>", "," },
+  keys = { "<leader>", "<localleader>" },
   cmd = { 'WhichKey' },
   config = function()
     local wk = require('which-key')
@@ -252,6 +253,7 @@ pack.plug({
         ['<space>'] = 'SPC',
         ['<cr>'] = 'RET',
         ['<tab>'] = 'TAB',
+        [','] = 'LocalLeader',
       },
       icons = {
         breadcrumb = '»', -- symbol used in the command line area that shows your active key combo
@@ -281,6 +283,7 @@ pack.plug({
       show_keys = true, -- show the currently pressed key and its label as a message in the command line
       triggers = 'auto', -- automatically setup triggers
       triggers_nowait = {
+        ',',
         -- marks
         '`',
         "'",
@@ -372,6 +375,28 @@ pack.plug({
           }
         }
       }
+    })
+  end,
+  init = function()
+    --- used by local buffer to refresh after buffer keymap set.
+    au.define_user_autocmd({
+      pattern = 'WhichKeyRefresh',
+      callback = function(ctx)
+        local ok, _ = pcall(require, 'which-key')
+        if not ok then return end
+        local Key = require('which-key.keys')
+        vim.schedule(function()
+          local data = ctx.data
+          local buf = data.buffer
+
+          Key.get_tree('n')
+          Key.get_tree('n', buf)
+          Key.get_tree('v')
+          Key.get_tree('v', buf)
+
+          Key.update(buf)
+        end)
+      end,
     })
   end,
 })
