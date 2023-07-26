@@ -22,16 +22,10 @@ plug({
       cmd_modcall('userlib.plugin-nvim-tree', 'nvim_tree_find_file_direct()'),
       desc = 'Locate current file in tree',
     },
-    {
-      '<localleader>b',
-      cmd_modcall('userlib.plugin-nvim-tree', 'nvim_tree_find_file({fallback=true})'),
-      -- cmd_modcall('userlib.plugin-nvim-tree', 'toggle_nvim_tree()'),
-      desc = 'Locate current file in tree',
-    },
   },
   config = function()
     local HEIGHT_RATIO = 0.8 -- You can change this
-    local WIDTH_RATIO = 0.5 -- You can change this too
+    local WIDTH_RATIO = 0.5  -- You can change this too
     local TREE_INIT_WIDTH = 40
 
 

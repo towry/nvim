@@ -430,7 +430,7 @@ plug({
     event = 'User LazyUIEnterOncePost',
     keys = {
       {
-        '<localleader>h',
+        '<leader>fh',
         '<cmd>lua require("harpoon.ui").toggle_quick_menu()<cr>',
         desc = 'Toggle harpoon UI',
       },

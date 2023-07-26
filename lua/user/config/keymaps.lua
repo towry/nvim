@@ -25,7 +25,7 @@ local function setup_basic()
     expr = false,
     noremap = true,
   })
-  set('n', '<localleader>n', function()
+  set('n', '<leader>rn', function()
     require('userlib.workflow.run-normal-keys')()
   end, {
     noremap = true,
@@ -102,7 +102,7 @@ local function setup_basic()
   set({ 'n', 'i' }, '<D-s>', cmd('update'), {
     desc = 'Save current buffer',
   })
-  set('n', '<localleader>w', cmd('update'), {
+  set('n', '<leader>bw', cmd('update'), {
     desc = 'Save current buffer',
   })
 

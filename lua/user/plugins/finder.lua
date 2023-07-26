@@ -125,7 +125,7 @@ plug({
   keys = {
     { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
-    { '<D-o>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<D-o>',      '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
   cmd = { 'SymbolsOutline', 'SymbolsOutlineOpen', 'SymbolsOutlineClose' },
   opts = {
@@ -253,7 +253,7 @@ plug({
       desc = 'Git branches'
     },
     {
-      '<localleader>f',
+      '<leader>f-',
       cmd_modcall(pickers_mod, 'project_files()'),
       desc =
       'Open Project files'
@@ -271,7 +271,7 @@ plug({
       'Resume telescope pickers'
     },
     {
-      '<localleader><Tab>',
+      '<leader><Tab>',
       cmd_modcall(pickers_mod,
         [[project_files(require('telescope.themes').get_dropdown({ previewer = false, cwd_only = false, oldfiles = true, cwd = vim.cfg.runtime__starts_cwd }))]]),
       desc =
@@ -295,7 +295,7 @@ plug({
       'Find folders'
     },
     {
-      '<localleader>l',
+      '<leader>fL',
       function()
         --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
         require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
@@ -310,7 +310,7 @@ plug({
         }))
       end,
       desc =
-      'Find folders'
+      'Find project folders'
     },
     {
       '<leader>fs',
@@ -322,21 +322,21 @@ plug({
       desc = 'Grep search'
     },
     {
-      '<localleader>s',
+      '<leader>fg',
       cmd_modcall('userlib.telescope.live_grep_call', '()'),
       desc =
-      'Grep search'
+      'Grep search in project'
     },
     {
-      '<localleader>s',
+      '<leader>fg',
       cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_visual_selection()'),
-      desc = 'Grep search on selection',
+      desc = 'Grep search on selection in project',
       mode = { 'v', 'x' }
     },
     {
-      '<localleader>S',
+      '<leader>fG',
       cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_word_under_cursor()'),
-      desc = 'Grep search on selection',
+      desc = 'Grep search on selection in project',
     },
     {
       '<leader>g.',
