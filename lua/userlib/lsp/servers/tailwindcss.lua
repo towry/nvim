@@ -19,7 +19,7 @@ end
 
 local on_attach = function(client, bufnr)
   if client.server_capabilities.colorProvider then
-    -- require('userlib.lspconfig.documentcolors').buf_attach(bufnr)
+    -- require('userlib.lsp.cfg.documentcolors').buf_attach(bufnr)
     attach_colorizer_to_buffer(bufnr, {
       mode = 'background',
       css = true,

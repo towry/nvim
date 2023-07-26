@@ -13,8 +13,8 @@ plug({
   event = { 'User LazyUIEnterOncePost', 'User OnLeaveDashboard' },
   config = function()
     require('user.config.options').setup_statusline()
-    local auto_format_disabled = require('userlib.lsp-format.autoformat').disabled
-    local format_utils         = require('userlib.lsp-format')
+    local auto_format_disabled = require('userlib.lsp.fmt.autoformat').disabled
+    local format_utils         = require('userlib.lsp.fmt')
     local Buffer               = require('userlib.runtime.buffer')
     local terms                = require('userlib.statusline.lualine.terminal_component')
 

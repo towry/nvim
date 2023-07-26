@@ -48,9 +48,9 @@ plug({
         ensure_installed = vim.cfg.lsp__auto_install_servers,
         automatic_installation = vim.cfg.lsp__automatic_installation,
       })
-      local servers_path = "userlib.lspconfig-servers."
-      local handlers = require('userlib.lspconfig.handlers')
-      local capabilities = require('userlib.lspconfig.capbilities')(require('cmp_nvim_lsp').default_capabilities())
+      local servers_path = "userlib.lsp.servers."
+      local handlers = require('userlib.lsp.cfg.handlers')
+      local capabilities = require('userlib.lsp.cfg.capbilities')(require('cmp_nvim_lsp').default_capabilities())
       local lsp_flags = {
         debounce_text_changes = 600,
         allow_incremental_sync = false,
@@ -82,20 +82,20 @@ plug({
       end
 
       au.do_useraucmd(au.user_autocmds.LspConfigDone_User)
-      require('userlib.lspconfig.diagnostic').setup()
-      require('userlib.lspconfig.inlayhints').setup({
+      require('userlib.lsp.cfg.diagnostic').setup()
+      require('userlib.lsp.cfg.inlayhints').setup({
         enabled = false,
         insert_only = true,
       })
     end,
     init = function()
       au.on_lsp_attach(function(client, bufnr)
-        require('userlib.lspconfig.keymaps').setup_keybinding(client, bufnr)
-        require('userlib.lsp-format').choose_formatter_for_buf(client, bufnr)
-        require('userlib.lsp-format.autoformat').attach(client, bufnr)
+        require('userlib.lsp.cfg.keymaps').setup_keybinding(client, bufnr)
+        require('userlib.lsp.fmt').choose_formatter_for_buf(client, bufnr)
+        require('userlib.lsp.fmt.autoformat').attach(client, bufnr)
         local is_auto_format_enable_config = true
         if is_auto_format_enable_config then
-          require('userlib.lsp-format.autoformat').enable()
+          require('userlib.lsp.fmt.autoformat').enable()
         end
       end)
     end,
