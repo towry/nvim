@@ -125,7 +125,7 @@ plug({
   keys = {
     { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
-    { '<D-o>',      '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<D-o>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
   cmd = { 'SymbolsOutline', 'SymbolsOutlineOpen', 'SymbolsOutlineClose' },
   opts = {
@@ -253,13 +253,13 @@ plug({
       desc = 'Git branches'
     },
     {
-      '<leader>f-',
+      '<leader>ff',
       cmd_modcall(pickers_mod, 'project_files()'),
       desc =
       'Open Project files'
     },
     {
-      '<leader>ff',
+      '<leader>f-',
       cmd_modcall(pickers_mod, 'project_files({use_all_files=false, cwd=vim.cfg.runtime__starts_cwd})'),
       desc =
       'Open find all files'
@@ -278,7 +278,7 @@ plug({
       'Open recent files'
     },
     {
-      '<leader>fl',
+      '<leader>fL',
       function()
         --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
         require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
@@ -292,10 +292,10 @@ plug({
         }))
       end,
       desc =
-      'Find folders'
+      'Find all folders'
     },
     {
-      '<leader>fL',
+      '<leader>fl',
       function()
         --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
         require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
@@ -319,7 +319,7 @@ plug({
           cwd = vim.cfg.runtime__starts_cwd,
         })
       end,
-      desc = 'Grep search'
+      desc = 'Grep search in all'
     },
     {
       '<leader>fg',
