@@ -26,4 +26,26 @@ function M.cu_cmdstr(cmd)
   return string.format('<C-u><cmd>%s<cr>', cmd)
 end
 
+local map_buf_thunk_defered = {}
+--- maybe use ft as throttle key
+---@param bufnr number
+function M.map_buf_thunk(bufnr)
+  if bufnr == 0 or not bufnr then
+    bufnr = vim.api.nvim_get_current_buf()
+  end
+  return function(mode, lhs, rhs, opts)
+    opts = opts or {}
+    opts.buffer = bufnr
+    M.set(mode, lhs, rhs, opts)
+    if not map_buf_thunk_defered[bufnr] then
+      map_buf_thunk_defered[bufnr] = true
+      vim.schedule(function()
+        require('userlib.runtime.au').exec_whichkey_refresh({
+          buffer = bufnr
+        })
+      end)
+    end
+  end
+end
+
 return M

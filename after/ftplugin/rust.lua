@@ -1,9 +1,4 @@
-local au = require('userlib.runtime.au')
-local set = function(mode, lhs, rhs, opts)
-  vim.keymap.set(mode, lhs, rhs, vim.tbl_deep_extend('keep', {
-    buffer = 0,
-  }, opts or {}))
-end
+local set = require('userlib.runtime.keymap').map_buf_thunk(0)
 
 set('n', '<localleader>cr', ':!cargo run<CR>', { noremap = true, desc = 'Run cargo run' })
 
@@ -25,5 +20,3 @@ set('n', '<localleader>B', function()
   end
   require('userlib.terminal.rust-bacon-term').toggle_bacon_term(cwd)
 end, { noremap = true, desc = 'Run bacon on workspace root' })
-
-au.exec_whichkey_refresh()

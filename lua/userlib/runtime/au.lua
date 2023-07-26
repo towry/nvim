@@ -203,13 +203,17 @@ function M.fire_event(event_name, args)
   end
 end
 
----@param opts? {prefix?:string,mode?:string}
+---@param opts? {buffer?:number}
 function M.exec_whichkey_refresh(opts)
   opts = opts or {}
-  if not opts.prefix then
-    opts.prefix = '<localleader>'
+  if not opts.buffer then
+    opts.buffer = vim.api.nvim_get_current_buf()
   end
+
   M.exec_useraucmd("WhichKeyRefresh", {
+    data = {
+      buffer = opts.buffer
+    }
   })
 end
 
