@@ -1,3 +1,4 @@
+local au = require('userlib.runtime.au')
 local M = {}
 
 M.open = function(cwd, buffer, pre_hook)
@@ -84,7 +85,10 @@ M.open = function(cwd, buffer, pre_hook)
       {
         "w",
         _(function()
-          require('userlib.runtime.utils').change_cwd(cwd, 'tcd')
+          au.exec_useraucmd(au.user_autocmds.DoEnterDashboard)
+          vim.schedule(function()
+            require('userlib.runtime.utils').change_cwd(cwd, 'tcd')
+          end)
         end),
         {
           private = true,
