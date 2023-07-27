@@ -1,6 +1,9 @@
 local plug = require('userlib.runtime.pack').plug
 local utils = require('userlib.runtime.utils')
 local au = require('userlib.runtime.au')
+local git_branch_icon = " "
+
+-- TODO: move cwd component to a module.
 
 plug({
   'nvim-lualine/lualine.nvim',
@@ -37,7 +40,7 @@ plug({
         lualine_b = {
           {
             'branch',
-            icon = ""
+            icon = git_branch_icon,
           },
           {
             'tabs',
@@ -54,9 +57,18 @@ plug({
       winbar = {},
       sections = {
         lualine_a = {
-          function()
-            return ' ' .. vim.b.toggle_number
-          end
+          "mode",
+          {
+            function()
+              return vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
+            end,
+            icon = ' ',
+          }
+        },
+        lualine_x = {
+          {
+            terms,
+          },
         }
       },
       filetypes = { 'toggleterm' }
@@ -175,9 +187,6 @@ plug({
             },
           },
           {
-            terms,
-          },
-          {
             function()
               return vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
             end,
@@ -188,7 +197,7 @@ plug({
           'searchcount',
           {
             'branch',
-            icon = ""
+            icon = git_branch_icon
           },
 
         },
@@ -221,6 +230,9 @@ plug({
           -- require('copilot_status').status_string,
           {
             'copilot',
+          },
+          {
+            terms,
           },
           {
             'encoding',
