@@ -31,7 +31,7 @@ plug({
             function()
               return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
             end,
-            icon = '',
+            icon = ' ',
           }
         },
         lualine_b = {
@@ -170,6 +170,12 @@ plug({
           },
           {
             terms,
+          },
+          {
+            function()
+              return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
+            end,
+            icon = ' ',
           }
         },
         lualine_b = {
@@ -246,12 +252,6 @@ plug({
         lualine_y = { 'filesize' },
         lualine_z = {
           { 'location', left_padding = 0 },
-          {
-            function()
-              return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
-            end,
-            icon = '',
-          }
         },
       },
       inactive_sections = {
