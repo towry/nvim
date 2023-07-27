@@ -319,7 +319,7 @@ plug({
           cwd = vim.cfg.runtime__starts_cwd,
         })
       end,
-      desc = 'Grep search in all'
+      desc = 'Grep search in all projects'
     },
     {
       '<leader>fg',
