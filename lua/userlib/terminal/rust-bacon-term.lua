@@ -2,7 +2,7 @@ local projects_instance_map = {}
 
 ---@param cwd string
 local function toggle_bacon_term(cwd)
-  if not vim.fn.executable('bacon') then
+  if vim.fn.executable('bacon') == 0 then
     vim.notify("bacon is not installed", vim.log.levels.ERROR)
     return
   end
@@ -21,7 +21,7 @@ local function toggle_bacon_term(cwd)
       dir = cwd,
       hidden = true,
       direction = 'vertical',
-      close_on_exit = true,
+      close_on_exit = false,
       auto_scroll = true,
       float_opts = {
         border = 'curved',
