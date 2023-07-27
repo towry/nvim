@@ -1,6 +1,6 @@
 local user_cfg = {
-  ui__theme_name = "nordic",
-  workbench__lualine_theme = 'nordic',
+  ui__theme_name = "everforest",
+  workbench__lualine_theme = 'everforest',
   --- treesitter
   lang__treesitter_plugin_rainbow = false,
 }
