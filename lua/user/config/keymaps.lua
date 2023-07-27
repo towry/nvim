@@ -116,12 +116,14 @@ local function setup_basic()
   end, {
     silent = true,
     desc = 'Delete char and yank to register d',
+    noremap = true,
     expr = true,
   })
   set({ 'n', 'v' }, 'D', '"dD', {
     desc = 'Delete to end of line and yank to register d',
     silent = true,
     expr = true,
+    noremap = true,
   })
   --- do not cut on normal mode.
   set({ 'n', 'v' }, 'x', function()
@@ -132,6 +134,7 @@ local function setup_basic()
   end, {
     expr = true,
     silent = true,
+    noremap = true,
     desc = 'Cut chars and do not yank to register',
   })
   set({ 'n', 'v' }, 'X', function()
@@ -142,6 +145,7 @@ local function setup_basic()
   end, {
     expr = true,
     silent = true,
+    noremap = true,
     desc = 'Cut chars and do not yank to register',
   })
 

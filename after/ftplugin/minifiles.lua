@@ -31,7 +31,34 @@ local tabpage = vim.api.nvim_get_current_tabpage()
 if vim.cfg.mf_tabpage_cwd_paths == nil then
   vim.cfg.mf_tabpage_cwd_paths = {}
 end
+
+
+-- keymaps
 --------------------
+key({ 'n', 'v' }, 'd', '"*d', {
+  noremap = true,
+  expr = true,
+  silent = true,
+  nowait = true,
+})
+key({ 'n', 'v' }, 'D', '"*D', {
+  desc = 'Delete to end of line and yank to register d',
+  silent = true,
+  expr = true,
+})
+key({ 'v' }, 'x', '"*x', {
+  noremap = true,
+  expr = true,
+  silent = true,
+  nowait = true,
+})
+key({ 'v' }, 'X', '"*X', {
+  noremap = true,
+  expr = true,
+  silent = true,
+  nowait = true,
+})
+-- x in normal is yanked to register x.
 
 key('n', '-', function()
   MF.go_out()
