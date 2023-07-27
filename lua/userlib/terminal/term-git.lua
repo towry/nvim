@@ -66,7 +66,6 @@ M.toggle_tig_file_history = function()
       buffer = bufnr,
       callback = function()
         if tig_pool[bufnr] then
-          Ty.ECHO({ { "unload tig for buf " .. bufnr, "Comment" } }, true, {})
           tig_pool[bufnr]:close()
           tig_pool[bufnr] = nil
         end

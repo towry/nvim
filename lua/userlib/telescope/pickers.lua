@@ -83,7 +83,7 @@ M.project_files = function(opts)
       local icon, iconhl = utils.get_devicons(tail_raw)
 
       return displayer({
-        { icon, iconhl },
+        { icon,            iconhl },
         tail,
         { path_to_display, 'TelescopeResultsComment' },
       })
@@ -238,7 +238,7 @@ function M.buffers()
   local actionstate = require('telescope.actions.state')
   local Buffer = require('userlib.runtime.buffer')
 
-  builtin.buffers({
+  builtin.buffers(require('telescope.themes').get_dropdown({
     ignore_current_buffer = true,
     sort_mru = true,
     -- layout_strategy = 'vertical',
@@ -275,7 +275,7 @@ function M.buffers()
 
       return true
     end,
-  })
+  }))
 end
 
 function M.gen_from_buffer(opts)
@@ -321,9 +321,9 @@ function M.gen_from_buffer(opts)
     })
 
     return displayer({
-      { entry.bufnr, 'TelescopeResultsNumber' },
+      { entry.bufnr,     'TelescopeResultsNumber' },
       { entry.indicator, 'TelescopeResultsComment' },
-      { icon, hl_group },
+      { icon,            hl_group },
       bufname_tail,
       { path_to_display .. ':' .. entry.lnum, 'TelescopeResultsComment' },
     })

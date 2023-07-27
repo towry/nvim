@@ -40,7 +40,7 @@ function M.toggle()
 end
 
 local function attach_autoformat_with_autocmd(_client, bufnr)
-  local formatter_name, _ = require('userlib.lsp-format').current_formatter_name(bufnr)
+  local formatter_name, _ = require('userlib.lsp.fmt').current_formatter_name(bufnr)
   if not formatter_name then
     return
   end
@@ -61,7 +61,7 @@ local function attach_autoformat_with_autocmd(_client, bufnr)
         nested = false,
         desc = "Auto format for buffer: " .. bufnr,
         callback = function()
-          require('userlib.lsp-format').format(bufnr, {
+          require('userlib.lsp.fmt').format(bufnr, {
             auto = true,
             async = false,
           })

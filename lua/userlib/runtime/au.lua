@@ -74,11 +74,14 @@ end
 ---@param name string the autocmd pattern name
 ---@param opts? {modeline?:boolean,data?:table} the autocmd options
 function M.exec_useraucmd(name, opts)
+  local bufnr = vim.api.nvim_get_current_buf()
   vim.api.nvim_exec_autocmds('User', vim.tbl_extend('force', {
     pattern = name,
     modeline = false,
     data = {
-      bufnr = vim.api.nvim_get_current_buf(),
+      -- TODO: remove bufnr
+      bufnr = bufnr,
+      buffer = bufnr,
     }
   }, opts or {}))
 end
@@ -198,6 +201,20 @@ function M.fire_event(event_name, args)
   for _, callback in pairs(callbacks) do
     callback(args)
   end
+end
+
+---@param opts? {buffer?:number}
+function M.exec_whichkey_refresh(opts)
+  opts = opts or {}
+  if not opts.buffer then
+    opts.buffer = vim.api.nvim_get_current_buf()
+  end
+
+  M.exec_useraucmd("WhichKeyRefresh", {
+    data = {
+      buffer = opts.buffer
+    }
+  })
 end
 
 return M

@@ -1,4 +1,4 @@
-local autoformat = require('userlib.lsp-format.autoformat')
+local autoformat = require('userlib.lsp.fmt.autoformat')
 
 ---formatter name that corresponds to client name.
 local ft_client_formatter = {}
@@ -17,7 +17,7 @@ function M.choose_formatter_for_buf(client, buf)
     return
   end
 
-  local nls = require('userlib.lspconfig-servers.null_ls.utils')
+  local nls = require('userlib.lsp.servers.null_ls.utils')
   local nls_available_formatters = nls.get_available_formatters(ft)
   local specific_formatter_name = nil
 

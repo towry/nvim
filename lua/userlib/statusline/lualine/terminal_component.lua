@@ -27,7 +27,7 @@ function TermsComponent.update_status(self)
   end
 
   if self.count <= 0 then
-    return self.options.symbols.term
+    return ''
   end
 
   return string.format('%s%d', self.options.symbols.term, self.count)

@@ -35,9 +35,9 @@ plug({
   {
     'tpope/vim-fugitive',
     keys = {
-      { '<leader>gg', ":Git<cr>",               desc = "Fugitive Git" },
+      { '<leader>gg', ":Git<cr>", desc = "Fugitive Git" },
       { '<leader>ga', cmdstr([[!git add %:p]]), desc = "!Git add current" },
-      { '<leader>gA', cmdstr([[!git add .]]),   desc = "!Git add all" },
+      { '<leader>gA', cmdstr([[!git add .]]), desc = "!Git add all" },
     },
     cmd = {
       'G',
@@ -54,9 +54,6 @@ plug({
       'Gsplit',
       'Grevert',
       'Grebase',
-      'Gblame',
-      'Gvdiff',
-      'Gsdiff',
       'Gpedit',
     },
     init = function()
@@ -78,8 +75,8 @@ plug({
   {
     -- git runtimes. ft etc.
     'tpope/vim-git',
-    event = au.user_autocmds.FileOpenedAfter_User,
-    enabled = false,
+    event = { 'BufReadPre' },
+    enabled = true,
     cond = function() return true end,
   },
   {
@@ -185,10 +182,10 @@ plug({
       local conflict = require('git-conflict')
 
       conflict.setup({
-        default_mappings = false,   -- disable buffer local mapping created by this plugin
+        default_mappings = false, -- disable buffer local mapping created by this plugin
         default_commands = true,
         disable_diagnostics = true, -- This will disable the diagnostics in a buffer whilst it is conflicted
-        highlights = {              -- They must have background color, otherwise the default color will be used
+        highlights = { -- They must have background color, otherwise the default color will be used
           -- incoming = 'DiffText',
           -- current = 'DiffAdd',
         },
@@ -213,11 +210,11 @@ plug({
       -- │ Setup                                                    │
       -- ╰──────────────────────────────────────────────────────────╯
       worktree.setup({
-        change_directory_command = 'cd',  -- default: "cd",
-        update_on_change = true,          -- default: true,
+        change_directory_command = 'cd', -- default: "cd",
+        update_on_change = true, -- default: true,
         update_on_change_command = 'e .', -- default: "e .",
-        clearjumps_on_change = true,      -- default: true,
-        autopush = false,                 -- default: false,
+        clearjumps_on_change = true, -- default: true,
+        autopush = false, -- default: false,
       })
 
       -- ╭──────────────────────────────────────────────────────────╮
@@ -294,8 +291,8 @@ plug({
           untracked = { hl = 'GitSignsAddNr', text = '┃', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
         },
         signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
-        numhl = false,     -- Toggle with `:Gitsigns toggle_numhl`
-        linehl = false,    -- Toggle with `:Gitsigns toggle_linehl`
+        numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
+        linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
         word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
         watch_gitdir = {
           interval = 1000,

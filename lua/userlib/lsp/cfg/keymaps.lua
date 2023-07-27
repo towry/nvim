@@ -44,6 +44,10 @@ function M.setup_keybinding(client, buffer)
     desc = _('Go to previous hint diagnostic'),
     nowait = true,
   }))
+  set('n', '<leader>cd', ':lua vim.diagnostic.setloclist()<cr>', opts({
+    desc = _('Diagnostics in location list'),
+    nowait = true,
+  }))
   set('n', '<leader>ch', func_call("goto_code_references()"), opts({
     desc = _('find code references'),
   }))

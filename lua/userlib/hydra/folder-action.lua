@@ -1,11 +1,9 @@
 local M = {}
 
-
-
-
 M.open = function(cwd, buffer, pre_hook)
   local ok, Hydra = pcall(require, 'hydra')
   if not ok then return end
+  cwd = require('userlib.runtime.path').remove_path_last_separator(cwd)
 
   local _ = function(callback)
     return function()
@@ -25,27 +23,6 @@ M.open = function(cwd, buffer, pre_hook)
       buffer = buffer,
     },
     heads = {
-      { "t", _(function()
-        local nvim_tree_api = require('nvim-tree.api')
-        nvim_tree_api.tree.open({
-          update_root = false,
-          find_file = false,
-          current_window = false,
-        })
-        nvim_tree_api.tree.change_root(cwd)
-      end), { private = true, desc = "Tree", exit = true } },
-      -- {
-      --   "m",
-      --   _(function()
-      --     require('mini.files').open(cwd, true)
-      --   end),
-      --   {
-      --     private = true,
-      --     nowait = true,
-      --     desc = "M.Files",
-      --     exit = true,
-      --   },
-      -- },
       {
         "f",
         _(function()
@@ -67,8 +44,7 @@ M.open = function(cwd, buffer, pre_hook)
             files = false,
             use_fd = true,
             cwd = cwd,
-            depth = 1,
-            respect_gitignore = false,
+            respect_gitignore = true,
           })
         end),
         {
@@ -108,9 +84,7 @@ M.open = function(cwd, buffer, pre_hook)
       {
         "w",
         _(function()
-          -- only change for current window.
-          vim.cmd('lcd ' .. cwd)
-          vim.notify(('New cwd: %s'):format(require('userlib.runtime.path').home_to_tilde(cwd)), vim.log.levels.INFO)
+          require('userlib.runtime.utils').change_cwd(cwd, 'lcd')
         end),
         {
           private = true,
@@ -126,6 +100,17 @@ M.open = function(cwd, buffer, pre_hook)
         {
           private = true,
           desc = 'MiniFiles',
+          exit = true,
+        }
+      },
+      {
+        't',
+        _(function()
+          vim.cmd('tabfind ' .. cwd)
+        end),
+        {
+          private = true,
+          desc = 'Open in tab',
           exit = true,
         }
       }

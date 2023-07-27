@@ -1,4 +1,3 @@
-local au = require('userlib.runtime.au')
 local keymap = require('userlib.runtime.keymap')
 local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 
@@ -26,7 +25,7 @@ local function setup_basic()
     expr = false,
     noremap = true,
   })
-  set('n', '<localleader>n', function()
+  set('n', '<leader>rn', function()
     require('userlib.workflow.run-normal-keys')()
   end, {
     noremap = true,
@@ -97,16 +96,13 @@ local function setup_basic()
     desc = 'Case change in visual mode'
   })
 
-  set({ 'v', 'i' }, '<F1>', cmd('bufdo update'), {
-    desc = 'Save all files',
-  })
   set({ 'n', 'i' }, '<D-S>', cmd('bufdo update'), {
     desc = 'Save all files',
   })
   set({ 'n', 'i' }, '<D-s>', cmd('update'), {
     desc = 'Save current buffer',
   })
-  set('n', '<localleader>w', cmd('update'), {
+  set('n', '<leader>bw', cmd('update'), {
     desc = 'Save current buffer',
   })
 
@@ -195,7 +191,7 @@ local function setup_basic()
   })
 
   for i = 1, 9 do
-    set('n', '<space>' .. i, cmd(i .. 'wincmd w'), {
+    set('n', '<space>' .. i, cmd(i .. 'tabnext'), {
       desc = 'which_key_ignore',
     })
   end

@@ -124,7 +124,7 @@ end
 -- * lsp root_dir
 -- * root pattern of filename of the current buffer
 -- * root pattern of cwd
----@param root_opts? {root_patterns?:table,lsp_ignore?:table}
+---@param root_opts? {root_patterns?:table,lsp_ignore?:table,only_pattern?:boolean,pattern_start_path?:string}
 ---@return string
 function M.get_root(root_opts)
   local has_root_patterns_opt = root_opts and root_opts.root_patterns ~= nil
@@ -132,8 +132,8 @@ function M.get_root(root_opts)
     root_patterns = M.root_patterns,
     lsp_ignore = M.root_lsp_ignore,
   }, root_opts or {})
-  local is_normal_buf = vim.bo.buftype == ''
-  if not has_root_patterns_opt and M.has_plugin('project_nvim') then
+  local only_pattern = root_opts.only_pattern
+  if not (has_root_patterns_opt or only_pattern) and M.has_plugin('project_nvim') then
     local is_ok, project_nvim = pcall(require, 'project_nvim.project')
     if is_ok then
       local project_root, _ = project_nvim.get_project_root()
@@ -148,7 +148,7 @@ function M.get_root(root_opts)
   path = path ~= "" and vim.uv.fs_realpath(path) or nil
   ---@type string[]
   local roots = {}
-  if path then
+  if path and not only_pattern then
     for _, client in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
       if not vim.tbl_contains(lsp_ignore, client.name or "") then
         local workspace = client.config.workspace_folders
@@ -170,7 +170,7 @@ function M.get_root(root_opts)
   ---@type string?
   local root = roots[1]
   if not root then
-    path = path and vim.fs.dirname(path) or vim.uv.cwd()
+    path = root_opts.pattern_start_path or (path and vim.fs.dirname(path)) or vim.uv.cwd()
     ---@type string?
     root = vim.fs.find(rootPatterns, { path = path, upward = true })[1]
     root = root and vim.fs.dirname(root) or vim.uv.cwd()
@@ -183,6 +183,7 @@ function M.get_root(root_opts)
 end
 
 M.use_plugin = function(plugin_name, callback, on_fail)
+  if not callback then return end
   local ok, plugin = pcall(require, plugin_name)
   if not ok then
     if on_fail then
@@ -194,6 +195,7 @@ M.use_plugin = function(plugin_name, callback, on_fail)
   end
   callback(plugin)
 end
+
 ---@usage load_plugins({'dression.nvim'})
 M.load_plugins = function(plugins)
   if type(plugins) ~= 'table' then
@@ -223,42 +225,6 @@ M.plugin_schedule_wrap = function(plugins, cb)
       cb(unpack(args))
     end)
   end
-end
-
----@see LazyVim
----@param opts? string|{msg:string, on_error:fun(msg)}
-function M.try(fn, opts)
-  opts = type(opts) == 'string' and { msg = opts } or opts or {}
-  local msg = opts.msg
-  -- error handler
-  local error_handler = function(err)
-    local trace = {}
-    local level = 1
-    while true do
-      local info = debug.getinfo(level, 'Sln')
-      if not info then break end
-      if info.what ~= 'C' and not info.source:find('lazy.nvim') then
-        local source = info.source:sub(2)
-        source = vim.fn.fnamemodify(source, ':p:~:.')
-        local line = '  - ' .. source .. ':' .. info.currentline
-        if info.name then line = line .. ' _in_ **' .. info.name .. '**' end
-        table.insert(trace, line)
-      end
-      level = level + 1
-    end
-    msg = (msg and (msg .. '\n\n') or '') .. err
-    if #trace > 0 then msg = msg .. '\n\n# stacktrace:\n' .. table.concat(trace, '\n') end
-    if opts.on_error then
-      opts.on_error(msg)
-    else
-      vim.schedule(function() M.errorlog(msg) end)
-    end
-    return err
-  end
-
-  ---@type boolean, any
-  local ok, result = xpcall(fn, error_handler)
-  return ok and result or nil
 end
 
 ---Parse the `style` string into nvim_set_hl options
@@ -332,6 +298,19 @@ end
 
 M.vim_starts_without_buffer = function()
   return vim.fn.argc(-1) == 0
+end
+
+function M.change_cwd(cwd, cmd)
+  vim.cmd((cmd or 'cd') .. ' ' .. cwd)
+  M.update_cwd_env(cwd)
+  vim.notify(('New cwd: %s'):format(vim.g.cwd_short), vim.log.levels.INFO)
+end
+
+function M.update_cwd_env(cwd)
+  vim.g.cwd = cwd
+  -- vim.g.cwd_short = require('userlib.runtime.path').home_to_tilde(cwd)
+  -- only show last part of path.
+  vim.g.cwd_short = require('userlib.runtime.path').home_to_tilde(cwd, { shorten = true })
 end
 
 return M

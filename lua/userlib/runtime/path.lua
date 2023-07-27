@@ -3,14 +3,24 @@ local Table = require('userlib.runtime.table')
 local is_windows = uv.os_uname().version:match 'Windows'
 local path_separator = is_windows and '\\' or '/'
 
+local function remove_path_last_separator(path)
+  if not path then return '' end
+  if path:sub(#path) == path_separator then
+    return path:sub(1, #path - 1)
+  end
+  return path
+end
+
 
 local function escape_wildcards(path)
   return path:gsub('([%[%]%?%*])', '\\%1')
 end
 
---- thanks @mrjones2014
---- https://github.com/mrjones2014/legendary.nvim/issues/390#issuecomment-1625225191
-local function home_to_tilde(path)
+---@param path string
+---@param opts? {shorten?:boolean}
+---@return string
+local function home_to_tilde(path, opts)
+  opts = opts or {}
   if not path then return '/tmp/wonderland' end
   -- local home = vim.loop.os_homedir()
   -- if path:sub(1, #home) == home then
@@ -18,7 +28,11 @@ local function home_to_tilde(path)
   -- end
   -- return path
   -- below not work for some case.
-  return vim.fn.fnamemodify(path, ':~:.')
+  local trimed = vim.fn.fnamemodify(path, ':~')
+  if opts.shorten then
+    return vim.fn.pathshorten(trimed)
+  end
+  return trimed
 end
 
 local function sanitize(path)
@@ -185,6 +199,7 @@ local function is_descendant(root, path)
 end
 
 return {
+  remove_path_last_separator = remove_path_last_separator,
   escape_wildcards = escape_wildcards,
   is_dir = is_dir,
   is_file = is_file,

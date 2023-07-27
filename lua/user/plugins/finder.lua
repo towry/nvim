@@ -253,13 +253,13 @@ plug({
       desc = 'Git branches'
     },
     {
-      '<localleader>f',
+      '<leader>ff',
       cmd_modcall(pickers_mod, 'project_files()'),
       desc =
       'Open Project files'
     },
     {
-      '<leader>ff',
+      '<leader>f-',
       cmd_modcall(pickers_mod, 'project_files({use_all_files=false, cwd=vim.cfg.runtime__starts_cwd})'),
       desc =
       'Open find all files'
@@ -271,14 +271,14 @@ plug({
       'Resume telescope pickers'
     },
     {
-      '<localleader><Tab>',
+      '<leader><Tab>',
       cmd_modcall(pickers_mod,
         [[project_files(require('telescope.themes').get_dropdown({ previewer = false, cwd_only = false, oldfiles = true, cwd = vim.cfg.runtime__starts_cwd }))]]),
       desc =
       'Open recent files'
     },
     {
-      '<leader>fl',
+      '<leader>fL',
       function()
         --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
         require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
@@ -292,10 +292,10 @@ plug({
         }))
       end,
       desc =
-      'Find folders'
+      'Find all folders'
     },
     {
-      '<localleader>l',
+      '<leader>fl',
       function()
         --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
         require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
@@ -310,7 +310,7 @@ plug({
         }))
       end,
       desc =
-      'Find folders'
+      'Find project folders'
     },
     {
       '<leader>fs',
@@ -319,24 +319,24 @@ plug({
           cwd = vim.cfg.runtime__starts_cwd,
         })
       end,
-      desc = 'Grep search'
+      desc = 'Grep search in all'
     },
     {
-      '<localleader>s',
+      '<leader>fg',
       cmd_modcall('userlib.telescope.live_grep_call', '()'),
       desc =
-      'Grep search'
+      'Grep search in project'
     },
     {
-      '<localleader>s',
+      '<leader>fg',
       cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_visual_selection()'),
-      desc = 'Grep search on selection',
+      desc = 'Grep search on selection in project',
       mode = { 'v', 'x' }
     },
     {
-      '<localleader>S',
+      '<leader>fG',
       cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_word_under_cursor()'),
-      desc = 'Grep search on selection',
+      desc = 'Grep search on selection in project',
     },
     {
       '<leader>g.',
@@ -362,6 +362,9 @@ plug({
       branch = 'feat/max-results',
       dev = false,
     },
+    {
+      'jvgrootveld/telescope-zoxide',
+    }
   },
   config = function(_, opts)
     require('telescope').setup(opts)
@@ -369,6 +372,7 @@ plug({
     require('telescope').load_extension('live_grep_args')
     require('telescope').load_extension('git_worktree')
     require('telescope').load_extension('termfinder')
+    require("telescope").load_extension('zoxide')
     --- https://github.com/nvim-telescope/telescope-file-browser.nvim
     --- Telescope file_browser files=false
     require("telescope").load_extension("file_browser")
@@ -534,6 +538,25 @@ plug({
             },
           },
         },
+        zoxide = {
+          --- https://github.com/jvgrootveld/telescope-zoxide
+          prompt_title = "Zz...",
+          mappings = {
+            default = {
+              after_action = function(selection)
+                print("Update to (" .. selection.z_score .. ") " .. selection.path)
+              end
+            },
+            -- ["<C-s>"] = {
+            --   before_action = function(selection) print("before C-s") end,
+            --   action = function(selection)
+            --     vim.cmd.edit(selection.path)
+            --   end
+            -- },
+            -- -- Opens the selected entry in a new split
+            -- ["<C-v>"] = { action = z_utils.create_basic_command("split") },
+          },
+        }
       },
     }
   end,

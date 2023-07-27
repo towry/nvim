@@ -13,6 +13,7 @@ plug({
         vim.cmd.TSUpdate()
       end
     end,
+    event = { 'BufReadPre', 'BufNewFile' },
     keys = {
       -- { "<Enter>",    desc = "Init Increment selection" },
       -- { "<Enter>",    desc = "node node incremental selection",      mode = "x" },
@@ -52,24 +53,6 @@ plug({
     },
     init = function()
       vim.opt.smartindent = false
-      vim.api.nvim_create_augroup('_ts_file_opened', { clear = true })
-      vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
-        group = '_ts_file_opened',
-        nested = true,
-        callback = function(args)
-          local buftype = vim.api.nvim_get_option_value("buftype", { buf = args.buf })
-          if not (vim.fn.expand "%" == "" or buftype == "nofile") then
-            -- remove this event.
-            vim.api.nvim_del_augroup_by_name("_ts_file_opened")
-            --- wait for other plugins has ready.
-            vim.defer_fn(function()
-              vim.schedule(function()
-                vim.cmd('Lazy load nvim-treesitter')
-              end)
-            end, 2)
-          end
-        end,
-      })
     end,
     config = function()
       local Buffer = require('userlib.runtime.buffer')
@@ -380,8 +363,26 @@ plug({
 
   {
     'vuki656/package-info.nvim',
-    enabled = false,
+    enabled = true,
     event = 'BufEnter package.json',
+    init = function()
+      au.define_autocmd({
+        'BufEnter',
+      }, {
+        pattern = 'package.json',
+        callback = function(ctx)
+          local opts = {
+            buffer = ctx.buf,
+            noremap = true,
+            silent = true,
+            nowait = true,
+          }
+          local set = vim.keymap.set
+          set('n', '<localleader>pi', '<cmd>lua require("package-info").show()<CR>', opts)
+          set('n', '<localleader>pc', '<cmd>lua require("package-info").change_version()<CR>', opts)
+        end
+      })
+    end,
     config = function()
       local icons = require('userlib.icons')
       require('package-info').setup({
@@ -396,14 +397,14 @@ plug({
             outdated = icons.gitRemove,     -- Icon for outdated packages
           },
         },
-        autostart = true,              -- Whether to autostart when `package.json` is opened
-        hide_up_to_date = true,        -- It hides up to date versions when displaying virtual text
-        hide_unstable_versions = true, -- It hides unstable versions from version list e.g next-11.1.3-canary3
+        autostart = true,               -- Whether to autostart when `package.json` is opened
+        hide_up_to_date = true,         -- It hides up to date versions when displaying virtual text
+        hide_unstable_versions = false, -- It hides unstable versions from version list e.g next-11.1.3-canary3
         -- Can be `npm` or `yarn`. Used for `delete`, `install` etc...
         -- The plugin will try to auto-detect the package manager based on
         -- `yarn.lock` or `package-lock.json`. If none are found it will use the
         -- provided one,                              if nothing is provided it will use `yarn`
-        package_manager = 'npm',
+        package_manager = 'pnpm',
       })
     end,
   },

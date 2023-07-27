@@ -13,8 +13,8 @@ plug({
   event = { 'User LazyUIEnterOncePost', 'User OnLeaveDashboard' },
   config = function()
     require('user.config.options').setup_statusline()
-    local auto_format_disabled = require('userlib.lsp-format.autoformat').disabled
-    local format_utils         = require('userlib.lsp-format')
+    local auto_format_disabled = require('userlib.lsp.fmt.autoformat').disabled
+    local format_utils         = require('userlib.lsp.fmt')
     local Buffer               = require('userlib.runtime.buffer')
     local terms                = require('userlib.statusline.lualine.terminal_component')
 
@@ -31,7 +31,7 @@ plug({
             function()
               return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
             end,
-            icon = '',
+            icon = ' ',
           }
         },
         lualine_b = {
@@ -73,8 +73,8 @@ plug({
       options = {
         theme = vim.cfg.workbench__lualine_theme,
         globalstatus = true,
-        component_separators = '│',
-        -- component_separators = '',
+        -- component_separators = '│',
+        component_separators = '',
         -- section_separators = { left = '', right = '' },
         section_separators = { left = '', right = '' },
         disabled_filetypes = { winbar = vim.cfg.misc__ft_exclude, statusline = { 'dashboard', 'lazy', 'alpha' } },
@@ -101,14 +101,6 @@ plug({
         lualine_b = {
           {
             function()
-              local alternate = vim.fn.fnamemodify(vim.fn.bufname('#'), ':t:h')
-              if alternate == '' then return '' end
-              local direction_icon = vim.fn.bufnr('#') > vim.fn.bufnr('%') and '[N]' or '[P]'
-              return direction_icon .. '' .. alternate
-            end,
-          },
-          {
-            function()
               local idx = require('harpoon.mark').status()
               return idx
             end,
@@ -127,7 +119,8 @@ plug({
               }
             }
           },
-        }
+        },
+        lualine_z = {}
       },
       inactive_winbar = {
         lualine_a = {
@@ -148,52 +141,58 @@ plug({
             }
           }
         },
+        lualine_z = {
+        }
       },
       sections = {
         lualine_a = {
+          { 'mode', fmt = function(str) return str:sub(1, 1) end },
           {
-            separator = { left = '', },
-            right_padding = 0,
+            -- separator = { left = '', },
+            -- right_padding = 0,
             function()
               local unsaved_count = #Buffer.unsaved_list({ perf = true })
               local has_modified = unsaved_count > 0
               local unsaved_count_text = unsaved_count > 0 and (':' .. unsaved_count) or ''
               vim.b['has_modified_file'] = has_modified
-              local icon = has_modified and ' ' or ' '
-              return icon .. #vim.fn.getbufinfo({ buflisted = 1 }) .. unsaved_count_text
+              return #vim.fn.getbufinfo({ buflisted = 1 }) .. unsaved_count_text
             end,
-            color = function()
-              if vim.b['has_modified_file'] then
-                return {
-                  bg = '#C20505',
-                  fg = '#ffffff',
-                }
-              end
-            end,
+            icon = {
+              ' ',
+              color = function()
+                if vim.b['has_modified_file'] then
+                  return {
+                    fg = '#C20505',
+                  }
+                end
+              end,
+            },
           },
-          { 'mode' },
           {
             terms,
+          },
+          {
+            function()
+              return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
+            end,
+            icon = ' ',
           }
         },
         lualine_b = {
           'searchcount',
           {
-            function()
-              return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
-            end,
-            icon = {
-              "",
-            },
-            -- color = 'NormalNC',
-            maxwidth = 20
+            'branch',
+            icon = ""
           },
+
         },
         -- filename is displayed by the incline.
         lualine_c = {
           {
-            'branch',
-            icon = ""
+            'tabs',
+            max_length = vim.o.columns / 3,
+            mode = 0,
+            use_mode_colors = true,
           },
           function()
             if not vim.b.gitsigns_head or vim.b.gitsigns_git_status or vim.o.columns < 120 then
@@ -202,9 +201,9 @@ plug({
 
             local git_status = vim.b.gitsigns_status_dict
 
-            local added = (git_status.added and git_status.added ~= 0) and (" +" .. git_status.added) or ""
-            local changed = (git_status.changed and git_status.changed ~= 0) and (" ~" .. git_status.changed) or ""
-            local removed = (git_status.removed and git_status.removed ~= 0) and (" -" .. git_status.removed) or ""
+            local added = (git_status.added and git_status.added ~= 0) and ("+" .. git_status.added) or ""
+            local changed = (git_status.changed and git_status.changed ~= 0) and ("~" .. git_status.changed) or ""
+            local removed = (git_status.removed and git_status.removed ~= 0) and ("-" .. git_status.removed) or ""
 
             return (added .. changed .. removed) ~= "" and (added .. changed .. removed) or ""
           end,
@@ -250,8 +249,10 @@ plug({
           },
           { 'filetype', colored = true, icon_only = true },
         },
-        lualine_y = { 'filesize', 'progress' },
-        lualine_z = { { 'location', separator = { left = '', right = '' }, left_padding = 0 } },
+        lualine_y = { 'filesize' },
+        lualine_z = {
+          { 'location', left_padding = 0 },
+        },
       },
       inactive_sections = {
         lualine_a = {},
@@ -283,17 +284,13 @@ plug({
         setopt = true,
         segments = {
           {
-            sign = { name = { '.*' }, maxwidth = 2, colwidth = 1, auto = true },
+            sign = { name = { '.*' }, maxwidth = 2, colwidth = 2, auto = true },
           },
           {
-            sign = { namespace = { '.*' }, maxwidth = 2, colwidth = 2, auto = true },
+            sign = { namespace = { '.*' }, maxwidth = 2, colwidth = 3, auto = true },
           },
           { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
           { text = { builtin.foldfunc, '' },  click = 'v:lua.ScFa' },
-          -- {
-          --   sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 1, auto = true },
-          --   click = 'v:lua.ScSa',
-          -- },
           {
             sign = { name = { 'Diagnostic' }, maxwidth = 1, auto = false },
             click = 'v:lua.ScSa',
@@ -312,8 +309,8 @@ plug({
       require('incline').setup({
         hide = {
           cursorline = true,
-          focused_win = true,
-          only_win = true,
+          focused_win = false,
+          only_win = false,
         },
         window = {
           margin = {
@@ -321,14 +318,12 @@ plug({
             horizontal = 0,
           },
         },
-        render = function(props)
-          -- local bufid = props.buf
-          local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
-          local icon, color = require('nvim-web-devicons').get_icon_color(filename)
+        render = function()
+          local path = vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
+          local icon = ' '
           return {
-            -- { '[' .. bufid .. '] ' },
-            { icon .. ' ', guifg = color },
-            { filename },
+            { icon },
+            { path },
           }
         end,
       })
@@ -337,6 +332,7 @@ plug({
 
   {
     'lewis6991/satellite.nvim',
+    enabled = vim.list_contains ~= nil,
     version = '*',
     -- event = 'VeryLazy',
     cmd = { 'SatelliteEnable', 'SatelliteDisable', 'SatelliteRefresh' },

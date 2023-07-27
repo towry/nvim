@@ -7,8 +7,8 @@ return plug({
   opts = {
     windows = {
       preview = true,
-      width_nofocus = 10,
-      width_preview = 20,
+      width_nofocus = 30,
+      width_preview = 60,
     },
     options = {
       -- Whether to use for editing directories
@@ -47,8 +47,8 @@ return plug({
       "-",
       function()
         local path = nil
-        if vim.bo.buftype == 'nofile' then
-          path = require('userlib.runtime.utils').get_root()
+        if require('userlib.runtime.buffer').is_empty_buffer(0) then
+          path = vim.uv.cwd()
         else
           path = vim.api.nvim_buf_get_name(0)
         end
@@ -66,5 +66,6 @@ return plug({
       pattern = 'MiniFilesWindowUpdate',
       callback = function(args) vim.wo[args.data.win_id].relativenumber = true end,
     })
+    vim.cmd('hi! link MiniFilesBorder NormalFloat')
   end,
 })

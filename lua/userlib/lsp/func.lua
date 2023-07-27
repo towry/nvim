@@ -4,7 +4,6 @@ local M = {}
 --- @param next boolean "next or prev"
 --- @param severity string {"ERROR"|"WARN"|"INFO"|"HINT"}
 function M.diagnostic_goto(next, severity)
-
   local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
   local sev = severity and vim.diagnostic.severity[severity] or nil
 
@@ -56,7 +55,7 @@ function M.peek_type_definition()
   vim.lsp.buf.type_definition()
 end
 
-function M.format_code(bufnr, opts) require('userlib.lsp-format').format(bufnr, opts) end
+function M.format_code(bufnr, opts) require('userlib.lsp.fmt').format(bufnr, opts) end
 
 function M.open_code_action()
   local mode = vim.api.nvim_get_mode().mode

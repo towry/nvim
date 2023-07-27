@@ -30,7 +30,7 @@ return function(opts)
 
   require('lspconfig').volar.setup(vim.tbl_extend('force', opts, {
     filetypes = fts,
-    commands = require('userlib.lsp-commands'),
+    commands = require('userlib.lsp.commands'),
     settings = M.settings,
     init_options = {
       typescript = {
