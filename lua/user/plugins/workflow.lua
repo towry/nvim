@@ -167,11 +167,11 @@ plug({
 
           local jumplist = builtins.jumplist.query({
             direction = 'backward',
-            max_results = 3,
+            max_results = 5,
           })
           local harpoon = builtins.harpoon.query({
             direction = 'backward',
-            max_results = 1,
+            max_results = 2,
           })
           require('portal').tunnel({ jumplist, harpoon })
         end,
@@ -184,11 +184,11 @@ plug({
 
           local jumplist = builtins.jumplist.query({
             direction = 'forward',
-            max_results = 3,
+            max_results = 5,
           })
           local harpoon = builtins.harpoon.query({
             direction = 'forward',
-            max_results = 1,
+            max_results = 2,
           })
 
           require('portal').tunnel({ jumplist, harpoon })
