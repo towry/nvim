@@ -91,6 +91,7 @@ plug({
 
         local buffer = vim.api.nvim_get_current_buf()
         local _, current_term = Terminal.identify()
+        if not current_term then return end
         local current_term_is_hidden = current_term.hidden
         local opts = { noremap = true, buffer = buffer, nowait = true }
         nvim_buf_set_keymap('t', '<C-\\>', [[<C-\><C-n>:ToggleTerm<CR>]], opts)
