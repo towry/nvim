@@ -112,9 +112,9 @@ plug({
       group = '_oil_change_cwd',
       pattern = 'oil:///*',
       callback = function(ctx)
-        vim.g.cwd = require('oil').get_current_dir()
-        vim.g.cwd_short = require('userlib.runtime.path').home_to_tilde(vim.g.cwd)
-        vim.cmd.lcd(vim.g.cwd)
+        vim.t.cwd = require('oil').get_current_dir()
+        vim.t.cwd_short = require('userlib.runtime.path').home_to_tilde(vim.t.cwd)
+        vim.cmd.tcd(vim.t.cwd)
       end,
     })
   end,
@@ -125,7 +125,7 @@ plug({
   keys = {
     { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
-    { '<D-o>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<D-o>',      '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
   cmd = { 'SymbolsOutline', 'SymbolsOutlineOpen', 'SymbolsOutlineClose' },
   opts = {
@@ -299,7 +299,7 @@ plug({
       function()
         --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
         require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
-          results_title = vim.g.cwd_short,
+          results_title = vim.t.cwd_short,
           files = false,
           use_fd = true,
           previewer = false,

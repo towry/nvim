@@ -303,14 +303,13 @@ end
 function M.change_cwd(cwd, cmd)
   vim.cmd((cmd or 'cd') .. ' ' .. cwd)
   M.update_cwd_env(cwd)
-  vim.notify(('New cwd: %s'):format(vim.g.cwd_short), vim.log.levels.INFO)
+  vim.notify(('New cwd: %s'):format(vim.t.cwd_short), vim.log.levels.INFO)
 end
 
 function M.update_cwd_env(cwd)
-  vim.g.cwd = cwd
-  -- vim.g.cwd_short = require('userlib.runtime.path').home_to_tilde(cwd)
+  vim.t.cwd = cwd
   -- only show last part of path.
-  vim.g.cwd_short = require('userlib.runtime.path').home_to_tilde(cwd, { shorten = true })
+  vim.t.cwd_short = require('userlib.runtime.path').home_to_tilde(cwd, { shorten = true })
 end
 
 return M

@@ -319,7 +319,7 @@ plug({
           -- * global (default)
           -- * tab
           -- * win
-          scope_chdir = 'win',
+          scope_chdir = 'tab',
         }
       }
     }

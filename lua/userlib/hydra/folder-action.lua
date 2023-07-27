@@ -84,7 +84,7 @@ M.open = function(cwd, buffer, pre_hook)
       {
         "w",
         _(function()
-          require('userlib.runtime.utils').change_cwd(cwd, 'lcd')
+          require('userlib.runtime.utils').change_cwd(cwd, 'tcd')
         end),
         {
           private = true,

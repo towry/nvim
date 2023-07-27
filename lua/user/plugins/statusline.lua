@@ -29,7 +29,7 @@ plug({
         lualine_a = {
           {
             function()
-              return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
+              return vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
             end,
             icon = ' ',
           }
@@ -179,7 +179,7 @@ plug({
           },
           {
             function()
-              return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
+              return vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
             end,
             icon = ' ',
           }
@@ -325,7 +325,7 @@ plug({
           },
         },
         render = function()
-          local path = vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
+          local path = vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
           local icon = ' '
           return {
             { icon },
