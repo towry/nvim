@@ -37,24 +37,21 @@ end
 --------------------
 key({ 'n', 'v' }, 'd', '"*d', {
   noremap = true,
-  expr = true,
   silent = true,
   nowait = true,
 })
 key({ 'n', 'v' }, 'D', '"*D', {
   desc = 'Delete to end of line and yank to register d',
   silent = true,
-  expr = true,
+  noremap = true,
 })
 key({ 'v' }, 'x', '"*x', {
   noremap = true,
-  expr = true,
   silent = true,
   nowait = true,
 })
 key({ 'v' }, 'X', '"*X', {
   noremap = true,
-  expr = true,
   silent = true,
   nowait = true,
 })
