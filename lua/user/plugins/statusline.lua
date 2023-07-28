@@ -166,6 +166,24 @@ plug({
         lualine_a = {
           { 'mode', fmt = function(str) return str:sub(1, 1) end },
           {
+            function()
+              return vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
+            end,
+            icon = ' ',
+          }
+        },
+        lualine_b = {
+          'searchcount',
+          {
+            'branch',
+            icon = git_branch_icon
+          },
+
+        },
+        -- filename is displayed by the incline.
+        lualine_c = {
+          -- TODO: move to component.
+          {
             -- separator = { left = '', },
             -- right_padding = 0,
             function()
@@ -186,23 +204,6 @@ plug({
               end,
             },
           },
-          {
-            function()
-              return vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
-            end,
-            icon = ' ',
-          }
-        },
-        lualine_b = {
-          'searchcount',
-          {
-            'branch',
-            icon = git_branch_icon
-          },
-
-        },
-        -- filename is displayed by the incline.
-        lualine_c = {
           {
             'tabs',
             max_length = vim.o.columns / 3,
