@@ -71,7 +71,7 @@ plug({
     use_default_keymaps = false,
     float = {
       padding = 3,
-      border = { "╔", "═", "╗", "║", "╝", "═", "╚", "║" },
+      border = vim.cfg.ui__float_border,
       win_options = {
         winblend = 0,
       }
@@ -404,6 +404,8 @@ plug({
 
     return {
       defaults = {
+        border = true,
+        borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
         wrap_results = false,
         --- give some opacity so we can see the window picker marks.
         winblend = 0,
@@ -490,6 +492,9 @@ plug({
       extensions = {
         ["ui-select"] = {
           require("telescope.themes").get_dropdown {
+            border = true,
+            -- not work.
+            borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
             -- even more opts
           }
         },
