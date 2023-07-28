@@ -311,7 +311,7 @@ pack.plug({
         },
         window = {
           completion = cmp.config.window.bordered({
-            winhighlight = 'CursorLine:CmpMenuSel,NormalFloat:NormalFloat,FloatBorder:FloatBorder',
+            winhighlight = 'CursorLine:CmpCompletionSel,NormalFloat:NormalFloat,FloatBorder:FloatBorder',
           }),
           documentation = cmp.config.window.bordered({
             winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
@@ -366,20 +366,6 @@ pack.plug({
       require('cmp-npm').setup({
         ignore = {},
         only_semantic_versions = true,
-      })
-
-      -- hls
-      local au = require('userlib.runtime.au')
-      au.register_event(au.events.AfterColorschemeChanged, {
-        name = 'update_cmp_hl',
-        immediate = true,
-        callback = function()
-          vim.api.nvim_set_hl(0, 'CmpMenuSel', {
-            bg = '#a7c080',
-            fg = '#ffffff',
-            bold = true,
-          })
-        end,
       })
     end,
   }
