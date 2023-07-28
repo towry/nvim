@@ -3,6 +3,16 @@ local utils = require('userlib.runtime.utils')
 local au = require('userlib.runtime.au')
 local git_branch_icon = " "
 
+local tabs_component = {
+  'tabs',
+  max_length = vim.o.columns / 3,
+  mode = 0,
+  use_mode_colors = true,
+  tabs_color = {
+    active = { fg = 'lualine_a_insert' }
+  }
+}
+
 -- TODO: move cwd component to a module.
 
 plug({
@@ -42,12 +52,7 @@ plug({
             'branch',
             icon = git_branch_icon,
           },
-          {
-            'tabs',
-            max_length = vim.o.columns / 3,
-            mode = 0,
-            use_mode_colors = true,
-          },
+          tabs_component,
         }
       },
       winbar = {},
@@ -204,12 +209,7 @@ plug({
               end,
             },
           },
-          {
-            'tabs',
-            max_length = vim.o.columns / 3,
-            mode = 0,
-            use_mode_colors = true,
-          },
+          tabs_component,
           function()
             if not vim.b.gitsigns_head or vim.b.gitsigns_git_status or vim.o.columns < 120 then
               return ""
