@@ -114,29 +114,33 @@ plug({
       {
         '<S-q>',
         function()
+          local bufnr = vim.api.nvim_get_current_buf()
           local buftype = vim.bo.buftype
-          if buftype ~= "" then
-            require('mini.bufremove').wipeout(0)
-            if not vim.tbl_contains({
-                  'terminal',
-                }, buftype) then
-              vim.cmd('q')
+          --- if close too fast after saving the file, vim lsp diagnostics will raise error.
+          vim.schedule(function()
+            if buftype ~= "" then
+              require('mini.bufremove').wipeout(bufnr)
+              if not vim.tbl_contains({
+                    'terminal',
+                  }, buftype) then
+                vim.cmd('q')
+              end
+              return
             end
-            return
-          end
-          local valid_buf_count = #(require('userlib.runtime.buffer').list_normal_bufnrs())
-          if valid_buf_count <= 1 then
-            require('mini.bufremove').wipeout(0)
-            vim.schedule(function()
-              au.exec_useraucmd(au.user_autocmds.DoEnterDashboard, {
-                data = {
-                  in_vimenter = true,
-                }
-              })
-            end)
-            return
-          end
-          require('mini.bufremove').wipeout(0)
+            local valid_buf_count = #(require('userlib.runtime.buffer').list_normal_bufnrs())
+            if valid_buf_count <= 1 then
+              require('mini.bufremove').wipeout(bufnr)
+              vim.schedule(function()
+                au.exec_useraucmd(au.user_autocmds.DoEnterDashboard, {
+                  data = {
+                    in_vimenter = true,
+                  }
+                })
+              end)
+              return
+            end
+            require('mini.bufremove').wipeout(bufnr)
+          end)
         end,
         desc = 'Quit current buffer',
       }
