@@ -313,6 +313,7 @@ pack.plug({
           completion = cmp.config.window.bordered({
             border = vim.cfg.ui__float_border,
             winhighlight = 'CursorLine:CursorLine,NormalFloat:NormalFloat,FloatBorder:NormalFloat',
+            winblend = 0,
           }),
           documentation = cmp.config.window.bordered({
             winhighlight = 'NormalFloat:NormalFloat,FloatBorder:NormalFloat',

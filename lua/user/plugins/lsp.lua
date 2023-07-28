@@ -142,6 +142,32 @@ plug({
               checkOnSave = {
                 command = "clippy",
               },
+              inlayHints = {
+                bindingModeHints = { enable = true },
+                closureReturnTypeHints = { enable = true },
+                lifetimeElisionHints = { enable = true },
+                reborrowHints = { enable = true },
+              },
+              diagnostics = {
+                disabled = { 'inactive-code', 'unresolved-proc-macro' },
+              },
+              procMacro = { enable = true },
+              files = {
+                excludeDirs = {
+                  '.direnv',
+                  'target',
+                  'js',
+                  'node_modules',
+                  'assets',
+                  'ci',
+                  'data',
+                  'docs',
+                  'store-metadata',
+                  '.gitlab',
+                  '.vscode',
+                  '.git',
+                },
+              },
               completion = {
                 postfix = {
                   enable = false,
