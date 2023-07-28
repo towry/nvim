@@ -3,6 +3,18 @@ local utils = require('userlib.runtime.utils')
 local au = require('userlib.runtime.au')
 local git_branch_icon = " "
 
+local tabs_nrto_icons = {
+  ['1'] = '❶ ',
+  ['2'] = '❷ ',
+  ['3'] = '❸ ',
+  ['4'] = '❹ ',
+  ['5'] = '❺ ',
+  ['6'] = '❻ ',
+  ['7'] = '❼ ',
+  ['8'] = '❽ ',
+  ['9'] = '❾ ',
+  ['10'] = '❿ ',
+}
 local tabs_component = {
   'tabs',
   max_length = vim.o.columns / 3,
@@ -11,7 +23,12 @@ local tabs_component = {
   tabs_color = {
     active = { fg = 'grey', gui = 'italic,bold' },
     inactive = 'lualine_c_normal',
-  }
+  },
+  fmt = function(name, context)
+    local tabnr = context.tabnr
+    local icon = tabs_nrto_icons[tostring(tabnr)] or tabnr
+    return icon .. ''
+  end,
 }
 
 -- TODO: move cwd component to a module.
