@@ -43,7 +43,8 @@ plug({
       transparent_background = false,
       -- light
       -- darken_comments = 30,
-      lightness = 'dim',
+      lightness = 'bright',
+      darkness = 'warm',
       darken_cursor_line = 10,
       --- dark
       lighten_cursor_line = 15,
@@ -67,12 +68,31 @@ plug({
 })
 
 plug({
-  'AlexvZyl/nordic.nvim',
+  'rebelot/kanagawa.nvim',
   event = 'User LazyTheme',
-  enabled = string.match(vim.cfg.ui__theme_name, 'nordic') ~= nil,
+  enabled = string.match(vim.cfg.ui__theme_name, 'kanagawa') ~= nil,
   opts = {
-    telescope = {
-      style = 'flat',
-    }
-  }
+    undercurl = true, -- enable undercurls
+    commentStyle = { italic = true },
+    functionStyle = { bold = true },
+    keywordStyle = { italic = true },
+    statementStyle = { bold = true },
+    typeStyle = { bold = true },
+    variablebuiltinStyle = { italic = true },
+    globalStatus = true,
+    colors = {
+      theme = {
+        all = {
+          ui = {
+            bg_gutter = "none",
+          },
+        },
+      },
+    },
+    background = {
+      -- dark = "wave",
+      dark = 'dragon',
+      light = "lotus",
+    },
+  },
 })

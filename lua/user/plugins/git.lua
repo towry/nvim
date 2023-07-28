@@ -35,9 +35,9 @@ plug({
   {
     'tpope/vim-fugitive',
     keys = {
-      { '<leader>gg', ":Git<cr>", desc = "Fugitive Git" },
+      { '<leader>gg', ":Git<cr>",               desc = "Fugitive Git" },
       { '<leader>ga', cmdstr([[!git add %:p]]), desc = "!Git add current" },
-      { '<leader>gA', cmdstr([[!git add .]]), desc = "!Git add all" },
+      { '<leader>gA', cmdstr([[!git add .]]),   desc = "!Git add all" },
     },
     cmd = {
       'G',
@@ -159,7 +159,6 @@ plug({
 
   {
     'akinsho/git-conflict.nvim',
-    event = au.user_autocmds.FileOpenedAfter_User,
     version = '*',
     keys = {
       {
@@ -182,10 +181,10 @@ plug({
       local conflict = require('git-conflict')
 
       conflict.setup({
-        default_mappings = false, -- disable buffer local mapping created by this plugin
+        default_mappings = false,   -- disable buffer local mapping created by this plugin
         default_commands = true,
         disable_diagnostics = true, -- This will disable the diagnostics in a buffer whilst it is conflicted
-        highlights = { -- They must have background color, otherwise the default color will be used
+        highlights = {              -- They must have background color, otherwise the default color will be used
           -- incoming = 'DiffText',
           -- current = 'DiffAdd',
         },
@@ -195,69 +194,15 @@ plug({
         vim.cmd('GitConflictRefresh')
       end)
     end,
-  },
-
-  {
-    'ThePrimeagen/git-worktree.nvim',
-    config = function()
-      local present, worktree = pcall(require, 'git-worktree')
-      if not present then return end
-
-      local utils = require('userlib.runtime.utils')
-      local au = require('userlib.runtime.au')
-
-      -- ╭──────────────────────────────────────────────────────────╮
-      -- │ Setup                                                    │
-      -- ╰──────────────────────────────────────────────────────────╯
-      worktree.setup({
-        change_directory_command = 'cd', -- default: "cd",
-        update_on_change = true, -- default: true,
-        update_on_change_command = 'e .', -- default: "e .",
-        clearjumps_on_change = true, -- default: true,
-        autopush = false, -- default: false,
+    init = function()
+      au.define_user_autocmd({
+        pattern = 'GitSignsUpdate',
+        once = true,
+        group = 'load_gitconflict',
+        callback = function()
+          require('userlib.runtime.utils').load_plugins('git-conflict.nvim')
+        end,
       })
-
-      -- ╭──────────────────────────────────────────────────────────╮
-      -- │ Keymappings                                              │
-      -- ╰──────────────────────────────────────────────────────────╯
-      -- <Enter> - switches to that worktree
-      -- <c-d> - deletes that worktree
-      -- <c-f> - toggles forcing of the next deletion
-      -- keymap("n", "<Leader>gww", "<CMD>lua require('telescope').extensions.git_worktree.git_worktrees()<CR>", silent)
-
-      -- First a telescope git branch window will appear.
-      -- Presing enter will choose the selected branch for the branch name.
-      -- If no branch is selected, then the prompt will be used as the branch name.
-
-      -- After the git branch window,
-      -- a prompt will be presented to enter the path name to write the worktree to.
-
-      -- As of now you can not specify the upstream in the telescope create workflow,
-      -- however if it finds a branch of the same name in the origin it will use it
-      -- keymap("n", "<Leader>gwc", "<CMD>lua require('telescope').extensions.git_worktree.create_git_worktree()<CR>", silent)
-
-      -- ╭──────────────────────────────────────────────────────────╮
-      -- │ Hooks                                                    │
-      -- ╰──────────────────────────────────────────────────────────╯
-      -- op = Operations.Switch, Operations.Create, Operations.Delete
-      -- metadata = table of useful values (structure dependent on op)
-      --      Switch
-      --          path = path you switched to
-      --          prev_path = previous worktree path
-      --      Create
-      --          path = path where worktree created
-      --          branch = branch name
-      --          upstream = upstream remote name
-      --      Delete
-      --          path = path where worktree deleted
-
-      worktree.on_tree_change(function(op, metadata)
-        if op == worktree.Operations.Switch then
-          utils.log('Switched from ' .. metadata.prev_path .. ' to ' .. metadata.path, 'Git Worktree')
-          au.fire_event(au.events.doBufferCloseAllButCurrent)
-          vim.cmd('e')
-        end
-      end)
     end,
   },
 
@@ -291,8 +236,8 @@ plug({
           untracked = { hl = 'GitSignsAddNr', text = '┃', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
         },
         signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
-        numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
-        linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
+        numhl = false,     -- Toggle with `:Gitsigns toggle_numhl`
+        linehl = false,    -- Toggle with `:Gitsigns toggle_linehl`
         word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
         watch_gitdir = {
           interval = 1000,

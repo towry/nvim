@@ -347,8 +347,6 @@ plug({
   dependencies = {
     { 'nvim-lua/popup.nvim' },
     { 'nvim-lua/plenary.nvim' },
-    { 'ThePrimeagen/git-worktree.nvim' },
-    -- { 'echasnovski/mini.fuzzy' },
     { 'nvim-telescope/telescope-live-grep-args.nvim' },
     {
       'nvim-telescope/telescope-fzf-native.nvim',
@@ -370,7 +368,6 @@ plug({
     require('telescope').setup(opts)
     require('telescope').load_extension('fzf')
     require('telescope').load_extension('live_grep_args')
-    require('telescope').load_extension('git_worktree')
     require('telescope').load_extension('termfinder')
     require("telescope").load_extension('zoxide')
     --- https://github.com/nvim-telescope/telescope-file-browser.nvim

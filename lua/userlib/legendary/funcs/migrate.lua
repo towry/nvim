@@ -29,15 +29,6 @@ return {
     function() require('notify').dismiss() end,
     description = 'Dismiss notifications',
   },
-  -- git worktree
-  {
-    function() require('telescope').extensions.git_worktree.git_worktrees() end,
-    description = 'Git worktrees',
-  },
-  {
-    function() require('telescope').extensions.git_worktree.create_git_worktree() end,
-    description = 'Git create worktree',
-  },
   -- toggle light mode.
   {
     function() Ty.ToggleTheme() end,

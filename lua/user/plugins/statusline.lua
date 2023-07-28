@@ -7,9 +7,10 @@ local tabs_component = {
   'tabs',
   max_length = vim.o.columns / 3,
   mode = 0,
-  use_mode_colors = true,
+  use_mode_colors = false,
   tabs_color = {
-    active = { fg = 'lualine_a_insert' }
+    active = { fg = 'grey', gui = 'italic,bold' },
+    inactive = 'lualine_c_normal',
   }
 }
 
@@ -52,6 +53,8 @@ plug({
             'branch',
             icon = git_branch_icon,
           },
+        },
+        lualine_c = {
           tabs_component,
         }
       },
@@ -98,8 +101,8 @@ plug({
         globalstatus = true,
         -- component_separators = '│',
         component_separators = '',
-        -- section_separators = { left = '', right = '' },
-        section_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
+        -- section_separators = { left = '', right = '' },
         disabled_filetypes = { winbar = vim.cfg.misc__ft_exclude, statusline = { 'dashboard', 'lazy', 'alpha' } },
       },
       winbar = {
@@ -111,7 +114,8 @@ plug({
             icon = ''
           },
           {
-            separator = { right = '', left = '' },
+            --section_separators = { left = '', right = '' },
+            separator = { right = '', left = '' },
             left_padding = 2,
             'filename',
             path = 1,
@@ -154,7 +158,8 @@ plug({
             icon = ''
           },
           {
-            separator = { left = '', right = '' },
+            -- section_separators = { left = '', right = '' },
+            separator = { left = '', right = '' },
             left_padding = 2,
             'filename',
             path = 1,
