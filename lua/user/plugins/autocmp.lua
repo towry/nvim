@@ -311,10 +311,12 @@ pack.plug({
         },
         window = {
           completion = cmp.config.window.bordered({
-            winhighlight = 'CursorLine:CmpCompletionSel,NormalFloat:NormalFloat,FloatBorder:FloatBorder',
+            border = vim.cfg.ui__float_border,
+            winhighlight = 'CursorLine:CursorLine,NormalFloat:NormalFloat,FloatBorder:NormalFloat',
           }),
           documentation = cmp.config.window.bordered({
-            winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
+            winhighlight = 'NormalFloat:NormalFloat,FloatBorder:NormalFloat',
+            border = vim.cfg.ui__float_border,
           }),
         },
         experimental = {
