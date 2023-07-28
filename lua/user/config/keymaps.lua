@@ -184,8 +184,8 @@ local function setup_basic()
   set('n', '<leader>b[', cmd_modcall('userlib.runtime.buffer', 'prev_unsaved_buf()'), {
     desc = 'Next unsaved buffer'
   })
-  set('n', '<leader>bu', [[:earlier 1f<cr>]], {
-    desc = 'Discard buffer changes'
+  set('n', '<leader>be', [[:earlier 1f<cr>]], {
+    desc = 'Most earlier buffer changes'
   })
   set('n', '<leader>bd', function()
     -- TODO: select next buffer.
