@@ -3,6 +3,17 @@ local utils = require('userlib.runtime.utils')
 local au = require('userlib.runtime.au')
 local git_branch_icon = " "
 
+local git_status_source = function()
+  local gitsigns = vim.b.gitsigns_status_dict
+  if gitsigns then
+    return {
+      added = gitsigns.added,
+      modified = gitsigns.changed,
+      removed = gitsigns.removed
+    }
+  end
+end
+
 local tabs_nrto_icons = {
   ['1'] = '❶ ',
   ['2'] = '❷ ',
@@ -18,7 +29,7 @@ local tabs_nrto_icons = {
 local tabs_component = {
   'tabs',
   max_length = vim.o.columns / 3,
-  mode = 0,
+  mode = 1,
   use_mode_colors = false,
   tabs_color = {
     active = { fg = 'grey', gui = 'italic,bold' },
@@ -165,6 +176,13 @@ plug({
             }
           },
         },
+        lualine_c = {
+          { 'diagnostics', update_in_insert = false, symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' } },
+          {
+            'diff',
+            source = git_status_source
+          },
+        },
         lualine_z = {}
       },
       inactive_winbar = {
@@ -233,21 +251,6 @@ plug({
             },
           },
           tabs_component,
-          function()
-            if not vim.b.gitsigns_head or vim.b.gitsigns_git_status or vim.o.columns < 120 then
-              return ""
-            end
-
-            local git_status = vim.b.gitsigns_status_dict
-
-            local added = (git_status.added and git_status.added ~= 0) and ("+" .. git_status.added) or ""
-            local changed = (git_status.changed and git_status.changed ~= 0) and ("~" .. git_status.changed) or ""
-            local removed = (git_status.removed and git_status.removed ~= 0) and ("-" .. git_status.removed) or ""
-
-            return (added .. changed .. removed) ~= "" and (added .. changed .. removed) or ""
-          end,
-          -- 'diff',
-          { 'diagnostics', update_in_insert = false, symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' } },
         },
         lualine_x = {
           -- copilot status

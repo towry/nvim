@@ -84,7 +84,7 @@ pack.plug({
       floating = {
         max_height = nil, -- These can be integers or a float between 0 and 1.
         max_width = nil, -- Floats will be treated as percentage of your screen.
-        border = 'rounded', -- Border style. Can be "single", "double" or "rounded"
+        border = 'single', -- Border style. Can be "single", "double" or "rounded"
         mappings = {
           close = { 'q', '<Esc>' },
         },
@@ -282,7 +282,7 @@ pack.plug({
         enabled = true,
       },
       floating = {
-        border = 'rounded',
+        border = 'single',
         max_height = 0.6,
         max_width = 0.6,
       },
