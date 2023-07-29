@@ -39,6 +39,7 @@ plug({
     {
       'pze/lualine-copilot',
       dev = false,
+      enabled = false,
     },
   },
   event = { 'User LazyUIEnterOncePost', 'User OnLeaveDashboard' },
@@ -251,9 +252,9 @@ plug({
         lualine_x = {
           -- copilot status
           -- require('copilot_status').status_string,
-          {
-            'copilot',
-          },
+          -- {
+          --   'copilot',
+          -- },
           {
             terms,
           },
@@ -331,7 +332,7 @@ plug({
             sign = { namespace = { '.*' }, maxwidth = 2, colwidth = 3, auto = true },
           },
           { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
-          { text = { builtin.foldfunc, '' },  click = 'v:lua.ScFa' },
+          { text = { builtin.foldfunc, '' }, click = 'v:lua.ScFa' },
           {
             sign = { name = { 'Diagnostic' }, maxwidth = 1, auto = false },
             click = 'v:lua.ScSa',
