@@ -478,7 +478,7 @@ pack.plug({
       }
     },
     opts = {
-      config_path = '~/.codeium/config.json'
+      -- config_path = '~/.codeium/config.json'
     },
     init = function()
       --- https://github.com/jcdickinson/codeium.nvim/pull/74/files
