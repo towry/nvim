@@ -125,7 +125,7 @@ plug({
   keys = {
     { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
-    { '<D-o>',      '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<D-o>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
   cmd = { 'SymbolsOutline', 'SymbolsOutlineOpen', 'SymbolsOutlineClose' },
   opts = {
@@ -289,6 +289,7 @@ plug({
           previewer = false,
           depth = 3,
           cwd = vim.cfg.runtime__starts_cwd,
+          borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
         }))
       end,
       desc =

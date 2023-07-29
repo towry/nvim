@@ -83,7 +83,7 @@ M.project_files = function(opts)
       local icon, iconhl = utils.get_devicons(tail_raw)
 
       return displayer({
-        { icon,            iconhl },
+        { icon, iconhl },
         tail,
         { path_to_display, 'TelescopeResultsComment' },
       })
@@ -182,12 +182,8 @@ function M.curbuf()
     winblend = 10,
     previewer = true,
     shorten_path = false,
-    borderchars = {
-      prompt = { '─', '│', ' ', '│', '╭', '╮', '│', '│' },
-      results = { '─', '│', '─', '│', '├', '┤', '╯', '╰' },
-      preview = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
-    },
-    border = {},
+    borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
+    border = true,
     layout_config = {
       width = 0.55,
     },
@@ -226,6 +222,7 @@ function M.buffers_or_recent()
       cwd = vim.cfg.runtime__starts_cwd,
       oldfiles = true,
       previewer = false,
+      borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
     }))
     return
   end
@@ -239,6 +236,7 @@ function M.buffers()
   local Buffer = require('userlib.runtime.buffer')
 
   builtin.buffers(require('telescope.themes').get_dropdown({
+    borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
     ignore_current_buffer = true,
     sort_mru = true,
     -- layout_strategy = 'vertical',
@@ -321,9 +319,9 @@ function M.gen_from_buffer(opts)
     })
 
     return displayer({
-      { entry.bufnr,     'TelescopeResultsNumber' },
+      { entry.bufnr, 'TelescopeResultsNumber' },
       { entry.indicator, 'TelescopeResultsComment' },
-      { icon,            hl_group },
+      { icon, hl_group },
       bufname_tail,
       { path_to_display .. ':' .. entry.lnum, 'TelescopeResultsComment' },
     })
