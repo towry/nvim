@@ -100,8 +100,8 @@ pack.plug({
       local source_mapping = {
         npm = icons.terminal .. 'NPM',
         cmp_tabnine = icons.light,
-        codeium = icons.pie .. 'AI',
-        copilot = icons.copilot .. 'COP',
+        codeium = icons.copilot .. 'AI',
+        copilot = icons.copilot .. 'AI',
         nvim_lsp = icons.paragraph .. 'LSP',
         nvim_lsp_signature_help = icons.typeParameter .. 'ARG',
         buffer = icons.buffer .. 'BUF',
@@ -149,29 +149,46 @@ pack.plug({
           ['<C-f>'] = cmp.mapping(function(fallback)
             if vim.bo.buftype == 'prompt' then return fallback() end
             local entry = cmp.get_selected_entry()
+            local has_ai_suggestions = (vim.b._copilot and vim.b._copilot.suggestions ~= nil) or
+                (vim.b._codeium_completions and vim.b._codeium_completions.items ~= nil)
+            local has_ai_suggestion_text = function()
+              if vim.b._copilot and vim.b._copilot.suggestions ~= nil then
+                local suggestion = vim.b._copilot.suggestions[1]
+                if suggestion ~= nil then suggestion = suggestion.displayText end
+                return suggestion ~= nil
+              end
+
+              if vim.b._codeium_completions and vim.b._codeium_completions.items then
+                local index      = vim.b._codeium_completions.index or 0
+                local suggestion = vim.b._codeium_completions.items[index + 1] or {}
+                local parts      = suggestion.completionParts or {}
+                if type(parts) ~= 'table' then return false end
+                return #parts >= 1
+              end
+
+              return false
+            end
             -- copilot.vim
-            if not entry and vim.b._copilot and vim.b._copilot.suggestions ~= nil then
-              -- Make sure the suggestion exists and it does not start with whitespace
-              -- This is to prevent the user from accidentally selecting a suggestion
-              -- when trying to indent
-              local suggestion = vim.b._copilot.suggestions[1]
-              if suggestion ~= nil then suggestion = suggestion.displayText end
-              -- if suggestion == nil or (suggestion:find('^%s') ~= nil and suggestion:find('^\n') == nil) then
-              if suggestion == nil then
+            if not entry and has_ai_suggestions then
+              if not has_ai_suggestion_text() then
                 if cmp.visible() and has_words_before() then
                   cmp.confirm({ select = true })
                 else
                   fallback()
                 end
               else
-                vim.fn.feedkeys(vim.fn['copilot#Accept'](), '')
+                if vim.b._copilot then
+                  vim.fn.feedkeys(vim.fn['copilot#Accept'](), '')
+                elseif vim.b._codeium_completions then
+                  vim.fn.feedkeys(vim.fn['codeium#Accept'](), '')
+                end
               end
             elseif cmp.visible() and has_words_before() then
               cmp.confirm({ select = true })
             else
               fallback()
             end
-          end),                           -- invoke complete
+          end), -- invoke complete
           ['<C-s>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
           ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
           ['<C-e>'] = cmp.mapping({
@@ -261,13 +278,13 @@ pack.plug({
         },
         -- You should specify your *installed* sources.
         sources = {
-          { name = 'nvim_lsp',                priority = 50, max_item_count = 6 },
-          { name = "copilot",                 priority = 30, max_item_count = 4 },
-          -- { name = 'codeium', priority = 7,   },
+          { name = 'nvim_lsp', priority = 50, max_item_count = 6 },
+          -- { name = "copilot",                 priority = 30, max_item_count = 4 },
+          { name = 'codeium', priority = 7, max_item_count = 4 },
           { name = 'nvim_lsp_signature_help', priority = 40, max_item_count = 3 },
-          { name = 'npm',                     priority = 3 },
-          { name = 'cmp_tabnine',             priority = 6,  max_item_count = 3 },
-          { name = 'luasnip',                 priority = 6,  max_item_count = 2 },
+          { name = 'npm', priority = 3 },
+          { name = 'cmp_tabnine', priority = 6, max_item_count = 3 },
+          { name = 'luasnip', priority = 6, max_item_count = 2 },
           {
             name = 'buffer',
             priority = 6,
@@ -276,8 +293,8 @@ pack.plug({
             max_item_count = 5,
           },
           { name = 'nvim_lua', priority = 5, ft = 'lua' },
-          { name = 'path',     priority = 4 },
-          { name = 'calc',     priority = 3 },
+          { name = 'path', priority = 4 },
+          { name = 'calc', priority = 3 },
         },
         sorting = {
           comparators = {
@@ -311,10 +328,13 @@ pack.plug({
         },
         window = {
           completion = cmp.config.window.bordered({
-            winhighlight = 'CursorLine:CmpMenuSel,NormalFloat:NormalFloat,FloatBorder:FloatBorder',
+            border = vim.cfg.ui__float_border,
+            winhighlight = 'CursorLine:CursorLine,NormalFloat:NormalFloat,FloatBorder:NormalFloat',
+            winblend = 0,
           }),
           documentation = cmp.config.window.bordered({
-            winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
+            winhighlight = 'NormalFloat:NormalFloat,FloatBorder:NormalFloat',
+            border = vim.cfg.ui__float_border,
           }),
         },
         experimental = {
@@ -366,20 +386,6 @@ pack.plug({
       require('cmp-npm').setup({
         ignore = {},
         only_semantic_versions = true,
-      })
-
-      -- hls
-      local au = require('userlib.runtime.au')
-      au.register_event(au.events.AfterColorschemeChanged, {
-        name = 'update_cmp_hl',
-        immediate = true,
-        callback = function()
-          vim.api.nvim_set_hl(0, 'CmpMenuSel', {
-            bg = '#a7c080',
-            fg = '#ffffff',
-            bold = true,
-          })
-        end,
       })
     end,
   }
@@ -457,20 +463,82 @@ pack.plug({
 --- AI autocompletion tools.
 pack.plug({
   {
-    'pze/codeium.nvim',
+    -- 'pze/codeium.nvim',
+    "jcdickinson/codeium.nvim",
     cmd = 'Codeium',
     dev = false,
-    enabled = false,
+    event = { 'InsertEnter' },
+    enabled = true,
     dependencies = {
       'nvim-lua/plenary.nvim',
       'MunifTanjim/nui.nvim',
+      {
+        "jcdickinson/http.nvim",
+        build = "cargo build --workspace --release"
+      }
     },
-    config = true,
+    opts = {
+      -- config_path = '~/.codeium/config.json'
+    },
+    init = function()
+      --- https://github.com/jcdickinson/codeium.nvim/pull/74/files
+      if not vim.ui.inputsecret then
+        ---@param opts {on_submit:function,prompt:string}
+        vim.ui.inputsecret = function(opts)
+          opts = opts or {}
+          local callback = opts.on_submit
+          local prompt = opts.prompt or "Input "
+          local result = vim.fn.inputsecret(prompt)
+          if result then
+            callback(result)
+          else
+            callback(nil)
+          end
+        end
+      end
+    end,
+  },
+  {
+    --- have bug when behind proxy.
+    'Exafunction/codeium.vim',
+    event = { 'InsertEnter' },
+    cmd = { 'Codeium' },
+    enabled = false,
+    config = function()
+      local set = vim.keymap.set
+
+
+      set('i', '<M-]>', function()
+        return vim.fn['codeium#CycleCompletions'](1)
+      end, {
+        expr = true,
+      })
+      set('i', '<M-[>', function()
+        return vim.fn['codeium#CycleCompletions'](-1)
+      end, {
+        expr = true,
+      })
+      -- force trigger ai completion.
+      set('i', '<D-/>', function()
+        return vim.fn['codeium#Complete']()
+      end, {
+        expr = true,
+      })
+    end,
+    init = function()
+      vim.g.codeium_disable_bindings = 1
+      vim.g.codeium_no_map_tab = true
+      vim.g.codeium_filetypes = {
+        ['*'] = true,
+        ['TelescopePrompt'] = false,
+        ['TelescopeResults'] = false,
+      }
+    end,
   },
   {
     -- https://github.com/dermoumi/dotfiles/blob/418de1a521e4f4ac6dc0aa10e75ffb890b0cb908/nvim/lua/plugins/copilot.lua#L4
     'github/copilot.vim',
-    enabled = true,
+    enabled = false,
     event = { 'InsertEnter' },
     keys = {
       { '<C-/>', mode = 'i' },

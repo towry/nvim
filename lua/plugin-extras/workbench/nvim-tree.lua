@@ -25,7 +25,7 @@ plug({
   },
   config = function()
     local HEIGHT_RATIO = 0.8 -- You can change this
-    local WIDTH_RATIO = 0.5  -- You can change this too
+    local WIDTH_RATIO = 0.5 -- You can change this too
     local TREE_INIT_WIDTH = 40
 
 
@@ -199,7 +199,7 @@ plug({
               height = metrix.height,
               row = metrix.row,
               col = metrix.col,
-              border = 'rounded',
+              border = 'single',
               style = 'minimal',
             }
           end,

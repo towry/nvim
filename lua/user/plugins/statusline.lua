@@ -1,6 +1,48 @@
 local plug = require('userlib.runtime.pack').plug
 local utils = require('userlib.runtime.utils')
 local au = require('userlib.runtime.au')
+local git_branch_icon = " "
+
+local git_status_source = function()
+  local gitsigns = vim.b.gitsigns_status_dict
+  if gitsigns then
+    return {
+      added = gitsigns.added,
+      modified = gitsigns.changed,
+      removed = gitsigns.removed
+    }
+  end
+end
+
+local tabs_nrto_icons = {
+  ['1'] = '❶ ',
+  ['2'] = '❷ ',
+  ['3'] = '❸ ',
+  ['4'] = '❹ ',
+  ['5'] = '❺ ',
+  ['6'] = '❻ ',
+  ['7'] = '❼ ',
+  ['8'] = '❽ ',
+  ['9'] = '❾ ',
+  ['10'] = '❿ ',
+}
+local tabs_component = {
+  'tabs',
+  max_length = vim.o.columns / 3,
+  mode = 1,
+  use_mode_colors = false,
+  tabs_color = {
+    active = { fg = 'grey', gui = 'italic,bold' },
+    inactive = 'lualine_c_normal',
+  },
+  fmt = function(name, context)
+    local tabnr = context.tabnr
+    local icon = tabs_nrto_icons[tostring(tabnr)] or tabnr
+    return icon .. ''
+  end,
+}
+
+-- TODO: move cwd component to a module.
 
 plug({
   'nvim-lualine/lualine.nvim',
@@ -8,6 +50,7 @@ plug({
     {
       'pze/lualine-copilot',
       dev = false,
+      enabled = false,
     },
   },
   event = { 'User LazyUIEnterOncePost', 'User OnLeaveDashboard' },
@@ -29,7 +72,7 @@ plug({
         lualine_a = {
           {
             function()
-              return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
+              return vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
             end,
             icon = ' ',
           }
@@ -37,8 +80,11 @@ plug({
         lualine_b = {
           {
             'branch',
-            icon = ""
+            icon = git_branch_icon,
           },
+        },
+        lualine_c = {
+          tabs_component,
         }
       },
       winbar = {},
@@ -48,9 +94,18 @@ plug({
       winbar = {},
       sections = {
         lualine_a = {
-          function()
-            return ' ' .. vim.b.toggle_number
-          end
+          "mode",
+          {
+            function()
+              return vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
+            end,
+            icon = ' ',
+          }
+        },
+        lualine_x = {
+          {
+            terms,
+          },
         }
       },
       filetypes = { 'toggleterm' }
@@ -75,8 +130,8 @@ plug({
         globalstatus = true,
         -- component_separators = '│',
         component_separators = '',
-        -- section_separators = { left = '', right = '' },
-        section_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
+        -- section_separators = { left = '', right = '' },
         disabled_filetypes = { winbar = vim.cfg.misc__ft_exclude, statusline = { 'dashboard', 'lazy', 'alpha' } },
       },
       winbar = {
@@ -88,7 +143,8 @@ plug({
             icon = ''
           },
           {
-            separator = { right = '', left = '' },
+            --section_separators = { left = '', right = '' },
+            separator = { right = '', left = '' },
             left_padding = 2,
             'filename',
             path = 1,
@@ -120,6 +176,13 @@ plug({
             }
           },
         },
+        lualine_c = {
+          { 'diagnostics', update_in_insert = false, symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' } },
+          {
+            'diff',
+            source = git_status_source
+          },
+        },
         lualine_z = {}
       },
       inactive_winbar = {
@@ -131,7 +194,8 @@ plug({
             icon = ''
           },
           {
-            separator = { left = '', right = '' },
+            -- section_separators = { left = '', right = '' },
+            separator = { left = '', right = '' },
             left_padding = 2,
             'filename',
             path = 1,
@@ -148,6 +212,24 @@ plug({
         lualine_a = {
           { 'mode', fmt = function(str) return str:sub(1, 1) end },
           {
+            function()
+              return vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
+            end,
+            icon = ' ',
+          }
+        },
+        lualine_b = {
+          'searchcount',
+          {
+            'branch',
+            icon = git_branch_icon
+          },
+
+        },
+        -- filename is displayed by the incline.
+        lualine_c = {
+          -- TODO: move to component.
+          {
             -- separator = { left = '', },
             -- right_padding = 0,
             function()
@@ -158,7 +240,7 @@ plug({
               return #vim.fn.getbufinfo({ buflisted = 1 }) .. unsaved_count_text
             end,
             icon = {
-              ' ',
+              ' ',
               color = function()
                 if vim.b['has_modified_file'] then
                   return {
@@ -168,53 +250,16 @@ plug({
               end,
             },
           },
-          {
-            terms,
-          },
-          {
-            function()
-              return vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
-            end,
-            icon = ' ',
-          }
-        },
-        lualine_b = {
-          'searchcount',
-          {
-            'branch',
-            icon = ""
-          },
-
-        },
-        -- filename is displayed by the incline.
-        lualine_c = {
-          {
-            'tabs',
-            max_length = vim.o.columns / 3,
-            mode = 0,
-            use_mode_colors = true,
-          },
-          function()
-            if not vim.b.gitsigns_head or vim.b.gitsigns_git_status or vim.o.columns < 120 then
-              return ""
-            end
-
-            local git_status = vim.b.gitsigns_status_dict
-
-            local added = (git_status.added and git_status.added ~= 0) and ("+" .. git_status.added) or ""
-            local changed = (git_status.changed and git_status.changed ~= 0) and ("~" .. git_status.changed) or ""
-            local removed = (git_status.removed and git_status.removed ~= 0) and ("-" .. git_status.removed) or ""
-
-            return (added .. changed .. removed) ~= "" and (added .. changed .. removed) or ""
-          end,
-          -- 'diff',
-          { 'diagnostics', update_in_insert = false, symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' } },
+          tabs_component,
         },
         lualine_x = {
           -- copilot status
           -- require('copilot_status').status_string,
+          -- {
+          --   'copilot',
+          -- },
           {
-            'copilot',
+            terms,
           },
           {
             'encoding',
@@ -284,13 +329,17 @@ plug({
         setopt = true,
         segments = {
           {
-            sign = { name = { '.*' }, maxwidth = 2, colwidth = 2, auto = true },
+            sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 1, auto = false },
+            click = 'v:lua.ScSa',
           },
+          -- {
+          --   sign = { name = { '.*' }, maxwidth = 2, colwidth = 2, auto = true },
+          -- },
           {
             sign = { namespace = { '.*' }, maxwidth = 2, colwidth = 3, auto = true },
           },
           { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
-          { text = { builtin.foldfunc, '' },  click = 'v:lua.ScFa' },
+          { text = { builtin.foldfunc, '' }, click = 'v:lua.ScFa' },
           {
             sign = { name = { 'Diagnostic' }, maxwidth = 1, auto = false },
             click = 'v:lua.ScSa',
@@ -319,7 +368,7 @@ plug({
           },
         },
         render = function()
-          local path = vim.g.cwd_short or vim.cfg.runtime__starts_cwd_short
+          local path = vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
           local icon = ' '
           return {
             { icon },

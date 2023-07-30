@@ -61,7 +61,7 @@ pack.plug({
         start_in_insert = true,
         -- These are passed to nvim_open_win
         anchor = 'SW',
-        border = 'rounded',
+        border = 'single',
         -- 'editor' and 'win' will default to being centered
         relative = 'cursor',
         -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
@@ -112,7 +112,7 @@ pack.plug({
           size = nil,
           relative = 'cursor',
           border = {
-            style = 'rounded',
+            style = 'single',
             text = {
               top_align = 'right',
             },
@@ -128,7 +128,7 @@ pack.plug({
         builtin = {
           -- These are passed to nvim_open_win
           wnchor = 'SW',
-          border = 'rounded',
+          border = 'single',
           -- 'editor' and 'win' will default to being centered
           relative = 'cursor',
           win_options = {

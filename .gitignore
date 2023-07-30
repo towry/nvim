@@ -4,3 +4,4 @@ log.txt
 lua/settings_env.lua
 lua/user/plugins_bundle.lua
 *.log
+~

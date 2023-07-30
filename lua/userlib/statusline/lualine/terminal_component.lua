@@ -3,7 +3,7 @@ local terms_count = require('userlib.terminal').terms_count
 
 local default_options = {
   symbols = {
-    term = ' ',
+    term = ' ',
   }
 }
 

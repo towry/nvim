@@ -116,12 +116,14 @@ local function setup_basic()
   end, {
     silent = true,
     desc = 'Delete char and yank to register d',
+    noremap = true,
     expr = true,
   })
   set({ 'n', 'v' }, 'D', '"dD', {
     desc = 'Delete to end of line and yank to register d',
     silent = true,
     expr = true,
+    noremap = true,
   })
   --- do not cut on normal mode.
   set({ 'n', 'v' }, 'x', function()
@@ -132,6 +134,7 @@ local function setup_basic()
   end, {
     expr = true,
     silent = true,
+    noremap = true,
     desc = 'Cut chars and do not yank to register',
   })
   set({ 'n', 'v' }, 'X', function()
@@ -142,6 +145,7 @@ local function setup_basic()
   end, {
     expr = true,
     silent = true,
+    noremap = true,
     desc = 'Cut chars and do not yank to register',
   })
 
@@ -180,8 +184,8 @@ local function setup_basic()
   set('n', '<leader>b[', cmd_modcall('userlib.runtime.buffer', 'prev_unsaved_buf()'), {
     desc = 'Next unsaved buffer'
   })
-  set('n', '<leader>bu', [[:earlier 1f<cr>]], {
-    desc = 'Discard buffer changes'
+  set('n', '<leader>be', [[:earlier 1f<cr>]], {
+    desc = 'Most earlier buffer changes'
   })
   set('n', '<leader>bd', function()
     -- TODO: select next buffer.

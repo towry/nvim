@@ -4,7 +4,7 @@ local function custom_hover_handler(_, result)
     if result then
       local lines = vim.split(result.contents.value, '\n')
       local bufnr =
-          vim.lsp.util.open_floating_preview(lines, 'markdown', { border = 'rounded' })
+      vim.lsp.util.open_floating_preview(lines, 'markdown', { border = 'single' })
       require('colorizer').highlight_buffer(
         bufnr,
         nil,
@@ -19,10 +19,10 @@ local function custom_hover_handler(_, result)
 end
 
 local handlers = {
-  ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' }),
+  ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' }),
   ['textDocument/signatureHelp'] = vim.lsp.with(
     vim.lsp.handlers.signature_help,
-    { border = 'rounded' }
+    { border = 'single' }
   ),
 }
 

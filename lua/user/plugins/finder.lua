@@ -71,7 +71,7 @@ plug({
     use_default_keymaps = false,
     float = {
       padding = 3,
-      border = { "╔", "═", "╗", "║", "╝", "═", "╚", "║" },
+      border = vim.cfg.ui__float_border,
       win_options = {
         winblend = 0,
       }
@@ -112,9 +112,9 @@ plug({
       group = '_oil_change_cwd',
       pattern = 'oil:///*',
       callback = function(ctx)
-        vim.g.cwd = require('oil').get_current_dir()
-        vim.g.cwd_short = require('userlib.runtime.path').home_to_tilde(vim.g.cwd)
-        vim.cmd.lcd(vim.g.cwd)
+        vim.t.cwd = require('oil').get_current_dir()
+        vim.t.cwd_short = require('userlib.runtime.path').home_to_tilde(vim.t.cwd)
+        vim.cmd.tcd(vim.t.cwd)
       end,
     })
   end,
@@ -289,6 +289,7 @@ plug({
           previewer = false,
           depth = 3,
           cwd = vim.cfg.runtime__starts_cwd,
+          borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
         }))
       end,
       desc =
@@ -299,7 +300,7 @@ plug({
       function()
         --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
         require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
-          results_title = vim.g.cwd_short,
+          results_title = vim.t.cwd_short,
           files = false,
           use_fd = true,
           previewer = false,
@@ -319,7 +320,7 @@ plug({
           cwd = vim.cfg.runtime__starts_cwd,
         })
       end,
-      desc = 'Grep search in all'
+      desc = 'Grep search in all projects'
     },
     {
       '<leader>fg',
@@ -347,8 +348,6 @@ plug({
   dependencies = {
     { 'nvim-lua/popup.nvim' },
     { 'nvim-lua/plenary.nvim' },
-    { 'ThePrimeagen/git-worktree.nvim' },
-    -- { 'echasnovski/mini.fuzzy' },
     { 'nvim-telescope/telescope-live-grep-args.nvim' },
     {
       'nvim-telescope/telescope-fzf-native.nvim',
@@ -370,7 +369,6 @@ plug({
     require('telescope').setup(opts)
     require('telescope').load_extension('fzf')
     require('telescope').load_extension('live_grep_args')
-    require('telescope').load_extension('git_worktree')
     require('telescope').load_extension('termfinder')
     require("telescope").load_extension('zoxide')
     --- https://github.com/nvim-telescope/telescope-file-browser.nvim
@@ -407,9 +405,11 @@ plug({
 
     return {
       defaults = {
+        border = true,
+        borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
         wrap_results = false,
         --- give some opacity so we can see the window picker marks.
-        winblend = 18,
+        winblend = 0,
         cache_picker = {
           num_pickers = 5,
         },
@@ -493,6 +493,9 @@ plug({
       extensions = {
         ["ui-select"] = {
           require("telescope.themes").get_dropdown {
+            border = true,
+            -- not work.
+            borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
             -- even more opts
           }
         },

@@ -5,13 +5,7 @@ local au = require('userlib.runtime.au')
 local function default_lspconfig_ui_options()
   local present, win = pcall(require, 'lspconfig.ui.windows')
   if not present then return end
-
-  local _default_opts = win.default_opts
-  win.default_opts = function(options)
-    local opts = _default_opts(options)
-    opts.border = vim.cfg.ui__float_border
-    return opts
-  end
+  win.default_options.border = vim.cfg.ui__float_border
 end
 
 plug({
@@ -147,6 +141,32 @@ plug({
               },
               checkOnSave = {
                 command = "clippy",
+              },
+              inlayHints = {
+                bindingModeHints = { enable = true },
+                closureReturnTypeHints = { enable = true },
+                lifetimeElisionHints = { enable = true },
+                reborrowHints = { enable = true },
+              },
+              diagnostics = {
+                disabled = { 'inactive-code', 'unresolved-proc-macro' },
+              },
+              procMacro = { enable = true },
+              files = {
+                excludeDirs = {
+                  '.direnv',
+                  'target',
+                  'js',
+                  'node_modules',
+                  'assets',
+                  'ci',
+                  'data',
+                  'docs',
+                  'store-metadata',
+                  '.gitlab',
+                  '.vscode',
+                  '.git',
+                },
               },
               completion = {
                 postfix = {
