@@ -18,7 +18,7 @@ plug({
 })
 
 plug({
-  enabled = false,
+  enabled = true,
   'stevearc/oil.nvim',
   lazy = not vim.cfg.runtime__starts_in_buffer,
   opts = {
