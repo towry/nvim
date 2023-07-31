@@ -37,12 +37,15 @@ local tabs_component = {
   mode = 1,
   use_mode_colors = false,
   tabs_color = {
-    active = { fg = 'grey', gui = 'italic,bold' },
-    inactive = 'lualine_c_normal',
+    active = { gui = 'italic,bold' },
+    inactive = { fg = 'gray' },
   },
   fmt = function(name, context)
     local tabnr = context.tabnr
     local icon = tabs_nrto_icons[tostring(tabnr)] or tabnr
+    if context.last and context.tabId == 1 then
+      return ''
+    end
     return icon .. ''
   end,
 }
@@ -229,14 +232,16 @@ plug({
         lualine_c = {
           -- TODO: move to component.
           {
-            -- separator = { left = '', },
-            -- right_padding = 0,
             function()
               local unsaved_count = #Buffer.unsaved_list({ perf = true })
               local has_modified = unsaved_count > 0
               local unsaved_count_text = unsaved_count > 0 and (':' .. unsaved_count) or ''
               vim.b['has_modified_file'] = has_modified
-              return #vim.fn.getbufinfo({ buflisted = 1 }) .. unsaved_count_text
+              local listed_count = #vim.fn.getbufinfo({ buflisted = 1 })
+              if listed_count <= 1 and unsaved_count <= 0 then
+                return ''
+              end
+              return listed_count .. unsaved_count_text
             end,
             icon = {
               ' ',
