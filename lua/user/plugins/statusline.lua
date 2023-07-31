@@ -37,7 +37,7 @@ local tabs_component = {
   mode = 1,
   use_mode_colors = false,
   tabs_color = {
-    active = { gui = 'italic,bold' },
+    active = { fg = 'cyan', gui = 'italic,bold' },
     inactive = { fg = 'gray' },
   },
   fmt = function(name, context)
