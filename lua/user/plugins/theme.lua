@@ -24,6 +24,14 @@ plug({
         dragonBlack6 = "#3b464f",
         dragonBlue2 = "#7b96a3",
         winterBlue = "#223140",
+
+        --- https://coolors.co/f5f4f2-f8f7f6-f9f9f8-fafafa-f1f5f1-dee2de-d4d8d4-caceca-a2a6a3-212121
+        lotusWhite0 = "#fafafa",
+        lotusWhite1 = "#f8f7f6",
+        lotusWhite2 = "#f9f9f8",
+        lotusWhite3 = "#f5f4f2",
+        lotusWhite4 = "#edebe3",
+        lotusWhite5 = "#e9e6db",
       },
       theme = {
         all = {
