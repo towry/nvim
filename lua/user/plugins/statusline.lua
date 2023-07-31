@@ -72,7 +72,7 @@ plug({
 
     local spectre_extension    = {
       sections = {
-        lualine_a = { 'mode' },
+        lualine_a = { 'mode', tabs_component },
       },
       filetypes = { 'spectre_panel' },
     }
@@ -106,7 +106,10 @@ plug({
               return vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
             end,
             icon = ' ',
-          }
+          },
+        },
+        lualine_b = {
+          tabs_component,
         },
         lualine_x = {
           {
