@@ -85,15 +85,9 @@ M.open = function(cwd, buffer, pre_hook)
       {
         "w",
         _(function()
-          au.exec_useraucmd(au.user_autocmds.DoEnterDashboard)
+          require('userlib.runtime.utils').change_cwd(cwd, 'tcd')
           vim.schedule(function()
-            require('userlib.runtime.utils').change_cwd(cwd, 'tcd')
-
-            -- need to call this to refresh the git branch change etc.
-            require('lualine').refresh({
-              scope = 'window',
-              place = { 'statusline', 'winbar' },
-            })
+            au.exec_useraucmd(au.user_autocmds.DoEnterDashboard)
           end)
         end),
         {

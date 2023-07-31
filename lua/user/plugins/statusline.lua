@@ -14,6 +14,11 @@ local git_status_source = function()
   end
 end
 
+local git_branch = {
+  'FugitiveHead',
+  icon = git_branch_icon,
+}
+
 local tabs_nrto_icons = {
   ['1'] = '❶ ',
   ['2'] = '❷ ',
@@ -52,6 +57,7 @@ plug({
       dev = false,
       enabled = false,
     },
+    'tpope/vim-fugitive',
   },
   event = { 'User LazyUIEnterOncePost', 'User OnLeaveDashboard' },
   config = function()
@@ -78,10 +84,7 @@ plug({
           }
         },
         lualine_b = {
-          {
-            'branch',
-            icon = git_branch_icon,
-          },
+          git_branch,
         },
         lualine_c = {
           tabs_component,
@@ -220,11 +223,7 @@ plug({
         },
         lualine_b = {
           'searchcount',
-          {
-            'branch',
-            icon = git_branch_icon
-          },
-
+          git_branch,
         },
         -- filename is displayed by the incline.
         lualine_c = {
@@ -339,7 +338,7 @@ plug({
             sign = { namespace = { '.*' }, maxwidth = 2, colwidth = 3, auto = true },
           },
           { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
-          { text = { builtin.foldfunc, '' }, click = 'v:lua.ScFa' },
+          { text = { builtin.foldfunc, '' },  click = 'v:lua.ScFa' },
           {
             sign = { name = { 'Diagnostic' }, maxwidth = 1, auto = false },
             click = 'v:lua.ScSa',
