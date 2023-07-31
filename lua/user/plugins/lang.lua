@@ -6,7 +6,7 @@ plug({
     --- some issues
     --- https://github.com/nvim-treesitter/nvim-treesitter/issues/3970#issuecomment-1353836834
     --- https://github.com/nvim-treesitter/nvim-treesitter/issues/2014#issuecomment-970342040
-    --- `:echo echo nvim_get_runtime_file('*/python.so', v:true)`
+    --- `:echo nvim_get_runtime_file('*/python.so', v:true)`
     'nvim-treesitter/nvim-treesitter',
     build = function()
       if #vim.api.nvim_list_uis() == 0 then
