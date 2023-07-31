@@ -37,7 +37,7 @@ function M.init_edit()
   o.encoding = 'utf-8'                             --- The encoding displayed
   o.errorbells = false                             --- Disables sound effect for errors
   o.fileencoding = 'utf-8'                         --- The encoding written to file
-  o.incsearch = false                              --- Start searching before pressing enter
+  o.incsearch = true                               --- Start searching before pressing enter
   o.switchbuf = 'usetab'                           -- Use already opened buffers when switching
   o.diffopt:append { "algorithm:histogram", "indent-heuristic" }
   o.shellcmdflag = '-ic'                           --- Make shell alias works.
