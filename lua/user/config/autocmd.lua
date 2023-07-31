@@ -3,8 +3,32 @@ local au = require('userlib.runtime.au')
 local M = {}
 
 function M.load_on_startup()
+  -- taken from AstroNvim
   local definitions = {
-    -- taken from AstroNvim
+    {
+      { 'ExitPre' },
+      {
+        group = "_check_exit",
+        callback = function()
+          --- https://github.com/neovim/neovim/issues/17256
+          local tabs_count = #vim.api.nvim_list_tabpages()
+          local terms_count = require('userlib.terminal').terms_count()
+
+          if tabs_count >= 2 or terms_count >= 1 then
+            print(' ')
+            print('  Are you sure to quit vim ? press `c` to cancel.')
+            print(' ')
+            local is_true_modifed = vim.bo.modified
+            vim.cmd('set modified')
+            vim.defer_fn(function()
+              if not is_true_modifed then
+                vim.cmd('set nomodified')
+              end
+            end, 1)
+          end
+        end,
+      }
+    },
     -- Emit `User FileOpened` event, used by the plugins.
     {
       { "BufRead", "BufWinEnter", "BufNewFile" },
