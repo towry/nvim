@@ -8,6 +8,7 @@ function M.init_edit()
   o.clipboard = { 'unnamed', 'unnamedplus' } --- Copy-paste between vim and everything else
   o.expandtab = true                         --- Use spaces instead of tabs
   o.ignorecase = true                        --- Needed for smartcase
+  o.textwidth = 80
   o.shiftwidth = 2                           --- Change a number of space characeters inseted for indentation
   o.shiftround = true                        -- round indent.
   o.smartcase = true                         --- Uses case in search
