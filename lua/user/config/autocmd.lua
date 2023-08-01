@@ -10,7 +10,7 @@ function M.load_on_startup()
       {
         group = '_clear_fugitive_bufs',
         pattern = 'fugitive://*',
-        cmd = 'set bufhidden=delete'
+        command = 'set bufhidden=delete'
       }
     },
     {
