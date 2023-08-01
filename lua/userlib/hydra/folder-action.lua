@@ -99,7 +99,8 @@ M.open = function(cwd, buffer, pre_hook)
       {
         "<CR>",
         _(function()
-          require('mini.files').open(cwd)
+          require('oil').open(cwd)
+          -- require('mini.files').open(cwd)
         end),
         {
           private = true,
