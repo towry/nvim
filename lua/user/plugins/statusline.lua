@@ -388,7 +388,8 @@ plug({
 
   {
     'lewis6991/satellite.nvim',
-    enabled = vim.list_contains ~= nil,
+    -- enabled = vim.list_contains ~= nil,
+    enabled = false,
     version = '*',
     -- event = 'VeryLazy',
     cmd = { 'SatelliteEnable', 'SatelliteDisable', 'SatelliteRefresh' },

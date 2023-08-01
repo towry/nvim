@@ -94,7 +94,6 @@
   "promise-async": { "branch": "main", "commit": "e94f35161b8c5d4a4ca3b6ff93dd073eb9214c0e" },
   "range-highlight.nvim": { "branch": "master", "commit": "8b5e8ccb3460b2c3675f4639b9f54e64eaab36d9" },
   "rust-tools.nvim": { "branch": "master", "commit": "0cc8adab23117783a0292a0c8a2fbed1005dc645" },
-  "satellite.nvim": { "branch": "main", "commit": "34cdb017ebb239bdba5a5ac23c6307837b5e3b7e" },
   "smart-splits.nvim": { "branch": "master", "commit": "7aad6019dee974a01333523a5b8e122b7e7da454" },
   "sqlite.lua": { "branch": "master", "commit": "b7e28c8463254c46a8e61c52d27d6a2040492fc3" },
   "ssr.nvim": { "branch": "main", "commit": "e5768511518a397fa712f26389ba30d0404990de" },
