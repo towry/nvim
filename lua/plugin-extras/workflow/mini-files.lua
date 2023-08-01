@@ -1,7 +1,7 @@
 local plug = require('userlib.runtime.pack').plug
 
 return plug({
-  enabled = true,
+  enabled = false,
   "echasnovski/mini.files",
   lazy = not vim.cfg.runtime__starts_in_buffer,
   opts = {
