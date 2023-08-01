@@ -18,7 +18,7 @@ plug({
 })
 
 plug({
-  enabled = true,
+  enabled = false,
   'stevearc/oil.nvim',
   lazy = not vim.cfg.runtime__starts_in_buffer,
   opts = {
@@ -125,7 +125,7 @@ plug({
   keys = {
     { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
-    { '<D-o>',      '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<D-o>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
   cmd = { 'SymbolsOutline', 'SymbolsOutlineOpen', 'SymbolsOutlineClose' },
   opts = {

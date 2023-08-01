@@ -99,9 +99,9 @@ M.open = function(cwd, buffer, pre_hook)
       {
         "<CR>",
         _(function()
-          require('userlib.runtime.utils').change_cwd(cwd, 'tcd')
-          require('oil').open(cwd)
-          -- require('mini.files').open(cwd)
+          -- require('userlib.runtime.utils').change_cwd(cwd, 'tcd')
+          -- require('oil').open(cwd)
+          require('mini.files').open(cwd)
         end),
         {
           private = true,
