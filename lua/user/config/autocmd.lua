@@ -6,6 +6,14 @@ function M.load_on_startup()
   -- taken from AstroNvim
   local definitions = {
     {
+      { 'BufReadPost', },
+      {
+        group = '_clear_fugitive_bufs',
+        pattern = 'fugitive://*',
+        cmd = 'set bufhidden=delete'
+      }
+    },
+    {
       { 'ExitPre' },
       {
         group = "_check_exit",

@@ -209,6 +209,14 @@ local function setup_basic()
     desc = 'Make sure <C-q> do not insert weird chars',
     nowait = true,
   })
+
+  -- works with quickfix
+  set('n', '[q', ':cprev<cr>', {
+    desc = 'Jump to previous quickfix item',
+  })
+  set('n', ']q', ':cnext<cr>', {
+    desc = 'Jump to next quickfix item',
+  })
 end
 
 function M.setup()

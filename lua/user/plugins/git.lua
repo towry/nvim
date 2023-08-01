@@ -55,6 +55,7 @@ plug({
       'Grevert',
       'Grebase',
       'Gpedit',
+      'Gclog',
     },
     init = function()
       vim.api.nvim_create_autocmd('BufWinEnter', {
