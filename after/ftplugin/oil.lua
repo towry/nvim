@@ -9,3 +9,22 @@ set('n', '<S-q>', function()
 end, {
   desc = 'Close oil',
 })
+
+
+set('n', 's', function()
+  require('flash').jump({
+    search = {
+      mode = "search",
+      max_length = 0,
+      exclude = {
+        function(win)
+          return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= "oil"
+        end,
+      }
+    },
+    label = { after = { 0, 0 } },
+    pattern = "^"
+  })
+end, {
+  nowait = true,
+})
