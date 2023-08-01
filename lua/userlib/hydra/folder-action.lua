@@ -104,7 +104,7 @@ M.open = function(cwd, buffer, pre_hook)
         end),
         {
           private = true,
-          desc = 'MiniFiles',
+          desc = 'Browser',
           exit = true,
         }
       },
