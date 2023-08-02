@@ -303,14 +303,14 @@ plug({
         },
         lualine_y = { 'filesize' },
         lualine_z = {
-          { 'location', left_padding = 0 },
+          -- { 'location', left_padding = 0 },
         },
       },
       inactive_sections = {
         lualine_a = {},
         lualine_b = {},
         lualine_c = { '' },
-        lualine_x = { 'location' },
+        -- lualine_x = { 'location' },
         lualine_y = {},
         lualine_z = {},
       },
@@ -346,7 +346,7 @@ plug({
             sign = { namespace = { '.*' }, maxwidth = 2, colwidth = 3, auto = true },
           },
           { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
-          { text = { builtin.foldfunc, '' },  click = 'v:lua.ScFa' },
+          { text = { builtin.foldfunc, '' }, click = 'v:lua.ScFa' },
           {
             sign = { name = { 'Diagnostic' }, maxwidth = 1, auto = false },
             click = 'v:lua.ScSa',
