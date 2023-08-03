@@ -60,7 +60,13 @@ function M.format_code(bufnr, opts) require('userlib.lsp.fmt').format(bufnr, opt
 function M.open_code_action()
   local mode = vim.api.nvim_get_mode().mode
   if mode == 'v' then vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-U>', true, false, true)) end
-  vim.lsp.buf.code_action()
+  vim.lsp.buf.code_action({
+    context = {
+      only = {
+        "source",
+      }
+    }
+  })
 end
 
 function M.open_source_action()
