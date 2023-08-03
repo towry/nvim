@@ -125,7 +125,7 @@ plug({
   keys = {
     { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
-    { '<D-o>',      '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<D-o>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
   cmd = { 'SymbolsOutline', 'SymbolsOutlineOpen', 'SymbolsOutlineClose' },
   opts = {
@@ -423,6 +423,7 @@ plug({
           '--smart-case',
         },
         layout_config = {
+          prompt_position = "top",
           horizontal = {
             preview_cutoff = 120,
           },
@@ -523,7 +524,6 @@ plug({
           -- theme = "dropdown",
           -- layout_strategy = "bottom_pane",
           layout_config = {
-            prompt_position = "bottom",
             width = 0.9,
           },
           mappings = {
