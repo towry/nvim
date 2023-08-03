@@ -125,7 +125,7 @@ plug({
   keys = {
     { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
-    { '<D-o>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<D-o>',      '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
   cmd = { 'SymbolsOutline', 'SymbolsOutlineOpen', 'SymbolsOutlineClose' },
   opts = {
@@ -406,7 +406,7 @@ plug({
     return {
       defaults = {
         border = true,
-        borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+        borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
         wrap_results = false,
         --- give some opacity so we can see the window picker marks.
         winblend = 0,
@@ -494,8 +494,7 @@ plug({
         ["ui-select"] = {
           require("telescope.themes").get_dropdown {
             border = true,
-            -- not work.
-            borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+            borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default
             -- even more opts
           }
         },
