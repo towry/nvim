@@ -1,7 +1,7 @@
 local plug = require('userlib.runtime.pack').plug
 local utils = require('userlib.runtime.utils')
 local au = require('userlib.runtime.au')
-local git_branch_icon = ""
+local git_branch_icon = " "
 
 local git_status_source = function()
   local gitsigns = vim.b.gitsigns_status_dict
@@ -140,19 +140,12 @@ plug({
         -- component_separators = '│',
         component_separators = '',
         section_separators = { left = '', right = '' },
-        -- section_separators = { left = '', right = '' },
         disabled_filetypes = { winbar = vim.cfg.misc__ft_exclude, statusline = { 'dashboard', 'lazy', 'alpha' } },
       },
       winbar = {
         lualine_a = {
+          { 'filetype', colored = true, icon_only = true },
           {
-            function()
-              return vim.api.nvim_win_get_number(0)
-            end,
-            icon = ''
-          },
-          {
-            --section_separators = { left = '', right = '' },
             separator = { right = '', left = '' },
             left_padding = 2,
             'filename',
@@ -196,14 +189,8 @@ plug({
       },
       inactive_winbar = {
         lualine_a = {
+          { 'filetype', colored = true, icon_only = true },
           {
-            function()
-              return vim.api.nvim_win_get_number(0)
-            end,
-            icon = ''
-          },
-          {
-            -- section_separators = { left = '', right = '' },
             separator = { left = '', right = '' },
             left_padding = 2,
             'filename',
@@ -299,7 +286,6 @@ plug({
               return not vim.tbl_contains({ 'unix', 'mac' }, vim.bo.fileformat)
             end,
           },
-          { 'filetype', colored = true, icon_only = true },
         },
         lualine_y = { 'filesize' },
         lualine_z = {
