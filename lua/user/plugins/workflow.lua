@@ -161,6 +161,7 @@ plug({
   ----- grapple and portal
   {
     'cbochs/portal.nvim',
+    enabled = false,
     cmd = { 'Portal' },
     keys = {
 
@@ -478,5 +479,17 @@ plug({
     init = function()
       vim.g.harpoon_log_level = 'warn'
     end,
+  },
+  {
+    'kwkarlwang/bufjump.nvim',
+    keys = {
+      '<D-i>',
+      '<D-o>',
+    },
+    opts = {
+      forward = '<D-i>',
+      backward = '<D-o>',
+      on_success = nil,
+    }
   }
 })
