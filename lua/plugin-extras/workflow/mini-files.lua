@@ -18,8 +18,9 @@ return plug({
     mappings = {
       go_in_plus = '<CR>',
       go_in = '<Tab>',
-      go_out = '-',
-      go_out_plus = '',
+      go_out = '<BS>',
+      go_out_plus = '<S-BS>',
+      reset = '<C-r>',
     }
   },
   keys = {
