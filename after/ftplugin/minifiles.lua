@@ -60,6 +60,9 @@ key({ 'v' }, 'X', '"*X', {
 key('n', '-', function()
   MF.go_out()
 end, keyopts)
+key('n', 'f', function()
+  MF.go_in()
+end, keyopts)
 
 key('n', '_', function()
   local lcwd = vim.cfg.mf_tabpage_cwd_paths[tabpage]

@@ -15,6 +15,7 @@ plug({
     globalStatus = true,
     colors = {
       palette = {
+        crystalBlue = "#a7d8de",
         -- dragonBlack0 = "#191f24",
         -- dragonBlack1 = "#1c2228",
         -- dragonBlack2 = "#192024",
