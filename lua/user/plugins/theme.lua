@@ -19,7 +19,10 @@ plug({
         MiniFilesTitleFocused = { fg = colors.palette.lotusWhite3, bg = colors.palette.waveRed, bold = true },
         MiniFilesBorderModified = {
           fg = colors.palette.samuraiRed,
-        }
+        },
+        --- window picker
+        WindowPickerStatusLine = { bg = colors.theme.syn.fun, fg = colors.theme.ui.bg_m3 },
+        WindowPickerStatusLineNC = { bg = colors.theme.syn.fun, fg = colors.theme.ui.bg_m3 },
       }
     end,
     colors = {

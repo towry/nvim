@@ -409,7 +409,7 @@ plug({
         borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
         wrap_results = false,
         --- give some opacity so we can see the window picker marks.
-        winblend = 0,
+        winblend = 10,
         cache_picker = {
           num_pickers = 5,
         },
