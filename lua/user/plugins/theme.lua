@@ -15,15 +15,15 @@ plug({
     globalStatus = true,
     colors = {
       palette = {
-        dragonBlack0 = "#191f24",
-        dragonBlack1 = "#1c2228",
-        dragonBlack2 = "#192024",
-        dragonBlack3 = "#1c2428",
-        dragonBlack4 = "#232c30",
-        dragonBlack5 = "#2b353b",
-        dragonBlack6 = "#3b464f",
-        dragonBlue2 = "#7b96a3",
-        winterBlue = "#223140",
+        -- dragonBlack0 = "#191f24",
+        -- dragonBlack1 = "#1c2228",
+        -- dragonBlack2 = "#192024",
+        -- dragonBlack3 = "#1c2428",
+        -- dragonBlack4 = "#232c30",
+        -- dragonBlack5 = "#2b353b",
+        -- dragonBlack6 = "#3b464f",
+        -- dragonBlue2 = "#7b96a3",
+        -- winterBlue = "#223140",
 
         --- https://coolors.co/f5f4f2-f8f7f6-f9f9f8-fafafa-f1f5f1-dee2de-d4d8d4-caceca-a2a6a3-212121
         -- lotusWhite0 = "#e6eaed",

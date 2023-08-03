@@ -1,6 +1,6 @@
 local user_cfg = {
-  ui__theme_name = "neobones",
-  workbench__lualine_theme = 'neobones',
+  ui__theme_name = "kanagawa",
+  workbench__lualine_theme = 'kanagawa',
   --- treesitter
   lang__treesitter_plugin_rainbow = false,
 }

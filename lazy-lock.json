@@ -35,6 +35,7 @@
   "http.nvim": { "branch": "main", "commit": "a2b51f2f8345279f3bf017974a56fa494c560745" },
   "hydra.nvim": { "branch": "master", "commit": "3ced42c0b6a6c85583ff0f221635a7f4c1ab0dd0" },
   "jump-tag": { "branch": "main", "commit": "b323cf42472d774f4e3564398d9a502254776de1" },
+  "kanagawa.nvim": { "branch": "master", "commit": "1749cea392acb7d1548a946fcee1e6f1304cd3cb" },
   "lazy.nvim": { "branch": "main", "commit": "dac844ed617dda4f9ec85eb88e9629ad2add5e05" },
   "lazygit.nvim": { "branch": "main", "commit": "1578fa3db0a707393d690a2357e7de6a47081ce0" },
   "legendary.nvim": { "branch": "master", "commit": "3db15cae08d63bab40d0c38474e368f97414f090" },
