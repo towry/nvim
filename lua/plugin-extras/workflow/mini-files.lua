@@ -17,10 +17,10 @@ return plug({
       use_as_default_explorer = true,
     },
     mappings = {
-      go_in_plus = '<CR>',
-      go_in = '<Tab>',
-      go_out = '<BS>',
-      go_out_plus = '<S-BS>',
+      go_in_plus = '',
+      go_in = 'f',
+      go_out = 'F',
+      go_out_plus = '',
       reset = '<C-r>',
     }
   },
@@ -68,10 +68,14 @@ return plug({
   config = function(_, opts)
     local MF = require('mini.files')
     MF.setup(opts)
-    -- au.define_user_autocmd({
-    --   pattern = 'MiniFilesWindowUpdate',
-    --   callback = function(args) vim.wo[args.data.win_id].relativenumber = true end,
-    -- })
+    au.define_user_autocmd({
+      pattern = 'MiniFilesWindowOpen',
+      callback = function(args)
+        local win_id = args.data.win_id;
+        vim.wo[win_id].relativenumber = true
+        vim.wo[win_id].winblend = 30
+      end,
+    })
     vim.cmd('hi! link MiniFilesBorder NormalFloat')
   end,
 })

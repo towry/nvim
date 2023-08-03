@@ -58,13 +58,6 @@ key({ 'v' }, 'X', '"*X', {
 -- x in normal is yanked to register x.
 
 key('n', '-', function()
-  MF.go_out()
-end, keyopts)
-key('n', 'f', function()
-  MF.go_in()
-end, keyopts)
-
-key('n', '_', function()
   local lcwd = vim.cfg.mf_tabpage_cwd_paths[tabpage]
   if lcwd ~= nil then
     MF.open(lcwd)
@@ -107,6 +100,24 @@ key('n', 's', function()
     label = { after = { 0, 0 } },
     pattern = "^"
   })
+end, keyopts)
+
+key('n', '<CR>', function()
+  local fsentry = MF.get_fs_entry()
+  if fsentry.fs_type ~= 'file' then
+    MF.go_in()
+    return
+  end
+  local win_pick = require('window-picker')
+  local win_picked = win_pick.pick_window({
+    autoselect_one = true,
+    -- hint = 'floating-big-letter',
+    include_current_win = false,
+  })
+  if not win_picked then return end
+  MF.set_target_window(win_picked)
+  MF.go_in()
+  MF.close()
 end, keyopts)
 
 ---- open in split.
