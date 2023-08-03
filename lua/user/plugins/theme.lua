@@ -13,6 +13,15 @@ plug({
     typeStyle = { bold = true },
     variablebuiltinStyle = { italic = true },
     globalStatus = true,
+    overrides = function(colors)
+      return {
+        --- mini files.
+        MiniFilesTitleFocused = { fg = colors.palette.lotusWhite3, bg = colors.palette.waveRed, bold = true },
+        MiniFilesBorderModified = {
+          fg = colors.palette.samuraiRed,
+        }
+      }
+    end,
     colors = {
       palette = {
         crystalBlue = "#a7d8de",
