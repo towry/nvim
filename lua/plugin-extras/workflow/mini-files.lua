@@ -1,4 +1,5 @@
 local plug = require('userlib.runtime.pack').plug
+local au = require('userlib.runtime.au')
 
 return plug({
   enabled = true,
@@ -65,11 +66,12 @@ return plug({
     },
   },
   config = function(_, opts)
-    require('mini.files').setup(opts)
-    vim.api.nvim_create_autocmd('User', {
-      pattern = 'MiniFilesWindowUpdate',
-      callback = function(args) vim.wo[args.data.win_id].relativenumber = true end,
-    })
+    local MF = require('mini.files')
+    MF.setup(opts)
+    -- au.define_user_autocmd({
+    --   pattern = 'MiniFilesWindowUpdate',
+    --   callback = function(args) vim.wo[args.data.win_id].relativenumber = true end,
+    -- })
     vim.cmd('hi! link MiniFilesBorder NormalFloat')
   end,
 })
