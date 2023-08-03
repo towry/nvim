@@ -26,12 +26,12 @@ plug({
         winterBlue = "#223140",
 
         --- https://coolors.co/f5f4f2-f8f7f6-f9f9f8-fafafa-f1f5f1-dee2de-d4d8d4-caceca-a2a6a3-212121
-        lotusWhite0 = "#ebedf2",
-        lotusWhite1 = "#f8f7f6",
-        lotusWhite2 = "#f9f9f8",
-        lotusWhite3 = "#f5f4f2",
-        lotusWhite4 = "#edebe3",
-        lotusWhite5 = "#e9e6db",
+        -- lotusWhite0 = "#e6eaed",
+        -- lotusWhite1 = "#e4e6eb",
+        -- lotusWhite2 = "##f0f2f5",
+        -- lotusWhite3 = "#ffffff",
+        -- lotusWhite4 = "#e6eaed",
+        -- lotusWhite5 = "#f6f8fa",
       },
       theme = {
         all = {
@@ -47,4 +47,21 @@ plug({
       light = "lotus",
     },
   },
+})
+
+plug({
+  'mcchrish/zenbones.nvim',
+  dependencies = {
+    'rktjmp/lush.nvim'
+  },
+  lazy = not string.match(vim.cfg.ui__theme_name, 'bones'),
+  priority = 1000,
+  config = false,
+  init = function()
+    vim.g.neobones = {
+      -- solid_line_nr = true,
+      darken_comments = 45,
+      solid_float_border = true,
+    }
+  end,
 })

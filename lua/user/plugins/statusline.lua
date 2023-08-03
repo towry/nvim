@@ -1,7 +1,7 @@
 local plug = require('userlib.runtime.pack').plug
 local utils = require('userlib.runtime.utils')
 local au = require('userlib.runtime.au')
-local git_branch_icon = " "
+local git_branch_icon = ""
 
 local git_status_source = function()
   local gitsigns = vim.b.gitsigns_status_dict
@@ -346,7 +346,7 @@ plug({
             sign = { namespace = { '.*' }, maxwidth = 2, colwidth = 3, auto = true },
           },
           { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
-          { text = { builtin.foldfunc, '' }, click = 'v:lua.ScFa' },
+          { text = { builtin.foldfunc, '' },  click = 'v:lua.ScFa' },
           {
             sign = { name = { 'Diagnostic' }, maxwidth = 1, auto = false },
             click = 'v:lua.ScSa',
