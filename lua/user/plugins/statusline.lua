@@ -2,6 +2,7 @@ local plug = require('userlib.runtime.pack').plug
 local utils = require('userlib.runtime.utils')
 local au = require('userlib.runtime.au')
 local git_branch_icon = " "
+local enable_lualine = true
 
 local git_status_source = function()
   local gitsigns = vim.b.gitsigns_status_dict
@@ -54,7 +55,7 @@ local tabs_component = {
 
 plug({
   'nvim-lualine/lualine.nvim',
-  enabled = false,
+  enabled = enable_lualine,
   dependencies = {
     {
       'pze/lualine-copilot',
@@ -307,6 +308,7 @@ plug({
 
 plug({
   'pze/stat.nvim',
+  enabled = not enable_lualine,
   event = { 'User LazyUIEnterOncePost', 'User OnLeaveDashboard' },
   config = function(_, opts)
     local Stat = require('stat')
