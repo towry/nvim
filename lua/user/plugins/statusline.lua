@@ -146,7 +146,6 @@ plug({
       },
       winbar = {
         lualine_a = {
-          { 'filetype', colored = true, icon_only = true },
           {
             separator = { right = '', left = '' },
             left_padding = 2,
@@ -265,6 +264,10 @@ plug({
           },
           {
             function()
+            end,
+          },
+          {
+            function()
               local icon = '  '
               if auto_format_disabled() then
                 icon = ' '
@@ -291,6 +294,7 @@ plug({
         },
         lualine_y = { 'filesize' },
         lualine_z = {
+          { 'filetype', colored = true, icon_only = true },
           -- { 'location', left_padding = 0 },
         },
       },

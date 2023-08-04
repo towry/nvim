@@ -125,7 +125,10 @@ pack.plug({
             bufs[vim.api.nvim_win_get_buf(win)] = true
           end
           --- alternative buf.
-          bufs[vim.fn.bufnr('#')] = true
+          local alter = vim.fn.bufnr('#')
+          if alter > 0 then
+            bufs[vim.fn.bufnr('#')] = true
+          end
           return vim.tbl_keys(bufs)
         end,
       }
