@@ -264,10 +264,6 @@ plug({
           },
           {
             function()
-            end,
-          },
-          {
-            function()
               local icon = '  '
               if auto_format_disabled() then
                 icon = ' '
@@ -294,7 +290,23 @@ plug({
         },
         lualine_y = { 'filesize' },
         lualine_z = {
-          { 'filetype', colored = true, icon_only = true },
+          {
+            'filetype',
+            colored = true,
+            icon_only = true,
+            color = function()
+              local function is_treesitter()
+                local bufnr = vim.api.nvim_get_current_buf()
+                return vim.treesitter.highlighter.active[bufnr] ~= nil
+              end
+              if is_treesitter() then
+                return
+              end
+              return {
+                bg = 'gray'
+              }
+            end
+          },
           -- { 'location', left_padding = 0 },
         },
       },
