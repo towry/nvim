@@ -290,7 +290,7 @@ pack.plug({
           { name = 'codeium',                 priority = 7,  max_item_count = 4 },
           { name = 'nvim_lsp_signature_help', priority = 40, max_item_count = 3 },
           { name = 'npm',                     priority = 3 },
-          { name = 'cmp_tabnine',             priority = 6,  max_item_count = 3 },
+          -- { name = 'cmp_tabnine',             priority = 6,  max_item_count = 3 },
           { name = 'luasnip',                 priority = 6,  max_item_count = 2 },
           {
             name = 'buffer',
