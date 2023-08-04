@@ -81,12 +81,12 @@ return plug({
       callback = function(args)
         local win_id = args.data.win_id;
         local curr_win_id = vim.api.nvim_get_current_win()
-        local is_focus = curr_win_id == win_id
-        if not is_focus then
+        local is_focus = (curr_win_id == win_id) and (not vim.wo[win_id].previewwindow)
+        if is_focus then
           vim.wo[win_id].winblend = 10
           vim.api.nvim_win_set_config(win_id, { border = 'double' })
         else
-          vim.wo[win_id].winblend = 40
+          vim.wo[win_id].winblend = 50
           vim.api.nvim_win_set_config(win_id, { border = 'single' })
         end
       end,
