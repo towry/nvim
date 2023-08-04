@@ -57,6 +57,9 @@ key({ 'v' }, 'X', '"*X', {
 })
 -- x in normal is yanked to register x.
 
+key('n', '<BS>', function()
+  MF.go_out()
+end)
 key('n', '-', function()
   local lcwd = vim.cfg.mf_tabpage_cwd_paths[tabpage]
   if lcwd ~= nil then
