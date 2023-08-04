@@ -94,16 +94,16 @@ function M.init_interface()
     o.splitkeep = 'screen'
     o.shortmess:append({ C = true })
   end
-  o.formatoptions:append {
-    r = true, -- Automatically insert comment leader after <Enter> in Insert mode.
-    o = true, -- Automatically insert comment leader after 'o' or 'O' in Normal mode.
-    l = true, -- Long lines are not broken in insert mode.
-    t = true, -- Do not auto wrap text
-    n = true, -- Recognise lists
-  }
-  -- o.formatoptions:remove('c')
-  -- o.formatoptions:remove('r')
-  -- o.formatoptions:remove('o')
+  -- o.formatoptions:append {
+  --   r = true, -- Automatically insert comment leader after <Enter> in Insert mode.
+  --   o = true, -- Automatically insert comment leader after 'o' or 'O' in Normal mode.
+  --   l = true, -- Long lines are not broken in insert mode.
+  --   t = true, -- Do not auto wrap text
+  --   n = true, -- Recognise lists
+  -- }
+  o.formatoptions:remove('c')
+  o.formatoptions:remove('r')
+  o.formatoptions:remove('o')
   if vim.fn.executable('rg') then
     -- credit: https://github.com/nicknisi/dotfiles/blob/1360edda1bbb39168637d0dff13dd12c2a23d095/config/nvim/init.lua#L73
     -- if ripgrep installed, use that as a grepper
