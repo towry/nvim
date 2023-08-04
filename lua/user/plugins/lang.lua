@@ -367,7 +367,7 @@ plug({
 
   {
     'vuki656/package-info.nvim',
-    enabled = true,
+    enabled = false,
     event = 'BufEnter package.json',
     init = function()
       au.define_autocmd({
