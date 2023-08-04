@@ -26,6 +26,7 @@ pack.plug({
   },
   {
     'hrsh7th/nvim-cmp',
+    commit = "2743dd989e9b932e1b4813a4927d7b84272a14e2",
     event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
       'hrsh7th/cmp-nvim-lsp-signature-help',
