@@ -125,7 +125,7 @@ plug({
   keys = {
     { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
-    { '<D-o>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<D-o>',      '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
   cmd = { 'SymbolsOutline', 'SymbolsOutlineOpen', 'SymbolsOutlineClose' },
   opts = {
@@ -450,13 +450,13 @@ plug({
         qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
         mappings = {
           i = {
+            --- used to move cursor forward.
+            ["<C-f>"] = false,
             ['<S-BS>'] = function()
               --- delete previous W
               if vim.fn.mode() == 'n' then return end
               vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>gEldEa', true, true, true), 'n', false)
             end,
-            -- ['<C-e>'] = function() vim.cmd('stopinsert') end,
-            -- ["<C-x>"] = false,
             ['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
             ['<C-s>'] = actions.cycle_previewers_next,
             ['<C-a>'] = actions.cycle_previewers_prev,
