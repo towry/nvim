@@ -54,6 +54,7 @@ local tabs_component = {
 
 plug({
   'nvim-lualine/lualine.nvim',
+  enabled = false,
   dependencies = {
     {
       'pze/lualine-copilot',
@@ -221,29 +222,29 @@ plug({
         -- filename is displayed by the incline.
         lualine_c = {
           -- TODO: move to component.
-          {
-            function()
-              local unsaved_count = #Buffer.unsaved_list({ perf = true })
-              local has_modified = unsaved_count > 0
-              local unsaved_count_text = unsaved_count > 0 and (':' .. unsaved_count) or ''
-              vim.b['has_modified_file'] = has_modified
-              local listed_count = #vim.fn.getbufinfo({ buflisted = 1 })
-              if listed_count <= 1 and unsaved_count <= 0 then
-                return ''
-              end
-              return listed_count .. unsaved_count_text
-            end,
-            icon = {
-              ' ',
-              color = function()
-                if vim.b['has_modified_file'] then
-                  return {
-                    fg = '#C20505',
-                  }
-                end
-              end,
-            },
-          },
+          -- {
+          --   function()
+          --     local unsaved_count = #Buffer.unsaved_list({ perf = true })
+          --     local has_modified = unsaved_count > 0
+          --     local unsaved_count_text = unsaved_count > 0 and (':' .. unsaved_count) or ''
+          --     vim.b['has_modified_file'] = has_modified
+          --     local listed_count = #vim.fn.getbufinfo({ buflisted = 1 })
+          --     if listed_count <= 1 and unsaved_count <= 0 then
+          --       return ''
+          --     end
+          --     return listed_count .. unsaved_count_text
+          --   end,
+          --   icon = {
+          --     ' ',
+          --     color = function()
+          --       if vim.b['has_modified_file'] then
+          --         return {
+          --           fg = '#C20505',
+          --         }
+          --       end
+          --     end,
+          --   },
+          -- },
           tabs_component,
         },
         lualine_x = {
@@ -301,6 +302,37 @@ plug({
         lualine_z = {},
       },
     })
+  end,
+})
+
+plug({
+  'pze/stat.nvim',
+  event = { 'User LazyUIEnterOncePost', 'User OnLeaveDashboard' },
+  config = function(_, opts)
+    local Stat = require('stat')
+    local ___ = Stat.___
+
+    Stat.setup(vim.tbl_extend("force", {
+      winbar = {},
+      statusline = {
+        Stat.mod.mode,
+        Stat.mod.filetype,
+        Stat.mod.git_diff,
+        ___,
+      },
+      theme = {
+        ["N"] = { fg = "#2d353b", bg = "#83c092" },
+        ["I"] = { fg = "#2d353b", bg = "#7fbbb3" },
+        ["V"] = { fg = "#2d353b", bg = "#dbbc7f" },
+        ["C"] = { fg = "#2d353b", bg = "#d699b6" },
+        ["T"] = { fg = "#2d353b", bg = "#a7c080" },
+        ["S"] = { fg = "#2d353b", bg = "#e67e80" },
+        ["File"] = { fg = "#d3c6aa", bg = "#343f44" },
+        ["Filetype"] = { fg = "#d3c6aa", bg = "#272e33" },
+        ["GitDiffDeletion"] = { fg = "#e67e80", bg = "#232a2e" },
+        ["GitDiffInsertion"] = { fg = "#a7c080", bg = "#232a2e" },
+      },
+    }, opts or {}))
   end,
 })
 
