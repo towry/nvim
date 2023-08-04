@@ -257,6 +257,14 @@ plug({
             terms,
           },
           {
+            function()
+              if vim.diagnostic.is_disabled() then
+                return 'Diag OFF';
+              end
+              return ''
+            end,
+          },
+          {
             'encoding',
             cond = function()
               return vim.opt.fileencoding and vim.opt.fileencoding:get() ~= 'utf-8'
@@ -288,8 +296,8 @@ plug({
             end,
           },
         },
-        lualine_y = { 'filesize' },
-        lualine_z = {
+        lualine_y = {
+          'filesize',
           {
             'filetype',
             colored = true,
@@ -307,6 +315,8 @@ plug({
               }
             end
           },
+        },
+        lualine_z = {
           -- { 'location', left_padding = 0 },
         },
       },

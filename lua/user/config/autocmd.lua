@@ -10,7 +10,28 @@ function M.load_on_startup()
       {
         group = '_clear_fugitive_bufs',
         pattern = 'fugitive://*',
-        command = 'set bufhidden=delete'
+        callback = function()
+          vim.cmd('set bufhidden=delete')
+        end,
+      }
+    },
+    {
+      { 'BufReadPost', },
+      {
+        group = '_disable_diagnostic_on_sth',
+        pattern = '*',
+        callback = function()
+          if vim.api.nvim_buf_line_count(0) > 40000 then
+            vim.diagnostic.disable()
+            return
+          end
+
+          vim.schedule(function()
+            if vim.wo.diff then
+              vim.diagnostic.disable()
+            end
+          end)
+        end,
       }
     },
     {

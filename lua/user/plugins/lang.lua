@@ -424,7 +424,8 @@ plug({
     },
     keys = {
       {
-        '[c', '<cmd>lua require("treesitter-context").go_to_context()<cr>', desc = 'Treesitter Context: Go to context'
+        '<leader>fc', '<cmd>lua require("treesitter-context").go_to_context()<cr>',
+        desc = 'Treesitter Context: Go to context'
       }
     },
     config = function(_, opts)
