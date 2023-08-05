@@ -1,12 +1,24 @@
 local keymap = require('userlib.runtime.keymap')
+local utils = require('userlib.runtime.utils')
 local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 
 local M = {}
 
+local xk = utils.utf8keys({
+  [ [[<C-'>]] ] = 0xAD,
+  [ [[<C-;>]] ] = 0xAB,
+})
 
 local function setup_basic()
-  set('i', "<C-'>", function()
+  -- <C-'> to pick register from insert mode.
+  set('i', xk [[<C-'>]], function()
     vim.cmd('stopinsert')
+    vim.fn.feedkeys(vim.api.nvim_replace_termcodes('"', true, false, true))
+  end, {
+    silent = true,
+    desc = 'Pick register from insert mode',
+  })
+  set('n', xk [[<C-'>]], function()
     vim.fn.feedkeys(vim.api.nvim_replace_termcodes('"', true, false, true))
   end, {
     silent = true,
@@ -21,7 +33,7 @@ local function setup_basic()
     noremap = true,
   })
   --- quickly go into cmd
-  set('n', '<C-;>', ':<C-u>', {
+  set('n', xk [[<C-;>]], ':<C-u>', {
     expr = false,
     noremap = true,
   })
@@ -43,20 +55,13 @@ local function setup_basic()
     desc = "Enter cmdline easily"
   })
   --- command line history.
-  set('c', '<C-;>', function()
+  set('c', xk [[<C-;>]], function()
     return [[lua require('userlib.telescope.pickers').command_history()<CR>]]
     --   return vim.api.nvim_replace_termcodes('<C-u><C-p>', true, false, true)
   end, {
     expr = true,
     noremap = false,
     desc = 'Previous command in cmdline',
-  })
-  set('c', '<C-/>', function()
-    return vim.api.nvim_replace_termcodes('<C-r>*', true, false, true)
-  end, {
-    expr = true,
-    noremap = false,
-    desc = 'Insert selection register into search',
   })
   ---///
   --- tab is mapped to buffers, since tab&<c-i> has same func, we
