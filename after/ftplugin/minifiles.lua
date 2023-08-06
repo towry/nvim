@@ -117,8 +117,9 @@ key('n', '<CR>', function()
     -- hint = 'floating-big-letter',
     include_current_win = false,
   })
-  if not win_picked then return end
-  MF.set_target_window(win_picked)
+  if win_picked then
+    MF.set_target_window(win_picked)
+  end
   MF.go_in()
   MF.close()
 end, keyopts)
