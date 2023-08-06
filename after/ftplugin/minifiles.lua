@@ -115,7 +115,7 @@ key('n', '<CR>', function()
   local win_picked = win_pick.pick_window({
     autoselect_one = true,
     -- hint = 'floating-big-letter',
-    include_current_win = false,
+    include_current_win = true,
   })
   if win_picked then
     MF.set_target_window(win_picked)
