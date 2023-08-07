@@ -4,9 +4,12 @@ local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 
 local M = {}
 
+--- only do this in tmux.
 local xk = utils.utf8keys({
+  [ [[<D-s>]] ] = 0xAA,
   [ [[<C-'>]] ] = 0xAD,
   [ [[<C-;>]] ] = 0xAB,
+  [ [[<C-i>]] ] = 0xAC,
 })
 
 local function setup_basic()
@@ -66,7 +69,7 @@ local function setup_basic()
   ---///
   --- tab is mapped to buffers, since tab&<c-i> has same func, we
   --- need to map <c-i> to its original func.
-  set('n', '<C-i>', '<C-i>', {
+  set('n', xk [[<C-i>]], '<C-i>', {
     noremap = true,
     expr = false,
   })
@@ -101,10 +104,10 @@ local function setup_basic()
     desc = 'Case change in visual mode'
   })
 
-  set({ 'n', 'i' }, '<D-S>', cmd('bufdo update'), {
-    desc = 'Save all files',
-  })
-  set({ 'n', 'i' }, '<D-s>', cmd('update'), {
+  -- set({ 'n', 'i' }, [[<D-s>]], cmd('bufdo update'), {
+  --   desc = 'Save all files',
+  -- })
+  set({ 'n', 'i' }, xk [[<D-s>]], cmd('update'), {
     desc = 'Save current buffer',
   })
   set('n', '<leader>bw', cmd('update'), {
