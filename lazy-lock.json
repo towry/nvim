@@ -93,7 +93,6 @@
   "smart-splits.nvim": { "branch": "master", "commit": "7aad6019dee974a01333523a5b8e122b7e7da454" },
   "sqlite.lua": { "branch": "master", "commit": "b7e28c8463254c46a8e61c52d27d6a2040492fc3" },
   "ssr.nvim": { "branch": "main", "commit": "e5768511518a397fa712f26389ba30d0404990de" },
-  "statuscol.nvim": { "branch": "main", "commit": "9f1ff2dcf614544c5022e876d83b4894c1944e87" },
   "stay-in-place.nvim": { "branch": "main", "commit": "0628b6db8970fc731abf9608d6f80659b58932c9" },
   "switch.vim": { "branch": "main", "commit": "6b6cfda7ba751617599fcf3a96c1694e7924255d" },
   "symbols-outline.nvim": { "branch": "master", "commit": "512791925d57a61c545bc303356e8a8f7869763c" },
