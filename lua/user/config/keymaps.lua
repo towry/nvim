@@ -10,7 +10,7 @@ local xk = utils.utf8keys({
   [ [[<C-'>]] ] = 0xAD,
   [ [[<C-;>]] ] = 0xAB,
   [ [[<C-i>]] ] = 0xAC,
-})
+}, true)
 
 local function setup_basic()
   -- <C-'> to pick register from insert mode.
