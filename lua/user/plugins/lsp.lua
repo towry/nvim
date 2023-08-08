@@ -106,9 +106,6 @@ plug({
     ft = 'lua'
   },
   {
-    'folke/neodev.nvim',
-  },
-  {
     'simrat39/rust-tools.nvim',
     dependencies = {
       'neovim/nvim-lspconfig',
