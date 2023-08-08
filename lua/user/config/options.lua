@@ -71,7 +71,7 @@ function M.init_interface()
   o.cursorline = true                                --- Highlight of current line
   o.emoji = true                                     --- Fix emoji display
   o.cursorlineopt = 'both'
-  o.foldcolumn = 'auto'                              -- Folding
+  o.foldcolumn = '1'                                 -- Folding
   o.list = true
   o.listchars:append('tab:⇢ ')
   -- o.listchars:append('eol:↲')
@@ -119,7 +119,8 @@ function M.init_folds()
     end
     vim.opt_local.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     vim.opt_local.foldmethod = 'expr'
-    vim.cmd.normal 'zx'
+    -- below will move cursor move
+    -- vim.cmd.normal 'zx'
   end
 
   vim.api.nvim_create_autocmd('FileType', {

@@ -288,7 +288,7 @@ pack.plug({
         sources = {
           { name = 'nvim_lsp',                priority = 50, max_item_count = 6 },
           -- { name = "copilot",                 priority = 30, max_item_count = 4 },
-          -- { name = 'codeium',                 priority = 7,  max_item_count = 4 },
+          { name = 'codeium',                 priority = 7,  max_item_count = 4 },
           { name = 'nvim_lsp_signature_help', priority = 40, max_item_count = 3 },
           { name = 'npm',                     priority = 3 },
           -- { name = 'cmp_tabnine',             priority = 6,  max_item_count = 3 },
@@ -414,7 +414,7 @@ pack.plug({
       disable_filetype = {
         'TelescopePrompt',
       },
-      -- ignored_next_char = "[%w%.{(\"']",
+      ignored_next_char = "[%w%.{(\"']",
       disable_in_macro = true,
       disable_in_replace_mode = true,
       enable_check_bracket_line = true,
@@ -479,7 +479,7 @@ pack.plug({
     cmd = 'Codeium',
     dev = false,
     event = { 'InsertEnter' },
-    enabled = false,
+    enabled = true,
     dependencies = {
       'nvim-lua/plenary.nvim',
       'MunifTanjim/nui.nvim',
