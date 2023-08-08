@@ -288,7 +288,7 @@ pack.plug({
         sources = {
           { name = 'nvim_lsp',                priority = 50, max_item_count = 6 },
           -- { name = "copilot",                 priority = 30, max_item_count = 4 },
-          { name = 'codeium',                 priority = 7,  max_item_count = 4 },
+          -- { name = 'codeium',                 priority = 7,  max_item_count = 4 },
           { name = 'nvim_lsp_signature_help', priority = 40, max_item_count = 3 },
           { name = 'npm',                     priority = 3 },
           -- { name = 'cmp_tabnine',             priority = 6,  max_item_count = 3 },
@@ -479,7 +479,7 @@ pack.plug({
     cmd = 'Codeium',
     dev = false,
     event = { 'InsertEnter' },
-    enabled = true,
+    enabled = false,
     dependencies = {
       'nvim-lua/plenary.nvim',
       'MunifTanjim/nui.nvim',
