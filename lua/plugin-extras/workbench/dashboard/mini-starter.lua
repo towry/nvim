@@ -59,9 +59,9 @@ return plug({
           end
           local bufnr = ctx.buf
           if not bufnr then return end
-          vim.keymap.set('n', '0', [[<cmd>lua MiniStarter.update_current_item('prev')<CR>]],
+          vim.keymap.set('n', ']', [[<cmd>lua MiniStarter.update_current_item('prev')<CR>]],
             { buffer = bufnr, nowait = true, silent = true })
-          vim.keymap.set('n', '9', [[<cmd>lua MiniStarter.update_current_item('next')<CR>]],
+          vim.keymap.set('n', '[', [[<cmd>lua MiniStarter.update_current_item('next')<CR>]],
             { buffer = bufnr, nowait = true, silent = true })
 
           au.define_autocmd({ 'VimResized', 'WinResized' }, {

@@ -36,6 +36,7 @@ plug({
     'tpope/vim-fugitive',
     keys = {
       { '<leader>gg', ":Git<cr>",               desc = "Fugitive Git" },
+      { '<leader>gG', ':tab Git<cr>',           desc = 'Fugitive Git in tab' },
       { '<leader>ga', cmdstr([[!git add %:p]]), desc = "!Git add current" },
       { '<leader>gA', cmdstr([[!git add .]]),   desc = "!Git add all" },
     },
