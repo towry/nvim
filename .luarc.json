@@ -1,9 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
   "workspace": {
-    "library": [
-      "/usr/local/share/nvim/runtime/lua",
-      "/Users/towry/.local/share/nvim/lazy/nvim-cmp/lua"
-    ]
+    "library": ["$VIMRUNTIME", "$HOME/.local/share/nvim/lazy/nvim-cmp/lua"]
   }
 }
