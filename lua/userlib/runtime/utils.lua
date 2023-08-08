@@ -302,10 +302,10 @@ end
 
 -- For each { k = v } in keys, return a table that when indexed by any k' such
 -- that tolower(k') == tolower(k) returns utf8(v)
-M.utf8keys = function(keys)
+M.utf8keys = function(keys, disable)
   local _keys = {}
   for k, v in pairs(keys) do
-    _keys[string.lower(k)] = M.utf8(v)
+    _keys[string.lower(k)] = disable and k or M.utf8(v)
   end
   return setmetatable(_keys, {
     __index = function(self, k)
