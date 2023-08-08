@@ -62,9 +62,14 @@ function M.setup_keybinding(client, buffer)
         desc = _('Organize Imports'),
       })
     )
-    set({ 'n', 'v' }, '<leader>ca', func_call("open_code_action()"),
+    set({ 'n', 'v' }, '<leader>ca', cmdstr(
+      [[lua vim.lsp.buf.code_action()]]
+    ), opts({
+      desc = _('Code Action'),
+    }))
+    set({ 'n', 'v' }, '<leader>cA', func_call("open_code_action()"),
       opts({
-        desc = _('Code Action'),
+        desc = _('Code Source Action'),
       }))
     set('n', '<D-.>', func_call("open_code_action()"),
       opts({
