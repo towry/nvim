@@ -307,6 +307,7 @@ plug({
                 local bufnr = vim.api.nvim_get_current_buf()
                 return vim.treesitter.highlighter.active[bufnr] ~= nil
               end
+
               if is_treesitter() then
                 return
               end
@@ -364,43 +365,7 @@ plug({
   end,
 })
 
-
 plug({
-  {
-    'luukvbaal/statuscol.nvim',
-    event = 'User LazyUIEnterOnce',
-    cond = function() return vim.fn.has('nvim-0.9.0') == 1 end,
-    config = function()
-      local statuscol = require('statuscol')
-      local builtin = require('statuscol.builtin')
-
-      statuscol.setup({
-        ft_ignore = vim.cfg.misc__ft_exclude,
-        buf_ignore = vim.cfg.misc__buf_exclude,
-        separator = '│',
-        relculright = true,
-        setopt = true,
-        segments = {
-          {
-            sign = { name = { 'GitSigns' }, maxwidth = 1, colwidth = 1, auto = false },
-            click = 'v:lua.ScSa',
-          },
-          -- {
-          --   sign = { name = { '.*' }, maxwidth = 2, colwidth = 2, auto = true },
-          -- },
-          {
-            sign = { namespace = { '.*' }, maxwidth = 2, colwidth = 3, auto = true },
-          },
-          { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
-          { text = { builtin.foldfunc, '' },  click = 'v:lua.ScFa' },
-          {
-            sign = { name = { 'Diagnostic' }, maxwidth = 1, auto = false },
-            click = 'v:lua.ScSa',
-          },
-        },
-      })
-    end,
-  },
   {
     'b0o/incline.nvim',
     event = { 'BufReadPost', 'BufNewFile', 'BufWinEnter' },
