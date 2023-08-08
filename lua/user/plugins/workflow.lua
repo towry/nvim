@@ -44,6 +44,10 @@ plug({
     },
     config = function(_, opts)
       require('windows').setup(opts)
+
+      if vim.cfg.runtime__starts_in_buffer and vim.wo.diff then
+        vim.cmd("WindowsEqualize")
+      end
     end,
     lazy = true,
     cmd = {
@@ -161,6 +165,7 @@ plug({
   ----- grapple and portal
   {
     'cbochs/portal.nvim',
+    enabled = false,
     cmd = { 'Portal' },
     keys = {
 
@@ -478,5 +483,17 @@ plug({
     init = function()
       vim.g.harpoon_log_level = 'warn'
     end,
+  },
+  {
+    'kwkarlwang/bufjump.nvim',
+    keys = {
+      '<D-i>',
+      '<D-o>',
+    },
+    opts = {
+      forward = '<D-i>',
+      backward = '<D-o>',
+      on_success = nil,
+    }
   }
 })

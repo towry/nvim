@@ -60,47 +60,11 @@ M.handle_job_data = function(data)
   return data
 end
 
-M.log = function(message, title) require('notify')(message, 'info', { title = title or 'Info' }) end
+M.log = function(message, title) vim.notify(message, vim.log.levels.INFO, { title = title or 'Info' }) end
 
-M.warnlog = function(message, title) require('notify')(message, 'warn', { title = title or 'Warning' }) end
+M.warnlog = function(message, title) vim.notify(message, vim.log.levels.WARN, { title = title or 'Warning' }) end
 
-M.errorlog = function(message, title) require('notify')(message, 'error', { title = title or 'Error' }) end
-
-M.jobstart = function(cmd, on_finish)
-  local has_error = false
-  local lines = {}
-
-  local function on_event(_, data, event)
-    if event == 'stdout' then
-      data = M.handle_job_data(data)
-      if not data then return end
-
-      for i = 1, #data do
-        table.insert(lines, data[i])
-      end
-    elseif event == 'stderr' then
-      data = M.handle_job_data(data)
-      if not data then return end
-
-      has_error = true
-      local error_message = ''
-      for _, line in ipairs(data) do
-        error_message = error_message .. line
-      end
-      M.log('Error during running a job: ' .. error_message)
-    elseif event == 'exit' then
-      if not has_error then on_finish(lines) end
-    end
-  end
-
-  vim.fn.jobstart(cmd, {
-    on_stderr = on_event,
-    on_stdout = on_event,
-    on_exit = on_event,
-    stdout_buffered = true,
-    stderr_buffered = true,
-  })
-end
+M.errorlog = function(message, title) vim.notify(message, vim.log.levels.ERROR, { title = title or 'Error' }) end
 
 M.remove_whitespaces = function(string) return string:gsub('%s+', '') end
 
@@ -310,6 +274,47 @@ function M.update_cwd_env(cwd)
   vim.t.cwd = cwd
   -- only show last part of path.
   vim.t.cwd_short = require('userlib.runtime.path').home_to_tilde(cwd, { shorten = true })
+end
+
+---- UTF-8
+-- Convert a number to a utf8 string
+M.utf8 = function(decimal)
+  if type(decimal) == 'string' then
+    decimal = vim.fn.char2nr(decimal)
+  end
+  if decimal < 128 then
+    return string.char(decimal)
+  end
+  local charbytes = {}
+  for bytes, vals in ipairs { { 0x7FF, 192 }, { 0xFFFF, 224 }, { 0x1FFFFF, 240 } } do
+    if decimal <= vals[1] then
+      for b = bytes + 1, 2, -1 do
+        local mod = decimal % 64
+        decimal = (decimal - mod) / 64
+        charbytes[b] = string.char(128 + mod)
+      end
+      charbytes[1] = string.char(vals[2] + decimal)
+      break
+    end
+  end
+  return table.concat(charbytes)
+end
+
+-- For each { k = v } in keys, return a table that when indexed by any k' such
+-- that tolower(k') == tolower(k) returns utf8(v)
+M.utf8keys = function(keys, disable)
+  local _keys = {}
+  for k, v in pairs(keys) do
+    _keys[string.lower(k)] = disable and k or M.utf8(v)
+  end
+  return setmetatable(_keys, {
+    __index = function(self, k)
+      return rawget(self, string.lower(k))
+    end,
+    __call = function(self, k)
+      return self[k]
+    end,
+  })
 end
 
 return M

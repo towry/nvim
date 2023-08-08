@@ -1,7 +1,8 @@
 local plug = require('userlib.runtime.pack').plug
 local utils = require('userlib.runtime.utils')
 local au = require('userlib.runtime.au')
-local git_branch_icon = " "
+local git_branch_icon = " "
+local enable_lualine = true
 
 local git_status_source = function()
   local gitsigns = vim.b.gitsigns_status_dict
@@ -13,6 +14,11 @@ local git_status_source = function()
     }
   end
 end
+
+local git_branch = {
+  'FugitiveHead',
+  icon = git_branch_icon,
+}
 
 local tabs_nrto_icons = {
   ['1'] = '❶ ',
@@ -32,12 +38,15 @@ local tabs_component = {
   mode = 1,
   use_mode_colors = false,
   tabs_color = {
-    active = { fg = 'grey', gui = 'italic,bold' },
-    inactive = 'lualine_c_normal',
+    active = { fg = '#6f894e', gui = 'italic,bold' },
+    inactive = { fg = 'gray' },
   },
   fmt = function(name, context)
     local tabnr = context.tabnr
     local icon = tabs_nrto_icons[tostring(tabnr)] or tabnr
+    if context.last and context.tabId == 1 then
+      return ''
+    end
     return icon .. ''
   end,
 }
@@ -46,12 +55,14 @@ local tabs_component = {
 
 plug({
   'nvim-lualine/lualine.nvim',
+  enabled = enable_lualine,
   dependencies = {
     {
       'pze/lualine-copilot',
       dev = false,
       enabled = false,
     },
+    'tpope/vim-fugitive',
   },
   event = { 'User LazyUIEnterOncePost', 'User OnLeaveDashboard' },
   config = function()
@@ -63,7 +74,7 @@ plug({
 
     local spectre_extension    = {
       sections = {
-        lualine_a = { 'mode' },
+        lualine_a = { 'mode', tabs_component },
       },
       filetypes = { 'spectre_panel' },
     }
@@ -78,10 +89,7 @@ plug({
           }
         },
         lualine_b = {
-          {
-            'branch',
-            icon = git_branch_icon,
-          },
+          git_branch,
         },
         lualine_c = {
           tabs_component,
@@ -100,7 +108,10 @@ plug({
               return vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
             end,
             icon = ' ',
-          }
+          },
+        },
+        lualine_b = {
+          tabs_component,
         },
         lualine_x = {
           {
@@ -131,19 +142,11 @@ plug({
         -- component_separators = '│',
         component_separators = '',
         section_separators = { left = '', right = '' },
-        -- section_separators = { left = '', right = '' },
         disabled_filetypes = { winbar = vim.cfg.misc__ft_exclude, statusline = { 'dashboard', 'lazy', 'alpha' } },
       },
       winbar = {
         lualine_a = {
           {
-            function()
-              return vim.api.nvim_win_get_number(0)
-            end,
-            icon = ''
-          },
-          {
-            --section_separators = { left = '', right = '' },
             separator = { right = '', left = '' },
             left_padding = 2,
             'filename',
@@ -187,14 +190,8 @@ plug({
       },
       inactive_winbar = {
         lualine_a = {
+          { 'filetype', colored = true, icon_only = true },
           {
-            function()
-              return vim.api.nvim_win_get_number(0)
-            end,
-            icon = ''
-          },
-          {
-            -- section_separators = { left = '', right = '' },
             separator = { left = '', right = '' },
             left_padding = 2,
             'filename',
@@ -220,36 +217,34 @@ plug({
         },
         lualine_b = {
           'searchcount',
-          {
-            'branch',
-            icon = git_branch_icon
-          },
-
+          git_branch,
         },
         -- filename is displayed by the incline.
         lualine_c = {
           -- TODO: move to component.
-          {
-            -- separator = { left = '', },
-            -- right_padding = 0,
-            function()
-              local unsaved_count = #Buffer.unsaved_list({ perf = true })
-              local has_modified = unsaved_count > 0
-              local unsaved_count_text = unsaved_count > 0 and (':' .. unsaved_count) or ''
-              vim.b['has_modified_file'] = has_modified
-              return #vim.fn.getbufinfo({ buflisted = 1 }) .. unsaved_count_text
-            end,
-            icon = {
-              ' ',
-              color = function()
-                if vim.b['has_modified_file'] then
-                  return {
-                    fg = '#C20505',
-                  }
-                end
-              end,
-            },
-          },
+          -- {
+          --   function()
+          --     local unsaved_count = #Buffer.unsaved_list({ perf = true })
+          --     local has_modified = unsaved_count > 0
+          --     local unsaved_count_text = unsaved_count > 0 and (':' .. unsaved_count) or ''
+          --     vim.b['has_modified_file'] = has_modified
+          --     local listed_count = #vim.fn.getbufinfo({ buflisted = 1 })
+          --     if listed_count <= 1 and unsaved_count <= 0 then
+          --       return ''
+          --     end
+          --     return listed_count .. unsaved_count_text
+          --   end,
+          --   icon = {
+          --     ' ',
+          --     color = function()
+          --       if vim.b['has_modified_file'] then
+          --         return {
+          --           fg = '#C20505',
+          --         }
+          --       end
+          --     end,
+          --   },
+          -- },
           tabs_component,
         },
         lualine_x = {
@@ -260,6 +255,14 @@ plug({
           -- },
           {
             terms,
+          },
+          {
+            function()
+              if vim.diagnostic.is_disabled() then
+                return 'Diag OFF';
+              end
+              return ''
+            end,
           },
           {
             'encoding',
@@ -292,22 +295,72 @@ plug({
               return not vim.tbl_contains({ 'unix', 'mac' }, vim.bo.fileformat)
             end,
           },
-          { 'filetype', colored = true, icon_only = true },
         },
-        lualine_y = { 'filesize' },
+        lualine_y = {
+          'filesize',
+          {
+            'filetype',
+            colored = true,
+            icon_only = true,
+            color = function()
+              local function is_treesitter()
+                local bufnr = vim.api.nvim_get_current_buf()
+                return vim.treesitter.highlighter.active[bufnr] ~= nil
+              end
+              if is_treesitter() then
+                return
+              end
+              return {
+                bg = 'gray'
+              }
+            end
+          },
+        },
         lualine_z = {
-          { 'location', left_padding = 0 },
+          -- { 'location', left_padding = 0 },
         },
       },
       inactive_sections = {
         lualine_a = {},
         lualine_b = {},
         lualine_c = { '' },
-        lualine_x = { 'location' },
+        -- lualine_x = { 'location' },
         lualine_y = {},
         lualine_z = {},
       },
     })
+  end,
+})
+
+plug({
+  'pze/stat.nvim',
+  enabled = not enable_lualine,
+  event = { 'User LazyUIEnterOncePost', 'User OnLeaveDashboard' },
+  config = function(_, opts)
+    local Stat = require('stat')
+    local ___ = Stat.___
+
+    Stat.setup(vim.tbl_extend("force", {
+      winbar = {},
+      statusline = {
+        Stat.mod.mode,
+        Stat.mod.filetype,
+        Stat.mod.git_diff,
+        ___,
+      },
+      theme = {
+        ["N"] = { fg = "#2d353b", bg = "#83c092" },
+        ["I"] = { fg = "#2d353b", bg = "#7fbbb3" },
+        ["V"] = { fg = "#2d353b", bg = "#dbbc7f" },
+        ["C"] = { fg = "#2d353b", bg = "#d699b6" },
+        ["T"] = { fg = "#2d353b", bg = "#a7c080" },
+        ["S"] = { fg = "#2d353b", bg = "#e67e80" },
+        ["File"] = { fg = "#d3c6aa", bg = "#343f44" },
+        ["Filetype"] = { fg = "#d3c6aa", bg = "#272e33" },
+        ["GitDiffDeletion"] = { fg = "#e67e80", bg = "#232a2e" },
+        ["GitDiffInsertion"] = { fg = "#a7c080", bg = "#232a2e" },
+      },
+    }, opts or {}))
   end,
 })
 
@@ -339,7 +392,7 @@ plug({
             sign = { namespace = { '.*' }, maxwidth = 2, colwidth = 3, auto = true },
           },
           { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
-          { text = { builtin.foldfunc, '' }, click = 'v:lua.ScFa' },
+          { text = { builtin.foldfunc, '' },  click = 'v:lua.ScFa' },
           {
             sign = { name = { 'Diagnostic' }, maxwidth = 1, auto = false },
             click = 'v:lua.ScSa',
@@ -381,7 +434,8 @@ plug({
 
   {
     'lewis6991/satellite.nvim',
-    enabled = vim.list_contains ~= nil,
+    -- enabled = vim.list_contains ~= nil,
+    enabled = false,
     version = '*',
     -- event = 'VeryLazy',
     cmd = { 'SatelliteEnable', 'SatelliteDisable', 'SatelliteRefresh' },

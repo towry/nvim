@@ -3,6 +3,7 @@ local cmd_modcall = require('userlib.runtime.keymap').cmd_modcall
 
 pack.plug({
   'kevinhwang91/nvim-ufo',
+  enabled = false,
   event = 'LspAttach',
   dependencies = {
     'kevinhwang91/promise-async',

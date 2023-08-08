@@ -61,6 +61,10 @@ local function attach_autoformat_with_autocmd(_client, bufnr)
         nested = false,
         desc = "Auto format for buffer: " .. bufnr,
         callback = function()
+          if vim.wo.diff then
+            vim.notify("auto format disabled due to diff mode")
+            return
+          end
           require('userlib.lsp.fmt').format(bufnr, {
             auto = true,
             async = false,

@@ -26,6 +26,7 @@ pack.plug({
   },
   {
     'hrsh7th/nvim-cmp',
+    -- commit = "2743dd989e9b932e1b4813a4927d7b84272a14e2",
     event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
       'hrsh7th/cmp-nvim-lsp-signature-help',
@@ -117,12 +118,19 @@ pack.plug({
         -- Complete from all visible buffers (splits)
         get_bufnrs = function()
           --- from all loaded buffers
-          return vim.api.nvim_list_bufs()
-          -- local bufs = {}
-          -- for _, win in ipairs(vim.api.nvim_list_wins()) do
-          --   bufs[vim.api.nvim_win_get_buf(win)] = true
-          -- end
-          -- return vim.tbl_keys(bufs)
+          -- return vim.api.nvim_list_bufs()
+          -- ----
+          -- from visible bufs.
+          local bufs = {}
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            bufs[vim.api.nvim_win_get_buf(win)] = true
+          end
+          --- alternative buf.
+          local alter = vim.fn.bufnr('#')
+          if alter > 0 then
+            bufs[vim.fn.bufnr('#')] = true
+          end
+          return vim.tbl_keys(bufs)
         end,
       }
       local select_option = {
@@ -188,7 +196,7 @@ pack.plug({
             else
               fallback()
             end
-          end), -- invoke complete
+          end),                           -- invoke complete
           ['<C-s>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
           ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
           ['<C-e>'] = cmp.mapping({
@@ -278,13 +286,13 @@ pack.plug({
         },
         -- You should specify your *installed* sources.
         sources = {
-          { name = 'nvim_lsp', priority = 50, max_item_count = 6 },
+          { name = 'nvim_lsp',                priority = 50, max_item_count = 6 },
           -- { name = "copilot",                 priority = 30, max_item_count = 4 },
-          { name = 'codeium', priority = 7, max_item_count = 4 },
+          { name = 'codeium',                 priority = 7,  max_item_count = 4 },
           { name = 'nvim_lsp_signature_help', priority = 40, max_item_count = 3 },
-          { name = 'npm', priority = 3 },
-          { name = 'cmp_tabnine', priority = 6, max_item_count = 3 },
-          { name = 'luasnip', priority = 6, max_item_count = 2 },
+          { name = 'npm',                     priority = 3 },
+          -- { name = 'cmp_tabnine',             priority = 6,  max_item_count = 3 },
+          { name = 'luasnip',                 priority = 6,  max_item_count = 2 },
           {
             name = 'buffer',
             priority = 6,
@@ -293,8 +301,8 @@ pack.plug({
             max_item_count = 5,
           },
           { name = 'nvim_lua', priority = 5, ft = 'lua' },
-          { name = 'path', priority = 4 },
-          { name = 'calc', priority = 3 },
+          { name = 'path',     priority = 4 },
+          { name = 'calc',     priority = 3 },
         },
         sorting = {
           comparators = {
@@ -374,13 +382,13 @@ pack.plug({
       -- │ Tabnine Setup                                            │
       -- ╰──────────────────────────────────────────────────────────╯
       tabnine:setup({
-        max_lines = 1000,
+        max_lines = 800,
         max_num_results = 3,
-        sort = true,
-        show_prediction_strength = true,
-        run_on_every_keystroke = true,
+        sort = false,
+        show_prediction_strength = false,
+        run_on_every_keystroke = false,
         snipper_placeholder = '..',
-        ignored_file_types = {},
+        ignored_file_types = vim.cfg.misc__ignored_file_types,
       })
       -- cmp npm
       require('cmp-npm').setup({
@@ -391,8 +399,10 @@ pack.plug({
   }
 })
 
+
 ---autopairs
 pack.plug({
+  enabled = true,
   'windwp/nvim-autopairs',
   event = { 'InsertEnter' },
   config = function()
@@ -404,6 +414,7 @@ pack.plug({
       disable_filetype = {
         'TelescopePrompt',
       },
+      ignored_next_char = "[%w%.{(\"']",
       disable_in_macro = true,
       disable_in_replace_mode = true,
       enable_check_bracket_line = true,

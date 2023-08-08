@@ -1,12 +1,27 @@
 local keymap = require('userlib.runtime.keymap')
+local utils = require('userlib.runtime.utils')
 local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 
 local M = {}
 
+--- only do this in tmux.
+local xk = utils.utf8keys({
+  [ [[<D-s>]] ] = 0xAA,
+  [ [[<C-'>]] ] = 0xAD,
+  [ [[<C-;>]] ] = 0xAB,
+  [ [[<C-i>]] ] = 0xAC,
+}, true)
 
 local function setup_basic()
-  set('i', "<C-'>", function()
+  -- <C-'> to pick register from insert mode.
+  set('i', xk [[<C-'>]], function()
     vim.cmd('stopinsert')
+    vim.fn.feedkeys(vim.api.nvim_replace_termcodes('"', true, false, true))
+  end, {
+    silent = true,
+    desc = 'Pick register from insert mode',
+  })
+  set('n', xk [[<C-'>]], function()
     vim.fn.feedkeys(vim.api.nvim_replace_termcodes('"', true, false, true))
   end, {
     silent = true,
@@ -21,7 +36,7 @@ local function setup_basic()
     noremap = true,
   })
   --- quickly go into cmd
-  set('n', '<C-;>', ':<C-u>', {
+  set('n', xk [[<C-;>]], ':<C-u>', {
     expr = false,
     noremap = true,
   })
@@ -43,7 +58,7 @@ local function setup_basic()
     desc = "Enter cmdline easily"
   })
   --- command line history.
-  set('c', '<C-;>', function()
+  set('c', xk [[<C-;>]], function()
     return [[lua require('userlib.telescope.pickers').command_history()<CR>]]
     --   return vim.api.nvim_replace_termcodes('<C-u><C-p>', true, false, true)
   end, {
@@ -51,17 +66,10 @@ local function setup_basic()
     noremap = false,
     desc = 'Previous command in cmdline',
   })
-  set('c', '<C-/>', function()
-    return vim.api.nvim_replace_termcodes('<C-r>*', true, false, true)
-  end, {
-    expr = true,
-    noremap = false,
-    desc = 'Insert selection register into search',
-  })
   ---///
   --- tab is mapped to buffers, since tab&<c-i> has same func, we
   --- need to map <c-i> to its original func.
-  set('n', '<C-i>', '<C-i>', {
+  set('n', xk [[<C-i>]], '<C-i>', {
     noremap = true,
     expr = false,
   })
@@ -96,10 +104,10 @@ local function setup_basic()
     desc = 'Case change in visual mode'
   })
 
-  set({ 'n', 'i' }, '<D-S>', cmd('bufdo update'), {
-    desc = 'Save all files',
-  })
-  set({ 'n', 'i' }, '<D-s>', cmd('update'), {
+  -- set({ 'n', 'i' }, [[<D-s>]], cmd('bufdo update'), {
+  --   desc = 'Save all files',
+  -- })
+  set({ 'n', 'i' }, xk [[<D-s>]], cmd('update'), {
     desc = 'Save current buffer',
   })
   set('n', '<leader>bw', cmd('update'), {
@@ -208,6 +216,14 @@ local function setup_basic()
   set('c', '<C-q>', ('<C-u>qa<CR>'), {
     desc = 'Make sure <C-q> do not insert weird chars',
     nowait = true,
+  })
+
+  -- works with quickfix
+  set('n', '[q', ':cprev<cr>', {
+    desc = 'Jump to previous quickfix item',
+  })
+  set('n', ']q', ':cnext<cr>', {
+    desc = 'Jump to next quickfix item',
   })
 end
 

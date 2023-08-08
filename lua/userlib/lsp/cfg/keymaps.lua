@@ -54,9 +54,6 @@ function M.setup_keybinding(client, buffer)
 
   -- Code actions.
   if cap.codeActionProvider then
-    set('n', '<leader>cA', cmdstr([[lua vim.lsp.buf.code_action({ context = { only = { "source" }}})]]), opts({
-      desc = _('Source Action'),
-    }))
     set('n', '<leader>co',
       cmdstr(
         [[lua vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' }}, apply = true})]]
@@ -65,9 +62,14 @@ function M.setup_keybinding(client, buffer)
         desc = _('Organize Imports'),
       })
     )
-    set({ 'n', 'v' }, '<leader>ca', func_call("open_code_action()"),
+    set({ 'n', 'v' }, '<leader>ca', cmdstr(
+      [[lua vim.lsp.buf.code_action()]]
+    ), opts({
+      desc = _('Code Action'),
+    }))
+    set({ 'n', 'v' }, '<leader>cA', func_call("open_code_action()"),
       opts({
-        desc = _('Code Action'),
+        desc = _('Code Source Action'),
       }))
     set('n', '<D-.>', func_call("open_code_action()"),
       opts({

@@ -6,6 +6,7 @@ return plug({
   -- enable mini.starter
   {
     "echasnovski/mini.starter",
+    enabled = true,
     version = false, -- wait till new 0.7.0 release to put it back on semver
     opts = function()
       local pad = string.rep(" ", 0)
@@ -58,9 +59,9 @@ return plug({
           end
           local bufnr = ctx.buf
           if not bufnr then return end
-          vim.keymap.set('n', 'K', [[<cmd>lua MiniStarter.update_current_item('prev')<CR>]],
+          vim.keymap.set('n', ']', [[<cmd>lua MiniStarter.update_current_item('prev')<CR>]],
             { buffer = bufnr, nowait = true, silent = true })
-          vim.keymap.set('n', 'J', [[<cmd>lua MiniStarter.update_current_item('next')<CR>]],
+          vim.keymap.set('n', '[', [[<cmd>lua MiniStarter.update_current_item('next')<CR>]],
             { buffer = bufnr, nowait = true, silent = true })
 
           au.define_autocmd({ 'VimResized', 'WinResized' }, {

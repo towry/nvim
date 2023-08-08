@@ -36,6 +36,7 @@ plug({
     'tpope/vim-fugitive',
     keys = {
       { '<leader>gg', ":Git<cr>",               desc = "Fugitive Git" },
+      { '<leader>gG', ':tab Git<cr>',           desc = 'Fugitive Git in tab' },
       { '<leader>ga', cmdstr([[!git add %:p]]), desc = "!Git add current" },
       { '<leader>gA', cmdstr([[!git add .]]),   desc = "!Git add all" },
     },
@@ -55,6 +56,7 @@ plug({
       'Grevert',
       'Grebase',
       'Gpedit',
+      'Gclog',
     },
     init = function()
       vim.api.nvim_create_autocmd('BufWinEnter', {
@@ -78,15 +80,6 @@ plug({
     event = { 'BufReadPre' },
     enabled = true,
     cond = function() return true end,
-  },
-  {
-    -- tig like git commit browser.
-    'junegunn/gv.vim',
-    enabled = false,
-    cmd = { 'GV' },
-    dependencies = {
-      'tpope/vim-fugitive',
-    },
   },
 
   {
@@ -154,55 +147,6 @@ plug({
     },
     config = function(_, opts)
       require('diffview').setup(opts)
-    end,
-  },
-
-  {
-    'akinsho/git-conflict.nvim',
-    version = '*',
-    keys = {
-      {
-        '<leader>gc',
-        '<cmd>lua require("userlib.hydra.git").open_git_conflict_hydra()<cr>',
-        desc = 'Open git conflict menus',
-      }
-    },
-    cmd = {
-      'GitConflictChooseBoth',
-      'GitConflictNextConflict',
-      'GitConflictChooseOurs',
-      'GitConflictPrevConflict',
-      'GitConflictChooseTheirs',
-      'GitConflictListQf',
-      'GitConflictChooseNone',
-      'GitConflictRefresh',
-    },
-    config = function()
-      local conflict = require('git-conflict')
-
-      conflict.setup({
-        default_mappings = false,   -- disable buffer local mapping created by this plugin
-        default_commands = true,
-        disable_diagnostics = true, -- This will disable the diagnostics in a buffer whilst it is conflicted
-        highlights = {              -- They must have background color, otherwise the default color will be used
-          -- incoming = 'DiffText',
-          -- current = 'DiffAdd',
-        },
-      })
-
-      vim.schedule(function()
-        vim.cmd('GitConflictRefresh')
-      end)
-    end,
-    init = function()
-      au.define_user_autocmd({
-        pattern = 'GitSignsUpdate',
-        once = true,
-        group = 'load_gitconflict',
-        callback = function()
-          require('userlib.runtime.utils').load_plugins('git-conflict.nvim')
-        end,
-      })
     end,
   },
 

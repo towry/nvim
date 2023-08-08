@@ -3,7 +3,8 @@ vim.filetype.add({
     ['es6'] = 'javascript',
     ['code-snippets'] = 'json',
     ['handlebars'] = 'html',
-    ['tigrc'] = 'bash'
+    ['tigrc'] = 'bash',
+    ['tmux'] = 'bash',
   },
   filename = {
     ['.envrc'] = 'bash',

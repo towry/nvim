@@ -73,7 +73,7 @@ plug({
       padding = 3,
       border = vim.cfg.ui__float_border,
       win_options = {
-        winblend = 0,
+        winblend = 10,
       }
     }
   },
@@ -108,15 +108,15 @@ plug({
     },
   },
   init = function()
-    au.define_autocmd('BufEnter', {
-      group = '_oil_change_cwd',
-      pattern = 'oil:///*',
-      callback = function(ctx)
-        vim.t.cwd = require('oil').get_current_dir()
-        vim.t.cwd_short = require('userlib.runtime.path').home_to_tilde(vim.t.cwd)
-        vim.cmd.tcd(vim.t.cwd)
-      end,
-    })
+    -- au.define_autocmd('BufEnter', {
+    --   group = '_oil_change_cwd',
+    --   pattern = 'oil:///*',
+    --   callback = function(ctx)
+    --     vim.t.cwd = require('oil').get_current_dir()
+    --     vim.t.cwd_short = require('userlib.runtime.path').home_to_tilde(vim.t.cwd)
+    --     vim.cmd.tcd(vim.t.cwd)
+    --   end,
+    -- })
   end,
 })
 
@@ -125,7 +125,7 @@ plug({
   keys = {
     { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
-    { '<D-o>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<D-o>',      '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
   cmd = { 'SymbolsOutline', 'SymbolsOutlineOpen', 'SymbolsOutlineClose' },
   opts = {
@@ -259,7 +259,7 @@ plug({
       'Open Project files'
     },
     {
-      '<leader>f-',
+      '<leader>fF',
       cmd_modcall(pickers_mod, 'project_files({use_all_files=false, cwd=vim.cfg.runtime__starts_cwd})'),
       desc =
       'Open find all files'
@@ -406,10 +406,10 @@ plug({
     return {
       defaults = {
         border = true,
-        borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+        borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
         wrap_results = false,
         --- give some opacity so we can see the window picker marks.
-        winblend = 0,
+        winblend = 10,
         cache_picker = {
           num_pickers = 5,
         },
@@ -423,6 +423,7 @@ plug({
           '--smart-case',
         },
         layout_config = {
+          prompt_position = "top",
           horizontal = {
             preview_cutoff = 120,
           },
@@ -449,13 +450,13 @@ plug({
         qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
         mappings = {
           i = {
+            --- used to move cursor forward.
+            ["<C-f>"] = false,
             ['<S-BS>'] = function()
               --- delete previous W
               if vim.fn.mode() == 'n' then return end
               vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>gEldEa', true, true, true), 'n', false)
             end,
-            -- ['<C-e>'] = function() vim.cmd('stopinsert') end,
-            -- ["<C-x>"] = false,
             ['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
             ['<C-s>'] = actions.cycle_previewers_next,
             ['<C-a>'] = actions.cycle_previewers_prev,
@@ -494,8 +495,7 @@ plug({
         ["ui-select"] = {
           require("telescope.themes").get_dropdown {
             border = true,
-            -- not work.
-            borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+            borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default
             -- even more opts
           }
         },
@@ -524,7 +524,6 @@ plug({
           -- theme = "dropdown",
           -- layout_strategy = "bottom_pane",
           layout_config = {
-            prompt_position = "bottom",
             width = 0.9,
           },
           mappings = {

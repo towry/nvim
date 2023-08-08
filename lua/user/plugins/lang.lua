@@ -6,7 +6,7 @@ plug({
     --- some issues
     --- https://github.com/nvim-treesitter/nvim-treesitter/issues/3970#issuecomment-1353836834
     --- https://github.com/nvim-treesitter/nvim-treesitter/issues/2014#issuecomment-970342040
-    --- `:echo echo nvim_get_runtime_file('*/python.so', v:true)`
+    --- `:echo nvim_get_runtime_file('*/python.so', v:true)`
     'nvim-treesitter/nvim-treesitter',
     build = function()
       if #vim.api.nvim_list_uis() == 0 then
@@ -367,7 +367,7 @@ plug({
 
   {
     'vuki656/package-info.nvim',
-    enabled = true,
+    enabled = false,
     event = 'BufEnter package.json',
     init = function()
       au.define_autocmd({
@@ -424,7 +424,8 @@ plug({
     },
     keys = {
       {
-        '[c', '<cmd>lua require("treesitter-context").go_to_context()<cr>', desc = 'Treesitter Context: Go to context'
+        '<leader>fc', '<cmd>lua require("treesitter-context").go_to_context()<cr>',
+        desc = 'Treesitter Context: Go to context'
       }
     },
     config = function(_, opts)

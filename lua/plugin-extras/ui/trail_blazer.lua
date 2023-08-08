@@ -54,7 +54,7 @@ return plug({
   },
   keys = {
     '<leader><space>',
-    '<BS>',
+    -- TODO: clean up this mess.
     '<leader>m,',
     '<leader>m.',
     { '<leader>mn', '<cmd>TrailBlazerMoveToNearest<cr>',       desc = 'trail nearest' },
@@ -67,31 +67,26 @@ return plug({
   },
   init = function()
     local set = vim.keymap.set
-    -- set('n', '<BS>', '<cmd>TrailBlazerTrackBack %<cr>', {
-    --   silent = true,
-    --   noremap = true,
-    --   desc = 'Trace back in buf'
-    -- })
-    set('n', '<D-h>', '<cmd>TrailBlazerTrackBack<cr>', {
+    set('n', '<leader>mb', '<cmd>TrailBlazerTrackBack<cr>', {
       silent = false,
       desc = 'Trace back global'
     })
-    set('n', '<D-j>', '<cmd>TrailBlazerPeekMoveNextDown %<cr>', {
+    set('n', '<leader>m]', '<cmd>TrailBlazerPeekMoveNextDown %<cr>', {
       silent = true,
       noremap = true,
       desc = 'Trail next in buf',
     })
-    set('n', '<D-k>', '<cmd>TrailBlazerPeekMovePreviousUp %<cr>', {
+    set('n', '<leader>m[', '<cmd>TrailBlazerPeekMovePreviousUp %<cr>', {
       silent = true,
       noremap = true,
       desc = 'Trail pre in buf',
     })
-    set('n', '<D-S-j>', '<cmd>TrailBlazerPeekMoveNextDown<cr>', {
+    set('n', '<leader>m9', '<cmd>TrailBlazerPeekMoveNextDown<cr>', {
       silent = true,
       noremap = true,
       desc = 'Trail next global',
     })
-    set('n', '<D-S-k>', '<cmd>TrailBlazerPeekMovePreviousUp<cr>', {
+    set('n', '<leader>m0', '<cmd>TrailBlazerPeekMovePreviousUp<cr>', {
       silent = true,
       noremap = true,
       desc = 'Trail pre global',

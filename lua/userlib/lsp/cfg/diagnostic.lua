@@ -78,6 +78,9 @@ function M.setup()
   local signs = { Error = 'E', Warn = 'W', Hint = 'H', Info = 'I' }
 
   vim.diagnostic.config({
+    float = {
+      border = 'single',
+    },
     severity_sort = true,
     signs = signs == false and false or true,
     underline = true,

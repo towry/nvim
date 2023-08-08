@@ -85,9 +85,9 @@ M.open = function(cwd, buffer, pre_hook)
       {
         "w",
         _(function()
-          au.exec_useraucmd(au.user_autocmds.DoEnterDashboard)
+          require('userlib.runtime.utils').change_cwd(cwd, 'tcd')
           vim.schedule(function()
-            require('userlib.runtime.utils').change_cwd(cwd, 'tcd')
+            au.exec_useraucmd(au.user_autocmds.DoEnterDashboard)
           end)
         end),
         {
@@ -99,11 +99,13 @@ M.open = function(cwd, buffer, pre_hook)
       {
         "<CR>",
         _(function()
+          -- require('userlib.runtime.utils').change_cwd(cwd, 'tcd')
+          -- require('oil').open(cwd)
           require('mini.files').open(cwd)
         end),
         {
           private = true,
-          desc = 'MiniFiles',
+          desc = 'Browser',
           exit = true,
         }
       },

@@ -8,3 +8,4 @@ if vim.loader then
 end
 
 require('user.config').setup()
+pcall(require, 'settings_env')
