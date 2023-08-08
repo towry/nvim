@@ -125,7 +125,7 @@ plug({
   keys = {
     { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
-    { '<D-o>',      '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<D-o>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
   },
   cmd = { 'SymbolsOutline', 'SymbolsOutlineOpen', 'SymbolsOutlineClose' },
   opts = {
@@ -343,6 +343,11 @@ plug({
       '<leader>g.',
       '<cmd>Telescope git_bcommits<cr>',
       desc = 'Show commits for current buffer with diff preview',
+    },
+    {
+      '<D-\\>',
+      '<cmd>Telescope jumplist fname_width=60 show_line=false<cr>',
+      desc = 'Show jumplist',
     }
   },
   dependencies = {

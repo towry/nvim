@@ -15,7 +15,8 @@ end
 function M.goto_definition_in_file(command) require('gtd').exec({ command = command or 'edit' }) end
 
 function M.goto_definition()
-  vim.lsp.buf.definition()
+  -- vim.lsp.buf.definition()
+  require('userlib.telescope.lsp').lsp_references()
 end
 
 function M.goto_type_definition()
