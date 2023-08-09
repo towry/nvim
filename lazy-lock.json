@@ -4,6 +4,7 @@
   "blackjack.nvim": { "branch": "main", "commit": "4145567d7c38cd3c693f3a07b6d713ce4c5a42aa" },
   "bufjump.nvim": { "branch": "master", "commit": "a020f81bb82f758da51594a07bfcb9635a6b0f73" },
   "bufresize.nvim": { "branch": "master", "commit": "3b19527ab936d6910484dcc20fb59bdb12322d8b" },
+  "carbon-now.nvim": { "branch": "main", "commit": "51ea54b20a61c6d90fd341055691cd7448ceba32" },
   "cheatsheet.nvim": { "branch": "master", "commit": "aa14d90e37fe267f5ef2444bf01c538e276bbabc" },
   "close-buffers.nvim": { "branch": "master", "commit": "3acbcad1211572342632a6c0151f839e7dead27f" },
   "cmd-parser.nvim": { "branch": "master", "commit": "6363b8bddef968c3ec51a38172af44f675f01ef3" },
