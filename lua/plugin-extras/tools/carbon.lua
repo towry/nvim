@@ -5,7 +5,10 @@ return plug({
   lazy = true,
   cmd = 'CarbonNow',
   opts = {
+    open_cmd = "open",
+    base_url = "https://carbon.now.sh/",
     options = {
+      theme = "zenburn",
       font_family = "JetBrains Mono"
     }
   },
