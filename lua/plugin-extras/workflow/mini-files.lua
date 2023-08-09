@@ -258,6 +258,16 @@ return plug({
         map_split(bufnr, '<C-x>', 'belowright horizontal')
         map_split(bufnr, '<C-v>', 'belowright vertical')
 
+        -- set up ability to confirm changes with :w
+        vim.api.nvim_buf_set_option(bufnr, 'buftype', 'acwrite')
+        vim.api.nvim_buf_set_name(bufnr, string.format('mini.files-%s', vim.uv.hrtime()))
+        vim.api.nvim_create_autocmd('BufWriteCmd', {
+          buffer = bufnr,
+          callback = function()
+            MF.synchronize()
+          end,
+        })
+
         vim.b.minianimate_disable = true
       end,
     })
