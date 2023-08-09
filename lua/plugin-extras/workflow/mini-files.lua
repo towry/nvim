@@ -27,7 +27,6 @@ local map_split = function(buf_id, lhs, direction)
   vim.keymap.set('n', lhs, rhs, { buffer = buf_id, desc = desc })
 end
 
-local show_dotfiles = false
 local filter_show = function(fs_entry)
   local name = fs_entry.name
   return name ~= ".DS_Store" and name ~= ".git" and name ~= ".direnv"
@@ -35,12 +34,6 @@ end
 local filter_hide = function(fs_entry)
   local name = fs_entry.name
   return not vim.startswith(name, '.') and name ~= ".dotfiles" and name ~= ".config"
-end
-local toggle_dotfiles = function()
-  local MF = require('mini.files')
-  show_dotfiles = not show_dotfiles
-  local new_filter = show_dotfiles and filter_show or filter_hide
-  MF.refresh({ content = { filter = new_filter } })
 end
 
 local get_current_dir = function()
@@ -166,6 +159,13 @@ return plug({
           silent = true,
           nowait = true
         }
+        local show_dotfiles = false
+        local toggle_dotfiles = function()
+          show_dotfiles = not show_dotfiles
+          local new_filter = show_dotfiles and filter_show or filter_hide
+          MF.refresh({ content = { filter = new_filter } })
+        end
+
         ---- keys
         set({ 'n', 'v' }, 'd', '"*d', {
           noremap = true,
