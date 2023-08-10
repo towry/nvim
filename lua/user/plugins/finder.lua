@@ -121,29 +121,90 @@ plug({
 })
 
 plug({
-  'simrat39/symbols-outline.nvim',
+  'stevearc/aerial.nvim',
   keys = {
-    { '<leader>/o', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<leader>/o', '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
     -- <CMD-o> open the outline.
-    { '<D-o>', '<cmd>SymbolsOutline<cr>', desc = 'Symbols outline' },
+    { '<D-l>',      '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
   },
-  cmd = { 'SymbolsOutline', 'SymbolsOutlineOpen', 'SymbolsOutlineClose' },
+  cmd = { 'AerialToggle', 'AerialOpen', 'AerialClose' },
   opts = {
-    -- https://github.com/simrat39/symbols-outline.nvim
-    show_guides = true,
-    auto_preview = false,
-    show_relative_numbers = true,
-    autofold_depth = 2,
-    width = 20,
-    auto_close = true, -- auto close after selection
-    keymaps = {
-      close = { "<Esc>", "q", "Q", "<leader>x" },
-      focus_location = '<S-CR>',
+    backends = { "treesitter", "lsp", "markdown", "man" },
+    layout = {
+      -- These control the width of the aerial window.
+      -- They can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+      -- min_width and max_width can be a list of mixed types.
+      -- max_width = {40, 0.2} means "the lesser of 40 columns or 20% of total"
+      max_width = { 80, 0.4 },
+      width = nil,
+      min_width = 10,
+      -- key-value pairs of window-local options for aerial window (e.g. winhl)
+      win_opts = {},
+      -- Determines the default direction to open the aerial window. The 'prefer'
+      -- options will open the window in the other direction *if* there is a
+      -- different buffer in the way of the preferred direction
+      -- Enum: prefer_right, prefer_left, right, left, float
+      default_direction = "prefer_right",
+      -- Determines where the aerial window will be opened
+      --   edge   - open aerial at the far right/left of the editor
+      --   window - open aerial to the right/left of the current window
+      placement = "window",
+      -- When the symbols change, resize the aerial window (within min/max constraints) to fit
+      resize_to_content = true,
+      -- Preserve window size equality with (:help CTRL-W_=)
+      preserve_equality = false,
     },
-    lsp_blacklist = {
-      "null-ls",
-      "tailwindcss",
+    -- global, window
+    attach_mode = "window",
+    --- unfocus
+    --- switch_buffer
+    --- unsupported
+    close_automatic_events = {},
+    -- see :help SymbolKind
+    filter_kind = {
+      "Class",
+      "Constructor",
+      "Enum",
+      "Function",
+      "Interface",
+      "Module",
+      "Method",
+      "Struct",
     },
+    ignore = {
+      -- Ignore unlisted buffers. See :help buflisted
+      unlisted_buffers = false,
+      -- List of filetypes to ignore.
+      filetypes = vim.cfg.misc__ft_exclude,
+      -- Ignored buftypes.
+      -- Can be one of the following:
+      -- false or nil - No buftypes are ignored.
+      -- "special"    - All buffers other than normal, help and man page buffers are ignored.
+      -- table        - A list of buftypes to ignore. See :help buftype for the
+      --                possible values.
+      -- function     - A function that returns true if the buffer should be
+      --                ignored or false if it should not be ignored.
+      --                Takes two arguments, `bufnr` and `buftype`.
+      buftypes = "special",
+      -- Ignored wintypes.
+      -- Can be one of the following:
+      -- false or nil - No wintypes are ignored.
+      -- "special"    - All windows other than normal windows are ignored.
+      -- table        - A list of wintypes to ignore. See :help win_gettype() for the
+      --                possible values.
+      -- function     - A function that returns true if the window should be
+      --                ignored or false if it should not be ignored.
+      --                Takes two arguments, `winid` and `wintype`.
+      wintypes = "special",
+    },
+    float = {
+      -- Controls border appearance. Passed to nvim_open_win
+      border = vim.cfg.ui__float_border,
+    },
+    lsp = {
+      diagnostics_trigger_update = false,
+      update_when_errors = false,
+    }
   }
 }
 )
