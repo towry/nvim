@@ -54,39 +54,38 @@ return plug({
   },
   keys = {
     '<leader><space>',
-    -- TODO: clean up this mess.
-    '<leader>m,',
-    '<leader>m.',
-    { '<leader>mn', '<cmd>TrailBlazerMoveToNearest<cr>',       desc = 'trail nearest' },
-    '<leader>mt',
-    { '<leader>ma', add_trail_mark_stack,                      desc = 'trailblazer: add stack' },
-    { '<leader>md', delete_trail_mark_stack,                   desc = 'trailblazer: delete stack' },
-    { '<leader>mg', function() get_available_stacks(true) end, desc = 'trailblazer: get stacks' },
-    { '<leader>ms', '<Cmd>TrailBlazerSaveSession<CR>',         desc = 'trailblazer: save session' },
-    { '<leader>ml', '<Cmd>TrailBlazerLoadSession<CR>',         desc = 'trailblazer: load session' },
+    '<leader>v,',
+    '<leader>v.',
+    { '<leader>vn', '<cmd>TrailBlazerMoveToNearest<cr>',       desc = 'trail nearest' },
+    '<leader>vt',
+    { '<leader>va', add_trail_mark_stack,                      desc = 'trailblazer: add stack' },
+    { '<leader>vd', delete_trail_mark_stack,                   desc = 'trailblazer: delete stack' },
+    { '<leader>vg', function() get_available_stacks(true) end, desc = 'trailblazer: get stacks' },
+    { '<leader>vs', '<Cmd>TrailBlazerSaveSession<CR>',         desc = 'trailblazer: save session' },
+    { '<leader>vl', '<Cmd>TrailBlazerLoadSession<CR>',         desc = 'trailblazer: load session' },
   },
   init = function()
     local set = vim.keymap.set
-    set('n', '<leader>mb', '<cmd>TrailBlazerTrackBack<cr>', {
+    set('n', '<leader>vb', '<cmd>TrailBlazerTrackBack<cr>', {
       silent = false,
       desc = 'Trace back global'
     })
-    set('n', '<leader>m]', '<cmd>TrailBlazerPeekMoveNextDown %<cr>', {
+    set('n', '<leader>v]', '<cmd>TrailBlazerPeekMoveNextDown %<cr>', {
       silent = true,
       noremap = true,
       desc = 'Trail next in buf',
     })
-    set('n', '<leader>m[', '<cmd>TrailBlazerPeekMovePreviousUp %<cr>', {
+    set('n', '<leader>v[', '<cmd>TrailBlazerPeekMovePreviousUp %<cr>', {
       silent = true,
       noremap = true,
       desc = 'Trail pre in buf',
     })
-    set('n', '<leader>m9', '<cmd>TrailBlazerPeekMoveNextDown<cr>', {
+    set('n', '<leader>v9', '<cmd>TrailBlazerPeekMoveNextDown<cr>', {
       silent = true,
       noremap = true,
       desc = 'Trail next global',
     })
-    set('n', '<leader>m0', '<cmd>TrailBlazerPeekMovePreviousUp<cr>', {
+    set('n', '<leader>v0', '<cmd>TrailBlazerPeekMovePreviousUp<cr>', {
       silent = true,
       noremap = true,
       desc = 'Trail pre global',
@@ -143,15 +142,15 @@ return plug({
       nv = {
         motions = {
           new_trail_mark = '<leader><space>',
-          toggle_trail_mark_list = '<leader>mt',
+          toggle_trail_mark_list = '<leader>vt',
         },
         actions = {
           -- delete_all_trail_marks = '<A-L>',
           -- paste_at_last_trail_mark = '<A-p>',
           -- paste_at_all_trail_marks = '<A-P>',
           -- set_trail_mark_select_mode = '<A-t>',
-          switch_to_next_trail_mark_stack = '<leader>m.',
-          switch_to_previous_trail_mark_stack = '<leader>m,',
+          switch_to_next_trail_mark_stack = '<leader>v.',
+          switch_to_previous_trail_mark_stack = '<leader>v,',
           -- set_trail_mark_stack_sort_mode = '<A-s>',
         },
       },

@@ -1,4 +1,10 @@
 {
   "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
-  "workspace.checkThirdParty": false
+  "workspace": {
+    "library": [
+      "$VIMRUNTIME",
+      "$HOME/.local/share/nvim/lazy/telescope.nvim/lua",
+      "$HOME/.local/share/nvim/lazy/plenary.nvim/lua"
+    ]
+  }
 }

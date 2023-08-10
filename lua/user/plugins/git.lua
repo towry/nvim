@@ -35,10 +35,11 @@ plug({
   {
     'tpope/vim-fugitive',
     keys = {
-      { '<leader>gg', ":Git<cr>",               desc = "Fugitive Git" },
-      { '<leader>gG', ':tab Git<cr>',           desc = 'Fugitive Git in tab' },
-      { '<leader>ga', cmdstr([[!git add %:p]]), desc = "!Git add current" },
-      { '<leader>gA', cmdstr([[!git add .]]),   desc = "!Git add all" },
+      { '<leader>gg', ":Git<cr>",                desc = "Fugitive Git" },
+      { '<leader>gG', ':tab Git<cr>',            desc = 'Fugitive Git in tab' },
+      { '<leader>ga', cmdstr([[!git add %:p]]),  desc = "!Git add current" },
+      { '<leader>gA', cmdstr([[!git add .]]),    desc = "!Git add all" },
+      { '<leader>gP', cmdstr([[:Git push<CR>]]), desc = 'Git push' },
     },
     cmd = {
       'G',
@@ -78,7 +79,7 @@ plug({
     -- git runtimes. ft etc.
     'tpope/vim-git',
     event = { 'BufReadPre' },
-    enabled = true,
+    enabled = false,
     cond = function() return true end,
   },
 

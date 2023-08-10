@@ -29,5 +29,6 @@ require("plugin-extras.tools.profile")
 require("plugin-extras.tools.games")
 require('plugin-extras.ui.trail_blazer')
 require('plugin-extras.tools.wakatime')
+require('plugin-extras.tools.carbon')
 
 return require('userlib.runtime.pack').repos()
