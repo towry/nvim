@@ -284,7 +284,7 @@ plug({
   keys = {
     {
       '<leader>gc',
-      '<cmd>lua require("libs.hydra.git").open_git_conflict_hydra()<cr>',
+      '<cmd>lua require("userlib.hydra.git").open_git_conflict_hydra()<cr>',
       desc = 'Open git conflict menus',
     }
   },
