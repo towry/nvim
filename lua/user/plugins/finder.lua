@@ -129,7 +129,7 @@ plug({
   },
   cmd = { 'AerialToggle', 'AerialOpen', 'AerialClose' },
   opts = {
-    backends = { "treesitter", "lsp", "markdown", "man" },
+    backends = { "treesitter", "lsp" },
     layout = {
       -- These control the width of the aerial window.
       -- They can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
@@ -162,6 +162,14 @@ plug({
     close_automatic_events = {},
     -- see :help SymbolKind
     filter_kind = {
+      "Field",
+      "Constant",
+      "Enum",
+      "EnumMember",
+      "Event",
+      "Variable",
+      "Operator",
+      "TypeParameter",
       "Class",
       "Constructor",
       "Enum",
@@ -205,7 +213,10 @@ plug({
       diagnostics_trigger_update = false,
       update_when_errors = false,
     }
-  }
+  },
+  config = function(_, opts)
+    require('aerial').setup(opts)
+  end
 }
 )
 
