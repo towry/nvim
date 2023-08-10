@@ -276,9 +276,11 @@ plug({
 })
 
 plug({
-  'akinsho/git-conflict.nvim',
+  'pze/git-conflict.nvim',
+  dev = false,
   event = au.user_autocmds.FileOpenedAfter_User,
-  version = "v1.1.2",
+  -- version = "v1.1.2",
+  branch = "bugfix/58",
   keys = {
     {
       '<leader>gc',
