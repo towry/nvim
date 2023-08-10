@@ -127,7 +127,7 @@ function M.init_folds()
   vim.api.nvim_create_autocmd('FileType', {
     -- schedule_wrap is used to stop dlopen from crashing on MacOS
     callback = vim.schedule_wrap(function()
-      if not pcall(vim.treesitter.start) then
+      if not pcall(vim.treesitter.start) or vim.wo.diff then
         return
       end
 

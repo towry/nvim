@@ -79,7 +79,7 @@ plug({
     -- git runtimes. ft etc.
     'tpope/vim-git',
     event = { 'BufReadPre' },
-    enabled = false,
+    enabled = true,
     cond = function() return true end,
   },
 
