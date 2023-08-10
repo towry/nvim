@@ -29,6 +29,7 @@
   "flatten.nvim": { "branch": "main", "commit": "07e9496191653587336b4c8f8cab02e5c34c7c44" },
   "friendly-snippets": { "branch": "main", "commit": "bc38057e513458cb2486b6cd82d365fa294ee398" },
   "fzf": { "branch": "master", "commit": "84a9c2c1122470b0b67b8e20e074704539bc1fc4" },
+  "git-conflict.nvim": { "branch": "main", "commit": "8d962d83cae924a314965f738ed1e05a4000d682" },
   "gitsigns.nvim": { "branch": "main", "commit": "bae45ef449d8811061cc940459e70e883a3aa83a" },
   "guess-indent.nvim": { "branch": "main", "commit": "b8ae749fce17aa4c267eec80a6984130b94f80b2" },
   "harpoon": { "branch": "master", "commit": "21f4c47c6803d64ddb934a5b314dcb1b8e7365dc" },
