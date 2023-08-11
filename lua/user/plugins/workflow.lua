@@ -32,7 +32,7 @@ plug({
       'anuvyklack/middleclass',
     },
     enabled = true,
-    event = 'User LazyUIEnterOnce',
+    event = 'WinNew',
     opts = {
       ignore = {
         buftype = vim.cfg.misc__buf_exclude,
@@ -496,4 +496,12 @@ plug({
       on_success = nil,
     }
   }
+})
+
+plug({
+  'towry/window-bufstack.nvim',
+  cond = false,
+  dev = true,
+  opts = {},
+  lazy = false,
 })
