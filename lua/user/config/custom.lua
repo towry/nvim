@@ -1,6 +1,6 @@
 local user_cfg = {
-  ui__theme_name = "zenburn",
-  workbench__lualine_theme = 'zenburn',
+  ui__theme_name = "nightfox",
+  workbench__lualine_theme = 'nightfox',
   --- treesitter
   lang__treesitter_plugin_rainbow = false,
 }

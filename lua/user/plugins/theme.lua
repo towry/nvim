@@ -67,7 +67,7 @@ plug({
   dependencies = {
     'rktjmp/lush.nvim'
   },
-  lazy = not string.match(vim.cfg.ui__theme_name, 'bones'),
+  lazy = (not string.match(vim.cfg.ui__theme_name, 'bones') and (not string.match(vim.cfg.ui__theme_name, 'zen'))),
   priority = 1000,
   config = false,
   init = function()
@@ -80,10 +80,9 @@ plug({
 })
 
 plug({
-  'phha/zenburn.nvim',
-  lazy = not string.match(vim.cfg.ui__theme_name, 'zenburn'),
+  'EdenEast/nightfox.nvim',
+  lazy = not string.match(vim.cfg.ui__theme_name, 'fox'),
   priority = 1000,
   opts = {
-    theme = "zenburn",
   }
 })
