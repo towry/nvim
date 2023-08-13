@@ -78,3 +78,12 @@ plug({
     }
   end,
 })
+
+plug({
+  'phha/zenburn.nvim',
+  lazy = not string.match(vim.cfg.ui__theme_name, 'zenburn'),
+  priority = 1000,
+  opts = {
+    theme = "zenburn",
+  }
+})
