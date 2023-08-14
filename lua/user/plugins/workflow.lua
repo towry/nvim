@@ -118,9 +118,15 @@ plug({
       {
         '<S-q>',
         function()
+          local mb = require('mini.bufremove')
           local bufstack = require('window-bufstack.bufstack')
           bufstack.ignore_next()
-          vim.cmd('bdelete')
+          --- buffer is displayed in other window.
+          if #vim.fn.win_findbuf(vim.fn.bufnr('%')) > 1 then
+            mb.unshow_in_window(0)
+          else
+            mb.delete(0)
+          end
           local next_buf = bufstack.pop()
           if not next_buf then
             vim.cmd('q')
@@ -483,6 +489,7 @@ plug({
 plug({
   'towry/window-bufstack.nvim',
   cond = true,
+  version = "v1.0.2",
   dev = false,
   opts = {},
   lazy = false,

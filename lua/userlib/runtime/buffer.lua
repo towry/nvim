@@ -214,4 +214,12 @@ function M.adjust_split_height(min_height, max_height)
   vim.api.nvim_win_set_height(0, math.max(math.min(vim.fn.line('$'), max_height), min_height))
 end
 
+---@param bufnr? number
+function M.buffer_display_in_other_window(bufnr)
+  if not bufnr then
+    bufnr = vim.api.nvim_get_current_buf()
+  end
+  return #vim.fn.win_findbuf(bufnr) > 1
+end
+
 return M
