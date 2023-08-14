@@ -50,6 +50,7 @@
   "middleclass": { "branch": "master", "commit": "9fab4d5bca67262614960960ca35c4740eb2be2c" },
   "mini.ai": { "branch": "main", "commit": "5218ea75e635df78a807bc9d5a7162594fb76d02" },
   "mini.bufremove": { "branch": "main", "commit": "c0c3939422d8cfd65b9225c4456e28acbe94c28f" },
+  "mini.doc": { "branch": "main", "commit": "fad0db8e0a7f490b3c2c9df824d7c296dc77f85e" },
   "mini.files": { "branch": "main", "commit": "dea80a8147aa4e3025c34d2e2aaa6f2aeb7b21dd" },
   "mini.indentscope": { "branch": "main", "commit": "f60e9b51a6214c73a170ffc5445ce91560981031" },
   "mini.starter": { "branch": "main", "commit": "c7e027558477838eac7109d8576ff1f2d9804845" },

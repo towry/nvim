@@ -494,3 +494,10 @@ plug({
   opts = {},
   lazy = false,
 })
+
+plug({
+  'echasnovski/mini.doc',
+  version = '*',
+  ft = "lua",
+  config = true,
+})
