@@ -218,6 +218,7 @@ return plug({
           end)
         end, keyopts)
         set('n', 'g.', toggle_dotfiles, keyopts)
+        set('n', '<ESC>', MF.close, keyopts)
         set('n', '<C-c>', function()
           MF.close()
         end, keyopts)

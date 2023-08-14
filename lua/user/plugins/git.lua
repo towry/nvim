@@ -79,7 +79,7 @@ plug({
     -- git runtimes. ft etc.
     'tpope/vim-git',
     event = { 'BufReadPre' },
-    enabled = false,
+    enabled = true,
     cond = function() return true end,
   },
 
@@ -272,5 +272,47 @@ plug({
         end
       end,
     }
+  end,
+})
+
+plug({
+  'pze/git-conflict.nvim',
+  dev = false,
+  event = au.user_autocmds.FileOpenedAfter_User,
+  -- version = "v1.1.2",
+  branch = "bugfix/58",
+  keys = {
+    {
+      '<leader>gc',
+      '<cmd>lua require("userlib.hydra.git").open_git_conflict_hydra()<cr>',
+      desc = 'Open git conflict menus',
+    }
+  },
+  cmd = {
+    'GitConflictChooseBoth',
+    'GitConflictNextConflict',
+    'GitConflictChooseOurs',
+    'GitConflictPrevConflict',
+    'GitConflictChooseTheirs',
+    'GitConflictListQf',
+    'GitConflictChooseNone',
+    'GitConflictRefresh',
+  },
+  config = function()
+    local conflict = require('git-conflict')
+
+    conflict.setup({
+      default_mappings = true,    -- disable buffer local mapping created by this plugin
+      default_commands = true,
+      disable_diagnostics = true, -- This will disable the diagnostics in a buffer whilst it is conflicted
+      highlights = {              -- They must have background color, otherwise the default color will be used
+        -- incoming = 'DiffText',
+        -- current = 'DiffAdd',
+      },
+    })
+
+    vim.schedule(function()
+      vim.cmd('GitConflictRefresh')
+    end)
   end,
 })
