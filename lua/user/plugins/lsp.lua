@@ -190,6 +190,14 @@ plug({
         border = vim.cfg.ui__float_border,
       },
     }
-  }
+  },
 
+  {
+    'Mofiqul/trld.nvim',
+    event = 'LspAttach',
+    opts = {
+      position = 'top',
+      auto_cmds = true,
+    }
+  }
 })

@@ -85,12 +85,12 @@ function M.setup()
     signs = signs == false and false or true,
     underline = true,
     update_in_insert = false,
-    -- virtual_text = false,
-    virtual_text = {
-      severity = vim.diagnostic.severity.ERROR,
-      spacing = 1,
-      prefix = '■',
-    },
+    virtual_text = false,
+    -- virtual_text = {
+    --   severity = vim.diagnostic.severity.ERROR,
+    --   spacing = 1,
+    --   prefix = '■',
+    -- },
   })
 
   -- vim.diagnostic.handlers.underline = {
