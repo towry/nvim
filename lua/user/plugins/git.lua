@@ -149,6 +149,21 @@ plug({
     config = function(_, opts)
       require('diffview').setup(opts)
     end,
+    init = function()
+      au.define_autocmd('BufEnter', {
+        pattern = 'diffview://*',
+        group = 'diffview_bindings',
+        callback = function(args)
+          local buf = args.buf
+          local set = require('userlib.runtime.keymap').map_buf_thunk(buf)
+          set('n', '<S-q>', function()
+            require("userlib.git.utils").close_git_views()
+          end, {
+            desc = 'quit diffview',
+          })
+        end,
+      })
+    end,
   },
 
   {
