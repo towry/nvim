@@ -31,7 +31,7 @@ return plug({
           new_section("Quit current", "q", "Built-in"),
         },
         content_hooks = {
-          starter.gen_hook.adding_bullet(pad .. "░ ", false),
+          starter.gen_hook.adding_bullet(pad .. "⦿ ", false),
           starter.gen_hook.aligning("left", "top"),
         },
         -- remove number from query since we need it as v:count
