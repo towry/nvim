@@ -41,7 +41,7 @@ function M.init_edit()
   o.incsearch = true                               --- Start searching before pressing enter
   o.switchbuf = 'usetab'                           -- Use already opened buffers when switching
   o.diffopt:append { "algorithm:histogram", "foldcolumn:0", "vertical", "linematch:50" }
-  o.shellcmdflag = '-ic'                           --- Make shell alias works.
+  -- o.shellcmdflag = '-ic' --- Make shell alias works, has bugs.
 end
 
 function M.init_interface()
