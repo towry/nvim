@@ -142,6 +142,18 @@ plug({
         desc = "Flash",
       },
       {
+        "<C-v>",
+        mode = { "n" },
+        function()
+          require("flash").jump({
+            search = { mode = "search", max_length = 0 },
+            label = { after = { 0, 0 } },
+            pattern = "\\(^\\s\\+\\)\\@<=\\S",
+          })
+        end,
+        desc = "Flash jump to line",
+      },
+      {
         ".s",
         mode = { "n", "x", "o" },
         function()
