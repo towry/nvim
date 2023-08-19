@@ -41,7 +41,7 @@ function M.init_edit()
   o.incsearch = true                               --- Start searching before pressing enter
   o.switchbuf = 'usetab'                           -- Use already opened buffers when switching
   o.diffopt:append { "algorithm:histogram", "foldcolumn:0", "vertical", "linematch:50" }
-  o.shellcmdflag = '-ic'                           --- Make shell alias works.
+  -- o.shellcmdflag = '-ic' --- Make shell alias works, has bugs.
 end
 
 function M.init_interface()
@@ -89,6 +89,8 @@ function M.init_interface()
   }
   vim.o.statuscolumn =
   '%s%=%{v:relnum?v:relnum:v:lnum} %{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "" : "") : "│") : "│" } '
+  vim.o.statuscolumn =
+  '%s%=%{v:lnum} %{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "" : "") : "│") : "│" } '
   o.laststatus       = 3 --- Have a global statusline at the bottom instead of one for each window
   o.shortmess:append({ W = true, I = true, c = true, F = true })
   if vim.fn.has('nvim-0.9.0') == 1 then

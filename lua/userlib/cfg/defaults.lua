@@ -46,7 +46,7 @@ return {
   runtime__python3_host_prog = '$HOME/.pyenv/shims/python',
   ---editor stuff
   --enable relative number or not.
-  editor__relative_number = true,
+  editor__relative_number = false,
   editor__highlight_yanked = true,
   editor__terminal_auto_insert = true,
   editor__jump_lastline_enable = true,

@@ -124,20 +124,24 @@ plug({
   'stevearc/aerial.nvim',
   keys = {
     { '<leader>/o', '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
-    -- <CMD-o> open the outline.
+    -- <CMD-l> open the outline.
     { '<D-l>',      '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
   },
   cmd = { 'AerialToggle', 'AerialOpen', 'AerialClose' },
   opts = {
-    backends = { "treesitter", "lsp" },
+    backends = {
+      ['_'] = { "lsp", "treesitter", "man", "markdown" },
+      typescript = { "lsp", "treesitter" },
+      typescriptreact = { "lsp", "treesitter" },
+    },
     layout = {
       -- These control the width of the aerial window.
       -- They can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
       -- min_width and max_width can be a list of mixed types.
       -- max_width = {40, 0.2} means "the lesser of 40 columns or 20% of total"
-      max_width = { 80, 0.4 },
+      max_width = 0.5,
       width = nil,
-      min_width = 10,
+      min_width = 30,
       -- key-value pairs of window-local options for aerial window (e.g. winhl)
       win_opts = {},
       -- Determines the default direction to open the aerial window. The 'prefer'
@@ -152,10 +156,10 @@ plug({
       -- When the symbols change, resize the aerial window (within min/max constraints) to fit
       resize_to_content = true,
       -- Preserve window size equality with (:help CTRL-W_=)
-      preserve_equality = false,
+      preserve_equality = true,
     },
     -- global, window
-    attach_mode = "window",
+    attach_mode = "global",
     --- unfocus
     --- switch_buffer
     --- unsupported
@@ -170,6 +174,7 @@ plug({
       "Variable",
       "Operator",
       "TypeParameter",
+      "Type",
       "Class",
       "Constructor",
       "Enum",
@@ -179,6 +184,24 @@ plug({
       "Method",
       "Struct",
     },
+    treesitter = {
+      experimental_selection_range = true,
+    },
+    post_parse_symbol = function(bufnr, item, ctx)
+      if ctx.backend_name == "treesitter" and (ctx.lang == "typescript" or ctx.lang == "tsx") then
+        return true
+      end
+      return true
+    end,
+    get_highlight = function(symbol, is_icon)
+      if symbol.scope == "private" then
+        return "AerialPrivate"
+      end
+    end,
+    autojump = true,
+    close_on_select = true,
+    highlight_on_hover = true,
+    show_guides = true,
     ignore = {
       -- Ignore unlisted buffers. See :help buflisted
       unlisted_buffers = false,
@@ -216,6 +239,7 @@ plug({
   },
   config = function(_, opts)
     require('aerial').setup(opts)
+    vim.api.nvim_set_hl(0, 'AerialPrivate', { default = true, italic = true })
   end
 }
 )
