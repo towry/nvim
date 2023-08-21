@@ -45,9 +45,11 @@ plug({
     config = function(_, opts)
       require('windows').setup(opts)
 
-      if vim.cfg.runtime__starts_in_buffer and vim.wo.diff then
-        vim.cmd("WindowsEqualize")
-      end
+      vim.schedule(function()
+        if vim.cfg.runtime__starts_in_buffer and vim.wo.diff then
+          vim.cmd("WindowsEqualize")
+        end
+      end)
     end,
     lazy = true,
     cmd = {
