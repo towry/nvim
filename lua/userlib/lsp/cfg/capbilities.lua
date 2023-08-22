@@ -8,7 +8,7 @@ return function(default_capabilities)
   }
   capabilities.workspace = {
     didChangeWatchedFiles = {
-      dynamicRegistration = true,
+      dynamicRegistration = false,
     }
   }
 
