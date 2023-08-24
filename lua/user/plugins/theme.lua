@@ -7,6 +7,8 @@ plug({
   enabled = vim.cfg.ui__theme_name == 'sonokai',
   init = function()
     vim.g.sonokai_style = "maia"
+    vim.g.sonokai_menu_selection_background = "green"
+    vim.g.sonokai_diagnostic_text_highlight = 1
   end
 })
 
