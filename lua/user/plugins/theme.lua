@@ -2,22 +2,11 @@ local plug = require('userlib.runtime.pack').plug
 
 ----- everforest
 plug({
-  'sainnhe/everforest',
+  'sainnhe/sonokai',
   event = 'User LazyTheme',
-  enabled = vim.cfg.ui__theme_name == 'everforest',
+  enabled = vim.cfg.ui__theme_name == 'sonokai',
   init = function()
-    vim.g.everforest_background = 'hard'
-    vim.g.everforest_ui_contrast = 'high'
-    vim.g.everforest_better_performance = 0
-    vim.g.everforest_enable_italic = true
-    vim.g.everforest_disable_italic_comment = false
-    vim.g.everforest_transparent_background = false
-    vim.g.everforest_dim_inactive_windows = false
-    vim.g.everforest_sign_column_background = 'none'  -- "none" | "grey"
-    vim.g.everforest_diagnostic_virtual_text = 'grey' -- "grey" | "colored"
-    vim.g.everforest_diagnostic_text_highlight = true
-    vim.g.everforest_diagnostic_line_highlight = true
-    vim.g.everforest_current_word = 'underline'
+    vim.g.sonokai_style = "maia"
   end
 })
 

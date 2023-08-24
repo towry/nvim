@@ -1,6 +1,6 @@
 local user_cfg = {
-  ui__theme_name = "everforest",
-  workbench__lualine_theme = 'everforest',
+  ui__theme_name = 'sonokai',
+  workbench__lualine_theme = 'sonokai',
   --- treesitter
   lang__treesitter_plugin_rainbow = false,
 }
