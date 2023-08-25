@@ -27,7 +27,6 @@ M.project_files = function(opts)
   local devicons = require('nvim-web-devicons')
   local def_icon = devicons.get_icon('fname', { default = true })
   local iconwidth = strings.strdisplaywidth(def_icon)
-  local level_up = vim.v.count
 
   local map_i_actions = function(_, map)
     map('i', '<C-o>', function(prompt_bufnr)
@@ -83,7 +82,7 @@ M.project_files = function(opts)
       local icon, iconhl = utils.get_devicons(tail_raw)
 
       return displayer({
-        { icon, iconhl },
+        { icon,            iconhl },
         tail,
         { path_to_display, 'TelescopeResultsComment' },
       })
@@ -93,7 +92,7 @@ M.project_files = function(opts)
   ---/// end item stylish
 
   if opts and opts.oldfiles then
-    opts.results_title = '  Recent files: '
+    opts.results_title = ' Recent files:'
     opts.include_current_session = true
     --- we want recent files inside monorepo root folder, not a sub project root.
     --- see https://github.com/nvim-telescope/telescope.nvim/blob/276362a8020c6e94c7a76d49aa00d4923b0c02f3/lua/telescope/builtin/__internal.lua#L533C61-L533C61
@@ -118,7 +117,7 @@ M.project_files = function(opts)
     return is_git_ok
   end)()
   if not ok then
-    opts.results_title = '  All Files: '
+    opts.results_title = ' All Files:'
     require('telescope.builtin').find_files(opts)
   end
 end
@@ -319,9 +318,9 @@ function M.gen_from_buffer(opts)
     })
 
     return displayer({
-      { entry.bufnr, 'TelescopeResultsNumber' },
+      { entry.bufnr,     'TelescopeResultsNumber' },
       { entry.indicator, 'TelescopeResultsComment' },
-      { icon, hl_group },
+      { icon,            hl_group },
       bufname_tail,
       { path_to_display .. ':' .. entry.lnum, 'TelescopeResultsComment' },
     })

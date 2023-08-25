@@ -21,8 +21,8 @@ plug({
       }
     },
     config = function()
-      vim.cmd('hi! link HydraHint NormalFloat')
-      vim.cmd('hi! link HydraBorder NormalFloat')
+      -- vim.cmd('hi! link HydraHint NormalFloat')
+      -- vim.cmd('hi! link HydraBorder NormalFloat')
     end,
   },
 
@@ -44,10 +44,16 @@ plug({
     },
     config = function(_, opts)
       require('windows').setup(opts)
-
-      if vim.cfg.runtime__starts_in_buffer and vim.wo.diff then
-        vim.cmd("WindowsEqualize")
-      end
+    end,
+    init = function()
+      au.define_autocmd('VimEnter', {
+        once = true,
+        callback = function()
+          if vim.cfg.runtime__starts_in_buffer and vim.wo.diff then
+            vim.cmd("WindowsEqualize")
+          end
+        end,
+      })
     end,
     lazy = true,
     cmd = {

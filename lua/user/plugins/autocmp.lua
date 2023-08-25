@@ -196,7 +196,7 @@ pack.plug({
             else
               fallback()
             end
-          end), -- invoke complete
+          end),                           -- invoke complete
           ['<C-s>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
           ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
           ['<C-e>'] = cmp.mapping({
@@ -286,13 +286,13 @@ pack.plug({
         },
         -- You should specify your *installed* sources.
         sources = {
-          { name = 'nvim_lsp', priority = 50, max_item_count = 6 },
+          { name = 'nvim_lsp',                priority = 50, max_item_count = 6 },
           -- { name = "copilot",                 priority = 30, max_item_count = 4 },
-          { name = 'codeium', priority = 7, max_item_count = 4 },
+          { name = 'codeium',                 priority = 7,  max_item_count = 4 },
           { name = 'nvim_lsp_signature_help', priority = 40, max_item_count = 3 },
-          { name = 'npm', priority = 3 },
+          { name = 'npm',                     priority = 3 },
           -- { name = 'cmp_tabnine',             priority = 6,  max_item_count = 3 },
-          { name = 'luasnip', priority = 6, max_item_count = 2 },
+          { name = 'luasnip',                 priority = 6,  max_item_count = 2 },
           {
             name = 'buffer',
             priority = 6,
@@ -301,8 +301,8 @@ pack.plug({
             max_item_count = 5,
           },
           { name = 'nvim_lua', priority = 5, ft = 'lua' },
-          { name = 'path', priority = 4 },
-          { name = 'calc', priority = 3 },
+          { name = 'path',     priority = 4 },
+          { name = 'calc',     priority = 3 },
         },
         sorting = {
           comparators = {
@@ -399,7 +399,6 @@ pack.plug({
   }
 })
 
-
 ---autopairs
 pack.plug({
   enabled = true,
@@ -414,7 +413,7 @@ pack.plug({
       disable_filetype = {
         'TelescopePrompt',
       },
-      ignored_next_char = "[%w%.{(\"']",
+      ignored_next_char = "[%S%w%.{(\"']",
       disable_in_macro = true,
       disable_in_replace_mode = true,
       enable_check_bracket_line = true,

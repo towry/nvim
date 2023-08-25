@@ -20,7 +20,7 @@ local function setup(lazy_opts, opts)
     spec = {},
     defaults = { lazy = true },
     dev = { patterns = is_window and {} or {}, path = is_window and "" or "~/workspace/git-repos" },
-    install = { missing = false, colorscheme = { vim.cfg.ui__theme_name } },
+    install = { missing = false, colorscheme = { "slate" } },
     ui = {
       icons = {
         lazy = ' ',
