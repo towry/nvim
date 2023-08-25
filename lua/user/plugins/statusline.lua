@@ -139,15 +139,13 @@ plug({
       options = {
         theme = vim.cfg.workbench__lualine_theme,
         globalstatus = true,
-        -- component_separators = '│',
-        component_separators = '',
-        section_separators = { left = '', right = '' },
+        component_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
         disabled_filetypes = { winbar = vim.cfg.misc__ft_exclude, statusline = { 'dashboard', 'lazy', 'alpha' } },
       },
       winbar = {
         lualine_a = {
           {
-            separator = { right = '', left = '' },
             left_padding = 2,
             'filename',
             path = 1,
@@ -192,7 +190,7 @@ plug({
         lualine_a = {
           { 'filetype', colored = true, icon_only = true },
           {
-            separator = { left = '', right = '' },
+            -- separator = { left = '', right = '' },
             left_padding = 2,
             'filename',
             path = 1,
@@ -330,38 +328,6 @@ plug({
         lualine_z = {},
       },
     })
-  end,
-})
-
-plug({
-  'pze/stat.nvim',
-  enabled = not enable_lualine,
-  event = { 'User LazyUIEnterOncePost', 'User OnLeaveDashboard' },
-  config = function(_, opts)
-    local Stat = require('stat')
-    local ___ = Stat.___
-
-    Stat.setup(vim.tbl_extend("force", {
-      winbar = {},
-      statusline = {
-        Stat.mod.mode,
-        Stat.mod.filetype,
-        Stat.mod.git_diff,
-        ___,
-      },
-      theme = {
-        ["N"] = { fg = "#2d353b", bg = "#83c092" },
-        ["I"] = { fg = "#2d353b", bg = "#7fbbb3" },
-        ["V"] = { fg = "#2d353b", bg = "#dbbc7f" },
-        ["C"] = { fg = "#2d353b", bg = "#d699b6" },
-        ["T"] = { fg = "#2d353b", bg = "#a7c080" },
-        ["S"] = { fg = "#2d353b", bg = "#e67e80" },
-        ["File"] = { fg = "#d3c6aa", bg = "#343f44" },
-        ["Filetype"] = { fg = "#d3c6aa", bg = "#272e33" },
-        ["GitDiffDeletion"] = { fg = "#e67e80", bg = "#232a2e" },
-        ["GitDiffInsertion"] = { fg = "#a7c080", bg = "#232a2e" },
-      },
-    }, opts or {}))
   end,
 })
 
