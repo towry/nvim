@@ -21,12 +21,11 @@ plug({
     keys = {
       -- { "<Enter>",    desc = "Init Increment selection" },
       -- { "<Enter>",    desc = "node node incremental selection",      mode = "x" },
-      { "<BS>",       desc = "Decrement selection",                  mode = "x" },
-      { '<leader>cr', desc = 'Smart rename/nvim-treesitter-refactor' },
+      { "<BS>", desc = "Decrement selection", mode = "x" },
     },
     dependencies = {
       "windwp/nvim-ts-autotag",
-      'yioneko/nvim-yati',
+      "andymass/vim-matchup",
       {
         'nvim-treesitter/nvim-treesitter-textobjects',
         init = function()
@@ -47,16 +46,15 @@ plug({
           end
         end,
       },
-      'nvim-treesitter/nvim-treesitter-refactor',
       -- setting the commentstring option based on the cursor location in the file. The location is checked via treesitter queries.
       -- Vue files can have many different sections, each of which can have a different style for comments.
       'JoosepAlviste/nvim-ts-context-commentstring',
-      'HiPhish/nvim-ts-rainbow2',
-      -- vai to select current context!
-      -- 'kiyoon/treesitter-indent-object.nvim',
     },
     init = function()
-      vim.opt.smartindent = false
+      -- vim.opt.smartindent = false
+      vim.g.matchup_matchparen_offscreen = {
+        method = 'popup',
+      }
     end,
     config = function()
       local Buffer = require('userlib.runtime.buffer')
@@ -97,65 +95,18 @@ plug({
           },
         },
         indent = {
-          enable = not vim.cfg.lang__treesitter_plugin_yati,
-          disable = disabled,
-        },
-        yati = {
-          -- https://github.com/yioneko/nvim-yati
-          enable = vim.cfg.lang__treesitter_plugin_yati,
-          disable = disabled,
-          default_lazy = true,
-          default_fallback = 'auto',
-          -- if ts.indent is truee, use below to suppress conflict warns.
-          suppress_conflict_warning = true,
+          enable = true,
         },
         context_commentstring = {
           enable = vim.cfg.lang__treesitter_plugin_context_commentstring,
-          enable_autocmd = false,
+          -- enable_autocmd = false,
         },
-        rainbow = {
-          disable = disabled,
-          enable = vim.cfg.lang__treesitter_plugin_rainbow,
-          -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
-          query = 'rainbow-parens',
-          -- Highlight the entire buffer all at once
-          strategy = require('ts-rainbow').strategy.global,
-          max_file_lines = 8000,
+        autotag = {
+          enable = true,
         },
-        refactor = {
-          --- cause slowness.
-          highlight_definitions = {
-            is_supported = function(lang)
-              local queries = require("nvim-treesitter.query")
-              return not disabled(lang, vim.api.nvim_get_current_buf()) and queries.has_locals(lang)
-            end,
-            enable = false,
-            -- Set to false if you have an `updatetime` of ~100.
-            clear_on_cursor_move = true,
-          },
-          highlight_current_scope = {
-            enable = false,
-            is_supported = function(lang)
-              local queries = require("nvim-treesitter.query")
-              return not disabled(lang, vim.api.nvim_get_current_buf()) and queries.has_locals(lang)
-            end,
-          },
-          smart_rename = {
-            enable = false,
-            keymaps = {
-              smart_rename = '<leader>cr',
-            },
-          },
-          navigation = {
-            enable = false,
-            keymaps = {
-              -- goto_definition = "gd",
-              -- list_definitions = "gnD",
-              -- list_definitions_toc = "gO",
-              -- goto_next_usage = "<a-*>",
-              -- goto_previous_usage = "<a-#>",
-            },
-          },
+        matchup = {
+          enable = true,
+          include_match_words = true,
         },
         textobjects = {
           move = {
@@ -179,36 +130,10 @@ plug({
               ['[M'] = '@class.outer',
             },
           },
-          select = {
-            disable = disabled,
-            enable = true,
-            -- Automatically jump forward to textobj, similar to targets.vim
-            lookahead = true,
-            keymaps = {
-              -- You can use the capture groups defined in textobjects.scm
-              ['af'] = '@function.outer',
-              ['if'] = '@function.inner',
-              ['ac'] = '@class.outer',
-              ['ic'] = '@class.inner',
-            },
-          },
           swap = {
             enable = false,
-            swap_next = {
-              -- FIXME: keymap
-              -- ["<S-~>"] = "@parameter.inner",
-            },
           },
-        },
-        textsubjects = {
-          disable = disabled,
-          -- has issues.
-          enable = vim.cfg.lang__treesitter_plugin_textsubjects,
-          lookahead = false,
-          keymaps = {
-            ['<cr>'] = 'textsubjects-smart', -- works in visual mode
-          },
-        },
+        }, -- end textobjects
       })
     end
   },
@@ -424,7 +349,8 @@ plug({
     },
     keys = {
       {
-        '<leader>fc', '<cmd>lua require("treesitter-context").go_to_context()<cr>',
+        '<leader>fc',
+        '<cmd>lua require("treesitter-context").go_to_context()<cr>',
         desc = 'Treesitter Context: Go to context'
       }
     },
