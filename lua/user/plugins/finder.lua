@@ -478,14 +478,14 @@ plug({
     au.do_useraucmd(au.user_autocmds.TelescopeConfigDone_User)
 
     -- colorscheme
-    au.register_event(au.events.AfterColorschemeChanged, {
-      name = "telescope_ui",
-      immediate = true,
-      callback = function()
-        vim.cmd('hi! link TelescopeNormal NormalFloat')
-        vim.cmd('hi! link TelescopeBorder NormalFloat')
-      end
-    })
+    -- au.register_event(au.events.AfterColorschemeChanged, {
+    --   name = "telescope_ui",
+    --   immediate = true,
+    --   callback = function()
+    --     vim.cmd('hi! link TelescopeNormal NormalFloat')
+    --     vim.cmd('hi! link TelescopeBorder NormalFloat')
+    --   end
+    -- })
   end,
   opts = function()
     -- local au = require('userlib.runtime.au')
@@ -510,7 +510,7 @@ plug({
         borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
         wrap_results = false,
         --- give some opacity so we can see the window picker marks.
-        winblend = 10,
+        winblend = 0,
         cache_picker = {
           num_pickers = 5,
         },
@@ -538,8 +538,8 @@ plug({
         ---@see https://github.com/nvim-telescope/telescope.nvim/issues/522#issuecomment-1107441677
         file_ignore_patterns = { "node_modules/", '.turbo/', 'dist', '.git/' },
         path_display = { 'truncate' },
-        -- layout_strategy = 'flex',
-        layout_strategy = "vertical",
+        layout_strategy = 'flex',
+        -- layout_strategy = "vertical",
         file_sorter = require('telescope.sorters').get_fzy_sorter,
         prompt_prefix = '',
         color_devicons = true,

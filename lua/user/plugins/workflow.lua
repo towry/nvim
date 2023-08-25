@@ -21,8 +21,8 @@ plug({
       }
     },
     config = function()
-      vim.cmd('hi! link HydraHint NormalFloat')
-      vim.cmd('hi! link HydraBorder NormalFloat')
+      -- vim.cmd('hi! link HydraHint NormalFloat')
+      -- vim.cmd('hi! link HydraBorder NormalFloat')
     end,
   },
 

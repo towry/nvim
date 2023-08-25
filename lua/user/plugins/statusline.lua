@@ -32,6 +32,12 @@ local tabs_nrto_icons = {
   ['9'] = '❾ ',
   ['10'] = '❿ ',
 }
+local cwd_component = {
+  function()
+    return vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
+  end,
+  icon = ' ',
+}
 local tabs_component = {
   'tabs',
   max_length = vim.o.columns / 3,
@@ -51,7 +57,6 @@ local tabs_component = {
   end,
 }
 
--- TODO: move cwd component to a module.
 
 plug({
   'nvim-lualine/lualine.nvim',
@@ -81,14 +86,9 @@ plug({
     local dashboard_extension  = {
       sections = {
         lualine_a = {
-          {
-            function()
-              return vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
-            end,
-            icon = ' ',
-          }
         },
         lualine_b = {
+          cwd_component,
           git_branch,
         },
         lualine_c = {
@@ -103,12 +103,6 @@ plug({
       sections = {
         lualine_a = {
           "mode",
-          {
-            function()
-              return vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
-            end,
-            icon = ' ',
-          },
         },
         lualine_b = {
           tabs_component,
@@ -206,14 +200,9 @@ plug({
       sections = {
         lualine_a = {
           { 'mode', fmt = function(str) return str:sub(1, 1) end },
-          {
-            function()
-              return vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
-            end,
-            icon = ' ',
-          }
         },
         lualine_b = {
+          cwd_component,
           'searchcount',
           git_branch,
         },
