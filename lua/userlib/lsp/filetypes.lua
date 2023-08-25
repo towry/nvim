@@ -17,7 +17,7 @@ M.config = {
   },
   ['typescript'] = {
     patterns = { '*.ts', '*.tsx', '*.js', '*.jsx' },
-    lspconfig = { 'tsserver', 'eslint' },
+    lspconfig = { 'volar', 'eslint' },
     formatter = 'prettier',
     treesitter = { 'typescript', 'javascript', 'tsx' },
   },
@@ -51,10 +51,6 @@ M.config = {
     formatter = 'shfmt',
     treesitter = { 'bash' },
   },
-  ['swift'] = {
-    lspconfig = 'sourcekit',
-    treesitter = false, -- requires treesitter-cli and only really works on mac
-  },
   ['nix'] = {
     lspconfig = 'nil_ls',
     linter = 'statix',
@@ -62,10 +58,6 @@ M.config = {
   },
   ['toml'] = {
     lspconfig = 'taplo',
-  },
-  ['fish'] = {
-    formatter = 'fish_indent',
-    linter = 'fish',
   },
 }
 -- these all use the same config
