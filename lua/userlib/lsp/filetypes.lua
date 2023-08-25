@@ -28,6 +28,7 @@ M.config = {
     treesitter = { 'lua', 'luadoc' },
   },
   ['rust'] = {
+    ignore = true,
     patterns = { '*.rs' },
     lspconfig = 'rust_analyzer',
   },

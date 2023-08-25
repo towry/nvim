@@ -52,11 +52,18 @@ plug({
         debounce_text_changes = 600,
         allow_incremental_sync = false,
       }
+      local efm_setup_done = false
 
       default_lspconfig_ui_options()
-      -- loop over lsp__enable_servers list
-      for _, server in ipairs(vim.cfg.lsp__enable_servers) do
-        local load_ok, server_rc = pcall(require, servers_path .. server)
+
+      local function setup_lsp_for_filetype(filetype, server_name)
+        -- setup efmls if not done already
+        if not efm_setup_done and require('userlib.lsp.filetypes').uses_efm(filetype) then
+          efm_setup_done = true
+          require('lspconfig').efm.setup(require('userlib.lsp.filetypes').efmls_config(capabilities))
+        end
+
+        local load_ok, server_rc = pcall(require, servers_path .. server_name)
         if type(server_rc) == 'function' then
           server_rc({
             flags = lsp_flags,
@@ -75,6 +82,50 @@ plug({
             capabilities,
             handlers,
           })
+        end
+      end
+  
+      local function current_buf_matches_file_patterns(patterns)
+        local bufname = vim.api.nvim_buf_get_name(0)
+        for _, pattern in ipairs(patterns) do
+          if string.match(bufname, string.format('.%s', pattern)) then
+            return true
+          end
+        end
+  
+        return require('userlib.lsp.filetypes').uses_efm(vim.bo.ft)
+      end
+
+      local function setup_server(filetype, file_patterns, server_name)
+        -- since we're lazy loading lspconfig itself,
+        -- check if we need to start LSP immediately or not
+        if current_buf_matches_file_patterns(file_patterns) then
+          setup_lsp_for_filetype(filetype, server_name)
+        else
+          -- if not, set up an autocmd to lazy load the rest
+          vim.api.nvim_create_autocmd('BufReadPre', {
+            callback = function()
+              setup_lsp_for_filetype(filetype, server_name)
+            end,
+            pattern = file_patterns,
+            once = true,
+          })
+        end
+      end
+
+      for filetype, filetype_config in pairs(require('userlib.lsp.filetypes').config) do
+        if not filetype_config.ignore then
+          local file_patterns = filetype_config.patterns or { string.format('*.%s', filetype) }
+          local server_name = filetype_config.lspconfig
+          if file_patterns and server_name then
+            if type(server_name) == 'table' then
+              for _, server in ipairs(server_name) do
+                setup_server(filetype, file_patterns, server)
+              end
+            else
+              setup_server(filetype, file_patterns, server_name)
+            end
+          end
         end
       end
 
