@@ -1,6 +1,7 @@
+-- https://github.com/mrjones2014/dotfiles/blob/master/nvim/lua/my/configure/lspconfig.lua
+
 local plug = require('userlib.runtime.pack').plug
 local au = require('userlib.runtime.au')
-
 
 local function default_lspconfig_ui_options()
   local present, win = pcall(require, 'lspconfig.ui.windows')
@@ -26,12 +27,14 @@ plug({
     event = { 'BufRead', 'BufNewFile' },
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
-      'jose-elias-alvarez/null-ls.nvim',
       'williamboman/mason-lspconfig.nvim',
       'williamboman/mason.nvim',
       {
         'hrsh7th/nvim-gtd',
         config = true,
+      },
+      {
+        'creativenull/efmls-configs-nvim',
       },
     },
     config = function()
