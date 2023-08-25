@@ -151,7 +151,7 @@ plug({
             path = 1,
             symbols = {
               modified = '',
-              readonly = '',
+              readonly = '',
             }
           },
         },
@@ -270,7 +270,7 @@ plug({
           },
           {
             function()
-              local icon = '  '
+              local icon = '󰉠 '
               if auto_format_disabled() then
                 icon = ' '
               end
