@@ -1,6 +1,6 @@
 local user_cfg = {
-  ui__theme_name = 'sonokai',
-  workbench__lualine_theme = 'sonokai',
+  ui__theme_name = 'slate',
+  workbench__lualine_theme = 'auto',
   --- treesitter
   lang__treesitter_plugin_rainbow = false,
 }
