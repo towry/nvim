@@ -21,7 +21,7 @@
 </details> 
 <details><summary><h4>File browser with extended actions</h4></summary>
 <img width="998" alt="截屏2023-08-21 17 11 01" src="https://github.com/towry/nvim/assets/8279858/fa8fa272-9c48-4ba3-933e-27e26adb5ffa">
-</details> 
+</details>
 
 ## TODO
 
@@ -29,6 +29,7 @@
 - [ ] Remeber last edited window and buffer.
 - [ ] refactor the `userlib.ui.dropdown` to use telescope-ui-select extension.
 - [ ] fix lsp keymaps binding.
+- [ ] setup a health check.
 
 ## Commands
 

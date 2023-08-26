@@ -93,7 +93,7 @@ function M.setup_keybinding(client, buffer)
     }))
   end
 
-  set('n', '<leader>cf', func_call("format_code(0, { async = true })"), opts({
+  set('n', '<leader>cf', func_call("format_code()"), opts({
     desc = _('Format code'),
   }))
   set('n', '<leader>ct', func_call("peek_type_definition()"), opts({

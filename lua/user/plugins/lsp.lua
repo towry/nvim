@@ -19,7 +19,7 @@ plug({
         -- The border to use for the UI window. Accepts same border values as |nvim_open_win()|.
         border = vim.cfg.ui__float_border,
       },
-    }
+    },
   },
 
   {
@@ -45,7 +45,7 @@ plug({
         ensure_installed = vim.cfg.lsp__auto_install_servers,
         automatic_installation = vim.cfg.lsp__automatic_installation,
       })
-      local servers_path = "userlib.lsp.servers."
+      local servers_path = 'userlib.lsp.servers.'
       local handlers = require('userlib.lsp.cfg.handlers')
       local capabilities = require('userlib.lsp.cfg.capbilities')(require('cmp_nvim_lsp').default_capabilities())
       local lsp_flags = {
@@ -56,14 +56,14 @@ plug({
 
       default_lspconfig_ui_options()
 
-      local function setup_lsp_for_filetype(filetype, server_name)
+      local function setup_lsp_for_filetype(filetype, server)
         -- setup efmls if not done already
         if not efm_setup_done and require('userlib.lsp.filetypes').uses_efm(filetype) then
           efm_setup_done = true
           require('lspconfig').efm.setup(require('userlib.lsp.filetypes').efmls_config(capabilities))
         end
 
-        local load_ok, server_rc = pcall(require, servers_path .. server_name)
+        local load_ok, server_rc = pcall(require, servers_path .. server)
         if type(server_rc) == 'function' then
           server_rc({
             flags = lsp_flags,
@@ -84,15 +84,13 @@ plug({
           })
         end
       end
-  
+
       local function current_buf_matches_file_patterns(patterns)
         local bufname = vim.api.nvim_buf_get_name(0)
         for _, pattern in ipairs(patterns) do
-          if string.match(bufname, string.format('.%s', pattern)) then
-            return true
-          end
+          if string.match(bufname, string.format('.%s', pattern)) then return true end
         end
-  
+
         return require('userlib.lsp.filetypes').uses_efm(vim.bo.ft)
       end
 
@@ -104,9 +102,7 @@ plug({
         else
           -- if not, set up an autocmd to lazy load the rest
           vim.api.nvim_create_autocmd('BufReadPre', {
-            callback = function()
-              setup_lsp_for_filetype(filetype, server_name)
-            end,
+            callback = function() setup_lsp_for_filetype(filetype, server_name) end,
             pattern = file_patterns,
             once = true,
           })
@@ -139,12 +135,7 @@ plug({
     init = function()
       au.on_lsp_attach(function(client, bufnr)
         require('userlib.lsp.cfg.keymaps').setup_keybinding(client, bufnr)
-        require('userlib.lsp.fmt').choose_formatter_for_buf(client, bufnr)
-        require('userlib.lsp.fmt.autoformat').attach(client, bufnr)
-        local is_auto_format_enable_config = true
-        if is_auto_format_enable_config then
-          require('userlib.lsp.fmt.autoformat').enable()
-        end
+        require('userlib.lsp.fmt').on_attach(client, bufnr)
       end)
     end,
   },
@@ -157,7 +148,7 @@ plug({
   ---- lua
   {
     'mrjones2014/lua-gf.nvim',
-    ft = 'lua'
+    ft = 'lua',
   },
   {
     'simrat39/rust-tools.nvim',
@@ -167,13 +158,13 @@ plug({
     config = function()
       local opts = {
         tools = {
-          executor = require("rust-tools/executors").termopen,
+          executor = require('rust-tools/executors').termopen,
           -- These apply to the default RustSetInlayHints command
           inlay_hints = {
             auto = true,
             show_parameter_hints = true,
-            parameter_hints_prefix = "<- ",
-            other_hints_prefix = "=> ",
+            parameter_hints_prefix = '<- ',
+            other_hints_prefix = '=> ',
             max_len_align = false,
             max_len_align_padding = 1,
             right_align = false,
@@ -186,12 +177,12 @@ plug({
         -- send our rust-analyzer configuration to lspconfig
         server = {
           settings = {
-            ["rust-analyzer"] = {
+            ['rust-analyzer'] = {
               cargo = {
                 autoreload = true,
               },
               checkOnSave = {
-                command = "clippy",
+                command = 'clippy',
               },
               inlayHints = {
                 bindingModeHints = { enable = true },
@@ -224,13 +215,13 @@ plug({
                   enable = false,
                 },
               },
-            }
+            },
           },
           -- on_attach = on_lsp_attach,
         }, -- rust-analyer options
       }
 
-      require("rust-tools").setup(opts)
+      require('rust-tools').setup(opts)
     end,
     event = 'BufReadPre Cargo.toml,*.rs',
   },
@@ -243,7 +234,7 @@ plug({
         autofocus = true,
         border = vim.cfg.ui__float_border,
       },
-    }
+    },
   },
 
   {
@@ -252,6 +243,6 @@ plug({
     opts = {
       position = 'bottom',
       auto_cmds = true,
-    }
-  }
+    },
+  },
 })

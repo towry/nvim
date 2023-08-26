@@ -1,86 +1,141 @@
-local autoformat = require('userlib.lsp.fmt.autoformat')
+-- https://github.com/mrjones2014/dotfiles/blob/master/nvim/lua/my/lsp/utils/init.lua
 
----formatter name that corresponds to client name.
-local ft_client_formatter = {}
----formatter name that the client use under the hood.
-local ft_impl_formatter = {}
-
+local Methods = vim.lsp.protocol.Methods
 local M = {}
+local init_done = false
+local formatting_enabled = true
 
---- @perf use ft instead of specific bufnr.
-function M.choose_formatter_for_buf(client, buf)
-  local ft = vim.api.nvim_get_option_value("filetype", {
-    buf = buf,
+function M.on_attach(client, bufnr)
+  if not init_done then
+    init_done = true
+    M.setup_async_formatting()
+  end
+  -- Run eslint fixes before writing
+  if client.name == 'eslint' then
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      buffer = bufnr,
+      command = 'EslintFixAll',
+    })
+  end
+  vim.api.nvim_create_autocmd('BufWritePost', {
+    buffer = bufnr,
+    callback = function()
+      M.format_document(bufnr)
+    end,
   })
+end
 
-  if ft_client_formatter[ft] then
-    return
-  end
+function M.setup_async_formatting()
+  -- format on save asynchronously, see M.format_document
+  vim.lsp.handlers[Methods.textDocument_formatting] = function(err, result, ctx)
+    if err ~= nil then
+      -- efm uses table messages
+      if type(err) == 'table' then
+        if err.message then
+          err = err.message
+        else
+          err = vim.inspect(err)
+        end
+      end
+      vim.api.nvim_err_write(err)
+      return
+    end
 
-  local nls = require('userlib.lsp.servers.null_ls.utils')
-  local nls_available_formatters = nls.get_available_formatters(ft)
-  local specific_formatter_name = nil
+    if result == nil then
+      return
+    end
 
-  local enable = false
-  if nls.has_formatter(ft, nls_available_formatters) then
-    enable = client.name == 'null-ls'
-    specific_formatter_name = nls.format_available_formatters(nls_available_formatters)
-  else
-    enable = client.server_capabilities.documentFormattingProvider and
-        not vim.tbl_contains({ 'null-ls', 'tsserver' }, client.name)
-  end
-
-  -- format on save
-  if enable then
-    ft_impl_formatter[ft] = specific_formatter_name
-    ft_client_formatter[ft] = client.name
+    if
+      vim.api.nvim_buf_get_var(ctx.bufnr, 'format_changedtick') == vim.api.nvim_buf_get_var(ctx.bufnr, 'changedtick')
+    then
+      local view = vim.fn.winsaveview()
+      vim.lsp.util.apply_text_edits(result, ctx.bufnr, 'utf-16')
+      vim.fn.winrestview(view)
+      if ctx.bufnr == vim.api.nvim_get_current_buf() then
+        vim.b.format_saving = true
+        vim.cmd('noau update')
+        vim.b.format_saving = false
+      end
+    end
   end
 end
 
---- Our custom format function.
----@param opts {auto?:boolean, async?:boolean}
-function M.format(bufnr, opts)
-  opts = opts or {}
 
-  local fsize = require('userlib.runtime.buffer').getfsize(bufnr)
+function M.toggle_formatting_enabled(enable)
+  if enable == nil then
+    enable = not formatting_enabled
+  end
+  if enable then
+    formatting_enabled = true
+    vim.notify('Enabling LSP formatting...', vim.log.levels.INFO)
+  else
+    formatting_enabled = false
+    vim.notify('Disabling LSP formatting...', vim.log.levels.INFO)
+  end
+end
+
+---@param buf number|nil defaults to 0 (current buffer)
+---@return string|nil
+function M.get_formatter_name(buf)
+  buf = buf or tonumber(vim.g.actual_curbuf or vim.api.nvim_get_current_buf())
+
+  -- if it uses efm-langserver, grab the formatter name
+  local ft_efm_cfg = require('userlib.lsp.filetypes').config[vim.bo[buf].filetype]
+  if ft_efm_cfg and ft_efm_cfg.formatter then
+    if type(ft_efm_cfg.formatter) == 'table' then
+      return ft_efm_cfg.formatter[1]
+    else
+      return tostring(ft_efm_cfg.formatter)
+    end
+  end
+
+  -- otherwise just return the LSP server name
+  local clients = vim.lsp.get_clients({ bufnr = buf, method = Methods.textDocument_formatting })
+  if #clients > 0 then
+    return clients[1].name
+  end
+
+  return nil
+end
+
+---@param buf number|nil defaults to 0 (current buffer)
+---@return boolean
+function M.is_formatting_supported(buf)
+  buf = buf or vim.api.nvim_get_current_buf()
+  if not formatting_enabled then
+    return false
+  end
+
+  local fsize = require('userlib.runtime.buffer').getfsize(buf)
   if fsize / 1024 > 200 then
     -- great than 200kb
     vim.notify('File is too large to format', vim.log.levels.WARN)
     return
   end
 
-  if autoformat.disabled() and opts.auto then return end
-
-  local name, impl_formatter_name = M.current_formatter_name(bufnr or 0)
-  local fmt_opts = {
-    bufnr = bufnr,
-    async = opts.async or false,
-  }
-  if name then
-    fmt_opts.name = name
-  end
-
-  vim.lsp.buf.format(fmt_opts)
-  if not opts.auto then
-    vim.api.nvim_echo({ { "format with " .. (impl_formatter_name or name or "default"), "Comment" } }
-    , true, {})
-  else
-    vim.defer_fn(function()
-      vim.api.nvim_echo({ { " written! also format with " .. (impl_formatter_name or name or "default"), "Comment" } }
-      , true, {})
-    end, 100)
-  end
+  local clients = vim.lsp.get_clients({ bufnr = buf, method = Methods.textDocument_formatting })
+  return #clients > 0
 end
 
----@return string|nil, string|nil
-function M.current_formatter_name(bufnr)
-  local ft = vim.api.nvim_get_option_value("filetype", {
-    buf = bufnr,
-  })
+function M.format_document(buf)
+  if not M.is_formatting_supported(buf) then
+    return
+  end
 
-  local impl_name = ft_impl_formatter[ft] or nil
-  local value = ft_client_formatter[ft] or nil
-  return value, impl_name
+  if not vim.b.format_saving then
+    vim.b.format_changedtick = vim.b.changedtick ---@diagnostic disable-line
+    local formats_with_efm = require('userlib.lsp.filetypes').formats_with_efm()
+    vim.lsp.buf.format({
+      async = true,
+      filter = function(client)
+        if formats_with_efm then
+          return client.name == 'efm'
+        else
+          return client.name ~= 'efm'
+        end
+      end,
+    })
+  end
 end
 
 return M

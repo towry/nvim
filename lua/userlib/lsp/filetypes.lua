@@ -21,8 +21,15 @@ M.config = {
     formatter = 'prettier',
     treesitter = { 'typescript', 'javascript', 'tsx' },
   },
+  ['vue'] = {
+    patterns = { '*.vue' },
+    lspconfig = { 'volar', 'eslint' },
+    formatter = 'prettier',
+    treesitter = { 'vue' },
+  },
   ['lua'] = {
     lspconfig = 'lua_ls',
+    -- cargo install stylua
     formatter = 'stylua',
     linter = 'luacheck',
     treesitter = { 'lua', 'luadoc' },
