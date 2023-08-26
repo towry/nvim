@@ -35,7 +35,7 @@ return {
     description = 'Toggle dark/light mode',
   },
   {
-    function() require('userlib.lsp.fmt.autoformat').toggle() end,
+    function() require('userlib.lsp.fmt').toggle_formatting_enabled() end,
     description = 'Toggle auto format',
   },
   {

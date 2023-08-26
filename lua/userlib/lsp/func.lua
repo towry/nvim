@@ -56,7 +56,7 @@ function M.peek_type_definition()
   vim.lsp.buf.type_definition()
 end
 
-function M.format_code(bufnr, opts) require('userlib.lsp.fmt').format(bufnr, opts) end
+function M.format_code(bufnr) require('userlib.lsp.fmt').format_document(bufnr) end
 
 function M.open_code_action()
   local mode = vim.api.nvim_get_mode().mode
