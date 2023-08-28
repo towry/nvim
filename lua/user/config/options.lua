@@ -3,7 +3,7 @@ local o = vim.opt
 local g = vim.g
 
 function M.init_edit()
-  o.cpoptions:append(">") -- append to register with line break
+  o.cpoptions:append('>') -- append to register with line break
   o.inccommand = 'nosplit' -- preview incremental substitute
   o.clipboard = { 'unnamed', 'unnamedplus' } --- Copy-paste between vim and everything else
   o.expandtab = true --- Use spaces instead of tabs
@@ -28,8 +28,12 @@ function M.init_edit()
   o.undofile = true --- Sets undo to file
   o.updatetime = 250 --- Faster completion
   -- o.viminfo        = "'1000" --- Increase the size of file history
-  o.wildignore = { '*node_modules/**', '.git/**' } --- Don't search inside Node.js modules (works for gutentag)
+  o.wildignore = { '*node_modules/**', '.git/**', '*.DS_Store' } --- Don't search inside Node.js modules (works for gutentag)
   o.wrap = false --- Display long lines as just one line
+  -- enable line-wrapping with left and right cursor movement
+  vim.opt.whichwrap:append({ ['<'] = true, ['>'] = true, ['h'] = true, ['l'] = true, ['['] = true, [']'] = true })
+  -- add @, -, and $ as keywords for full SCSS support
+  vim.opt.iskeyword:append({ '@-@', '-', '$' })
   o.writebackup = false --- Not needed
   o.autoindent = true --- Good auto indent
   o.backspace = { 'indent', 'eol', 'start' } --- Making sure backspace works
@@ -40,13 +44,13 @@ function M.init_edit()
   o.fileencoding = 'utf-8' --- The encoding written to file
   o.incsearch = true --- Start searching before pressing enter
   o.switchbuf = 'usetab' -- Use already opened buffers when switching
-  o.diffopt:append { "algorithm:histogram", "foldcolumn:0", "vertical", "linematch:50" }
+  o.diffopt:append({ 'algorithm:histogram', 'foldcolumn:0', 'vertical', 'linematch:50' })
   -- o.shellcmdflag = '-ic' --- Make shell alias works, has bugs.
+  o.virtualedit = 'onemore'
 end
 
 function M.init_interface()
-  o.colorcolumn =
-  '+1' -- Draw colored column one step to the right of desired maximum width
+  o.colorcolumn = '+1' -- Draw colored column one step to the right of desired maximum width
   o.showmode = false --- Don't show things like -- INSERT -- anymore
   o.modeline = true -- Allow modeline
   o.ruler = false -- Always show cursor position
@@ -66,7 +70,7 @@ function M.init_interface()
   o.sidescrolloff = 8 -- Columns of context
   o.lazyredraw = false --- Makes macros faster & prevent errors in complicated mappings
   o.wildmode = { 'longest:full', 'full' } -- Command-line completion mode
-  o.cmdheight = 1 --- Give more space for displaying messages
+  o.cmdheight = 0 --- Give more space for displaying messages
   o.completeopt = { 'menu', 'menuone', 'noselect' } --- Better autocompletion
   o.cursorline = true --- Highlight of current line
   o.emoji = true --- Fix emoji display
@@ -78,7 +82,7 @@ function M.init_interface()
   o.listchars:append('extends:»')
   o.listchars:append('nbsp:␣')
   o.listchars:append('precedes:«')
-  o.fillchars        = {
+  o.fillchars = {
     stl = ' ',
     stlnc = ' ',
     eob = ' ',
@@ -88,10 +92,10 @@ function M.init_interface()
     foldclose = '',
   }
   vim.o.statuscolumn =
-  '%s%=%{v:relnum?v:relnum:v:lnum} %{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "-" : "+") : "│") : "│" } '
+    '%s%=%{v:relnum?v:relnum:v:lnum} %{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "-" : "+") : "│") : "│" } '
   -- vim.o.statuscolumn =
   -- '%s%=%{v:lnum} %{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "-" : "+") : "│") : "│" } '
-  o.laststatus       = 3 --- Have a global statusline at the bottom instead of one for each window
+  o.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
   o.shortmess:append({ W = true, I = true, c = true, F = true })
   if vim.fn.has('nvim-0.9.0') == 1 then
     o.splitkeep = 'screen'
@@ -110,16 +114,14 @@ function M.init_interface()
   if vim.fn.executable('rg') then
     -- credit: https://github.com/nicknisi/dotfiles/blob/1360edda1bbb39168637d0dff13dd12c2a23d095/config/nvim/init.lua#L73
     -- if ripgrep installed, use that as a grepper
-    o.grepprg = "rg --vimgrep --color=never --with-filename --line-number --no-heading --smart-case --"
-    o.grepformat = "%f:%l:%c:%m,%f:%l:%m"
+    o.grepprg = 'rg --vimgrep --color=never --with-filename --line-number --no-heading --smart-case --'
+    o.grepformat = '%f:%l:%c:%m,%f:%l:%m'
   end
 end
 
 function M.init_folds()
   local function enable_foldexpr()
-    if vim.api.nvim_buf_line_count(0) > 40000 then
-      return
-    end
+    if vim.api.nvim_buf_line_count(0) > 40000 then return end
     vim.opt_local.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     vim.opt_local.foldmethod = 'expr'
     -- below will move cursor move
@@ -129,12 +131,10 @@ function M.init_folds()
   vim.api.nvim_create_autocmd('FileType', {
     -- schedule_wrap is used to stop dlopen from crashing on MacOS
     callback = vim.schedule_wrap(function()
-      if not pcall(vim.treesitter.start) or vim.wo.diff then
-        return
-      end
+      if not pcall(vim.treesitter.start) or vim.wo.diff then return end
 
       enable_foldexpr()
-    end)
+    end),
   })
   o.foldnestmax = 10 -- deepest fold is 10 levels
   o.foldlevel = 99 --- Using ufo provider need a large value
@@ -148,12 +148,12 @@ function M.init_other()
 
   -- built-in plugins disable.
   for _, plugin in ipairs(vim.cfg.runtime__disable_builtin_plugins) do
-    local var = "loaded_" .. plugin
+    local var = 'loaded_' .. plugin
     vim.g[var] = 1
   end
   -- built-in neovim RPC provider disable
   for _, provider in ipairs(vim.cfg.runtime__disable_builtin_provider) do
-    local var = "loaded_" .. provider .. "_provider"
+    local var = 'loaded_' .. provider .. '_provider'
     vim.g[var] = 0
   end
 end
@@ -167,9 +167,7 @@ end
 
 --- need to lazy setup, otherwise bunch mods needed to be load.
 function M.setup_lsp()
-  if vim.cfg.lsp__log_level then
-    vim.lsp.set_log_level(vim.cfg.lsp__log_level)
-  end
+  if vim.cfg.lsp__log_level then vim.lsp.set_log_level(vim.cfg.lsp__log_level) end
 end
 
 function M.setup()
