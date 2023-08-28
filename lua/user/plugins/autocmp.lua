@@ -20,13 +20,12 @@ pack.plug({
           { name = 'git' }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
         }, {
           { name = 'buffer' },
-        })
+        }),
       })
     end,
   },
   {
     'hrsh7th/nvim-cmp',
-    -- commit = "2743dd989e9b932e1b4813a4927d7b84272a14e2",
     event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
       'hrsh7th/cmp-nvim-lsp-signature-help',
@@ -46,16 +45,16 @@ pack.plug({
     },
     config = function()
       local has_words_before = function()
-        if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+        if vim.api.nvim_buf_get_option(0, 'buftype') == 'prompt' then return false end
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
+        return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match('^%s*$') == nil
       end
       local lspkind = require('lspkind')
       local icons = require('userlib.icons')
 
       lspkind.init({
         symbol_map = {
-          Copilot = "",
+          Copilot = '',
         },
       })
 
@@ -127,9 +126,7 @@ pack.plug({
           end
           --- alternative buf.
           local alter = vim.fn.bufnr('#')
-          if alter > 0 then
-            bufs[vim.fn.bufnr('#')] = true
-          end
+          if alter > 0 then bufs[vim.fn.bufnr('#')] = true end
           return vim.tbl_keys(bufs)
         end,
       }
@@ -157,8 +154,8 @@ pack.plug({
           ['<C-f>'] = cmp.mapping(function(fallback)
             if vim.bo.buftype == 'prompt' then return fallback() end
             local entry = cmp.get_selected_entry()
-            local has_ai_suggestions = (vim.b._copilot and vim.b._copilot.suggestions ~= nil) or
-                (vim.b._codeium_completions and vim.b._codeium_completions.items ~= nil)
+            local has_ai_suggestions = (vim.b._copilot and vim.b._copilot.suggestions ~= nil)
+              or (vim.b._codeium_completions and vim.b._codeium_completions.items ~= nil)
             local has_ai_suggestion_text = function()
               if vim.b._copilot and vim.b._copilot.suggestions ~= nil then
                 local suggestion = vim.b._copilot.suggestions[1]
@@ -167,9 +164,9 @@ pack.plug({
               end
 
               if vim.b._codeium_completions and vim.b._codeium_completions.items then
-                local index      = vim.b._codeium_completions.index or 0
+                local index = vim.b._codeium_completions.index or 0
                 local suggestion = vim.b._codeium_completions.items[index + 1] or {}
-                local parts      = suggestion.completionParts or {}
+                local parts = suggestion.completionParts or {}
                 if type(parts) ~= 'table' then return false end
                 return #parts >= 1
               end
@@ -196,7 +193,7 @@ pack.plug({
             else
               fallback()
             end
-          end),                           -- invoke complete
+          end), -- invoke complete
           ['<C-s>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
           ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
           ['<C-e>'] = cmp.mapping({
@@ -286,13 +283,13 @@ pack.plug({
         },
         -- You should specify your *installed* sources.
         sources = {
-          { name = 'nvim_lsp',                priority = 50, max_item_count = 6 },
+          { name = 'nvim_lsp', priority = 50, max_item_count = 6 },
           -- { name = "copilot",                 priority = 30, max_item_count = 4 },
-          { name = 'codeium',                 priority = 7,  max_item_count = 4 },
+          { name = 'codeium', priority = 7, max_item_count = 4 },
           { name = 'nvim_lsp_signature_help', priority = 40, max_item_count = 3 },
-          { name = 'npm',                     priority = 3 },
+          { name = 'npm', priority = 3 },
           -- { name = 'cmp_tabnine',             priority = 6,  max_item_count = 3 },
-          { name = 'luasnip',                 priority = 6,  max_item_count = 2 },
+          { name = 'luasnip', priority = 6, max_item_count = 2 },
           {
             name = 'buffer',
             priority = 6,
@@ -301,8 +298,8 @@ pack.plug({
             max_item_count = 5,
           },
           { name = 'nvim_lua', priority = 5, ft = 'lua' },
-          { name = 'path',     priority = 4 },
-          { name = 'calc',     priority = 3 },
+          { name = 'path', priority = 4 },
+          { name = 'calc', priority = 3 },
         },
         sorting = {
           comparators = {
@@ -313,8 +310,8 @@ pack.plug({
 
             deprioritize_snippet,
             function(entry1, entry2)
-              local _, entry1_under = entry1.completion_item.label:find "^_+"
-              local _, entry2_under = entry2.completion_item.label:find "^_+"
+              local _, entry1_under = entry1.completion_item.label:find('^_+')
+              local _, entry2_under = entry2.completion_item.label:find('^_+')
               entry1_under = entry1_under or 0
               entry2_under = entry2_under or 0
               if entry1_under > entry2_under then
@@ -347,7 +344,7 @@ pack.plug({
         },
         experimental = {
           -- can be anoying.
-          ghost_text = false
+          ghost_text = false,
           -- ghost_text = {
           --   hl_group = "LspCodeLens",
           -- },
@@ -396,7 +393,7 @@ pack.plug({
         only_semantic_versions = true,
       })
     end,
-  }
+  },
 })
 
 ---autopairs
@@ -413,7 +410,7 @@ pack.plug({
       disable_filetype = {
         'TelescopePrompt',
       },
-      ignored_next_char = "[%S%w%.{(\"']",
+      ignored_next_char = '[%S%w%.{("\']',
       disable_in_macro = true,
       disable_in_replace_mode = true,
       enable_check_bracket_line = true,
@@ -433,8 +430,9 @@ pack.plug({
       if commit_character ~= nil then return end
       -- do not add pairs if in jsx.
       local ts_current_line_node_type = Ty.TS_GET_NODE_TYPE()
-      if vim.tbl_contains({ 'jsx_self_closing_element', 'jsx_opening_element' }, ts_current_line_node_type)
-          and (item.kind == Kind.Function or item.kind == Kind.Method)
+      if
+        vim.tbl_contains({ 'jsx_self_closing_element', 'jsx_opening_element' }, ts_current_line_node_type)
+        and (item.kind == Kind.Function or item.kind == Kind.Method)
       then
         return
       end
@@ -466,15 +464,14 @@ pack.plug({
       -- if rule exist in module and is a function, call it.
       if rules[rule] and type(rules[rule]) == 'function' then rules[rule]() end
     end
-  end
+  end,
 })
-
 
 --- AI autocompletion tools.
 pack.plug({
   {
     -- 'pze/codeium.nvim',
-    "jcdickinson/codeium.nvim",
+    'jcdickinson/codeium.nvim',
     cmd = 'Codeium',
     dev = false,
     event = { 'InsertEnter' },
@@ -483,9 +480,9 @@ pack.plug({
       'nvim-lua/plenary.nvim',
       'MunifTanjim/nui.nvim',
       {
-        "jcdickinson/http.nvim",
-        build = "cargo build --workspace --release"
-      }
+        'jcdickinson/http.nvim',
+        build = 'cargo build --workspace --release',
+      },
     },
     opts = {
       -- config_path = '~/.codeium/config.json'
@@ -497,7 +494,7 @@ pack.plug({
         vim.ui.inputsecret = function(opts)
           opts = opts or {}
           local callback = opts.on_submit
-          local prompt = opts.prompt or "Input "
+          local prompt = opts.prompt or 'Input '
           local result = vim.fn.inputsecret(prompt)
           if result then
             callback(result)
@@ -517,21 +514,14 @@ pack.plug({
     config = function()
       local set = vim.keymap.set
 
-
-      set('i', '<M-]>', function()
-        return vim.fn['codeium#CycleCompletions'](1)
-      end, {
+      set('i', '<M-]>', function() return vim.fn['codeium#CycleCompletions'](1) end, {
         expr = true,
       })
-      set('i', '<M-[>', function()
-        return vim.fn['codeium#CycleCompletions'](-1)
-      end, {
+      set('i', '<M-[>', function() return vim.fn['codeium#CycleCompletions'](-1) end, {
         expr = true,
       })
       -- force trigger ai completion.
-      set('i', '<D-/>', function()
-        return vim.fn['codeium#Complete']()
-      end, {
+      set('i', '<D-/>', function() return vim.fn['codeium#Complete']() end, {
         expr = true,
       })
     end,
@@ -555,8 +545,8 @@ pack.plug({
       {
         '<leader>zp',
         '<cmd>Copilot panel<cr>',
-        desc = 'Open Copilot panel'
-      }
+        desc = 'Open Copilot panel',
+      },
     },
     cmd = { 'Copilot' },
     config = function()
@@ -588,6 +578,6 @@ pack.plug({
           })
         end,
       })
-    end
-  }
+    end,
+  },
 })

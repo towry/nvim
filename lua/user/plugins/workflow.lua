@@ -10,15 +10,13 @@ plug({
       {
         '<C-w>',
         function()
-          if vim.bo.filetype == 'TelescopePrompt' then
-            return '<C-w>';
-          end
+          if vim.bo.filetype == 'TelescopePrompt' then return '<C-w>' end
           return cmdstr([[lua require("userlib.hydra.window").open_window_hydra(true)]])
         end,
         desc = 'Window operations',
         nowait = true,
         expr = true,
-      }
+      },
     },
     config = function()
       -- vim.cmd('hi! link HydraHint NormalFloat')
@@ -40,18 +38,14 @@ plug({
       },
       animation = {
         enable = false,
-      }
+      },
     },
-    config = function(_, opts)
-      require('windows').setup(opts)
-    end,
+    config = function(_, opts) require('windows').setup(opts) end,
     init = function()
       au.define_autocmd('VimEnter', {
         once = true,
         callback = function()
-          if vim.cfg.runtime__starts_in_buffer and vim.wo.diff then
-            vim.cmd("WindowsEqualize")
-          end
+          if vim.cfg.runtime__starts_in_buffer and vim.wo.diff then vim.cmd('WindowsEqualize') end
         end,
       })
     end,
@@ -88,7 +82,7 @@ plug({
     cmd = {
       'BDelete',
       'BWipeout',
-    }
+    },
   },
   {
     'kwkarlwang/bufresize.nvim',
@@ -116,9 +110,7 @@ plug({
       },
       {
         '<leader>bh',
-        function()
-          require('mini.bufremove').unshow(0)
-        end,
+        function() require('mini.bufremove').unshow(0) end,
         desc = 'Unshow current buffer',
       },
       {
@@ -141,19 +133,19 @@ plug({
           end
         end,
         desc = 'Quit current buffer',
-      }
-    }
+      },
+    },
   },
 
   --- open buffer last place.
   {
     'ethanholz/nvim-lastplace',
-    event = { 'BufReadPre', },
+    event = { 'BufReadPre' },
     opts = {
       lastplace_ignore_buftype = vim.cfg.misc__buf_exclude,
       lastplace_ignore_filetype = vim.cfg.misc__ft_exclude,
       lastplace_open_folds = true,
-    }
+    },
   },
 
   ----- grapple and portal
@@ -197,13 +189,13 @@ plug({
           require('portal').tunnel({ jumplist, harpoon })
         end,
         desc = 'Portal jump forward',
-      }
+      },
     },
     config = function()
       require('portal').setup({
         log_level = 'error',
         window_options = {
-          relative = "cursor",
+          relative = 'cursor',
           width = 80,
           height = 4,
           col = 2,
@@ -218,7 +210,7 @@ plug({
           ['<C-c>'] = true,
           ['q'] = true,
           ['<C-j>'] = true,
-        }
+        },
       })
 
       vim.cmd('hi! link PortalBorder NormalFloat')
@@ -229,8 +221,8 @@ plug({
     'cbochs/grapple.nvim',
     keys = {
       { '<leader>bg', '<cmd>GrappleToggle<cr>', desc = 'Toggle grapple' },
-      { '<leader>bp', '<cmd>GrapplePopup<cr>',  desc = 'Popup grapple' },
-      { '<leader>bc', '<cmd>GrappleCycle<cr>',  desc = 'Cycle grapple' },
+      { '<leader>bp', '<cmd>GrapplePopup<cr>', desc = 'Popup grapple' },
+      { '<leader>bc', '<cmd>GrappleCycle<cr>', desc = 'Cycle grapple' },
     },
     cmd = { 'GrappleToggle', 'GrapplePopup', 'GrappleCycle' },
     opts = {
@@ -239,7 +231,7 @@ plug({
       integrations = {
         resession = false,
       },
-    }
+    },
   },
   {
     'telescope.nvim',
@@ -268,8 +260,8 @@ plug({
           {
             '<leader>fp',
             function()
-              local actions = require("telescope.actions")
-              local state = require("telescope.actions.state")
+              local actions = require('telescope.actions')
+              local state = require('telescope.actions.state')
               require('userlib.runtime.utils').plugin_schedule('project_nvim', function()
                 require('telescope').extensions.projects.projects(require('telescope.themes').get_dropdown({
                   attach_mappings = function(prompt_bufnr, _map)
@@ -287,7 +279,7 @@ plug({
               end)
             end,
             desc = 'Projects',
-          }
+          },
         },
         config = function(_, opts)
           require('project_nvim').setup(opts)
@@ -304,14 +296,14 @@ plug({
           -- Don't calculate root dir on specific directories
           -- Ex: { "~/.cargo/*", ... }
           exclude_dirs = {
-            ".cargo/",
-            "~/.local",
-            "~/.cache",
-            "Library/",
-            ".cache/",
-            "dist/",
-            "node_modules/",
-            ".pnpm/"
+            '.cargo/',
+            '~/.local',
+            '~/.cache',
+            'Library/',
+            '.cache/',
+            'dist/',
+            'node_modules/',
+            '.pnpm/',
           },
           -- Show hidden files in telescope
           show_hidden = false,
@@ -323,9 +315,9 @@ plug({
           -- * tab
           -- * win
           scope_chdir = 'tab',
-        }
-      }
-    }
+        },
+      },
+    },
   },
   {
     'Shatur/neovim-session-manager',
@@ -335,28 +327,31 @@ plug({
         '<leader>/s',
         '<cmd>SessionManager load_session<CR>',
         desc = 'Load current session',
-      }
+      },
     },
     config = function()
       local session_manager = require('session_manager')
       local Path = require('plenary.path')
 
       session_manager.setup({
-        sessions_dir = Path:new(vim.fn.stdpath('data'), 'sessions'),             -- The directory where the session files will be saved.
-        path_replacer = '__',                                                    -- The character to which the path separator will be replaced for session files.
-        colon_replacer = '++',                                                   -- The character to which the colon symbol will be replaced for session files.
+        sessions_dir = Path:new(vim.fn.stdpath('data'), 'sessions'), -- The directory where the session files will be saved.
+        path_replacer = '__', -- The character to which the path separator will be replaced for session files.
+        colon_replacer = '++', -- The character to which the colon symbol will be replaced for session files.
         autoload_mode = require('session_manager.config').AutoloadMode.Disabled, -- Define what to do when Neovim is started without arguments. Possible values: Disabled, CurrentDir, LastSession
-        autosave_last_session = true,                                            -- Automatically save last session on exit and on session switch.
-        autosave_ignore_not_normal = true,                                       -- Plugin will not save a session when no buffers are opened, or all of them aren't writable or listed.
-        autosave_ignore_filetypes = vim.tbl_extend('force',
-          {                                                                      -- All buffers of these file types will be closed before the session is saved.
+        autosave_last_session = true, -- Automatically save last session on exit and on session switch.
+        autosave_ignore_not_normal = true, -- Plugin will not save a session when no buffers are opened, or all of them aren't writable or listed.
+        autosave_ignore_filetypes = vim.tbl_extend(
+          'force',
+          { -- All buffers of these file types will be closed before the session is saved.
             'gitcommit',
             'toggleterm',
             'term',
-            'nvimtree'
-          }, vim.cfg.misc__ft_exclude),
+            'nvimtree',
+          },
+          vim.cfg.misc__ft_exclude
+        ),
         autosave_only_in_session = false, -- Always autosaves session. If true, only autosaves after a session is active.
-        max_path_length = 0,              -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
+        max_path_length = 0, -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
       })
     end,
   },
@@ -364,21 +359,21 @@ plug({
   {
     'mrjones2014/smart-splits.nvim',
     keys = {
-      { '<A-h>', cmdstr([[lua require("smart-splits").resize_left()]]),       desc = 'Resize window to left' },
-      { '<A-j>', cmdstr([[lua require("smart-splits").resize_down()]]),       desc = 'Resize window to down' },
-      { '<A-k>', cmdstr([[lua require("smart-splits").resize_up()]]),         desc = 'Resize window to up' },
-      { '<A-l>', cmdstr([[lua require("smart-splits").resize_right()]]),      desc = 'Resize window to right' },
-      { '<C-h>', cmdstr([[lua require("smart-splits").move_cursor_left()]]),  desc = 'Move cursor to left window' },
-      { '<C-j>', cmdstr([[lua require("smart-splits").move_cursor_down()]]),  desc = 'Move cursor to down window' },
-      { '<C-k>', cmdstr([[lua require("smart-splits").move_cursor_up()]]),    desc = 'Move cursor to up window' },
+      { '<A-h>', cmdstr([[lua require("smart-splits").resize_left()]]), desc = 'Resize window to left' },
+      { '<A-j>', cmdstr([[lua require("smart-splits").resize_down()]]), desc = 'Resize window to down' },
+      { '<A-k>', cmdstr([[lua require("smart-splits").resize_up()]]), desc = 'Resize window to up' },
+      { '<A-l>', cmdstr([[lua require("smart-splits").resize_right()]]), desc = 'Resize window to right' },
+      { '<C-h>', cmdstr([[lua require("smart-splits").move_cursor_left()]]), desc = 'Move cursor to left window' },
+      { '<C-j>', cmdstr([[lua require("smart-splits").move_cursor_down()]]), desc = 'Move cursor to down window' },
+      { '<C-k>', cmdstr([[lua require("smart-splits").move_cursor_up()]]), desc = 'Move cursor to up window' },
       { '<C-l>', cmdstr([[lua require("smart-splits").move_cursor_right()]]), desc = 'Move cursor to right window' },
     },
     dependencies = {
       'kwkarlwang/bufresize.nvim',
     },
-    build = "./kitty/install-kittens.bash",
+    build = './kitty/install-kittens.bash',
     config = function()
-      local splits = require("smart-splits")
+      local splits = require('smart-splits')
 
       splits.setup({
         -- Ignored filetypes (only while resizing)
@@ -389,7 +384,7 @@ plug({
           'qf',
         },
         -- Ignored buffer types (only while resizing)
-        ignored_buftypes = { 'nofile', 'NvimTree', },
+        ignored_buftypes = { 'nofile', 'NvimTree' },
         resize_mode = {
           quit_key = {
             quit_key = '<ESC>',
@@ -403,7 +398,7 @@ plug({
           'BufEnter',
           'WinEnter',
         },
-        log_level = "error",
+        log_level = 'error',
         disable_multiplexer_nav_when_zoomed = true,
       })
     end,
@@ -420,11 +415,11 @@ plug({
           filetype = vim.cfg.misc__ft_exclude,
 
           -- if the file type is one of following, the window will be ignored
-          buftype = vim.cfg.misc__buf_exclude
+          buftype = vim.cfg.misc__buf_exclude,
         },
       },
-      selection_chars = "ABCDEFGHIJKLMNOPQRSTUVW"
-    }
+      selection_chars = 'ABCDEFGHIJKLMNOPQRSTUVW',
+    },
   },
 
   {
@@ -466,17 +461,15 @@ plug({
     config = function(_, opts)
       require('harpoon').setup(opts)
       au.register_event(au.events.AfterColorschemeChanged, {
-        name = "harpoon_ui",
+        name = 'harpoon_ui',
         immediate = true,
         callback = function()
           vim.cmd('hi! link HarpoonWindow NormalFloat')
           vim.cmd('hi! link HarpoonBorder NormalFloat')
-        end
+        end,
       })
     end,
-    init = function()
-      vim.g.harpoon_log_level = 'warn'
-    end,
+    init = function() vim.g.harpoon_log_level = 'warn' end,
   },
   {
     'kwkarlwang/bufjump.nvim',
@@ -488,14 +481,14 @@ plug({
       forward = '<D-i>',
       backward = '<D-o>',
       on_success = nil,
-    }
-  }
+    },
+  },
 })
 
 plug({
   'towry/window-bufstack.nvim',
   cond = true,
-  version = "v1.0.2",
+  version = 'v1.0.3',
   dev = false,
   opts = {},
   lazy = false,
@@ -504,6 +497,6 @@ plug({
 plug({
   'echasnovski/mini.doc',
   version = '*',
-  ft = "lua",
+  ft = 'lua',
   config = true,
 })
