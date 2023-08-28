@@ -5,7 +5,6 @@ local cmd_modcall = keymap.cmd_modcall
 local pickers_mod = 'userlib.telescope.pickers'
 local au = require('userlib.runtime.au')
 
-
 plug({
   'kyoh86/vim-ripgrep',
   event = 'User LazyUIEnterOncePost',
@@ -24,15 +23,15 @@ plug({
   opts = {
     default_file_explorer = true,
     keymaps = {
-      ["g?"] = "actions.show_help",
-      ["<CR>"] = "actions.select",
-      ["<C-v>"] = "actions.select_vsplit",
-      ["<C-x>"] = "actions.select_split",
-      ["<C-t>"] = "actions.select_tab",
-      ["<C-p>"] = "actions.preview",
-      ["<C-c>"] = "actions.close",
-      ["<C-r>"] = "actions.refresh",
-      ["<C-o>"] = function()
+      ['g?'] = 'actions.show_help',
+      ['<CR>'] = 'actions.select',
+      ['<C-v>'] = 'actions.select_vsplit',
+      ['<C-x>'] = 'actions.select_split',
+      ['<C-t>'] = 'actions.select_tab',
+      ['<C-p>'] = 'actions.preview',
+      ['<C-c>'] = 'actions.close',
+      ['<C-r>'] = 'actions.refresh',
+      ['<C-o>'] = function()
         local oil = require('oil')
         -- type: file|directory
         local current = require('oil').get_cursor_entry()
@@ -47,14 +46,14 @@ plug({
         end
 
         if folder then
-          require('userlib.hydra.folder-action').open(folder, 0);
+          require('userlib.hydra.folder-action').open(folder, 0)
         else
-          require('userlib.hydra.file-action').open(file, 0);
+          require('userlib.hydra.file-action').open(file, 0)
         end
       end,
-      ["y"] = "actions.copy_entry_path",
-      ["-"] = "actions.parent",
-      ["_"] = function()
+      ['y'] = 'actions.copy_entry_path',
+      ['-'] = 'actions.parent',
+      ['_'] = function()
         if vim.w.oil_lcwd ~= nil then
           require('oil').open(vim.w.oil_lcwd)
           vim.w.oil_lcwd = nil
@@ -64,9 +63,9 @@ plug({
           require('oil').open(require('userlib.runtime.utils').get_root())
         end
       end,
-      ["`"] = "actions.cd",
-      ["~"] = "actions.tcd",
-      ["g."] = "actions.toggle_hidden",
+      ['`'] = 'actions.cd',
+      ['~'] = 'actions.tcd',
+      ['g.'] = 'actions.toggle_hidden',
     },
     use_default_keymaps = false,
     float = {
@@ -74,36 +73,28 @@ plug({
       border = vim.cfg.ui__float_border,
       win_options = {
         winblend = 10,
-      }
-    }
+      },
+    },
   },
   keys = {
     {
       '<leader>fo',
-      function()
-        require('oil').open(vim.cfg.runtime__starts_cwd)
-      end,
+      function() require('oil').open(vim.cfg.runtime__starts_cwd) end,
       desc = 'Open oil(Root) file browser',
     },
     {
       '<leader>fO',
-      function()
-        require('oil').open(require('userlib.runtime.utils').get_root())
-      end,
+      function() require('oil').open(require('userlib.runtime.utils').get_root()) end,
       desc = 'Open oil(BUF) file browser',
     },
     {
       '-',
-      function()
-        require('oil').open()
-      end,
+      function() require('oil').open() end,
       desc = 'Open oil file browser(buf)',
     },
     {
       '_',
-      function()
-        require('oil').open_float()
-      end,
+      function() require('oil').open_float() end,
       desc = 'Open oil file browser(buf|float)',
     },
   },
@@ -125,14 +116,14 @@ plug({
   keys = {
     { '<leader>/o', '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
     -- <CMD-l> open the outline.
-    { '<D-l>',      '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
+    { '<D-l>', '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
   },
   cmd = { 'AerialToggle', 'AerialOpen', 'AerialClose' },
   opts = {
     backends = {
-      ['_'] = { "lsp", "treesitter", "man", "markdown" },
-      typescript = { "lsp", "treesitter" },
-      typescriptreact = { "lsp", "treesitter" },
+      ['_'] = { 'lsp', 'treesitter', 'man', 'markdown' },
+      typescript = { 'lsp', 'treesitter' },
+      typescriptreact = { 'lsp', 'treesitter' },
     },
     layout = {
       -- These control the width of the aerial window.
@@ -148,55 +139,51 @@ plug({
       -- options will open the window in the other direction *if* there is a
       -- different buffer in the way of the preferred direction
       -- Enum: prefer_right, prefer_left, right, left, float
-      default_direction = "prefer_right",
+      default_direction = 'prefer_right',
       -- Determines where the aerial window will be opened
       --   edge   - open aerial at the far right/left of the editor
       --   window - open aerial to the right/left of the current window
-      placement = "window",
+      placement = 'window',
       -- When the symbols change, resize the aerial window (within min/max constraints) to fit
       resize_to_content = true,
       -- Preserve window size equality with (:help CTRL-W_=)
       preserve_equality = true,
     },
     -- global, window
-    attach_mode = "global",
+    attach_mode = 'global',
     --- unfocus
     --- switch_buffer
     --- unsupported
     close_automatic_events = {},
     -- see :help SymbolKind
     filter_kind = {
-      "Field",
-      "Constant",
-      "Enum",
-      "EnumMember",
-      "Event",
-      "Variable",
-      "Operator",
-      "TypeParameter",
-      "Type",
-      "Class",
-      "Constructor",
-      "Enum",
-      "Function",
-      "Interface",
-      "Module",
-      "Method",
-      "Struct",
+      'Field',
+      'Constant',
+      'Enum',
+      'EnumMember',
+      'Event',
+      'Variable',
+      'Operator',
+      'TypeParameter',
+      'Type',
+      'Class',
+      'Constructor',
+      'Enum',
+      'Function',
+      'Interface',
+      'Module',
+      'Method',
+      'Struct',
     },
     treesitter = {
       experimental_selection_range = true,
     },
     post_parse_symbol = function(bufnr, item, ctx)
-      if ctx.backend_name == "treesitter" and (ctx.lang == "typescript" or ctx.lang == "tsx") then
-        return true
-      end
+      if ctx.backend_name == 'treesitter' and (ctx.lang == 'typescript' or ctx.lang == 'tsx') then return true end
       return true
     end,
     get_highlight = function(symbol, is_icon)
-      if symbol.scope == "private" then
-        return "AerialPrivate"
-      end
+      if symbol.scope == 'private' then return 'AerialPrivate' end
     end,
     autojump = true,
     close_on_select = true,
@@ -216,7 +203,7 @@ plug({
       -- function     - A function that returns true if the buffer should be
       --                ignored or false if it should not be ignored.
       --                Takes two arguments, `bufnr` and `buftype`.
-      buftypes = "special",
+      buftypes = 'special',
       -- Ignored wintypes.
       -- Can be one of the following:
       -- false or nil - No wintypes are ignored.
@@ -226,7 +213,7 @@ plug({
       -- function     - A function that returns true if the window should be
       --                ignored or false if it should not be ignored.
       --                Takes two arguments, `winid` and `wintype`.
-      wintypes = "special",
+      wintypes = 'special',
     },
     float = {
       -- Controls border appearance. Passed to nvim_open_win
@@ -235,14 +222,13 @@ plug({
     lsp = {
       diagnostics_trigger_update = false,
       update_when_errors = false,
-    }
+    },
   },
   config = function(_, opts)
     require('aerial').setup(opts)
     vim.api.nvim_set_hl(0, 'AerialPrivate', { default = true, italic = true })
-  end
-}
-)
+  end,
+})
 
 plug({
   'nvim-pack/nvim-spectre',
@@ -257,9 +243,7 @@ plug({
   keys = {
     {
       '<leader>sp',
-      function()
-        require('spectre').open_visual()
-      end,
+      function() require('spectre').open_visual() end,
       desc = 'Open Search and replace panel',
     },
     {
@@ -273,9 +257,9 @@ plug({
           search_text = vim.fn.expand('<cword>'),
         })
       end,
-      desc = 'Search and replace cword in current file'
-    }
-  }
+      desc = 'Search and replace cword in current file',
+    },
+  },
 })
 
 plug({
@@ -284,15 +268,15 @@ plug({
   --- A wildcard is an identifier starts with $, like $name.
   --- A $name wildcard in the search pattern will match any
   --- AST node and $name will reference it in the replacement.
-  "cshuaimin/ssr.nvim",
-  module = "ssr",
+  'cshuaimin/ssr.nvim',
+  module = 'ssr',
   keys = {
     {
       '<leader>sr',
       '<cmd>lua require("ssr").open()<cr>',
       mode = { 'n', 'x' },
       desc = 'Replace with Treesitter structure(SSR)',
-    }
+    },
   },
   opts = {
     border = vim.cfg.ui__float_border,
@@ -301,15 +285,14 @@ plug({
     max_width = 120,
     max_height = 25,
     keymaps = {
-      close = "q",
-      next_match = "n",
-      prev_match = "N",
-      replace_confirm = "<cr>",
-      replace_all = "<S-CR>",
+      close = 'q',
+      next_match = 'n',
+      prev_match = 'N',
+      replace_confirm = '<cr>',
+      replace_all = '<S-CR>',
     },
   },
-}
-)
+})
 
 plug({
   'nvim-telescope/telescope.nvim',
@@ -323,8 +306,7 @@ plug({
     {
       '<Tab>',
       cmd_modcall(pickers_mod, 'buffers_or_recent()'),
-      desc =
-      "List Buffers"
+      desc = 'List Buffers',
     },
     {
       '<leader>gb',
@@ -341,37 +323,35 @@ plug({
               hint = 'remotes',
               'Telescope git_branches',
             },
-          }
+          },
         }, {
           prompt_title = 'Select action',
         })
       end,
-      desc = 'Git branches'
+      desc = 'Git branches',
     },
     {
       '<leader>ff',
       cmd_modcall(pickers_mod, 'project_files()'),
-      desc =
-      'Open Project files'
+      desc = 'Open Project files',
     },
     {
       '<leader>fe',
       cmd_modcall(pickers_mod, 'project_files({use_all_files=false, cwd=vim.cfg.runtime__starts_cwd})'),
-      desc =
-      'Open find all files'
+      desc = 'Open find all files',
     },
     {
       '<leader>fr',
       cmd_modcall('telescope.builtin', 'resume()'),
-      desc =
-      'Resume telescope pickers'
+      desc = 'Resume telescope pickers',
     },
     {
       '<leader><Tab>',
-      cmd_modcall(pickers_mod,
-        [[project_files(require('telescope.themes').get_dropdown({ previewer = false, cwd_only = false, oldfiles = true, cwd = vim.cfg.runtime__starts_cwd }))]]),
-      desc =
-      'Open recent files'
+      cmd_modcall(
+        pickers_mod,
+        [[project_files(require('telescope.themes').get_dropdown({ previewer = false, cwd_only = false, oldfiles = true, cwd = vim.cfg.runtime__starts_cwd }))]]
+      ),
+      desc = 'Open recent files',
     },
     {
       '<leader>fo',
@@ -388,8 +368,7 @@ plug({
           borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
         }))
       end,
-      desc =
-      'Find all folders'
+      desc = 'Find all folders',
     },
     {
       '<leader>fl',
@@ -406,8 +385,7 @@ plug({
           cwd = require('userlib.runtime.utils').get_root(),
         }))
       end,
-      desc =
-      'Find project folders'
+      desc = 'Find project folders',
     },
     {
       '<leader>fs',
@@ -416,19 +394,18 @@ plug({
           cwd = vim.cfg.runtime__starts_cwd,
         })
       end,
-      desc = 'Grep search in all projects'
+      desc = 'Grep search in all projects',
     },
     {
       '<leader>fg',
       cmd_modcall('userlib.telescope.live_grep_call', '()'),
-      desc =
-      'Grep search in project'
+      desc = 'Grep search in project',
     },
     {
       '<leader>fg',
       cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_visual_selection()'),
       desc = 'Grep search on selection in project',
-      mode = { 'v', 'x' }
+      mode = { 'v', 'x' },
     },
     {
       '<leader>fG',
@@ -444,7 +421,7 @@ plug({
       '<D-\\>',
       '<cmd>Telescope jumplist fname_width=60 show_line=false<cr>',
       desc = 'Show jumplist',
-    }
+    },
   },
   dependencies = {
     { 'nvim-lua/popup.nvim' },
@@ -464,28 +441,28 @@ plug({
     },
     {
       'jvgrootveld/telescope-zoxide',
-    }
+    },
   },
   config = function(_, opts)
     require('telescope').setup(opts)
     require('telescope').load_extension('fzf')
     require('telescope').load_extension('live_grep_args')
     require('telescope').load_extension('termfinder')
-    require("telescope").load_extension('zoxide')
+    require('telescope').load_extension('zoxide')
     --- https://github.com/nvim-telescope/telescope-file-browser.nvim
     --- Telescope file_browser files=false
-    require("telescope").load_extension("file_browser")
+    require('telescope').load_extension('file_browser')
     au.do_useraucmd(au.user_autocmds.TelescopeConfigDone_User)
 
     -- colorscheme
-    -- au.register_event(au.events.AfterColorschemeChanged, {
-    --   name = "telescope_ui",
-    --   immediate = true,
-    --   callback = function()
-    --     vim.cmd('hi! link TelescopeNormal NormalFloat')
-    --     vim.cmd('hi! link TelescopeBorder NormalFloat')
-    --   end
-    -- })
+    au.register_event(au.events.AfterColorschemeChanged, {
+      name = 'telescope_ui',
+      immediate = true,
+      callback = function()
+        vim.cmd('hi! link TelescopeNormal NormalFloat')
+        vim.cmd('hi! link TelescopeBorder NormalFloat')
+      end,
+    })
   end,
   opts = function()
     -- local au = require('userlib.runtime.au')
@@ -524,7 +501,7 @@ plug({
           '--smart-case',
         },
         layout_config = {
-          prompt_position = "top",
+          prompt_position = 'top',
           horizontal = {
             preview_cutoff = 120,
           },
@@ -536,7 +513,7 @@ plug({
         },
         -- generic_sorter = require('mini.fuzzy').get_telescope_sorter,
         ---@see https://github.com/nvim-telescope/telescope.nvim/issues/522#issuecomment-1107441677
-        file_ignore_patterns = { "node_modules/", '.turbo/', 'dist', '.git/' },
+        file_ignore_patterns = { 'node_modules/', '.turbo/', 'dist', '.git/' },
         path_display = { 'truncate' },
         layout_strategy = 'flex',
         -- layout_strategy = "vertical",
@@ -552,7 +529,7 @@ plug({
         mappings = {
           i = {
             --- used to move cursor forward.
-            ["<C-f>"] = false,
+            ['<C-f>'] = false,
             ['<S-BS>'] = function()
               --- delete previous W
               if vim.fn.mode() == 'n' then return end
@@ -593,12 +570,12 @@ plug({
         },
       },
       extensions = {
-        ["ui-select"] = {
-          require("telescope.themes").get_dropdown {
+        ['ui-select'] = {
+          require('telescope.themes').get_dropdown({
             border = true,
-            borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default
+            borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
             -- even more opts
-          }
+          }),
         },
         file_browser = {
           use_fd = true,
@@ -610,8 +587,8 @@ plug({
 
                 require('userlib.hydra.folder-action').open(new_cwd, prompt_buf)
               end,
-            }
-          }
+            },
+          },
         },
         fzf = {
           fuzzy = true,
@@ -633,7 +610,7 @@ plug({
               ['<C-k>'] = lga_actions.quote_prompt(),
               ['<C-o>'] = function(prompt_bufnr)
                 return require('userlib.telescope.picker_keymaps').open_selected_in_window(prompt_bufnr)
-              end
+              end,
             },
             ['n'] = {
               -- your custom normal mode mappings
@@ -643,12 +620,10 @@ plug({
         },
         zoxide = {
           --- https://github.com/jvgrootveld/telescope-zoxide
-          prompt_title = "Zz...",
+          prompt_title = 'Zz...',
           mappings = {
             default = {
-              after_action = function(selection)
-                print("Update to (" .. selection.z_score .. ") " .. selection.path)
-              end
+              after_action = function(selection) print('Update to (' .. selection.z_score .. ') ' .. selection.path) end,
             },
             -- ["<C-s>"] = {
             --   before_action = function(selection) print("before C-s") end,
@@ -659,7 +634,7 @@ plug({
             -- -- Opens the selected entry in a new split
             -- ["<C-v>"] = { action = z_utils.create_basic_command("split") },
           },
-        }
+        },
       },
     }
   end,
