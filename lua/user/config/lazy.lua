@@ -1,26 +1,24 @@
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 
 local function prepend_lazy()
-  if not vim.uv.fs_stat(lazypath) then
-    return false
-  end
+  if not vim.uv.fs_stat(lazypath) then return false end
   vim.opt.rtp:prepend(lazypath)
   return true
 end
 
 local function install_lazy_vim()
-  print(vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", lazypath }))
-  print(vim.fn.system({ "git", "-C", lazypath, "checkout", "tags/stable" })) -- last stable release
+  print(vim.fn.system({ 'git', 'clone', '--filter=blob:none', 'https://github.com/folke/lazy.nvim.git', lazypath }))
+  print(vim.fn.system({ 'git', '-C', lazypath, 'checkout', 'tags/stable' })) -- last stable release
 end
 
 ---@param opts {getspec:function}
 local function setup(lazy_opts, opts)
   local is_window = jit.os:find('Windows')
-  lazy_opts = vim.tbl_deep_extend("force", {
+  lazy_opts = vim.tbl_deep_extend('force', {
     spec = {},
     defaults = { lazy = true },
-    dev = { patterns = is_window and {} or {}, path = is_window and "" or "~/workspace/git-repos" },
-    install = { missing = false, colorscheme = { "slate" } },
+    dev = { patterns = is_window and {} or {}, path = is_window and '' or '~/workspace/git-repos' },
+    install = { missing = false, colorscheme = { 'wildcharm' } },
     ui = {
       icons = {
         lazy = ' ',
@@ -54,15 +52,15 @@ local function setup(lazy_opts, opts)
       },
       rtp = {
         disabled_plugins = {
-          "gzip",
-          "matchit",
-          "matchparen",
-          "netrwPlugin",
-          "rplugin",
-          "tarPlugin",
-          "tohtml",
-          "tutor",
-          "zipPlugin",
+          'gzip',
+          'matchit',
+          'matchparen',
+          'netrwPlugin',
+          'rplugin',
+          'tarPlugin',
+          'tohtml',
+          'tutor',
+          'zipPlugin',
         },
       },
     },
@@ -71,16 +69,14 @@ local function setup(lazy_opts, opts)
 
   local ok = prepend_lazy()
 
-  vim.api.nvim_create_user_command("PrebundlePlugins", function()
-    require("userlib.runtime.bundle").run_command({
-      main = "user.config.plugs",
-      output = "user/plugins_bundle.lua",
-      glob_dir = { "user/plugins/*.lua", "plugin-extras/**/*.lua", },
+  vim.api.nvim_create_user_command('PrebundlePlugins', function()
+    require('userlib.runtime.bundle').run_command({
+      main = 'user.config.plugs',
+      output = 'user/plugins_bundle.lua',
+      glob_dir = { 'user/plugins/*.lua', 'plugin-extras/**/*.lua' },
     })
-    if vim.loader then
-      vim.loader.reset()
-    end
-    vim.notify("PrebundlePlugins DONE!")
+    if vim.loader then vim.loader.reset() end
+    vim.notify('PrebundlePlugins DONE!')
   end, {})
 
   if not ok then
@@ -88,24 +84,20 @@ local function setup(lazy_opts, opts)
       install_lazy_vim()
       local is_ok_again = prepend_lazy()
       if not is_ok_again then
-        vim.notify("... something is wrong when installing the lazy plugin")
+        vim.notify('... something is wrong when installing the lazy plugin')
         return
       end
-      require("lazy").setup(lazy_opts)
-      vim.notify("lazy is ready to user")
-    end, {
-
-    })
+      require('lazy').setup(lazy_opts)
+      vim.notify('lazy is ready to user')
+    end, {})
     -- we want user to decide wether to install or not.
-    vim.notify("lazy plugin is not installed, please run :InstallLazyVim command to install")
+    vim.notify('lazy plugin is not installed, please run :InstallLazyVim command to install')
     return
   end
 
-  if opts and type(opts.getspec) == 'function' then
-    lazy_opts.spec = opts.getspec()
-  end
+  if opts and type(opts.getspec) == 'function' then lazy_opts.spec = opts.getspec() end
 
-  require("lazy").setup(lazy_opts)
+  require('lazy').setup(lazy_opts)
 end
 
 return {
