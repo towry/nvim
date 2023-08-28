@@ -41,6 +41,7 @@ plug({
       { '<leader>ga', cmdstr([[Git add %:p]]), desc = '!Git add current' },
       { '<leader>gA', cmdstr([[Git add .]]), desc = '!Git add all' },
       { '<leader>gP', cmdstr([[Git push]]), desc = 'Git push' },
+      { '<leader>gp', cmdstr([[Git pull]]), desc = 'Git pull' },
     },
     cmd = {
       'G',
