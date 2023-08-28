@@ -170,6 +170,11 @@ function M.setup_lsp()
   if vim.cfg.lsp__log_level then vim.lsp.set_log_level(vim.cfg.lsp__log_level) end
 end
 
+function M.custom_theme_wildcharm()
+  --- custom wildcharm theme.
+  vim.cmd([[hi Visual guifg=#000000 guibg=#ffffff gui=NONE cterm=NONE]])
+end
+
 function M.setup()
   vim.g.mapleader = ' '
   vim.g.maplocalleader = ','

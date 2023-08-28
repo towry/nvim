@@ -6,17 +6,15 @@ function M.load_on_startup()
   -- taken from AstroNvim
   local definitions = {
     {
-      { 'BufReadPost', },
+      { 'BufReadPost' },
       {
         group = '_clear_fugitive_bufs',
         pattern = 'fugitive://*',
-        callback = function()
-          vim.cmd('set bufhidden=delete')
-        end,
-      }
+        callback = function() vim.cmd('set bufhidden=delete') end,
+      },
     },
     {
-      { 'BufReadPost', },
+      { 'BufReadPost' },
       {
         group = '_disable_diagnostic_on_sth',
         pattern = '*',
@@ -33,12 +31,12 @@ function M.load_on_startup()
             end
           end)
         end,
-      }
+      },
     },
     {
       { 'ExitPre' },
       {
-        group = "_check_exit",
+        group = '_check_exit',
         callback = function()
           --- https://github.com/neovim/neovim/issues/17256
           local tabs_count = #vim.api.nvim_list_tabpages()
@@ -51,43 +49,37 @@ function M.load_on_startup()
             local is_true_modifed = vim.bo.modified
             vim.cmd('set modified')
             vim.defer_fn(function()
-              if not is_true_modifed then
-                vim.cmd('set nomodified')
-              end
+              if not is_true_modifed then vim.cmd('set nomodified') end
             end, 1)
           end
         end,
-      }
+      },
     },
     -- Emit `User FileOpened` event, used by the plugins.
     {
-      { "BufRead", "BufWinEnter", "BufNewFile" },
+      { 'BufRead', 'BufWinEnter', 'BufNewFile' },
       {
-        group = "_file_opened",
+        group = '_file_opened',
         nested = true,
         callback = function(args)
-          local buftype = vim.api.nvim_get_option_value("buftype", { buf = args.buf })
-          if not (vim.fn.expand "%" == "" or buftype == "nofile") then
-            vim.api.nvim_del_augroup_by_name("_file_opened")
+          local buftype = vim.api.nvim_get_option_value('buftype', { buf = args.buf })
+          if not (vim.fn.expand('%') == '' or buftype == 'nofile') then
+            vim.api.nvim_del_augroup_by_name('_file_opened')
             au.do_useraucmd(au.user_autocmds.FileOpened_User)
 
             vim.defer_fn(function()
-              vim.schedule(function()
-                au.do_useraucmd(au.user_autocmds.FileOpenedAfter_User)
-              end)
+              vim.schedule(function() au.do_useraucmd(au.user_autocmds.FileOpenedAfter_User) end)
             end, 10)
           end
         end,
       },
     },
     {
-      "ColorScheme",
+      'ColorScheme',
       {
-        group = "_colorscheme",
-        callback = function()
-          au.fire_event(au.events.AfterColorschemeChanged)
-        end,
-      }
+        group = '_colorscheme',
+        callback = function() au.fire_event(au.events.AfterColorschemeChanged) end,
+      },
     },
     {
       'LspAttach',
@@ -101,7 +93,7 @@ function M.load_on_startup()
             bufnr = bufnr,
           })
         end,
-      }
+      },
     },
     {
       { 'BufRead', 'BufNewFile' },
@@ -109,7 +101,7 @@ function M.load_on_startup()
         group = '_no_lsp_diagnostic_inside_folders',
         pattern = '*/node_modules/*',
         command = 'lua vim.diagnostic.disable(0)',
-      }
+      },
     },
     {
       { 'BufWritePost' },
@@ -120,18 +112,16 @@ function M.load_on_startup()
           -- may being called two times due to the auto format write.
           vim.notify("Config changed, do not forget to run 'PrebundlePlugins' command!")
         end,
-      }
+      },
     },
     {
       { 'BufWinEnter' },
       {
         group = 'clear_search_hl_on_buf_enter',
         callback = function()
-          vim.schedule(function()
-            vim.cmd('nohl')
-          end)
-        end
-      }
+          vim.schedule(function() vim.cmd('nohl') end)
+        end,
+      },
     },
     {
       'UIEnter',
@@ -160,14 +150,17 @@ function M.load_on_startup()
               data = ctx.data,
             })
             --- maybe post event should be fired inside above event.
-            vim.defer_fn(function()
-              au.exec_useraucmd(au.user_autocmds.LazyUIEnterOncePost, {
-                data = ctx.data,
-              })
-            end, 1)
+            vim.defer_fn(
+              function()
+                au.exec_useraucmd(au.user_autocmds.LazyUIEnterOncePost, {
+                  data = ctx.data,
+                })
+              end,
+              1
+            )
           end)
-        end
-      }
+        end,
+      },
     },
     {
       { 'UIEnter' },
@@ -194,14 +187,17 @@ function M.load_on_startup()
             au.exec_useraucmd(au.user_autocmds.LazyUIEnter, {
               data = ctx.data,
             })
-            vim.defer_fn(function()
-              au.exec_useraucmd(au.user_autocmds.LazyUIEnterPost, {
-                data = ctx.data,
-              })
-            end, 1)
+            vim.defer_fn(
+              function()
+                au.exec_useraucmd(au.user_autocmds.LazyUIEnterPost, {
+                  data = ctx.data,
+                })
+              end,
+              1
+            )
           end)
         end,
-      }
+      },
     },
   }
 
@@ -213,23 +209,23 @@ function M.load_on_startup()
       callback = function(ctx)
         local data = ctx.data or {}
         local new_cwd = data.dir or nil
-        if not new_cwd then
-          new_cwd = vim.uv.get_cwd()
-        end
+        if not new_cwd then new_cwd = vim.uv.get_cwd() end
         require('userlib.runtime.utils').update_cwd_env(new_cwd)
       end,
     },
     {
-      pattern = "AlphaClosed",
-      callback = function()
-        au.do_useraucmd(au.user_autocmds.OnLeaveDashboard_User)
-      end
+      pattern = 'AlphaClosed',
+      callback = function() au.do_useraucmd(au.user_autocmds.OnLeaveDashboard_User) end,
     },
     {
       pattern = au.user_autocmds.LazyUIEnterPre,
       once = true,
       callback = function()
         pcall(vim.cmd, 'colorscheme ' .. vim.cfg.ui__theme_name)
+        local opts = require('user.config.options')
+        if type(opts['custom_theme_' .. vim.cfg.ui__theme_name]) == 'function' then
+          opts['custom_theme_' .. vim.cfg.ui__theme_name]()
+        end
       end,
     },
     {
@@ -237,45 +233,44 @@ function M.load_on_startup()
       pattern = au.user_autocmds.LazyUIEnter,
       once = true,
       callback = function()
-        if vim.fn.argc(-1) ~= 0 then
-          return
-        end
-        vim.schedule(function()
-          au.exec_useraucmd(au.user_autocmds.DoEnterDashboard, {
-            data = {
-              in_vimenter = true,
-            }
-          })
-        end)
+        if vim.fn.argc(-1) ~= 0 then return end
+        vim.schedule(
+          function()
+            au.exec_useraucmd(au.user_autocmds.DoEnterDashboard, {
+              data = {
+                in_vimenter = true,
+              },
+            })
+          end
+        )
       end,
-    }
+    },
   }
 
   au.define_autocmds(definitions)
   au.define_user_autocmds(user_definitions)
 
-  vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
+  vim.api.nvim_create_autocmd({ 'InsertLeave', 'WinEnter' }, {
     callback = function()
-      local ok, cl = pcall(vim.api.nvim_win_get_var, 0, "auto-cursorline")
+      local ok, cl = pcall(vim.api.nvim_win_get_var, 0, 'auto-cursorline')
       if ok and cl then
         vim.wo.cursorline = true
-        vim.api.nvim_win_del_var(0, "auto-cursorline")
+        vim.api.nvim_win_del_var(0, 'auto-cursorline')
       end
     end,
   })
-  vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
+  vim.api.nvim_create_autocmd({ 'InsertEnter', 'WinLeave' }, {
     callback = function()
       local cl = vim.wo.cursorline
       if cl then
-        vim.api.nvim_win_set_var(0, "auto-cursorline", cl)
+        vim.api.nvim_win_set_var(0, 'auto-cursorline', cl)
         vim.wo.cursorline = false
       end
     end,
   })
 end
 
-function M.setup_events_on_startup()
-end
+function M.setup_events_on_startup() end
 
 ---resize kitty window, no padding when neovim is present.
 local function resize_kitty()
@@ -304,16 +299,14 @@ end
 
 ---@param opts? {resize_kitty?: boolean,on_very_lazy?:function}
 function M.setup(opts)
-  opts = vim.tbl_deep_extend("force", {
+  opts = vim.tbl_deep_extend('force', {
     resize_kitty = false,
   }, opts or {})
 
   M.load_on_startup()
   M.setup_events_on_startup()
 
-  if opts.resize_kitty then
-    resize_kitty()
-  end
+  if opts.resize_kitty then resize_kitty() end
   if type(opts.on_very_lazy) == 'function' then
     au.define_user_autocmd({
       pattern = 'VeryLazy',
