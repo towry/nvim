@@ -1,9 +1,7 @@
 local plug = require('userlib.runtime.pack').plug
 local au = require('userlib.runtime.au')
 
-if vim.cfg.mf_tabpage_cwd_paths == nil then
-  vim.cfg.mf_tabpage_cwd_paths = {}
-end
+if vim.cfg.mf_tabpage_cwd_paths == nil then vim.cfg.mf_tabpage_cwd_paths = {} end
 
 local map_split = function(buf_id, lhs, direction)
   local rhs = function()
@@ -29,11 +27,11 @@ end
 
 local filter_show = function(fs_entry)
   local name = fs_entry.name
-  return name ~= ".DS_Store" and name ~= ".git" and name ~= ".direnv"
+  return name ~= '.DS_Store' and name ~= '.git' and name ~= '.direnv'
 end
 local filter_hide = function(fs_entry)
   local name = fs_entry.name
-  return not vim.startswith(name, '.') and name ~= ".dotfiles" and name ~= ".config"
+  return not vim.startswith(name, '.') and name ~= '.dotfiles' and name ~= '.config'
 end
 
 local get_current_dir = function()
@@ -45,7 +43,7 @@ end
 
 return plug({
   enabled = true,
-  "echasnovski/mini.files",
+  'echasnovski/mini.files',
   lazy = not vim.cfg.runtime__starts_in_buffer,
   opts = {
     windows = {
@@ -98,11 +96,11 @@ return plug({
       --     return not vim.tbl_contains(output_lines, entry.path)
       --   end, entries))
       -- end,
-    }
+    },
   },
   keys = {
     {
-      "<leader>fI",
+      '<leader>fI',
       function()
         local path = nil
         if vim.bo.buftype == 'nofile' then
@@ -110,22 +108,20 @@ return plug({
         else
           path = vim.api.nvim_buf_get_name(0)
         end
-        local mf = require("mini.files");
+        local mf = require('mini.files')
         local is_closed = mf.close()
         if is_closed == true then return end
-        require("mini.files").open(path, true)
+        require('mini.files').open(path, true)
       end,
-      desc = "Open mini.files (directory of current file)",
+      desc = 'Open mini.files (directory of current file)',
     },
     {
-      "<leader>fi",
-      function()
-        require("mini.files").open(vim.uv.cwd(), true)
-      end,
-      desc = "Open mini.files (cwd)",
+      '<leader>fi',
+      function() require('mini.files').open(vim.uv.cwd(), true) end,
+      desc = 'Open mini.files (cwd)',
     },
     {
-      "-",
+      '-',
       function()
         local path = nil
         if require('userlib.runtime.buffer').is_empty_buffer(0) then
@@ -133,18 +129,18 @@ return plug({
         else
           path = vim.api.nvim_buf_get_name(0)
         end
-        local mf = require("mini.files");
+        local mf = require('mini.files')
         local is_closed = mf.close()
         if is_closed == true then return end
-        require("mini.files").open(path, true)
+        require('mini.files').open(path, true)
       end,
-      desc = "Open mini.files (directory of current file)",
+      desc = 'Open mini.files (directory of current file)',
     },
   },
   config = function(_, opts)
     local MF = require('mini.files')
     MF.setup(opts)
-    vim.cmd('hi! link MiniFilesBorder NormalFloat')
+    vim.schedule(function() vim.cmd('hi! link MiniFilesBorder NormalFloat') end)
   end,
   init = function()
     au.define_user_autocmd({
@@ -157,7 +153,7 @@ return plug({
         local keyopts = {
           noremap = true,
           silent = true,
-          nowait = true
+          nowait = true,
         }
         local show_dotfiles = false
         local toggle_dotfiles = function()
@@ -189,9 +185,7 @@ return plug({
         })
         -- x in normal is yanked to register x.
 
-        set('n', '<BS>', function()
-          MF.go_out()
-        end)
+        set('n', '<BS>', function() MF.go_out() end)
         set('n', '-', function()
           local lcwd = vim.cfg.mf_tabpage_cwd_paths[tabpage]
           if lcwd ~= nil then
@@ -207,34 +201,26 @@ return plug({
         set('n', 'm', function()
           local fsentry = MF.get_fs_entry()
           if not fsentry then return nil end
-          require('userlib.hydra.folder-action').open(fsentry.path, bufnr, function()
-            MF.close()
-          end)
+          require('userlib.hydra.folder-action').open(fsentry.path, bufnr, function() MF.close() end)
         end, keyopts)
         set('n', 'M', function()
           local cwd = get_current_dir()
-          require('userlib.hydra.file-action').open(cwd, bufnr, function()
-            MF.close()
-          end)
+          require('userlib.hydra.file-action').open(cwd, bufnr, function() MF.close() end)
         end, keyopts)
         set('n', 'g.', toggle_dotfiles, keyopts)
         set('n', '<ESC>', MF.close, keyopts)
-        set('n', '<C-c>', function()
-          MF.close()
-        end, keyopts)
+        set('n', '<C-c>', function() MF.close() end, keyopts)
         set('n', 's', function()
           require('flash').jump({
             search = {
-              mode = "search",
+              mode = 'search',
               max_length = 0,
               exclude = {
-                function(win)
-                  return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= "minifiles"
-                end,
-              }
+                function(win) return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= 'minifiles' end,
+              },
             },
             label = { after = { 0, 0 } },
-            pattern = "^"
+            pattern = '^',
           })
         end, keyopts)
 
@@ -250,9 +236,7 @@ return plug({
             -- hint = 'floating-big-letter',
             include_current_win = true,
           })
-          if win_picked then
-            MF.set_target_window(win_picked)
-          end
+          if win_picked then MF.set_target_window(win_picked) end
           MF.go_in()
           MF.close()
         end, keyopts)

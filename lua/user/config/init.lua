@@ -7,19 +7,15 @@ function M.setup()
 
   require('user.config.autocmd').setup({
     resize_kitty = false,
-    on_very_lazy = function()
-      require('user.config.keymaps').setup()
-    end,
+    on_very_lazy = function() require('user.config.keymaps').setup() end,
   })
 
   require('user.config.lazy').setup({}, {
     getspec = function()
       local bundle_ok, spec = pcall(require, 'user.plugins_bundle')
-      if not bundle_ok then
-        spec = require('user.config.plugs')
-      end
+      if not bundle_ok then spec = require('user.config.plugs') end
       return spec
-    end
+    end,
   })
 end
 

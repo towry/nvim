@@ -218,15 +218,9 @@ function M.load_on_startup()
       callback = function() au.do_useraucmd(au.user_autocmds.OnLeaveDashboard_User) end,
     },
     {
-      pattern = au.user_autocmds.LazyUIEnterPre,
+      pattern = 'VeryLazy',
       once = true,
-      callback = function()
-        pcall(vim.cmd, 'colorscheme ' .. vim.cfg.ui__theme_name)
-        local opts = require('user.config.options')
-        if type(opts['custom_theme_' .. vim.cfg.ui__theme_name]) == 'function' then
-          opts['custom_theme_' .. vim.cfg.ui__theme_name]()
-        end
-      end,
+      callback = function() require('user.config.options').setup_theme() end,
     },
     {
       --- start dashboard

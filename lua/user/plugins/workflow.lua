@@ -69,8 +69,10 @@ plug({
       { 'junegunn/fzf', build = function() vim.fn['fzf#install']() end },
     },
     config = function()
-      vim.cmd('hi! link BqfPreviewBorder NormalFloat')
-      vim.cmd('hi! link BqfPreviewFloat NormalFloat')
+      vim.schedule(function()
+        vim.cmd('hi! link BqfPreviewBorder NormalFloat')
+        vim.cmd('hi! link BqfPreviewFloat NormalFloat')
+      end)
     end,
   },
 
