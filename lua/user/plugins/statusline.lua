@@ -147,7 +147,6 @@ plug({
       },
       inactive_winbar = {
         lualine_a = {
-          { 'filetype', colored = true, icon_only = true },
           {
             'filename',
             file_status = true,
