@@ -241,7 +241,7 @@ plug({
     'Mofiqul/trld.nvim',
     event = 'LspAttach',
     opts = {
-      position = 'bottom',
+      position = 'top',
       auto_cmds = true,
     },
   },
