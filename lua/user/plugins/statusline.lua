@@ -41,6 +41,7 @@ local tabs_component = {
   max_length = vim.o.columns / 3,
   mode = 1,
   use_mode_colors = false,
+  draw_empty = false,
   tabs_color = {
     active = { fg = '#6f894e', gui = 'italic,bold' },
     inactive = { fg = 'gray' },
@@ -97,7 +98,7 @@ plug({
         lualine_a = {
           'mode',
         },
-        lualine_b = {
+        lualine_c = {
           tabs_component,
         },
         lualine_x = {
