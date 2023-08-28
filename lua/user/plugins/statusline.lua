@@ -43,14 +43,16 @@ local tabs_component = {
   use_mode_colors = false,
   draw_empty = false,
   tabs_color = {
-    active = { fg = '#6f894e', gui = 'italic,bold' },
+    active = { fg = 'black', gui = 'italic,bold,underline' },
     inactive = { fg = 'gray' },
   },
+  cond = function() return vim.fn.tabpagenr('$') > 1 end,
   fmt = function(name, context)
     local tabnr = context.tabnr
-    local icon = tabs_nrto_icons[tostring(tabnr)] or tabnr
+    -- local icon = tabs_nrto_icons[tostring(tabnr)] or tabnr
+    local icon = 'T'
     if context.last and context.tabId == 1 then return '' end
-    return icon .. ''
+    return icon .. tabnr
   end,
 }
 
@@ -139,7 +141,27 @@ plug({
             path = 3,
           },
         },
+        lualine_b = {},
+        lualine_c = {},
+        lualine_z = {},
+      },
+      inactive_winbar = {
+        lualine_a = {
+          { 'filetype', colored = true, icon_only = true },
+          {
+            'filename',
+            file_status = true,
+            path = 3,
+          },
+        },
+        lualine_z = {},
+      },
+      sections = {
+        lualine_a = {
+          { 'mode', fmt = function(str) return str:sub(1, 1) end },
+        },
         lualine_b = {
+          git_branch,
           {
             function()
               local idx = require('harpoon.mark').status()
@@ -165,32 +187,10 @@ plug({
             'diff',
             source = git_status_source,
           },
-        },
-        lualine_z = {},
-      },
-      inactive_winbar = {
-        lualine_a = {
-          { 'filetype', colored = true, icon_only = true },
-          {
-            'filename',
-            file_status = true,
-            path = 3,
-          },
-        },
-        lualine_z = {},
-      },
-      sections = {
-        lualine_a = {
-          { 'mode', fmt = function(str) return str:sub(1, 1) end },
-        },
-        lualine_b = {
-          git_branch,
-        },
-        lualine_c = {
           tabs_component,
-          'searchcount',
         },
         lualine_x = {
+          'searchcount',
           -- copilot status
           -- require('copilot_status').status_string,
           -- {
