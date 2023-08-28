@@ -70,7 +70,7 @@ function M.init_interface()
   o.sidescrolloff = 8 -- Columns of context
   o.lazyredraw = false --- Makes macros faster & prevent errors in complicated mappings
   o.wildmode = { 'longest:full', 'full' } -- Command-line completion mode
-  o.cmdheight = 0 --- Give more space for displaying messages
+  o.cmdheight = 1 --- Give more space for displaying messages
   o.completeopt = { 'menu', 'menuone', 'noselect' } --- Better autocompletion
   o.cursorline = true --- Highlight of current line
   o.emoji = true --- Fix emoji display
@@ -119,22 +119,34 @@ function M.init_interface()
   end
 end
 
+local fold_inited = false
+--- called after nvim-treesitter loaded.
 function M.init_folds()
+  if fold_inited then return end
+  fold_inited = true
   local function enable_foldexpr()
-    if vim.api.nvim_buf_line_count(0) > 40000 then return end
+    local buf = vim.api.nvim_get_current_buf()
+    if vim.api.nvim_get_option_value('buftype', { buf = buf }) ~= '' or (not vim.api.nvim_buf_is_valid(buf)) then
+      return
+    end
+    if not buf or vim.api.nvim_buf_line_count(buf) > 40000 then return end
     vim.opt_local.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     vim.opt_local.foldmethod = 'expr'
-    -- below will move cursor move
+    -- below will make cursor move
     -- vim.cmd.normal 'zx'
+  end
+  local function start()
+    local utils = require('userlib.runtime.utils')
+    if utils.has_plugin('nvim-treesitter') then utils.load_plugins('nvim-treesitter') end
+    vim.schedule(function()
+      if not pcall(vim.treesitter.start) or vim.wo.diff then return end
+      enable_foldexpr()
+    end)
   end
 
   vim.api.nvim_create_autocmd('FileType', {
     -- schedule_wrap is used to stop dlopen from crashing on MacOS
-    callback = vim.schedule_wrap(function()
-      if not pcall(vim.treesitter.start) or vim.wo.diff then return end
-
-      enable_foldexpr()
-    end),
+    callback = start,
   })
   o.foldnestmax = 10 -- deepest fold is 10 levels
   o.foldlevel = 99 --- Using ufo provider need a large value
@@ -191,8 +203,8 @@ function M.setup()
 
   M.init_edit()
   M.init_interface()
-  M.init_folds()
   M.init_other()
+  M.init_folds()
 
   if vim.cfg.runtime__starts_in_buffer then M.setup_theme() end
 end

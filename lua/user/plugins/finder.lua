@@ -296,6 +296,7 @@ plug({
 
 plug({
   'nvim-telescope/telescope.nvim',
+  commit = '2d92125620417fbea82ec30303823e3cd69e90e8',
   cmd = { 'Telescope' },
   keys = {
     {

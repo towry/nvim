@@ -231,7 +231,7 @@ plug({
       log_level = 'error',
       scope = 'git',
       integrations = {
-        resession = false,
+        resession = true,
       },
     },
   },
@@ -321,41 +321,45 @@ plug({
       },
     },
   },
-  {
-    'Shatur/neovim-session-manager',
-    cmd = { 'SessionManager' },
-    keys = {
-      {
-        '<leader>/s',
-        '<cmd>SessionManager load_session<CR>',
-        desc = 'Load current session',
-      },
-    },
-    config = function()
-      local session_manager = require('session_manager')
-      local Path = require('plenary.path')
 
-      session_manager.setup({
-        sessions_dir = Path:new(vim.fn.stdpath('data'), 'sessions'), -- The directory where the session files will be saved.
-        path_replacer = '__', -- The character to which the path separator will be replaced for session files.
-        colon_replacer = '++', -- The character to which the colon symbol will be replaced for session files.
-        autoload_mode = require('session_manager.config').AutoloadMode.Disabled, -- Define what to do when Neovim is started without arguments. Possible values: Disabled, CurrentDir, LastSession
-        autosave_last_session = true, -- Automatically save last session on exit and on session switch.
-        autosave_ignore_not_normal = true, -- Plugin will not save a session when no buffers are opened, or all of them aren't writable or listed.
-        autosave_ignore_filetypes = vim.tbl_extend(
-          'force',
-          { -- All buffers of these file types will be closed before the session is saved.
-            'gitcommit',
-            'toggleterm',
-            'term',
-            'nvimtree',
-          },
-          vim.cfg.misc__ft_exclude
-        ),
-        autosave_only_in_session = false, -- Always autosaves session. If true, only autosaves after a session is active.
-        max_path_length = 0, -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
+  {
+    'stevearc/resession.nvim',
+    event = 'VeryLazy',
+    init = function()
+      local function get_session_name()
+        local name = vim.cfg.runtime__starts_cwd or vim.fn.getcwd()
+        local branch = vim.fn.system({ 'git', 'branch', '--show-current' })
+        if vim.v.shell_error ~= 0 then branch = '' end
+        return vim.trim(string.format('%s%s', name, branch))
+      end
+
+      local is_ok, resession = pcall(require, 'resession')
+      if not is_ok then return end
+      resession.add_hook('post_load', function()
+        -- if loading a session, there are likely multiple windows, and loading smart-splits.nvim is inexpensive anyway
+        require('smart-splits')
+      end)
+      -- Only load the session if nvim was started with no args, or if command was to open a directory, not a file
+      local num_args = vim.fn.argc(-1)
+      if num_args == 0 or (num_args == 1 and vim.fn.isdirectory(vim.fn.argv(0) or '') ~= 0) then
+        resession.load(get_session_name(), { dir = 'dirsession', silence_errors = true, notify = false })
+      end
+
+      vim.api.nvim_create_autocmd('VimLeavePre', {
+        callback = function()
+          vim.cmd.cd(vim.cfg.runtime__starts_cwd)
+          require('resession').save(get_session_name(), { dir = 'dirsession', notify = false })
+        end,
       })
     end,
+    opts = {
+      autosave = {
+        enabled = false, -- How often to save (in seconds)
+        interval = 60,
+        -- Notify when autosaved
+        notify = false,
+      },
+    },
   },
 
   {
