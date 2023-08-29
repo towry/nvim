@@ -19,9 +19,7 @@ function M.on_attach(client, bufnr)
   end
   vim.api.nvim_create_autocmd('BufWritePost', {
     buffer = bufnr,
-    callback = function()
-      M.format_document(bufnr)
-    end,
+    callback = function() M.format_document(bufnr) end,
   })
 end
 
@@ -41,13 +39,12 @@ function M.setup_async_formatting()
       return
     end
 
-    if result == nil then
-      return
-    end
+    if result == nil then return end
 
-    if
-      vim.api.nvim_buf_get_var(ctx.bufnr, 'format_changedtick') == vim.api.nvim_buf_get_var(ctx.bufnr, 'changedtick')
-    then
+    local is_ok, format_changedtick = pcall(vim.api.nvim_buf_get_var, ctx.bufnr, 'format_changedtick')
+    local _, changedtick = pcall(vim.api.nvim_buf_get_var, ctx.bufnr, 'changedtick')
+
+    if is_ok and format_changedtick == changedtick then
       local view = vim.fn.winsaveview()
       vim.lsp.util.apply_text_edits(result, ctx.bufnr, 'utf-16')
       vim.fn.winrestview(view)
@@ -60,11 +57,8 @@ function M.setup_async_formatting()
   end
 end
 
-
 function M.toggle_formatting_enabled(enable)
-  if enable == nil then
-    enable = not formatting_enabled
-  end
+  if enable == nil then enable = not formatting_enabled end
   if enable then
     formatting_enabled = true
     vim.notify('Enabling LSP formatting...', vim.log.levels.INFO)
@@ -91,9 +85,7 @@ function M.get_formatter_name(buf)
 
   -- otherwise just return the LSP server name
   local clients = vim.lsp.get_clients({ bufnr = buf, method = Methods.textDocument_formatting })
-  if #clients > 0 then
-    return clients[1].name
-  end
+  if #clients > 0 then return clients[1].name end
 
   return nil
 end
@@ -102,9 +94,7 @@ end
 ---@return boolean
 function M.is_formatting_supported(buf)
   buf = buf or vim.api.nvim_get_current_buf()
-  if not formatting_enabled then
-    return false
-  end
+  if not formatting_enabled then return false end
 
   local fsize = require('userlib.runtime.buffer').getfsize(buf)
   if fsize / 1024 > 200 then
@@ -118,9 +108,7 @@ function M.is_formatting_supported(buf)
 end
 
 function M.format_document(buf)
-  if not M.is_formatting_supported(buf) then
-    return
-  end
+  if not M.is_formatting_supported(buf) then return end
 
   if not vim.b.format_saving then
     vim.b.format_changedtick = vim.b.changedtick ---@diagnostic disable-line
@@ -139,3 +127,4 @@ function M.format_document(buf)
 end
 
 return M
+
