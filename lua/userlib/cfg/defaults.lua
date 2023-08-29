@@ -117,7 +117,6 @@ return {
     'bashls',
     'html',
     -- "tsserver",
-    'null_ls',
   },
   lsp__auto_install_servers = {
     -- 'bashls',
@@ -136,7 +135,6 @@ return {
   lsp__server_volar_takeover_mode = true,
   lsp__ui_progress = true,
   lsp__ui_progress_ignore_servers = {
-    'null-ls',
     'tailwindcss',
   },
   lsp__allow_incremental_sync = false,
