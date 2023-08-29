@@ -1,7 +1,7 @@
 local plug = require('userlib.runtime.pack').plug
 local utils = require('userlib.runtime.utils')
 local au = require('userlib.runtime.au')
-local git_branch_icon = " "
+local git_branch_icon = ' '
 local enable_lualine = true
 
 local git_status_source = function()
@@ -10,7 +10,7 @@ local git_status_source = function()
     return {
       added = gitsigns.added,
       modified = gitsigns.changed,
-      removed = gitsigns.removed
+      removed = gitsigns.removed,
     }
   end
 end
@@ -33,9 +33,7 @@ local tabs_nrto_icons = {
   ['10'] = '❿ ',
 }
 local cwd_component = {
-  function()
-    return vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
-  end,
+  function() return vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short end,
   icon = ' ',
 }
 local tabs_component = {
@@ -43,20 +41,20 @@ local tabs_component = {
   max_length = vim.o.columns / 3,
   mode = 1,
   use_mode_colors = false,
+  draw_empty = false,
   tabs_color = {
-    active = { fg = '#6f894e', gui = 'italic,bold' },
+    active = { fg = 'black', gui = 'italic,bold,underline' },
     inactive = { fg = 'gray' },
   },
+  cond = function() return vim.fn.tabpagenr('$') > 1 end,
   fmt = function(name, context)
     local tabnr = context.tabnr
-    local icon = tabs_nrto_icons[tostring(tabnr)] or tabnr
-    if context.last and context.tabId == 1 then
-      return ''
-    end
-    return icon .. ''
+    -- local icon = tabs_nrto_icons[tostring(tabnr)] or tabnr
+    local icon = 'T'
+    if context.last and context.tabId == 1 then return '' end
+    return icon .. tabnr
   end,
 }
-
 
 plug({
   'nvim-lualine/lualine.nvim',
@@ -72,27 +70,26 @@ plug({
   event = { 'User LazyUIEnterOncePost', 'User OnLeaveDashboard' },
   config = function()
     require('user.config.options').setup_statusline()
-    local format_utils         = require('userlib.lsp.fmt')
+    local format_utils = require('userlib.lsp.fmt')
     -- local Buffer               = require('userlib.runtime.buffer')
-    local terms                = require('userlib.statusline.lualine.terminal_component')
+    local terms = require('userlib.statusline.lualine.terminal_component')
 
-    local spectre_extension    = {
+    local spectre_extension = {
       sections = {
         lualine_a = { 'mode', tabs_component },
       },
       filetypes = { 'spectre_panel' },
     }
-    local dashboard_extension  = {
+    local dashboard_extension = {
       sections = {
-        lualine_a = {
-        },
+        lualine_a = {},
         lualine_b = {
           cwd_component,
           git_branch,
         },
         lualine_c = {
           tabs_component,
-        }
+        },
       },
       winbar = {},
       filetypes = { 'starter', 'alpha' },
@@ -101,20 +98,20 @@ plug({
       winbar = {},
       sections = {
         lualine_a = {
-          "mode",
+          'mode',
         },
-        lualine_b = {
+        lualine_c = {
           tabs_component,
         },
         lualine_x = {
           {
             terms,
           },
-        }
+        },
       },
-      filetypes = { 'toggleterm' }
+      filetypes = { 'toggleterm' },
     }
-    local present, lualine     = pcall(require, 'lualine')
+    local present, lualine = pcall(require, 'lualine')
 
     if not present then
       Ty.NOTIFY('lualine not installed')
@@ -139,16 +136,31 @@ plug({
       winbar = {
         lualine_a = {
           {
-            left_padding = 2,
             'filename',
-            path = 1,
-            symbols = {
-              modified = '',
-              readonly = '',
-            }
+            file_status = true,
+            path = 3,
           },
         },
+        lualine_b = {},
+        lualine_c = {},
+        lualine_z = {},
+      },
+      inactive_winbar = {
+        lualine_a = {
+          {
+            'filename',
+            file_status = true,
+            path = 3,
+          },
+        },
+        lualine_z = {},
+      },
+      sections = {
+        lualine_a = {
+          { 'mode', fmt = function(str) return str:sub(1, 1) end },
+        },
         lualine_b = {
+          git_branch,
           {
             function()
               local idx = require('harpoon.mark').status()
@@ -156,9 +168,7 @@ plug({
             end,
             cond = function()
               local harpoon_has = utils.pkg_loaded('harpoon')
-              if not harpoon_has then
-                return false
-              end
+              if not harpoon_has then return false end
               local idx = require('harpoon.mark').status()
               return idx and idx ~= ''
             end,
@@ -166,74 +176,20 @@ plug({
               '',
               color = {
                 fg = 'red',
-              }
-            }
+              },
+            },
           },
         },
         lualine_c = {
           { 'diagnostics', update_in_insert = false, symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' } },
           {
             'diff',
-            source = git_status_source
+            source = git_status_source,
           },
-        },
-        lualine_z = {}
-      },
-      inactive_winbar = {
-        lualine_a = {
-          { 'filetype', colored = true, icon_only = true },
-          {
-            -- separator = { left = '', right = '' },
-            left_padding = 2,
-            'filename',
-            path = 1,
-            symbols = {
-              modified = '',
-              readonly = '',
-            }
-          }
-        },
-        lualine_z = {
-        }
-      },
-      sections = {
-        lualine_a = {
-          { 'mode', fmt = function(str) return str:sub(1, 1) end },
-        },
-        lualine_b = {
-          cwd_component,
-          'searchcount',
-          git_branch,
-        },
-        -- filename is displayed by the incline.
-        lualine_c = {
-          -- TODO: move to component.
-          -- {
-          --   function()
-          --     local unsaved_count = #Buffer.unsaved_list({ perf = true })
-          --     local has_modified = unsaved_count > 0
-          --     local unsaved_count_text = unsaved_count > 0 and (':' .. unsaved_count) or ''
-          --     vim.b['has_modified_file'] = has_modified
-          --     local listed_count = #vim.fn.getbufinfo({ buflisted = 1 })
-          --     if listed_count <= 1 and unsaved_count <= 0 then
-          --       return ''
-          --     end
-          --     return listed_count .. unsaved_count_text
-          --   end,
-          --   icon = {
-          --     ' ',
-          --     color = function()
-          --       if vim.b['has_modified_file'] then
-          --         return {
-          --           fg = '#C20505',
-          --         }
-          --       end
-          --     end,
-          --   },
-          -- },
           tabs_component,
         },
         lualine_x = {
+          'searchcount',
           -- copilot status
           -- require('copilot_status').status_string,
           -- {
@@ -244,39 +200,31 @@ plug({
           },
           {
             function()
-              if vim.diagnostic.is_disabled() then
-                return 'Diag OFF';
-              end
+              if vim.diagnostic.is_disabled() then return 'Diag OFF' end
               return ''
             end,
           },
           {
             'encoding',
-            cond = function()
-              return vim.opt.fileencoding and vim.opt.fileencoding:get() ~= 'utf-8'
-            end
+            cond = function() return vim.opt.fileencoding and vim.opt.fileencoding:get() ~= 'utf-8' end,
           },
           {
             function()
               local icon = '󰉠 '
-              local ftr_name= format_utils.get_formatter_name(0)
-              if not ftr_name then
-                return ''
-              end
+              local ftr_name = format_utils.get_formatter_name(0)
+              if not ftr_name then return '' end
               return string.format('%s%s', icon, ftr_name)
             end,
           },
           --- dap
           {
-            function() return "  " .. require("dap").status() end,
-            cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
-            color = utils.fg("Debug"),
+            function() return '  ' .. require('dap').status() end,
+            cond = function() return package.loaded['dap'] and require('dap').status() ~= '' end,
+            color = utils.fg('Debug'),
           },
           {
             'fileformat',
-            cond = function()
-              return not vim.tbl_contains({ 'unix', 'mac' }, vim.bo.fileformat)
-            end,
+            cond = function() return not vim.tbl_contains({ 'unix', 'mac' }, vim.bo.fileformat) end,
           },
         },
         lualine_y = {
@@ -291,13 +239,11 @@ plug({
                 return vim.treesitter.highlighter.active[bufnr] ~= nil
               end
 
-              if is_treesitter() then
-                return
-              end
+              if is_treesitter() then return end
               return {
-                bg = 'gray'
+                bg = 'gray',
               }
-            end
+            end,
           },
         },
         lualine_z = {
@@ -366,8 +312,6 @@ plug({
       width = 4,
       excluded_filetypes = vim.cfg.misc__ft_exclude,
     },
-    config = function(_, opts)
-      require('satellite').setup(opts)
-    end
-  }
+    config = function(_, opts) require('satellite').setup(opts) end,
+  },
 })

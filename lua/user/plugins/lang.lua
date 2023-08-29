@@ -21,29 +21,27 @@ plug({
     keys = {
       -- { "<Enter>",    desc = "Init Increment selection" },
       -- { "<Enter>",    desc = "node node incremental selection",      mode = "x" },
-      { "<BS>", desc = "Decrement selection", mode = "x" },
+      { '<BS>', desc = 'Decrement selection', mode = 'x' },
     },
     dependencies = {
-      "windwp/nvim-ts-autotag",
-      "andymass/vim-matchup",
+      'windwp/nvim-ts-autotag',
+      'andymass/vim-matchup',
       {
         'nvim-treesitter/nvim-treesitter-textobjects',
         init = function()
           -- PERF: no need to load the plugin, if we only need its queries for mini.ai
-          local plugin = require("lazy.core.config").spec.plugins["nvim-treesitter"]
-          local opts = require("lazy.core.plugin").values(plugin, "opts", false)
+          local plugin = require('lazy.core.config').spec.plugins['nvim-treesitter']
+          local opts = require('lazy.core.plugin').values(plugin, 'opts', false)
           local enabled = false
           if opts.textobjects then
-            for _, mod in ipairs({ "move", "select", "swap", "lsp_interop" }) do
+            for _, mod in ipairs({ 'move', 'select', 'swap', 'lsp_interop' }) do
               if opts.textobjects[mod] and opts.textobjects[mod].enable then
                 enabled = true
                 break
               end
             end
           end
-          if not enabled then
-            require("lazy.core.loader").disable_rtp_plugin("nvim-treesitter-textobjects")
-          end
+          if not enabled then require('lazy.core.loader').disable_rtp_plugin('nvim-treesitter-textobjects') end
         end,
       },
       -- setting the commentstring option based on the cursor location in the file. The location is checked via treesitter queries.
@@ -60,12 +58,10 @@ plug({
       local Buffer = require('userlib.runtime.buffer')
       local disabled = function(_lang, bufnr)
         --- must after buffer is read and loaded, otherwise some option is not available.
-        local ft = vim.api.nvim_get_option_value("filetype", {
+        local ft = vim.api.nvim_get_option_value('filetype', {
           buf = bufnr,
         })
-        if vim.tbl_contains(vim.cfg.lang__treesitter_plugin_disable_on_filetypes or {}, ft) then
-          return true
-        end
+        if vim.tbl_contains(vim.cfg.lang__treesitter_plugin_disable_on_filetypes or {}, ft) then return true end
         local buftype = vim.api.nvim_get_option_value('buftype', { buf = bufnr })
         if buftype ~= '' then return true end
         -- great than 100kb or lines great than 20000
@@ -74,7 +70,7 @@ plug({
       require('nvim-treesitter.install').prefer_git = true
       require('nvim-treesitter.configs').setup({
         -- parser_install_dir = parser_install_dir,
-        ensure_installed = require('userlib.lsp.filetypes').treesitter_parsers(), -- one of "all", or a list of languages
+        ensure_installed = vim.cfg.lang__treesitter_ensure_installed,
         highlight = {
           disable = disabled,
           enable = vim.cfg.lang__treesitter_plugin_highlight,
@@ -85,10 +81,10 @@ plug({
           enable = vim.cfg.lang__treesitter_plugin_incremental_selection,
           disable = disabled,
           keymaps = {
-            init_selection = "<S-Enter>",
-            node_incremental = "<Enter>",
-            scope_incremental = "<S-Enter>",
-            node_decremental = "<BS>",
+            init_selection = '<S-Enter>',
+            node_incremental = '<Enter>',
+            scope_incremental = '<S-Enter>',
+            node_decremental = '<BS>',
           },
         },
         indent = {
@@ -132,7 +128,7 @@ plug({
           },
         }, -- end textobjects
       })
-    end
+    end,
   },
   {
     'NvChad/nvim-colorizer.lua',
@@ -165,7 +161,7 @@ plug({
         mode = 'background',
         tailwind = true, -- Enable tailwind colors
       },
-    }
+    },
   },
 
   {
@@ -214,14 +210,13 @@ plug({
         ---Pre-hook, called before commenting the line
         ---@type function|nil
         pre_hook = function(ctx)
-          return require('ts_context_commentstring.internal').calculate_commentstring() or
-              vim.bo.commentstring
+          return require('ts_context_commentstring.internal').calculate_commentstring() or vim.bo.commentstring
         end,
         ---Post-hook, called after commenting is done
         ---@type function|nil
         post_hook = nil,
       }
-    end
+    end,
   },
 
   {
@@ -238,18 +233,22 @@ plug({
     },
     keys = {
       {
-        ']td', "<cmd>lua require('todo-comments').jump_next()<CR>", desc = 'Jump to next todo',
+        ']td',
+        "<cmd>lua require('todo-comments').jump_next()<CR>",
+        desc = 'Jump to next todo',
       },
       {
-        '[td', "<cmd>lua require('todo-comments').jump_prev()<CR>", desc = 'Jump to next todo',
-      }
+        '[td',
+        "<cmd>lua require('todo-comments').jump_prev()<CR>",
+        desc = 'Jump to next todo',
+      },
     },
     event = au.user_autocmds.FileOpenedAfter_User,
     config = function()
       local todo_comments = require('todo-comments')
 
       todo_comments.setup({
-        signs = false,     -- show icons in the signs column
+        signs = false, -- show icons in the signs column
         sign_priority = 8, -- sign priority
         -- keywords recognized as todo comments
         keywords = {
@@ -260,14 +259,14 @@ plug({
           PERF = { alt = { 'OPTIM', 'PERFORMANCE', 'OPTIMIZE' } },
         },
         highlight = {
-          before = '',                     -- "fg" or "bg" or empty
+          before = '', -- "fg" or "bg" or empty
           -- keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
-          keyword = 'wide',                -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
-          after = '',                      -- "fg" or "bg" or empty
+          keyword = 'wide', -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
+          after = '', -- "fg" or "bg" or empty
           pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
-          comments_only = true,            -- uses treesitter to match keywords in comments only
-          max_line_len = 1500,             -- ignore lines longer than this
-          exclude = {},                    -- list of file types to exclude highlighting
+          comments_only = true, -- uses treesitter to match keywords in comments only
+          max_line_len = 1500, -- ignore lines longer than this
+          exclude = {}, -- list of file types to exclude highlighting
         },
       })
     end,
@@ -277,7 +276,7 @@ plug({
     event = au.user_autocmds.FileOpenedAfter_User,
     opts = {
       color = '#F7768E',
-    }
+    },
   },
 
   {
@@ -306,7 +305,7 @@ plug({
           local set = vim.keymap.set
           set('n', '<localleader>pi', '<cmd>lua require("package-info").show()<CR>', opts)
           set('n', '<localleader>pc', '<cmd>lua require("package-info").change_version()<CR>', opts)
-        end
+        end,
       })
     end,
     config = function()
@@ -314,17 +313,17 @@ plug({
       require('package-info').setup({
         colors = {
           up_to_date = '#3C4048', -- Text color for up to date package virtual text
-          outdated = '#fc514e',   -- Text color for outdated package virtual text
+          outdated = '#fc514e', -- Text color for outdated package virtual text
         },
         icons = {
-          enable = true,                    -- Whether to display icons
+          enable = true, -- Whether to display icons
           style = {
             up_to_date = icons.checkSquare, -- Icon for up to date packages
-            outdated = icons.gitRemove,     -- Icon for outdated packages
+            outdated = icons.gitRemove, -- Icon for outdated packages
           },
         },
-        autostart = true,               -- Whether to autostart when `package.json` is opened
-        hide_up_to_date = true,         -- It hides up to date versions when displaying virtual text
+        autostart = true, -- Whether to autostart when `package.json` is opened
+        hide_up_to_date = true, -- It hides up to date versions when displaying virtual text
         hide_unstable_versions = false, -- It hides unstable versions from version list e.g next-11.1.3-canary3
         -- Can be `npm` or `yarn`. Used for `delete`, `install` etc...
         -- The plugin will try to auto-detect the package manager based on
@@ -336,24 +335,24 @@ plug({
   },
 
   {
-    "nvim-treesitter/nvim-treesitter-context",
-    event = "BufReadPost",
-    enabled = true,
+    'nvim-treesitter/nvim-treesitter-context',
+    event = 'BufReadPost',
+    enabled = false,
     opts = {
       max_lines = 3,
-      mode = "cursor",
+      mode = 'cursor',
       min_window_height = 5,
     },
     keys = {
       {
         '<leader>fc',
         '<cmd>lua require("treesitter-context").go_to_context()<cr>',
-        desc = 'Treesitter Context: Go to context'
-      }
+        desc = 'Treesitter Context: Go to context',
+      },
     },
     config = function(_, opts)
       require('treesitter-context').setup(opts)
       vim.cmd([[hi TreesitterContextBottom gui=underline guisp=Grey]])
-    end
+    end,
   },
 })

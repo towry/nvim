@@ -41,7 +41,7 @@ Ty.ECHO = function(chunks, history, opts)
     end
     chunks = { { chunks, hl } }
   elseif type(chunks) ~= 'table' then
-    error("invalid arguments")
+    error('invalid arguments')
   end
   vim.api.nvim_echo(chunks, history, opts or {})
 end
@@ -61,16 +61,13 @@ Ty.ToggleTheme = function(mode)
   end
 end
 
-
 ---@param filename? string
 ---@param opts? {flame?:boolean}
 Ty.StartProfile = function(filename, opts)
   opts = opts or {}
-  require('userlib.profile').start(filename or 'profile.log', opts)
+  require('plenary.profile').start(filename or 'profile.log', opts)
 end
-Ty.StopProfile = function()
-  require('userlib.profile').stop()
-end
+Ty.StopProfile = function() require('plenary.profile').stop() end
 
 Ty.find_string = function(tab, str)
   local found = false
