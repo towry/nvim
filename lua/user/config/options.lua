@@ -204,7 +204,7 @@ function M.setup()
   M.init_edit()
   M.init_interface()
   M.init_other()
-  M.init_folds()
+  -- M.init_folds()
 
   if vim.cfg.runtime__starts_in_buffer then M.setup_theme() end
 end

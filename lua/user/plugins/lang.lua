@@ -70,7 +70,7 @@ plug({
       require('nvim-treesitter.install').prefer_git = true
       require('nvim-treesitter.configs').setup({
         -- parser_install_dir = parser_install_dir,
-        ensure_installed = require('userlib.lsp.filetypes').treesitter_parsers(), -- one of "all", or a list of languages
+        ensure_installed = vim.cfg.lang__treesitter_ensure_installed,
         highlight = {
           disable = disabled,
           enable = vim.cfg.lang__treesitter_plugin_highlight,

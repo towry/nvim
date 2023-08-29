@@ -111,6 +111,7 @@ return {
     'tailwindcss',
     'cssls',
     'jsonls',
+    'eslint',
     'lua_ls',
     'volar',
     'bashls',
