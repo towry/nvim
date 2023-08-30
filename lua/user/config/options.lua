@@ -3,6 +3,7 @@ local o = vim.opt
 local g = vim.g
 
 function M.init_edit()
+  o.breakindent = true
   o.cpoptions:append('>') -- append to register with line break
   o.inccommand = 'nosplit' -- preview incremental substitute
   o.clipboard = { 'unnamed', 'unnamedplus' } --- Copy-paste between vim and everything else
@@ -124,24 +125,27 @@ local fold_inited = false
 function M.init_folds()
   if fold_inited then return end
   fold_inited = true
-  local function enable_foldexpr()
-    local buf = vim.api.nvim_get_current_buf()
-    if vim.api.nvim_get_option_value('buftype', { buf = buf }) ~= '' or (not vim.api.nvim_buf_is_valid(buf)) then
-      return
-    end
-    if not buf or vim.api.nvim_buf_line_count(buf) > 40000 then return end
-    vim.opt_local.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-    vim.opt_local.foldmethod = 'expr'
-  end
-  local function start() enable_foldexpr() end
-
   vim.api.nvim_create_autocmd('FileType', {
-    -- schedule_wrap is used to stop dlopen from crashing on MacOS
-    callback = start,
+    callback = function(args)
+      local buf = args.buf
+      if not pcall(vim.treesitter.start, buf) then return end
+      M.enable_foldexpr_for_buf(buf)
+    end,
   })
   o.foldnestmax = 10 -- deepest fold is 10 levels
   o.foldlevel = 99 --- Using ufo provider need a large value
   o.foldlevelstart = 99 --- Expand all folds by default
+end
+
+--- https://github.dev/lewis6991/dotfiles/blob/main/config/nvim/lua/lewis6991/lsp.lua
+function M.enable_foldexpr_for_buf(buf)
+  if vim.api.nvim_get_option_value('buftype', { buf = buf }) ~= '' or (not vim.api.nvim_buf_is_valid(buf)) then
+    return
+  end
+  if not buf or vim.api.nvim_buf_line_count(buf) > 40000 then return end
+  vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+  vim.wo[0][0].foldmethod = 'expr'
+  vim.cmd.normal('zx')
 end
 
 function M.init_other()

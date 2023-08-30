@@ -324,7 +324,7 @@ plug({
 
   {
     'stevearc/resession.nvim',
-    event = 'VeryLazy',
+    event = 'VimEnter',
     init = function()
       local function get_session_name()
         local name = vim.cfg.runtime__starts_cwd or vim.fn.getcwd()
