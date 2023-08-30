@@ -31,6 +31,9 @@ M.config = {
     linter = 'statix',
     formatter = 'nixfmt',
   },
+  ['scss'] = {
+    formatter = 'prettier',
+  },
 }
 -- these all use the same config
 M.config['javascript'] = M.config['typescript']
@@ -99,4 +102,3 @@ function M.formats_with_efm(ft)
 end
 
 return M
-
