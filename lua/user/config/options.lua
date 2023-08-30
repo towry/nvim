@@ -132,17 +132,8 @@ function M.init_folds()
     if not buf or vim.api.nvim_buf_line_count(buf) > 40000 then return end
     vim.opt_local.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     vim.opt_local.foldmethod = 'expr'
-    -- below will make cursor move
-    -- vim.cmd.normal 'zx'
   end
-  local function start()
-    local utils = require('userlib.runtime.utils')
-    if utils.has_plugin('nvim-treesitter') then utils.load_plugins('nvim-treesitter') end
-    vim.schedule(function()
-      if not pcall(vim.treesitter.start) or vim.wo.diff then return end
-      enable_foldexpr()
-    end)
-  end
+  local function start() enable_foldexpr() end
 
   vim.api.nvim_create_autocmd('FileType', {
     -- schedule_wrap is used to stop dlopen from crashing on MacOS
