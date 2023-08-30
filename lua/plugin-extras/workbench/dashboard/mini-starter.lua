@@ -104,11 +104,7 @@ return plug({
               local data = ctx.data or {}
               pcall(function()
                 local bufnr = nil
-                if data.in_vimenter == true then
-                  bufnr = vim.api.nvim_get_current_buf()
-                  -- loaded by session.
-                  if vim.api.nvim_get_option_value('buftype', { buf = bufnr }) == '' then return end
-                end
+                if data.in_vimenter == true then bufnr = vim.api.nvim_get_current_buf() end
                 require('mini.starter').open(bufnr)
                 vim.cmd('do User LazyVimStarted')
               end)
