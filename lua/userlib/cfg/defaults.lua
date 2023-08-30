@@ -116,7 +116,7 @@ return {
     'volar',
     'bashls',
     'html',
-    -- "tsserver",
+    'tsserver',
   },
   lsp__auto_install_servers = {
     -- 'bashls',
@@ -132,7 +132,7 @@ return {
   },
   lsp__automatic_installation = false,
   lsp__server_tailwindcss_prettier = false,
-  lsp__server_volar_takeover_mode = true,
+  lsp__server_volar_takeover_mode = false,
   lsp__ui_progress = true,
   lsp__ui_progress_ignore_servers = {
     'tailwindcss',
