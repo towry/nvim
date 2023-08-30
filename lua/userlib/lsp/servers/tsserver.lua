@@ -56,6 +56,12 @@ local settings = {
 M.capabilities = capabilities
 M.on_attach = on_attach
 M.settings = settings
+--- https://github.com/typescript-language-server/typescript-language-server#initializationoptions
+M.init_options = {
+  preferences = {
+    importModuleSpecifierPreference = 'relative',
+  },
+}
 
 return function(opts)
   if vim.cfg.lsp__server_volar_takeover_mode then return end
