@@ -98,7 +98,7 @@ return {
     'git',
   },
   lang__treesitter_plugin_incremental_selection = true,
-  lang__treesitter_plugin_highlight = true,
+  lang__treesitter_plugin_highlight = false,
   lang__treesitter_plugin_indent = true,
   lang__treesitter_plugin_yati = true,
   lang__treesitter_plugin_rainbow = true,
