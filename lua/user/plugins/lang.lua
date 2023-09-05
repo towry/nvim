@@ -248,8 +248,6 @@ plug({
                     break
                   end
                 end
-              else
-                print('commment: not contain in range')
               end
             end)
 
@@ -259,6 +257,8 @@ plug({
           -- return vim.bo.commentstring
           local ft = get_injection_filetype()
           if not ft then ft = vim.bo.filetype end
+          -- FIXME: can not get html ft at .vue
+          if ft == 'vue' then ft = 'html' end
           return vim.filetype.get_option(ft, 'commentstring') --[[@as string]]
         end,
         ---Post-hook, called after commenting is done
