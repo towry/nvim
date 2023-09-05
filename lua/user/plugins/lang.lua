@@ -1,8 +1,22 @@
 local plug = require('userlib.runtime.pack').plug
 local au = require('userlib.runtime.au')
 
-plug({
-  {
+if vim.cfg.lang__treesitter_next then
+  plug({
+    'nvim-treesitter/nvim-treesitter',
+    branch = 'main',
+    build = ':TSUpdate',
+    lazy = false,
+    config = function()
+      require('nvim-treesitter').setup({
+        ensure_install = vim.cfg.lang__treesitter_ensure_installed,
+      })
+      vim.opt.indentexpr = [[v:lua.require('nvim-treesitter').indentexpr()]]
+      vim.treesitter.language.register('tsx', 'typescriptreact')
+    end,
+  })
+else
+  plug({
     --- some issues
     --- https://github.com/nvim-treesitter/nvim-treesitter/issues/3970#issuecomment-1353836834
     --- https://github.com/nvim-treesitter/nvim-treesitter/issues/2014#issuecomment-970342040
@@ -21,7 +35,7 @@ plug({
     keys = {
       -- { "<Enter>",    desc = "Init Increment selection" },
       -- { "<Enter>",    desc = "node node incremental selection",      mode = "x" },
-      { '<BS>', desc = 'Decrement selection', mode = 'x' },
+      -- { '<BS>', desc = 'Decrement selection', mode = 'x' },
     },
     dependencies = {
       'windwp/nvim-ts-autotag',
@@ -129,7 +143,9 @@ plug({
         }, -- end textobjects
       })
     end,
-  },
+  })
+end
+plug({
   {
     'NvChad/nvim-colorizer.lua',
     ft = {
@@ -167,7 +183,6 @@ plug({
   {
     'numToStr/Comment.nvim',
     event = { 'BufReadPost', 'BufNewFile' },
-    dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
     opts = function()
       return {
         ---Add a space b/w comment and the line
@@ -210,7 +225,41 @@ plug({
         ---Pre-hook, called before commenting the line
         ---@type function|nil
         pre_hook = function(ctx)
-          return require('ts_context_commentstring.internal').calculate_commentstring() or vim.bo.commentstring
+          local function get_injection_filetype()
+            local ok, parser = pcall(vim.treesitter.get_parser)
+            if not ok then return end
+
+            local col = ctx.range.ecol
+            local row = ctx.range.erow
+
+            local range = {
+              row,
+              col,
+              row,
+              col + 1,
+            }
+            local ft --- @type string?
+            parser:for_each_child(function(tree, lang)
+              if tree:contains(range) then
+                local fts = vim.treesitter.language.get_filetypes(lang)
+                for _, ft0 in ipairs(fts) do
+                  if vim.filetype.get_option(ft0, 'commentstring') ~= '' then
+                    ft = fts[1]
+                    break
+                  end
+                end
+              end
+            end)
+
+            return ft
+          end
+
+          -- return vim.bo.commentstring
+          local ft = get_injection_filetype()
+          if not ft then ft = vim.bo.filetype end
+          -- FIXME: can not get html ft at .vue
+          if ft == 'vue' then ft = 'html' end
+          return vim.filetype.get_option(ft, 'commentstring') --[[@as string]]
         end,
         ---Post-hook, called after commenting is done
         ---@type function|nil

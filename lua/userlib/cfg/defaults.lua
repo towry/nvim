@@ -69,6 +69,7 @@ return {
   editorExtend__colorizer_enable_tailwind_color = true,
   ---languages
   ---- must installed, otherwise slowness.
+  lang__treesitter_next = true,
   lang__treesitter_ensure_installed = {
     'comment',
     'diff',

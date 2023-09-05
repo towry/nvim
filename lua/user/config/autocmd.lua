@@ -14,16 +14,6 @@ function M.load_on_startup()
       },
     },
     {
-      { 'BufEnter' },
-      {
-        group = '_fix_ts_for_tsx',
-        pattern = '*.tsx$',
-        callback = function()
-          vim.schedule(function() vim.treesitter.language.register('tsx', 'typescriptreact') end)
-        end,
-      },
-    },
-    {
       { 'BufReadPost' },
       {
         group = '_disable_diagnostic_on_sth',

@@ -111,6 +111,15 @@ plug({
   end,
 })
 
+local function backend_ts_support(backends)
+  if not vim.cfg.lang__treesitter_next then
+    return backends
+  end
+  return require('userlib.runtime.table').filter(function (item)
+    return item ~= 'treesitter'
+  end, backends)
+end
+
 plug({
   'stevearc/aerial.nvim',
   keys = {
@@ -121,9 +130,9 @@ plug({
   cmd = { 'AerialToggle', 'AerialOpen', 'AerialClose' },
   opts = {
     backends = {
-      ['_'] = { 'lsp', 'treesitter', 'man', 'markdown' },
-      typescript = { 'lsp', 'treesitter' },
-      typescriptreact = { 'lsp', 'treesitter' },
+      ['_'] = backend_ts_support({ 'lsp', 'treesitter', 'man', 'markdown' }),
+      typescript = backend_ts_support({ 'lsp', 'treesitter' }),
+      typescriptreact = backend_ts_support({ 'lsp', 'treesitter' }),
     },
     layout = {
       -- These control the width of the aerial window.

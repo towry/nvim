@@ -398,7 +398,7 @@ pack.plug({
 
 ---autopairs
 pack.plug({
-  enabled = true,
+  enabled = not vim.cfg.lang__treesitter_next,
   'windwp/nvim-autopairs',
   event = { 'InsertEnter' },
   config = function()

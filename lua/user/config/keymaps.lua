@@ -132,7 +132,6 @@ local function setup_basic()
   --- do not cut on normal mode.
   set({ 'n', 'v' }, 'x', function()
     if vim.v.register == 'x' or vim.v.register == 'X' then return '"' .. vim.v.register .. 'x' end
-    vim.cmd([[silent! normal! ""x]])
     return '"xx'
   end, {
     expr = true,
@@ -142,7 +141,6 @@ local function setup_basic()
   })
   set({ 'n', 'v' }, 'X', function()
     if vim.v.register == 'x' or vim.v.register == 'X' then return '"' .. vim.v.register .. 'X' end
-    vim.cmd([[silent! normal! ""X]])
     return '"xX'
   end, {
     expr = true,

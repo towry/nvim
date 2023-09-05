@@ -1,8 +1,6 @@
 local au = require('userlib.runtime.au')
 local pack = require('userlib.runtime.pack')
-local function t(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
+local function t(str) return vim.api.nvim_replace_termcodes(str, true, true, true) end
 
 ---- core
 pack.plug({
@@ -24,9 +22,7 @@ pack.plug({
     init = function()
       require('userlib.runtime.au').define_user_autocmd({
         pattern = 'TelescopeConfigDone',
-        callback = function()
-          require('telescope').load_extension('ui-select')
-        end,
+        callback = function() require('telescope').load_extension('ui-select') end,
       })
     end,
   },
@@ -38,7 +34,7 @@ pack.plug({
     'echasnovski/mini.trailspace',
     event = require('userlib.runtime.au').user_autocmds.FileOpenedAfter_User,
     config = true,
-  }
+  },
 })
 
 ---dressing
@@ -194,11 +190,11 @@ pack.plug({
       return default_columns
     end
 
-    local lg = require("legendary");
-    local au = require("userlib.runtime.au")
+    local lg = require('legendary')
+    local au = require('userlib.runtime.au')
     lg.setup({
       funcs = require('userlib.legendary.funcs.migrate'),
-      commands = require("userlib.legendary.commands.migrate"),
+      commands = require('userlib.legendary.commands.migrate'),
       -- autocmds =
       default_item_formatter = my_formatter,
       include_builtin = false,
@@ -206,16 +202,16 @@ pack.plug({
       default_opts = {
         keymaps = { silent = true, noremap = true },
       },
-      select_prompt = " ⚒ ",
+      select_prompt = ' ⚒ ',
       icons = {
-        fn = " ",
-        command = " ",
-        key = " ",
+        fn = ' ',
+        command = ' ',
+        key = ' ',
       },
       extensions = {
         diffview = true,
         nvim_tree = true,
-      }
+      },
     })
   end,
 })
@@ -223,28 +219,28 @@ pack.plug({
 --- which-key
 pack.plug({
   'folke/which-key.nvim',
-  keys = { "<leader>", "<localleader>" },
+  keys = { '<leader>', '<localleader>' },
   cmd = { 'WhichKey' },
   config = function()
     local wk = require('which-key')
     wk.setup({
       plugins = {
-        marks = true,     -- shows a list of your marks on ' and `
+        marks = true, -- shows a list of your marks on ' and `
         registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
         -- the presets plugin, adds help for a bunch of default keybindings in Neovim
         -- No actual key bindings are created
         spelling = {
-          enabled = true,   -- enabling this will show WhichKey when pressing z= to select spelling suggestions
+          enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
           suggestions = 20, -- how many suggestions should be shown in the list?
         },
         presets = {
-          operators = true,    -- adds help for operators like d, y, ...
-          motions = true,      -- adds help for motions
+          operators = true, -- adds help for operators like d, y, ...
+          motions = true, -- adds help for motions
           text_objects = true, -- help for text objects triggered after entering an operator
-          windows = false,     -- default bindings on <c-w>, already taken care by hydra.
-          nav = false,         -- misc bindings to work with windows
-          z = true,            -- bindings for folds, spelling and others prefixed with z
-          g = true,            -- bindings for prefixed with g
+          windows = false, -- default bindings on <c-w>, already taken care by hydra.
+          nav = false, -- misc bindings to work with windows
+          z = true, -- bindings for folds, spelling and others prefixed with z
+          g = true, -- bindings for prefixed with g
         },
       },
       operators = { gc = 'Comments' },
@@ -257,30 +253,30 @@ pack.plug({
       icons = {
         breadcrumb = '»', -- symbol used in the command line area that shows your active key combo
         separator = ' ', -- symbol used between a key and it's label
-        group = '  ',  -- symbol prepended to a group
+        group = '  ', -- symbol prepended to a group
       },
       popup_mappings = {
         scroll_down = '<c-d>', -- binding to scroll down inside the popup
-        scroll_up = '<c-u>',   -- binding to scroll up inside the popup
+        scroll_up = '<c-u>', -- binding to scroll up inside the popup
       },
       window = {
-        border = 'none',          -- none, single, double, shadow
-        position = 'bottom',      -- bottom, top
-        margin = { 1, 0, 1, 0 },  -- extra window margin [top, right, bottom, left]
+        border = 'none', -- none, single, double, shadow
+        position = 'bottom', -- bottom, top
+        margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
         padding = { 1, 2, 1, 2 }, -- extra window padding [top, right, bottom, left]
-        winblend = 0,             -- value between 0-100 0 for fully opaque and 100 for fully transparent
+        winblend = 0, -- value between 0-100 0 for fully opaque and 100 for fully transparent
       },
       layout = {
         height = { min = 4, max = 25 }, -- min and max height of the columns
         width = { min = 20, max = 50 }, -- min and max width of the columns
-        spacing = 3,                    -- spacing between columns
-        align = 'left',                 -- align columns left, center or right
+        spacing = 3, -- spacing between columns
+        align = 'left', -- align columns left, center or right
       },
       ignore_missing = false,
       hidden = { '<CR>', '^:', '^ ', '^call ', '^lua ' }, -- hide mapping boilerplate
-      show_help = false,                                  -- show a help message in the command line for using WhichKey
-      show_keys = true,                                   -- show the currently pressed key and its label as a message in the command line
-      triggers = 'auto',                                  -- automatically setup triggers
+      show_help = false, -- show a help message in the command line for using WhichKey
+      show_keys = true, -- show the currently pressed key and its label as a message in the command line
+      triggers = 'auto', -- automatically setup triggers
       triggers_nowait = {
         ',',
         -- marks
@@ -288,8 +284,8 @@ pack.plug({
         "'",
         'g`',
         "g'",
-        "gg",
-        "G",
+        'gg',
+        'G',
         -- registers
         '"',
         '<c-r>',
@@ -334,13 +330,13 @@ pack.plug({
         name = 'Git',
       },
       b = {
-        name = "Buffers"
+        name = 'Buffers',
       },
       m = {
         name = 'Motion|Modify',
         j = {
-          name = 'Join & Split'
-        }
+          name = 'Join & Split',
+        },
       },
       r = {
         name = 'Debugger|Runner',
@@ -348,16 +344,15 @@ pack.plug({
           name = 'Sniprun',
         },
         o = {
-          name = "Overseer Runner"
+          name = 'Overseer Runner',
         },
         t = {
           name = 'Test runner',
-        }
+        },
       },
     }, {
-      prefix = '<leader>'
+      prefix = '<leader>',
     })
-
 
     wk.register({
       g = {
@@ -371,9 +366,9 @@ pack.plug({
             v = {
               'Go to definition in vertical splited file',
             },
-          }
-        }
-      }
+          },
+        },
+      },
     })
   end,
   init = function()
@@ -412,7 +407,7 @@ local function setup_yanky_legendary()
     description = 'Paste from yanky',
   })
   legendary.keymaps({
-    { '<Plug>(YankyCycleForward)',  description = 'Yanky/paste cycle forward ' },
+    { '<Plug>(YankyCycleForward)', description = 'Yanky/paste cycle forward ' },
     { '<Plug>(YankyCycleBackward)', description = 'Ynky/paste cycle backward ' },
   })
 end
@@ -422,7 +417,10 @@ pack.plug({
   'gbprod/yanky.nvim',
   keys = {
     {
-      'y', '<Plug>(YankyYank)', mode = { 'n', 'x', }, desc = 'Yanky yank',
+      'y',
+      '<Plug>(YankyYank)',
+      mode = { 'n', 'x' },
+      desc = 'Yanky yank',
     },
     {
       '<C-v>',
@@ -437,75 +435,67 @@ pack.plug({
       'p',
       function()
         local ynk_mtd = vim.api.nvim_get_mode().mode == 'n' and 'YankyPutAfter' or 'YankyPutAfterCharwise'
-        vim.fn.feedkeys(t(('"%s<Plug>(%s)'):format(vim.v.register, ynk_mtd)))
         local reg = vim.v.register
-        vim.schedule(function()
-          require('userlib.hydra.yanky').open_yanky_ring_hydra(reg)
-        end)
+        local keys = t(('%s<Plug>(%s)'):format((not reg) and '' or '"' .. reg, ynk_mtd))
+        vim.fn.feedkeys(keys)
+        vim.schedule(function() require('userlib.hydra.yanky').open_yanky_ring_hydra(reg) end)
       end,
-      mode = { 'n', 'v', },
+      mode = { 'n', 'v' },
+      noremap = true,
       desc = 'Yanky put after',
     },
     {
       'P',
       function()
         local ynk_mtd = vim.api.nvim_get_mode().mode == 'n' and 'YankyPutBefore' or 'YankyPutAfterCharwise'
-        vim.fn.feedkeys(t(('"%s<Plug>(%s)'):format(vim.v.register, ynk_mtd)))
-        vim.schedule(function()
-          require('userlib.hydra.yanky').open_yanky_ring_hydra(vim.v.register)
-        end)
+        local reg = vim.v.register
+        local keys = t(('%s<Plug>(%s)'):format((not reg) and '' or '"' .. reg, ynk_mtd))
+        vim.fn.feedkeys(keys)
+        vim.schedule(function() require('userlib.hydra.yanky').open_yanky_ring_hydra(reg) end)
       end,
-      mode = { 'n', 'v', },
+      mode = { 'n', 'v' },
       desc = 'Yanky put before',
     },
     {
       'gp',
       function()
         vim.fn.feedkeys(t(('"%s<Plug>(YankyGPutAfter)'):format(vim.v.register)))
-        vim.schedule(function()
-          require('userlib.hydra.yanky').open_yanky_ring_hydra()
-        end)
+        vim.schedule(function() require('userlib.hydra.yanky').open_yanky_ring_hydra() end)
       end,
-      mode = { 'n', 'x', },
+      mode = { 'n', 'x' },
       desc = 'Yanky gput after',
     },
     {
       'gP',
       function()
         vim.fn.feedkeys(t(('"%s<Plug>(YankyGPutBefore)'):format(vim.v.register)))
-        vim.schedule(function()
-          require('userlib.hydra.yanky').open_yanky_ring_hydra()
-        end)
+        vim.schedule(function() require('userlib.hydra.yanky').open_yanky_ring_hydra() end)
       end,
-      mode = { 'n', 'x', },
+      mode = { 'n', 'x' },
       desc = 'Yanky gput before',
     },
     {
       ']p',
       function()
         vim.fn.feedkeys(t(('"%s<Plug>(YankyPutIndentAfter)'):format(vim.v.register)))
-        vim.schedule(function()
-          require('userlib.hydra.yanky').open_yanky_ring_hydra()
-        end)
+        vim.schedule(function() require('userlib.hydra.yanky').open_yanky_ring_hydra() end)
       end,
-      mode = { 'n', 'x', },
+      mode = { 'n', 'x' },
       desc = 'Yanky put after with indent',
     },
     {
       '[p',
       function()
         vim.fn.feedkeys(t(('"%s<Plug>(YankyPutIndentAfter)'):format(vim.v.register)))
-        vim.schedule(function()
-          require('userlib.hydra.yanky').open_yanky_ring_hydra()
-        end)
+        vim.schedule(function() require('userlib.hydra.yanky').open_yanky_ring_hydra() end)
       end,
-      mode = { 'n', 'x', },
+      mode = { 'n', 'x' },
       desc = 'Yanky put before with indent',
     },
   },
   config = function()
-    local mappings = require("yanky.telescope.mapping")
-    local utils = require("yanky.utils")
+    local mappings = require('yanky.telescope.mapping')
+    local utils = require('yanky.utils')
     require('yanky').setup({
       highlight = {
         timer = 300,
@@ -514,13 +504,13 @@ pack.plug({
         telescope = {
           use_default_mappings = false,
           mappings = {
-            default = mappings.put("p"),
+            default = mappings.put('p'),
             i = {
-              ["<c-x>"] = mappings.delete(),
-              ["<c-r>"] = mappings.set_register(utils.get_default_register()),
-            }
-          }
-        }
+              ['<c-x>'] = mappings.delete(),
+              ['<c-r>'] = mappings.set_register(utils.get_default_register()),
+            },
+          },
+        },
       },
       --- cycle history when paste with shortcuts.
       ring = {
@@ -529,9 +519,7 @@ pack.plug({
         storage = 'shada',
       },
     })
-    require("telescope").load_extension("yank_history")
+    require('telescope').load_extension('yank_history')
   end,
-  init = function()
-    require('userlib.legendary').pre_hook('setup_yanky_lg', setup_yanky_legendary)
-  end,
+  init = function() require('userlib.legendary').pre_hook('setup_yanky_lg', setup_yanky_legendary) end,
 })
