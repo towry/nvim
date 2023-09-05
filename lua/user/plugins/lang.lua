@@ -5,15 +5,7 @@ if vim.cfg.lang__treesitter_next then
   plug({
     'nvim-treesitter/nvim-treesitter',
     branch = 'main',
-    build = function()
-      if #vim.api.nvim_list_uis() == 0 then
-        -- update sync if running headless
-        vim.cmd.TSUpdateSync()
-      else
-        -- otherwise update async
-        vim.cmd.TSUpdate()
-      end
-    end,
+    build = function() vim.cmd('TSUpdate') end,
     event = { 'BufReadPre', 'BufNewFile' },
     config = function()
       require('nvim-treesitter').setup({
