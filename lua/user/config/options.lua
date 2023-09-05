@@ -232,14 +232,17 @@ function M.setup()
   local ftau = vim.api.nvim_create_augroup('option_ft', { clear = true })
   vim.api.nvim_create_autocmd('FileType', {
     group = ftau,
-    pattern = vim.cfg.lang__treesitter_ensure_installed,
     callback = function(args)
       local buf = args.buf
       if not pcall(vim.treesitter.start, buf) then return end
-
       M.enable_foldexpr_for_buf(buf)
       -- M.enable_commentstring_for_buf(buf)
     end,
+  })
+  vim.api.nvim_create_autocmd('FileType', {
+    group = ftau,
+    pattern = 'comment',
+    callback = function() vim.bo.commentstring = '' end,
   })
 
   if vim.cfg.runtime__starts_in_buffer then M.setup_theme() end

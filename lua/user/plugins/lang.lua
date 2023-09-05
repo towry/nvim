@@ -5,13 +5,14 @@ if vim.cfg.lang__treesitter_next then
   plug({
     'nvim-treesitter/nvim-treesitter',
     branch = 'main',
-    build = function() vim.cmd('TSUpdate') end,
-    event = { 'BufReadPre', 'BufNewFile' },
+    build = ':TSUpdate',
+    lazy = false,
     config = function()
       require('nvim-treesitter').setup({
         ensure_install = vim.cfg.lang__treesitter_ensure_installed,
       })
       vim.opt.indentexpr = [[v:lua.require('nvim-treesitter').indentexpr()]]
+      vim.treesitter.language.register('tsx', 'typescriptreact')
     end,
   })
 else
@@ -247,13 +248,17 @@ plug({
                     break
                   end
                 end
+              else
+                print('commment: not contain in range')
               end
             end)
 
             return ft
           end
 
-          local ft = get_injection_filetype() or vim.bo.filetype
+          -- return vim.bo.commentstring
+          local ft = get_injection_filetype()
+          if not ft then ft = vim.bo.filetype end
           return vim.filetype.get_option(ft, 'commentstring') --[[@as string]]
         end,
         ---Post-hook, called after commenting is done
