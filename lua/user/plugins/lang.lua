@@ -1,8 +1,29 @@
 local plug = require('userlib.runtime.pack').plug
 local au = require('userlib.runtime.au')
 
-plug({
-  {
+if vim.cfg.lang__treesitter_next then
+  plug({
+    'nvim-treesitter/nvim-treesitter',
+    branch = 'main',
+    build = function()
+      if #vim.api.nvim_list_uis() == 0 then
+        -- update sync if running headless
+        vim.cmd.TSUpdateSync()
+      else
+        -- otherwise update async
+        vim.cmd.TSUpdate()
+      end
+    end,
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = function()
+      require('nvim-treesitter').setup({
+        ensure_install = vim.cfg.lang__treesitter_ensure_installed,
+      })
+      vim.opt.indentexpr = [[v:lua.require('nvim-treesitter').indentexpr()]]
+    end,
+  })
+else
+  plug({
     --- some issues
     --- https://github.com/nvim-treesitter/nvim-treesitter/issues/3970#issuecomment-1353836834
     --- https://github.com/nvim-treesitter/nvim-treesitter/issues/2014#issuecomment-970342040
@@ -21,7 +42,7 @@ plug({
     keys = {
       -- { "<Enter>",    desc = "Init Increment selection" },
       -- { "<Enter>",    desc = "node node incremental selection",      mode = "x" },
-      { '<BS>', desc = 'Decrement selection', mode = 'x' },
+      -- { '<BS>', desc = 'Decrement selection', mode = 'x' },
     },
     dependencies = {
       'windwp/nvim-ts-autotag',
@@ -129,7 +150,9 @@ plug({
         }, -- end textobjects
       })
     end,
-  },
+  })
+end
+plug({
   {
     'NvChad/nvim-colorizer.lua',
     ft = {
@@ -167,7 +190,6 @@ plug({
   {
     'numToStr/Comment.nvim',
     event = { 'BufReadPost', 'BufNewFile' },
-    dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
     opts = function()
       return {
         ---Add a space b/w comment and the line
@@ -209,9 +231,7 @@ plug({
         },
         ---Pre-hook, called before commenting the line
         ---@type function|nil
-        pre_hook = function(ctx)
-          return require('ts_context_commentstring.internal').calculate_commentstring() or vim.bo.commentstring
-        end,
+        pre_hook = function(ctx) return vim.bo.commentstring end,
         ---Post-hook, called after commenting is done
         ---@type function|nil
         post_hook = nil,
