@@ -100,7 +100,7 @@ function M.is_formatting_supported(buf)
   if fsize / 1024 > 200 then
     -- great than 200kb
     vim.notify('File is too large to format', vim.log.levels.WARN)
-    return
+    return false
   end
 
   local clients = vim.lsp.get_clients({ bufnr = buf, method = Methods.textDocument_formatting })
@@ -127,4 +127,3 @@ function M.format_document(buf)
 end
 
 return M
-
