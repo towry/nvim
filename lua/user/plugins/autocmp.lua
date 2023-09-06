@@ -117,17 +117,17 @@ pack.plug({
         -- Complete from all visible buffers (splits)
         get_bufnrs = function()
           --- from all loaded buffers
-          -- return vim.api.nvim_list_bufs()
+          return vim.api.nvim_list_bufs()
           -- ----
           -- from visible bufs.
-          local bufs = {}
-          for _, win in ipairs(vim.api.nvim_list_wins()) do
-            bufs[vim.api.nvim_win_get_buf(win)] = true
-          end
-          --- alternative buf.
-          local alter = vim.fn.bufnr('#')
-          if alter > 0 then bufs[vim.fn.bufnr('#')] = true end
-          return vim.tbl_keys(bufs)
+          -- local bufs = {}
+          -- for _, win in ipairs(vim.api.nvim_list_wins()) do
+          --   bufs[vim.api.nvim_win_get_buf(win)] = true
+          -- end
+          -- --- alternative buf.
+          -- local alter = vim.fn.bufnr('#')
+          -- if alter > 0 then bufs[vim.fn.bufnr('#')] = true end
+          -- return vim.tbl_keys(bufs)
         end,
       }
       local select_option = {
