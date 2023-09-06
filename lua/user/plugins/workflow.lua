@@ -61,21 +61,6 @@ plug({
     },
   },
 
-  {
-    -- https://github.com/kevinhwang91/nvim-bqf
-    'kevinhwang91/nvim-bqf',
-    ft = 'qf',
-    dependencies = {
-      { 'junegunn/fzf', build = function() vim.fn['fzf#install']() end },
-    },
-    config = function()
-      vim.schedule(function()
-        vim.cmd('hi! link BqfPreviewBorder NormalFloat')
-        vim.cmd('hi! link BqfPreviewFloat NormalFloat')
-      end)
-    end,
-  },
-
   ----- buffers
   {
     'kazhala/close-buffers.nvim',
