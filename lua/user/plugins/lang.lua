@@ -1,150 +1,20 @@
 local plug = require('userlib.runtime.pack').plug
 local au = require('userlib.runtime.au')
 
-if vim.cfg.lang__treesitter_next then
-  plug({
-    'nvim-treesitter/nvim-treesitter',
-    branch = 'main',
-    build = ':TSUpdate',
-    lazy = false,
-    config = function()
-      require('nvim-treesitter').setup({
-        ensure_install = vim.cfg.lang__treesitter_ensure_installed,
-      })
-      vim.opt.indentexpr = [[v:lua.require('nvim-treesitter').indentexpr()]]
-      vim.treesitter.language.register('tsx', 'typescriptreact')
-    end,
-  })
-else
-  plug({
-    --- some issues
-    --- https://github.com/nvim-treesitter/nvim-treesitter/issues/3970#issuecomment-1353836834
-    --- https://github.com/nvim-treesitter/nvim-treesitter/issues/2014#issuecomment-970342040
-    --- `:echo nvim_get_runtime_file('*/python.so', v:true)`
-    'nvim-treesitter/nvim-treesitter',
-    build = function()
-      if #vim.api.nvim_list_uis() == 0 then
-        -- update sync if running headless
-        vim.cmd.TSUpdateSync()
-      else
-        -- otherwise update async
-        vim.cmd.TSUpdate()
-      end
-    end,
-    event = { 'BufReadPre', 'BufNewFile' },
-    keys = {
-      -- { "<Enter>",    desc = "Init Increment selection" },
-      -- { "<Enter>",    desc = "node node incremental selection",      mode = "x" },
-      -- { '<BS>', desc = 'Decrement selection', mode = 'x' },
-    },
-    dependencies = {
-      'windwp/nvim-ts-autotag',
-      'andymass/vim-matchup',
-      {
-        'nvim-treesitter/nvim-treesitter-textobjects',
-        init = function()
-          -- PERF: no need to load the plugin, if we only need its queries for mini.ai
-          local plugin = require('lazy.core.config').spec.plugins['nvim-treesitter']
-          local opts = require('lazy.core.plugin').values(plugin, 'opts', false)
-          local enabled = false
-          if opts.textobjects then
-            for _, mod in ipairs({ 'move', 'select', 'swap', 'lsp_interop' }) do
-              if opts.textobjects[mod] and opts.textobjects[mod].enable then
-                enabled = true
-                break
-              end
-            end
-          end
-          if not enabled then require('lazy.core.loader').disable_rtp_plugin('nvim-treesitter-textobjects') end
-        end,
-      },
-      -- setting the commentstring option based on the cursor location in the file. The location is checked via treesitter queries.
-      -- Vue files can have many different sections, each of which can have a different style for comments.
-      'JoosepAlviste/nvim-ts-context-commentstring',
-    },
-    init = function()
-      -- vim.opt.smartindent = false
-      vim.g.matchup_matchparen_offscreen = {
-        method = 'popup',
-      }
-    end,
-    config = function()
-      local Buffer = require('userlib.runtime.buffer')
-      local disabled = function(_lang, bufnr)
-        --- must after buffer is read and loaded, otherwise some option is not available.
-        local ft = vim.api.nvim_get_option_value('filetype', {
-          buf = bufnr,
-        })
-        if vim.tbl_contains(vim.cfg.lang__treesitter_plugin_disable_on_filetypes or {}, ft) then return true end
-        local buftype = vim.api.nvim_get_option_value('buftype', { buf = bufnr })
-        if buftype ~= '' then return true end
-        -- great than 100kb or lines great than 20000
-        return vim.api.nvim_buf_line_count(bufnr) > 20000 or Buffer.getfsize(bufnr) > 100000
-      end
-      require('nvim-treesitter.install').prefer_git = true
-      require('nvim-treesitter.configs').setup({
-        -- parser_install_dir = parser_install_dir,
-        ensure_installed = vim.cfg.lang__treesitter_ensure_installed,
-        highlight = {
-          disable = disabled,
-          enable = vim.cfg.lang__treesitter_plugin_highlight,
-          -- disable = { "c", "rust" },  -- list of language that will be disabled
-          additional_vim_regex_highlighting = false,
-        },
-        incremental_selection = {
-          enable = vim.cfg.lang__treesitter_plugin_incremental_selection,
-          disable = disabled,
-          keymaps = {
-            init_selection = '<S-Enter>',
-            node_incremental = '<Enter>',
-            scope_incremental = '<S-Enter>',
-            node_decremental = '<BS>',
-          },
-        },
-        indent = {
-          enable = true,
-        },
-        context_commentstring = {
-          enable = vim.cfg.lang__treesitter_plugin_context_commentstring,
-          -- enable_autocmd = false,
-        },
-        autotag = {
-          enable = true,
-        },
-        matchup = {
-          enable = true,
-          include_match_words = true,
-        },
-        textobjects = {
-          move = {
-            disable = disabled,
-            enable = vim.cfg.lang__treesitter_plugin_textobjects_move,
-            set_jumps = true, -- whether to set jumps in the jumplist
-            goto_next_start = {
-              [']]'] = '@function.outer',
-              [']m'] = '@class.outer',
-            },
-            goto_next_end = {
-              [']['] = '@function.outer',
-              [']M'] = '@class.outer',
-            },
-            goto_previous_start = {
-              ['[['] = '@function.outer',
-              ['[m'] = '@class.outer',
-            },
-            goto_previous_end = {
-              ['[]'] = '@function.outer',
-              ['[M'] = '@class.outer',
-            },
-          },
-          swap = {
-            enable = false,
-          },
-        }, -- end textobjects
-      })
-    end,
-  })
-end
+plug({
+  'nvim-treesitter/nvim-treesitter',
+  branch = 'main',
+  build = ':TSUpdate',
+  lazy = false,
+  config = function()
+    require('nvim-treesitter').setup({
+      ensure_install = vim.cfg.lang__treesitter_ensure_installed,
+    })
+    vim.opt.indentexpr = [[v:lua.require('nvim-treesitter').indentexpr()]]
+    vim.treesitter.language.register('tsx', 'typescriptreact')
+  end,
+})
+
 plug({
   {
     'NvChad/nvim-colorizer.lua',
@@ -257,7 +127,7 @@ plug({
           -- return vim.bo.commentstring
           local ft = get_injection_filetype()
           if not ft then ft = vim.bo.filetype end
-          -- FIXME: can not get html ft at .vue
+          -- FIXME: can not get html ft in .vue
           if ft == 'vue' then ft = 'html' end
           return vim.filetype.get_option(ft, 'commentstring') --[[@as string]]
         end,
