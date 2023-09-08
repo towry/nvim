@@ -415,6 +415,7 @@ end
 pack.plug({
   -- better yank
   'gbprod/yanky.nvim',
+  enabled = false,
   keys = {
     {
       'y',
