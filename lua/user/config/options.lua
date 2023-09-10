@@ -235,7 +235,7 @@ function M.setup()
     callback = function(args)
       local buf = args.buf
       -- start highlighter.
-      -- if not pcall(vim.treesitter.start, buf) then return end
+      if not pcall(vim.treesitter.start, buf) then return end
       M.enable_foldexpr_for_buf(buf)
       -- M.enable_commentstring_for_buf(buf)
     end,
