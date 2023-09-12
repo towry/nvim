@@ -71,7 +71,8 @@ return {
   ---- must installed, otherwise slowness.
   lang__treesitter_next = true,
   lang__treesitter_ensure_installed = {
-    'comment',
+    -- see https://github.com/neovim/neovim/issues/25113#issuecomment-1715470173
+    -- 'comment',
     'diff',
     'vim',
     'vimdoc',
