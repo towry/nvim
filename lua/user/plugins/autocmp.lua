@@ -200,7 +200,10 @@ pack.plug({
             i = cmp.mapping.abort(),
             c = cmp.mapping.close(),
           }),
-          ['<CR>'] = cmp.mapping.confirm({ select = select_first_on_enter }),
+          ['<CR>'] = cmp.mapping.confirm({
+            select = select_first_on_enter,
+            behavior = cmp.ConfirmBehavior.Replace,
+          }),
           ['<S-CR>'] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
