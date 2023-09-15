@@ -51,6 +51,14 @@ plug({
   },
 
   {
+    'JoosepAlviste/nvim-ts-context-commentstring',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+    },
+    opts = {},
+  },
+
+  {
     'numToStr/Comment.nvim',
     event = { 'BufReadPost', 'BufNewFile' },
     opts = function()
@@ -94,43 +102,7 @@ plug({
         },
         ---Pre-hook, called before commenting the line
         ---@type function|nil
-        pre_hook = function(ctx)
-          local function get_injection_filetype()
-            local ok, parser = pcall(vim.treesitter.get_parser)
-            if not ok then return end
-
-            local col = ctx.range.ecol
-            local row = ctx.range.erow
-
-            local range = {
-              row,
-              col,
-              row,
-              col + 1,
-            }
-            local ft --- @type string?
-            parser:for_each_child(function(tree, lang)
-              if tree:contains(range) then
-                local fts = vim.treesitter.language.get_filetypes(lang)
-                for _, ft0 in ipairs(fts) do
-                  if vim.filetype.get_option(ft0, 'commentstring') ~= '' then
-                    ft = fts[1]
-                    break
-                  end
-                end
-              end
-            end)
-
-            return ft
-          end
-
-          -- return vim.bo.commentstring
-          local ft = get_injection_filetype()
-          if not ft then ft = vim.bo.filetype end
-          -- FIXME: can not get html ft in .vue
-          if ft == 'vue' then ft = 'html' end
-          return vim.filetype.get_option(ft, 'commentstring') --[[@as string]]
-        end,
+        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
         ---Post-hook, called after commenting is done
         ---@type function|nil
         post_hook = nil,

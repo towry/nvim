@@ -181,45 +181,6 @@ function M.setup_theme()
   end
 end
 
----@return string?
-local function get_injection_filetype()
-  local ok, parser = pcall(vim.treesitter.get_parser)
-  if not ok then return end
-
-  local cpos = vim.api.nvim_win_get_cursor(0)
-  local row, col = cpos[1] - 1, cpos[2]
-  local range = { row, col, row, col + 1 }
-
-  local ft --- @type string?
-
-  parser:for_each_child(function(tree, lang)
-    if tree:contains(range) then
-      local fts = vim.treesitter.language.get_filetypes(lang)
-      for _, ft0 in ipairs(fts) do
-        if vim.filetype.get_option(ft0, 'commentstring') ~= '' then
-          ft = fts[1]
-          break
-        end
-      end
-    end
-  end)
-
-  return ft
-end
-
-local ts_commentstring = vim.api.nvim_create_augroup('ts_commentstring', {})
-function M.enable_commentstring_for_buf(bufnr)
-  vim.api.nvim_clear_autocmds({ buffer = bufnr, group = ts_commentstring })
-  vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-    buffer = bufnr,
-    group = ts_commentstring,
-    callback = function()
-      local ft = get_injection_filetype() or vim.bo[bufnr].filetype
-      vim.bo[bufnr].commentstring = vim.filetype.get_option(ft, 'commentstring') --[[@as string]]
-    end,
-  })
-end
-
 function M.setup()
   vim.g.mapleader = ' '
   vim.g.maplocalleader = ','
@@ -237,7 +198,6 @@ function M.setup()
       -- start highlighter.
       if not pcall(vim.treesitter.start, buf) then return end
       M.enable_foldexpr_for_buf(buf)
-      -- M.enable_commentstring_for_buf(buf)
     end,
   })
   vim.api.nvim_create_autocmd('FileType', {
