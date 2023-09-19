@@ -286,13 +286,12 @@ plug({
   end,
 })
 
--- throws too many open files error.
 plug({
-  'pze/git-conflict.nvim',
+  -- 'pze/git-conflict.nvim',
+  'akinsho/git-conflict.nvim',
   dev = false,
-  -- event = au.user_autocmds.FileOpenedAfter_User,
-  -- version = "v1.1.2",
-  branch = 'bugfix/58',
+  event = au.user_autocmds.FileOpenedAfter_User,
+  version = 'v1.2.2',
   keys = {
     {
       '<leader>gc',

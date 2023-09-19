@@ -61,9 +61,10 @@ plug({
   enabled = enable_lualine,
   dependencies = {
     {
-      'pze/lualine-copilot',
+      -- 'pze/lualine-copilot',
+      'ofseed/lualine-copilot',
       dev = false,
-      enabled = false,
+      enabled = true,
     },
     'tpope/vim-fugitive',
   },
@@ -192,9 +193,9 @@ plug({
           'searchcount',
           -- copilot status
           -- require('copilot_status').status_string,
-          -- {
-          --   'copilot',
-          -- },
+          {
+            'copilot',
+          },
           {
             terms,
           },
