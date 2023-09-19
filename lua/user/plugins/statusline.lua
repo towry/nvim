@@ -209,8 +209,18 @@ plug({
             cond = function() return vim.opt.fileencoding and vim.opt.fileencoding:get() ~= 'utf-8' end,
           },
           {
-            function() return vim.trim(vim.fn['codeium#GetStatusString']() or '') end,
-            icon = ' ',
+            function()
+              local ret = vim.trim(vim.fn['codeium#GetStatusString']() or '')
+              if ret == '*' then
+                return '󱥸 '
+              elseif ret == '0' then
+                return ' '
+              elseif ret ~= '' then
+                return ret
+              else
+                return '󰛿 '
+              end
+            end,
             cond = function() return vim.cfg.plug__enable_codeium_vim end,
           },
           {
