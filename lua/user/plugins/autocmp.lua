@@ -288,7 +288,7 @@ pack.plug({
         sources = {
           { name = 'nvim_lsp', priority = 50, max_item_count = 6 },
           -- { name = "copilot",                 priority = 30, max_item_count = 4 },
-          { name = 'codeium', priority = 7, max_item_count = 4 },
+          -- { name = 'codeium', priority = 7, max_item_count = 4 },
           { name = 'nvim_lsp_signature_help', priority = 40, max_item_count = 3 },
           { name = 'npm', priority = 3 },
           -- { name = 'cmp_tabnine',             priority = 6,  max_item_count = 3 },
@@ -478,7 +478,7 @@ pack.plug({
     cmd = 'Codeium',
     dev = false,
     event = { 'InsertEnter' },
-    enabled = true,
+    enabled = not vim.cfg.plug__enable_codeium_vim,
     dependencies = {
       'nvim-lua/plenary.nvim',
       'MunifTanjim/nui.nvim',
@@ -513,7 +513,7 @@ pack.plug({
     'Exafunction/codeium.vim',
     event = { 'InsertEnter' },
     cmd = { 'Codeium' },
-    enabled = false,
+    enabled = vim.cfg.plug__enable_codeium_vim,
     config = function()
       local set = vim.keymap.set
 

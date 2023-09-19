@@ -209,6 +209,11 @@ plug({
             cond = function() return vim.opt.fileencoding and vim.opt.fileencoding:get() ~= 'utf-8' end,
           },
           {
+            function() return vim.trim(vim.fn['codeium#GetStatusString']() or '') end,
+            icon = ' ',
+            cond = function() return vim.cfg.plug__enable_codeium_vim end,
+          },
+          {
             function()
               local icon = '󰉠 '
               local ftr_name = format_utils.get_formatter_name(0)

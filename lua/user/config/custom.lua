@@ -3,6 +3,7 @@ local user_cfg = {
   workbench__lualine_theme = 'auto',
   --- treesitter
   lang__treesitter_plugin_rainbow = false,
+  plug__enable_codeium_vim = true,
 }
 
 return {
