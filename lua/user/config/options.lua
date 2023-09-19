@@ -195,8 +195,10 @@ function M.setup()
     group = ftau,
     callback = function(args)
       local buf = args.buf
-      -- start highlighter.
-      if not pcall(vim.treesitter.start, buf) then return end
+      if args.match ~= 'vue' then
+        -- start highlighter.
+        if not pcall(vim.treesitter.start, buf) then return end
+      end
       M.enable_foldexpr_for_buf(buf)
     end,
   })
