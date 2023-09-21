@@ -124,7 +124,7 @@ plug({
         spectre_extension,
         dashboard_extension,
         toggleterm_extension,
-        'nvim-tree',
+        'neo-tree',
         'quickfix',
       },
       options = {
