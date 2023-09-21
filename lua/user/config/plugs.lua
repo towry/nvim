@@ -20,7 +20,7 @@ require('user.plugins.workflow')
 --- extras
 -- make neovim slow.
 -- require("plugin-extras.coding.copilot-nvim")
-require('lua.plugin-extras.workbench.neo-tree')
+require('plugin-extras.workbench.neo-tree')
 require('plugin-extras.coding.word-switch')
 require('plugin-extras.workflow.zenmode')
 require('plugin-extras.workflow.mini-files')
