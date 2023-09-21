@@ -9,7 +9,7 @@ plug({
   keys = {
     {
       '<leader>ft',
-      '<cmd>Neotree toggle<cr>',
+      '<cmd>Neotree left toggle<cr>',
       desc = 'Toggle explore tree',
     },
     {
