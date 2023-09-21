@@ -19,8 +19,8 @@ plug({
       {
         '<leader>gV',
         '<cmd>lua require("userlib.terminal.term-git").toggle_tig_file_history()<cr>',
-        desc = "Tig current file history",
-      }
+        desc = 'Tig current file history',
+      },
     },
     cmd = { 'ToggleTerm', 'TermExec' },
     branch = 'main',
@@ -57,22 +57,22 @@ plug({
         },
         shade_filetypes = { 'none' },
         shade_terminals = true,
-        shading_factor = 1,     -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
+        shading_factor = 1, -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
         start_in_insert = true,
         insert_mappings = true, -- whether or not the open mapping applies in insert mode
         persist_size = false,
         persist_mode = false,
         auto_scroll = false,
         direction = 'horizontal', -- | 'horizontal' | 'window' | 'float',
-        close_on_exit = true,     -- close the terminal window when the process exits
-        shell = vim.o.shell,      -- change the default shell
+        close_on_exit = true, -- close the terminal window when the process exits
+        shell = vim.o.shell, -- change the default shell
         -- This field is only relevant if direction is set to 'float'
         float_opts = {
           -- The border key is *almost* the same as 'nvim_win_open'
           -- see :h nvim_win_open for details on borders however
           -- the 'curved' border is a custom border type
           -- not natively supported but implemented in this plugin.
-          border = 'double', -- single/double/shadow/curved
+          border = vim.cfg.ui__float_border, -- single/double/shadow/curved
           winblend = 15,
         },
         winbar = {
@@ -99,23 +99,19 @@ plug({
 
         if not current_term_is_hidden then
           -- close term if is in normal mode otherwise enter normal mode.
-          nvim_buf_set_keymap({ 't' }, '<ESC>', function()
-            vim.cmd('noau stopinsert')
-          end, {
-            nowait = true,
-            noremap = true,
-            expr = true,
-            buffer = buffer
-          })
-          nvim_buf_set_keymap('n', '<ESC>', function()
-            if vim.api.nvim_get_mode().mode == 'nt' then
-              return [[<C-\><C-n>:ToggleTerm<CR>]]
-            end
-          end, {
-            nowait = true,
-            expr = true,
-            buffer = buffer
-          })
+          -- nvim_buf_set_keymap({ 't' }, '<ESC>', function() vim.cmd('noau stopinsert') end, {
+          --   nowait = true,
+          --   noremap = true,
+          --   expr = true,
+          --   buffer = buffer,
+          -- })
+          -- nvim_buf_set_keymap('n', '<ESC>', function()
+          --   if vim.api.nvim_get_mode().mode == 'nt' then return [[<C-\><C-n>:ToggleTerm<CR>]] end
+          -- end, {
+          --   nowait = true,
+          --   expr = true,
+          --   buffer = buffer,
+          -- })
         end
         --- switch windows
         nvim_buf_set_keymap('t', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
@@ -131,31 +127,12 @@ plug({
       end
 
       vim.cmd('autocmd! TermOpen term://* lua _plugin_set_terminal_keymaps()')
-      --- open in workspace root.
+      --- open in project root.
       vim.keymap.set('n', '<C-\\>', function()
         if vim.tbl_contains({
-              'NvimTree',
-              'lazy',
-            }, vim.bo.filetype) then
-          vim.notify('please open in normal buffer')
-          return
-        end
-        if vim.v.count == 9 then
-          vim.cmd(([[9ToggleTerm direction=float dir=%s]]):format(vim.cfg.runtime__starts_cwd))
-        else
-          vim.cmd((vim.v.count .. [[ToggleTerm direction=horizontal dir=%s]]):format(vim.cfg.runtime__starts_cwd))
-        end
-      end, {
-        desc = 'toggle term',
-        silent = true,
-      })
-      --- open in current project root.
-      --- super+ctrl+/
-      vim.keymap.set('n', vim.api.nvim_replace_termcodes('<C-S-\\>', true, true, false), function()
-        if vim.tbl_contains({
-              'NvimTree',
-              'lazy',
-            }, vim.bo.filetype) then
+          'NvimTree',
+          'lazy',
+        }, vim.bo.filetype) then
           vim.notify('please open in normal buffer')
           return
         end
@@ -168,14 +145,30 @@ plug({
         desc = 'toggle term',
         silent = true,
       })
-
+      --- open in workspace root.
+      --- super+ctrl+/
+      vim.keymap.set('n', vim.api.nvim_replace_termcodes('<C-S-\\>', true, true, false), function()
+        if vim.tbl_contains({
+          'NvimTree',
+          'lazy',
+        }, vim.bo.filetype) then
+          vim.notify('please open in normal buffer')
+          return
+        end
+        if vim.v.count == 9 then
+          vim.cmd(([[9ToggleTerm direction=float dir=%s]]):format(vim.cfg.runtime__starts_cwd))
+        else
+          vim.cmd((vim.v.count .. [[ToggleTerm direction=horizontal dir=%s]]):format(vim.cfg.runtime__starts_cwd))
+        end
+      end, {
+        desc = 'toggle term',
+        silent = true,
+      })
 
       -- kill all at exits.
       au.define_autocmd('VimLeavePre', {
         group = '_kill_terms_on_leave',
-        callback = function()
-          require('userlib.terminal.toggleterm_kill_all')()
-        end,
+        callback = function() require('userlib.terminal.toggleterm_kill_all')() end,
       })
     end,
   },
@@ -195,7 +188,7 @@ plug({
 
           -- In this case, we would block if we find the `-b` flag
           -- This allows you to use `nvim -b file1` instead of `nvim --cmd 'let g:flatten_wait=1' file1`
-          return vim.tbl_contains(argv, "-b")
+          return vim.tbl_contains(argv, '-b')
 
           -- Alternatively, we can block if we find the diff-mode option
           -- return vim.tbl_contains(argv, "-d")
@@ -207,7 +200,7 @@ plug({
         post_open = function(bufnr, winnr, ft, is_blocking)
           if is_blocking then
             -- Hide the terminal while it's blocking
-            require("toggleterm").toggle(0)
+            require('toggleterm').toggle(0)
           else
             -- If it's a normal file, just switch to its window
             vim.api.nvim_set_current_win(winnr)
@@ -235,6 +228,6 @@ plug({
       window = {
         open = 'alternate',
       },
-    }
-  }
+    },
+  },
 })
