@@ -1,3 +1,4 @@
+local Buffer = require('userlib.runtime.buffer')
 local M = {}
 local o = vim.opt
 local g = vim.g
@@ -129,10 +130,6 @@ end
 
 --- https://github.dev/lewis6991/dotfiles/blob/main/config/nvim/lua/lewis6991/lsp.lua
 function M.enable_foldexpr_for_buf(buf)
-  if vim.api.nvim_get_option_value('buftype', { buf = buf }) ~= '' or (not vim.api.nvim_buf_is_valid(buf)) then
-    return
-  end
-  if not buf or vim.api.nvim_buf_line_count(buf) > 40000 then return end
   vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
   vim.wo[0][0].foldmethod = 'expr'
   vim.cmd.normal('zx')
@@ -196,6 +193,7 @@ function M.setup()
     group = ftau,
     callback = function(args)
       local buf = args.buf
+      if Buffer.is_big_file(buf) then return end
       if args.match ~= 'vue' then
         -- start highlighter.
         if not pcall(vim.treesitter.start, buf) then return end

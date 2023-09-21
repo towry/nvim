@@ -4,12 +4,12 @@ local M = {}
 function M.is_empty_buffer(bufnr)
   bufnr = bufnr or 0
   local buftype = vim.api.nvim_get_option_value('buftype', {
-    buf = bufnr
+    buf = bufnr,
   })
   if buftype == 'nofile' then return true end
 
   local filename = vim.api.nvim_buf_get_name(bufnr)
-  return filename == ""
+  return filename == ''
 end
 
 function M.set_options(buf, opts)
@@ -23,12 +23,8 @@ end
 function M.list()
   local all_buffers = vim.api.nvim_list_bufs()
   local valid_buffers = Table.filter(function(b)
-    if b == 0 then
-      return false
-    end
-    if vim.api.nvim_buf_get_name(b) == "" then
-      return false
-    end
+    if b == 0 then return false end
+    if vim.api.nvim_buf_get_name(b) == '' then return false end
 
     return vim.api.nvim_buf_is_loaded(b)
   end, all_buffers)
@@ -44,16 +40,10 @@ end
 function M.list_bufnrs(extra_filter)
   local all_buffers = vim.api.nvim_list_bufs()
   local valid_buffers = Table.filter(function(b)
-    if b == 0 then
-      return false
-    end
-    if vim.api.nvim_buf_get_name(b) == "" then
-      return false
-    end
+    if b == 0 then return false end
+    if vim.api.nvim_buf_get_name(b) == '' then return false end
 
-    if extra_filter and extra_filter(b) == false then
-      return false
-    end
+    if extra_filter and extra_filter(b) == false then return false end
 
     return vim.api.nvim_buf_is_valid(b) and vim.api.nvim_buf_is_loaded(b)
   end, all_buffers)
@@ -64,19 +54,15 @@ end
 function M.list_normal_bufnrs()
   return M.list_bufnrs(function(b)
     if vim.api.nvim_get_option_value('buftype', {
-          buf = b,
-        }) ~= '' then
-      return false
-    end
+      buf = b,
+    }) ~= '' then return false end
   end)
 end
 
 --- filter buffers
 function M.filter_bufnrs(filter)
   local all_buffers = vim.api.nvim_list_bufs()
-  return Table.filter(function(b)
-    return filter(b)
-  end, all_buffers)
+  return Table.filter(function(b) return filter(b) end, all_buffers)
 end
 
 ---@param callback function carry, bufnr
@@ -92,19 +78,13 @@ function M.unsaved_list(opts)
   local all_buffers = vim.api.nvim_list_bufs()
   if opts.perf and #all_buffers > 40 then return {} end
   local valid_buffers = Table.filter(function(b)
-    if b == 0 then
-      return false
-    end
-    if vim.api.nvim_buf_get_name(b) == "" then
-      return false
-    end
+    if b == 0 then return false end
+    if vim.api.nvim_buf_get_name(b) == '' then return false end
 
-    local is_modified = vim.api.nvim_get_option_value("modified", {
+    local is_modified = vim.api.nvim_get_option_value('modified', {
       buf = b,
     })
-    if not is_modified then
-      return false
-    end
+    if not is_modified then return false end
 
     return vim.api.nvim_buf_is_loaded(b)
   end, all_buffers)
@@ -116,12 +96,10 @@ function M.get_current_empty_buffer()
   local bufnr = vim.api.nvim_get_current_buf()
   local name = vim.api.nvim_buf_get_name(bufnr)
   -- local ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
-  local ft = vim.api.nvim_get_option_value("filetype", {
+  local ft = vim.api.nvim_get_option_value('filetype', {
     buf = bufnr,
   })
-  if name == '' and ft == '' then
-    return bufnr
-  end
+  if name == '' and ft == '' then return bufnr end
   return nil
 end
 
@@ -134,9 +112,7 @@ function M.getfsize(bufnr)
   end
 
   local size = vim.fn.getfsize(file)
-  if size <= 0 then
-    return 0
-  end
+  if size <= 0 then return 0 end
   return size
 end
 
@@ -155,21 +131,17 @@ end
 M.next_unsaved_buf = function()
   local unsaved_buffers = M.unsaved_list()
   if #unsaved_buffers <= 0 then
-    vim.notify("No unsaved buffer", vim.log.levels.WARN)
+    vim.notify('No unsaved buffer', vim.log.levels.WARN)
     return
   end
 
   local current_buf = vim.api.nvim_get_current_buf()
 
   local current_buf_index = vim.fn.index(unsaved_buffers, current_buf)
-  if current_buf_index < 0 then
-    current_buf_index = 0
-  end
+  if current_buf_index < 0 then current_buf_index = 0 end
 
   local next_buf_index = current_buf_index + 1
-  if next_buf_index > #unsaved_buffers then
-    next_buf_index = 1
-  end
+  if next_buf_index > #unsaved_buffers then next_buf_index = 1 end
   local next_buf = unsaved_buffers[next_buf_index]
   if not next_buf or next_buf < 1 then return end
 
@@ -180,20 +152,16 @@ end
 M.prev_unsaved_buf = function()
   local unsaved_buffers = M.unsaved_list()
   if #unsaved_buffers <= 0 then
-    vim.notify("No unsaved buffer", vim.log.levels.WARN)
+    vim.notify('No unsaved buffer', vim.log.levels.WARN)
     return
   end
   local current_buf = vim.api.nvim_get_current_buf()
 
   local current_buf_index = vim.fn.index(unsaved_buffers, current_buf)
-  if current_buf_index < 0 then
-    current_buf_index = 2
-  end
+  if current_buf_index < 0 then current_buf_index = 2 end
 
   local prev_buf_index = current_buf_index - 1
-  if prev_buf_index < 1 then
-    prev_buf_index = #unsaved_buffers
-  end
+  if prev_buf_index < 1 then prev_buf_index = #unsaved_buffers end
   local prev_buf = unsaved_buffers[prev_buf_index]
   if not prev_buf or prev_buf < 1 then return end
   M.set_current_buffer_focus(prev_buf)
@@ -216,10 +184,13 @@ end
 
 ---@param bufnr? number
 function M.buffer_display_in_other_window(bufnr)
-  if not bufnr then
-    bufnr = vim.api.nvim_get_current_buf()
-  end
+  if not bufnr then bufnr = vim.api.nvim_get_current_buf() end
   return #vim.fn.win_findbuf(bufnr) > 1
+end
+
+function M.is_big_file(buf)
+  if M.getfsize(buf) > 100000 then return true end
+  if vim.api.nvim_buf_line_count(buf) > 20000 then return true end
 end
 
 return M
