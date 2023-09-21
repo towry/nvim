@@ -128,6 +128,14 @@ plug({
           event = 'neo_tree_buffer_enter',
           handler = function(_) vim.opt_local.signcolumn = 'auto' end,
         },
+        {
+          event = 'neo_tree_window_after_open',
+          handler = function(args) end,
+        },
+        {
+          event = 'neo_tree_window_before_close',
+          handler = function(args) end,
+        },
       },
     }
   end,
