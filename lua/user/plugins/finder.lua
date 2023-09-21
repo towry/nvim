@@ -112,12 +112,8 @@ plug({
 })
 
 local function backend_ts_support(backends)
-  if not vim.cfg.lang__treesitter_next then
-    return backends
-  end
-  return require('userlib.runtime.table').filter(function (item)
-    return item ~= 'treesitter'
-  end, backends)
+  if not vim.cfg.lang__treesitter_next then return backends end
+  return require('userlib.runtime.table').filter(function(item) return item ~= 'treesitter' end, backends)
 end
 
 plug({

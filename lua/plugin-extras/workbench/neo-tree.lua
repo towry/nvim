@@ -6,6 +6,18 @@ plug({
   branch = 'main', -- HACK: force neo-tree to checkout `main` for initial v3 migration since default branch has changed
   dependencies = { 'MunifTanjim/nui.nvim' },
   cmd = 'Neotree',
+  keys = {
+    {
+      '<leader>ft',
+      '<cmd>Neotree toggle<cr>',
+      desc = 'Toggle explore tree',
+    },
+    {
+      '<leader>f.',
+      '<cmd>Neotree reveal float<cr>',
+      desc = 'Locate current file in tree',
+    },
+  },
   init = function() vim.g.neo_tree_remove_legacy_commands = true end,
   opts = function()
     return {
