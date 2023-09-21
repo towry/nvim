@@ -3,6 +3,7 @@ local o = vim.opt
 local g = vim.g
 
 function M.init_edit()
+  o.jumpoptions = 'stack'
   o.breakindent = true
   o.cpoptions:append('>') -- append to register with line break
   o.inccommand = 'nosplit' -- preview incremental substitute
