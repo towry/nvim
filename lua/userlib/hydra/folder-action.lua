@@ -25,29 +25,33 @@ M.open = function(cwd, buffer, pre_hook)
     },
     heads = {
       {
-        "f",
-        _(function()
-          require('userlib.telescope.pickers').project_files({
-            cwd = cwd,
-            use_all_files = true,
-          })
-        end),
+        'f',
+        _(
+          function()
+            require('userlib.telescope.pickers').project_files({
+              cwd = cwd,
+              use_all_files = true,
+            })
+          end
+        ),
         {
           private = true,
           exit = true,
           desc = 'T.Files',
-        }
+        },
       },
       {
-        "p",
-        _(function()
-          require('telescope').extensions.file_browser.file_browser({
-            files = false,
-            use_fd = true,
-            cwd = cwd,
-            respect_gitignore = true,
-          })
-        end),
+        'p',
+        _(
+          function()
+            require('telescope').extensions.file_browser.file_browser({
+              files = false,
+              use_fd = true,
+              cwd = cwd,
+              respect_gitignore = true,
+            })
+          end
+        ),
         {
           private = true,
           desc = 'Folders',
@@ -55,72 +59,72 @@ M.open = function(cwd, buffer, pre_hook)
         },
       },
       {
-        "s",
-        _(function()
-          require('userlib.telescope.live_grep_call')({
-            cwd = cwd,
-          })
-        end),
+        's',
+        _(
+          function()
+            require('userlib.telescope.live_grep_call')({
+              cwd = cwd,
+            })
+          end
+        ),
         {
           desc = 'Content',
           private = true,
           exit = true,
-        }
+        },
       },
       {
-        "r",
-        _(function()
-          require('userlib.telescope.pickers').project_files({
-            oldfiles = true,
-            cwd_only = false,
-            cwd = cwd,
-          })
-        end),
+        'r',
+        _(
+          function()
+            require('userlib.telescope.pickers').project_files({
+              oldfiles = true,
+              cwd_only = false,
+              cwd = cwd,
+            })
+          end
+        ),
         {
           private = true,
           desc = 'Recent',
           exit = true,
-        }
+        },
       },
       {
-        "w",
+        'w',
         _(function()
           require('userlib.runtime.utils').change_cwd(cwd, 'tcd')
-          vim.schedule(function()
-            au.exec_useraucmd(au.user_autocmds.DoEnterDashboard)
-          end)
+          vim.schedule(function() au.exec_useraucmd(au.user_autocmds.DoEnterDashboard) end)
         end),
         {
           private = true,
           desc = 'Cwd',
           exit = true,
-        }
+        },
       },
       {
-        "<CR>",
+        '<CR>',
         _(function()
           -- require('userlib.runtime.utils').change_cwd(cwd, 'tcd')
-          -- require('oil').open(cwd)
-          require('mini.files').open(cwd)
+          require('oil').open(cwd)
+          -- require('mini.files').open(cwd)
         end),
         {
           private = true,
           desc = 'Browser',
           exit = true,
-        }
+        },
       },
       {
         't',
-        _(function()
-          vim.cmd('tabfind ' .. cwd)
-        end),
+        _(function() vim.cmd('tabfind ' .. cwd) end),
         {
           private = true,
           desc = 'Open in tab',
           exit = true,
-        }
-      }
-    }
+        },
+      },
+    },
   })
 
   hydra:activate()
