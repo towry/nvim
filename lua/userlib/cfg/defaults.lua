@@ -182,6 +182,7 @@ return {
     'txt',
     'log',
     'Trouble',
+    'neo-tree',
     'NvimTree',
     'qf',
     'harpoon',
