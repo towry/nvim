@@ -199,6 +199,9 @@ local function setup_basic()
       desc = 'which_key_ignore',
     })
   end
+  set('n', '<leader>tn', cmd('tabnew'), {
+    desc = 'New tab',
+  })
 
   set('n', 'qq', cmd([[:qa]]), {
     desc = 'Quit all',
