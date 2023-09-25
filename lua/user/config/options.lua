@@ -96,10 +96,8 @@ function M.init_interface()
   }
   vim.o.statuscolumn =
     '%s%=%{v:relnum?v:relnum:v:lnum} %{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "-" : "+") : "│") : "│" } '
-  -- vim.o.statuscolumn =
-  -- '%s%=%{v:lnum} %{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "-" : "+") : "│") : "│" } '
   o.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
-  o.shortmess:append({ W = true, I = true, c = true, F = true })
+  o.shortmess:append({ a = true, c = true, F = false, I = true })
   if vim.fn.has('nvim-0.9.0') == 1 then
     o.splitkeep = 'screen'
     o.shortmess:append({ C = true })
