@@ -22,6 +22,7 @@ M.open = function(cwd, buffer, pre_hook)
     mode = { 'n', 'i' },
     config = {
       buffer = buffer,
+      on_exit = function() vim.cmd([[echo ' ']]) end,
     },
     heads = {
       {

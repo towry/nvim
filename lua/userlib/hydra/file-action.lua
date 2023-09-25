@@ -20,23 +20,27 @@ M.open = function(file_path, buffer, pre_hook)
     mode = { 'n', 'i' },
     config = {
       buffer = buffer,
+      on_exit = function() vim.cmd([[echo ' ']]) end,
     },
     heads = {
-      { "y", _(function()
-        vim.fn.setreg('+', file_path)
-      end), { private = true, desc = "Copy", exit = true } },
       {
-        "Y", _(function()
-        local relative_path = vim.fn.fnamemodify(file_path, ':~:.')
-        vim.fn.setreg('+', relative_path)
-      end),
+        'y',
+        _(function() vim.fn.setreg('+', file_path) end),
+        { private = true, desc = 'Copy', exit = true },
+      },
+      {
+        'Y',
+        _(function()
+          local relative_path = vim.fn.fnamemodify(file_path, ':~:.')
+          vim.fn.setreg('+', relative_path)
+        end),
         {
           private = true,
           desc = 'Copy relative',
           exit = true,
-        }
-      }
-    }
+        },
+      },
+    },
   })
 
   hydra:activate()
