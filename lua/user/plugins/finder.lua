@@ -111,11 +111,6 @@ plug({
   end,
 })
 
-local function backend_ts_support(backends)
-  if not vim.cfg.lang__treesitter_next then return backends end
-  return require('userlib.runtime.table').filter(function(item) return item ~= 'treesitter' end, backends)
-end
-
 plug({
   'stevearc/aerial.nvim',
   keys = {
@@ -126,9 +121,9 @@ plug({
   cmd = { 'AerialToggle', 'AerialOpen', 'AerialClose' },
   opts = {
     backends = {
-      ['_'] = backend_ts_support({ 'lsp', 'treesitter', 'man', 'markdown' }),
-      typescript = backend_ts_support({ 'lsp', 'treesitter' }),
-      typescriptreact = backend_ts_support({ 'lsp', 'treesitter' }),
+      ['_'] = { 'lsp', 'man', 'markdown' },
+      typescript = { 'lsp' },
+      typescriptreact = { 'lsp' },
     },
     layout = {
       -- These control the width of the aerial window.
@@ -180,16 +175,6 @@ plug({
       'Method',
       'Struct',
     },
-    treesitter = {
-      experimental_selection_range = true,
-    },
-    post_parse_symbol = function(bufnr, item, ctx)
-      if ctx.backend_name == 'treesitter' and (ctx.lang == 'typescript' or ctx.lang == 'tsx') then return true end
-      return true
-    end,
-    get_highlight = function(symbol, is_icon)
-      if symbol.scope == 'private' then return 'AerialPrivate' end
-    end,
     autojump = true,
     close_on_select = true,
     highlight_on_hover = true,
@@ -231,7 +216,7 @@ plug({
   },
   config = function(_, opts)
     require('aerial').setup(opts)
-    vim.api.nvim_set_hl(0, 'AerialPrivate', { default = true, italic = true })
+    -- vim.api.nvim_set_hl(0, 'AerialPrivate', { default = true, italic = true })
   end,
 })
 
