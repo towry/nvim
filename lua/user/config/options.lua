@@ -194,10 +194,8 @@ function M.setup()
     callback = function(args)
       local buf = args.buf
       if Buffer.is_big_file(buf) then return end
-      if args.match ~= 'vue' then
-        -- start highlighter.
-        if not pcall(vim.treesitter.start, buf) then return end
-      end
+      -- start highlighter.
+      if not pcall(vim.treesitter.start, buf) then return end
       M.enable_foldexpr_for_buf(buf)
     end,
   })
