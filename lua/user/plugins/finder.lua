@@ -426,7 +426,7 @@ plug({
     },
     {
       'pze/telescope-file-browser.nvim',
-      branch = 'feat/max-results',
+      -- branch = 'feat/max-results',
       dev = false,
     },
     {
