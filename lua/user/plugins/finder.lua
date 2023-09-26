@@ -69,6 +69,10 @@ plug({
       ['g.'] = 'actions.toggle_hidden',
     },
     use_default_keymaps = false,
+    delete_to_trash = false,
+    -- is_hidden_file = function(name, bufnr)
+    --   return vim.startswith(name, ".")
+    -- end,
     float = {
       padding = 3,
       border = vim.cfg.ui__float_border,
