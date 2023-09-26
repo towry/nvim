@@ -1,5 +1,5 @@
 local user_cfg = {
-  ui__theme_name = 'slate',
+  ui__theme_name = 'murphy',
   workbench__lualine_theme = 'auto',
   --- treesitter
   lang__treesitter_plugin_rainbow = false,
