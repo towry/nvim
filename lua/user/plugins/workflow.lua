@@ -438,9 +438,12 @@ plug({
 plug({
   'towry/window-bufstack.nvim',
   cond = true,
-  version = 'v1.0.3',
+  -- version = 'v1.0.3',
+  branch = 'feat/ignore-filetype-opt',
   dev = false,
-  opts = {},
+  opts = {
+    ignore_filetype = { 'oil' },
+  },
   lazy = false,
 })
 

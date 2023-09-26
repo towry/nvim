@@ -111,7 +111,7 @@
   "vim-rsi": { "branch": "master", "commit": "45540637ead22f011e8215f1c90142e49d946a54" },
   "vim-wakatime": { "branch": "master", "commit": "0d2efa2daff34b27b0d227d4c3b136811c93db93" },
   "which-key.nvim": { "branch": "main", "commit": "7ccf476ebe0445a741b64e36c78a682c1c6118b7" },
-  "window-bufstack.nvim": { "branch": "main", "commit": "6fe8832348a6153d9c7cfc8825a4c6b78c644b6a" },
+  "window-bufstack.nvim": { "branch": "feat/ignore-filetype-opt", "commit": "0f45765c404098658402300c4b6aa9b2485e1758" },
   "windows.nvim": { "branch": "main", "commit": "c7492552b23d0ab30325e90b56066ec51242adc8" },
   "zen-mode.nvim": { "branch": "main", "commit": "68f554702de63f4b7b6b6d4bcb10178f41a0acc7" },
   "zenbones.nvim": { "branch": "main", "commit": "491b8a79e0547e181c7c6fb054d778fd595f068c" }
