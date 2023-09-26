@@ -3,7 +3,17 @@ vim.b.minianimate_disable = true
 local bufnr = vim.api.nvim_get_current_buf()
 local set = require('userlib.runtime.keymap').map_buf_thunk(bufnr)
 
-set('n', '<S-q>', function() require('oil').close() end, {
+set('n', '<S-q>', function()
+  local ok, bufstack = pcall(require, 'window-bufstack.bufstack')
+  local pre_buf = nil
+  if ok then
+    -- pop oil buf.
+    bufstack.pop()
+    pre_buf = bufstack.pop()
+  end
+  require('oil').close()
+  if ok and not pre_buf then vim.cmd('q') end
+end, {
   desc = 'Close oil',
 })
 
