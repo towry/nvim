@@ -4,6 +4,11 @@ local au = require('userlib.runtime.au')
 local git_branch_icon = ' '
 local enable_lualine = true
 
+local function is_treesitter()
+  local bufnr = vim.api.nvim_get_current_buf()
+  return vim.treesitter.highlighter.active[bufnr] ~= nil
+end
+
 local git_status_source = function()
   local gitsigns = vim.b.gitsigns_status_dict
   if gitsigns then
@@ -201,7 +206,7 @@ plug({
           },
           {
             function()
-              if vim.diagnostic.is_disabled() then return 'Diag OFF' end
+              if vim.diagnostic.is_disabled() then return '-DIAG' end
               return ''
             end,
           },
@@ -246,20 +251,15 @@ plug({
         lualine_y = {
           'filesize',
           {
+            function()
+              if is_treesitter() then return '' end
+              return '-TS'
+            end,
+          },
+          {
             'filetype',
             colored = true,
             icon_only = true,
-            color = function()
-              local function is_treesitter()
-                local bufnr = vim.api.nvim_get_current_buf()
-                return vim.treesitter.highlighter.active[bufnr] ~= nil
-              end
-
-              if is_treesitter() then return end
-              return {
-                bg = 'gray',
-              }
-            end,
           },
         },
         lualine_z = {
