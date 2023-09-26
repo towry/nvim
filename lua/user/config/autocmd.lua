@@ -14,19 +14,20 @@ function M.load_on_startup()
       },
     },
     {
-      { 'BufReadPost' },
+      { 'BufWinEnter' },
       {
         group = '_disable_diagnostic_on_sth',
         pattern = '*',
-        callback = function()
-          if vim.api.nvim_buf_line_count(0) > 40000 then
-            vim.diagnostic.disable()
+        callback = function(args)
+          local buf = args.buf
+          if vim.b[buf].enable_diagnostic == 0 or vim.api.nvim_buf_line_count(0) > 40000 then
+            vim.diagnostic.disable(buf)
             return
           end
 
           vim.schedule(function()
             if vim.wo.diff then
-              vim.diagnostic.disable()
+              vim.diagnostic.disable(buf)
               au.do_useraucmd('User IsDiffMode')
             end
           end)
