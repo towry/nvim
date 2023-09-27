@@ -104,7 +104,7 @@ plug({
     },
   },
   init = function()
-    au.define_autocmd('BufEnter', {
+    au.define_autocmd('BufWinEnter', {
       group = '_oil_change_cwd',
       pattern = 'oil:///*',
       callback = function(ctx)
