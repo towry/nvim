@@ -246,10 +246,10 @@ end
 
 M.vim_starts_without_buffer = function() return vim.fn.argc(-1) == 0 end
 
-function M.change_cwd(cwd, cmd)
+function M.change_cwd(cwd, cmd, silent)
   vim.cmd((cmd or 'cd') .. ' ' .. cwd)
   M.update_cwd_env(cwd)
-  vim.notify(('New cwd: %s'):format(vim.t.cwd_short), vim.log.levels.INFO)
+  if not silent then vim.notify(('New cwd: %s'):format(vim.t.cwd_short), vim.log.levels.INFO) end
 end
 
 function M.update_cwd_env(cwd)

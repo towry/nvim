@@ -104,15 +104,14 @@ plug({
     },
   },
   init = function()
-    -- au.define_autocmd('BufEnter', {
-    --   group = '_oil_change_cwd',
-    --   pattern = 'oil:///*',
-    --   callback = function(ctx)
-    --     vim.t.cwd = require('oil').get_current_dir()
-    --     vim.t.cwd_short = require('userlib.runtime.path').home_to_tilde(vim.t.cwd)
-    --     vim.cmd.tcd(vim.t.cwd)
-    --   end,
-    -- })
+    au.define_autocmd('BufEnter', {
+      group = '_oil_change_cwd',
+      pattern = 'oil:///*',
+      callback = function(ctx)
+        local cwd = require('oil').get_current_dir()
+        require('userlib.runtime.utils').change_cwd(cwd, 'lcd', true)
+      end,
+    })
   end,
 })
 
