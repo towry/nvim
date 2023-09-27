@@ -1,6 +1,6 @@
 local user_cfg = {
-  ui__theme_name = 'murphy',
-  workbench__lualine_theme = 'auto',
+  ui__theme_name = 'nightfox',
+  workbench__lualine_theme = 'nightfox',
   --- treesitter
   lang__treesitter_plugin_rainbow = false,
   plug__enable_codeium_vim = false,
