@@ -106,11 +106,6 @@ plug({
     end,
   },
 
-  ---- formats
-  {
-    'jose-elias-alvarez/null-ls.nvim',
-  },
-
   ---- lua
   {
     'mrjones2014/lua-gf.nvim',

@@ -3,7 +3,7 @@ local M = {}
 M.root_patterns =
   { '_darcs', '.bzr', '.vscode', 'package.json', 'pnpm-workspace.yaml', 'Cargo.toml', '.git', '.gitmodules', '.svn' }
 --- ignore jsonls: inside package.json, it give root to parent root.
-M.root_lsp_ignore = { 'null-ls', 'tailwindcss', 'jsonls' }
+M.root_lsp_ignore = { 'tailwindcss', 'jsonls' }
 
 M.file_exists = function(path)
   local f = io.open(path, 'r')
