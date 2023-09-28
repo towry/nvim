@@ -17,6 +17,8 @@ function M.setup()
       return spec
     end,
   })
+
+  require('user.config.theme').setup()
 end
 
 return M
