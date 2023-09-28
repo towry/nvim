@@ -170,8 +170,12 @@ end
 local is_setup_theme_done = false
 function M.setup_theme()
   if is_setup_theme_done then return end
-  is_setup_theme_done = true
-  pcall(vim.cmd, 'colorscheme ' .. vim.cfg.ui__theme_name)
+  local ok = pcall(vim.cmd, 'colorscheme ' .. vim.cfg.ui__theme_name)
+  if ok then
+    is_setup_theme_done = true
+  else
+    return
+  end
   if type(M['custom_theme_' .. vim.cfg.ui__theme_name]) == 'function' then
     vim.schedule(M['custom_theme_' .. vim.cfg.ui__theme_name])
   end
