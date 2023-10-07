@@ -82,6 +82,51 @@ plug({
     },
   },
   keys = {
+    {
+      '<S-q>',
+      function()
+        local ok, bufstack = pcall(require, 'window-bufstack.bufstack')
+        local pre_buf = nil
+        if ok then pre_buf = bufstack.pop() end
+        require('oil').close()
+        if ok and not pre_buf then vim.cmd('q') end
+      end,
+      desc = 'Close oil',
+      ft = 'oil',
+    },
+    {
+      's',
+      function()
+        require('flash').jump({
+          search = {
+            mode = 'search',
+            max_length = 0,
+            exclude = {
+              function(win) return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= 'oil' end,
+            },
+          },
+          label = { after = { 0, 0 } },
+          pattern = '^',
+        })
+      end,
+      desc = 'Flash',
+      ft = 'oil',
+      nowait = true,
+    },
+    {
+      'W',
+      function() require('oil').open(vim.cfg.runtime__starts_cwd) end,
+      desc = 'Open oil(Root) file browser',
+      ft = 'oil',
+      nowait = true,
+    },
+    {
+      '_',
+      function() require('oil').open(require('userlib.runtime.utils').get_root()) end,
+      ft = 'oil',
+      nowait = true,
+      desc = 'Open in project',
+    },
     -- {
     --   '<leader>fo',
     --   function() require('oil').open(vim.cfg.runtime__starts_cwd) end,
