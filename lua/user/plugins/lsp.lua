@@ -202,7 +202,8 @@ plug({
     'Mofiqul/trld.nvim',
     event = 'LspAttach',
     opts = {
-      position = 'bottom',
+      -- bottom doesn't bottom enough.
+      position = 'top',
       auto_cmds = true,
     },
   },
