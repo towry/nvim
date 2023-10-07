@@ -67,7 +67,21 @@ plug({
       { '<leader>gA', cmdstr([[Git add .]]), desc = '!Git add all' },
       { '<leader>gP', cmdstr([[Git push]]), desc = 'Git push' },
       { '<leader>gp', cmdstr([[Git pull]]), desc = 'Git pull' },
-      { 'q', ':bd<cr>', nowait = true, noremap = true, silent = true, ft = 'fugitive' },
+      {
+        'q',
+        function()
+          local wc = vim.api.nvim_tabpage_list_wins(0)
+          if #wc == 1 then
+            vim.cmd('bd')
+          else
+            vim.cmd('q')
+          end
+        end,
+        nowait = true,
+        noremap = true,
+        silent = true,
+        ft = 'fugitive',
+      },
     },
     cmd = {
       'G',
