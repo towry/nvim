@@ -10,31 +10,6 @@ plug({
       '<cmd>:UndotreeToggle<cr>',
       desc = 'Toggle undo tree',
     },
-    {
-      'l',
-      '<cmd>wincmd l<cr>',
-      ft = 'undotree',
-      nowait = true,
-      noremap = true,
-      silent = true,
-    },
-    {
-      'h',
-      '<cmd>wincmd l<cr>',
-      ft = 'undotree',
-      nowait = true,
-      noremap = true,
-      silent = true,
-    },
-    {
-      '<ESC>',
-      ':UndotreeHide<cr>',
-      ft = 'undotree',
-      desc = 'Hide undotree',
-      nowait = true,
-      noremap = true,
-      silent = true,
-    },
   },
   cmd = { 'UndotreeToggle', 'UndotreeHide', 'UndotreeShow' },
   init = function()
@@ -67,21 +42,6 @@ plug({
       { '<leader>gA', cmdstr([[Git add .]]), desc = '!Git add all' },
       { '<leader>gP', cmdstr([[Git push]]), desc = 'Git push' },
       { '<leader>gp', cmdstr([[Git pull]]), desc = 'Git pull' },
-      {
-        'q',
-        function()
-          local wc = vim.api.nvim_tabpage_list_wins(0)
-          if #wc == 1 then
-            vim.cmd('bd')
-          else
-            vim.cmd('q')
-          end
-        end,
-        nowait = true,
-        noremap = true,
-        silent = true,
-        ft = 'fugitive',
-      },
     },
     cmd = {
       'G',
