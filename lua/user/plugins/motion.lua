@@ -34,6 +34,8 @@ plug({
   },
   {
     'echasnovski/mini.ai',
+    -- disabled due to not compatible with nvim-treesitter#1.0
+    enabled = false,
     event = au.user_autocmds.FileOpenedAfter_User,
     opts = function()
       local ai = require('mini.ai')
