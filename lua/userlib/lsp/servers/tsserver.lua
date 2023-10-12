@@ -60,6 +60,7 @@ M.settings = settings
 M.init_options = {
   preferences = {
     importModuleSpecifierPreference = 'relative',
+    importModuleSpecifierEnding = 'index',
   },
 }
 

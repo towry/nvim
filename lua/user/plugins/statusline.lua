@@ -142,6 +142,9 @@ plug({
       winbar = {
         lualine_a = {
           {
+            function() return vim.fn.bufnr('%') end,
+          },
+          {
             'filename',
             file_status = true,
             path = 3,
@@ -153,6 +156,9 @@ plug({
       },
       inactive_winbar = {
         lualine_a = {
+          {
+            function() return vim.fn.bufnr('%') end,
+          },
           {
             'filename',
             file_status = true,

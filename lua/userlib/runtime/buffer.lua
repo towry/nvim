@@ -14,7 +14,9 @@ end
 
 function M.set_options(buf, opts)
   for k, v in pairs(opts) do
-    vim.api.nvim_buf_set_option(buf, k, v)
+    vim.api.nvim_set_option_value(k, v, {
+      buf = buf,
+    })
   end
 end
 

@@ -221,7 +221,7 @@ function M.load_on_startup()
     {
       pattern = 'VeryLazy',
       once = true,
-      callback = function() require('user.config.options').setup_theme() end,
+      callback = function() require('user.config.theme').setup_theme() end,
     },
     {
       --- start dashboard
