@@ -10,8 +10,9 @@ vim.filetype.add({
     ['.envrc'] = 'bash',
     ['Brewfile'] = 'brewfile',
     ['config'] = 'bash',
+    ['.swcrc'] = 'json',
   },
   pattern = {
-    ['.*ignore$'] = "gitignore",
-  }
+    ['.*ignore$'] = 'gitignore',
+  },
 })
