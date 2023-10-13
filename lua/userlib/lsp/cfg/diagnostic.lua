@@ -78,14 +78,14 @@ function M.setup()
     signs = signs == false and false or true,
     underline = true,
     update_in_insert = false,
-    -- virtual_text = false,
-    virtual_text = {
-      severity = vim.diagnostic.severity.ERROR,
-      spacing = 1,
-      prefix = '■',
-      -- right_align | overlay | eol | inline
-      virt_text_pos = 'right_align',
-    },
+    virtual_text = false,
+    -- virtual_text = {
+    --   severity = vim.diagnostic.severity.ERROR,
+    --   spacing = 1,
+    --   prefix = '■',
+    --   -- right_align | overlay | eol | inline
+    --   virt_text_pos = 'right_align',
+    -- },
   })
 
   -- vim.diagnostic.handlers.underline = {
