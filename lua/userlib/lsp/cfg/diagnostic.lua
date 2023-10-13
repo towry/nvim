@@ -19,12 +19,8 @@ local devicon = nil
 ---@param source_name string
 local function get_icon_for_diag_source(source_name)
   local fname = DiagSourceToIcon[source_name]
-  if not fname then
-    return source_name
-  end
-  if DiagSourceToIconCache[source_name] then
-    return DiagSourceToIconCache[source_name]
-  end
+  if not fname then return source_name end
+  if DiagSourceToIconCache[source_name] then return DiagSourceToIconCache[source_name] end
   if not devicon then
     if utils.has_plugin('nvim-web-devicons') then
       devicon = require('nvim-web-devicons')
@@ -38,9 +34,7 @@ end
 
 local function get_formal_source_name(source_name)
   local format = DiagSourceNameFormatMap[source_name]
-  if not format then
-    return source_name
-  end
+  if not format then return source_name end
   return format
 end
 
@@ -49,7 +43,7 @@ M.remove_multiline_underline_handler = function(namespace, bufnr, diagnostics, o
 
   local diagnostics_without_multiline = vim.tbl_map(function(diagnostic)
     diagnostic.end_col = diagnostic.lnum == diagnostic.end_lnum and diagnostic.end_col
-        or #buf_lines[diagnostic.lnum + 1]
+      or #buf_lines[diagnostic.lnum + 1]
     diagnostic.end_lnum = diagnostic.lnum
 
     return diagnostic
@@ -60,12 +54,11 @@ end
 
 M.add_source_to_virtual_text_handler = function(namespace, bufnr, diagnostics, opts)
   local diagnostics_with_source = vim.tbl_map(function(diagnostic)
-    local source = diagnostic.source or ""
+    local source = diagnostic.source or ''
     -- if source contains non char at the last, remove it.
     source = string.gsub(source, '[^%w]$', '')
     source = get_formal_source_name(source)
-    diagnostic.message = source and source .. ": " .. diagnostic.message
-        or diagnostic.message
+    diagnostic.message = source and source .. ': ' .. diagnostic.message or diagnostic.message
 
     return diagnostic
   end, vim.deepcopy(diagnostics))
@@ -85,12 +78,14 @@ function M.setup()
     signs = signs == false and false or true,
     underline = true,
     update_in_insert = false,
-    virtual_text = false,
-    -- virtual_text = {
-    --   severity = vim.diagnostic.severity.ERROR,
-    --   spacing = 1,
-    --   prefix = '■',
-    -- },
+    -- virtual_text = false,
+    virtual_text = {
+      severity = vim.diagnostic.severity.ERROR,
+      spacing = 1,
+      prefix = '■',
+      -- right_align | overlay | eol | inline
+      virt_text_pos = 'right_align',
+    },
   })
 
   -- vim.diagnostic.handlers.underline = {
@@ -110,12 +105,8 @@ function M.setup()
     end
   end
 
-  vim.api.nvim_create_user_command('UserLspDiagnosticDisable', function()
-    vim.diagnostic.disable()
-  end, {})
-  vim.api.nvim_create_user_command('UserLspDiagnosticEnable', function()
-    vim.diagnostic.enable()
-  end, {})
+  vim.api.nvim_create_user_command('UserLspDiagnosticDisable', function() vim.diagnostic.disable() end, {})
+  vim.api.nvim_create_user_command('UserLspDiagnosticEnable', function() vim.diagnostic.enable() end, {})
 end
 
 return M

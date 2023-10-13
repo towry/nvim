@@ -228,7 +228,7 @@ plug({
   'nvim-pack/nvim-spectre',
   opts = {
     color_devicons = true,
-    open_cmd = 'vnew',
+    open_cmd = 'noswapfile vnew',
     live_update = true,
     is_insert_mode = false,
     is_open_target_win = false,
