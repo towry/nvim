@@ -389,7 +389,7 @@ plug({
       desc = 'Find project folders',
     },
     {
-      '<leader>fs',
+      '<leader>fg',
       function()
         require('userlib.telescope.live_grep_call')({
           cwd = vim.cfg.runtime__starts_cwd,
@@ -398,18 +398,18 @@ plug({
       desc = 'Grep search in all projects',
     },
     {
-      '<leader>fg',
+      '<leader>fs',
       cmd_modcall('userlib.telescope.live_grep_call', '()'),
       desc = 'Grep search in project',
     },
     {
-      '<leader>fg',
+      '<leader>fs',
       cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_visual_selection()'),
       desc = 'Grep search on selection in project',
       mode = { 'v', 'x' },
     },
     {
-      '<leader>fG',
+      '<leader>fS',
       cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_word_under_cursor()'),
       desc = 'Grep search on selection in project',
     },
