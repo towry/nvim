@@ -125,9 +125,9 @@ plug({
   cmd = { 'AerialToggle', 'AerialOpen', 'AerialClose' },
   opts = {
     backends = {
-      ['_'] = { 'lsp', 'man', 'markdown' },
-      typescript = { 'lsp' },
-      typescriptreact = { 'lsp' },
+      ['_'] = { 'lsp', 'treesitter', 'man', 'markdown' },
+      typescript = { 'lsp', 'treesitter' },
+      typescriptreact = { 'lsp', 'treesitter' },
     },
     layout = {
       -- These control the width of the aerial window.
