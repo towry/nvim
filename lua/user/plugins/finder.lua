@@ -166,7 +166,7 @@ plug({
       'Enum',
       'EnumMember',
       'Event',
-      'Variable',
+      -- 'Variable',
       'Operator',
       'TypeParameter',
       'Type',
