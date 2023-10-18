@@ -6,10 +6,10 @@ plug({
   event = 'User LazyTheme',
   enabled = vim.cfg.ui__theme_name == 'sonokai',
   init = function()
-    vim.g.sonokai_style = "maia"
-    vim.g.sonokai_menu_selection_background = "green"
+    vim.g.sonokai_style = 'maia'
+    vim.g.sonokai_menu_selection_background = 'green'
     vim.g.sonokai_diagnostic_text_highlight = 1
-  end
+  end,
 })
 
 plug({
@@ -39,7 +39,7 @@ plug({
     end,
     colors = {
       palette = {
-        crystalBlue = "#a7d8de",
+        crystalBlue = '#a7d8de',
         -- dragonBlack0 = "#191f24",
         -- dragonBlack1 = "#1c2228",
         -- dragonBlack2 = "#192024",
@@ -61,15 +61,15 @@ plug({
       theme = {
         all = {
           ui = {
-            bg_gutter = "none",
+            bg_gutter = 'none',
           },
         },
       },
     },
     background = {
-      dark = "wave",
+      dark = 'wave',
       -- dark = 'dragon',
-      light = "lotus",
+      light = 'lotus',
     },
   },
 })
@@ -77,7 +77,7 @@ plug({
 plug({
   'mcchrish/zenbones.nvim',
   dependencies = {
-    'rktjmp/lush.nvim'
+    'rktjmp/lush.nvim',
   },
   lazy = (not string.match(vim.cfg.ui__theme_name, 'bones') and (not string.match(vim.cfg.ui__theme_name, 'zen'))),
   priority = 1000,
@@ -89,12 +89,4 @@ plug({
       solid_float_border = true,
     }
   end,
-})
-
-plug({
-  'EdenEast/nightfox.nvim',
-  lazy = not string.match(vim.cfg.ui__theme_name, 'fox'),
-  priority = 1000,
-  opts = {
-  }
 })
