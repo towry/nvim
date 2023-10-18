@@ -93,6 +93,7 @@ function M.init_interface()
     foldsep = ' ',
     foldopen = '',
     foldclose = '',
+    diff = ' ',
   }
   vim.o.statuscolumn =
     '%s%=%{v:relnum?v:relnum:v:lnum} %{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "-" : "+") : "│") : "│" } '
