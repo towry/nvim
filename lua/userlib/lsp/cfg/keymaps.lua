@@ -152,7 +152,7 @@ function M.setup_keybinding(client, buffer)
   set(
     'n',
     '<leader>cf',
-    func_call('format_code()'),
+    func_call('format_code(0, { async = true })'),
     opts({
       desc = _('Format code'),
     })

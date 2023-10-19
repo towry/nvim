@@ -76,7 +76,8 @@ plug({
   event = { 'User LazyUIEnterOncePost', 'User OnLeaveDashboard' },
   config = function()
     require('user.config.options').setup_statusline()
-    local format_utils = require('userlib.lsp.fmt')
+    local auto_format_disabled = require('userlib.lsp.servers.null_ls.autoformat').disabled
+    local format_utils = require('userlib.lsp.servers.null_ls.fmt')
     -- local Buffer               = require('userlib.runtime.buffer')
     local terms = require('userlib.statusline.lualine.terminal_component')
 
@@ -237,10 +238,15 @@ plug({
           },
           {
             function()
-              local icon = '󰉠 '
-              local ftr_name = format_utils.get_formatter_name(0)
-              if not ftr_name then return '' end
-              return string.format('%s%s', icon, ftr_name)
+              local icon = '  '
+              if auto_format_disabled() then
+                icon = ' '
+              end
+              local ftr_name, impl_ftr_name = format_utils.current_formatter_name(0)
+              if not ftr_name and not impl_ftr_name then
+                return ''
+              end
+              return string.format('%s%s', icon, impl_ftr_name or ftr_name)
             end,
           },
           --- dap

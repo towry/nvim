@@ -3,20 +3,10 @@
 local plug = require('userlib.runtime.pack').plug
 local au = require('userlib.runtime.au')
 
-local efm_setup_done = false
-
 local function default_lspconfig_ui_options()
   local present, win = pcall(require, 'lspconfig.ui.windows')
   if not present then return end
   win.default_options.border = vim.cfg.ui__float_border
-end
-
-local function setup_efm_lsp()
-  -- setup efmls if not done already
-  if not efm_setup_done then
-    efm_setup_done = true
-    require('lspconfig').efm.setup(require('userlib.lsp.filetypes').efmls_config(capabilities))
-  end
 end
 
 plug({
@@ -65,8 +55,6 @@ plug({
 
       default_lspconfig_ui_options()
 
-      setup_efm_lsp()
-
       -- loop over lsp__enable_servers list
       for _, server in ipairs(vim.cfg.lsp__enable_servers) do
         local load_ok, server_rc = pcall(require, servers_path .. server)
@@ -101,9 +89,14 @@ plug({
     init = function()
       au.on_lsp_attach(function(client, bufnr)
         require('userlib.lsp.cfg.keymaps').setup_keybinding(client, bufnr)
-        require('userlib.lsp.fmt').on_attach(client, bufnr)
+        require('userlib.lsp.servers.null_ls.fmt').attach(client, bufnr)
       end)
     end,
+  },
+
+  {
+    -- null-ls
+    'nvimtools/none-ls.nvim'
   },
 
   ---- lua

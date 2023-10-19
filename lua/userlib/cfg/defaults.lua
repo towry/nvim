@@ -119,6 +119,7 @@ return {
     'bashls',
     'html',
     'tsserver',
+    'null_ls'
   },
   lsp__auto_install_servers = {
     -- 'bashls',
