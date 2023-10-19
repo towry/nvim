@@ -84,7 +84,7 @@ end
 
 function M.attach(client, bufnr)
   choose_formatter_for_buf(client, bufnr)
-  autoformat.attach_autoformat_with_autocmd(client, bufnr)
+  autoformat.attach(client, bufnr)
 end
 
 return M

@@ -1,4 +1,4 @@
-local auto_format_disabled = true
+local auto_format_disabled = false
 
 local M = {}
 
@@ -9,32 +9,14 @@ end
 
 --- Enable the autoformat feature.
 function M.enable()
-  local ok, lsp_format = pcall(require, 'lsp-format')
   auto_format_disabled = false
-  if not ok then
-    return
-  end
-  lsp_format.enable({
-    args = ""
-  })
 end
 
 function M.toggle()
-  local ok, lsp_format = pcall(require, 'lsp-format')
   auto_format_disabled = not auto_format_disabled
   if auto_format_disabled then
     vim.notify('Auto format is disabled')
-    if ok then
-      lsp_format.disable({
-        args = ""
-      })
-    end
   else
-    if ok then
-      lsp_format.enable({
-        args = ""
-      })
-    end
     vim.notify('Auto format is enabled')
   end
 end

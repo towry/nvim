@@ -238,9 +238,9 @@ plug({
           },
           {
             function()
-              local icon = '  '
+              local icon = '󰎟 '
               if auto_format_disabled() then
-                icon = ' '
+                icon = '󰙧 '
               end
               local ftr_name, impl_ftr_name = format_utils.current_formatter_name(0)
               if not ftr_name and not impl_ftr_name then
