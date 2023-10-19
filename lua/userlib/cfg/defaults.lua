@@ -113,12 +113,13 @@ return {
     'tailwindcss',
     'cssls',
     'jsonls',
-    'eslint',
+    -- 'eslint',
     'lua_ls',
     'volar',
     'bashls',
     'html',
     'tsserver',
+    'null_ls'
   },
   lsp__auto_install_servers = {
     -- 'bashls',
