@@ -155,7 +155,7 @@ pack.plug({
             if vim.bo.buftype == 'prompt' then return fallback() end
             local entry = cmp.get_selected_entry()
             local has_ai_suggestions = (vim.b._copilot and vim.b._copilot.suggestions ~= nil)
-              or (vim.b._codeium_completions and vim.b._codeium_completions.items ~= nil)
+                or (vim.b._codeium_completions and vim.b._codeium_completions.items ~= nil)
             local has_ai_suggestion_text = function()
               if vim.b._copilot and vim.b._copilot.suggestions ~= nil then
                 local suggestion = vim.b._copilot.suggestions[1]
@@ -193,7 +193,7 @@ pack.plug({
             else
               fallback()
             end
-          end), -- invoke complete
+          end),                           -- invoke complete
           ['<C-s>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
           ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
           ['<C-e>'] = cmp.mapping({
@@ -286,13 +286,13 @@ pack.plug({
         },
         -- You should specify your *installed* sources.
         sources = {
-          { name = 'nvim_lsp', priority = 10, max_item_count = 6 },
+          { name = 'nvim_lsp',                priority = 10, max_item_count = 6 },
           -- { name = "copilot",                 priority = 30, max_item_count = 4 },
           -- { name = 'codeium', priority = 7, max_item_count = 4 },
           { name = 'nvim_lsp_signature_help', priority = 10, max_item_count = 3 },
-          { name = 'npm', priority = 3 },
+          { name = 'npm',                     priority = 3 },
           -- { name = 'cmp_tabnine',             priority = 6,  max_item_count = 3 },
-          { name = 'luasnip', priority = 6, max_item_count = 2 },
+          { name = 'luasnip',                 priority = 6,  max_item_count = 2 },
           {
             name = 'buffer',
             priority = 10,
@@ -301,8 +301,8 @@ pack.plug({
             max_item_count = 5,
           },
           { name = 'nvim_lua', priority = 5, ft = 'lua' },
-          { name = 'path', priority = 4 },
-          { name = 'calc', priority = 3 },
+          { name = 'path',     priority = 4 },
+          { name = 'calc',     priority = 3 },
         },
         sorting = {
           comparators = {
@@ -434,8 +434,8 @@ pack.plug({
       -- do not add pairs if in jsx.
       local ts_current_line_node_type = Ty.TS_GET_NODE_TYPE()
       if
-        vim.tbl_contains({ 'jsx_self_closing_element', 'jsx_opening_element' }, ts_current_line_node_type)
-        and (item.kind == Kind.Function or item.kind == Kind.Method)
+          vim.tbl_contains({ 'jsx_self_closing_element', 'jsx_opening_element' }, ts_current_line_node_type)
+          and (item.kind == Kind.Function or item.kind == Kind.Method)
       then
         return
       end
@@ -553,12 +553,6 @@ pack.plug({
     },
     cmd = { 'Copilot' },
     config = function()
-      -- <C-/>
-      vim.keymap.set({ 'i' }, '<C-/>', 'copilot#Suggest()', {
-        silent = true,
-        expr = true,
-        script = true,
-      })
     end,
     init = function()
       vim.g.copilot_filetypes = {
@@ -580,6 +574,12 @@ pack.plug({
             noremap = true,
           })
         end,
+      })
+      -- <C-/>
+      vim.keymap.set({ 'i' }, '<C-/>', 'copilot#Suggest()', {
+        silent = true,
+        expr = true,
+        script = true,
       })
     end,
   },
