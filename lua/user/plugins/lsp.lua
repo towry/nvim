@@ -96,7 +96,8 @@ plug({
 
   {
     -- null-ls
-    'nvimtools/none-ls.nvim'
+    -- be sure to run ./scripts/install-web-dep.sh
+    'nvimtools/none-ls.nvim',
   },
 
   ---- lua
