@@ -106,14 +106,12 @@ plug({
       sections = {
         lualine_a = {
           'mode',
-        },
-        lualine_c = {
-          tabs_component,
-        },
-        lualine_x = {
           {
             terms,
           },
+        },
+        lualine_c = {
+          tabs_component,
         },
       },
       filetypes = { 'toggleterm' },
