@@ -4,6 +4,12 @@ local bufnr = vim.api.nvim_get_current_buf()
 local set = require('userlib.runtime.keymap').map_buf_thunk(bufnr)
 
 set('n', '<S-q>', function()
+  local current_win = vim.api.nvim_get_current_win()
+  if vim.api.nvim_win_get_config(current_win).relative ~= '' then
+    -- float win
+    require('oil').close()
+    return
+  end
   local ok, bufstack = pcall(require, 'window-bufstack.bufstack')
   local pre_buf = nil
   if ok then pre_buf = bufstack.pop() end
