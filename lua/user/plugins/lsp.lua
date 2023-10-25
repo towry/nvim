@@ -35,6 +35,7 @@ plug({
       },
       {
         'creativenull/efmls-configs-nvim',
+        enabled = false
       },
     },
     config = function()
