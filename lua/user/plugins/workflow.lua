@@ -373,6 +373,24 @@ plug({
       },
       selection_chars = 'ABCDEFGHIJKLMNOPQRSTUVW',
     },
+    keys = {
+      {
+        '<leader>bm',
+        function()
+          local buf = vim.api.nvim_get_current_buf()
+          local win = require('window-picker').pick_window({
+            autoselect_one = false,
+            include_current_win = false,
+          })
+          if not win then return end
+          require('mini.bufremove').unshow(buf)
+          -- TODO: use bufstack.
+          vim.api.nvim_set_current_win(win)
+          vim.api.nvim_win_set_buf(win, buf)
+        end,
+        desc = 'Move buffer to another window',
+      }
+    }
   },
 
   {
