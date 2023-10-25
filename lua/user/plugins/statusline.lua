@@ -101,6 +101,16 @@ plug({
       winbar = {},
       filetypes = { 'starter', 'alpha' },
     }
+    local overseer_extension = {
+      winbar = {
+        lualine_a = {
+          function()
+            return 'Overseer list'
+          end,
+        }
+      },
+      filetypes = { 'OverseerList' },
+    }
     local toggleterm_extension = {
       winbar = {},
       sections = {
@@ -128,6 +138,7 @@ plug({
         spectre_extension,
         dashboard_extension,
         toggleterm_extension,
+        overseer_extension,
         'neo-tree',
         'quickfix',
       },
@@ -200,6 +211,7 @@ plug({
           tabs_component,
         },
         lualine_x = {
+          'overseer',
           'searchcount',
           -- copilot status
           -- require('copilot_status').status_string,

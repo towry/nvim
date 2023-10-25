@@ -2,6 +2,7 @@ local M = {}
 
 local pre_hook_records = {}
 
+--- Use this to dynamic register to legendary.
 --- callback should return false if it does want to run again on next pre hook event.
 ---@param name string
 ---@param callback function
@@ -19,5 +20,7 @@ function M.pre_hook(name, callback)
     end,
   })
 end
+
+M.register = M.pre_hook
 
 return M

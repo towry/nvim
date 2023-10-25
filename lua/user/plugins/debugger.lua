@@ -20,20 +20,20 @@ pack.plug({
     -- │ DAP Virtual Text Setup                                   │
     -- ╰──────────────────────────────────────────────────────────╯
     dap_vt.setup({
-      enabled = true, -- enable this plugin (the default)
-      enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
-      highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
-      highlight_new_as_changed = false, -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
-      show_stop_reason = true, -- show stop reason when stopped for exceptions
-      commented = false, -- prefix virtual text with comment string
-      only_first_definition = true, -- only show virtual text at first definition (if there are multiple)
-      all_references = false, -- show virtual text on all all references of the variable (not only definitions)
+      enabled = true,                        -- enable this plugin (the default)
+      enabled_commands = true,               -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
+      highlight_changed_variables = true,    -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
+      highlight_new_as_changed = false,      -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
+      show_stop_reason = true,               -- show stop reason when stopped for exceptions
+      commented = false,                     -- prefix virtual text with comment string
+      only_first_definition = true,          -- only show virtual text at first definition (if there are multiple)
+      all_references = false,                -- show virtual text on all all references of the variable (not only definitions)
       filter_references_pattern = '<module', -- filter references (not definitions) pattern when all_references is activated (Lua gmatch pattern, default filters out Python modules)
       -- Experimental Features:
-      virt_text_pos = 'eol', -- position of virtual text, see `:h nvim_buf_set_extmark()`
-      all_frames = false, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
-      virt_lines = false, -- show virtual lines instead of virtual text (will flicker!)
-      virt_text_win_col = nil, -- position the virtual text at a fixed window column (starting from the first text column) ,
+      virt_text_pos = 'eol',                 -- position of virtual text, see `:h nvim_buf_set_extmark()`
+      all_frames = false,                    -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
+      virt_lines = false,                    -- show virtual lines instead of virtual text (will flicker!)
+      virt_text_win_col = nil,               -- position the virtual text at a fixed window column (starting from the first text column) ,
     })
 
     -- ╭──────────────────────────────────────────────────────────╮
@@ -82,8 +82,8 @@ pack.plug({
         },
       },
       floating = {
-        max_height = nil, -- These can be integers or a float between 0 and 1.
-        max_width = nil, -- Floats will be treated as percentage of your screen.
+        max_height = nil,  -- These can be integers or a float between 0 and 1.
+        max_width = nil,   -- Floats will be treated as percentage of your screen.
         border = 'single', -- Border style. Can be "single", "double" or "rounded"
         mappings = {
           close = { 'q', '<Esc>' },
@@ -362,33 +362,33 @@ pack.plug({
     'OverseerDeleteBundle', 'OverseerRunCmd', 'OverseerInfo', 'OverseerBuild', 'OverseerQuickAction',
     'OverseerTaskAction', 'OverseerClearCache' },
   keys = {
-    { '<leader>rot', '<cmd>OverseerToggle!<cr>', desc = 'Toggle' },
-    { '<leader>roo', '<cmd>OverseerOpen!<cr>', desc = 'Open' },
-    { '<leader>ror', '<cmd>OverseerRun<cr>', desc = 'Run' },
-    { '<leader>roR', '<cmd>OverseerRunCmd<cr>', desc = 'Run cmd' },
-    { '<leader>roc', '<cmd>OverseerClose<cr>', desc = 'Close' },
-    { '<leader>ros', '<cmd>OverseerSaveBundle<cr>', desc = 'Save bundle' },
-    { '<leader>rol', '<cmd>OverseerLoadBundle<cr>', desc = 'Load bundle' },
+    { '<leader>rot', '<cmd>OverseerToggle!<cr>',      desc = 'Toggle' },
+    { '<leader>roo', '<cmd>OverseerOpen!<cr>',        desc = 'Open' },
+    { '<leader>ror', '<cmd>OverseerRun<cr>',          desc = 'Run' },
+    { '<leader>roR', '<cmd>OverseerRunCmd<cr>',       desc = 'Run cmd' },
+    { '<leader>roc', '<cmd>OverseerClose<cr>',        desc = 'Close' },
+    { '<leader>ros', '<cmd>OverseerSaveBundle<cr>',   desc = 'Save bundle' },
+    { '<leader>rol', '<cmd>OverseerLoadBundle<cr>',   desc = 'Load bundle' },
     { '<leader>rod', '<cmd>OverseerDeleteBundle<cr>', desc = 'Delete bundle' },
-    { '<leader>roi', '<cmd>OverseerInfo<cr>', desc = 'Info' },
-    { '<leader>rob', '<cmd>OverseerBuild<cr>', desc = 'Build' },
-    { '<leader>roq', '<cmd>OverseerQuickAction<cr>', desc = 'Quick action' },
-    { '<leader>roT', '<cmd>OverseerTaskAction<cr>', desc = 'Task action' },
-    { '<leader>roC', '<cmd>OverseerClearCache<cr>', desc = 'Clear cache' },
+    { '<leader>roi', '<cmd>OverseerInfo<cr>',         desc = 'Info' },
+    { '<leader>rob', '<cmd>OverseerBuild<cr>',        desc = 'Build' },
+    { '<leader>roq', '<cmd>OverseerQuickAction<cr>',  desc = 'Quick action' },
+    { '<leader>roT', '<cmd>OverseerTaskAction<cr>',   desc = 'Task action' },
+    { '<leader>roC', '<cmd>OverseerClearCache<cr>',   desc = 'Clear cache' },
   },
   opts = {
     -- https://github.com/stevearc/overseer.nvim/blob/master/doc/reference.md#setup-options
     -- strategy = "terminal",
-    strategy = "jobstart",
+    strategy = "terminal",
     templates = { "builtin" },
     auto_detect_success_color = true,
     dap = true,
+    task_list = {
+      max_width = { 100, 0.6 },
+      min_width = { 50, 0.4 },
+      direction = 'right',
+    },
     task_launcher = {
-      bindings = {
-        n = {
-          ["<leader>c"] = "Cancel",
-        },
-      },
     },
   },
   config = function(_, opts)
@@ -398,6 +398,43 @@ pack.plug({
     -- if has_dap then
     --   require("dap.ext.vscode").json_decode = require("overseer.util").decode_json
     -- end
+  end,
+  init = function()
+    require('userlib.legendary').register('overseer', function(lg)
+      lg.commands({
+        {
+          'OverseerRun',
+          description = 'Overseer run',
+        },
+        {
+          'OverseerClose',
+          description = 'Overseer close',
+        },
+        {
+          'OverseerOpen',
+          description = 'Overseer open',
+        },
+        {
+          'OverseerToggle',
+          description = 'Overseer toggle',
+        }
+      })
+
+      lg.funcs({
+        {
+          function()
+            local overseer = require("overseer")
+            local tasks = overseer.list_tasks({ recent_first = true })
+            if vim.tbl_isempty(tasks) then
+              vim.notify("No tasks found", vim.log.levels.WARN)
+            else
+              overseer.run_action(tasks[1], "restart")
+            end
+          end,
+          description = 'Overseer restart last',
+        }
+      })
+    end)
   end
 })
 
@@ -420,7 +457,7 @@ pack.plug({
   -- https://michaelb.github.io/sniprun/sources/README.html#installation
   opts = {
     display = {
-      "Classic", --# display results in the command-line  area
+      "Classic",       --# display results in the command-line  area
       "VirtualTextOk", --# display ok results as virtual text (multiline is shortened)
     },
   },

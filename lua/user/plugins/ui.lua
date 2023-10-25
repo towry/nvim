@@ -6,11 +6,11 @@ plug({
     event = 'User LazyUIEnter',
     config = function()
       require('notify').setup({
-        timeout = '3000',
+        timeout = 3000,
         max_width = function() return math.floor(vim.o.columns * 0.75) end,
         max_height = function() return math.floor(vim.o.lines * 0.75) end,
         on_open = function(win)
-          if vim.api.nvim_win_is_valid(win) then vim.api.nvim_win_set_config(win, { border = 'single' }) end
+          if vim.api.nvim_win_is_valid(win) then vim.api.nvim_win_set_config(win, { border = vim.cfg.ui__float_border }) end
         end,
         render = function(...)
           -- local notif = select(2, ...)
@@ -18,6 +18,7 @@ plug({
           -- local style = notif.title[1] == '' and 'default' or 'default'
           require('notify.render')[style](...)
         end,
+        top_down = false,
       })
 
       local banned_msgs = {
