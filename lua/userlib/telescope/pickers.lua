@@ -83,7 +83,7 @@ M.project_files = function(opts)
       local icon, iconhl = utils.get_devicons(tail_raw)
 
       return displayer({
-        { icon, iconhl },
+        { icon,            iconhl },
         tail,
         { path_to_display, 'TelescopeResultsComment' },
       })
@@ -268,6 +268,14 @@ function M.buffers()
 
       map('i', '<C-h>', close_buf)
       map('i', '<CR>', open_selected)
+      -- pick window to open.
+      map(
+        'i',
+        '<C-o>',
+        function(prompt_bufnr_) require('userlib.telescope.picker_keymaps').open_selected_in_window(prompt_bufnr_) end,
+        { noremap = true, silent = true }
+      )
+
 
       return true
     end,
@@ -317,9 +325,9 @@ function M.gen_from_buffer(opts)
     })
 
     return displayer({
-      { entry.bufnr, 'TelescopeResultsNumber' },
+      { entry.bufnr,     'TelescopeResultsNumber' },
       { entry.indicator, 'TelescopeResultsComment' },
-      { icon, hl_group },
+      { icon,            hl_group },
       bufname_tail,
       { path_to_display .. ':' .. entry.lnum, 'TelescopeResultsComment' },
     })
