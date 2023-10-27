@@ -9,6 +9,7 @@ pack.plug({
     { 'rcarriga/nvim-dap-ui' },
   },
   config = function()
+    local utils = require('userlib.runtime.utils')
     local present_dapui, dapui = pcall(require, 'dapui')
     local present_dap, dap = pcall(require, 'dap')
     local present_virtual_text, dap_vt = pcall(require, 'nvim-dap-virtual-text')
@@ -124,53 +125,6 @@ pack.plug({
     vim.fn.sign_define('DapStopped', { text = '⭐️', texthl = '', linehl = '', numhl = '' })
 
     -- ╭──────────────────────────────────────────────────────────╮
-    -- │ Keybindings                                              │
-    -- ╰──────────────────────────────────────────────────────────╯
-    vim.api.nvim_set_keymap(
-      'n',
-      '<Leader>rdb',
-      "<CMD>lua require('dap').toggle_breakpoint()<CR>",
-      { noremap = true, silent = true }
-    )
-    vim.api.nvim_set_keymap(
-      'n',
-      '<Leader>rdc',
-      "<CMD>lua require('dap').continue()<CR>",
-      { noremap = true, silent = true }
-    )
-    vim.api.nvim_set_keymap(
-      'n',
-      '<Leader>rdd',
-      "<CMD>lua require('dap').continue()<CR>",
-      { noremap = true, silent = true }
-    )
-    vim.api.nvim_set_keymap('n', '<Leader>rdh', "<CMD>lua require('dapui').eval()<CR>", { noremap = true, silent = true })
-    vim.api.nvim_set_keymap(
-      'n',
-      '<Leader>rdi',
-      "<CMD>lua require('dap').step_into()<CR>",
-      { noremap = true, silent = true }
-    )
-    vim.api.nvim_set_keymap(
-      'n',
-      '<Leader>rdo',
-      "<CMD>lua require('dap').step_out()<CR>",
-      { noremap = true, silent = true }
-    )
-    vim.api.nvim_set_keymap(
-      'n',
-      '<Leader>rdO',
-      "<CMD>lua require('dap').step_over()<CR>",
-      { noremap = true, silent = true }
-    )
-    vim.api.nvim_set_keymap(
-      'n',
-      '<Leader>rdt',
-      "<CMD>lua require('dap').terminate()<CR>",
-      { noremap = true, silent = true }
-    )
-
-    -- ╭──────────────────────────────────────────────────────────╮
     -- │ Adapters                                                 │
     -- ╰──────────────────────────────────────────────────────────╯
     -- NODE / TYPESCRIPT
@@ -187,15 +141,13 @@ pack.plug({
       args = { vim.fn.stdpath('data') .. '/mason/packages/chrome-debug-adapter/out/src/chromeDebug.js' },
     }
 
-    -- ╭──────��───────────────────────────────────────────────────╮
-    -- │ Configurations                                           │
-    -- ╰──────────────────────────────────────────────────────────╯
+    -- TODO: move to ftplugin.
     dap.configurations.javascript = {
       {
         type = 'node2',
         request = 'launch',
         program = '${file}',
-        cwd = vim.fn.getcwd(),
+        cwd = utils.get_root(),
         sourceMaps = true,
         protocol = 'inspector',
         console = 'integratedTerminal',
@@ -207,7 +159,7 @@ pack.plug({
         type = 'chrome',
         request = 'attach',
         program = '${file}',
-        cwd = vim.fn.getcwd(),
+        cwd = utils.get_root(),
         sourceMaps = true,
         protocol = 'inspector',
         port = 9222,
@@ -220,7 +172,7 @@ pack.plug({
         type = 'chrome',
         request = 'attach',
         program = '${file}',
-        cwd = vim.fn.getcwd(),
+        cwd = utils.get_root(),
         sourceMaps = true,
         protocol = 'inspector',
         port = 9222,
@@ -233,7 +185,7 @@ pack.plug({
         type = 'chrome',
         request = 'attach',
         program = '${file}',
-        cwd = vim.fn.getcwd(),
+        cwd = utils.get_root(),
         sourceMaps = true,
         protocol = 'inspector',
         port = 9222,
@@ -252,20 +204,37 @@ pack.plug({
     'nvim-treesitter/nvim-treesitter',
     'haydenmeade/neotest-jest',
   },
-  keys = {
-    {
-      '<leader>rtn', cmdstr([[lua require("neotest").run.run()]]), desc = 'Run the nearest test'
-    },
-    {
-      '<leader>rtf', cmdstr([[lua require("neotest").run.run(vim.fn.expand("%"))]]), desc = 'Run the current file'
-    },
-    {
-      '<leader>rtd', cmdstr([[lua require("neotest").run({strategy = "dap"})]]), desc = 'Debug the nearest test'
-    },
-    {
-      '<leader>rtx', cmdstr([[lua require("neotest").stop()]]), desc = 'Stop the nearest test'
-    },
-  },
+  init = function()
+    require('userlib.legendary').register('neotest', function(lg)
+      lg.funcs({
+        {
+          function()
+            require("neotest").run.run()
+          end,
+          description = 'Neotest run',
+        },
+        {
+          function()
+            require("neotest").stop()
+          end,
+          description = 'Neotest stop',
+        },
+        -- run current file.
+        {
+          function()
+            require("neotest").run.run(vim.fn.expand("%"))
+          end,
+          description = 'Neotest run current file',
+        },
+        {
+          function()
+            require("neotest").run({ strategy = "dap" })
+          end,
+          description = 'Debug the nearest test',
+        },
+      })
+    end)
+  end,
   config = function()
     local present, neotest = pcall(require, 'neotest')
     if not present then return end
@@ -273,9 +242,9 @@ pack.plug({
     neotest.setup({
       adapters = {
         require('neotest-jest')({
-          jestCommand = 'npm test --',
+          jestCommand = 'pnpm test --',
           env = { CI = true },
-          cwd = function(path) return vim.fn.getcwd() end,
+          cwd = function(path) return require('userlib.runtime.utils').get_root() end,
         }),
       },
       diagnostic = {

@@ -8,7 +8,7 @@ local ft_impl_formatter = {}
 local M = {}
 
 --- @perf use ft instead of specific bufnr.
-function choose_formatter_for_buf(client, buf)
+local function choose_formatter_for_buf(client, buf)
   local ft = vim.api.nvim_get_option_value("filetype", {
     buf = buf,
   })
