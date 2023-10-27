@@ -12,7 +12,7 @@ set('n', '<S-q>', function()
   end
   local ok, bufstack = pcall(require, 'window-bufstack.bufstack')
   local pre_buf = nil
-  if ok then pre_buf = bufstack.pop() end
+  if ok then pre_buf = bufstack.peek_bufstack() end
   require('oil').close()
   if ok and not pre_buf then vim.cmd('q') end
 end, {
