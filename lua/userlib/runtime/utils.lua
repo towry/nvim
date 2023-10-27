@@ -1,7 +1,7 @@
 local M = {}
 
 M.root_patterns =
-  { '_darcs', '.bzr', '.vscode', 'package.json', 'pnpm-workspace.yaml', 'Cargo.toml', '.git', '.gitmodules', '.svn' }
+{ '_darcs', '.bzr', '.vscode', 'package.json', 'pnpm-workspace.yaml', 'Cargo.toml', '.git', '.gitmodules', '.svn' }
 --- ignore jsonls: inside package.json, it give root to parent root.
 M.root_lsp_ignore = { 'tailwindcss', 'jsonls' }
 
@@ -42,7 +42,7 @@ end
 
 M.starts_with = function(str, start) return str:sub(1, #start) == start end
 
-M.end_with = function(str, ending) return ending == '' or str:sub(-#ending) == ending end
+M.end_with = function(str, ending) return ending == '' or str:sub(- #ending) == ending end
 
 M.split = function(s, delimiter)
   local result = {}
@@ -115,8 +115,8 @@ function M.get_root(root_opts)
       if not vim.tbl_contains(lsp_ignore, client.name or '') then
         local workspace = client.config.workspace_folders
         local paths = workspace and vim.tbl_map(function(ws) return vim.uri_to_fname(ws.uri) end, workspace)
-          or client.config.root_dir and { client.config.root_dir }
-          or {}
+            or client.config.root_dir and { client.config.root_dir }
+            or {}
         for _, p in ipairs(paths) do
           local r = vim.uv.fs_realpath(p)
           if path:find(r, 1, true) then roots[#roots + 1] = r end
@@ -247,6 +247,7 @@ end
 M.vim_starts_without_buffer = function() return vim.fn.argc(-1) == 0 end
 
 function M.change_cwd(cwd, cmd, silent)
+  if not cwd then return end
   vim.cmd((cmd or 'cd') .. ' ' .. cwd)
   M.update_cwd_env(cwd)
   if not silent then vim.notify(('New cwd: %s'):format(vim.t.cwd_short), vim.log.levels.INFO) end
