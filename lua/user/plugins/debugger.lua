@@ -331,9 +331,7 @@ pack.plug({
     'OverseerDeleteBundle', 'OverseerRunCmd', 'OverseerInfo', 'OverseerBuild', 'OverseerQuickAction',
     'OverseerTaskAction', 'OverseerClearCache' },
   keys = {
-    { '<leader>to',  '<cmd>OverseerToggle<cr>',       desc = 'Toggle' },
-    { '<leader>rot', '<cmd>OverseerToggle!<cr>',      desc = 'Toggle' },
-    { '<leader>roo', '<cmd>OverseerOpen!<cr>',        desc = 'Open' },
+    { '<leader>roo', '<cmd>OverseerToggle!<cr>',      desc = 'Open' },
     { '<leader>ror', '<cmd>OverseerRun<cr>',          desc = 'Run' },
     { '<leader>roR', '<cmd>OverseerRunCmd<cr>',       desc = 'Run cmd' },
     { '<leader>roc', '<cmd>OverseerClose<cr>',        desc = 'Close' },
