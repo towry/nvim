@@ -331,18 +331,21 @@ pack.plug({
     'OverseerDeleteBundle', 'OverseerRunCmd', 'OverseerInfo', 'OverseerBuild', 'OverseerQuickAction',
     'OverseerTaskAction', 'OverseerClearCache' },
   keys = {
-    { '<leader>roo', '<cmd>OverseerToggle!<cr>',      desc = 'Open' },
+    { '<leader>roo', '<cmd>OverseerToggle<cr>',       desc = 'Toggle' },
     { '<leader>ror', '<cmd>OverseerRun<cr>',          desc = 'Run' },
-    { '<leader>roR', '<cmd>OverseerRunCmd<cr>',       desc = 'Run cmd' },
+    { '<leader>roR', '<cmd>OverseerRunCmd<cr>',       desc = 'Run shell cmd' },
     { '<leader>roc', '<cmd>OverseerClose<cr>',        desc = 'Close' },
     { '<leader>ros', '<cmd>OverseerSaveBundle<cr>',   desc = 'Save bundle' },
     { '<leader>rol', '<cmd>OverseerLoadBundle<cr>',   desc = 'Load bundle' },
     { '<leader>rod', '<cmd>OverseerDeleteBundle<cr>', desc = 'Delete bundle' },
-    { '<leader>roi', '<cmd>OverseerInfo<cr>',         desc = 'Info' },
-    { '<leader>rob', '<cmd>OverseerBuild<cr>',        desc = 'Build' },
-    { '<leader>roq', '<cmd>OverseerQuickAction<cr>',  desc = 'Quick action' },
-    { '<leader>roT', '<cmd>OverseerTaskAction<cr>',   desc = 'Task action' },
-    { '<leader>roC', '<cmd>OverseerClearCache<cr>',   desc = 'Clear cache' },
+    {
+      '<leader>roq',
+      '<cmd>OverseerQuickAction<cr>',
+      desc =
+      'Run an action on the most recent task, or the task under the cursor'
+    },
+    { '<leader>roT', '<cmd>OverseerTaskAction<cr>', desc = 'Select a task to run an action on' },
+    { '<leader>roC', '<cmd>OverseerClearCache<cr>', desc = 'Clear cache' },
   },
   opts = {
     -- https://github.com/stevearc/overseer.nvim/blob/master/doc/reference.md#setup-options
