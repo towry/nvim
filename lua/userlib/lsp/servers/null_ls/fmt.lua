@@ -41,6 +41,9 @@ end
 --- Our custom format function.
 ---@param opts {auto?:boolean, async?:boolean}
 function M.format(bufnr, opts)
+  if vim.b.format_saving then
+    return
+  end
   opts = opts or {}
 
   local fsize = require('userlib.runtime.buffer').getfsize(bufnr)
@@ -89,7 +92,6 @@ function M.attach(client, bufnr)
     async_format_setup_done = true
     fmtcore.setup_async_formatting()
   end
-
   choose_formatter_for_buf(client, bufnr)
   autoformat.attach(client, bufnr)
 end
