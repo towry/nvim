@@ -24,6 +24,8 @@ local function setup_async_formatting()
       return
     end
 
+    if result == nil then return end
+
     local is_ok, format_changedtick = pcall(vim.api.nvim_buf_get_var, ctx.bufnr, 'format_changedtick')
     local _, changedtick = pcall(vim.api.nvim_buf_get_var, ctx.bufnr, 'changedtick')
 
