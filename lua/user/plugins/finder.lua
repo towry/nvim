@@ -7,7 +7,7 @@ local au = require('userlib.runtime.au')
 
 plug({
   'kyoh86/vim-ripgrep',
-  event = 'User LazyUIEnterOncePost',
+  event = 'CmdlineEnter',
   init = function()
     --- https://github.dev/qalshidi/vim-bettergrep
     -- abbr rg to Rg

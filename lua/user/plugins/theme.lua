@@ -1,5 +1,28 @@
 local plug = require('userlib.runtime.pack').plug
 
+----- everforest
+plug({
+  'sainnhe/everforest',
+  event = 'User LazyTheme',
+  priority = 1000,
+  lazy = not string.match(vim.cfg.ui__theme_name, 'everforest'),
+  cond = vim.cfg.ui__theme_name == 'everforest',
+  init = function()
+    vim.g.everforest_background = 'soft'
+    vim.g.everforest_ui_contrast = 'soft'
+    vim.g.everforest_better_performance = 0
+    vim.g.everforest_enable_italic = 1
+    vim.g.everforest_disable_italic_comment = false
+    vim.g.everforest_transparent_background = false
+    vim.g.everforest_dim_inactive_windows = false
+    vim.g.everforest_sign_column_background = 'none'     -- "none" | "grey"
+    vim.g.everforest_diagnostic_virtual_text = 'colored' -- "grey" | "colored"
+    vim.g.everforest_diagnostic_text_highlight = 1
+    vim.g.everforest_diagnostic_line_highlight = 1
+    vim.g.everforest_current_word = 'underline'
+  end
+})
+
 
 plug({
   'rebelot/kanagawa.nvim',
@@ -68,6 +91,7 @@ plug({
   dependencies = {
     'rktjmp/lush.nvim',
   },
+  enabled = string.match(vim.cfg.ui__theme_name, 'zenbones') ~= nil,
   lazy = (not string.match(vim.cfg.ui__theme_name, 'bones') and (not string.match(vim.cfg.ui__theme_name, 'zen'))),
   priority = 1000,
   config = false,
