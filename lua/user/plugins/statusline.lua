@@ -184,6 +184,10 @@ plug({
         lualine_b = {
           git_branch,
           {
+            'diff',
+            source = git_status_source,
+          },
+          {
             function()
               local idx = require('harpoon.mark').status()
               return idx
@@ -204,10 +208,6 @@ plug({
         },
         lualine_c = {
           { 'diagnostics', update_in_insert = false, symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' } },
-          {
-            'diff',
-            source = git_status_source,
-          },
           tabs_component,
         },
         lualine_x = {
