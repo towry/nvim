@@ -211,7 +211,6 @@ plug({
           tabs_component,
         },
         lualine_x = {
-          'overseer',
           'searchcount',
           -- copilot status
           -- require('copilot_status').status_string,
