@@ -6,7 +6,7 @@ plug({
   event = 'User LazyTheme',
   priority = 1000,
   lazy = not string.match(vim.cfg.ui__theme_name, 'everforest'),
-  cond = vim.cfg.ui__theme_name == 'everforest',
+  enabled = vim.cfg.ui__theme_name == 'everforest',
   init = function()
     vim.g.everforest_background = 'soft'
     vim.g.everforest_ui_contrast = 'soft'
