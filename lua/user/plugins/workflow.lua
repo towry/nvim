@@ -33,7 +33,7 @@ plug({
     event = 'WinNew',
     opts = {
       autowidth = {
-        enable = false,
+        enable = true,
       },
       ignore = {
         buftype = vim.cfg.misc__buf_exclude,
