@@ -30,13 +30,16 @@ local function attach_autoformat_with_autocmd(_client, bufnr)
   local group = vim.api.nvim_create_augroup('_lsp_format_' .. bufnr, {
     clear = true,
   })
+  local async = true
+  -- make sure event is post if is async, otherwise changedtick will not match.
+  local event_name = async and 'BufWritePost' or 'BufWritePre'
   vim.api.nvim_clear_autocmds({
     group = group,
     buffer = bufnr,
   })
   au.define_autocmds({
     {
-      { 'BufWritePre' },
+      { event_name },
       {
         group = group,
         buffer = bufnr,
@@ -45,7 +48,7 @@ local function attach_autoformat_with_autocmd(_client, bufnr)
         callback = function()
           require('userlib.lsp.servers.null_ls.fmt').format(bufnr, {
             auto = true,
-            async = true,
+            async = async,
           })
         end
       }

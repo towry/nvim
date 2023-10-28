@@ -24,9 +24,6 @@ local function setup_async_formatting()
       return
     end
 
-    if result == nil then return end
-
-
     local is_ok, format_changedtick = pcall(vim.api.nvim_buf_get_var, ctx.bufnr, 'format_changedtick')
     local _, changedtick = pcall(vim.api.nvim_buf_get_var, ctx.bufnr, 'changedtick')
 
@@ -36,7 +33,7 @@ local function setup_async_formatting()
       vim.fn.winrestview(view)
       if ctx.bufnr == vim.api.nvim_get_current_buf() then
         vim.b.format_saving = true
-        vim.cmd('noau update')
+        vim.cmd('silent! noau update')
         vim.b.format_saving = false
       end
     end

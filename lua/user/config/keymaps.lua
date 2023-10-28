@@ -103,11 +103,11 @@ local function setup_basic()
   -- set({ 'n', 'i' }, [[<D-s>]], cmd('bufdo update'), {
   --   desc = 'Save all files',
   -- })
-  set({ 'n', 'i' }, xk([[<D-s>]]), '<ESC>:update<cr>', {
+  set({ 'n', 'i' }, xk([[<D-s>]]), '<ESC>:silent! update<cr>', {
     desc = 'Save current buffer',
     silent = true,
   })
-  set('n', '<leader>bw', cmd('update'), {
+  set('n', '<leader>bw', cmd('silent! update'), {
     desc = 'Save current buffer',
     silent = true,
   })
