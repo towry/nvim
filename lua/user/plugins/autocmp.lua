@@ -35,6 +35,7 @@ pack.plug({
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
+      'dmitmel/cmp-cmdline-history',
       'hrsh7th/cmp-calc',
       {
         'tzachar/cmp-tabnine',
@@ -372,10 +373,13 @@ pack.plug({
           ['<C-n>'] = cmp.config.disable,
         }),
         sources = cmp.config.sources({
-          { name = 'path' },
-        }, {
-          { name = 'cmdline' },
-        }),
+            { name = 'path' },
+          },
+          {
+            { name = 'cmdline' },
+            { name = 'cmdline_history' },
+          }
+        ),
       })
 
       -- ╭────────-─────────────────────────────────────────────────╮
