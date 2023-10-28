@@ -1,5 +1,7 @@
+local fmtcore = require('userlib.lsp.fmt')
 local autoformat = require('userlib.lsp.servers.null_ls.autoformat')
 
+local async_format_setup_done = false
 ---formatter name that corresponds to client name.
 local ft_client_formatter = {}
 ---formatter name that the client use under the hood.
@@ -83,6 +85,11 @@ function M.current_formatter_name(bufnr)
 end
 
 function M.attach(client, bufnr)
+  if not async_format_setup_done then
+    async_format_setup_done = true
+    fmtcore.setup_async_formatting()
+  end
+
   choose_formatter_for_buf(client, bufnr)
   autoformat.attach(client, bufnr)
 end
