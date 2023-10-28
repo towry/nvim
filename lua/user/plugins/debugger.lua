@@ -326,10 +326,14 @@ pack.plug({
   dependencies = {
     "mfussenegger/nvim-dap"
   },
-  cmd = { 'Grep', 'OverseerRun', 'OverseerOpen', 'OverseerToggle', 'OverseerClose', 'OverseerSaveBundle',
+  cmd = {
+    'OverseerRestartLast',
+    'Grep',
+    'OverseerRun', 'OverseerOpen', 'OverseerToggle', 'OverseerClose', 'OverseerSaveBundle',
     'OverseerLoadBundle',
     'OverseerDeleteBundle', 'OverseerRunCmd', 'OverseerInfo', 'OverseerBuild', 'OverseerQuickAction',
-    'OverseerTaskAction', 'OverseerClearCache' },
+    'OverseerTaskAction', 'OverseerClearCache'
+  },
   keys = {
     { '<leader>roo', '<cmd>OverseerToggle<cr>',       desc = 'Toggle' },
     { '<leader>ror', '<cmd>OverseerRun<cr>',          desc = 'Run' },
@@ -369,6 +373,14 @@ pack.plug({
     -- if has_dap then
     --   require("dap.ext.vscode").json_decode = require("overseer.util").decode_json
     -- end
+    vim.api.nvim_create_user_command("OverseerRestartLast", function()
+      local tasks = overseer.list_tasks({ recent_first = true })
+      if vim.tbl_isempty(tasks) then
+        vim.notify("No tasks found", vim.log.levels.WARN)
+      else
+        overseer.run_action(tasks[1], "restart")
+      end
+    end, {})
   end,
   init = function()
     require('userlib.legendary').register('overseer', function(lg)
