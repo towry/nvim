@@ -31,19 +31,31 @@ plug({
   priority = 1000,
   lazy = not string.match(vim.cfg.ui__theme_name, 'gruvbox'),
   cond = vim.cfg.ui__theme_name == 'gruvbox',
-  opts = {
-    undercurl = true,
-    underline = true,
-    bold = true,
-    italic = {
-      strings = true,
-      emphasis = true,
-      comments = true,
-      operators = false,
-      folds = true,
-      contrast = "soft",
-    },
-  }
+  opts = function()
+    local P = require('gruvbox').palette
+    local color = function(dark, light)
+      light = light or dark
+      return vim.opt.background:get() == 'dark' and dark or light
+    end
+    return {
+      undercurl = true,
+      underline = true,
+      bold = true,
+      italic = {
+        strings = true,
+        emphasis = true,
+        comments = true,
+        operators = false,
+        folds = true,
+        contrast = "soft",
+      },
+      overrides = {
+        -- CursorLine = { bg = color(P.dark2, P.light2) },
+        CursorLineNr = { fg = color(P.neutral_yellow), bg = color(P.dark3, P.light3) },
+        TelescopeSelection = { link = "CursorLineNr" },
+      }
+    }
+  end
 })
 
 plug({
