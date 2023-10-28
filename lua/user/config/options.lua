@@ -53,7 +53,8 @@ function M.init_edit()
 end
 
 function M.init_interface()
-  o.colorcolumn = '+1'                               -- Draw colored column one step to the right of desired maximum width
+  o.colorcolumn =
+  '+1'                                               -- Draw colored column one step to the right of desired maximum width
   o.showmode = false                                 --- Don't show things like -- INSERT -- anymore
   o.modeline = true                                  -- Allow modeline
   o.ruler = false                                    -- Always show cursor position
@@ -73,7 +74,7 @@ function M.init_interface()
   o.sidescrolloff = 8                                -- Columns of context
   o.lazyredraw = false                               --- Makes macros faster & prevent errors in complicated mappings
   o.wildmode = { 'longest:full', 'full' }            -- Command-line completion mode
-  o.cmdheight = 0                                    --- Give more space for displaying messages
+  o.cmdheight = 1                                    --- Give more space for displaying messages
   o.completeopt = { 'menu', 'menuone', 'noselect' }  --- Better autocompletion
   o.cursorline = true                                --- Highlight of current line
   o.emoji = true                                     --- Fix emoji display

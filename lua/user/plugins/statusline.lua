@@ -145,7 +145,7 @@ plug({
       options = {
         theme = vim.cfg.workbench__lualine_theme,
         globalstatus = true,
-        component_separators = '/',
+        component_separators = '│',
         section_separators = { left = '', right = '' },
         disabled_filetypes = { winbar = vim.cfg.misc__ft_exclude, statusline = { 'dashboard', 'lazy', 'alpha' } },
       },
