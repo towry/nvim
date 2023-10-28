@@ -45,7 +45,7 @@ local function attach_autoformat_with_autocmd(_client, bufnr)
         callback = function()
           require('userlib.lsp.servers.null_ls.fmt').format(bufnr, {
             auto = true,
-            async = false,
+            async = true,
           })
         end
       }

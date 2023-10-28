@@ -1,6 +1,5 @@
-local fmtcore = require('userlib.lsp.fmt')
 local autoformat = require('userlib.lsp.servers.null_ls.autoformat')
-
+local Methods = vim.lsp.protocol.Methods
 local async_format_setup_done = false
 ---formatter name that corresponds to client name.
 local ft_client_formatter = {}
@@ -8,6 +7,41 @@ local ft_client_formatter = {}
 local ft_impl_formatter = {}
 
 local M = {}
+
+local function setup_async_formatting()
+  -- format on save asynchronously, see M.format_document
+  vim.lsp.handlers[Methods.textDocument_formatting] = function(err, result, ctx)
+    if err ~= nil then
+      -- efm uses table messages
+      if type(err) == 'table' then
+        if err.message then
+          err = err.message
+        else
+          err = vim.inspect(err)
+        end
+      end
+      vim.api.nvim_err_write(err)
+      return
+    end
+
+    if result == nil then return end
+
+
+    local is_ok, format_changedtick = pcall(vim.api.nvim_buf_get_var, ctx.bufnr, 'format_changedtick')
+    local _, changedtick = pcall(vim.api.nvim_buf_get_var, ctx.bufnr, 'changedtick')
+
+    if is_ok and format_changedtick == changedtick then
+      local view = vim.fn.winsaveview()
+      vim.lsp.util.apply_text_edits(result, ctx.bufnr, 'utf-16')
+      vim.fn.winrestview(view)
+      if ctx.bufnr == vim.api.nvim_get_current_buf() then
+        vim.b.format_saving = true
+        vim.cmd('noau update')
+        vim.b.format_saving = false
+      end
+    end
+  end
+end
 
 --- @perf use ft instead of specific bufnr.
 local function choose_formatter_for_buf(client, buf)
@@ -41,9 +75,6 @@ end
 --- Our custom format function.
 ---@param opts {auto?:boolean, async?:boolean}
 function M.format(bufnr, opts)
-  if vim.b.format_saving then
-    return
-  end
   opts = opts or {}
 
   local fsize = require('userlib.runtime.buffer').getfsize(bufnr)
@@ -54,6 +85,11 @@ function M.format(bufnr, opts)
   end
 
   if autoformat.disabled() and opts.auto then return end
+  if vim.b.format_saving then
+    return
+  end
+
+  vim.b.format_changedtick = vim.b.changedtick ---@diagnostic disable-line
 
   local name, impl_formatter_name = M.current_formatter_name(bufnr or 0)
   local fmt_opts = {
@@ -72,7 +108,7 @@ function M.format(bufnr, opts)
     vim.defer_fn(function()
       vim.api.nvim_echo({ { " written! also format with " .. (impl_formatter_name or name or "default"), "Comment" } }
       , true, {})
-    end, 100)
+    end, 1)
   end
 end
 
@@ -90,7 +126,7 @@ end
 function M.attach(client, bufnr)
   if not async_format_setup_done then
     async_format_setup_done = true
-    fmtcore.setup_async_formatting()
+    setup_async_formatting()
   end
   choose_formatter_for_buf(client, bufnr)
   autoformat.attach(client, bufnr)
