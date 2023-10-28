@@ -32,6 +32,9 @@ plug({
     enabled = true,
     event = 'WinNew',
     opts = {
+      autowidth = {
+        enable = false,
+      },
       ignore = {
         buftype = vim.cfg.misc__buf_exclude,
         filetype = vim.cfg.misc__ft_exclude,
@@ -40,7 +43,10 @@ plug({
         enable = false,
       },
     },
-    config = function(_, opts) require('windows').setup(opts) end,
+    config = function(_, opts)
+      vim.opt.equalalways = false
+      require('windows').setup(opts)
+    end,
     init = function()
       au.define_autocmd('VimEnter', {
         once = true,
