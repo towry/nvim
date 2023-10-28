@@ -14,24 +14,6 @@ function M.load_on_startup()
       },
     },
     {
-      { 'CmdlineEnter', },
-      {
-        pattern = '*',
-        callback = function()
-          vim.opt.ch = 1
-        end
-      },
-    },
-    {
-      { 'CmdlineLeave', },
-      {
-        pattern = '*',
-        callback = function()
-          vim.opt.ch = 0
-        end
-      },
-    },
-    {
       { 'BufWinEnter' },
       {
         group = '_disable_diagnostic_on_sth',
