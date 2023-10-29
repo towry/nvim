@@ -122,7 +122,7 @@ plug({
   keys = {
     { '<leader>/o', '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
     -- <CMD-l> open the outline.
-    { '<D-l>',      '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
+    { '<D-l>', '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
   },
   cmd = { 'AerialToggle', 'AerialOpen', 'AerialClose' },
   opts = {
@@ -462,8 +462,8 @@ plug({
       name = 'telescope_ui',
       immediate = true,
       callback = function()
-        vim.cmd('hi! link TelescopeNormal NormalFloat')
-        vim.cmd('hi! link TelescopeBorder NormalFloat')
+        -- vim.cmd('hi! link TelescopeNormal NormalFloat')
+        -- vim.cmd('hi! link TelescopeBorder NormalFloat')
       end,
     })
   end,
@@ -602,8 +602,7 @@ plug({
         live_grep_args = {
           disable_coordinates = true,
           auto_quoting = true, -- enable/disable auto-quoting
-          -- theme = "dropdown",
-          -- layout_strategy = "bottom_pane",
+          layout_strategy = "flex",
           layout_config = {
             width = 0.9,
           },
