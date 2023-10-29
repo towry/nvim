@@ -376,8 +376,8 @@ pack.plug({
           { name = 'path' },
         },
           {
-            { name = 'cmdline' },
-            { name = 'cmdline_history' },
+            { name = 'cmdline', },
+            { name = 'cmdline_history', max_item_count = 3, },
           }
         ),
       })
