@@ -205,15 +205,9 @@ plug({
               },
             },
           },
-          {
-            function()
-              return vim.fn.expand('#:t')
-            end,
-          }
         },
         lualine_c = {
           { 'diagnostics', update_in_insert = false, symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' } },
-          tabs_component,
         },
         lualine_x = {
           'searchcount',
@@ -289,6 +283,7 @@ plug({
           },
         },
         lualine_z = {
+          tabs_component,
           -- { 'location', left_padding = 0 },
         },
       },
