@@ -207,7 +207,7 @@ plug({
           },
           {
             function()
-              return vim.fn.expand('#')
+              return vim.fn.expand('#:t')
             end,
           }
         },
