@@ -18,4 +18,4 @@ map('n', 'H', ':colder<CR>', { desc = 'qf: older' })
 map('n', 'L', ':cnewer<CR>', { desc = 'qf: newer' })
 -- force quickfix to open beneath all other splits
 vim.cmd.wincmd('J')
-require('userlib.runtime.buffer').adjust_split_height(3, 10)
+require('userlib.runtime.buffer').adjust_split_height(6, 10)
