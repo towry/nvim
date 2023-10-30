@@ -6,6 +6,7 @@ map('n', 'q', '<cmd>cclose<cr>', { silent = true, nowait = true, noremap = true,
 local opt = vim.opt_local
 
 opt.wrap = false
+opt.cursorline = true
 opt.number = false
 opt.signcolumn = 'yes'
 opt.buflisted = false

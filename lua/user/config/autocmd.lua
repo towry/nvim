@@ -247,6 +247,7 @@ function M.load_on_startup()
 
   vim.api.nvim_create_autocmd({ 'InsertLeave', 'WinEnter' }, {
     callback = function()
+      if vim.bo.buftype ~= '' then return end
       local ok, cl = pcall(vim.api.nvim_win_get_var, 0, 'auto-cursorline')
       if ok and cl then
         vim.wo.cursorline = true
@@ -256,6 +257,7 @@ function M.load_on_startup()
   })
   vim.api.nvim_create_autocmd({ 'InsertEnter', 'WinLeave' }, {
     callback = function()
+      if vim.bo.buftype ~= '' then return end
       local cl = vim.wo.cursorline
       if cl then
         vim.api.nvim_win_set_var(0, 'auto-cursorline', cl)
