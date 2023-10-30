@@ -48,7 +48,7 @@ local tabs_component = {
   use_mode_colors = false,
   draw_empty = false,
   tabs_color = {
-    active = { fg = 'Yellow', gui = 'italic,bold,underline' },
+    active = { fg = 'Yellow', gui = 'bold,underline' },
     inactive = { fg = 'Comment' },
   },
   cond = function() return vim.fn.tabpagenr('$') > 1 end,
@@ -180,6 +180,7 @@ plug({
       sections = {
         lualine_a = {
           { 'mode', fmt = function(str) return str:sub(1, 1) end },
+          tabs_component,
         },
         lualine_b = {
           git_branch,
@@ -283,7 +284,6 @@ plug({
           },
         },
         lualine_z = {
-          tabs_component,
           -- { 'location', left_padding = 0 },
         },
       },

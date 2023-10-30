@@ -40,7 +40,8 @@ function M.load_on_startup()
         group = '_check_exit',
         callback = function()
           --- https://github.com/neovim/neovim/issues/17256
-          local tabs_count = #vim.api.nvim_list_tabpages()
+          -- local tabs_count = #vim.api.nvim_list_tabpages()
+          local tabs_count = 0
           local terms_count = require('userlib.terminal').terms_count()
 
           if tabs_count >= 2 or terms_count >= 1 then
