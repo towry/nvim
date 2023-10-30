@@ -205,6 +205,11 @@ plug({
               },
             },
           },
+          {
+            function()
+              return vim.fn.expand('#')
+            end,
+          }
         },
         lualine_c = {
           { 'diagnostics', update_in_insert = false, symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' } },
@@ -268,6 +273,11 @@ plug({
             'fileformat',
             cond = function() return not vim.tbl_contains({ 'unix', 'mac' }, vim.bo.fileformat) end,
           },
+          {
+            'filetype',
+            colored = true,
+            icon_only = true,
+          },
         },
         lualine_y = {
           'filesize',
@@ -276,11 +286,6 @@ plug({
               if is_treesitter() then return '' end
               return '-TS'
             end,
-          },
-          {
-            'filetype',
-            colored = true,
-            icon_only = true,
           },
         },
         lualine_z = {
