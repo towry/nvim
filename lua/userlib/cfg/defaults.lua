@@ -77,6 +77,7 @@ return {
     'vim',
     'vimdoc',
     'bash',
+    'fish',
     'css',
     'html',
     'javascript',
