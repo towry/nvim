@@ -4,6 +4,7 @@ return function()
     Ty.NOTIFY("null-ls is not installed")
     return
   end
+  -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
   local builtins = nls.builtins
 
   -- use `filetypes` to specific which filetypes to run the generators.
@@ -19,6 +20,8 @@ return function()
     -- Make sure do not use the version of mason.
     builtins.code_actions.eslint_d,
     builtins.diagnostics.eslint_d,
+    -- yaml
+    builtins.diagnostics.yamllint,
   }
 
   nls.setup({
