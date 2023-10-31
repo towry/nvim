@@ -1,4 +1,5 @@
 local pack = require('userlib.runtime.pack')
+local Path = require('userlib.runtime.path')
 
 pack.plug({
   {
@@ -77,6 +78,7 @@ pack.plug({
         paths = {
           './user-snippets',
           vim.uv.cwd() .. '/.vscode',
+          Path.path_join(vim.cfg.runtime__starts_cwd, '.vscode'),
         },
       })
 
@@ -194,7 +196,7 @@ pack.plug({
             else
               fallback()
             end
-          end), -- invoke complete
+          end),                           -- invoke complete
           ['<C-s>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
           ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
           ['<C-e>'] = cmp.mapping({
@@ -287,13 +289,13 @@ pack.plug({
         },
         -- You should specify your *installed* sources.
         sources = {
-          { name = 'nvim_lsp', priority = 10, max_item_count = 6 },
+          { name = 'nvim_lsp',                priority = 10, max_item_count = 6 },
           -- { name = "copilot",                 priority = 30, max_item_count = 4 },
           -- { name = 'codeium', priority = 7, max_item_count = 4 },
           { name = 'nvim_lsp_signature_help', priority = 10, max_item_count = 3 },
-          { name = 'npm', priority = 3 },
+          { name = 'npm',                     priority = 3 },
           -- { name = 'cmp_tabnine',             priority = 6,  max_item_count = 3 },
-          { name = 'luasnip', priority = 6, max_item_count = 2 },
+          { name = 'luasnip',                 priority = 6,  max_item_count = 2 },
           {
             name = 'buffer',
             priority = 10,
@@ -302,8 +304,8 @@ pack.plug({
             max_item_count = 5,
           },
           { name = 'nvim_lua', priority = 5, ft = 'lua' },
-          { name = 'path', priority = 4 },
-          { name = 'calc', priority = 3 },
+          { name = 'path',     priority = 4 },
+          { name = 'calc',     priority = 3 },
         },
         sorting = {
           comparators = {
@@ -373,8 +375,8 @@ pack.plug({
           ['<C-n>'] = cmp.config.disable,
         }),
         sources = cmp.config.sources({
-          { name = 'path' },
-        },
+            { name = 'path' },
+          },
           {
             { name = 'cmdline', },
             { name = 'cmdline_history', max_item_count = 3, },
