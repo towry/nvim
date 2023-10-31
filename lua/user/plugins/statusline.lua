@@ -183,11 +183,6 @@ plug({
           tabs_component,
         },
         lualine_b = {
-          git_branch,
-          {
-            'diff',
-            source = git_status_source,
-          },
           {
             function()
               local idx = require('harpoon.mark').status()
@@ -277,14 +272,18 @@ plug({
         lualine_y = {
           'filesize',
           {
-            function()
-              if is_treesitter() then return '' end
-              return '-TS'
-            end,
+            'diff',
+            source = git_status_source,
           },
         },
         lualine_z = {
-          -- { 'location', left_padding = 0 },
+          git_branch,
+          {
+            function()
+              if is_treesitter() then return '' end
+              return '󰐆'
+            end,
+          },
         },
       },
       inactive_sections = {
