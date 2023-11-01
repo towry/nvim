@@ -110,7 +110,7 @@ plug({
       callback = function(ctx)
         vim.schedule(function()
           local cwd = require('oil').get_current_dir()
-          require('userlib.runtime.utils').change_cwd(cwd, 'lcd', true)
+          require('userlib.runtime.utils').change_cwd(cwd, 'lcd', false)
         end)
       end,
     })
@@ -122,7 +122,7 @@ plug({
   keys = {
     { '<leader>/o', '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
     -- <CMD-l> open the outline.
-    { '<D-l>', '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
+    { '<D-l>',      '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
   },
   cmd = { 'AerialToggle', 'AerialOpen', 'AerialClose' },
   opts = {

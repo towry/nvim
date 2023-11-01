@@ -51,8 +51,7 @@ M.project_files = function(opts)
 
   opts = opts or {}
   if not opts.cwd then
-    -- opts.cwd = require('userlib.telescope.helpers').get_cwd_relative_to_buf(0, level_up)
-    opts.cwd = vim.uv.cwd()
+    opts.cwd = vim.t.cwd or vim.uv.cwd()
   end
   opts.hidden = true
 
