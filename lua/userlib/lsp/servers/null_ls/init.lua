@@ -12,8 +12,8 @@ return function()
     -- builtins.formatting.stylua.with({
     -- 	filetypes = { "lua" }
     -- }),
-    -- builtins.formatting.prettier,
-    builtins.formatting.prettierd,
+    -- only prettier works with monorepo.
+    builtins.formatting.prettier,
     -- builtins.code_actions.gitsigns,
     -- require("typescript.extensions.null-ls.code-actions"), -- disabled on volar take over mode.
     -- eslint.
