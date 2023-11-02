@@ -152,17 +152,14 @@ plug({
       winbar = {
         lualine_a = {
           {
-            function() return vim.fn.bufnr('%') end,
-          },
-          {
-            function()
-              return vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
-            end,
-          },
-          {
             'filename',
             file_status = true,
             path = 1,
+            fmt = function(name)
+              local bufnr = vim.fn.bufnr('%')
+              local cwd = vim.fn.fnamemodify(vim.t.cwd or vim.cfg.runtime__starts_cwd, ':t')
+              return string.format('%s:%s:%s', cwd, bufnr, name)
+            end
           },
         },
         lualine_b = {},
@@ -172,15 +169,14 @@ plug({
       inactive_winbar = {
         lualine_a = {
           {
-            function() return vim.fn.bufnr('%') end,
-          },
-          {
-            function() return vim.fn.bufnr('%') end,
-          },
-          {
-            function()
-              return vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
-            end,
+            'filename',
+            file_status = true,
+            path = 1,
+            fmt = function(name)
+              local bufnr = vim.fn.bufnr('%')
+              local cwd = vim.fn.fnamemodify(vim.t.cwd or vim.cfg.runtime__starts_cwd, ':t')
+              return string.format('%s:%s:%s', cwd, bufnr, name)
+            end
           },
         },
         lualine_z = {},
@@ -188,9 +184,10 @@ plug({
       sections = {
         lualine_a = {
           { 'mode', fmt = function(str) return str:sub(1, 1) end },
-          tabs_component,
+          git_branch,
         },
         lualine_b = {
+          tabs_component,
           {
             function()
               local idx = require('harpoon.mark').status()
@@ -285,7 +282,6 @@ plug({
           },
         },
         lualine_z = {
-          git_branch,
           {
             function()
               if is_treesitter() then return '' end
