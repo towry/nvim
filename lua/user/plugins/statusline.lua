@@ -53,16 +53,11 @@ local tabs_component = {
   },
   cond = function() return vim.fn.tabpagenr('$') > 1 end,
   fmt = function(name, context)
-    -- Show + if buffer is modified in tab
-    local buflist = vim.fn.tabpagebuflist(context.tabnr)
-    local winnr = vim.fn.tabpagewinnr(context.tabnr)
-    local bufnr = buflist[winnr]
-    local mod = vim.fn.getbufvar(bufnr, '&mod')
-    local bufpath = vim.fn.bufname(bufnr)
-    -- last part of bufpath
-    local bufname = vim.fn.fnamemodify(bufpath, ':t')
-
-    return string.format('%s%s%s', context.tabnr, bufname ~= '' and ':' .. bufname or '', mod == 1 and '[+]' or '')
+    local cwd = vim.t[context.tabnr].cwd or ''
+    if cwd then
+      cwd = vim.fn.fnamemodify(cwd, ':t')
+    end
+    return string.format('%s%s', context.tabnr, cwd ~= '' and ':' .. cwd or '')
   end,
 }
 
