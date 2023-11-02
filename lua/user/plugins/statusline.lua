@@ -75,7 +75,8 @@ plug({
     },
     'tpope/vim-fugitive',
   },
-  event = { 'User LazyUIEnterOncePost', 'User OnLeaveDashboard' },
+  -- event = { 'User LazyUIEnterOncePost', 'User OnLeaveDashboard' },
+  event = 'BufReadPre',
   config = function()
     require('user.config.options').setup_statusline()
     local auto_format_disabled = require('userlib.lsp.servers.null_ls.autoformat').disabled
