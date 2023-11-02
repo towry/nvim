@@ -48,7 +48,7 @@ local tabs_component = {
   use_mode_colors = false,
   draw_empty = false,
   tabs_color = {
-    active = { fg = 'Yellow', gui = 'bold,underline' },
+    active = { fg = 'Green', gui = 'bold,underline' },
     inactive = { fg = 'Comment' },
   },
   cond = function() return vim.fn.tabpagenr('$') > 1 end,
