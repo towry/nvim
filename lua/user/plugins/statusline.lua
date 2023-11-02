@@ -53,11 +53,16 @@ local tabs_component = {
   },
   cond = function() return vim.fn.tabpagenr('$') > 1 end,
   fmt = function(name, context)
-    local tabnr = context.tabnr
-    -- local icon = tabs_nrto_icons[tostring(tabnr)] or tabnr
-    local icon = 'T'
-    if context.last and context.tabId == 1 then return '' end
-    return icon .. tabnr
+    -- Show + if buffer is modified in tab
+    local buflist = vim.fn.tabpagebuflist(context.tabnr)
+    local winnr = vim.fn.tabpagewinnr(context.tabnr)
+    local bufnr = buflist[winnr]
+    local mod = vim.fn.getbufvar(bufnr, '&mod')
+    local bufpath = vim.fn.bufname(bufnr)
+    -- last part of bufpath
+    local bufname = vim.fn.fnamemodify(bufpath, ':t')
+
+    return string.format('%s%s%s', context.tabnr, bufname ~= '' and ':' .. bufname or '', mod == 1 and '[+]' or '')
   end,
 }
 
