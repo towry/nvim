@@ -155,9 +155,14 @@ plug({
             function() return vim.fn.bufnr('%') end,
           },
           {
+            function()
+              return vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
+            end,
+          },
+          {
             'filename',
             file_status = true,
-            path = 3,
+            path = 1,
           },
         },
         lualine_b = {},
@@ -170,9 +175,12 @@ plug({
             function() return vim.fn.bufnr('%') end,
           },
           {
-            'filename',
-            file_status = true,
-            path = 3,
+            function() return vim.fn.bufnr('%') end,
+          },
+          {
+            function()
+              return vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
+            end,
           },
         },
         lualine_z = {},
