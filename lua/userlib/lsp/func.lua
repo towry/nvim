@@ -1,5 +1,33 @@
 local M = {}
 
+local function get_diagnostic_at_cursor()
+  local cur_buf = vim.api.nvim_get_current_buf()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  local entrys = vim.diagnostic.get(cur_buf, { lnum = line - 1 })
+  local res = {}
+  for _, v in pairs(entrys) do
+    if v.col <= col and v.end_col >= col then
+      table.insert(res, {
+        code = v.code,
+        message = v.message,
+        range = {
+          ['start'] = {
+            character = v.col,
+            line = v.lnum,
+          },
+          ['end'] = {
+            character = v.end_col,
+            line = v.end_lnum,
+          },
+        },
+        severity = v.severity,
+        source = v.source or nil,
+      })
+    end
+  end
+  return res
+end
+
 --- wrap function for navigate lsp diagnostics, used by keymaps.
 --- @param next boolean "next or prev"
 --- @param severity string {"ERROR"|"WARN"|"INFO"|"HINT"}
@@ -51,11 +79,10 @@ function M.open_code_action()
   -- https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_codeAction
   vim.lsp.buf.code_action({
     context = {
-      only = {
-        'source',
-      },
-      triggerKind = 1,
-      diagnostics = {},
+      -- only = {
+      --   'source',
+      -- },
+      diagnostics = get_diagnostic_at_cursor(),
     },
   })
 end
