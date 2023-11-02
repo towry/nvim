@@ -120,7 +120,7 @@ plug({
   keys = {
     { '<leader>/o', '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
     -- <CMD-l> open the outline.
-    { '<D-l>',      '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
+    { '<D-l>', '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
   },
   cmd = { 'AerialToggle', 'AerialOpen', 'AerialClose' },
   opts = {
@@ -328,6 +328,11 @@ plug({
       '<leader>ff',
       cmd_modcall(pickers_mod, 'project_files()'),
       desc = 'Open Project files',
+    },
+    {
+      '<leader>fF',
+      cmd_modcall(pickers_mod, 'project_files({default_text = vim.fn.expand("<cword>")})'),
+      desc = 'Open Project files with current word',
     },
     {
       '<leader>fe',
