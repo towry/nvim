@@ -51,6 +51,7 @@
   "middleclass": { "branch": "master", "commit": "9fab4d5bca67262614960960ca35c4740eb2be2c" },
   "mini.bufremove": { "branch": "main", "commit": "c0c3939422d8cfd65b9225c4456e28acbe94c28f" },
   "mini.doc": { "branch": "main", "commit": "fad0db8e0a7f490b3c2c9df824d7c296dc77f85e" },
+  "mini.sessions": { "branch": "main", "commit": "a3ea04c737436c81bfcc45169845e8726e5f8849" },
   "mini.starter": { "branch": "main", "commit": "c74bdde61385360b02ca9fd7731ebce8903d78d7" },
   "mini.trailspace": { "branch": "main", "commit": "14d57f3af4925d329f0070c0479a2d96714837c1" },
   "neo-tree.nvim": { "branch": "main", "commit": "1236db954ce502eb5b340bcdb69aa057cc372e8d" },

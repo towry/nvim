@@ -479,3 +479,49 @@ plug({
   ft = 'lua',
   config = true,
 })
+
+plug({
+  'echasnovski/mini.sessions',
+  version = '*',
+  cmd = {
+    'MakeSession',
+    'LoadSession',
+  },
+  opts = {
+    autoread = false,
+    autowrite = false,
+  },
+  init = function()
+    -- create MakeSession, LoadSession commands using neovim api.
+    vim.api.nvim_create_user_command("MakeSession", function()
+      local MS = require('mini.sessions')
+      local branch_name = vim.fn['FugitiveHead']() or 'temp'
+      local cwd = vim.fn.fnameescape(vim.cfg.runtime__starts_cwd)
+      local session_name = string.format('%s_%s', branch_name, cwd)
+      -- replace slash, space, backslash, dot etc specifical char in session_name to underscore
+      session_name = string.gsub(session_name, '[/\\ .]', '_')
+      MS.write(session_name, {
+        force = true,
+      })
+    end, {
+      nargs = 0,
+      desc = 'Make session of current working directory',
+    })
+    vim.api.nvim_create_user_command("LoadSession", function()
+      local MS = require('mini.sessions')
+      local branch_name = vim.fn['FugitiveHead']() or 'temp'
+      local cwd = vim.fn.fnameescape(vim.cfg.runtime__starts_cwd)
+      local session_name = string.format('%s_%s', branch_name, cwd)
+      -- replace slash, space, backslash, dot etc specifical char in session_name to underscore
+      session_name = string.gsub(session_name, '[/\\ .]', '_')
+      MS.read(session_name, {
+        -- do not delete unsaved buffer.
+        force = false,
+        verbose = true,
+      })
+    end, {
+      nargs = 0,
+      desc = 'Load session',
+    })
+  end,
+})
