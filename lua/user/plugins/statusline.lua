@@ -43,7 +43,7 @@ local cwd_component = {
 }
 local tabs_component = {
   'tabs',
-  max_length = vim.o.columns / 3,
+  max_length = vim.o.columns / 2,
   mode = 1,
   use_mode_colors = false,
   draw_empty = false,
