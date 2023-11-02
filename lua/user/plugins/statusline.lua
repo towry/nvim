@@ -43,19 +43,21 @@ local cwd_component = {
 }
 local tabs_component = {
   'tabs',
-  max_length = vim.o.columns / 2,
+  -- max_length = vim.o.columns / 2,
   mode = 1,
   use_mode_colors = false,
   draw_empty = false,
-  tabs_color = {
-    active = { fg = 'Green', gui = 'bold,underline' },
-    inactive = { fg = 'Comment' },
-  },
-  cond = function() return vim.fn.tabpagenr('$') > 1 end,
+  -- tabs_color = {
+  --   active = { fg = 'Green', gui = 'bold,underline' },
+  --   inactive = { fg = 'Comment' },
+  -- },
+  -- cond = function() return vim.fn.tabpagenr('$') > 1 end,
   fmt = function(name, context)
     local cwd = vim.t[context.tabnr].cwd or ''
     if cwd then
       cwd = vim.fn.fnamemodify(cwd, ':t')
+    elseif not cwd then
+      cwd = name
     end
     return string.format('%s%s', context.tabnr, cwd ~= '' and ':' .. cwd or '')
   end,
@@ -95,7 +97,7 @@ plug({
           git_branch,
         },
         lualine_c = {
-          tabs_component,
+          -- tabs_component,
         },
       },
       winbar = {},
@@ -121,7 +123,7 @@ plug({
           },
         },
         lualine_c = {
-          tabs_component,
+          -- tabs_component,
         },
       },
       filetypes = { 'toggleterm' },
@@ -148,6 +150,11 @@ plug({
         component_separators = '│',
         section_separators = { left = '', right = '' },
         disabled_filetypes = { winbar = vim.cfg.misc__ft_exclude, statusline = { 'dashboard', 'lazy', 'alpha' } },
+      },
+      tabline = {
+        lualine_a = {
+          tabs_component,
+        },
       },
       winbar = {
         lualine_a = {
@@ -187,7 +194,7 @@ plug({
           git_branch,
         },
         lualine_b = {
-          tabs_component,
+          -- tabs_component,
           {
             function()
               local idx = require('harpoon.mark').status()
