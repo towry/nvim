@@ -10,9 +10,17 @@ plug({
     require('nvim-treesitter').setup({
       ensure_install = vim.cfg.lang__treesitter_ensure_installed,
     })
-    vim.opt.indentexpr = [[v:lua.require('nvim-treesitter').indentexpr()]]
     vim.treesitter.language.register('tsx', 'typescriptreact')
   end,
+  init = function()
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'TreeSitterStart',
+      callback = function()
+        if vim.b.treesitter_disable then return end
+        vim.opt_local.indentexpr = [[v:lua.require('nvim-treesitter').indentexpr()]]
+      end
+    })
+  end
 })
 
 plug({
