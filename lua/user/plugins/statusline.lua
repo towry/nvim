@@ -107,20 +107,11 @@ plug({
     local empty_buffer_extension = {
       sections = {
         lualine_a = {
-        },
-      },
-      winbar = {
-        lualine_a = {
-          'mode',
-          git_branch,
           cwd_component,
+          git_branch,
         },
-        lualine_b = {
-        },
-        lualine_z = {
-          -- tabs_component,
-        }
       },
+      tabline = {},
       filetypes = { '' },
     }
     local overseer_extension = {
