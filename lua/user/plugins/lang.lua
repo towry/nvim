@@ -13,7 +13,9 @@ plug({
     vim.treesitter.language.register('tsx', 'typescriptreact')
   end,
   init = function()
+    vim.api.nvim_create_augroup('treesitter_start', { clear = true })
     vim.api.nvim_create_autocmd('User', {
+      group = 'treesitter_start',
       pattern = 'TreeSitterStart',
       callback = function()
         if vim.b.treesitter_disable then return end

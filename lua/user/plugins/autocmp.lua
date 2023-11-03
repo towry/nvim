@@ -547,7 +547,7 @@ pack.plug({
     -- https://github.com/dermoumi/dotfiles/blob/418de1a521e4f4ac6dc0aa10e75ffb890b0cb908/nvim/lua/plugins/copilot.lua#L4
     'github/copilot.vim',
     enabled = true,
-    event = { 'InsertEnter' },
+    -- event = { 'InsertEnter' },
     keys = {
       { '<C-/>', mode = 'i' },
       {
@@ -560,6 +560,14 @@ pack.plug({
     config = function()
     end,
     init = function()
+      require('userlib.runtime.au').define_autocmd({ 'InsertEnter' },
+        {
+          group = 'start_copilot',
+          once = true,
+          callback = function()
+            require('userlib.runtime.utils').load_plugins({ 'copilot.vim' })
+          end,
+        })
       vim.g.copilot_filetypes = {
         ['*'] = true,
         ['TelescopePrompt'] = false,

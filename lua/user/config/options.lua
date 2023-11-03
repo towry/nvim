@@ -183,7 +183,7 @@ function M.setup()
       -- start highlighter.
       if not pcall(vim.treesitter.start, buf) then return end
       M.enable_foldexpr_for_buf(buf)
-      require('userlib.runtime.au').do_useraucmd('TreeSitterStart')
+      require('userlib.runtime.au').do_useraucmd('User TreeSitterStart')
     end,
   })
   vim.api.nvim_create_autocmd('FileType', {
