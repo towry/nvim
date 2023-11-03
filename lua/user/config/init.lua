@@ -6,7 +6,8 @@ function M.setup()
   require('user.config.options').setup()
 
   require('user.config.autocmd').setup({
-    resize_kitty = true,
+    -- lazy
+    resize_kitty = false,
     on_very_lazy = function() require('user.config.keymaps').setup() end,
   })
 
