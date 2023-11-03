@@ -165,6 +165,14 @@ plug({
       },
       tabline = {
         lualine_a = {
+          -- {
+          --   'buffers',
+          --   show_filename_only = true,
+          --   hide_filename_extension = true,
+          --   show_modified_status = true,
+          --   mode = 4,
+          --   max_length = vim.o.columns * 2 / 3,
+          -- },
           {
             'filename',
             file_status = true,
