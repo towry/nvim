@@ -171,7 +171,8 @@ plug({
             fmt = function(name)
               if name == '[No Name]' then return '' end
               local bufnr = vim.fn.bufnr('%')
-              return string.format('%s:%s', bufnr, name)
+              local cwd = vim.fn.fnamemodify(vim.t.cwd or vim.cfg.runtime__starts_cwd, ':t')
+              return string.format('%s:%s:%s', cwd, bufnr, name)
             end
           },
         },
