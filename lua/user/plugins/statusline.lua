@@ -231,12 +231,6 @@ plug({
             terms,
           },
           {
-            function()
-              if vim.diagnostic.is_disabled() then return '-DIAG' end
-              return ''
-            end,
-          },
-          {
             'encoding',
             cond = function() return vim.opt.fileencoding and vim.opt.fileencoding:get() ~= 'utf-8' end,
           },
@@ -297,6 +291,15 @@ plug({
             function()
               if is_treesitter() then return '' end
               return '󰐆'
+            end,
+          },
+          {
+            function()
+              if vim.diagnostic.is_disabled() then return '' end
+              return ''
+            end,
+            cond = function()
+              return vim.diagnostic.is_disabled()
             end,
           },
         },
