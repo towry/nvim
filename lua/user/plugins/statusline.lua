@@ -43,15 +43,11 @@ local cwd_component = {
 }
 local tabs_component = {
   'tabs',
-  -- max_length = vim.o.columns / 2,
+  max_length = vim.o.columns / 2,
   mode = 1,
   use_mode_colors = false,
   draw_empty = false,
-  -- tabs_color = {
-  --   active = { fg = 'Green', gui = 'bold,underline' },
-  --   inactive = { fg = 'Comment' },
-  -- },
-  -- cond = function() return vim.fn.tabpagenr('$') > 1 end,
+  cond = function() return vim.fn.tabpagenr('$') > 1 end,
   fmt = function(name, context)
     local cwd = vim.t[context.tabnr].cwd or ''
     if cwd then
@@ -107,11 +103,20 @@ plug({
     local empty_buffer_extension = {
       sections = {
         lualine_a = {
-          cwd_component,
-          git_branch,
         },
       },
-      tabline = {},
+      winbar = {
+        lualine_a = {
+          'mode',
+          git_branch,
+          cwd_component,
+        },
+        lualine_b = {
+        },
+        lualine_z = {
+          -- tabs_component,
+        }
+      },
       filetypes = { '' },
     }
     local overseer_extension = {
@@ -163,20 +168,12 @@ plug({
         section_separators = { left = '', right = '' },
         disabled_filetypes = { winbar = vim.cfg.misc__ft_exclude, statusline = { 'dashboard', 'lazy', 'alpha' } },
       },
-      tabline = {
+      winbar = {
         lualine_a = {
-          -- {
-          --   'buffers',
-          --   show_filename_only = true,
-          --   hide_filename_extension = true,
-          --   show_modified_status = true,
-          --   mode = 4,
-          --   max_length = vim.o.columns * 2 / 3,
-          -- },
           {
             'filename',
             file_status = true,
-            path = 4,
+            path = 1,
             fmt = function(name)
               if name == '[No Name]' then return '' end
               local bufnr = vim.fn.bufnr('%')
@@ -184,39 +181,28 @@ plug({
             end
           },
         },
-        lualine_z = {
-          tabs_component,
-        }
-      },
-      winbar = {
-        lualine_a = {
-        },
-        lualine_b = {},
-        lualine_c = {},
-        lualine_z = {},
       },
       inactive_winbar = {
         lualine_a = {
-          -- {
-          --   'filename',
-          --   file_status = true,
-          --   path = 1,
-          --   fmt = function(name)
-          --     local bufnr = vim.fn.bufnr('%')
-          --     local cwd = vim.fn.fnamemodify(vim.t.cwd or vim.cfg.runtime__starts_cwd, ':t')
-          --     return string.format('%s:%s:%s', cwd, bufnr, name)
-          --   end
-          -- },
+          {
+            'filename',
+            file_status = true,
+            path = 1,
+            fmt = function(name)
+              local bufnr = vim.fn.bufnr('%')
+              local cwd = vim.fn.fnamemodify(vim.t.cwd or vim.cfg.runtime__starts_cwd, ':t')
+              return string.format('%s:%s:%s', cwd, bufnr, name)
+            end
+          },
         },
-        lualine_z = {},
       },
       sections = {
         lualine_a = {
           { 'mode', fmt = function(str) return str:sub(1, 1) end },
           git_branch,
+          tabs_component,
         },
         lualine_b = {
-          -- tabs_component,
           {
             function()
               local idx = require('harpoon.mark').status()
