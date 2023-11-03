@@ -172,7 +172,7 @@ plug({
               if name == '[No Name]' then return '' end
               local bufnr = vim.fn.bufnr('%')
               local cwd = vim.fn.fnamemodify(vim.t.cwd or vim.cfg.runtime__starts_cwd, ':t')
-              return string.format('%s:%s:%s', cwd, bufnr, name)
+              return string.format('%s#%s~%s', bufnr, cwd, name)
             end
           },
         },
@@ -280,8 +280,9 @@ plug({
           },
           {
             'filetype',
-            colored = true,
-            icon_only = true,
+            icon = { align = 'left' },
+            colored = false,
+            icon_only = false,
           },
         },
         lualine_y = {
