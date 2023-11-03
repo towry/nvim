@@ -75,8 +75,8 @@ plug({
     },
     'tpope/vim-fugitive',
   },
-  -- event = { 'User LazyUIEnterOncePost', 'User OnLeaveDashboard' },
-  event = 'BufReadPre',
+  event = { 'User LazyUIEnterOncePost', 'User OnLeaveDashboard' },
+  -- event = 'BufReadPre',
   config = function()
     require('user.config.options').setup_statusline()
     local auto_format_disabled = require('userlib.lsp.servers.null_ls.autoformat').disabled
@@ -104,8 +104,27 @@ plug({
       winbar = {},
       filetypes = { 'starter', 'alpha' },
     }
-    local overseer_extension = {
+    local empty_buffer_extension = {
+      sections = {
+        lualine_a = {
+        },
+      },
       winbar = {
+        lualine_a = {
+          'mode',
+          git_branch,
+          cwd_component,
+        },
+        lualine_b = {
+        },
+        lualine_z = {
+          -- tabs_component,
+        }
+      },
+      filetypes = { '' },
+    }
+    local overseer_extension = {
+      tabline = {
         lualine_a = {
           function()
             return 'Overseer list'
@@ -115,7 +134,7 @@ plug({
       filetypes = { 'OverseerList' },
     }
     local toggleterm_extension = {
-      winbar = {},
+      tabline = {},
       sections = {
         lualine_a = {
           'mode',
@@ -142,6 +161,7 @@ plug({
         dashboard_extension,
         toggleterm_extension,
         overseer_extension,
+        empty_buffer_extension,
         'neo-tree',
         'quickfix',
       },
@@ -154,21 +174,23 @@ plug({
       },
       tabline = {
         lualine_a = {
-          tabs_component,
-        },
-      },
-      winbar = {
-        lualine_a = {
           {
             'filename',
             file_status = true,
-            path = 1,
+            path = 4,
             fmt = function(name)
+              if name == '[No Name]' then return '' end
               local bufnr = vim.fn.bufnr('%')
-              local cwd = vim.fn.fnamemodify(vim.t.cwd or vim.cfg.runtime__starts_cwd, ':t')
-              return string.format('%s:%s:%s', cwd, bufnr, name)
+              return string.format('%s:%s', bufnr, name)
             end
           },
+        },
+        lualine_z = {
+          tabs_component,
+        }
+      },
+      winbar = {
+        lualine_a = {
         },
         lualine_b = {},
         lualine_c = {},
@@ -176,16 +198,16 @@ plug({
       },
       inactive_winbar = {
         lualine_a = {
-          {
-            'filename',
-            file_status = true,
-            path = 1,
-            fmt = function(name)
-              local bufnr = vim.fn.bufnr('%')
-              local cwd = vim.fn.fnamemodify(vim.t.cwd or vim.cfg.runtime__starts_cwd, ':t')
-              return string.format('%s:%s:%s', cwd, bufnr, name)
-            end
-          },
+          -- {
+          --   'filename',
+          --   file_status = true,
+          --   path = 1,
+          --   fmt = function(name)
+          --     local bufnr = vim.fn.bufnr('%')
+          --     local cwd = vim.fn.fnamemodify(vim.t.cwd or vim.cfg.runtime__starts_cwd, ':t')
+          --     return string.format('%s:%s:%s', cwd, bufnr, name)
+          --   end
+          -- },
         },
         lualine_z = {},
       },
