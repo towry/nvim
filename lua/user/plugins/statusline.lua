@@ -45,7 +45,7 @@ local tabs_component = {
   'tabs',
   max_length = vim.o.columns / 2,
   mode = 1,
-  use_mode_colors = false,
+  use_mode_colors = true,
   draw_empty = false,
   cond = function() return vim.fn.tabpagenr('$') > 1 end,
   fmt = function(name, context)
@@ -107,15 +107,9 @@ plug({
       },
       winbar = {
         lualine_a = {
-          'mode',
-          git_branch,
           cwd_component,
+          git_branch,
         },
-        lualine_b = {
-        },
-        lualine_z = {
-          -- tabs_component,
-        }
       },
       filetypes = { '' },
     }
