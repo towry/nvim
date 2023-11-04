@@ -422,13 +422,13 @@ else
     hi PmenuSbar       guibg=#2e3330 guifg=#000000
     hi PMenuThumb      guibg=#a0afa0 guifg=#040404
     hi MatchParen      guifg=#b2b2a0 guibg=#2e2e2e gui=bold
-    hi SignColumn      guifg=#9fafaf guibg=#343434 gui=bold
+    hi SignColumn      guifg=#9fafaf guibg=#3f3f3f gui=bold
     hi TabLineFill     guifg=#cfcfaf guibg=#353535 gui=bold
     hi TabLineSel      guifg=#efefef guibg=#3a3a39 gui=bold
     hi TabLine         guifg=#b6bf98 guibg=#353535 gui=bold
     hi NonText         guifg=#5b605e gui=bold
 
-    hi LineNr          guifg=#9fafaf guibg=#262626
+    hi LineNr          guifg=#9fafaf guibg=#3f3f3f
 endif
 
 if exists("g:zenburn_old_Visual") && g:zenburn_old_Visual
