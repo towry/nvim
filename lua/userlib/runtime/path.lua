@@ -11,6 +11,14 @@ local function remove_path_last_separator(path)
   return path
 end
 
+---@param path string
+---@param segments_left? number
+---@return string
+local function shorten(path, segments_left)
+  local ok, pathlib = pcall(require, 'plenary.path')
+  if not ok then return vim.fn.pathshorten(path) end
+  return pathlib:new(path):shorten(segments_left)
+end
 
 local function escape_wildcards(path)
   return path:gsub('([%[%]%?%*])', '\\%1')
@@ -30,7 +38,7 @@ local function home_to_tilde(path, opts)
   -- below not work for some case.
   local trimed = vim.fn.fnamemodify(path, ':~')
   if opts.shorten then
-    return vim.fn.pathshorten(trimed)
+    return shorten(trimed, 2)
   end
   return trimed
 end
@@ -217,4 +225,5 @@ return {
   path_separator = path_separator,
   search_ancestors = search_ancestors,
   home_to_tilde = home_to_tilde,
+  shorten = shorten,
 }
