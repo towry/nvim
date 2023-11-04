@@ -1,6 +1,6 @@
 local user_cfg = {
-  ui__theme_name = 'gruvbox-material',
-  workbench__lualine_theme = 'gruvbox-material',
+  ui__theme_name = 'zenburn',
+  workbench__lualine_theme = 'auto',
   --- treesitter
   lang__treesitter_plugin_rainbow = false,
   plug__enable_codeium_vim = false,
