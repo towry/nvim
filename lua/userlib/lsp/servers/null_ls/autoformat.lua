@@ -3,7 +3,10 @@ local auto_format_disabled = false
 local M = {}
 
 --- Is auto format is disabled
-function M.disabled()
+function M.disabled(bufnr)
+  if (bufnr or bufnr == 0) and vim.b[bufnr].autoformat_disable then
+    return true
+  end
   return auto_format_disabled
 end
 

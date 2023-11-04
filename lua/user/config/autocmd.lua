@@ -20,7 +20,7 @@ function M.load_on_startup()
         pattern = '*',
         callback = function(args)
           local buf = args.buf
-          if vim.b[buf].enable_diagnostic == 0 or vim.api.nvim_buf_line_count(0) > 40000 then
+          if vim.b[buf].diagnostic_disable or vim.api.nvim_buf_line_count(0) > 40000 then
             vim.diagnostic.disable(buf)
             return
           end
@@ -98,11 +98,16 @@ function M.load_on_startup()
       },
     },
     {
-      { 'BufRead', 'BufNewFile' },
+      { 'BufReadPre', 'BufNewFile' },
       {
         group = '_no_lsp_diagnostic_inside_folders',
         pattern = '*/node_modules/*',
-        command = 'lua vim.diagnostic.disable(0)',
+        callback = function(args)
+          local bufnr = args.buf
+          assert(bufnr ~= nil)
+          vim.b[bufnr].diagnostic_disable = true
+          vim.b[bufnr].autoformat_disable = true
+        end,
       },
     },
     {

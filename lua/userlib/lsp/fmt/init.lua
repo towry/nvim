@@ -96,7 +96,7 @@ end
 function M.is_formatting_supported(buf)
   buf = buf or vim.api.nvim_get_current_buf()
   if not formatting_enabled then return false end
-  if vim.b[buf].enable_auto_format == 0 then return false end
+  if vim.b[buf].autoformat_disable then return false end
 
   local fsize = require('userlib.runtime.buffer').getfsize(buf)
   if fsize / 1024 > 200 then

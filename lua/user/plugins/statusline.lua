@@ -182,11 +182,10 @@ plug({
           {
             'filename',
             file_status = true,
-            path = 1,
+            path = 3,
             fmt = function(name)
               local bufnr = vim.fn.bufnr('%')
-              local cwd = vim.fn.fnamemodify(vim.t.cwd or vim.cfg.runtime__starts_cwd, ':t')
-              return string.format('%s:%s:%s', cwd, bufnr, name)
+              return string.format('%s#%s', bufnr, name)
             end
           },
         },
@@ -218,7 +217,14 @@ plug({
           },
         },
         lualine_c = {
-          { 'diagnostics', update_in_insert = false, symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' } },
+          {
+            'diagnostics',
+            update_in_insert = false,
+            symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' },
+            cond = function()
+              return vim.b.diagnostic_disable ~= true
+            end
+          },
         },
         lualine_x = {
           'searchcount',
@@ -252,7 +258,7 @@ plug({
           {
             function()
               local icon = '󰎟 '
-              if auto_format_disabled() then
+              if auto_format_disabled(0) then
                 icon = '󰙧 '
               end
               local ftr_name, impl_ftr_name = format_utils.current_formatter_name(0)
@@ -302,6 +308,11 @@ plug({
               return vim.diagnostic.is_disabled()
             end,
           },
+          {
+            function()
+              return vim.cfg.runtime__starts_cwd_short
+            end,
+          }
         },
       },
       inactive_sections = {

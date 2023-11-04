@@ -83,7 +83,7 @@ function M.format(bufnr, opts)
     return
   end
 
-  if autoformat.disabled() and opts.auto then return end
+  if autoformat.disabled(bufnr) and opts.auto then return end
   if vim.b.format_saving then
     return
   end
@@ -102,11 +102,11 @@ function M.format(bufnr, opts)
   vim.lsp.buf.format(fmt_opts)
   if not opts.auto then
     vim.api.nvim_echo({ { "format with " .. (impl_formatter_name or name or "default"), "Comment" } }
-    , true, {})
+      , true, {})
   else
     vim.defer_fn(function()
       vim.api.nvim_echo({ { " written! also format with " .. (impl_formatter_name or name or "default"), "Comment" } }
-      , true, {})
+        , true, {})
     end, 1)
   end
 end
