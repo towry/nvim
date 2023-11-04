@@ -170,6 +170,8 @@ return {
     'prompt',
     'terminal',
     'nowrite',
+    'gitcommit',
+    'git'
   },
   misc__ft_exclude = {
     'diff',
