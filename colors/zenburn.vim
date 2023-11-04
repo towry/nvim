@@ -244,6 +244,7 @@ hi VertSplit       guifg=#2e3330 guibg=#688060
 hi VisualNOS       guifg=#333333 guibg=#f18c96 gui=bold,underline
 hi WarningMsg      guifg=#ffffff guibg=#333333 gui=bold
 hi WildMenu        guibg=#2c302d guifg=#cbecd0 gui=underline
+hi ColorColumn     guibg=#3a3a3a
 
 hi SpellBad   guisp=#bc6c4c guifg=#dc8c6c
 hi SpellCap   guisp=#6c6c9c guifg=#8c8cbc
@@ -305,6 +306,7 @@ if &t_Co > 255
     hi VisualNOS       ctermfg=236   ctermbg=210     cterm=bold
     hi WarningMsg      ctermfg=15    ctermbg=236     cterm=bold
     hi WildMenu        ctermbg=236   ctermfg=194     cterm=bold
+    hi ColorColumn     ctermbg=grey
 
     " spellchecking, always "bright" background
     hi SpellLocal ctermfg=14  ctermbg=237
