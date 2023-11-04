@@ -122,8 +122,18 @@ plug({
             mb.delete(0)
           end
           local next_buf = bufstack.pop()
+          -- has current tab have more than 1 window?
+          local current_tab_windows_count = #vim.fn.tabpagebuflist(vim.fn.tabpagenr())
           if not next_buf then
-            vim.cmd('q')
+            if current_tab_windows_count > 1 then
+              vim.cmd('q')
+            else
+              if require('userlib.runtime.buffer').is_empty_buffer(0) then
+                vim.cmd('q')
+              else
+                vim.cmd('enew')
+              end
+            end
           else
             vim.api.nvim_win_set_buf(0, next_buf)
           end
@@ -217,8 +227,8 @@ plug({
     'cbochs/grapple.nvim',
     keys = {
       { '<leader>bg', '<cmd>GrappleToggle<cr>', desc = 'Toggle grapple' },
-      { '<leader>bp', '<cmd>GrapplePopup<cr>',  desc = 'Popup grapple' },
-      { '<leader>bc', '<cmd>GrappleCycle<cr>',  desc = 'Cycle grapple' },
+      { '<leader>bp', '<cmd>GrapplePopup<cr>', desc = 'Popup grapple' },
+      { '<leader>bc', '<cmd>GrappleCycle<cr>', desc = 'Cycle grapple' },
     },
     cmd = { 'GrappleToggle', 'GrapplePopup', 'GrappleCycle' },
     opts = {
@@ -318,13 +328,13 @@ plug({
   {
     'mrjones2014/smart-splits.nvim',
     keys = {
-      { '<A-h>', cmdstr([[lua require("smart-splits").resize_left()]]),       desc = 'Resize window to left' },
-      { '<A-j>', cmdstr([[lua require("smart-splits").resize_down()]]),       desc = 'Resize window to down' },
-      { '<A-k>', cmdstr([[lua require("smart-splits").resize_up()]]),         desc = 'Resize window to up' },
-      { '<A-l>', cmdstr([[lua require("smart-splits").resize_right()]]),      desc = 'Resize window to right' },
-      { '<C-h>', cmdstr([[lua require("smart-splits").move_cursor_left()]]),  desc = 'Move cursor to left window' },
-      { '<C-j>', cmdstr([[lua require("smart-splits").move_cursor_down()]]),  desc = 'Move cursor to down window' },
-      { '<C-k>', cmdstr([[lua require("smart-splits").move_cursor_up()]]),    desc = 'Move cursor to up window' },
+      { '<A-h>', cmdstr([[lua require("smart-splits").resize_left()]]), desc = 'Resize window to left' },
+      { '<A-j>', cmdstr([[lua require("smart-splits").resize_down()]]), desc = 'Resize window to down' },
+      { '<A-k>', cmdstr([[lua require("smart-splits").resize_up()]]), desc = 'Resize window to up' },
+      { '<A-l>', cmdstr([[lua require("smart-splits").resize_right()]]), desc = 'Resize window to right' },
+      { '<C-h>', cmdstr([[lua require("smart-splits").move_cursor_left()]]), desc = 'Move cursor to left window' },
+      { '<C-j>', cmdstr([[lua require("smart-splits").move_cursor_down()]]), desc = 'Move cursor to down window' },
+      { '<C-k>', cmdstr([[lua require("smart-splits").move_cursor_up()]]), desc = 'Move cursor to up window' },
       { '<C-l>', cmdstr([[lua require("smart-splits").move_cursor_right()]]), desc = 'Move cursor to right window' },
     },
     dependencies = {

@@ -16,7 +16,13 @@ set('n', '<S-q>', function()
   local pre_buf = nil
   if ok then pre_buf = bufstack.peek_bufstack() end
   require('oil').close()
-  if ok and not pre_buf then vim.cmd('q') end
+  if not ok then return end
+  if not pre_buf and #vim.fn.tabpagebuflist(vim.fn.tabpagenr()) > 1 then
+    vim.cmd('q')
+  end
+  if not pre_buf then
+    vim.cmd('enew')
+  end
 end, {
   desc = 'Close oil',
 })
