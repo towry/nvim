@@ -165,14 +165,19 @@ plug({
       winbar = {
         lualine_a = {
           {
+            function()
+              local cwd = vim.fn.fnamemodify(vim.t.cwd or vim.cfg.runtime__starts_cwd, ':t')
+              return cwd
+            end,
+          },
+          {
             'filename',
             file_status = true,
             path = 1,
             fmt = function(name)
               if name == '[No Name]' then return '' end
               local bufnr = vim.fn.bufnr('%')
-              local cwd = vim.fn.fnamemodify(vim.t.cwd or vim.cfg.runtime__starts_cwd, ':t')
-              return string.format('%s#%s~%s', bufnr, cwd, name)
+              return string.format('%s#%s', bufnr, name)
             end
           },
         },
