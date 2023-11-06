@@ -177,6 +177,8 @@ plug({
               return cwd
             end,
           },
+        },
+        lualine_b = {
           {
             'filename',
             file_status = true,
@@ -187,10 +189,11 @@ plug({
               return string.format('%s#%s', bufnr, name)
             end
           },
-        },
+
+        }
       },
       inactive_winbar = {
-        lualine_a = {
+        lualine_b = {
           {
             'filename',
             file_status = true,
