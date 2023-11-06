@@ -56,8 +56,7 @@ local tabs_component = {
     local cwd = vim.t[context.tabnr].cwd or vim.uv.cwd()
     if cwd then
       cwd = vim.fn.fnamemodify(cwd, ':t')
-    end
-    if name then
+    elseif not cwd then
       cwd = name
     end
     return string.format('%s%s', context.tabnr, cwd ~= '' and ':' .. cwd or '')
