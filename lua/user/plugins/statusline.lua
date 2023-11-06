@@ -47,6 +47,10 @@ local tabs_component = {
   mode = 1,
   use_mode_colors = true,
   draw_empty = false,
+  tabs_color = {
+    active = { fg = 'Green', gui = 'bold,underline' },
+    inactive = { fg = 'Comment' },
+  },
   cond = function() return vim.fn.tabpagenr('$') > 1 end,
   fmt = function(name, context)
     local cwd = vim.t[context.tabnr].cwd or ''
