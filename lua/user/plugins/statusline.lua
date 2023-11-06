@@ -246,6 +246,12 @@ plug({
             'copilot',
           },
           {
+            'overseer',
+            cond = function()
+              return package.loaded['overseer']
+            end,
+          },
+          {
             terms,
           },
           {
