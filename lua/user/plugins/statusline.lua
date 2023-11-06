@@ -111,6 +111,9 @@ plug({
       },
       winbar = {
         lualine_a = {
+          function()
+            return '  Hello Towry!'
+          end,
           cwd_component,
           git_branch,
         },
