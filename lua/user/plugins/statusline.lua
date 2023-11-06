@@ -246,10 +246,10 @@ plug({
             'copilot',
           },
           {
-            'overseer',
-            cond = function()
-              return package.loaded['overseer']
+            function()
+              return ''
             end,
+            name = "overseer-placeholder"
           },
           {
             terms,

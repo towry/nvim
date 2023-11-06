@@ -79,7 +79,7 @@
   "plenary.nvim": { "branch": "master", "commit": "50012918b2fc8357b87cff2a7f7f0446e47da174" },
   "popfix": { "branch": "master", "commit": "bf3cc436df63cd535350d5ef1b951c91554d4b01" },
   "popup.nvim": { "branch": "master", "commit": "b7404d35d5d3548a82149238289fa71f7f6de4ac" },
-  "project_nvim": { "branch": "feat/more-api", "commit": "9738ea1b0cb8d587af3073ed68dfb4832c293eb0" },
+  "project_nvim": { "branch": "main", "commit": "8f96883146510e50b28c5ffca88e2123a96bced4" },
   "range-highlight.nvim": { "branch": "master", "commit": "8b5e8ccb3460b2c3675f4639b9f54e64eaab36d9" },
   "rust-tools.nvim": { "branch": "master", "commit": "0cc8adab23117783a0292a0c8a2fbed1005dc645" },
   "smart-splits.nvim": { "branch": "master", "commit": "c8a9173d70cbbd1f6e4a414e49e31df2b32a1362" },

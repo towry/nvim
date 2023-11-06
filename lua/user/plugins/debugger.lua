@@ -381,6 +381,23 @@ pack.plug({
         overseer.run_action(tasks[1], "restart")
       end
     end, {})
+
+    -- setup lualine plugin
+    -- find table with property name = 'overseer-placeholder' and replace this
+    -- table with { 'overseer' }
+    local lualinecfg = require('lualine.config')
+    local current_lualine_cfg = lualinecfg.get_config()
+    local index = nil
+    for i, item in ipairs(current_lualine_cfg.sections.lualine_x) do
+      if item.name == 'overseer-placeholder' then
+        index = i
+        break
+      end
+    end
+    if index ~= nil then
+      current_lualine_cfg.sections.lualine_x[index] = { 'overseer' }
+    end
+    require('lualine').setup(lualinecfg.apply_configuration(current_lualine_cfg))
   end,
   init = function()
     require('userlib.legendary').register('overseer', function(lg)
