@@ -270,6 +270,7 @@ plug({
               local state = require('telescope.actions.state')
               require('userlib.runtime.utils').plugin_schedule('project_nvim', function()
                 require('telescope').extensions.projects.projects(require('telescope.themes').get_dropdown({
+                  cwd = vim.cfg.runtime__starts_cwd,
                   attach_mappings = function(prompt_bufnr, _map)
                     local on_project_selected = function()
                       local entry_path = state.get_selected_entry().value
