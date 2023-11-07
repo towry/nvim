@@ -107,6 +107,7 @@ plug({
     local empty_buffer_extension = {
       sections = {
         lualine_a = {
+          tabs_component,
         },
       },
       winbar = {
