@@ -176,6 +176,7 @@ plug({
               local cwd = vim.fn.fnamemodify(vim.t.cwd or vim.cfg.runtime__starts_cwd, ':t')
               return cwd
             end,
+            icon = '󰉋 '
           },
         },
         lualine_b = {
@@ -333,6 +334,7 @@ plug({
             function()
               return vim.cfg.runtime__starts_cwd_short
             end,
+            icon = ' '
           }
         },
       },
