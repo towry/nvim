@@ -53,7 +53,7 @@ local tabs_component = {
   },
   cond = function() return vim.fn.tabpagenr('$') > 1 end,
   fmt = function(name, context)
-    local cwd = vim.t[context.tabnr].cwd or vim.uv.cwd()
+    local cwd = vim.t[context.tabnr].cwd
     if cwd then
       cwd = vim.fn.fnamemodify(cwd, ':t')
     elseif not cwd then
