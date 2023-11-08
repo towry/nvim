@@ -39,6 +39,8 @@ function M.load_on_startup()
       {
         group = '_check_exit',
         callback = function()
+          local disable = true
+          if disable then return end
           --- https://github.com/neovim/neovim/issues/17256
           -- local tabs_count = #vim.api.nvim_list_tabpages()
           local tabs_count = 0
