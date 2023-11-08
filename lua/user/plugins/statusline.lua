@@ -172,7 +172,7 @@ plug({
         disabled_filetypes = { winbar = vim.cfg.misc__ft_exclude, statusline = { 'dashboard', 'lazy', 'alpha' } },
       },
       winbar = {
-        lualine_a = {
+        lualine_z = {
           {
             function()
               local cwd = vim.fn.fnamemodify(vim.b.cwd or vim.cfg.runtime__starts_cwd, ':t')
@@ -197,7 +197,7 @@ plug({
         }
       },
       inactive_winbar = {
-        lualine_a = {
+        lualine_z = {
           {
             function()
               local cwd = vim.fn.fnamemodify(vim.b.cwd or vim.cfg.runtime__starts_cwd, ':t')
@@ -215,6 +215,7 @@ plug({
               local bufnr = vim.fn.bufnr('%')
               if vim.b.cwd then
                 name = require('userlib.runtime.path').make_relative(name, vim.b.cwd)
+                name = require('userlib.runtime.path').shorten(name, 5)
               end
               return string.format('%s#%s', bufnr, name)
             end
@@ -368,11 +369,9 @@ plug({
 plug({
   {
     'b0o/incline.nvim',
-    event = { 'BufReadPost', 'BufNewFile', 'BufWinEnter' },
+    event = { 'BufReadPost', 'BufNewFile' },
     enabled = false,
     config = function()
-      if vim.g.started_by_firenvim then return end
-
       require('incline').setup({
         hide = {
           cursorline = true,
@@ -385,12 +384,18 @@ plug({
             horizontal = 0,
           },
         },
-        render = function()
-          local path = vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
+        render = function(ctx)
+          local buf = ctx.buf
+          local cwd = vim.fn.fnamemodify(vim.b[buf].cwd or vim.cfg.runtime__starts_cwd, ':t')
+          local bufname = vim.api.nvim_buf_get_name(buf)
+          bufname = require('userlib.runtime.path').make_relative(bufname, cwd)
+          bufname = require('userlib.runtime.path').shorten(bufname, 5)
+
           local icon = ' '
           return {
+            { bufname },
             { icon },
-            { path },
+            { cwd },
           }
         end,
       })
