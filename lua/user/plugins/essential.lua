@@ -155,16 +155,17 @@ pack.plug({
         },
         -- see :help dressing_get_config
         get_config = function(opts)
-          if opts.kind == 'codeaction' then
-            return {
-              backend = 'telescope',
-              nui = {
-                relative = 'cursor',
-                max_width = 80,
-                min_height = 2,
-              },
-            }
-          end
+          -- NOTE: code action ui
+          -- if opts.kind == 'codeaction' then
+          --   return {
+          --     backend = 'telescope',
+          --     nui = {
+          --       relative = 'cursor',
+          --       max_width = 80,
+          --       min_height = 2,
+          --     },
+          --   }
+          -- end
         end,
       },
     })
