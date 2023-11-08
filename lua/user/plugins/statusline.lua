@@ -181,12 +181,11 @@ plug({
             icon = '󰉋 '
           },
         },
-        lualine_b = {
+        lualine_a = {
           {
             'filename',
             file_status = true,
-            shorting_target = 40,
-            path = 1,
+            path = 4,
             fmt = function(name)
               if name == '[No Name]' then return '' end
               local bufnr = vim.fn.bufnr('%')
@@ -206,17 +205,13 @@ plug({
             icon = '󰉋 '
           },
         },
-        lualine_b = {
+        lualine_a = {
           {
             'filename',
             file_status = true,
-            path = 2,
+            path = 4,
             fmt = function(name)
               local bufnr = vim.fn.bufnr('%')
-              if vim.b.cwd then
-                name = require('userlib.runtime.path').make_relative(name, vim.b.cwd)
-                name = require('userlib.runtime.path').shorten(name, 5)
-              end
               return string.format('%s#%s', bufnr, name)
             end
           },
