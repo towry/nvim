@@ -70,7 +70,7 @@ plug({
   dependencies = {
     {
       -- 'pze/lualine-copilot',
-      'ofseed/lualine-copilot',
+      'ofseed/copilot-status.nvim',
       dev = false,
       enabled = true,
     },
