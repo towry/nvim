@@ -257,6 +257,7 @@ function M.update_cwd_env(cwd)
   vim.t.cwd = cwd
   -- only show last part of path.
   vim.t.cwd_short = require('userlib.runtime.path').home_to_tilde(cwd, { shorten = true })
+  return cwd, vim.t.cwd_short
 end
 
 ---- UTF-8

@@ -175,7 +175,7 @@ plug({
         lualine_a = {
           {
             function()
-              local cwd = vim.fn.fnamemodify(vim.t.cwd or vim.cfg.runtime__starts_cwd, ':t')
+              local cwd = vim.fn.fnamemodify(vim.b.cwd or vim.cfg.runtime__starts_cwd, ':t')
               return cwd
             end,
             icon = '󰉋 '
@@ -185,6 +185,7 @@ plug({
           {
             'filename',
             file_status = true,
+            shorting_target = 40,
             path = 1,
             fmt = function(name)
               if name == '[No Name]' then return '' end
@@ -196,17 +197,27 @@ plug({
         }
       },
       inactive_winbar = {
+        lualine_a = {
+          {
+            function()
+              local cwd = vim.fn.fnamemodify(vim.b.cwd or vim.cfg.runtime__starts_cwd, ':t')
+              return cwd
+            end,
+            icon = '󰉋 '
+          },
+        },
         lualine_b = {
           {
             'filename',
             file_status = true,
-            path = 3,
+            shorting_target = 40,
+            path = 1,
             fmt = function(name)
               local bufnr = vim.fn.bufnr('%')
               return string.format('%s#%s', bufnr, name)
             end
           },
-        },
+        }
       },
       sections = {
         lualine_a = {

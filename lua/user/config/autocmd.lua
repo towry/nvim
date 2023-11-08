@@ -218,8 +218,13 @@ function M.load_on_startup()
       callback = function(ctx)
         local data = ctx.data or {}
         local new_cwd = data.dir or nil
-        if not new_cwd then new_cwd = vim.uv.get_cwd() end
-        require('userlib.runtime.utils').update_cwd_env(new_cwd)
+        ---@diagnostic disable-next-line: undefined-field
+        if not new_cwd then new_cwd = vim.uv.cwd() end
+        local cwd, cwd_short = require('userlib.runtime.utils').update_cwd_env(new_cwd)
+        if vim.bo.buftype ~= '' then return end
+        -- set cwd on this buffer.
+        vim.b[ctx.buf].cwd = cwd
+        vim.b[ctx.buf].cwd_short = cwd_short
       end,
     },
     {

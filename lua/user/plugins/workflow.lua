@@ -246,12 +246,12 @@ plug({
       {
         'pze/project.nvim',
         branch = 'main',
-        dev = false,
+        dev = true,
         cond = not vim.cfg.runtime__starts_as_gittool,
         name = 'project_nvim',
         cmd = { 'ProjectRoot' },
         event = {
-          'BufRead',
+          'BufReadPre',
           'BufNewFile',
         },
         keys = {
