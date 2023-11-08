@@ -210,10 +210,12 @@ plug({
           {
             'filename',
             file_status = true,
-            shorting_target = 40,
-            path = 1,
+            path = 2,
             fmt = function(name)
               local bufnr = vim.fn.bufnr('%')
+              if vim.b.cwd then
+                name = require('userlib.runtime.path').make_relative(name, vim.b.cwd)
+              end
               return string.format('%s#%s', bufnr, name)
             end
           },
