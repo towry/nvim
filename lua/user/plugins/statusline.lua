@@ -175,7 +175,7 @@ plug({
         lualine_z = {
           {
             function()
-              local cwd = vim.fn.fnamemodify(vim.b.cwd or vim.cfg.runtime__starts_cwd, ':t')
+              local cwd = vim.fn.fnamemodify(vim.b.cwd or vim.uv.cwd(), ':t')
               return cwd
             end,
             icon = '󰉋 '
@@ -199,7 +199,7 @@ plug({
         lualine_z = {
           {
             function()
-              local cwd = vim.fn.fnamemodify(vim.b.cwd or vim.cfg.runtime__starts_cwd, ':t')
+              local cwd = vim.fn.fnamemodify(vim.b.cwd or vim.uv.cwd(), ':t')
               return cwd
             end,
             icon = '󰉋 '
