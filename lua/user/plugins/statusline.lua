@@ -66,10 +66,11 @@ local tabs_component = {
 plug({
   'nvim-lualine/lualine.nvim',
   enabled = enable_lualine,
+  cond = not vim.cfg.runtime__starts_as_gittool,
   dependencies = {
     {
       -- 'pze/lualine-copilot',
-      'ofseed/lualine-copilot',
+      'ofseed/copilot-status.nvim',
       dev = false,
       enabled = true,
     },
@@ -171,20 +172,20 @@ plug({
         disabled_filetypes = { winbar = vim.cfg.misc__ft_exclude, statusline = { 'dashboard', 'lazy', 'alpha' } },
       },
       winbar = {
-        lualine_a = {
+        lualine_z = {
           {
             function()
-              local cwd = vim.fn.fnamemodify(vim.t.cwd or vim.cfg.runtime__starts_cwd, ':t')
+              local cwd = vim.fn.fnamemodify(vim.b.cwd or vim.uv.cwd(), ':t')
               return cwd
             end,
             icon = '󰉋 '
           },
         },
-        lualine_b = {
+        lualine_a = {
           {
             'filename',
             file_status = true,
-            path = 1,
+            path = 4,
             fmt = function(name)
               if name == '[No Name]' then return '' end
               local bufnr = vim.fn.bufnr('%')
@@ -195,17 +196,26 @@ plug({
         }
       },
       inactive_winbar = {
-        lualine_b = {
+        lualine_z = {
+          {
+            function()
+              local cwd = vim.fn.fnamemodify(vim.b.cwd or vim.uv.cwd(), ':t')
+              return cwd
+            end,
+            icon = '󰉋 '
+          },
+        },
+        lualine_a = {
           {
             'filename',
             file_status = true,
-            path = 3,
+            path = 4,
             fmt = function(name)
               local bufnr = vim.fn.bufnr('%')
               return string.format('%s#%s', bufnr, name)
             end
           },
-        },
+        }
       },
       sections = {
         lualine_a = {
@@ -354,11 +364,9 @@ plug({
 plug({
   {
     'b0o/incline.nvim',
-    event = { 'BufReadPost', 'BufNewFile', 'BufWinEnter' },
+    event = { 'BufReadPost', 'BufNewFile' },
     enabled = false,
     config = function()
-      if vim.g.started_by_firenvim then return end
-
       require('incline').setup({
         hide = {
           cursorline = true,
@@ -371,12 +379,18 @@ plug({
             horizontal = 0,
           },
         },
-        render = function()
-          local path = vim.t.cwd_short or vim.cfg.runtime__starts_cwd_short
+        render = function(ctx)
+          local buf = ctx.buf
+          local cwd = vim.fn.fnamemodify(vim.b[buf].cwd or vim.cfg.runtime__starts_cwd, ':t')
+          local bufname = vim.api.nvim_buf_get_name(buf)
+          bufname = require('userlib.runtime.path').make_relative(bufname, cwd)
+          bufname = require('userlib.runtime.path').shorten(bufname, 5)
+
           local icon = ' '
           return {
+            { bufname },
             { icon },
-            { path },
+            { cwd },
           }
         end,
       })

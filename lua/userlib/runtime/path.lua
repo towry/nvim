@@ -20,6 +20,15 @@ local function shorten(path, segments_left)
   return pathlib:new(path):shorten(segments_left)
 end
 
+---@param path string
+---@param cwd string
+---@return string
+local function make_relative(path, cwd)
+  local ok, pathlib = pcall(require, 'plenary.path')
+  if not ok then return path end
+  return pathlib:new(path):make_relative(cwd)
+end
+
 local function escape_wildcards(path)
   return path:gsub('([%[%]%?%*])', '\\%1')
 end
@@ -226,4 +235,5 @@ return {
   search_ancestors = search_ancestors,
   home_to_tilde = home_to_tilde,
   shorten = shorten,
+  make_relative = make_relative,
 }

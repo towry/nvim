@@ -6,6 +6,7 @@ plug({
   branch = 'main',
   build = ':TSUpdate',
   lazy = false,
+  cond = not vim.cfg.runtime__starts_as_gittool,
   config = function()
     require('nvim-treesitter').setup({
       ensure_install = vim.cfg.lang__treesitter_ensure_installed,
@@ -62,6 +63,7 @@ plug({
 
   {
     'JoosepAlviste/nvim-ts-context-commentstring',
+    cond = not vim.cfg.runtime__starts_as_gittool,
     dependencies = {
       'nvim-treesitter/nvim-treesitter',
     },
@@ -70,6 +72,7 @@ plug({
 
   {
     'numToStr/Comment.nvim',
+    cond = not vim.cfg.runtime__starts_as_gittool,
     event = { 'BufReadPost', 'BufNewFile' },
     opts = function()
       return {
@@ -174,6 +177,7 @@ plug({
   },
   {
     'm-demare/hlargs.nvim',
+    cond = not vim.cfg.runtime__starts_as_gittool,
     event = au.user_autocmds.FileOpenedAfter_User,
     opts = {
       color = '#F7768E',

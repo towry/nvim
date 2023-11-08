@@ -20,11 +20,13 @@ plug({
         border = vim.cfg.ui__float_border,
       },
     },
+    cond = not vim.cfg.runtime__starts_as_gittool
   },
 
   {
     'neovim/nvim-lspconfig',
     event = { 'BufRead', 'BufNewFile' },
+    cond = not vim.cfg.runtime__starts_as_gittool,
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
       'williamboman/mason-lspconfig.nvim',

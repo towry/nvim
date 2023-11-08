@@ -15,7 +15,7 @@ pack.plug({
     'MunifTanjim/nui.nvim',
   },
   {
-    'nvim-telescope/telescope-ui-select.nvim',
+    'spoof/telescope-ui-select.nvim',
     dependencies = {
       'nvim-telescope/telescope.nvim',
     },
@@ -155,9 +155,10 @@ pack.plug({
         },
         -- see :help dressing_get_config
         get_config = function(opts)
+          -- NOTE: code action ui
           if opts.kind == 'codeaction' then
             return {
-              backend = 'telescope',
+              backend = 'nui',
               nui = {
                 relative = 'cursor',
                 max_width = 80,
