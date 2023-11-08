@@ -9,6 +9,9 @@ return {
     'dist/',
     '.cargo/',
   },
+  --- the argv(0) maybe /folder/path/.git/COMMIT_EDITMSG, test if it is match
+  runtime__starts_as_gittool = vim.fn.argc(-1) ~= 0 and
+  vim.tbl_contains({ 'COMMIT_EDITMSG', 'MERGE_MSG' }, vim.fn.expand('%:t')),
   runtime__starts_in_buffer = vim.fn.argc(-1) ~= 0,
   runtime__starts_cwd = cwd,
   runtime__starts_cwd_short = require('userlib.runtime.path').home_to_tilde(cwd, {

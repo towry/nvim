@@ -146,6 +146,7 @@ plug({
   --- open buffer last place.
   {
     'ethanholz/nvim-lastplace',
+    cond = not vim.cfg.runtime__starts_as_gittool,
     event = { 'BufReadPre' },
     opts = {
       lastplace_ignore_buftype = vim.cfg.misc__buf_exclude,
@@ -246,6 +247,7 @@ plug({
         'pze/project.nvim',
         branch = 'main',
         dev = false,
+        cond = not vim.cfg.runtime__starts_as_gittool,
         name = 'project_nvim',
         cmd = { 'ProjectRoot' },
         event = {
@@ -474,7 +476,7 @@ plug({
 
 plug({
   'towry/window-bufstack.nvim',
-  cond = true,
+  cond = not vim.cfg.runtime__starts_as_gittool,
   version = 'v1.0.4',
   dev = false,
   opts = {
@@ -493,6 +495,7 @@ plug({
 local cache_tcd = nil
 plug({
   'echasnovski/mini.sessions',
+  cond = not vim.cfg.runtime__starts_as_gittool,
   version = '*',
   cmd = {
     'MakeSession',

@@ -66,6 +66,7 @@ local tabs_component = {
 plug({
   'nvim-lualine/lualine.nvim',
   enabled = enable_lualine,
+  cond = not vim.cfg.runtime__starts_as_gittool,
   dependencies = {
     {
       -- 'pze/lualine-copilot',
