@@ -15,7 +15,7 @@ pack.plug({
     'MunifTanjim/nui.nvim',
   },
   {
-    'spoof/telescope-ui-select.nvim',
+    'nvim-telescope/telescope-ui-select.nvim',
     dependencies = {
       'nvim-telescope/telescope.nvim',
     },
