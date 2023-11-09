@@ -248,7 +248,7 @@ plug({
       {
         'pze/project.nvim',
         branch = 'main',
-        dev = true,
+        dev = false,
         cond = not vim.cfg.runtime__starts_as_gittool,
         name = 'project_nvim',
         cmd = { 'ProjectRoot' },

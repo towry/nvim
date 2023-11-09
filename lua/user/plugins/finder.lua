@@ -448,6 +448,9 @@ plug({
     },
     {
       'jvgrootveld/telescope-zoxide',
+      keys = {
+        { '<leader>fz', ':lua require("telescope").extensions.zoxide.list()<cr>', desc = 'zoxide', silent = true }
+      }
     },
   },
   config = function(_, opts)
