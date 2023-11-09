@@ -233,6 +233,26 @@ local function setup_basic()
   end, {
     desc = 'Toggle profile',
   })
+
+  local tip_is_loading = false
+  set('n', '<leader>/t', function()
+    if tip_is_loading then return end
+    local job = require 'plenary.job'
+    job:new({
+      command = 'curl',
+      args = { 'https://vtip.43z.one' },
+      on_exit = function(j, exit_code)
+        tip_is_loading = false
+        local res = table.concat(j:result())
+        if exit_code ~= 0 then
+          res = 'Error fetching tip: ' .. res
+        end
+        print(res)
+      end,
+    }):start()
+  end, {
+    desc = 'Get a random tip from vtip.43z.one'
+  })
 end
 
 function M.setup() setup_basic() end
