@@ -60,8 +60,8 @@ pack.plug({
         },
       })
 
-      local cmp_tabnine_status_ok, tabnine = pcall(require, 'cmp_tabnine.config')
-      if not cmp_tabnine_status_ok then return end
+      -- local cmp_tabnine_status_ok, tabnine = pcall(require, 'cmp_tabnine.config')
+      -- if not cmp_tabnine_status_ok then return end
 
       local cmp_status_ok, cmp = pcall(require, 'cmp')
       if not cmp_status_ok then return end
@@ -289,7 +289,7 @@ pack.plug({
         },
         -- You should specify your *installed* sources.
         sources = {
-          { name = 'nvim_lsp',                priority = 10, max_item_count = 6 },
+          { name = 'nvim_lsp',                priority = 10, max_item_count = 5 },
           -- { name = "copilot",                 priority = 30, max_item_count = 4 },
           -- { name = 'codeium', priority = 7, max_item_count = 4 },
           { name = 'nvim_lsp_signature_help', priority = 10, max_item_count = 3 },
@@ -301,7 +301,7 @@ pack.plug({
             priority = 10,
             keyword_length = 2,
             option = buffer_option,
-            max_item_count = 5,
+            max_item_count = 4,
           },
           { name = 'nvim_lua', priority = 5, ft = 'lua' },
           { name = 'path',     priority = 4 },
@@ -387,15 +387,15 @@ pack.plug({
       -- ╭────────-─────────────────────────────────────────────────╮
       -- │ Tabnine Setup                                            │
       -- ╰──────────────────────────────────────────────────────────╯
-      tabnine:setup({
-        max_lines = 30,
-        max_num_results = 3,
-        sort = false,
-        show_prediction_strength = false,
-        run_on_every_keystroke = false,
-        snipper_placeholder = '..',
-        ignored_file_types = vim.cfg.misc__ignored_file_types,
-      })
+      -- tabnine:setup({
+      --   max_lines = 30,
+      --   max_num_results = 3,
+      --   sort = false,
+      --   show_prediction_strength = false,
+      --   run_on_every_keystroke = false,
+      --   snipper_placeholder = '..',
+      --   ignored_file_types = vim.cfg.misc__ignored_file_types,
+      -- })
       -- cmp npm
       require('cmp-npm').setup({
         ignore = {},
