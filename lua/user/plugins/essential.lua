@@ -15,18 +15,6 @@ pack.plug({
     'MunifTanjim/nui.nvim',
   },
   {
-    'nvim-telescope/telescope-ui-select.nvim',
-    dependencies = {
-      'nvim-telescope/telescope.nvim',
-    },
-    init = function()
-      require('userlib.runtime.au').define_user_autocmd({
-        pattern = 'TelescopeConfigDone',
-        callback = function() require('telescope').load_extension('ui-select') end,
-      })
-    end,
-  },
-  {
     'tpope/vim-repeat',
     keys = { '.' },
   },
@@ -262,7 +250,7 @@ pack.plug({
       icons = {
         breadcrumb = '»', -- symbol used in the command line area that shows your active key combo
         separator = ' ', -- symbol used between a key and it's label
-        group = '  ',  -- symbol prepended to a group
+        group = '  ', -- symbol prepended to a group
       },
       popup_mappings = {
         scroll_down = '<c-d>', -- binding to scroll down inside the popup
@@ -416,7 +404,7 @@ local function setup_yanky_legendary()
     description = 'Paste from yanky',
   })
   legendary.keymaps({
-    { '<Plug>(YankyCycleForward)',  description = 'Yanky/paste cycle forward ' },
+    { '<Plug>(YankyCycleForward)', description = 'Yanky/paste cycle forward ' },
     { '<Plug>(YankyCycleBackward)', description = 'Ynky/paste cycle backward ' },
   })
 end

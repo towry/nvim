@@ -388,7 +388,7 @@ pack.plug({
       -- │ Tabnine Setup                                            │
       -- ╰──────────────────────────────────────────────────────────╯
       tabnine:setup({
-        max_lines = 800,
+        max_lines = 30,
         max_num_results = 3,
         sort = false,
         show_prediction_strength = false,

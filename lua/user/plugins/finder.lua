@@ -577,13 +577,6 @@ plug({
         },
       },
       extensions = {
-        ['ui-select'] = {
-          require('telescope.themes').get_dropdown({
-            border = true,
-            borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
-            -- even more opts
-          }),
-        },
         file_browser = {
           use_fd = true,
           mappings = {
