@@ -21,7 +21,9 @@ set('n', '<S-q>', function()
     vim.cmd('q')
   end
   if not pre_buf then
-    vim.cmd('enew')
+    vim.schedule(function()
+      vim.cmd('enew')
+    end)
   end
 end, {
   desc = 'Close oil',

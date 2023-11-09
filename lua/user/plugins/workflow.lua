@@ -112,14 +112,15 @@ plug({
       {
         '<S-q>',
         function()
+          local current_buf = vim.api.nvim_get_current_buf()
           local mb = require('mini.bufremove')
           local bufstack = require('window-bufstack.bufstack')
           bufstack.ignore_next()
           --- buffer is displayed in other window.
           if #vim.fn.win_findbuf(vim.fn.bufnr('%')) > 1 then
-            mb.unshow_in_window(0)
+            mb.unshow_in_window(current_buf)
           else
-            mb.delete(0)
+            mb.delete(current_buf)
           end
           local next_buf = bufstack.pop()
           -- has current tab have more than 1 window?
@@ -128,13 +129,14 @@ plug({
             if current_tab_windows_count > 1 then
               vim.cmd('q')
             else
-              if require('userlib.runtime.buffer').is_empty_buffer(0) then
+              if require('userlib.runtime.buffer').is_empty_buffer(current_buf) then
                 vim.cmd('q')
               else
                 vim.cmd('enew')
               end
             end
           else
+            print("set next buf")
             vim.api.nvim_win_set_buf(0, next_buf)
           end
         end,
