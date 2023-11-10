@@ -1,5 +1,16 @@
 local M = {}
 
+local function get_window_bufnr(winid)
+  return vim.api.nvim_win_call(winid, function()
+    return vim.fn.bufnr('%')
+  end)
+end
+local function change_window_bufnr(winid, bufnr)
+  vim.api.nvim_win_call(winid, function()
+    vim.cmd(string.format('buffer %d', bufnr))
+  end)
+end
+
 M.open_window_hydra = function(is_manually)
   local Hydra = require('hydra')
   -- local cmd = require('hydra.keymap-util').cmd
@@ -52,25 +63,31 @@ M.open_window_hydra = function(is_manually)
       { 'p',     '<C-w><C-p>',                       { exit = true, nowait = true } },
       { 'x', function()
         local cur_win = vim.api.nvim_get_current_win()
-        local count = vim.v.count
+        if vim.fn.winnr('$') <= 2 then
+          vim.cmd('wincmd x')
+          return
+        end
         vim.schedule(function()
-          if count == 0 then
-            local ok, winpick = pcall(require, 'window-picker')
-            if not ok then
-              count = 0
-            else
-              local picked = winpick.pick_window({
-                autoselect_one = false,
-                include_current_win = false,
-                hint = 'floating-big-letter',
-              })
-              if not picked then return end
-              local picked_win_number = vim.fn.win_id2win(picked)
-              count = picked_win_number
-            end
+          local ok, winpick = pcall(require, 'window-picker')
+          if not ok then
+            vim.cmd('wincmd x')
+            return
+          else
+            local picked = winpick.pick_window({
+              autoselect_one = false,
+              include_current_win = false,
+              hint = 'floating-big-letter',
+            })
+            if not picked then return end
+            local current_bufnr = get_window_bufnr(cur_win)
+            local target_bufnr = get_window_bufnr(picked)
+            change_window_bufnr(picked, current_bufnr)
+            -- use wincmd to focus picked window.
+            change_window_bufnr(cur_win, target_bufnr)
+            vim.cmd(string.format('%dwincmd w', vim.fn.win_id2win(picked)))
+            -- go back, so we can use quickly switch between those two window.
+            vim.cmd('wincmd p')
           end
-          vim.cmd(string.format('%swincmd x', count ~= 0 and count or ''))
-          vim.api.nvim_set_current_win(cur_win)
         end)
       end, { exit = true, nowait = true, desc = 'swap window' } },
       { 'c',     pcmd('close', 'E444'), { exit = true, nowait = true } },
