@@ -53,7 +53,7 @@ M.project_files = function(opts)
   if not opts.cwd then
     opts.cwd = vim.t.cwd or vim.uv.cwd()
   end
-  opts.hidden = true
+  -- opts.hidden = true
 
   local nicely_cwd = require('userlib.runtime.path').home_to_tilde(opts.cwd)
   opts.prompt_title = opts.prompt_title or nicely_cwd
