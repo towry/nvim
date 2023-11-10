@@ -7,8 +7,8 @@ M.open_window_hydra = function(is_manually)
 
   local hint = [[
   focus:   _h_: ←    _j_: ↓    _k_: ↑    _l_: →
-  Rerange: _H_: ←    _J_: ↓    _K_: ↑    _L_: →
-  Split:   _x_: Horizontal _v_: Vertical _T_: Move-to-tab
+  Rerange: _H_: ←    _J_: ↓    _K_: ↑    _L_: →    _x_: swap
+  Split:   _s_: Horizontal _v_: Vertical _T_: Move-to-tab
   Close:   _c_: Close _q_: Close
   Auto:    _a_: Auto Size   _m_: Maximize  _f_: No auto size
   Other:   _w_: Next  _o_: Remain only|Maximize
@@ -41,7 +41,7 @@ M.open_window_hydra = function(is_manually)
       { 'L',     '<C-w>L',                           { exit = true } },
       { 'T',     '<C-w>T',                           { exit = true } },
       { '=',     '<C-w>=',                           { desc = 'equalize', exit = true } },
-      { 'x',     pcmd('split', 'E36'),               { nowait = true, exit = true } },
+      { 's',     pcmd('split', 'E36'),               { nowait = true, exit = true } },
       { '<C-s>', pcmd('split', 'E36'),               { desc = false, nowait = true, exit = true } },
       { 'v',     pcmd('vsplit', 'E36'),              { nowait = true, exit = true } },
       { '<C-v>', pcmd('vsplit', 'E36'),              { desc = false, nowait = true } },
@@ -50,11 +50,34 @@ M.open_window_hydra = function(is_manually)
       { 'o',     '<C-w>o',                           { exit = true, desc = 'remain only' } },
       { '<C-o>', '<C-w>o',                           { exit = true, desc = false } },
       { 'p',     '<C-w><C-p>',                       { exit = true, nowait = true } },
-      { 'c',     pcmd('close', 'E444'),              { exit = true, nowait = true } },
-      { 'q',     pcmd('close', 'E444'),              { desc = 'close window', exit = true } },
-      { '<C-c>', pcmd('close', 'E444'),              { desc = false } },
-      { '<C-q>', pcmd('close', 'E444'),              { desc = false } },
-      { '<Esc>', nil,                                { exit = true, desc = false } },
+      { 'x', function()
+        local cur_win = vim.api.nvim_get_current_win()
+        local count = vim.v.count
+        vim.schedule(function()
+          if count == 0 then
+            local ok, winpick = pcall(require, 'window-picker')
+            if not ok then
+              count = 0
+            else
+              local picked = winpick.pick_window({
+                autoselect_one = false,
+                include_current_win = false,
+                hint = 'floating-big-letter',
+              })
+              if not picked then return end
+              local picked_win_number = vim.fn.win_id2win(picked)
+              count = picked_win_number
+            end
+          end
+          vim.cmd(string.format('%swincmd x', count ~= 0 and count or ''))
+          vim.api.nvim_set_current_win(cur_win)
+        end)
+      end, { exit = true, nowait = true, desc = 'swap window' } },
+      { 'c',     pcmd('close', 'E444'), { exit = true, nowait = true } },
+      { 'q',     pcmd('close', 'E444'), { desc = 'close window', exit = true } },
+      { '<C-c>', pcmd('close', 'E444'), { desc = false } },
+      { '<C-q>', pcmd('close', 'E444'), { desc = false } },
+      { '<Esc>', nil,                   { exit = true, desc = false } },
     }
   })
 
