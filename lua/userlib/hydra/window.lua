@@ -8,7 +8,7 @@ M.open_window_hydra = function(is_manually)
   local hint = [[
   focus:   _h_: ←    _j_: ↓    _k_: ↑    _l_: →
   Rerange: _H_: ←    _J_: ↓    _K_: ↑    _L_: →
-  Split:   _x_: Horizontal _v_: Vertical
+  Split:   _x_: Horizontal _v_: Vertical _T_: Move-to-tab
   Close:   _c_: Close _q_: Close
   Auto:    _a_: Auto Size   _m_: Maximize  _f_: No auto size
   Other:   _w_: Next  _o_: Remain only|Maximize
@@ -39,6 +39,7 @@ M.open_window_hydra = function(is_manually)
       { 'J',     '<C-w>J',                           { exit = true } },
       { 'K',     '<C-w>K',                           { exit = true } },
       { 'L',     '<C-w>L',                           { exit = true } },
+      { 'T',     '<C-w>T',                           { exit = true } },
       { '=',     '<C-w>=',                           { desc = 'equalize', exit = true } },
       { 'x',     pcmd('split', 'E36'),               { nowait = true, exit = true } },
       { '<C-s>', pcmd('split', 'E36'),               { desc = false, nowait = true, exit = true } },

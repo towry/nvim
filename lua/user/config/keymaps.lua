@@ -202,6 +202,15 @@ local function setup_basic()
   set('n', '<leader>tn', cmd('tabnew'), {
     desc = 'New tab',
   })
+  -- map alt+number to navigate to window by ${number} . wincmd w<cr>
+  for i = 1, 9 do
+    set('n', '<M-' .. i .. '>', cmd(i .. 'wincmd w'), {
+      desc = 'which_key_ignore',
+    })
+  end
+  set('n', '<M-`>', cmd('wincmd p'), {
+    desc = 'which_key_ignore',
+  })
 
   set('n', 'qq', cmd([[:qa]]), {
     desc = 'Quit all',
