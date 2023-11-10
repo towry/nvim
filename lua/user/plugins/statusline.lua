@@ -189,7 +189,8 @@ plug({
             fmt = function(name)
               if name == '[No Name]' then return '' end
               local bufnr = vim.fn.bufnr('%')
-              return string.format('%s#%s', bufnr, name)
+              local winindex = vim.fn.win_id2win(vim.fn.win_getid())
+              return string.format('%s.%s#%s', winindex, bufnr, name)
             end
           },
 
@@ -212,7 +213,8 @@ plug({
             path = 4,
             fmt = function(name)
               local bufnr = vim.fn.bufnr('%')
-              return string.format('%s#%s', bufnr, name)
+              local winindex = vim.fn.win_id2win(vim.fn.win_getid())
+              return string.format('%s.%s#%s', winindex, bufnr, name)
             end
           },
         }
