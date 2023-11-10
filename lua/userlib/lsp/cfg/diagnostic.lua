@@ -69,7 +69,14 @@ end
 function M.setup()
   -- local signs = { Error = '', Warn = '', Hint = '', Info = '' }
   local signs = { Error = 'E', Warn = 'W', Hint = 'H', Info = 'I' }
-  local enable_virtual_text = true
+  local enable_virtual_text = false
+  local virtual_text = enable_virtual_text and {
+    severity = vim.diagnostic.severity.ERROR,
+    spacing = 1,
+    prefix = '■',
+    -- right_align | overlay | eol | inline
+    -- virt_text_pos = 'right_align',
+  } or false
 
   vim.diagnostic.config({
     float = {
@@ -79,41 +86,36 @@ function M.setup()
     signs = signs == false and false or true,
     underline = true,
     update_in_insert = false,
-    -- virtual_text = false,
-    virtual_text = {
-      severity = vim.diagnostic.severity.ERROR,
-      spacing = 1,
-      prefix = '■',
-      -- right_align | overlay | eol | inline
-      virt_text_pos = 'right_align',
-    },
+    virtual_text = virtual_text,
   })
 
-  local diagnostic_ns = vim.api.nvim_create_augroup('dia_insert', { clear = true })
-  -- Display diagnostics as virtual text only if not in insert mode
-  vim.api.nvim_create_autocmd("InsertEnter", {
-    pattern = "*",
-    group = diagnostic_ns,
-    callback = function()
-      vim.diagnostic.config({
-        virtual_text = false,
-      })
-      if not enable_virtual_text then
-        vim.api.nvim_create_augroup('dia_insert', { clear = true })
-        return
+  if enable_virtual_text then
+    local diagnostic_ns = vim.api.nvim_create_augroup('dia_insert', { clear = true })
+    -- Display diagnostics as virtual text only if not in insert mode
+    vim.api.nvim_create_autocmd("InsertEnter", {
+      pattern = "*",
+      group = diagnostic_ns,
+      callback = function()
+        vim.diagnostic.config({
+          virtual_text = false,
+        })
+        if not enable_virtual_text then
+          vim.api.nvim_create_augroup('dia_insert', { clear = true })
+          return
+        end
       end
-    end
-  })
-  vim.api.nvim_create_autocmd("InsertLeave", {
-    pattern = "*",
-    group = diagnostic_ns,
-    callback = function()
-      if not enable_virtual_text then return end
-      vim.diagnostic.config({
-        virtual_text = true,
-      })
-    end
-  })
+    })
+    vim.api.nvim_create_autocmd("InsertLeave", {
+      pattern = "*",
+      group = diagnostic_ns,
+      callback = function()
+        if not enable_virtual_text then return end
+        vim.diagnostic.config({
+          virtual_text = true,
+        })
+      end
+    })
+  end
 
   -- vim.diagnostic.handlers.underline = {
   --   show = M.remove_multiline_underline_handler,
