@@ -1,15 +1,15 @@
 {
   "Prettier ignore comment": {
     "prefix": ["ignore_prettier", "prettier_ignore"],
-    "body": [
-      "// prettier-ignore"
-    ]
+    "body": ["// prettier-ignore"]
   },
   "Eslint disable next line": {
     "prefix": ["eslint_disable"],
-    "body": [
-      "// eslint-disable-next-line"
-    ]
+    "body": ["// eslint-disable-next-line"]
+  },
+  "sass element": {
+    "prefix": ["sass-element"],
+    "body": ["@include element(\"${1}\") {", "  ${2}", "}"]
   },
   "generate snippet package": {
     "prefix": ["snippet_package"],
