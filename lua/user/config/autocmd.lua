@@ -6,16 +6,6 @@ function M.load_on_startup()
   -- taken from AstroNvim
   local definitions = {
     {
-      { 'CursorHold' },
-      {
-        group = '_show_diagnostic_in_line',
-        pattern = '*',
-        callback = function()
-          vim.diagnostic.open_float(nil, { scope = 'line', header = vim.fn.getline('.') })
-        end,
-      }
-    },
-    {
       { 'BufReadPost' },
       {
         group = '_clear_fugitive_bufs',
