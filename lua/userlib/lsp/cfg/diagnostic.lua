@@ -69,6 +69,7 @@ end
 function M.setup()
   -- local signs = { Error = '', Warn = '', Hint = '', Info = '' }
   local signs = { Error = 'E', Warn = 'W', Hint = 'H', Info = 'I' }
+  local enable_virtual_text = true
 
   vim.diagnostic.config({
     float = {
@@ -86,6 +87,32 @@ function M.setup()
       -- right_align | overlay | eol | inline
       virt_text_pos = 'right_align',
     },
+  })
+
+  local diagnostic_ns = vim.api.nvim_create_augroup('dia_insert', { clear = true })
+  -- Display diagnostics as virtual text only if not in insert mode
+  vim.api.nvim_create_autocmd("InsertEnter", {
+    pattern = "*",
+    group = diagnostic_ns,
+    callback = function()
+      vim.diagnostic.config({
+        virtual_text = false,
+      })
+      if not enable_virtual_text then
+        vim.api.nvim_create_augroup('dia_insert', { clear = true })
+        return
+      end
+    end
+  })
+  vim.api.nvim_create_autocmd("InsertLeave", {
+    pattern = "*",
+    group = diagnostic_ns,
+    callback = function()
+      if not enable_virtual_text then return end
+      vim.diagnostic.config({
+        virtual_text = true,
+      })
+    end
   })
 
   -- vim.diagnostic.handlers.underline = {
