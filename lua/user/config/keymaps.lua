@@ -26,14 +26,14 @@ local function setup_basic()
     silent = true,
     desc = 'Pick register from insert mode',
   })
-  set('n', '[b', ':bprevious<CR>', {
-    desc = 'Previous buffer',
-    noremap = true,
-  })
-  set('n', ']b', ':bnext<cr>', {
-    desc = 'Next buffer',
-    noremap = true,
-  })
+  -- set('n', '[b', ':bprevious<CR>', {
+  --   desc = 'Previous buffer',
+  --   noremap = true,
+  -- })
+  -- set('n', ']b', ':bnext<cr>', {
+  --   desc = 'Next buffer',
+  --   noremap = true,
+  -- })
   --- quickly go into cmd
   set('n', xk([[<C-;>]]), ':<C-u>', {
     expr = false,

@@ -483,11 +483,39 @@ plug({
   'towry/window-bufstack.nvim',
   cond = not vim.cfg.runtime__starts_as_gittool,
   version = 'v1.0.4',
-  dev = false,
+  dev = true,
   opts = {
     ignore_filetype = { 'oil' },
   },
   lazy = false,
+  keys = {
+    {
+      '[b',
+      function()
+        local bufstack = require('window-bufstack.bufstack')
+        local next_buf = bufstack.peek_bufstack(0, 1)
+        if next_buf then
+          vim.api.nvim_win_set_buf(0, next_buf)
+        else
+          vim.cmd('bprevious')
+        end
+      end,
+      desc = 'Previous buffer'
+    },
+    {
+      ']b',
+      function()
+        local bufstack = require('window-bufstack.bufstack')
+        local next_buf = bufstack.peek_bufstack(0, 1)
+        if next_buf then
+          vim.api.nvim_win_set_buf(0, next_buf)
+        else
+          vim.cmd('bnext')
+        end
+      end,
+      desc = 'Next buffer'
+    },
+  }
 })
 
 plug({
