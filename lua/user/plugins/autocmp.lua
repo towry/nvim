@@ -38,10 +38,10 @@ pack.plug({
       'hrsh7th/cmp-cmdline',
       'dmitmel/cmp-cmdline-history',
       'hrsh7th/cmp-calc',
-      {
-        'tzachar/cmp-tabnine',
-        build = './install.sh',
-      },
+      -- {
+      --   'tzachar/cmp-tabnine',
+      --   build = './install.sh',
+      -- },
       'David-Kunz/cmp-npm',
       'saadparwaiz1/cmp_luasnip',
     },
