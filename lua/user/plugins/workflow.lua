@@ -33,7 +33,7 @@ plug({
     event = 'WinNew',
     opts = {
       autowidth = {
-        enable = true,
+        enable = false,
       },
       ignore = {
         buftype = vim.cfg.misc__buf_exclude,
@@ -44,7 +44,7 @@ plug({
       },
     },
     config = function(_, opts)
-      vim.opt.equalalways = false
+      vim.opt.equalalways = true
       require('windows').setup(opts)
     end,
     init = function()
