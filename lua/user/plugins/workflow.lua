@@ -44,13 +44,14 @@ plug({
       },
     },
     config = function(_, opts)
-      vim.opt.equalalways = true
+      vim.opt.equalalways = vim.cfg.ui__window_equalalways
       require('windows').setup(opts)
     end,
     init = function()
       au.define_autocmd('VimEnter', {
         once = true,
         callback = function()
+          if vim.cfg.ui__window_equalalways then return end
           if vim.cfg.runtime__starts_in_buffer and vim.wo.diff then vim.cmd('WindowsEqualize') end
         end,
       })
