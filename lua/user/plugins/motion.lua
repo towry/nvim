@@ -239,4 +239,26 @@ plug({
       'CmdlineEnter',
     },
   },
+
+  {
+    'chrisgrieser/nvim-spider',
+    keys = {
+      {
+        'w',
+        "<cmd>lua require('spider').motion('w')<CR>",
+        desc = "Spider-w",
+        mode = {
+          "n", "o", "x"
+        }
+      },
+      {
+        'e',
+        "<cmd>lua require('spider').motion('e')<CR>",
+        desc = "Spider-e",
+        mode = {
+          "n", "o", "x"
+        }
+      }
+    }
+  }
 })
