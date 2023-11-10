@@ -43,7 +43,7 @@ M.remove_multiline_underline_handler = function(namespace, bufnr, diagnostics, o
 
   local diagnostics_without_multiline = vim.tbl_map(function(diagnostic)
     diagnostic.end_col = diagnostic.lnum == diagnostic.end_lnum and diagnostic.end_col
-      or #buf_lines[diagnostic.lnum + 1]
+        or #buf_lines[diagnostic.lnum + 1]
     diagnostic.end_lnum = diagnostic.lnum
 
     return diagnostic
@@ -78,14 +78,14 @@ function M.setup()
     signs = signs == false and false or true,
     underline = true,
     update_in_insert = false,
-    virtual_text = false,
-    -- virtual_text = {
-    --   severity = vim.diagnostic.severity.ERROR,
-    --   spacing = 1,
-    --   prefix = '■',
-    --   -- right_align | overlay | eol | inline
-    --   virt_text_pos = 'right_align',
-    -- },
+    -- virtual_text = false,
+    virtual_text = {
+      severity = vim.diagnostic.severity.ERROR,
+      spacing = 1,
+      prefix = '■',
+      -- right_align | overlay | eol | inline
+      virt_text_pos = 'right_align',
+    },
   })
 
   -- vim.diagnostic.handlers.underline = {
