@@ -258,6 +258,14 @@ plug({
         mode = {
           "n", "o", "x"
         }
+      },
+      {
+        'b',
+        "<cmd>lua require('spider').motion('b')<CR>",
+        desc = "Spider-b",
+        mode = {
+          "n", "o", "x"
+        }
       }
     }
   }
