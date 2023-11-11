@@ -8,7 +8,7 @@ plug({
   lazy = not string.match(vim.cfg.ui__theme_name, 'gruvbox-material'),
   enabled = vim.cfg.ui__theme_name == 'gruvbox-material',
   init = function()
-    vim.g.gruvbox_material_background = 'soft'
+    vim.g.gruvbox_material_background = 'hard'
     vim.g.gruvbox_material_ui_contrast = 'low'
     vim.g.gruvbox_material_better_performance = 1
     vim.g.gruvbox_material_enable_italic = 1

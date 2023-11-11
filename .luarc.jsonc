@@ -6,7 +6,7 @@
       "$HOME/.local/share/nvim/lazy/telescope.nvim/lua",
       "$HOME/.local/share/nvim/lazy/plenary.nvim/lua",
       "$HOME/workspace/git-repos/window-bufstack.nvim/lua"
-    ]
-  },
-    "workspace.checkThirdParty": "Disable"
+    ],
+    "checkThirdParty": true
+  }
 }
