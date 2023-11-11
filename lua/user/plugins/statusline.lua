@@ -110,6 +110,12 @@ plug({
         lualine_a = {
           tabs_component,
         },
+        lualine_c = {
+          {
+            'diff',
+            source = git_status_source,
+          },
+        }
       },
       winbar = {
         lualine_a = {
@@ -172,23 +178,24 @@ plug({
         disabled_filetypes = { winbar = vim.cfg.misc__ft_exclude, statusline = { 'dashboard', 'lazy', 'alpha' } },
       },
       winbar = {
-        lualine_z = {
+        lualine_a = {
           {
             function()
-              local cwd = vim.fn.fnamemodify(vim.b.cwd or vim.uv.cwd(), ':t')
+              local cwd = vim.fn.fnamemodify(vim.b.project_nvim_cwd or vim.uv.cwd(), ':t')
               return cwd
             end,
             icon = '󰉋 '
           },
-        },
-        lualine_a = {
           {
             'filename',
             file_status = true,
-            path = 4,
+            path = 1,
             fmt = function(name)
               if name == '[No Name]' then return '' end
               local bufnr = vim.fn.bufnr('%')
+              if vim.b[bufnr].relative_path then
+                name = vim.b[bufnr].relative_path
+              end
               local winindex = vim.fn.win_id2win(vim.fn.win_getid())
               return string.format('%s.%s#%s', winindex, bufnr, name)
             end
@@ -197,22 +204,23 @@ plug({
         }
       },
       inactive_winbar = {
-        lualine_z = {
+        lualine_a = {
           {
             function()
-              local cwd = vim.fn.fnamemodify(vim.b.cwd or vim.uv.cwd(), ':t')
+              local cwd = vim.fn.fnamemodify(vim.b.project_nvim_cwd or vim.uv.cwd(), ':t')
               return cwd
             end,
             icon = '󰉋 '
           },
-        },
-        lualine_a = {
           {
             'filename',
             file_status = true,
-            path = 4,
+            path = 1,
             fmt = function(name)
               local bufnr = vim.fn.bufnr('%')
+              if vim.b[bufnr].relative_path then
+                name = vim.b[bufnr].relative_path
+              end
               local winindex = vim.fn.win_id2win(vim.fn.win_getid())
               return string.format('%s.%s#%s', winindex, bufnr, name)
             end
@@ -253,6 +261,10 @@ plug({
             cond = function()
               return vim.b.diagnostic_disable ~= true
             end
+          },
+          {
+            'diff',
+            source = git_status_source,
           },
         },
         lualine_x = {
@@ -322,10 +334,6 @@ plug({
         },
         lualine_y = {
           'filesize',
-          {
-            'diff',
-            source = git_status_source,
-          },
         },
         lualine_z = {
           {

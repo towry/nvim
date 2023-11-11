@@ -172,6 +172,16 @@ function M.load_on_startup()
       },
     },
     {
+      { 'BufDelete', 'BufNew' },
+      {
+        group = '_after_buf_rename',
+        pattern = '*',
+        callback = function(ctx)
+          vim.b[ctx.buf].project_nvim_cwd = nil
+        end
+      }
+    },
+    {
       { 'UIEnter' },
       {
         group = '_lazy_ui_enter',
@@ -216,15 +226,19 @@ function M.load_on_startup()
       pattern = 'ProjectNvimSetPwd',
       group = '_set_dir_on_change_',
       callback = function(ctx)
+        if vim.bo.buftype ~= '' then return end
         local data = ctx.data or {}
         local new_cwd = data.dir or nil
         ---@diagnostic disable-next-line: undefined-field
         if not new_cwd then new_cwd = vim.uv.cwd() end
-        local cwd, cwd_short = require('userlib.runtime.utils').update_cwd_env(new_cwd)
-        if vim.bo.buftype ~= '' then return end
+        local buf_cwd, buf_cwd_short = vim.b[ctx.buf].project_nvim_cwd, vim.b[ctx.buf].project_nvim_cwd_short
+        local cwd, cwd_short = require('userlib.runtime.utils').update_cwd_env(buf_cwd, buf_cwd_short)
+        if vim.b[ctx.buf].did_set_cwd_short == cwd then return end
+        vim.b[ctx.buf].did_set_cwd_short = cwd
         -- set cwd on this buffer.
-        vim.b[ctx.buf].cwd = cwd
-        vim.b[ctx.buf].cwd_short = cwd_short
+        vim.b[ctx.buf].project_nvim_cwd_short = cwd_short
+        vim.b[ctx.buf].relative_path = require('userlib.runtime.path').make_relative(vim.api.nvim_buf_get_name(ctx.buf),
+          cwd)
       end,
     },
     {

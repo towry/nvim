@@ -3,7 +3,7 @@ local M = {}
 M.root_patterns =
 { '_darcs', '.bzr', '.vscode', 'package.json', 'pnpm-workspace.yaml', 'Cargo.toml', '.git', '.gitmodules', '.svn' }
 --- ignore jsonls: inside package.json, it give root to parent root.
-M.root_lsp_ignore = { 'tailwindcss', 'jsonls' }
+M.root_lsp_ignore = { 'tailwindcss', 'jsonls', 'copilot', 'null-ls' }
 
 M.file_exists = function(path)
   local f = io.open(path, 'r')
@@ -253,10 +253,12 @@ function M.change_cwd(cwd, cmd, silent)
   if not silent then vim.notify(('New cwd: %s'):format(vim.t.cwd_short), vim.log.levels.INFO) end
 end
 
-function M.update_cwd_env(cwd)
+---@param cwd string
+---@param cwd_short? string
+function M.update_cwd_env(cwd, cwd_short)
   vim.t.cwd = cwd
   -- only show last part of path.
-  vim.t.cwd_short = require('userlib.runtime.path').home_to_tilde(cwd, { shorten = true })
+  vim.t.cwd_short = cwd_short or require('userlib.runtime.path').home_to_tilde(cwd, { shorten = true })
   return cwd, vim.t.cwd_short
 end
 
