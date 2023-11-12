@@ -427,4 +427,13 @@ plug({
     },
     config = function(_, opts) require('satellite').setup(opts) end,
   },
+  {
+    'towry/whiskyline.nvim',
+    enabled = not enable_lualine,
+    event = 'BufReadPost',
+    dev = true,
+    config = function()
+      require('whiskyline').setup()
+    end
+  },
 })

@@ -7,6 +7,6 @@
       "$HOME/.local/share/nvim/lazy/plenary.nvim/lua",
       "$HOME/workspace/git-repos/window-bufstack.nvim/lua"
     ],
-    "checkThirdParty": true
+    "checkThirdParty": false
   }
 }
