@@ -1,5 +1,8 @@
+local runtime_utils = require('userlib.runtime.utils')
 local conditions = require("heirline.conditions")
 local utils = require("heirline.utils")
+local format_utils = require('userlib.lsp.servers.null_ls.fmt')
+local auto_format_disabled = require('userlib.lsp.servers.null_ls.autoformat').disabled
 
 local Spacer = { provider = " " }
 local function rpad(child)
@@ -122,7 +125,7 @@ local FileType = {
 
 local FileName = {
   provider = function(self)
-    local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":.")
+    local filename = vim.b.relative_path or vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":.")
     if filename == "" then
       return "[No Name]"
     end
@@ -133,6 +136,15 @@ local FileName = {
     end
     return filename
   end,
+}
+
+local BufferCwd = {
+  provider = function(self)
+    local cwd = vim.fn.fnamemodify(vim.b.project_nvim_cwd or vim.uv.cwd(), ':t')
+    if not cwd or cwd == '' then return '' end
+
+    return ' ' .. cwd
+  end
 }
 
 local FileFlags = {
@@ -163,6 +175,26 @@ local FullFileName = {
   FileFlags,
   { provider = "%=" },
 }
+
+local DirAndFileName = {
+  hl = function()
+    local fg
+    if vim.bo.modified then
+      fg = "yellow"
+    else
+      fg = conditions.is_active() and "tablinesel_fg" or "tabline_fg"
+    end
+    return {
+      fg = fg,
+      bg = conditions.is_active() and "tablinesel_bg" or "winbar_bg",
+    }
+  end,
+  lpad(BufferCwd),
+  lpad(FileName),
+  FileFlags,
+  { provider = "%=" },
+}
+
 
 local function OverseerTasksForStatus(status)
   return {
@@ -195,30 +227,6 @@ local Overseer = {
   rpad(OverseerTasksForStatus("RUNNING")),
   rpad(OverseerTasksForStatus("SUCCESS")),
   rpad(OverseerTasksForStatus("FAILURE")),
-}
-
-local DiagnosticSignError = vim.fn.sign_getdefined("DiagnosticSignError") or {}
-local DiagnosticSignWarn = vim.fn.sign_getdefined("DiagnosticSignWarn") or {}
-local Diagnostics = {
-  condition = function() return #vim.diagnostic.get(0, { severity = { min = vim.diagnostic.severity.WARN } }) > 0 end,
-  static = {
-    error_icon = DiagnosticSignError[1] and DiagnosticSignError[1].text or '',
-    warn_icon = DiagnosticSignWarn[1] and DiagnosticSignWarn[1].text or '',
-  },
-  init = function(self)
-    self.errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
-    self.warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
-  end,
-  update = { "DiagnosticChanged", "BufEnter" },
-
-  {
-    provider = function(self) return self.errors > 0 and (self.error_icon .. self.errors .. " ") end,
-    hl = { fg = "diag_error" },
-  },
-  {
-    provider = function(self) return self.warnings > 0 and (self.warn_icon .. self.warnings .. " ") end,
-    hl = { fg = "diag_warn" },
-  },
 }
 
 local function setup_colors()
@@ -320,6 +328,46 @@ local Ruler = {
   hl = function(self) return { fg = "black", bg = self:mode_color(), bold = true } end,
 }
 
+local Branch = {
+  condition = function()
+    return vim.fn.exists("*FugitiveHead")
+  end,
+  init = function(self)
+    if vim.fn.exists("*FugitiveHead") then
+      self.head = vim.fn["FugitiveHead"]()
+    else
+      self.head = ''
+    end
+  end,
+  provider = function(self)
+    return self.head ~= '' and ' ' .. self.head or ''
+  end,
+  update = {
+    'User',
+    pattern = 'FugitiveChanged',
+  }
+}
+
+local Harpoon = {
+  condition = function()
+    local loaded = package.loaded.harpoon
+    if not loaded then return false end
+    return true
+  end,
+  init = function(self)
+    self.harpoon_idx = require('harpoon.mark').status()
+  end,
+  provider = function(self)
+    if not self.harpoon_idx or self.harpoon_idx == '' then return '' end
+    return ' ' .. self.harpoon_idx
+  end,
+  hl = function()
+    return {
+      fg = "red",
+    }
+  end,
+}
+
 local ProfileRecording = {
   condition = function()
     local profile = package.loaded.profile
@@ -333,6 +381,40 @@ local ProfileRecording = {
   },
 }
 
+local DiagnosticsDisabled = {
+  condition = function()
+    return vim.diagnostic.is_disabled()
+  end,
+  provider = function() return " " end,
+}
+
+local WorkspaceRoot = {
+  condition = function()
+    return vim.cfg.runtime__starts_cwd_short ~= nil
+  end,
+  provider = function()
+    return ' ' .. vim.cfg.runtime__starts_cwd_short
+  end,
+}
+
+local LspFormatter = {
+  init = function(self)
+    local ftr_name, impl_ftr_name = format_utils.current_formatter_name(0)
+    self.formatter_icon = '󰎟 '
+    self.formatter_disable_icon = '󰙧 '
+    self.formatter_name = impl_ftr_name or ftr_name or ''
+    self.disabled = auto_format_disabled(0)
+  end,
+  provider = function(self)
+    if self.formatter_name == '' then return '' end
+    if self.disabled then
+      return self.formatter_disable_icon
+    end
+    return string.format('%s%s', self.formatter_icon, self.formatter_name)
+  end,
+  update = { 'LspAttach', 'LspDetach' },
+}
+
 return {
   ViMode = ViMode,
   Ruler = Ruler,
@@ -343,7 +425,6 @@ return {
   FileType = FileType,
   FullFileName = FullFileName,
   Overseer = Overseer,
-  Diagnostics = Diagnostics,
   setup_colors = setup_colors,
   -- SessionName = SessionName,
   ArduinoStatus = ArduinoStatus,
@@ -351,4 +432,10 @@ return {
   stl_static = stl_static,
   -- ConjoinStatus = ConjoinStatus,
   ProfileRecording = ProfileRecording,
+  Branch = Branch,
+  Harpoon = Harpoon,
+  DirAndFileName = DirAndFileName,
+  DiagnosticsDisabled = DiagnosticsDisabled,
+  WorkspaceRoot = WorkspaceRoot,
+  LspFormatter = LspFormatter,
 }

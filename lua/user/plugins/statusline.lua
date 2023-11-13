@@ -2,7 +2,7 @@ local plug = require('userlib.runtime.pack').plug
 local utils = require('userlib.runtime.utils')
 local au = require('userlib.runtime.au')
 local git_branch_icon = ' '
-local enable_lualine = true
+local enable_lualine = false
 
 local function is_treesitter()
   local bufnr = vim.api.nvim_get_current_buf()
@@ -443,7 +443,7 @@ plug({
   ---@see https://github.com/stevearc/dotfiles/blob/860e18ee85d30a72cea5a51acd9983830259075e/.config/nvim/lua/plugins/heirline.lua#L4
   "rebelot/heirline.nvim",
   event = 'VeryLazy',
-  enabled = not enable_lualine,
+  cond = not enable_lualine,
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
     local comp = require('userlib.statusline.heirline.components')
@@ -460,24 +460,41 @@ plug({
       end,
     })
     require("heirline").setup({
+      winbar = {
+        comp.DirAndFileName,
+      },
+      -- mode
+      -- branch
+      -- harpoon
+      -- tabs
+      -- lsp diagnostics
+      -- git changes
+      -- padding
+      -- copilot
+      -- formatter name
+      -- filetype
+      -- filesize
+      -- root folder
       statusline = heirline_utils.insert(
         {
           static = comp.stl_static,
           hl = { bg = "bg" },
         },
         comp.ViMode,
+        comp.lpad(comp.Branch),
         comp.lpad(comp.ProfileRecording),
+        comp.lpad(comp.Harpoon),
         comp.lpad(comp.LSPActive),
-        comp.lpad(comp.Diagnostics),
+        comp.lpad(require('userlib.statusline.heirline.component_diagnostic')),
         require("userlib.statusline.heirline").left_components,
         { provider = "%=" },
         require("userlib.statusline.heirline").right_components,
-        comp.rpad(comp.ConjoinStatus),
-        comp.rpad(comp.ArduinoStatus),
-        comp.rpad(comp.SessionName),
         comp.rpad(comp.Overseer),
+        comp.rpad(comp.LspFormatter),
         comp.rpad(comp.FileType),
-        comp.Ruler
+        comp.rpad(comp.DiagnosticsDisabled),
+        comp.rpad(comp.WorkspaceRoot)
+      -- comp.Ruler
       ),
 
       opts = {
@@ -498,6 +515,6 @@ plug({
       {}
     )
     -- Because heirline is lazy loaded, we need to manually set the winbar on startup
-    -- vim.opt_local.winbar = "%{%v:lua.require'heirline'.eval_winbar()%}"
+    vim.opt_local.winbar = "%{%v:lua.require'heirline'.eval_winbar()%}"
   end
 })
