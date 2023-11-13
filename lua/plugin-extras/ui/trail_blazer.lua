@@ -80,12 +80,12 @@ return plug({
       noremap = true,
       desc = 'Trail pre in buf',
     })
-    set('n', '<leader>v9', '<cmd>TrailBlazerPeekMoveNextDown<cr>', {
+    set('n', '<leader>v0', '<cmd>TrailBlazerPeekMoveNextDown<cr>', {
       silent = true,
       noremap = true,
       desc = 'Trail next global',
     })
-    set('n', '<leader>v0', '<cmd>TrailBlazerPeekMovePreviousUp<cr>', {
+    set('n', '<leader>v9', '<cmd>TrailBlazerPeekMovePreviousUp<cr>', {
       silent = true,
       noremap = true,
       desc = 'Trail pre global',
