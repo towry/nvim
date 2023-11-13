@@ -1,6 +1,8 @@
 local pack = require('userlib.runtime.pack')
 local Path = require('userlib.runtime.path')
 
+local MAX_INDEX_FILE_SIZE = 4000
+
 pack.plug({
   {
     'L3MON4D3/LuaSnip',
@@ -47,7 +49,7 @@ pack.plug({
     },
     config = function()
       local has_words_before = function()
-        if vim.api.nvim_buf_get_option(0, 'buftype') == 'prompt' then return false end
+        if vim.api.nvim_get_option_value('buftype', { buf = 0 }) == 'prompt' then return false end
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match('^%s*$') == nil
       end
@@ -120,7 +122,15 @@ pack.plug({
         -- Complete from all visible buffers (splits)
         get_bufnrs = function()
           --- from all loaded buffers
-          return vim.api.nvim_list_bufs()
+          local bufs = {}
+          local loaded_bufs = vim.api.nvim_list_bufs()
+          for _, bufnr in ipairs(loaded_bufs) do
+            -- Don't index giant files
+            if vim.api.nvim_buf_is_loaded(bufnr) and vim.api.nvim_buf_line_count(bufnr) < MAX_INDEX_FILE_SIZE then
+              table.insert(bufs, bufnr)
+            end
+          end
+          return bufs
           -- ----
           -- from visible bufs.
           -- local bufs = {}
@@ -401,6 +411,10 @@ pack.plug({
         ignore = {},
         only_semantic_versions = true,
       })
+
+      vim.api.nvim_create_user_command("CmpInfo", function()
+        cmp.status()
+      end, {})
     end,
   },
 })
