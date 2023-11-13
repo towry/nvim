@@ -11,7 +11,7 @@ return function(opts)
     '--no-[filename|ignore|ignore-dot|ignore-exclude]'
   }, ' ')
   opts.prompt_title = opts.prompt_title or
-  vim.fn.fnamemodify(require('userlib.runtime.path').home_to_tilde(opts.cwd), ':t')
+      (' ' .. vim.fn.fnamemodify(require('userlib.runtime.path').home_to_tilde(opts.cwd), ':t'))
   opts.results_title = opts.results_title or results_title
   return require('telescope').extensions.live_grep_args.live_grep_args(opts)
 end

@@ -55,7 +55,7 @@ M.project_files = function(opts)
   end
   -- opts.hidden = true
 
-  local nicely_cwd = vim.fn.fnamemodify(require('userlib.runtime.path').home_to_tilde(opts.cwd), ':t')
+  local nicely_cwd = ' ' .. vim.fn.fnamemodify(require('userlib.runtime.path').home_to_tilde(opts.cwd), ':t')
   opts.prompt_title = opts.prompt_title or nicely_cwd
 
   opts.attach_mappings = function(_, map)
