@@ -15,7 +15,7 @@ function M.init_edit()
   o.shiftwidth = 2                           --- Change a number of space characeters inseted for indentation
   o.shiftround = true                        -- round indent.
   o.smartcase = true                         --- Uses case in search
-  o.smartindent = true                       --- Makes indenting smart
+  o.smartindent = false                      --- Makes indenting smart
   o.smarttab = true                          --- Makes tabbing smarter will realize you have 2 vs 4
   o.softtabstop = 2                          --- Insert 2 spaces for a tab
   o.splitright = true                        --- Vertical splits will automatically be to the right
@@ -39,7 +39,7 @@ function M.init_edit()
   -- add @, -, and $ as keywords for full SCSS support
   vim.opt.iskeyword:append({ '@-@', '-', '$' })
   o.writebackup = false                      --- Not needed
-  o.autoindent = true                        --- Good auto indent
+  o.autoindent = false                       --- Good auto indent
   o.backspace = { 'indent', 'eol', 'start' } --- Making sure backspace works
   o.backup = false                           --- Recommended by coc
   o.conceallevel = 0                         --- Show `` in markdown files
