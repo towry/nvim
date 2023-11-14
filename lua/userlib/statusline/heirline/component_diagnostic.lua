@@ -18,7 +18,7 @@ return {
   static = init_icons({}),
 
   init = function(self)
-    if not self.error_icon then
+    if not self.error_icon or not self.warn_icon or not self.info_icon or not self.hint_icon then
       init_icons(self)
     end
     self.errors =

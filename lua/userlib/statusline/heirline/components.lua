@@ -1,4 +1,4 @@
-local heirline = require('heirline')
+-- local heirline = require('heirline')
 local conditions = require("heirline.conditions")
 local utils = require("heirline.utils")
 local format_utils = require('userlib.lsp.servers.null_ls.fmt')

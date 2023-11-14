@@ -641,3 +641,26 @@ plug({
     }
   end,
 })
+
+plug({
+  'linrongbin16/fzfx.nvim',
+  dependencies = {
+    {
+      "junegunn/fzf",
+      build = function()
+        vim.fn["fzf#install"]()
+      end,
+    },
+    "nvim-tree/nvim-web-devicons"
+  },
+  cmd = {
+    'FzfxFiles', 'FzfxFilesV', 'FzfxFilesW', 'FzfxFilesR', 'FzfxFilesP',
+    'FzfxBuffers', 'FzfxBuffersV', 'FzfxBuffersW', 'FzfxBuffersR', 'FzfxBuffersP',
+    'FzfxLiveGrep', 'FzfxLiveGrepV', 'FzfxLiveGrepW', 'FzfxLiveGrepR', 'FzfxLiveGrepP',
+    'FzfxGFiles', 'FzfxGFilesV', 'FzfxGFilesW', 'FzfxGFilesR', 'FzfxGFilesP',
+    'FzfxFileExplorer', 'FzfxFileExplorerV', 'FzfxFileExplorerW', 'FzfxFileExplorerR', 'FzfxFileExplorerP',
+  },
+  config = function()
+    require("fzfx").setup()
+  end,
+})
