@@ -7,10 +7,10 @@ local function init_icons(self)
   self.hint_icon = vim.fn.sign_getdefined("DiagnosticSignHint")[1].text
 
   return {
-    error_icon = self.error_icon,
-    warn_icon = self.warn_icon,
-    info_icon = self.info_icon,
-    hint_icon = self.hint_icon,
+    error_icon = self.error_icon or '',
+    warn_icon = self.warn_icon or '',
+    info_icon = self.info_icon or '',
+    hint_icon = self.hint_icon or '',
   }
 end
 
