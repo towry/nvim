@@ -1,7 +1,7 @@
 local pack = require('userlib.runtime.pack')
 local Path = require('userlib.runtime.path')
 
-local MAX_INDEX_FILE_SIZE = 4000
+local MAX_INDEX_FILE_SIZE = 2000
 
 pack.plug({
   {
