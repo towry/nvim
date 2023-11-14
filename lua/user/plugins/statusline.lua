@@ -376,7 +376,7 @@ plug({
   ---@see https://github.com/stevearc/dotfiles/blob/860e18ee85d30a72cea5a51acd9983830259075e/.config/nvim/lua/plugins/heirline.lua#L4
   "rebelot/heirline.nvim",
   event = 'VeryLazy',
-  cond = not enable_lualine,
+  cond = not vim.cfg.runtime__starts_as_gittool,
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
     local comp = require('userlib.statusline.heirline.components')
