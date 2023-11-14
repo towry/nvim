@@ -193,7 +193,7 @@ local DirAndFileName = {
   lpad(FileName),
   FileFlags,
   { provider = "%=" },
-  update = { 'BufEnter', 'LspAttach' }
+  update = { 'BufEnter', 'LspAttach', 'BufWritePost' }
 }
 
 
