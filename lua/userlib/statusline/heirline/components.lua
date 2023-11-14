@@ -1,4 +1,4 @@
-local runtime_utils = require('userlib.runtime.utils')
+local heirline = require('heirline')
 local conditions = require("heirline.conditions")
 local utils = require("heirline.utils")
 local format_utils = require('userlib.lsp.servers.null_ls.fmt')
@@ -193,6 +193,7 @@ local DirAndFileName = {
   lpad(FileName),
   FileFlags,
   { provider = "%=" },
+  update = { 'BufEnter', 'LspAttach' }
 }
 
 
@@ -397,6 +398,23 @@ local WorkspaceRoot = {
   end,
 }
 
+local Tabs = {
+  {
+    condition = function() return #vim.api.nvim_list_tabpages() >= 2 end, -- only show tabs if there are more than one
+    utils.make_tablist {                                                  -- component for each tab
+      provider = function(self) return (self and self.tabnr) and "%" .. self.tabnr .. "T " .. self.tabnr .. " %T" or "" end,
+      hl = function(self)
+        if self.is_active then
+          return { fg = "Green" }
+        else
+          return { fg = "Gray" }
+        end
+      end,
+    },
+  },
+  update = { 'VimEnter', 'TabNew', 'TabLeave' },
+}
+
 local LspFormatter = {
   init = function(self)
     local ftr_name, impl_ftr_name = format_utils.current_formatter_name(0)
@@ -438,4 +456,5 @@ return {
   DiagnosticsDisabled = DiagnosticsDisabled,
   WorkspaceRoot = WorkspaceRoot,
   LspFormatter = LspFormatter,
+  Tabs = Tabs,
 }

@@ -482,6 +482,7 @@ plug({
         },
         comp.ViMode,
         comp.lpad(comp.Branch),
+        comp.lpad(comp.Tabs),
         comp.lpad(comp.ProfileRecording),
         comp.lpad(comp.Harpoon),
         comp.lpad(comp.LSPActive),
