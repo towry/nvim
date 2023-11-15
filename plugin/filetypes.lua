@@ -2,7 +2,7 @@ vim.filetype.add({
   extension = {
     ['es6'] = 'javascript',
     ['code-snippets'] = 'json',
-    ['handlebars'] = 'html',
+    ['handlebars'] = 'htmldjango',
     ['tigrc'] = 'bash',
     ['tmux'] = 'bash',
   },
