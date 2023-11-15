@@ -394,23 +394,23 @@ local WorkspaceRoot = {
     return vim.cfg.runtime__starts_cwd_short ~= nil
   end,
   provider = function()
-    return ' ' .. vim.cfg.runtime__starts_cwd_short
+    return ' ' .. vim.cfg.runtime__starts_cwd_short
   end,
 }
 
 local Tabs = {
-  {
-    condition = function() return #vim.api.nvim_list_tabpages() >= 2 end, -- only show tabs if there are more than one
-    utils.make_tablist {                                                  -- component for each tab
-      provider = function(self) return (self and self.tabnr) and "%" .. self.tabnr .. "T " .. self.tabnr .. " %T" or "" end,
-      hl = function(self)
-        if self.is_active then
-          return { fg = "Green" }
-        else
-          return { fg = "Gray" }
-        end
-      end,
-    },
+  condition = function() return #vim.api.nvim_list_tabpages() >= 2 end, -- only show tabs if there are more than one
+  utils.make_tablist {                                                  -- component for each tab
+    provider = function(self)
+      return (self and self.tabnr) and "%" .. self.tabnr .. "T " .. self.tabnr .. " %T" or ""
+    end,
+    hl = function(self)
+      if self.is_active then
+        return { fg = "Green" }
+      else
+        return { fg = "Gray" }
+      end
+    end,
   },
   update = { 'VimEnter', 'TabNew', 'TabLeave' },
 }
@@ -431,6 +431,47 @@ local LspFormatter = {
     return string.format('%s%s', self.formatter_icon, self.formatter_name)
   end,
   update = { 'LspAttach', 'LspDetach' },
+}
+
+local Copilot = {
+  condition = function()
+    local agent = vim.g.loaded_copilot == 1
+    return agent ~= nil
+  end,
+  static = {
+    get_status = function()
+      if vim.g.loaded_copilot == 1 and vim.fn["copilot#Enabled"]() == 1 then
+        return 1
+      else
+        return 0
+      end
+    end,
+    is_running = function()
+      return vim.g._copilot_timer ~= nil
+      -- local agent = vim.g.loaded_copilot == 1 and vim.fn["copilot#RunningAgent"]() or nil
+      -- if not agent then
+      --   return false
+      -- end
+      -- -- most of the time, requests is just empty dict.
+      -- local requests = agent.requests or {}
+      --
+      -- -- requests is dict with number as index, get status from those requests.
+      -- for _, req in pairs(requests) do
+      --   local req_status = req.status
+      --   if req_status == "running" then
+      --     return true
+      --   end
+      -- end
+      -- return false
+    end,
+  },
+  provider = function(self)
+    local is_enable = self.get_status() == 1
+    if not is_enable then return '󱚧 ' end
+    local is_running = self.is_running()
+    if not is_running then return '󰚩 ' end
+    return '󱇳 '
+  end
 }
 
 return {
@@ -457,4 +498,5 @@ return {
   WorkspaceRoot = WorkspaceRoot,
   LspFormatter = LspFormatter,
   Tabs = Tabs,
+  Copilot = Copilot,
 }
