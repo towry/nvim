@@ -124,6 +124,10 @@ plug({
             mb.delete(current_buf)
           end
           local next_buf = bufstack.pop()
+          -- if not valid buf
+          if not vim.api.nvim_buf_is_valid(next_buf) then
+            next_buf = nil
+          end
           -- has current tab have more than 1 window?
           local current_tab_windows_count = #vim.fn.tabpagebuflist(vim.fn.tabpagenr())
           if not next_buf then
@@ -137,7 +141,6 @@ plug({
               end
             end
           else
-            print("set next buf")
             vim.api.nvim_win_set_buf(0, next_buf)
           end
         end,

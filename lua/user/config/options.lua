@@ -180,6 +180,7 @@ function M.setup()
     callback = function(args)
       local buf = args.buf
       if vim.b[buf].treesitter_disable == true then return end
+      if not vim.api.nvim_buf_is_valid(buf) then return end
       if Buffer.is_big_file(buf) then return end
       -- start highlighter.
       if not pcall(vim.treesitter.start, buf) then return end
