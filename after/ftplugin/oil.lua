@@ -61,6 +61,7 @@ set('n', '<C-o>', function()
     end
   end
 
+  local current_win = vim.api.nvim_get_current_win()
   get_edit_path(function(normalized_url)
     local filename = util.escape_filename(normalized_url)
     local win = require("window-picker").pick_window({
@@ -70,7 +71,9 @@ set('n', '<C-o>', function()
     })
     if not win then return end
 
-    require('oil').close()
+    if current_win == win then
+      require('oil').close()
+    end
 
     vim.api.nvim_set_current_win(win)
     vim.cmd({
