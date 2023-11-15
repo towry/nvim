@@ -602,7 +602,7 @@ plug({
     }
   },
   init = function()
-    require('userlib.legendary').register('overseer', function(lg)
+    require('userlib.legendary').register('mini_session', function(lg)
       lg.funcs({
         {
           function()
