@@ -417,7 +417,6 @@ plug({
         comp.lpad(comp.Branch),
         comp.lpad(comp.ProfileRecording),
         comp.lpad(comp.Harpoon),
-        comp.lpad(comp.LSPActive),
         comp.lpad(require('userlib.statusline.heirline.component_diagnostic')),
         require("userlib.statusline.heirline").left_components,
         { provider = "%=" },
