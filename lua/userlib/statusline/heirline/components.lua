@@ -119,7 +119,15 @@ local FileType = {
   condition = function() return vim.bo.filetype ~= "" end,
   FileIcon,
   {
-    provider = function() return vim.bo.filetype end,
+    provider = function()
+      local ft = vim.bo.filetype
+      if #ft > 4 then
+        -- pick first two and last one
+        ft = ft:sub(1, 2) .. '~' .. ft:sub(#ft, #ft)
+        return ft
+      end
+      return ft
+    end,
   },
 }
 
