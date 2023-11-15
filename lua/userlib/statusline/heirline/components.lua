@@ -435,8 +435,7 @@ local LspFormatter = {
 
 local Copilot = {
   condition = function()
-    local agent = vim.g.loaded_copilot == 1
-    return agent ~= nil
+    return vim.g.loaded_copilot == 1
   end,
   static = {
     get_status = function()
