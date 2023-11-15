@@ -448,21 +448,6 @@ local Copilot = {
     end,
     is_running = function()
       return vim.g._copilot_timer ~= nil
-      -- local agent = vim.g.loaded_copilot == 1 and vim.fn["copilot#RunningAgent"]() or nil
-      -- if not agent then
-      --   return false
-      -- end
-      -- -- most of the time, requests is just empty dict.
-      -- local requests = agent.requests or {}
-      --
-      -- -- requests is dict with number as index, get status from those requests.
-      -- for _, req in pairs(requests) do
-      --   local req_status = req.status
-      --   if req_status == "running" then
-      --     return true
-      --   end
-      -- end
-      -- return false
     end,
   },
   provider = function(self)
@@ -470,8 +455,8 @@ local Copilot = {
     if not is_enable then return '󱚧 ' end
     local is_running = self.is_running()
     if not is_running then return '󰚩 ' end
-    return '󱇳 '
-  end
+    return '󰆄 '
+  end,
 }
 
 return {
