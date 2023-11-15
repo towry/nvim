@@ -38,7 +38,7 @@ pack.plug({
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
-      'dmitmel/cmp-cmdline-history',
+      -- 'dmitmel/cmp-cmdline-history',
       'hrsh7th/cmp-calc',
       -- {
       --   'tzachar/cmp-tabnine',
@@ -389,7 +389,7 @@ pack.plug({
           },
           {
             { name = 'cmdline', },
-            { name = 'cmdline_history', max_item_count = 3, },
+            -- { name = 'cmdline_history', max_item_count = 3, },
           }
         ),
       })
