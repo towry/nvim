@@ -440,7 +440,7 @@ local Copilot = {
   end,
   static = {
     get_status = function()
-      if vim.g.loaded_copilot == 1 and vim.fn["copilot#Enabled"]() == 1 then
+      if vim.g.loaded_copilot == 1 and vim.g.copilot_enabled ~= 0 then
         return 1
       else
         return 0
