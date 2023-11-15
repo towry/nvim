@@ -125,7 +125,7 @@ plug({
           end
           local next_buf = bufstack.pop()
           -- if not valid buf
-          if not vim.api.nvim_buf_is_valid(next_buf) then
+          if next_buf and not vim.api.nvim_buf_is_valid(next_buf) then
             next_buf = nil
           end
           -- has current tab have more than 1 window?
