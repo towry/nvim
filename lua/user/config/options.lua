@@ -127,13 +127,15 @@ function M.init_folds()
   o.foldnestmax = 10    -- deepest fold is 10 levels
   o.foldlevel = 99      --- Using ufo provider need a large value
   o.foldlevelstart = 99 --- Expand all folds by default
+
+  M.enable_foldexpr_for_buf()
 end
 
 --- https://github.dev/lewis6991/dotfiles/blob/main/config/nvim/lua/lewis6991/lsp.lua
-function M.enable_foldexpr_for_buf(buf)
-  vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-  vim.wo[0][0].foldmethod = 'expr'
-  vim.cmd.normal('zx')
+function M.enable_foldexpr_for_buf()
+  vim.wo.foldmethod = 'expr'
+  vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+  -- vim.cmd.normal('zx')
 end
 
 function M.init_other()
@@ -188,7 +190,6 @@ function M.setup()
       if Buffer.is_big_file(buf) then return end
       -- start highlighter.
       if not pcall(vim.treesitter.start, buf) then return end
-      M.enable_foldexpr_for_buf(buf)
       require('userlib.runtime.au').do_useraucmd('User TreeSitterStart')
     end,
   })
