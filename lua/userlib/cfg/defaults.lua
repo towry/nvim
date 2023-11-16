@@ -2,6 +2,7 @@ local cwd = vim.uv.cwd()
 
 return {
   ---runtime
+  runtime__is_zellij = os.getenv('ZELLIJ_SESSION_NAME') ~= nil,
   runtime__folder_holes_inregex = {
     'node_modules/',
     '.git/',

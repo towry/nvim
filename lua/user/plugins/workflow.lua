@@ -335,6 +335,20 @@ plug({
     },
   },
   {
+    'Lilja/zellij.nvim',
+    cond = vim.cfg.runtime__is_zellij,
+    cmd = {
+      'ZellijNewPane',
+      'ZellijNewTab',
+      'ZellijRenamePane',
+      'ZellijRenameTab',
+      'ZellijNavigateLeft',
+      'ZellijNavigateRight',
+      'ZellijNavigateUp',
+      'ZellijNavigateDown',
+    }
+  },
+  {
     'mrjones2014/smart-splits.nvim',
     keys = {
       {

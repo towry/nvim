@@ -14,26 +14,6 @@ local xk = utils.utf8keys({
 }, true)
 
 local function setup_basic()
-  -- <C-'> to pick register from insert mode.
-  set('i', xk([[<C-'>]]), function()
-    vim.cmd('stopinsert')
-    vim.fn.feedkeys(vim.api.nvim_replace_termcodes('"', true, false, true))
-  end, {
-    silent = true,
-    desc = 'Pick register from insert mode',
-  })
-  set('n', xk([[<C-'>]]), function() vim.fn.feedkeys(vim.api.nvim_replace_termcodes('"', true, false, true)) end, {
-    silent = true,
-    desc = 'Pick register from insert mode',
-  })
-  -- set('n', '[b', ':bprevious<CR>', {
-  --   desc = 'Previous buffer',
-  --   noremap = true,
-  -- })
-  -- set('n', ']b', ':bnext<cr>', {
-  --   desc = 'Next buffer',
-  --   noremap = true,
-  -- })
   --- quickly go into cmd
   set('n', xk([[<C-;>]]), ':<C-u>', {
     expr = false,
