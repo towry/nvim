@@ -179,6 +179,10 @@ function M.setup()
     group = ftau,
     callback = function(args)
       local buf = args.buf
+      local ft = vim.bo[buf].filetype
+      -- NOTE: nvim-treesitter on comment have some bugs.
+      if ft == 'comment' then return end
+
       if vim.b[buf].treesitter_disable == true then return end
       if not vim.api.nvim_buf_is_valid(buf) then return end
       if Buffer.is_big_file(buf) then return end

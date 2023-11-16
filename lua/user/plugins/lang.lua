@@ -10,6 +10,8 @@ plug({
   config = function()
     require('nvim-treesitter').setup({
       ensure_install = vim.cfg.lang__treesitter_ensure_installed,
+      auto_install = vim.cfg.lang_treesitter_auto_install,
+      ignore_install = { 'comment' },
     })
     vim.treesitter.language.register('tsx', 'typescriptreact')
   end,

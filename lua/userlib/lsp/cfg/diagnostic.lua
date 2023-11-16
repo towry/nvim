@@ -81,6 +81,9 @@ function M.setup()
   vim.diagnostic.config({
     float = {
       border = 'single',
+      focused = false,
+      style = "minimal",
+      source = "always",
     },
     severity_sort = true,
     signs = signs == false and false or true,

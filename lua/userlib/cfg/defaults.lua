@@ -74,6 +74,7 @@ return {
   ---languages
   ---- must installed, otherwise slowness.
   lang__treesitter_next = true,
+  lang__treesitter_auto_install = false,
   lang__treesitter_ensure_installed = {
     -- see https://github.com/neovim/neovim/issues/25113#issuecomment-1715470173
     -- 'comment',
@@ -104,15 +105,7 @@ return {
     'starter',
     'git',
   },
-  lang__treesitter_plugin_incremental_selection = true,
-  lang__treesitter_plugin_highlight = false,
-  lang__treesitter_plugin_indent = true,
-  lang__treesitter_plugin_yati = true,
-  lang__treesitter_plugin_rainbow = true,
   lang__treesitter_plugin_context_commentstring = true,
-  lang__treesitter_plugin_refactor = true,
-  lang__treesitter_plugin_textobjects_move = true,
-  lang__treesitter_plugin_textsubjects = true,
   lsp__log_level = 'ERROR',
   lsp__enable_servers = {
     'tailwindcss',
