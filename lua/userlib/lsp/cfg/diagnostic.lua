@@ -1,6 +1,13 @@
 local utils = require('userlib.runtime.utils')
 local M = {}
 
+M.DiagnosticIcons = {
+  error_icon = 'E',
+  warn_icon = 'W',
+  info_icon = 'I',
+  hint_icon = 'H',
+}
+
 local original_underline_function_show = vim.diagnostic.handlers.underline.show
 local original_virtual_text_function_show = vim.diagnostic.handlers.virtual_text.show
 
@@ -67,8 +74,13 @@ M.add_source_to_virtual_text_handler = function(namespace, bufnr, diagnostics, o
 end
 
 function M.setup()
-  -- local signs = { Error = '', Warn = '', Hint = '', Info = '' }
-  local signs = { Error = 'E', Warn = 'W', Hint = 'H', Info = 'I' }
+  local signs = {
+    Error = M.DiagnosticIcons.error_icon,
+    Warn = M.DiagnosticIcons.warn_icon,
+    Hint = M.DiagnosticIcons
+        .hint_icon,
+    Info = M.DiagnosticIcons.info_icon
+  }
   local enable_virtual_text = false
   local virtual_text = enable_virtual_text and {
     severity = vim.diagnostic.severity.ERROR,
