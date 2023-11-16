@@ -558,7 +558,14 @@ plug({
       end,
       desc = 'Next buffer'
     },
-  }
+  },
+  init = function()
+    -- create a user command with nvim api
+    vim.api.nvim_create_user_command('DebugWindowBufStack', function()
+      vim.print(require('window-bufstack.bufstack').debug())
+    end, {
+    })
+  end,
 })
 
 plug({
