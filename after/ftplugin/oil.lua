@@ -20,11 +20,11 @@ set('n', '<S-q>', function()
   if not pre_buf and #vim.fn.tabpagebuflist(vim.fn.tabpagenr()) > 1 then
     vim.cmd('q')
   end
-  if not pre_buf then
-    vim.schedule(function()
-      vim.cmd('enew')
-    end)
-  end
+  -- if not pre_buf then
+  --   vim.schedule(function()
+  --     vim.cmd('enew')
+  --   end)
+  -- end
 end, {
   desc = 'Close oil',
 })
