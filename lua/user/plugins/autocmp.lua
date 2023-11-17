@@ -1,6 +1,28 @@
 local pack = require('userlib.runtime.pack')
 local Path = require('userlib.runtime.path')
 
+local has_ai_suggestions = function()
+  return (vim.b._copilot and vim.b._copilot.suggestions ~= nil)
+      or (vim.b._codeium_completions and vim.b._codeium_completions.items ~= nil)
+end
+local has_ai_suggestion_text = function()
+  if vim.b._copilot and vim.b._copilot.suggestions ~= nil then
+    local suggestion = vim.b._copilot.suggestions[1]
+    if suggestion ~= nil then suggestion = suggestion.displayText end
+    return suggestion ~= nil
+  end
+
+  if vim.b._codeium_completions and vim.b._codeium_completions.items then
+    local index = vim.b._codeium_completions.index or 0
+    local suggestion = vim.b._codeium_completions.items[index + 1] or {}
+    local parts = suggestion.completionParts or {}
+    if type(parts) ~= 'table' then return false end
+    return #parts >= 1
+  end
+
+  return false
+end
+
 local MAX_INDEX_FILE_SIZE = 2000
 
 pack.plug({
@@ -167,27 +189,8 @@ pack.plug({
           ['<C-f>'] = cmp.mapping(function(fallback)
             if vim.bo.buftype == 'prompt' then return fallback() end
             local entry = cmp.get_selected_entry()
-            local has_ai_suggestions = (vim.b._copilot and vim.b._copilot.suggestions ~= nil)
-                or (vim.b._codeium_completions and vim.b._codeium_completions.items ~= nil)
-            local has_ai_suggestion_text = function()
-              if vim.b._copilot and vim.b._copilot.suggestions ~= nil then
-                local suggestion = vim.b._copilot.suggestions[1]
-                if suggestion ~= nil then suggestion = suggestion.displayText end
-                return suggestion ~= nil
-              end
-
-              if vim.b._codeium_completions and vim.b._codeium_completions.items then
-                local index = vim.b._codeium_completions.index or 0
-                local suggestion = vim.b._codeium_completions.items[index + 1] or {}
-                local parts = suggestion.completionParts or {}
-                if type(parts) ~= 'table' then return false end
-                return #parts >= 1
-              end
-
-              return false
-            end
             -- copilot.vim
-            if not entry and has_ai_suggestions then
+            if not entry and has_ai_suggestions() then
               if not has_ai_suggestion_text() then
                 if cmp.visible() and has_words_before() then
                   cmp.confirm({ select = true })
@@ -563,7 +566,35 @@ pack.plug({
     enabled = true,
     event = { 'VeryLazy' },
     keys = {
-      { '<C-/>', mode = 'i' },
+      {
+        '<C-]>',
+        function()
+          vim.fn['copilot#Schedule']()
+          vim.schedule(function()
+            local cmp = require('cmp')
+            if cmp.visible() then cmp.close() end
+            if has_ai_suggestion_text() then
+              vim.fn['copilot#Next']()
+            else
+              vim.fn['copilot#Suggest']()
+            end
+          end)
+        end,
+        mode = 'i',
+        silent = false,
+      },
+      -- {
+      --   '<C-[>',
+      --   function()
+      --     local cmp = require('cmp')
+      --     if cmp.visible() then cmp.close() end
+      --     if has_ai_suggestion_text() then
+      --       vim.fn.feedkeys(vim.fn['copilot#Previous'](), '')
+      --     else
+      --       vim.fn.feedkeys(vim.fn['copilot#Suggest'](), '')
+      --     end
+      --   end,
+      -- },
       {
         '<leader>zp',
         '<cmd>Copilot panel<cr>',
@@ -594,12 +625,6 @@ pack.plug({
             noremap = true,
           })
         end,
-      })
-      -- <C-/>
-      vim.keymap.set({ 'i' }, '<C-/>', 'copilot#Suggest()', {
-        silent = true,
-        expr = true,
-        script = true,
       })
     end,
   },
