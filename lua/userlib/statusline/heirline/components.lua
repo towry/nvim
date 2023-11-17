@@ -438,7 +438,7 @@ local LspFormatter = {
     end
     return string.format('%s%s', self.formatter_icon, self.formatter_name)
   end,
-  update = { 'LspAttach', 'LspDetach' },
+  update = { 'LspAttach', 'LspDetach', 'BufWinEnter' },
 }
 
 local Copilot = {
