@@ -202,7 +202,6 @@ local DirAndFileName = {
   { provider = "#%1.3n.%{tabpagewinnr(tabpagenr())}" },
   FileFlags,
   { provider = "%=" },
-  update = { 'BufEnter', 'LspAttach', 'BufWritePost', 'BufWinEnter', 'BufNew', 'BufDelete' }
 }
 
 
