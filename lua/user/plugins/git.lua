@@ -289,9 +289,16 @@ plug({
 })
 
 plug({
+  'whiteinge/diffconflicts',
+  lazy = not vim.cfg.runtime__starts_as_gittool,
+  config = function()
+  end,
+})
+plug({
   -- 'pze/git-conflict.nvim',
   'akinsho/git-conflict.nvim',
   dev = false,
+  enabled = false,
   event = au.user_autocmds.FileOpenedAfter_User,
   version = 'v1.2.2',
   keys = {
@@ -318,10 +325,10 @@ plug({
       default_mappings = true,    -- disable buffer local mapping created by this plugin
       default_commands = true,
       disable_diagnostics = true, -- This will disable the diagnostics in a buffer whilst it is conflicted
-      highlights = {              -- They must have background color, otherwise the default color will be used
-        incoming = 'DiffAdd',
-        current = 'DiffAdd',
-      },
+      -- highlights = {              -- They must have background color, otherwise the default color will be used
+      --   incoming = 'DiffAdd',
+      --   current = 'DiffAdd',
+      -- },
     })
 
     vim.schedule(function() vim.cmd('GitConflictRefresh') end)

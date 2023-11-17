@@ -295,4 +295,20 @@ M.utf8keys = function(keys, disable)
   })
 end
 
+M.is_start_as_git_tool = function()
+  if vim.fn.argc(-1) == 0 then return false end
+  local argv = vim.v.argv or {}
+  local args = { { '-d' }, { '-c', 'DiffConflicts' } }
+  -- each table in args is pairs of args that may exists in argv to determin the
+  -- return value is true or false.
+  for _, arg in ipairs(args) do
+    local is_match = true
+    for _, v in ipairs(arg) do
+      if not vim.tbl_contains(argv, v) then is_match = false end
+    end
+    if is_match then return true end
+  end
+  return false
+end
+
 return M
