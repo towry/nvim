@@ -24,13 +24,6 @@ function M.load_on_startup()
             vim.diagnostic.disable(buf)
             return
           end
-
-          vim.schedule(function()
-            if vim.wo.diff then
-              vim.diagnostic.disable(buf)
-              au.do_useraucmd('User IsDiffMode')
-            end
-          end)
         end,
       },
     },
