@@ -129,10 +129,16 @@ plug({
             next_buf = nil
           end
           -- has current tab have more than 1 window?
-          local current_tab_windows_count = #vim.fn.tabpagebuflist(vim.fn.tabpagenr())
           if not next_buf then
+            local current_tab_windows_count = #vim.fn.tabpagebuflist(vim.fn.tabpagenr())
+            local tabs_count = vim.fn.tabpagenr('$')
+            local bufers_count = #vim.fn.getbufinfo({ buflisted = 1 })
             if current_tab_windows_count > 1 then
               vim.cmd('q')
+            elseif tabs_count > 1 then
+              vim.cmd('q')
+            elseif bufers_count > 1 then
+              mb.delete(current_buf)
             else
               if require('userlib.runtime.buffer').is_empty_buffer(current_buf) then
                 vim.cmd('q')
