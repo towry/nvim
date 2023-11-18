@@ -52,6 +52,20 @@ function M.load_on_startup()
         end,
       },
     },
+    -- disable something on large buffer.
+    {
+      { 'BufReadPre', },
+      {
+        group = '_disable_on_large_buf',
+        callback = function(ctx)
+          -- if file size is big than 100000
+          if vim.fn.getfsize(ctx.file) > 100000 then
+            vim.b[ctx.buf].copilot_enabled = false
+            vim.b[ctx.buf].autoformat_disable = true
+          end
+        end,
+      },
+    },
     -- Emit `User FileOpened` event, used by the plugins.
     {
       { 'BufRead', 'BufWinEnter', 'BufNewFile' },

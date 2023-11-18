@@ -1,6 +1,28 @@
 local pack = require('userlib.runtime.pack')
 local Path = require('userlib.runtime.path')
 
+local has_ai_suggestions = function()
+  return (vim.b._copilot and vim.b._copilot.suggestions ~= nil)
+      or (vim.b._codeium_completions and vim.b._codeium_completions.items ~= nil)
+end
+local has_ai_suggestion_text = function()
+  if vim.b._copilot and vim.b._copilot.suggestions ~= nil then
+    local suggestion = vim.b._copilot.suggestions[1]
+    if suggestion ~= nil then suggestion = suggestion.displayText end
+    return suggestion ~= nil
+  end
+
+  if vim.b._codeium_completions and vim.b._codeium_completions.items then
+    local index = vim.b._codeium_completions.index or 0
+    local suggestion = vim.b._codeium_completions.items[index + 1] or {}
+    local parts = suggestion.completionParts or {}
+    if type(parts) ~= 'table' then return false end
+    return #parts >= 1
+  end
+
+  return false
+end
+
 local MAX_INDEX_FILE_SIZE = 2000
 
 pack.plug({
@@ -167,27 +189,8 @@ pack.plug({
           ['<C-f>'] = cmp.mapping(function(fallback)
             if vim.bo.buftype == 'prompt' then return fallback() end
             local entry = cmp.get_selected_entry()
-            local has_ai_suggestions = (vim.b._copilot and vim.b._copilot.suggestions ~= nil)
-                or (vim.b._codeium_completions and vim.b._codeium_completions.items ~= nil)
-            local has_ai_suggestion_text = function()
-              if vim.b._copilot and vim.b._copilot.suggestions ~= nil then
-                local suggestion = vim.b._copilot.suggestions[1]
-                if suggestion ~= nil then suggestion = suggestion.displayText end
-                return suggestion ~= nil
-              end
-
-              if vim.b._codeium_completions and vim.b._codeium_completions.items then
-                local index = vim.b._codeium_completions.index or 0
-                local suggestion = vim.b._codeium_completions.items[index + 1] or {}
-                local parts = suggestion.completionParts or {}
-                if type(parts) ~= 'table' then return false end
-                return #parts >= 1
-              end
-
-              return false
-            end
             -- copilot.vim
-            if not entry and has_ai_suggestions then
+            if not entry and has_ai_suggestions() then
               if not has_ai_suggestion_text() then
                 if cmp.visible() and has_words_before() then
                   cmp.confirm({ select = true })
@@ -561,9 +564,24 @@ pack.plug({
     -- https://github.com/dermoumi/dotfiles/blob/418de1a521e4f4ac6dc0aa10e75ffb890b0cb908/nvim/lua/plugins/copilot.lua#L4
     'github/copilot.vim',
     enabled = true,
-    event = { 'VeryLazy' },
+    event = { 'InsertEnter' },
     keys = {
-      { '<C-/>', mode = 'i' },
+      {
+        '<C-]>',
+        function()
+          if vim.b.copilot_enabled == false then return end
+          local cmp = require('cmp')
+          if cmp.visible() then cmp.close() end
+          if has_ai_suggestion_text() then
+            vim.cmd([[call copilot#Next()]])
+          else
+            vim.cmd([[call copilot#Schedule()]])
+            vim.cmd([[call copilot#Suggest()]])
+          end
+        end,
+        mode = 'i',
+        silent = false,
+      },
       {
         '<leader>zp',
         '<cmd>Copilot panel<cr>',
@@ -575,7 +593,7 @@ pack.plug({
     end,
     init = function()
       vim.g.copilot_filetypes = {
-        ['*'] = true,
+        ['*'] = false,
         ['TelescopePrompt'] = false,
         ['TelescopeResults'] = false,
         ['OverseerForm'] = true,
@@ -595,11 +613,35 @@ pack.plug({
           })
         end,
       })
-      -- <C-/>
-      vim.keymap.set({ 'i' }, '<C-/>', 'copilot#Suggest()', {
-        silent = true,
-        expr = true,
-        script = true,
+      vim.api.nvim_create_autocmd('LspRequest', {
+        callback = function(args)
+          local client_id = args.data.client_id
+          -- get client name by client_id
+          local client_name = vim.lsp.get_client_by_id(client_id).name
+          if client_name ~= 'copilot' then return end
+          local request = args.data.request
+          if request.type == 'pending' then
+            vim.g.copilot_status = 'pending'
+            vim.notify('copilot  ', vim.log.levels.INFO, {
+              key = 'copilot',
+              group = "Notifications",
+            })
+          elseif request.type == 'cancel' then
+            vim.g.copilot_status = 'cancel'
+            vim.notify('copilot  ', vim.log.levels.INFO, {
+              key = 'copilot',
+              group = "Notifications",
+            })
+          elseif request.type == 'complete' then
+            vim.g.copilot_status = 'complete'
+            vim.notify('copilot  ', vim.log.levels.INFO, {
+              key = 'copilot',
+              group = "Notifications",
+            })
+          end
+          -- trigger user autocmd
+          vim.api.nvim_command('doautocmd User CopilotStatus')
+        end
       })
     end,
   },

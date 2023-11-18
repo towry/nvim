@@ -5,7 +5,7 @@ plug({
   'nvim-treesitter/nvim-treesitter',
   branch = 'main',
   build = ':TSUpdate',
-  lazy = false,
+  event = 'VeryLazy',
   cond = not vim.cfg.runtime__starts_as_gittool,
   config = function()
     require('nvim-treesitter').setup({

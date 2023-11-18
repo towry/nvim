@@ -2,7 +2,7 @@ local plug = require('userlib.runtime.pack').plug
 
 plug({
   {
-    enabled = true,
+    enabled = false,
     'rcarriga/nvim-notify',
     event = 'User LazyUIEnter',
     config = function()
@@ -75,7 +75,7 @@ plug({
   {
     'j-hui/fidget.nvim',
     event = { 'User LazyUIEnter', 'LspAttach' },
-    enabled = false,
+    enabled = true,
     opts = {
       progress = {
         ignore = {

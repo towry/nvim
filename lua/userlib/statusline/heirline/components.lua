@@ -445,7 +445,15 @@ local Copilot = {
   condition = function()
     return vim.g.loaded_copilot == 1
   end,
+  init = function(self)
+    self.enable = self.get_status() == 1
+  end,
   static = {
+    running = false,
+    count = -1,
+    -- if this comes to 0, means no running finally.
+    timer = nil,
+    spin = '',
     get_status = function()
       if vim.g.loaded_copilot == 1 and vim.g.copilot_enabled ~= 0 then
         return 1
@@ -454,16 +462,21 @@ local Copilot = {
       end
     end,
     is_running = function()
-      return vim.g._copilot_timer ~= nil
+      return vim.g.copilot_status == 'pending'
     end,
   },
   provider = function(self)
-    local is_enable = self.get_status() == 1
-    if not is_enable then return '󱚧 ' end
-    local is_running = self.is_running()
-    if not is_running then return '󰚩 ' end
+    if not self.enable then return '󱚧 ' end
+    if not self.is_running() then return '󰚩 ' end
     return '󰆄 '
   end,
+  update = {
+    'User',
+    pattern = 'CopilotStatus',
+    callback = vim.schedule_wrap(function()
+      vim.cmd.redrawstatus()
+    end)
+  }
 }
 
 return {
