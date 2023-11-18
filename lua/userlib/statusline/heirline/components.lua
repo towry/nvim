@@ -446,26 +446,14 @@ local Copilot = {
     return vim.g.loaded_copilot == 1
   end,
   init = function(self)
-    local running = self.is_running()
     self.enable = self.get_status() == 1
-    self.running = running
   end,
   static = {
+    running = false,
     count = -1,
     -- if this comes to 0, means no running finally.
-    timmer = nil,
-    --- see https://github.com/ofseed/copilot-status.nvim/blob/main/lua/copilot-status/spinners.lua
-    spinner = {
-      "┤",
-      "┘",
-      "┴",
-      "└",
-      "├",
-      "┌",
-      "┬",
-      "┐",
-    },
-    spinner_len = 8,
+    timer = nil,
+    spin = '',
     get_status = function()
       if vim.g.loaded_copilot == 1 and vim.g.copilot_enabled ~= 0 then
         return 1
@@ -474,31 +462,21 @@ local Copilot = {
       end
     end,
     is_running = function()
-      local agent = vim.g.loaded_copilot == 1 and vim.fn["copilot#RunningAgent"]() or nil
-      if not agent then
-        return false
-      end
-      -- most of the time, requests is just empty dict.
-      local requests = agent.requests or {}
-
-      -- requests is dict with number as index, get status from those requests.
-      for _, req in pairs(requests) do
-        local req_status = req.status
-        if req_status == "running" then
-          return true
-        end
-      end
-      return false
+      return vim.g.copilot_status == 'pending'
     end,
   },
   provider = function(self)
     if not self.enable then return '󱚧 ' end
-    if not self.running then return '󰚩 ' end
-    self.count = self.count + 1
-    if self.count == 0 then self.count = 1 end
-    if self.count >= self.spinner_len then self.count = 1 end
-    return self.spinner[self.count]
+    if not self.is_running() then return '󰚩 ' end
+    return '󰆄 '
   end,
+  update = {
+    'User',
+    pattern = 'CopilotStatus',
+    callback = vim.schedule_wrap(function()
+      vim.cmd.redrawstatus()
+    end)
+  }
 }
 
 return {

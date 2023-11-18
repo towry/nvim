@@ -564,37 +564,24 @@ pack.plug({
     -- https://github.com/dermoumi/dotfiles/blob/418de1a521e4f4ac6dc0aa10e75ffb890b0cb908/nvim/lua/plugins/copilot.lua#L4
     'github/copilot.vim',
     enabled = true,
-    event = { 'VeryLazy' },
+    event = { 'InsertEnter' },
     keys = {
       {
         '<C-]>',
         function()
-          vim.fn['copilot#Schedule']()
-          vim.schedule(function()
-            local cmp = require('cmp')
-            if cmp.visible() then cmp.close() end
-            if has_ai_suggestion_text() then
-              vim.fn['copilot#Next']()
-            else
-              vim.fn['copilot#Suggest']()
-            end
-          end)
+          if vim.b.copilot_enabled == false then return end
+          local cmp = require('cmp')
+          if cmp.visible() then cmp.close() end
+          if has_ai_suggestion_text() then
+            vim.cmd([[call copilot#Next()]])
+          else
+            vim.cmd([[call copilot#Schedule()]])
+            vim.cmd([[call copilot#Suggest()]])
+          end
         end,
         mode = 'i',
         silent = false,
       },
-      -- {
-      --   '<C-[>',
-      --   function()
-      --     local cmp = require('cmp')
-      --     if cmp.visible() then cmp.close() end
-      --     if has_ai_suggestion_text() then
-      --       vim.fn.feedkeys(vim.fn['copilot#Previous'](), '')
-      --     else
-      --       vim.fn.feedkeys(vim.fn['copilot#Suggest'](), '')
-      --     end
-      --   end,
-      -- },
       {
         '<leader>zp',
         '<cmd>Copilot panel<cr>',
@@ -606,7 +593,7 @@ pack.plug({
     end,
     init = function()
       vim.g.copilot_filetypes = {
-        ['*'] = true,
+        ['*'] = false,
         ['TelescopePrompt'] = false,
         ['TelescopeResults'] = false,
         ['OverseerForm'] = true,
@@ -625,6 +612,36 @@ pack.plug({
             noremap = true,
           })
         end,
+      })
+      vim.api.nvim_create_autocmd('LspRequest', {
+        callback = function(args)
+          local client_id = args.data.client_id
+          -- get client name by client_id
+          local client_name = vim.lsp.get_client_by_id(client_id).name
+          if client_name ~= 'copilot' then return end
+          local request = args.data.request
+          if request.type == 'pending' then
+            vim.g.copilot_status = 'pending'
+            vim.notify('copilot  ', vim.log.levels.INFO, {
+              key = 'copilot',
+              group = "Notifications",
+            })
+          elseif request.type == 'cancel' then
+            vim.g.copilot_status = 'cancel'
+            vim.notify('copilot  ', vim.log.levels.INFO, {
+              key = 'copilot',
+              group = "Notifications",
+            })
+          elseif request.type == 'complete' then
+            vim.g.copilot_status = 'complete'
+            vim.notify('copilot  ', vim.log.levels.INFO, {
+              key = 'copilot',
+              group = "Notifications",
+            })
+          end
+          -- trigger user autocmd
+          vim.api.nvim_command('doautocmd User CopilotStatus')
+        end
       })
     end,
   },
