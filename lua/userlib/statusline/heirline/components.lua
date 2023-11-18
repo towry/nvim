@@ -466,9 +466,9 @@ local Copilot = {
     end,
   },
   provider = function(self)
-    if not self.enable then return '󱚧 ' end
-    if not self.is_running() then return '󰚩 ' end
-    return '󰆄 '
+    if not self.enable then return '󱚧' end
+    if not self.is_running() then return '󰚩' end
+    return '󰆄'
   end,
   update = {
     'User',
