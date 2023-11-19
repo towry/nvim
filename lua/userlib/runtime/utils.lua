@@ -248,6 +248,7 @@ M.vim_starts_without_buffer = function() return vim.fn.argc(-1) == 0 end
 
 function M.change_cwd(cwd, cmd, silent)
   if not cwd then return end
+  cwd = require('userlib.runtime.path').remove_path_last_separator(cwd)
   vim.cmd((cmd or 'cd') .. ' ' .. cwd)
   M.update_cwd_env(cwd)
   if not silent then vim.notify(('New cwd: %s'):format(vim.t.cwd_short), vim.log.levels.INFO) end
