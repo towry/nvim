@@ -50,8 +50,8 @@ plug({
       local handlers = require('userlib.lsp.cfg.handlers')
       local capabilities = require('userlib.lsp.cfg.capbilities')(require('cmp_nvim_lsp').default_capabilities())
       local lsp_flags = {
-        debounce_text_changes = 600,
-        allow_incremental_sync = false,
+        debounce_text_changes = 150,
+        allow_incremental_sync = true,
       }
 
       default_lspconfig_ui_options()
