@@ -622,19 +622,19 @@ pack.plug({
           local request = args.data.request
           if request.type == 'pending' then
             vim.g.copilot_status = 'pending'
-            vim.notify('copilot  ', vim.log.levels.INFO, {
+            vim.notify(' Copilot is thinking ...', vim.log.levels.INFO, {
               key = 'copilot',
               group = "Notifications",
             })
           elseif request.type == 'cancel' then
             vim.g.copilot_status = 'cancel'
-            vim.notify('copilot  ', vim.log.levels.INFO, {
+            vim.notify(' Copilot is canceled ', vim.log.levels.INFO, {
               key = 'copilot',
               group = "Notifications",
             })
           elseif request.type == 'complete' then
             vim.g.copilot_status = 'complete'
-            vim.notify('copilot  ', vim.log.levels.INFO, {
+            vim.notify(' Copilot is done', vim.log.levels.INFO, {
               key = 'copilot',
               group = "Notifications",
             })

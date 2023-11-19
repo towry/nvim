@@ -470,6 +470,17 @@ local Copilot = {
     if not self.is_running() then return '󰚩' end
     return '󰆄'
   end,
+  hl = function(self)
+    local fg
+    if self.is_running() then
+      fg = "green"
+    else
+      fg = ''
+    end
+    return {
+      fg = fg,
+    }
+  end,
   update = {
     'User',
     pattern = 'CopilotStatus',
