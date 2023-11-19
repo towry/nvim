@@ -256,6 +256,7 @@ end
 ---@param cwd string
 ---@param cwd_short? string
 function M.update_cwd_env(cwd, cwd_short)
+  cwd = require('userlib.runtime.path').remove_path_last_separator(cwd)
   vim.t.cwd = cwd
   -- only show last part of path.
   vim.t.cwd_short = cwd_short or require('userlib.runtime.path').home_to_tilde(cwd, { shorten = true })
