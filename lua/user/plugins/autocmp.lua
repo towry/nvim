@@ -622,21 +622,21 @@ pack.plug({
           local request = args.data.request
           if request.type == 'pending' then
             vim.g.copilot_status = 'pending'
-            vim.notify(' Copilot is thinking ...', vim.log.levels.INFO, {
+            vim.notify('Copilot is thinking ...', nil, {
+              annote = ' ',
               key = 'copilot',
-              group = "Notifications",
             })
           elseif request.type == 'cancel' then
             vim.g.copilot_status = 'cancel'
-            vim.notify(' Copilot is canceled ', vim.log.levels.INFO, {
+            vim.notify('Copilot is cancelled', nil, {
+              annote = ' ',
               key = 'copilot',
-              group = "Notifications",
             })
           elseif request.type == 'complete' then
             vim.g.copilot_status = 'complete'
-            vim.notify(' Copilot is done', vim.log.levels.INFO, {
+            vim.notify('Copilot is done', nil, {
+              annote = ' ',
               key = 'copilot',
-              group = "Notifications",
             })
           end
           -- trigger user autocmd
