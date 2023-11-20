@@ -77,6 +77,7 @@ plug({
     cond = not vim.cfg.runtime__starts_as_gittool,
     event = { 'BufReadPost', 'BufNewFile' },
     opts = function()
+      local pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook()
       return {
         ---Add a space b/w comment and the line
         ---@type boolean
@@ -117,7 +118,9 @@ plug({
         },
         ---Pre-hook, called before commenting the line
         ---@type function|nil
-        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+        pre_hook = function(ctx)
+          return pre_hook(ctx)
+        end,
         ---Post-hook, called after commenting is done
         ---@type function|nil
         post_hook = nil,
