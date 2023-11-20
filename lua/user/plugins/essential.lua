@@ -521,3 +521,22 @@ pack.plug({
   end,
   init = function() require('userlib.legendary').pre_hook('setup_yanky_lg', setup_yanky_legendary) end,
 })
+
+pack.plug({
+  'echasnovski/mini.clue',
+  event = { 'CursorHold', 'CursorHoldI' },
+  opts = function()
+    return {
+      window = {
+        delay = 100,
+      },
+      triggers = {
+        { mode = 'n', keys = 'gh' },
+      },
+      clues = {
+        -- gh<key> for gitsigns.
+        { mode = 'n', keys = 'gh', desc = '+Gitsigns' },
+      }
+    }
+  end,
+})

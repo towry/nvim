@@ -164,8 +164,74 @@ plug({
     'lewis6991/gitsigns.nvim',
     keys = {
       {
-        'gh',
-        '<cmd>lua require("userlib.hydra.git").open_git_signs_hydra()<cr>',
+        'ghd',
+        '<cmd>Gitsigns diffthis<cr>',
+        desc = "Diff this",
+      },
+      {
+        'ghs',
+        '<cmd>Gitsigns stage_hunk<cr>',
+        desc = "Stage hunk",
+      },
+      {
+        'ghr',
+        '<cmd>Gitsigns reset_hunk<cr>',
+        desc = "Reset hunk",
+      },
+      {
+        'ghS',
+        '<cmd>Gitsigns stage_buffer<cr>',
+        desc = "Stage buffer",
+      },
+      {
+        'ghu',
+        '<cmd>Gitsigns undo_stage_hunk<cr>',
+        desc = "Undo stage hunk",
+      },
+      {
+        'ghR',
+        '<cmd>Gitsigns reset_buffer<cr>',
+        desc = "Reset buffer",
+      },
+      {
+        'ghp',
+        '<cmd>Gitsigns preview_hunk<cr>',
+        desc = 'Preview hunk',
+      },
+      {
+        'ghb',
+        '<cmd>Gitsigns blame_line<cr>',
+        desc = 'Blame line',
+      },
+      {
+        'ghB',
+        '<cmd>Gitsigns toggle_current_line_blame<cr>',
+        desc = 'Toggle current line blame',
+      },
+      {
+        'ghx',
+        '<cmd>Gitsigns select_hunk<cr>',
+        desc = 'Select hunk',
+      },
+      {
+        'gh]',
+        function()
+          local gs = require('gitsigns')
+          if vim.wo.diff then return end
+          vim.schedule(function() gs.next_hunk() end)
+        end,
+        desc = 'Next hunk'
+      },
+      {
+        'gh[',
+        function()
+          local gs = require('gitsigns')
+          if vim.wo.diff then return end
+          vim.schedule(function()
+            gs.prev_hunk()
+          end)
+        end,
+        desc = 'Prev hunk'
       },
     },
     event = au.user_autocmds.FileOpenedAfter_User,
