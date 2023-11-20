@@ -2,25 +2,23 @@ local au = require('userlib.runtime.au')
 local plug = require('userlib.runtime.pack').plug
 local cmdstr = require('userlib.runtime.keymap').cmdstr
 
+local function get_window_bufnr(winid)
+  return vim.api.nvim_win_call(winid, function()
+    return vim.fn.bufnr('%')
+  end)
+end
+local function change_window_bufnr(winid, bufnr)
+  vim.api.nvim_win_call(winid, function()
+    vim.cmd(string.format('buffer %d', bufnr))
+  end)
+end
+
+
 plug({
   {
     -- 'anuvyklack/hydra.nvim',
     'pze/hydra.nvim',
-    keys = {
-      {
-        '<C-w>',
-        function()
-          if vim.bo.filetype == 'TelescopePrompt' then return '<C-w>' end
-          return cmdstr([[lua require("userlib.hydra.window").open_window_hydra(true)]])
-        end,
-        desc = 'Window operations',
-        nowait = true,
-        expr = true,
-      },
-    },
     config = function()
-      -- vim.cmd('hi! link HydraHint NormalFloat')
-      -- vim.cmd('hi! link HydraBorder NormalFloat')
     end,
   },
 
@@ -28,6 +26,45 @@ plug({
     'anuvyklack/windows.nvim',
     dependencies = {
       'anuvyklack/middleclass',
+    },
+    keys = {
+      { '<C-w>a', '<cmd>WindowsEnableAutowidth<cr>',  nowait = true, desc = 'Toggle auto size' },
+      { '<C-w>m', '<cmd>WindowsMaximize<cr>',         nowait = true, desc = 'maximize window' },
+      { '<C-w>f', '<cmd>WindowsDisableAutowidth<cr>', nowait = true, desc = 'Disable auto size' },
+      { '<C-w>=', '<cmd>WindowsEqualize<cr>',         nowait = true, desc = 'Equallize window' },
+      {
+        '<C-w>x',
+        function()
+          local cur_win = vim.api.nvim_get_current_win()
+          if vim.fn.winnr('$') <= 2 then
+            vim.cmd('wincmd x')
+            return
+          end
+          vim.schedule(function()
+            local ok, winpick = pcall(require, 'window-picker')
+            if not ok then
+              vim.cmd('wincmd x')
+              return
+            else
+              local picked = winpick.pick_window({
+                autoselect_one = false,
+                include_current_win = false,
+                hint = 'floating-big-letter',
+              })
+              if not picked then return end
+              local current_bufnr = get_window_bufnr(cur_win)
+              local target_bufnr = get_window_bufnr(picked)
+              change_window_bufnr(picked, current_bufnr)
+              -- use wincmd to focus picked window.
+              change_window_bufnr(cur_win, target_bufnr)
+              vim.cmd(string.format('%dwincmd w', vim.fn.win_id2win(picked)))
+              -- go back, so we can use quickly switch between those two window.
+              vim.cmd('wincmd p')
+            end
+          end)
+        end,
+        desc = 'swap',
+      }
     },
     enabled = true,
     event = 'WinNew',

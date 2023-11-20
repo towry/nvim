@@ -532,10 +532,15 @@ pack.plug({
       },
       triggers = {
         { mode = 'n', keys = 'gh' },
+        { mode = 'n', keys = '<C-w>' },
       },
       clues = {
         -- gh<key> for gitsigns.
-        { mode = 'n', keys = 'gh', desc = '+Gitsigns' },
+        { mode = 'n', keys = 'gh',     desc = '+Gitsigns' },
+        { mode = 'n', keys = '<C-w>a' },
+        { mode = 'n', keys = '<C-w>m' },
+        { mode = 'n', keys = '<C-w>x' },
+        { mode = 'n', keys = '<C-w>=', },
       }
     }
   end,
