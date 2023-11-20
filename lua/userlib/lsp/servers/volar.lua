@@ -19,6 +19,7 @@ M.settings = {
   },
 }
 
+--- https://github.com/volarjs/volar.js/blob/master/packages/language-server/lib/types.ts
 return function(opts)
   local utils = require('userlib.runtime.utils')
   local node_root = utils.get_root()
