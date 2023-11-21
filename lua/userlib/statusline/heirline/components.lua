@@ -339,7 +339,7 @@ local Ruler = {
 
 local Branch = {
   condition = function()
-    return vim.fn.exists("*FugitiveHead")
+    return vim.fn.exists("*FugitiveHead") == 1
   end,
   init = function(self)
     if vim.fn.exists("*FugitiveHead") then
