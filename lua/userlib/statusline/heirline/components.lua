@@ -471,11 +471,9 @@ local Copilot = {
     return '󰆄'
   end,
   hl = function(self)
-    local fg
+    local fg = ''
     if self.is_running() then
       fg = "green"
-    else
-      fg = ''
     end
     return {
       fg = fg,
