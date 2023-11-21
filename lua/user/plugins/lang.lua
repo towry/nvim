@@ -180,14 +180,6 @@ plug({
       })
     end,
   },
-  {
-    'm-demare/hlargs.nvim',
-    cond = not vim.cfg.runtime__starts_as_gittool,
-    event = au.user_autocmds.FileOpenedAfter_User,
-    opts = {
-      color = '#F7768E',
-    },
-  },
 
   {
     'iamcco/markdown-preview.nvim',
