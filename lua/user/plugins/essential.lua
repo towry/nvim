@@ -539,7 +539,7 @@ pack.plug({
       },
       triggers = {
         { mode = 'n', keys = '<Leader>' },
-        { mode = 'n', keys = 'gh' },
+        { mode = 'n', keys = '<LocalLeader>' },
         { mode = 'n', keys = '<C-w>' },
         -- Built-in completion
         { mode = 'i', keys = '<C-x>' },
