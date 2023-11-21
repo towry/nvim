@@ -533,6 +533,9 @@ pack.plug({
     local opts = {
       window = {
         delay = 200,
+        config = {
+          width = 'auto',
+        }
       },
       triggers = {
         { mode = 'n', keys = '<Leader>' },
@@ -563,6 +566,7 @@ pack.plug({
       clues = {
         miniclue.gen_clues.builtin_completion(),
         miniclue.gen_clues.g(),
+        { mode = 'n', keys = 'gdf',       desc = 'Go to definition in file' },
         miniclue.gen_clues.marks(),
         miniclue.gen_clues.registers(),
         miniclue.gen_clues.z(),
