@@ -216,6 +216,7 @@ pack.plug({
 --- which-key
 pack.plug({
   'folke/which-key.nvim',
+  enabled = vim.cfg.plugin__whichkey_or_clue == 'whichkey',
   keys = { '<leader>', '<localleader>' },
   cmd = { 'WhichKey' },
   config = function()
@@ -525,23 +526,81 @@ pack.plug({
 pack.plug({
   'echasnovski/mini.clue',
   event = { 'CursorHold', 'CursorHoldI' },
-  opts = function()
-    return {
+  enabled = vim.cfg.plugin__whichkey_or_clue == 'clue',
+  config = function()
+    local miniclue = require('mini.clue')
+
+    local opts = {
       window = {
-        delay = 100,
+        delay = 200,
       },
       triggers = {
+        { mode = 'n', keys = '<Leader>' },
         { mode = 'n', keys = 'gh' },
         { mode = 'n', keys = '<C-w>' },
+        -- Built-in completion
+        { mode = 'i', keys = '<C-x>' },
+
+        -- `g` key
+        { mode = 'n', keys = 'g' },
+        { mode = 'x', keys = 'g' },
+
+        -- Marks
+        { mode = 'n', keys = "'" },
+        { mode = 'n', keys = '`' },
+        { mode = 'x', keys = "'" },
+        { mode = 'x', keys = '`' },
+
+        -- Registers
+        { mode = 'n', keys = '"' },
+        { mode = 'x', keys = '"' },
+        { mode = 'i', keys = '<C-r>' },
+        { mode = 'c', keys = '<C-r>' },
+        -- `z` key
+        { mode = 'n', keys = 'z' },
+        { mode = 'x', keys = 'z' },
       },
       clues = {
+        miniclue.gen_clues.builtin_completion(),
+        miniclue.gen_clues.g(),
+        miniclue.gen_clues.marks(),
+        miniclue.gen_clues.registers(),
+        miniclue.gen_clues.z(),
         -- gh<key> for gitsigns.
-        { mode = 'n', keys = 'gh',     desc = '+Gitsigns' },
+        { mode = 'n', keys = '<Leader>g', desc = '+Git' },
+        { mode = 'n', keys = '<Leader>f', desc = '+Finder' },
+        { mode = 'n', keys = '<Leader>c', desc = '+Code' },
+        { mode = 'n', keys = '<Leader>/', desc = '+Outline|Terms' },
+        { mode = 'n', keys = '<Leader>v', desc = '+Trails' },
+        { mode = 'n', keys = '<Leader>z', desc = '+Extended' },
+        { mode = 'n', keys = '<Leader>m', desc = '+Motion' },
+        { mode = 'n', keys = '<Leader>b', desc = '+Buffer' },
+        { mode = 'n', keys = '<Leader>t', desc = '+Tools' },
+        { mode = 'n', keys = '<Leader>w', desc = '+Workspace' },
+        { mode = 'n', keys = '<Leader>s', desc = '+Search|Replace' },
+        { mode = 'n', keys = '<Leader>r', desc = '+Runner|Debugger' },
+        ---
+        { mode = 'n', keys = 'gh',        desc = '+Gitsigns' },
         { mode = 'n', keys = '<C-w>a' },
         { mode = 'n', keys = '<C-w>m' },
         { mode = 'n', keys = '<C-w>x' },
         { mode = 'n', keys = '<C-w>=', },
       }
     }
+    miniclue.setup(opts)
   end,
+  init = function()
+    au.define_user_autocmd({
+      pattern = 'WhichKeyRefresh',
+      callback = function(ctx)
+        local ok, miniclue = pcall(require, 'mini.clue')
+        if not ok then return end
+        vim.schedule(function()
+          local data = ctx.data
+          local buf = data.buffer
+          miniclue.ensure_buf_triggers(buf)
+        end)
+      end,
+    })
+  end
 })

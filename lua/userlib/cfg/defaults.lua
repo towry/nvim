@@ -197,4 +197,5 @@ return {
     'noice',
   },
   ---plugins specific.
+  plugin__whichkey_or_clue = "clue"
 }

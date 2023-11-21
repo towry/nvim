@@ -148,7 +148,7 @@ plug({
         desc = 'Unshow current buffer',
       },
       {
-        '<S-q>',
+        '<C-q>',
         function()
           local current_buf = vim.api.nvim_get_current_buf()
           local mb = require('mini.bufremove')

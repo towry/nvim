@@ -7,7 +7,7 @@ function M.setup_keybinding(client, buffer)
       buffer = buffer,
     }, e or {})
   end
-  local _ = function(d) return ' ' .. d end
+  local _ = function(d) return '' .. d end
   local set = keymap.set
   local cmdstr = keymap.cmdstr
   local func_call = function(call_sig) return cmdstr([[lua require("userlib.lsp.func").]] .. call_sig) end
@@ -196,7 +196,7 @@ function M.setup_keybinding(client, buffer)
   )
   set(
     'n',
-    'gd',
+    'gdfd',
     func_call('goto_definition_in_file()'),
     opts({
       desc = _('Go find definition in file'),

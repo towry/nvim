@@ -176,7 +176,7 @@ local function setup_basic()
 
   for i = 1, 9 do
     set('n', '<space>' .. i, cmd(i .. 'tabnext'), {
-      desc = 'which_key_ignore',
+      desc = 'Go to tab ' .. i,
     })
   end
   set('n', '<leader>tn', cmd('tabnew'), {
