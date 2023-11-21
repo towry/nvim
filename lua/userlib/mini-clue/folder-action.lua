@@ -35,6 +35,11 @@ M.open = function(new_cwd)
     end, {
       desc = 'Search content',
     })
+    set('n', 'g', function()
+      require('rgflow').open(nil, nil, new_cwd)
+    end, {
+      desc = 'Grep on it',
+    })
     set('n', 'r', function()
       require('userlib.telescope.pickers').project_files({
         oldfiles = true,

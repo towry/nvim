@@ -6,6 +6,61 @@ local pickers_mod = 'userlib.telescope.pickers'
 local au = require('userlib.runtime.au')
 
 plug({
+  'mangelozzi/rgflow.nvim',
+  opts = {
+    default_trigger_mappings = true,
+    default_ui_mappings = true,
+    default_quickfix_mappings = true,
+    cmd_flags = ("--smart-case -g !*.{min.js,pyc} --fixed-strings --no-fixed-strings --no-ignore -M 500"
+      -- Exclude globs
+      .. " -g !**/.angular/"
+      .. " -g !**/node_modules/"
+      .. " -g !**/static/*"
+      .. " -g !**/public/*"
+      .. " -g !**/dist/*"
+    )
+  },
+  keys = {
+    {
+      '<leader>sgg',
+      '<cmd>lua require("rgflow").open()<cr>',
+      desc = 'Open rg flow',
+    },
+    {
+      '<leader>sgr',
+      '<cmd>lua require("rgflow").open_again()<cr>',
+      desc = 'Open rg flow with previous pattern',
+    },
+    -- open_cword
+    {
+      '<leader>sgw',
+      '<cmd>lua require("rgflow").open_cword()<cr>',
+      desc = 'Open rg flow with current word',
+    },
+    {
+      '<leader>sgp',
+      '<cmd>lua require("rgflow").open_paste()<cr>',
+      desc = 'Open rg flow with paste',
+    },
+    {
+      '<leader>sgv',
+      '<cmd>lua require("rgflow").open_visual()<cr>',
+      desc = 'Open rg flow with visual selection',
+    },
+    {
+      '<leader>sgx',
+      '<cmd>lua require("rgflow").abort()<cr>',
+      desc = 'Abort rg flow',
+    },
+    {
+      '<leader>sgS',
+      '<cmd>lau require("rgflow").print_status()<cr>',
+      desc = 'Print rg flow status',
+    }
+  }
+})
+
+plug({
   'kyoh86/vim-ripgrep',
   event = 'CmdlineEnter',
   init = function()
