@@ -603,7 +603,7 @@ plug({
         live_grep_args = {
           disable_coordinates = true,
           auto_quoting = true, -- enable/disable auto-quoting
-          layout_strategy = "flex",
+          layout_strategy = "vertical",
           layout_config = {
             width = 0.9,
           },
