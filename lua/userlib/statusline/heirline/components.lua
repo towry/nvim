@@ -471,7 +471,7 @@ local Copilot = {
     return '󰆄'
   end,
   hl = function(self)
-    local fg = ''
+    local fg = vim.g.copilot_auto_mode == true and 'orange' or ''
     if self.is_running() then
       fg = "green"
     end

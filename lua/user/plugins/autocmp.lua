@@ -619,13 +619,14 @@ pack.plug({
           vim.g.copilot_auto_mode = false
           vim.g.copilot_filetypes['*'] = false
           vim.notify("Copilot auto mode disabled X")
-          vim.cmd.redrawstatus()
         else
           vim.g.copilot_auto_mode = true
           vim.g.copilot_filetypes['*'] = true
           vim.notify("Copilot auto mode enabled ✔")
-          vim.cmd.redrawstatus()
         end
+        vim.api.nvim_exec_autocmds('User', {
+          pattern = 'CopilotStatus',
+        })
       end, {})
       vim.api.nvim_create_autocmd('LspRequest', {
         callback = function(args)
