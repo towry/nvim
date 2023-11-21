@@ -5,6 +5,7 @@ M.open = function(new_cwd)
   new_cwd = require('userlib.runtime.path').remove_path_last_separator(new_cwd)
 
   require('userlib.mini-clue').shortly_open(function(set, unset)
+    set('n', '1', '<cmd>echo expand("%")<cr>', { desc = new_cwd })
     set('n', 'f', function()
       require('userlib.telescope.pickers').project_files({
         cwd = new_cwd,
