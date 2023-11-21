@@ -617,11 +617,15 @@ pack.plug({
         if vim.g.copilot_auto_mode == true then
           -- disable
           vim.g.copilot_auto_mode = false
-          vim.g.copilot_filetypes['*'] = false
+          vim.g.copilot_filetypes = vim.tbl_extend('keep', {
+            ["*"] = false
+          }, vim.g.copilot_filetypes)
           vim.notify("Copilot auto mode disabled X")
         else
           vim.g.copilot_auto_mode = true
-          vim.g.copilot_filetypes['*'] = true
+          vim.g.copilot_filetypes = vim.tbl_extend('keep', {
+            ["*"] = true
+          }, vim.g.copilot_filetypes)
           vim.notify("Copilot auto mode enabled ✔")
         end
         vim.api.nvim_exec_autocmds('User', {
