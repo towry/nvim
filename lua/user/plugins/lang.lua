@@ -13,8 +13,7 @@ plug({
       auto_install = vim.cfg.lang_treesitter_auto_install,
       ignore_install = { 'comment' },
     })
-    -- below make insert onClick=_{_ freeze.
-    -- vim.treesitter.language.register('tsx', 'typescriptreact')
+    vim.treesitter.language.register('tsx', 'typescriptreact')
   end,
   init = function()
     vim.api.nvim_create_augroup('treesitter_start', { clear = true })
