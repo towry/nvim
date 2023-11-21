@@ -23,7 +23,7 @@ Ty.SCROLL = function(...)
   -- vim.cmd("Beacon")
 end
 
-Ty.NOTIFY = function(...) require('notify').notify(...) end
+Ty.NOTIFY = function(...) vim.notify(...) end
 ---@example
 ---```lua
 ---Ty.ECHO({{ 'hello', 'Comment'}})
