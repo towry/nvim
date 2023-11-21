@@ -369,10 +369,45 @@ plug({
   version = 'v1.2.2',
   keys = {
     {
-      '<leader>gc',
-      '<cmd>lua require("userlib.hydra.git").open_git_conflict_hydra()<cr>',
-      desc = 'Open git conflict menus',
+      '<leader>gcb',
+      '<cmd>GitConflictChooseBoth<cr>',
+      desc = 'Git conflict choose both',
     },
+    {
+      '<leader>gcn',
+      '<cmd>GitConflictNextConflict<cr>',
+      desc = 'Git conflict next conflict',
+    },
+    {
+      '<leader>gco',
+      '<cmd>GitConflictChooseOurs<cr>',
+      desc = 'Git conflict choose ours',
+    },
+    {
+      '<leader>gcp',
+      '<cmd>GitConflictPrevConflict<cr>',
+      desc = 'Git conflict prev conflict',
+    },
+    {
+      '<leader>gct',
+      '<cmd>GitConflictChooseTheirs<cr>',
+      desc = 'Git conflict choose theirs',
+    },
+    {
+      '<leader>gcl',
+      '<cmd>GitConflictListQf<cr>',
+      desc = 'Git conflict list qf',
+    },
+    {
+      '<leader>gcN',
+      '<cmd>GitConflictChooseNone<cr>',
+      desc = 'Git conflict choose none',
+    },
+    {
+      '<leader>gcr',
+      '<cmd>GitConflictRefresh<cr>',
+      desc = 'Git conflict refresh',
+    }
   },
   cmd = {
     'GitConflictChooseBoth',
