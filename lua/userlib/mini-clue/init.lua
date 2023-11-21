@@ -1,7 +1,6 @@
 local M = {}
 
 M.shortly_prefix = '<leader>z+'
-local keys_mode = {}
 
 ---@param fn function
 M.shortly_open = function(fn)
@@ -20,22 +19,15 @@ M.shortly_open = function(fn)
     if type(mode == 'string') then
       mode = { mode }
     end
-    --- record keys with mode to be deleted later
-    for _, m in ipairs(mode) do
-      keys_mode[m] = keys_mode[m] or {}
-      table.insert(keys_mode[m], key)
-    end
     local keys = M.shortly_prefix .. key
     bufset(mode, keys, command, opts)
   end
+  local is_unset = false
+  --- actually this is not neccessary
   local unset = function()
-    --- use vim.api.nvim_buf_del_keymap to delete previously set keys
-    for mode, keys in pairs(keys_mode) do
-      for _, key in ipairs(keys) do
-        vim.api.nvim_buf_del_keymap(buf, mode, M.shortly_prefix .. key)
-      end
-    end
-    keys_mode = {}
+    if is_unset then return end
+    is_unset = true
+    vim.b[buf].miniclue_config = {}
   end
 
   fn(set, unset, buf)
