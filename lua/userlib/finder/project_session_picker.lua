@@ -72,7 +72,7 @@ local function session_projects(opts)
         if not entry_path then return end
         local new_cwd = entry_path
 
-        require('userlib.hydra.folder-action').open(new_cwd, prompt_bufnr)
+        require('userlib.mini-clue.folder-action').open(new_cwd)
       end
       actions.select_default:replace(on_project_selected)
       return true

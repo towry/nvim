@@ -16,13 +16,6 @@ end
 
 plug({
   {
-    -- 'anuvyklack/hydra.nvim',
-    'pze/hydra.nvim',
-    config = function()
-    end,
-  },
-
-  {
     'anuvyklack/windows.nvim',
     dependencies = {
       'anuvyklack/middleclass',
@@ -327,8 +320,8 @@ plug({
                       local entry_path = state.get_selected_entry().value
                       if not entry_path then return end
                       local new_cwd = entry_path
-
-                      require('userlib.hydra.folder-action').open(new_cwd, prompt_bufnr)
+                      actions.close(prompt_bufnr)
+                      require('userlib.mini-clue.folder-action').open(new_cwd)
                     end
                     actions.select_default:replace(on_project_selected)
                     return true

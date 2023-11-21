@@ -540,6 +540,7 @@ pack.plug({
       triggers = {
         { mode = 'n', keys = '<Leader>' },
         { mode = 'n', keys = '<LocalLeader>' },
+        { mode = 'n', keys = '<Leader>z+' },
         { mode = 'n', keys = '<C-w>' },
         -- Built-in completion
         { mode = 'i', keys = '<C-x>' },
@@ -585,6 +586,8 @@ pack.plug({
         { mode = 'n', keys = '<Leader>r', desc = '+Runner|Debugger' },
         ---
         { mode = 'n', keys = 'gh',        desc = '+Gitsigns' },
+        --- windows
+        miniclue.gen_clues.windows(),
         { mode = 'n', keys = '<C-w>a' },
         { mode = 'n', keys = '<C-w>m' },
         { mode = 'n', keys = '<C-w>x' },

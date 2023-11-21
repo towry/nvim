@@ -47,7 +47,7 @@ plug({
         end
 
         if folder then
-          require('userlib.hydra.folder-action').open(folder, 0)
+          require('userlib.mini-clue.folder-action').open(folder)
         else
           require('userlib.hydra.file-action').open(file, 0)
         end
@@ -588,7 +588,8 @@ plug({
                 local entry_path = action_state.get_selected_entry().Path
                 local new_cwd = entry_path:is_dir() and entry_path:absolute() or entry_path:parent():absolute()
 
-                require('userlib.hydra.folder-action').open(new_cwd, prompt_buf)
+                actions.close(prompt_buf)
+                require('userlib.mini-clue.folder-action').open(new_cwd)
               end,
             },
           },
