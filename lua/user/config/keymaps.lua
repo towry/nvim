@@ -227,6 +227,7 @@ local function setup_basic()
   set('n', '<leader>/t', function()
     if tip_is_loading then return end
     local job = require 'plenary.job'
+    vim.notify('loading tip...')
     job:new({
       command = 'curl',
       args = { 'https://vtip.43z.one' },
