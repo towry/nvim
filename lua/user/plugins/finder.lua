@@ -32,7 +32,7 @@ plug({
       ['<C-p>'] = 'actions.preview',
       ['<C-c>'] = 'actions.close',
       ['<C-r>'] = 'actions.refresh',
-      ['<C-o>'] = function()
+      ['M'] = function()
         local oil = require('oil')
         -- type: file|directory
         local current = require('oil').get_cursor_entry()
