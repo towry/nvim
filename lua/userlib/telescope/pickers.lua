@@ -176,10 +176,10 @@ function M.curbuf()
     winblend = 10,
     previewer = true,
     shorten_path = false,
-    borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
+    -- borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
     border = true,
     layout_config = {
-      width = 0.55,
+      width = 0.8,
     },
   })
   builtin.current_buffer_fuzzy_find(opts)
@@ -216,7 +216,7 @@ function M.buffers_or_recent()
       cwd = vim.cfg.runtime__starts_cwd,
       oldfiles = true,
       previewer = false,
-      borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
+      -- borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
     }))
     return
   end
@@ -230,7 +230,7 @@ function M.buffers()
   local Buffer = require('userlib.runtime.buffer')
 
   builtin.buffers(require('telescope.themes').get_dropdown({
-    borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
+    -- borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
     ignore_current_buffer = true,
     sort_mru = true,
     -- layout_strategy = 'vertical',

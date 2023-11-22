@@ -429,7 +429,7 @@ plug({
           depth = 3,
           git_status = false,
           cwd = vim.cfg.runtime__starts_cwd,
-          borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
+          -- borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
         }))
       end,
       desc = 'Find all folders',
@@ -555,7 +555,7 @@ plug({
     return {
       defaults = {
         border = true,
-        borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
+        -- borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
         wrap_results = false,
         --- give some opacity so we can see the window picker marks.
         winblend = 0,
@@ -572,9 +572,18 @@ plug({
           '--smart-case',
         },
         layout_config = {
-          prompt_position = 'top',
+          -- prompt_position = 'top',
           horizontal = {
-            preview_cutoff = 120,
+            preview_cutoff = 20,
+          },
+          vertical = {
+            preview_cutoff = 0,
+            width = 0.9,
+          },
+          flex = {
+            width = 0.98,
+            preview_width = 0.2,
+            preview_cutoff = 200,
           },
           bottom_pane = {
             preview_width = 0.4,
@@ -666,7 +675,8 @@ plug({
           auto_quoting = true, -- enable/disable auto-quoting
           layout_strategy = "vertical",
           layout_config = {
-            width = 0.9,
+            width = 0.95,
+            mirror = false,
           },
           mappings = {
             -- extend mappings
