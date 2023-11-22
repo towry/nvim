@@ -199,9 +199,9 @@ pack.plug({
                 end
               else
                 if vim.b._copilot then
-                  vim.fn.feedkeys(vim.fn['copilot#Accept'](), '')
+                  vim.fn.feedkeys(vim.fn['copilot#Accept'](), 'i')
                 elseif vim.b._codeium_completions then
-                  vim.fn.feedkeys(vim.fn['codeium#Accept'](), '')
+                  vim.fn.feedkeys(vim.fn['codeium#Accept'](), 'i')
                 end
               end
             elseif cmp.visible() and has_words_before() then
