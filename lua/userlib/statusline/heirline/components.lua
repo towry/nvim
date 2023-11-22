@@ -337,17 +337,6 @@ local Ruler = {
   hl = function(self) return { fg = "black", bg = self:mode_color(), bold = true } end,
 }
 
-local Treesitter = {
-  init = function(self)
-    self.bufnr = vim.api.nvim_get_current_buf()
-  end,
-  provider = function()
-    local is_active = vim.treesitter.highlighter.active[self.bufnr] ~= nil
-    if not is_active then return '󰹩 ' end
-  end,
-  update = 'FileType',
-}
-
 local Branch = {
   condition = function()
     return vim.fn.exists("*FugitiveHead") == 1
