@@ -48,6 +48,7 @@ plug({
         comp.lpad(comp.Copilot),
         comp.lpad(comp.Harpoon),
         comp.lpad(require('userlib.statusline.heirline.component_diagnostic')),
+        comp.lpad(comp.TerminalStatusline),
         require("userlib.statusline.heirline").left_components,
         { provider = "%=" },
         comp.lpad(comp.Tabs),
@@ -56,6 +57,7 @@ plug({
         comp.rpad(comp.Dap),
         comp.rpad(comp.Overseer),
         comp.rpad(comp.LspFormatter),
+        comp.rpad(comp.HelpFileName),
         comp.rpad(comp.FileType),
         comp.rpad(comp.DiagnosticsDisabled),
         comp.rpad(comp.WorkspaceRoot)
