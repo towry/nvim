@@ -592,6 +592,9 @@ pack.plug({
         { mode = 'n', keys = '<C-w>m' },
         { mode = 'n', keys = '<C-w>x' },
         { mode = 'n', keys = '<C-w>=', },
+
+        --- localleader
+        { mode = 'n', keys = '<LocalLeader>f', desc = '+Grep' },
       }
     }
     miniclue.setup(opts)

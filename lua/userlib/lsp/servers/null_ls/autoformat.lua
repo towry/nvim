@@ -20,9 +20,9 @@ end
 function M.toggle()
   auto_format_disabled = not auto_format_disabled
   if auto_format_disabled then
-    vim.notify('Auto format is disabled')
+    vim.notify('Auto format is disabled', nil, { key = 'autoformat' })
   else
-    vim.notify('Auto format is enabled')
+    vim.notify('Auto format is enabled', nil, { key = 'autoformat' })
   end
   vim.api.nvim_exec_autocmds('User', { pattern = 'StatuslineUpdate' })
 end
