@@ -3,6 +3,12 @@ local M = {}
 M.attach = function(bufnr)
   local set = require('userlib.runtime.keymap').map_buf_thunk(bufnr)
 
+  require('userlib.mini-clue').extend_clues({
+    {
+      mode = "n", keys = "<localleader>t", desc = "+Tests"
+    }
+  })
+
   set('n', '<localleader>to', function()
     require('neotest').output.open({ entery = true })
   end, {

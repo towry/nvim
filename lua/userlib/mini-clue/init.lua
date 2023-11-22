@@ -48,4 +48,11 @@ M.show_on_keys = function(keys)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), 'mit', false)
 end
 
+M.extend_clues = function(clues)
+  -- vim.print(clues)
+  -- vim.b.miniclue_config = vim.b.miniclue_config or {}
+  -- vim.b.miniclue_config['clues'] = vim.b.miniclue_config['clues'] or {}
+  -- vim.list_extend(vim.b.miniclue_config['clues'], clues)
+end
+
 return M
