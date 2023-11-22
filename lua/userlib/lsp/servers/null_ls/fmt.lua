@@ -101,12 +101,10 @@ function M.format(bufnr, opts)
 
   vim.lsp.buf.format(fmt_opts)
   if not opts.auto then
-    vim.api.nvim_echo({ { "format with " .. (impl_formatter_name or name or "default"), "Comment" } }
-      , true, {})
+    vim.notify("format with " .. (impl_formatter_name or name or "default"), vim.log.levels.INFO)
   else
     vim.defer_fn(function()
-      vim.api.nvim_echo({ { " written! also format with " .. (impl_formatter_name or name or "default"), "Comment" } }
-        , true, {})
+      vim.notify("written! also format with " .. (impl_formatter_name or name or "default"), vim.log.levels.INFO)
     end, 1)
   end
 end

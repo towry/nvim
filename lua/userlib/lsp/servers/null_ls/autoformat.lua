@@ -24,6 +24,7 @@ function M.toggle()
   else
     vim.notify('Auto format is enabled')
   end
+  vim.api.nvim_exec_autocmds('User', { pattern = 'StatuslineUpdate' })
 end
 
 local function attach_autoformat_with_autocmd(_client, bufnr)
@@ -63,6 +64,7 @@ end
 
 function M.attach(client, bufnr)
   attach_autoformat_with_autocmd(client, bufnr)
+  vim.api.nvim_exec_autocmds('User', { pattern = 'StatuslineUpdate' })
 end
 
 return M
