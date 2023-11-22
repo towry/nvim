@@ -299,7 +299,7 @@ end
 
 M.is_start_as_git_tool = function()
   if vim.fn.argc(-1) == 0 then return false end
-  local argv = vim.fn.argv()
+  local argv = vim.v.argv
   local args = { { '-d' }, { '-c', 'DiffConflicts' }, }
   -- each table in args is pairs of args that may exists in argv to determin the
   -- return value is true or false.
