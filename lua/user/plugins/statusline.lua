@@ -53,6 +53,8 @@ plug({
         comp.lpad(comp.Tabs),
         { provider = "%=" },
         require("userlib.statusline.heirline").right_components,
+        comp.rpad(comp.Treesitter),
+        comp.rpad(comp.Dap),
         comp.rpad(comp.Overseer),
         comp.rpad(comp.LspFormatter),
         comp.rpad(comp.FileType),
