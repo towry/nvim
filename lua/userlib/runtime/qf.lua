@@ -21,7 +21,7 @@ function M.toggle_loc()
   if is_list_open('loclist') then
     vim.cmd.lclose(silence)
   elseif #vim.fn.getloclist(0) > 0 then
-    require('').preserve_window(vim.cmd.lopen, silence)
+    require('userlib.runtime.buffer').preserve_window(vim.cmd.lopen, silence)
   end
 end
 
