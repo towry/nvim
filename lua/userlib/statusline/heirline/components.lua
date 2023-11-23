@@ -100,7 +100,7 @@ local ViMode = {
     },
   },
   provider = function(self) return " " .. self.mode_names[self.mode] .. " " end,
-  hl = function(self) return { fg = "black", bg = self:mode_color(), bold = true } end,
+  hl = function(self) return { fg = self:mode_color(), bold = true } end,
   update = {
     "ModeChanged",
   },
@@ -132,7 +132,7 @@ local FileType = {
 }
 
 local FileName = {
-  provider = function(self)
+  provider = function()
     local filename = vim.b.relative_path or vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":.")
     if filename == "" then
       return "[No Name]"
@@ -176,7 +176,7 @@ local FullFileName = {
     end
     return {
       fg = fg,
-      bg = conditions.is_active() and "tablinesel_bg" or "winbar_bg",
+      -- bg = conditions.is_active() and "tablinesel_bg" or "winbar_bg",
     }
   end,
   FileName,
@@ -190,11 +190,11 @@ local DirAndFileName = {
     if vim.bo.modified then
       fg = "yellow"
     else
-      fg = conditions.is_active() and "tablinesel_fg" or "tabline_fg"
+      fg = conditions.is_active() and "tablinesel_bg" or "tabline_bg"
     end
     return {
       fg = fg,
-      bg = conditions.is_active() and "tablinesel_bg" or "winbar_bg",
+      -- bg = conditions.is_active() and "tablinesel_bg" or "winbar_bg",
     }
   end,
   lpad(BufferCwd),
@@ -247,6 +247,7 @@ local function setup_colors()
     tablinesel_fg = utils.get_highlight("TabLineSel").fg or "none",
     tablinesel_bg = utils.get_highlight("TabLineSel").bg or "none",
     tabline_fg = utils.get_highlight("TabLine").fg or "none",
+    tabline_bg = utils.get_highlight("TabLine").bg or "none",
     red = utils.get_highlight("DiagnosticError").fg or "none",
     yellow = utils.get_highlight("DiagnosticWarn").fg or "none",
     green = utils.get_highlight("DiagnosticOk").fg or "none",
