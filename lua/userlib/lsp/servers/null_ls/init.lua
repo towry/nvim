@@ -18,8 +18,8 @@ return function()
     -- require("typescript.extensions.null-ls.code-actions"), -- disabled on volar take over mode.
     -- eslint.
     -- Make sure do not use the version of mason.
-    builtins.code_actions.eslint_d,
-    builtins.diagnostics.eslint_d,
+    -- builtins.code_actions.eslint,
+    -- builtins.diagnostics.eslint,
     -- yaml
     builtins.diagnostics.yamllint,
   }
