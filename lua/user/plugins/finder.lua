@@ -572,18 +572,16 @@ plug({
           '--smart-case',
         },
         layout_config = {
+          width = 0.98,
           -- prompt_position = 'top',
           horizontal = {
             preview_cutoff = 20,
           },
           vertical = {
             preview_cutoff = 0,
-            width = 0.9,
+            width = 0.98,
           },
           flex = {
-            width = 0.98,
-            preview_width = 0.2,
-            preview_cutoff = 200,
           },
           bottom_pane = {
             preview_width = 0.4,

@@ -6,7 +6,9 @@ M.get_path_and_tail = function(filename)
   local bufname_tail = utils.path_tail(filename)
   local path_without_tail = require('plenary.strings').truncate(filename, #filename - #bufname_tail, '')
   local path_to_display = utils.transform_path({
-    path_display = { 'truncate' },
+    path_display = function(_opts, path_to_transform)
+      return require('userlib.runtime.path').shorten(path_to_transform, 4)
+    end,
   }, path_without_tail)
 
   return bufname_tail, path_to_display
