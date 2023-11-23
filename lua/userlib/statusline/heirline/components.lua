@@ -353,6 +353,7 @@ local Branch = {
   end,
   update = {
     'User',
+    -- doesn't work if current dir is changed
     pattern = 'FugitiveChanged',
   }
 }
