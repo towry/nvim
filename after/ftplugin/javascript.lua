@@ -1,4 +1,4 @@
 -- make gf work better.
-vim.cmd('setlocal path+=src')
+vim.cmd([[setlocal suffixesadd+=.js,.ts,.scss,tsx,.jsx,.vue]])
 
 require('user.ftplugins.javascript').attach()
