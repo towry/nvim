@@ -582,7 +582,7 @@ plug({
   lazy = false,
   keys = {
     {
-      '[b',
+      ']b',
       function()
         local bufstack = require('window-bufstack.bufstack')
         local next_buf = bufstack.peek_bufstack(0, {
@@ -595,10 +595,10 @@ plug({
           vim.cmd('bprevious')
         end
       end,
-      desc = 'Previous buffer'
+      desc = 'Next buffer in window'
     },
     {
-      ']b',
+      '[b',
       function()
         local bufstack = require('window-bufstack.bufstack')
         local next_buf = bufstack.peek_bufstack(0, {
@@ -612,7 +612,7 @@ plug({
           vim.cmd('bnext')
         end
       end,
-      desc = 'Next buffer'
+      desc = 'Prev buffer in window'
     },
   },
   init = function()
