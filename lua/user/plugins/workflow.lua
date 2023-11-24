@@ -575,7 +575,6 @@ plug({
 plug({
   'towry/window-bufstack.nvim',
   cond = not vim.cfg.runtime__starts_as_gittool,
-  version = 'v1.0.5',
   dev = false,
   opts = {
     ignore_filetype = { 'oil' },
@@ -586,7 +585,10 @@ plug({
       '[b',
       function()
         local bufstack = require('window-bufstack.bufstack')
-        local next_buf = bufstack.peek_bufstack(0, 1)
+        local next_buf = bufstack.peek_bufstack(0, {
+          skip = 0,
+          bottom = true,
+        })
         if next_buf then
           vim.api.nvim_win_set_buf(0, next_buf)
         else
@@ -599,8 +601,12 @@ plug({
       ']b',
       function()
         local bufstack = require('window-bufstack.bufstack')
-        local next_buf = bufstack.peek_bufstack(0, 1)
+        local next_buf = bufstack.peek_bufstack(0, {
+          skip = 1
+        })
+        print(next_buf)
         if next_buf then
+          bufstack.push(0, 0, { bottom = true })
           vim.api.nvim_win_set_buf(0, next_buf)
         else
           vim.cmd('bnext')

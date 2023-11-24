@@ -108,7 +108,7 @@
   "vim-ripgrep": { "branch": "main", "commit": "0771a715ef7db975afa01fa927b5905410e78f51" },
   "vim-rsi": { "branch": "master", "commit": "45540637ead22f011e8215f1c90142e49d946a54" },
   "vim-startuptime": { "branch": "master", "commit": "454b3de856b7bd298700de33d79774ca9b9e3875" },
-  "window-bufstack.nvim": { "branch": "main", "commit": "1ab6322a269004427d815f61d32580a9a7922c53" },
+  "window-bufstack.nvim": { "branch": "main", "commit": "0218857fbd9e24ffd8422dbbb47dceba37ec5666" },
   "windows.nvim": { "branch": "main", "commit": "c7492552b23d0ab30325e90b56066ec51242adc8" },
   "zen-mode.nvim": { "branch": "main", "commit": "50e2e2a36cc97847d9ab3b1a3555ba2ef6839b50" }
 }
