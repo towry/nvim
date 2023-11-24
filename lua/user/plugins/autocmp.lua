@@ -50,6 +50,26 @@ pack.plug({
     end,
   },
   {
+    'lukas-reineke/cmp-rg',
+    cond = function()
+      return vim.fn.executable('rg')
+    end,
+    ft = 'rgflow',
+    dependencies = {
+      'hrsh7th/nvim-cmp',
+    },
+    config = function()
+      local cmp = require('cmp')
+      cmp.setup.filetype('rgflow', {
+        sources = cmp.config.sources({
+          { name = 'rg' },
+        }, {
+          { name = 'buffer' },
+        }),
+      })
+    end
+  },
+  {
     'hrsh7th/nvim-cmp',
     event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
