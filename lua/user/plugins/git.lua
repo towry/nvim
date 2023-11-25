@@ -23,17 +23,6 @@ plug({
 
 plug({
   {
-    'kdheepak/lazygit.nvim',
-    cmd = 'LazyGit',
-    keys = {
-      {
-        '<leader>gl',
-        '<cmd>LazyGit<cr>',
-        desc = 'Open Lazygit',
-      },
-    },
-  },
-  {
     'tpope/vim-fugitive',
     keys = {
       { '<leader>gg', ':Git<cr>',            desc = 'Fugitive Git' },
