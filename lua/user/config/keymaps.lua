@@ -15,10 +15,15 @@ local xk = utils.utf8keys({
 
 local function setup_basic()
   --- quickly go into cmd
+  set('n', '«', ':<C-u>', {
+    expr = false,
+    noremap = true,
+  })
   set('n', xk([[<C-;>]]), ':<C-u>', {
     expr = false,
     noremap = true,
   })
+  --->>
   set('n', '<leader>rn', function() require('userlib.workflow.run-normal-keys')() end, {
     noremap = true,
     silent = false,
@@ -80,9 +85,11 @@ local function setup_basic()
     desc = 'Case change in visual mode',
   })
 
-  -- set({ 'n', 'i' }, [[<D-s>]], cmd('bufdo update'), {
-  --   desc = 'Save all files',
-  -- })
+  -- this is what <D-s> output in zellij.
+  set({ 'n', 'i' }, 'ª', '<ESC>:silent! update<cr>', {
+    desc = 'Save buffer',
+    silent = true,
+  })
   set({ 'n', 'i' }, xk([[<D-s>]]), '<ESC>:silent! update<cr>', {
     desc = 'Save current buffer',
     silent = true,
