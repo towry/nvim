@@ -67,17 +67,6 @@ plug({
 })
 
 plug({
-  'kyoh86/vim-ripgrep',
-  event = 'CmdlineEnter',
-  init = function()
-    --- https://github.dev/qalshidi/vim-bettergrep
-    -- abbr rg to Rg
-    vim.cmd([[cnoreabbrev <expr> rg (getcmdtype() ==# ':' && getcmdline() ==# 'rg')  ? 'Rg' : 'rg']])
-    vim.cmd([[command! -nargs=+ -complete=file Rg :call ripgrep#search(<q-args>)]])
-  end,
-})
-
-plug({
   enabled = true,
   'stevearc/oil.nvim',
   lazy = not vim.cfg.runtime__starts_in_buffer,
