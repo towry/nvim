@@ -1,8 +1,5 @@
 local user_cfg = {
-  ui__theme_name = 'gruvbox-material',
-  workbench__lualine_theme = 'gruvbox-material',
-  --- treesitter
-  lang__treesitter_plugin_rainbow = false,
+  ui__theme_name = 'slate',
   plug__enable_codeium_vim = false,
 }
 
