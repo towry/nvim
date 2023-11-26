@@ -1,5 +1,5 @@
 local user_cfg = {
-  ui__theme_name = 'nightfox',
+  ui__theme_name = 'slate',
   plug__enable_codeium_vim = false,
 }
 

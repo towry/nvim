@@ -22,17 +22,3 @@ plug({
     vim.g.gruvbox_material_current_word = 'underline'
   end
 })
-
-
-plug({
-  'EdenEast/nightfox.nvim',
-  dependencies = {
-  },
-  event = 'User LazyTheme',
-  priority = 1000,
-  lazy = not string.match(vim.cfg.ui__theme_name, 'nightfox'),
-  enabled = vim.cfg.ui__theme_name == 'nightfox',
-  opts = function()
-    return {}
-  end
-})
