@@ -146,11 +146,11 @@ plug({
           local current_buf = vim.api.nvim_get_current_buf()
           local mb = require('mini.bufremove')
           local bufstack = require('window-bufstack.bufstack')
-          bufstack.ignore_next()
           --- buffer is displayed in other window.
           if #vim.fn.win_findbuf(vim.fn.bufnr('%')) > 1 then
-            mb.unshow_in_window(current_buf)
+            bufstack.pop()
           else
+            bufstack.ignore_next()
             mb.delete(current_buf)
           end
           local next_buf = bufstack.pop()
