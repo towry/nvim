@@ -59,8 +59,13 @@ plug({
     },
     {
       '<leader>sgS',
-      '<cmd>lau require("rgflow").print_status()<cr>',
+      '<cmd>lua require("rgflow").print_status()<cr>',
       desc = 'Print rg flow status',
+    },
+    {
+      '<leader>sgh',
+      '<cmd>lua require("rgflow").show_rg_help()<cr>',
+      desc = 'Show rg help in float window',
     }
   }
 })
