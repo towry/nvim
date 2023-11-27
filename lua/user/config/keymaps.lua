@@ -55,7 +55,7 @@ local function setup_basic()
     noremap = true,
     expr = false,
   })
-  --- <C-i>
+  --- <C-i> that works in zellij.
   set('n', '¬', '<C-i>', {
     noremap = true,
     expr = false,
