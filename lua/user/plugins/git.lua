@@ -24,13 +24,16 @@ plug({
 plug({
   {
     'tpope/vim-fugitive',
+    dependencies = {
+      'tpope/dispatch',
+    },
     keys = {
-      { '<leader>gg', ':Git<cr>',            desc = 'Fugitive Git' },
-      { '<leader>gG', ':tab Git<cr>',        desc = 'Fugitive Git in tab' },
-      { '<leader>ga', cmdstr([[Git add %]]), desc = '!Git add current' },
-      { '<leader>gA', cmdstr([[Git add .]]), desc = '!Git add all' },
-      { '<leader>gP', cmdstr([[Git push]]),  desc = 'Git push' },
-      { '<leader>gp', cmdstr([[Git pull]]),  desc = 'Git pull' },
+      { '<leader>gg', ':Git<cr>',                     desc = 'Fugitive Git' },
+      { '<leader>gG', ':tab Git<cr>',                 desc = 'Fugitive Git in tab' },
+      { '<leader>ga', cmdstr([[Git add %]]),          desc = '!Git add current' },
+      { '<leader>gA', cmdstr([[Git add .]]),          desc = '!Git add all' },
+      { '<leader>gp', cmdstr([[Dispatch! Git push]]), desc = 'Git push' },
+      { '<leader>gP', cmdstr([[Git! pull]]),          desc = 'Git pull' },
     },
     event = 'VeryLazy',
     cmd = {

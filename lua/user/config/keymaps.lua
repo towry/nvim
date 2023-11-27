@@ -209,6 +209,11 @@ local function setup_basic()
     nowait = true,
   })
 
+  set('n', '<leader>tw', cmd('pclose'), {
+    desc = 'Close any preview windows',
+    nowait = true
+  })
+
   -- works with quickfix
   set('n', '[q', ':cprev<cr>', {
     desc = 'Jump to previous quickfix item',
