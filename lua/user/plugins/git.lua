@@ -41,7 +41,7 @@ plug({
           -- use vim.ui.input to write commit message and then commit with the
           -- message.
           vim.ui.input({
-            prompt = 'Msg: ',
+            prompt = 'Commit message: ',
           }, function(input)
             -- if input is trimmed empty
             if vim.trim(input or '') == '' then
