@@ -25,7 +25,7 @@ plug({
   {
     'tpope/vim-fugitive',
     dependencies = {
-      'tpope/dispatch',
+      'tpope/vim-dispatch',
     },
     keys = {
       { '<leader>gg', ':Git<cr>',                      desc = 'Fugitive Git' },
