@@ -119,6 +119,13 @@ plug({
         '<cmd>lua require("userlib.runtime.qf").toggle_qf()<cr>',
         desc = 'Toggle quickfix',
       },
+    },
+    opts = {
+      preview = {
+        winblend = 0,
+        show_scroll_bar = false,
+        show_title = true,
+      }
     }
   }
 })

@@ -7,7 +7,7 @@ local au = require('userlib.runtime.au')
 plug({
   'mangelozzi/rgflow.nvim',
   dependencies = {
-    'kevinhwang91/nvim-bqf',
+    'pze/nvim-bqf',
   },
   opts = {
     default_trigger_mappings = true,
