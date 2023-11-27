@@ -55,6 +55,12 @@ local function setup_basic()
     noremap = true,
     expr = false,
   })
+  --- <C-i>
+  set('n', '¬', '<C-i>', {
+    noremap = true,
+    expr = false,
+    nowait = true,
+  })
   --- provided by rsi.vim
   -- set('i', '<C-e>', '<End>', {
   --   desc = 'Insert mode: move to end of line',
