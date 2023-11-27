@@ -532,6 +532,18 @@ local TerminalStatusline = {
   { TerminalName },
 }
 
+local NavigateDirection = {
+  condition = function()
+    return vim.g.direction ~= nil
+  end,
+  provider = function()
+    return ({
+      next = '[NEXT]',
+      prev = '[PRE]',
+    })[vim.g.direction]
+  end,
+}
+
 return {
   TerminalStatusline = TerminalStatusline,
   HelpFileName = HelpFileName,
@@ -561,4 +573,5 @@ return {
   Copilot = Copilot,
   Treesitter = Treesitter,
   Dap = Dap,
+  NavigateDirection = NavigateDirection,
 }

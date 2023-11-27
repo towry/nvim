@@ -584,6 +584,7 @@ plug({
     {
       ']b',
       function()
+        vim.g.direction = "next"
         local bufstack = require('window-bufstack.bufstack')
         local next_buf = bufstack.peek_bufstack(0, {
           skip = 0,
@@ -600,11 +601,11 @@ plug({
     {
       '[b',
       function()
+        vim.g.direction = "prev"
         local bufstack = require('window-bufstack.bufstack')
         local next_buf = bufstack.peek_bufstack(0, {
           skip = 1
         })
-        print(next_buf)
         if next_buf then
           bufstack.push(0, 0, { bottom = true })
           vim.api.nvim_win_set_buf(0, next_buf)
