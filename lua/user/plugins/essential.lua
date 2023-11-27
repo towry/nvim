@@ -8,6 +8,17 @@ pack.plug({
     'nvim-lua/plenary.nvim',
   },
   {
+    'tpope/vim-dispatch',
+    cmd = {
+      'Dispatch',
+      'Make',
+      'Focus',
+      'FocusDispatch',
+      'Start',
+      'Copen',
+    }
+  },
+  {
     'nvim-tree/nvim-web-devicons',
   },
   { 'nvim-lua/popup.nvim' },
