@@ -1,6 +1,5 @@
 local plug = require('userlib.runtime.pack').plug
 local keymap = require('userlib.runtime.keymap')
--- local cmdstr = keymap.cmdstr
 local cmd_modcall = keymap.cmd_modcall
 local pickers_mod = 'userlib.telescope.pickers'
 local au = require('userlib.runtime.au')
@@ -515,14 +514,14 @@ plug({
     au.do_useraucmd(au.user_autocmds.TelescopeConfigDone_User)
 
     -- colorscheme
-    au.register_event(au.events.AfterColorschemeChanged, {
-      name = 'telescope_ui',
-      immediate = true,
-      callback = function()
-        -- vim.cmd('hi! link TelescopeNormal NormalFloat')
-        -- vim.cmd('hi! link TelescopeBorder NormalFloat')
-      end,
-    })
+    -- au.register_event(au.events.AfterColorschemeChanged, {
+    --   name = 'telescope_ui',
+    --   immediate = true,
+    --   callback = function()
+    --     vim.cmd('hi! link TelescopeNormal NormalFloat')
+    --     vim.cmd('hi! link TelescopeBorder NormalFloat')
+    --   end,
+    -- })
   end,
   opts = function()
     -- local au = require('userlib.runtime.au')
@@ -698,28 +697,5 @@ plug({
         },
       },
     }
-  end,
-})
-
-plug({
-  'linrongbin16/fzfx.nvim',
-  dependencies = {
-    {
-      "junegunn/fzf",
-      build = function()
-        vim.fn["fzf#install"]()
-      end,
-    },
-    "nvim-tree/nvim-web-devicons"
-  },
-  cmd = {
-    'FzfxFiles', 'FzfxFilesV', 'FzfxFilesW', 'FzfxFilesR', 'FzfxFilesP',
-    'FzfxBuffers', 'FzfxBuffersV', 'FzfxBuffersW', 'FzfxBuffersR', 'FzfxBuffersP',
-    'FzfxLiveGrep', 'FzfxLiveGrepV', 'FzfxLiveGrepW', 'FzfxLiveGrepR', 'FzfxLiveGrepP',
-    'FzfxGFiles', 'FzfxGFilesV', 'FzfxGFilesW', 'FzfxGFilesR', 'FzfxGFilesP',
-    'FzfxFileExplorer', 'FzfxFileExplorerV', 'FzfxFileExplorerW', 'FzfxFileExplorerR', 'FzfxFileExplorerP',
-  },
-  config = function()
-    require("fzfx").setup()
   end,
 })
