@@ -32,7 +32,7 @@ plug({
       { '<leader>gG', ':tab Git<cr>',                  desc = 'Fugitive Git in tab' },
       { '<leader>ga', cmdstr([[Dispatch! Git add %]]), desc = '!Git add current' },
       { '<leader>gA', cmdstr([[Dispatch! Git add .]]), desc = '!Git add all' },
-      { '<leader>gp', cmdstr([[Dispatch! Git push]]),  desc = 'Git push' },
+      { '<leader>gp', cmdstr([[Git! push]]),           desc = 'Git push' },
       { '<leader>gP', cmdstr([[Git! pull]]),           desc = 'Git pull' },
       { '<leader>gs', cmdstr([[Git! status]]),         desc = 'Git status' },
       {
