@@ -34,6 +34,25 @@ plug({
       { '<leader>gA', cmdstr([[Dispatch! Git add .]]), desc = '!Git add all' },
       { '<leader>gp', cmdstr([[Dispatch! Git push]]),  desc = 'Git push' },
       { '<leader>gP', cmdstr([[Git! pull]]),           desc = 'Git pull' },
+      { '<leader>gs', cmdstr([[Git! status]]),         desc = 'Git status' },
+      {
+        '<leader>gc',
+        function()
+          -- use vim.ui.input to write commit message and then commit with the
+          -- message.
+          vim.ui.input({
+            prompt = 'Msg: ',
+          }, function(input)
+            -- if input is trimmed empty
+            if vim.trim(input or '') == '' then
+              vim.notify("Empty commit message", vim.log.levels.ERROR)
+              return
+            end
+            vim.cmd(string.format('Dispatch! Git commit -m "%s"', input))
+          end)
+        end,
+        desc = 'Use vim.ui.input to collect message and commit',
+      }
     },
     event = 'VeryLazy',
     cmd = {
@@ -82,23 +101,23 @@ plug({
       {
         '<leader>gf',
         '<cmd>lua require("userlib.git.utils").toggle_files_history()<cr>',
-        desc = 'Files history',
+        desc = '[DV] Files history',
       },
       {
         '<leader>gF',
         [[<cmd>lua require("userlib.git.utils").toggle_files_history(nil, '%')<cr>]],
-        desc = 'Current file history(diffview)',
+        desc = '[DV] Current file history(diffview)',
       },
       ---FIXME: <Space>e keymap not reset when exist the diffview. it should be buffer local keymaps.
       {
-        '<leader>gs',
+        '<leader>gS',
         '<cmd>lua require("userlib.git.utils").toggle_working_changes()<cr>',
-        desc = 'Current status/changes',
+        desc = '[DV] Current status/changes',
       },
       {
         '<leader>gq',
         '<cmd>lua require("userlib.git.utils").close_git_views()<cr>',
-        desc = 'Quite git views',
+        desc = '[DV] Quite git views',
       },
     },
     cmd = {
