@@ -14,15 +14,6 @@ local xk = utils.utf8keys({
 }, true)
 
 local function setup_basic()
-  --- quickly go into cmd
-  set('n', '«', ':<C-u>', {
-    expr = false,
-    noremap = true,
-  })
-  set('n', xk([[<C-;>]]), ':<C-u>', {
-    expr = false,
-    noremap = true,
-  })
   --->>
   set('n', '<leader>rn', function() require('userlib.workflow.run-normal-keys')() end, {
     noremap = true,
@@ -33,6 +24,20 @@ local function setup_basic()
     silent = true,
     noremap = true,
     desc = 'run shell command',
+  })
+
+  --- quickly go into cmd
+  set('n', '«', ':<C-u>', {
+    expr = false,
+    noremap = true,
+  })
+  set('i', '«', '<esc>:<C-u>', {
+    expr = false,
+    noremap = true,
+  })
+  set('n', xk([[<C-;>]]), ':<C-u>', {
+    expr = false,
+    noremap = true,
   })
   set('i', '<C-;>', '<esc>:<C-u>', {
     expr = false,
