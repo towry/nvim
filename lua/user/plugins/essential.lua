@@ -16,7 +16,11 @@ pack.plug({
       'FocusDispatch',
       'Start',
       'Copen',
-    }
+    },
+    config = function() end,
+    init = function()
+      vim.g.dispatch_no_maps = 1
+    end,
   },
   {
     'nvim-tree/nvim-web-devicons',
