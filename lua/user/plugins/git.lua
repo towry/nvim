@@ -28,13 +28,13 @@ plug({
       'tpope/vim-dispatch',
     },
     keys = {
-      { '<leader>gg', ':Git<cr>',                      desc = 'Fugitive Git' },
-      { '<leader>gG', ':tab Git<cr>',                  desc = 'Fugitive Git in tab' },
-      { '<leader>ga', cmdstr([[Dispatch! Git add %]]), desc = '!Git add current' },
-      { '<leader>gA', cmdstr([[Dispatch! Git add .]]), desc = '!Git add all' },
-      { '<leader>gp', cmdstr([[Git! push]]),           desc = 'Git push' },
-      { '<leader>gP', cmdstr([[Git! pull]]),           desc = 'Git pull' },
-      { '<leader>gs', cmdstr([[Git! status]]),         desc = 'Git status' },
+      { '<leader>gg', ':Git<cr>',                                             desc = 'Fugitive Git' },
+      { '<leader>gG', ':tab Git<cr>',                                         desc = 'Fugitive Git in tab' },
+      { '<leader>ga', cmdstr([[Dispatch! Git add %]]),                        desc = '!Git add current' },
+      { '<leader>gA', cmdstr([[Dispatch! Git add .]]),                        desc = '!Git add all' },
+      { '<leader>gp', cmdstr([[Git! push | :lua vim.g.escape_cmd="pclose"]]), desc = 'Git push' },
+      { '<leader>gu', cmdstr([[Git! pull | :lua vim.g.escape_cmd="pclose"]]), desc = 'Git pull' },
+      { '<leader>gs', cmdstr([[vert Git]]),                                   desc = 'Git status',         silent = false, },
       {
         '<leader>gc',
         function()

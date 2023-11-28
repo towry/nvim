@@ -78,8 +78,21 @@ local function setup_basic()
     }
   )
 
-  set('n', '<ESC>', cmd('noh'), {
+  set('n', '<ESC>', function()
+    vim.cmd('nohl')
+    if vim.g.escape_cmd ~= nil and vim.g.escape_cmd ~= '' then
+      local escape_cmd = vim.g.escape_cmd
+      vim.schedule(function()
+        vim.cmd(escape_cmd)
+      end)
+      vim.g.escape_cmd = nil
+    end
+    return '<esc>'
+  end, {
     desc = 'Clear search highlight',
+    silent = true,
+    noremap = true,
+    expr = true,
   })
   set('v', '<', '<gv', {
     desc = 'Keep visual mode indenting, left',
