@@ -12,6 +12,11 @@ end, {
   desc = 'Close',
   nowait = true,
 })
+set('n', 'P', function()
+  vim.cmd([[Git! push | :lua vim.g.escape_cmd="pclose"]])
+end, {
+  desc = 'Push',
+})
 
 -- vim.api.nvim_buf_set_keymap(0, 'n', 'cc', "", {
 --   callback = function()
