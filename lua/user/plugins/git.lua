@@ -35,7 +35,7 @@ plug({
       { '<leader>gp', cmdstr([[exec "Git! push origin " .. FugitiveHead() | :lua vim.g.escape_cmd="pclose"]]), desc = 'Git push' },
       { '<leader>gu', cmdstr([[exec "Git! pull origin " .. FugitiveHead() | :lua vim.g.escape_cmd="pclose"]]), desc = 'Git pull',                     silent = false },
       { '<leader>gs', cmdstr([[vert Git]]),                                                                    desc = 'Git status',                   silent = false, },
-      { '<leader>gF', cmdstr([[Git log --oneline -- %]]),                                                      desc = 'Git show current file history' },
+      { '<leader>gF', cmdstr([[Git log --max-count=100 --oneline -- %]]),                                      desc = 'Git show current file history' },
       {
         '<leader>gc',
         function()
@@ -164,7 +164,7 @@ plug({
         callback = function(args)
           local buf = args.buf
           local set = require('userlib.runtime.keymap').map_buf_thunk(buf)
-          set('n', '<S-q>', function() require('userlib.git.utils').close_git_views() end, {
+          set('n', '<C-q>', function() require('userlib.git.utils').close_git_views() end, {
             desc = 'quit diffview',
           })
         end,

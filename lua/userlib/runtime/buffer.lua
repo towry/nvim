@@ -204,7 +204,7 @@ function M.current_tab_windows_count()
   local tab_wins = vim.api.nvim_tabpage_list_wins(0)
   local count = 0
   for _, win in ipairs(tab_wins) do
-    if not vim.api.nvim_win_get_config(win).relative then
+    if vim.api.nvim_win_get_config(win).relative == '' then
       count = count + 1
     end
   end
