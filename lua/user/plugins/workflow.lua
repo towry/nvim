@@ -321,7 +321,7 @@ plug({
                       if not entry_path then return end
                       local new_cwd = entry_path
                       actions.close(prompt_bufnr)
-                      require('userlib.mini-clue.folder-action').open(new_cwd)
+                      require('userlib.mini.clue.folder-action').open(new_cwd)
                     end
                     actions.select_default:replace(on_project_selected)
                     return true
@@ -510,53 +510,43 @@ plug({
   },
 
   {
-    'ThePrimeagen/harpoon',
-    dev = false,
+    'echasnovski/mini.visits',
     event = 'User LazyUIEnterOncePost',
     keys = {
       {
         '<leader>fh',
-        '<cmd>lua require("harpoon.ui").toggle_quick_menu()<cr>',
-        desc = 'Toggle harpoon UI',
+        '<cmd>lua require("userlib.mini.visits").select_by_cwd_and_weight(vim.cfg.runtime__starts_cwd)<cr>',
+        desc = 'Show current cwd visits',
       },
       --- marks as m also create harpoon mark.
       {
         'mm',
         function()
-          require('harpoon.mark').add_file()
-          return 'mm'
+          require('mini.visits').add_path(nil, vim.cfg.runtime__starts_cwd)
         end,
         expr = true,
         nowait = true,
         silent = false,
+        desc = 'Add to visits',
       },
+      {
+        '<leader>vm',
+        function()
+          require('mini.visits').add_label(nil, nil, vim.cfg.runtime__starts_cwd);
+        end,
+        desc = 'Add label to path',
+      }
     },
     opts = function()
       return {
-        menu = {
-          width = vim.api.nvim_win_get_width(0) - 6,
-        },
-        global_settings = {
-          excluded_filetypes = vim.cfg.misc__ft_exclude,
-        },
-        mark_branch = false,
-        -- get_project_key = function()
-        --   return vim.cfg.runtime__starts_cwd
-        -- end,
+        track = {
+          -- event = '',
+        }
       }
     end,
     config = function(_, opts)
-      require('harpoon').setup(opts)
-      au.register_event(au.events.AfterColorschemeChanged, {
-        name = 'harpoon_ui',
-        immediate = true,
-        callback = function()
-          vim.cmd('hi! link HarpoonWindow NormalFloat')
-          vim.cmd('hi! link HarpoonBorder NormalFloat')
-        end,
-      })
+      require('mini.visits').setup(opts)
     end,
-    init = function() vim.g.harpoon_log_level = 'warn' end,
   },
   {
     'kwkarlwang/bufjump.nvim',

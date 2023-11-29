@@ -101,7 +101,7 @@ plug({
         end
 
         if folder then
-          require('userlib.mini-clue.folder-action').open(folder)
+          require('userlib.mini.clue.folder-action').open(folder)
         else
           require('userlib.hydra.file-action').open(file, 0)
         end
@@ -650,7 +650,7 @@ plug({
                 local new_cwd = entry_path:is_dir() and entry_path:absolute() or entry_path:parent():absolute()
 
                 actions.close(prompt_buf)
-                require('userlib.mini-clue.folder-action').open(new_cwd)
+                require('userlib.mini.clue.folder-action').open(new_cwd)
               end,
             },
           },

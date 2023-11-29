@@ -4,6 +4,7 @@ local function t(str) return vim.api.nvim_replace_termcodes(str, true, true, tru
 
 ---- core
 pack.plug({
+  { 'echasnovski/mini.extra' },
   {
     'nvim-lua/plenary.nvim',
   },

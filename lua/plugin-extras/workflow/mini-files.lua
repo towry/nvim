@@ -202,7 +202,7 @@ return plug({
           local fsentry = MF.get_fs_entry()
           if not fsentry then return nil end
           MF.close()
-          require('userlib.mini-clue.folder-action').open(fsentry.path)
+          require('userlib.mini.clue.folder-action').open(fsentry.path)
         end, keyopts)
         set('n', 'M', function()
           local cwd = get_current_dir()
