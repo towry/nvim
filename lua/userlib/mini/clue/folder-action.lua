@@ -69,6 +69,11 @@ M.open = function(new_cwd)
     end, {
       desc = 'Open in tab',
     })
+    set('n', 'c', function()
+      vim.cmd(string.format('ToggleTerm dir=%s', new_cwd))
+    end, {
+      desc = 'Open in terminal',
+    })
   end)
 end
 
