@@ -56,8 +56,10 @@ end
 function M.list_normal_bufnrs()
   return M.list_bufnrs(function(b)
     if vim.api.nvim_get_option_value('buftype', {
-      buf = b,
-    }) ~= '' then return false end
+          buf = b,
+        }) ~= '' then
+      return false
+    end
   end)
 end
 
@@ -193,6 +195,20 @@ end
 function M.is_big_file(buf)
   if M.getfsize(buf) > 100000 then return true end
   if vim.api.nvim_buf_line_count(buf) > 20000 then return true end
+end
+
+--- Return the windows count in current tab
+--- exclude float windows.
+--- NOTE: windows like fidget is floating window.
+function M.current_tab_windows_count()
+  local tab_wins = vim.api.nvim_tabpage_list_wins(0)
+  local count = 0
+  for _, win in ipairs(tab_wins) do
+    if not vim.api.nvim_win_get_config(win).relative then
+      count = count + 1
+    end
+  end
+  return count
 end
 
 return M
