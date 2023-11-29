@@ -33,8 +33,9 @@ plug({
       { '<leader>ga', cmdstr([[Dispatch! Git add %]]),                                                         desc = '!Git add current' },
       { '<leader>gA', cmdstr([[Dispatch! Git add .]]),                                                         desc = '!Git add all' },
       { '<leader>gp', cmdstr([[exec "Git! push origin " .. FugitiveHead() | :lua vim.g.escape_cmd="pclose"]]), desc = 'Git push' },
-      { '<leader>gu', cmdstr([[exec "Git! pull origin " .. FugitiveHead() | :lua vim.g.escape_cmd="pclose"]]), desc = 'Git pull',           silent = false },
-      { '<leader>gs', cmdstr([[vert Git]]),                                                                    desc = 'Git status',         silent = false, },
+      { '<leader>gu', cmdstr([[exec "Git! pull origin " .. FugitiveHead() | :lua vim.g.escape_cmd="pclose"]]), desc = 'Git pull',                     silent = false },
+      { '<leader>gs', cmdstr([[vert Git]]),                                                                    desc = 'Git status',                   silent = false, },
+      { '<leader>gF', cmdstr([[Git log --oneline -- %]]),                                                      desc = 'Git show current file history' },
       {
         '<leader>gc',
         function()
@@ -103,11 +104,11 @@ plug({
         '<cmd>lua require("userlib.git.utils").toggle_files_history()<cr>',
         desc = '[DV] Files history',
       },
-      {
-        '<leader>gF',
-        [[<cmd>lua require("userlib.git.utils").toggle_files_history(nil, '%')<cr>]],
-        desc = '[DV] Current file history(diffview)',
-      },
+      -- {
+      --   '<leader>gF',
+      --   [[<cmd>lua require("userlib.git.utils").toggle_files_history(nil, '%')<cr>]],
+      --   desc = '[DV] Current file history(diffview)',
+      -- },
       ---FIXME: <Space>e keymap not reset when exist the diffview. it should be buffer local keymaps.
       {
         '<leader>gS',
