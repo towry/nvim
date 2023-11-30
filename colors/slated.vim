@@ -34,18 +34,18 @@ hi! link PopupNotification Todo
 
 hi Normal guifg=#ffffff guibg=#262626 gui=NONE cterm=NONE
 hi EndOfBuffer guifg=#5f87d7 guibg=NONE gui=NONE cterm=NONE
-hi StatusLine guifg=#262626 guibg=#afaf87 gui=NONE cterm=NONE
+hi StatusLine guifg=#D3DCAB guibg=#2C2C29 gui=NONE cterm=NONE
 hi StatusLineNC guifg=#afafaf guibg=#313129 gui=NONE cterm=NONE
-hi StatusLineTerm guifg=#000000 guibg=#afaf87 gui=NONE cterm=NONE
-hi StatusLineTermNC guifg=#666666 guibg=#afaf87 gui=NONE cterm=NONE
+hi StatusLineTerm guifg=#000000 guibg=#2C2C29 gui=NONE cterm=NONE
+hi StatusLineTermNC guifg=#666666 guibg=#2C2C29 gui=NONE cterm=NONE
 hi! link WinBar StatusLine
 hi! link WinBarNC StatusLineNC
-hi VertSplit guifg=#666666 guibg=#afaf87 gui=NONE cterm=NONE
-hi PmenuSel guifg=#262626 guibg=#afaf87 gui=NONE cterm=NONE
+hi VertSplit guifg=#666666 guibg=#2C2C29 gui=NONE cterm=NONE
+hi PmenuSel guifg=#D3DCAB guibg=#2C2C29 gui=NONE cterm=NONE
 hi Pmenu guifg=NONE guibg=#4a4a4a gui=NONE cterm=NONE
 hi PmenuSbar guifg=NONE guibg=#262626 gui=NONE cterm=NONE
 hi PmenuThumb guifg=NONE guibg=#ffd700 gui=NONE cterm=NONE
-hi TabLineSel guifg=#000000 guibg=#afaf87 gui=NONE cterm=NONE
+hi TabLineSel guifg=#000000 guibg=#2C2C29 gui=NONE cterm=NONE
 hi TabLine guifg=#666666 guibg=#333333 gui=NONE cterm=NONE
 hi TabLineFill guifg=#ff8787 guibg=#333333 gui=NONE cterm=NONE
 hi ToolbarLine guifg=NONE guibg=NONE gui=NONE ctermfg=NONE ctermbg=NONE cterm=NONE
@@ -100,7 +100,7 @@ hi Title guifg=#ffd700 guibg=NONE gui=bold cterm=bold
 hi DiffAdd guifg=#56d364 guibg=#244032 gui=NONE cterm=NONE
 hi DiffChange guifg=#e3b341 guibg=#341a00 gui=NONE cterm=NONE
 hi DiffText guifg=#fff987 guibg=#341a00 gui=NONE cterm=NONE
-hi DiffDelete guifg=#462c32 guibg=#f85149 gui=NONE cterm=NONE
+hi DiffDelete guifg=#462c32 guibg=#A93A34 gui=NONE cterm=NONE
 hi DiffFile guifg=#6cb6ff guibg=NONE gui=NONE
 hi FloatBorder guifg=#56d364 guibg=#363636 gui=NONE cterm=NONE
 hi NormalFloat  guifg=NONE guibg=#363636 gui=NONE cterm=NONE
@@ -521,7 +521,7 @@ endif
 " Color: color04       #87d7FF           117               darkblue
 " Color: color12       #5F87D7           68                blue
 " Color: color05       #d7d787           186               darkmagenta
-" Color: color13       #AFAF87           144               magenta
+" Color: color13       #2C2C29           144               magenta
 " Color: color06       #FFD7AF           223               darkcyan
 " Color: color14       #FF8787           210               cyan
 " Color: color07       #666666           241               grey

@@ -204,7 +204,7 @@ local GitStatus = {
       local count = self.status_dict.changed or 0
       return count > 0 and ("~" .. count) or ''
     end,
-    hl = { fg = utils.get_highlight("DiffChange").bg },
+    hl = { fg = utils.get_highlight("DiffChange").fg },
   },
   {
     provider = function(self)
