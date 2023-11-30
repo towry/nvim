@@ -166,6 +166,62 @@ local FileFlags = {
   },
 }
 
+local GitStatus = {
+  condition = function()
+    if not vim.b.gitsigns_status_dict then return false end
+    local status = vim.b.gitsigns_status_dict
+    return status.added ~= 0 or status.removed ~= 0 or status.changed ~= 0
+  end,
+  init = function(self)
+    self.status_dict = vim.b
+        .gitsigns_status_dict
+    if self.status_dict == nil then
+      self.has_changes = false
+      return
+    end
+    self.has_changes = self.status_dict ~= nil and self.status_dict.added ~= 0
+        or self.status_dict.removed ~= 0
+        or self.status_dict.changed ~= 0
+  end,
+
+  hl = { fg = utils.get_highlight("Constant").fg, },
+
+  -- {
+  --   condition = function(self)
+  --     return self.has_changes
+  --   end,
+  --   provider = " ",
+  -- },
+  {
+    provider = function(self)
+      local count = self.status_dict.added or 0
+      return count > 0 and ("+" .. count) or ''
+    end,
+    hl = { fg = utils.get_highlight("DiffAdd").bg },
+  },
+  {
+    provider = function(self)
+      local count = self.status_dict.changed or 0
+      return count > 0 and ("~" .. count) or ''
+    end,
+    hl = { fg = utils.get_highlight("DiffChange").bg },
+  },
+  {
+    provider = function(self)
+      local count = self.status_dict.removed or 0
+      return count > 0 and ("-" .. count) or ''
+    end,
+    hl = { fg = utils.get_highlight("DiffDelete").bg },
+  },
+
+  -- {
+  --   condition = function(self)
+  --     return self.has_changes
+  --   end,
+  --   provider = " ",
+  -- },
+}
+
 local FullFileName = {
   hl = function()
     local fg
@@ -564,6 +620,7 @@ return {
   -- ConjoinStatus = ConjoinStatus,
   ProfileRecording = ProfileRecording,
   Branch = Branch,
+  GitStatus = GitStatus,
   Harpoon = Harpoon,
   DirAndFileName = DirAndFileName,
   DiagnosticsDisabled = DiagnosticsDisabled,
@@ -571,7 +628,6 @@ return {
   LspFormatter = LspFormatter,
   Tabs = Tabs,
   Copilot = Copilot,
-  Treesitter = Treesitter,
   Dap = Dap,
   NavigateDirection = NavigateDirection,
 }
