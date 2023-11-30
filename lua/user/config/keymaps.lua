@@ -279,6 +279,15 @@ local function setup_basic()
   end, {
     desc = 'Get a random tip from vtip.43z.one'
   })
+
+  set('n', '<leader>rzr', function()
+    -- https://github.com/echasnovski/mini.visits/blob/7f2836d9f3957843e0d00762a3f3bb47cf88b92e/lua/mini/visits.lua#L1407
+    local ok, res = pcall(vim.fn.input, { prompt = '[zellij] Command to run: ', cancelreturn = false })
+    if not ok or res == false then return end
+    vim.cmd(string.format('Dispatch! zellij run -d down -- %s', res))
+  end, {
+    desc = 'zellij run',
+  })
 end
 
 function M.setup() setup_basic() end
