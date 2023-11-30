@@ -40,7 +40,7 @@ plug({
       statusline = heirline_utils.insert(
         {
           static = comp.stl_static,
-          hl = { bg = "bg" },
+          hl = { fg = 'fg', bg = "bg" },
         },
         comp.ViMode,
         comp.lpad(comp.Branch),

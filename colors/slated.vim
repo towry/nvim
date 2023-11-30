@@ -32,7 +32,7 @@ hi! link CursorLineSign CursorLine
 hi! link MessageWindow Pmenu
 hi! link PopupNotification Todo
 
-hi Normal guifg=#ffffff guibg=#262626 gui=NONE cterm=NONE
+hi Normal guifg=#EBEBDD guibg=#262626 gui=NONE cterm=NONE
 hi EndOfBuffer guifg=#5f87d7 guibg=NONE gui=NONE cterm=NONE
 hi StatusLine guifg=#D3DCAB guibg=#1E1D1A gui=NONE cterm=NONE
 hi StatusLineNC guifg=#afafaf guibg=#313129 gui=NONE cterm=NONE
