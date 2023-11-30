@@ -24,7 +24,6 @@ function M.close()
   -- has current tab have more than 1 window?
   if not next_buf then
     local current_tab_windows_count = require('userlib.runtime.buffer').current_tab_windows_count()
-    print(current_tab_windows_count)
     local tabs_count = vim.fn.tabpagenr('$')
     local bufers_count = #vim.fn.getbufinfo({ buflisted = 1 })
     if current_tab_windows_count > 1 then
