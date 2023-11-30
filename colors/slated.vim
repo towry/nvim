@@ -38,8 +38,10 @@ hi StatusLine guifg=#000000 guibg=#afaf87 gui=NONE cterm=NONE
 hi StatusLineNC guifg=#666666 guibg=#afaf87 gui=NONE cterm=NONE
 hi StatusLineTerm guifg=#000000 guibg=#afaf87 gui=NONE cterm=NONE
 hi StatusLineTermNC guifg=#666666 guibg=#afaf87 gui=NONE cterm=NONE
+hi link WinBar StatusLine
+hi link WinBarNC StatusLineNC
 hi VertSplit guifg=#666666 guibg=#afaf87 gui=NONE cterm=NONE
-hi PmenuSel guifg=#262626 guibg=#d7d787 gui=NONE cterm=NONE
+hi PmenuSel guifg=#262626 guibg=#afaf87 gui=NONE cterm=NONE
 hi Pmenu guifg=NONE guibg=#4a4a4a gui=NONE cterm=NONE
 hi PmenuSbar guifg=NONE guibg=#262626 gui=NONE cterm=NONE
 hi PmenuThumb guifg=NONE guibg=#ffd700 gui=NONE cterm=NONE
@@ -53,9 +55,9 @@ hi SpecialKey guifg=#00875f guibg=NONE gui=NONE cterm=NONE
 hi QuickFixLine guifg=#000000 guibg=#5f87d7 gui=NONE cterm=NONE
 hi Folded guifg=#666666 guibg=#000000 gui=NONE cterm=NONE
 hi FoldColumn guifg=#5f87d7 guibg=#000000 gui=NONE cterm=NONE
-hi CursorLine guifg=NONE guibg=#333333 gui=NONE cterm=NONE
-hi CursorColumn guifg=NONE guibg=#333333 gui=NONE cterm=NONE
-hi ColorColumn guifg=NONE guibg=#000000 gui=NONE cterm=NONE
+hi CursorLine guifg=NONE guibg=#363636 gui=NONE cterm=NONE
+hi CursorColumn guifg=NONE guibg=#363636 gui=NONE cterm=NONE
+hi ColorColumn guifg=NONE guibg=#292929 gui=NONE cterm=NONE
 hi CursorLineNr guifg=NONE guibg=#333333 gui=NONE cterm=NONE
 hi Visual guifg=#d7d787 guibg=#5f8700 gui=NONE cterm=NONE
 hi SignColumn guifg=NONE guibg=#262626 gui=NONE cterm=NONE
@@ -100,8 +102,8 @@ hi DiffChange guifg=#e3b341 guibg=#341a00 gui=NONE cterm=NONE
 hi DiffText guifg=#fff987 guibg=#341a00 gui=NONE cterm=NONE
 hi DiffDelete guifg=#462c32 guibg=#f85149 gui=NONE cterm=NONE
 hi DiffFile guifg=#6cb6ff guibg=NONE gui=NONE
-hi FloatBorder guifg=#666666 guibg=#444444 gui=NONE cterm=NONE
-hi NormalFloat  guifg=NONE guibg=#444444 gui=NONE cterm=NONE
+hi FloatBorder guifg=#56d364 guibg=#363636 gui=NONE cterm=NONE
+hi NormalFloat  guifg=NONE guibg=#363636 gui=NONE cterm=NONE
 
 " hi link diffLine DiffFile
 " hi link diffIndexLine DiffFile
@@ -109,9 +111,10 @@ hi NormalFloat  guifg=NONE guibg=#444444 gui=NONE cterm=NONE
 
 " ==============
 " //Telescope
-hi TelescopeSelection guifg=NONE guibg=#444444 gui=NONE cterm=NONE
-hi TelescopeBorder guifg=#666666 guibg=#2f2f2f gui=NONE cterm=NONE
-hi TelescopeNormal guifg=NONE guibg=#2f2f2f gui=NONE cterm=NONE
+hi link TelescopeSelection PmenuSel
+hi link TelescopeBorder FloatBorder
+hi link TelescopeNormal NormalFloat
+hi link TelescopeMatching Visual
 " //
 " //Treesitter?
 hi! link TSError Error
