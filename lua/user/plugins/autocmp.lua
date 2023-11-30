@@ -607,6 +607,11 @@ pack.plug({
         '<cmd>Copilot panel<cr>',
         desc = 'Open Copilot panel',
       },
+      {
+        '<leader>tc',
+        '<cmd>ToggleCopilotAutoMode<cr>',
+        desc = 'Toggle copilot',
+      }
     },
     cmd = { 'Copilot' },
     config = function()
