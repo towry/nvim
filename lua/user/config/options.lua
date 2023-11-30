@@ -136,7 +136,7 @@ end
 --- https://github.dev/lewis6991/dotfiles/blob/main/config/nvim/lua/lewis6991/lsp.lua
 function M.enable_foldexpr_for_buf()
   vim.opt.foldmethod = 'expr'
-  vim.opt.foldtext = 'v:lua.vim.treesitter.foldtext()'
+  -- vim.opt.foldtext = 'v:lua.vim.treesitter.foldtext()'
   vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
   -- vim.cmd.normal('zx')
 end
