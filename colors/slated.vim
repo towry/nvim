@@ -153,6 +153,9 @@ hi LspSemanticFunction ctermfg=81 ctermbg=NONE cterm=NONE
 hi LspSemanticMethod ctermfg=81 ctermbg=NONE cterm=NONE
 hi LspSemanticKeyword ctermfg=81 ctermbg=NONE cterm=NONE
 hi LspSemanticVariable ctermfg=81 ctermbg=NONE cterm=NONE
+" // mini.cursorword
+hi MiniCursorword guifg=NONE guibg=#4a4a4a gui=NONE cterm=NONE
+hi MiniCursorwordCurrent guifg=NONE guibg=#333333 gui=bold,underline cterm=NONE
 " ==============
 
 if s:t_Co >= 256

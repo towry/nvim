@@ -6,6 +6,13 @@ local function t(str) return vim.api.nvim_replace_termcodes(str, true, true, tru
 pack.plug({
   { 'echasnovski/mini.extra' },
   {
+    'echasnovski/mini.cursorword',
+    event = 'BufReadPost',
+    opts = {
+      delay = 150,
+    }
+  },
+  {
     'nvim-lua/plenary.nvim',
   },
   {

@@ -45,6 +45,7 @@
   "mini.ai": { "branch": "main", "commit": "a1e9d8a69f608a0593d8db9cab2b774884382b29" },
   "mini.bufremove": { "branch": "main", "commit": "10c3feddf51b53d5a67c07858d55668dcf489c7e" },
   "mini.clue": { "branch": "main", "commit": "9d04c00d72faabff6a8bc873f5324a75a2d4b13f" },
+  "mini.cursorword": { "branch": "main", "commit": "30d527d46cf1dae6ba61988b2e2802e0819b4eb0" },
   "mini.doc": { "branch": "main", "commit": "c14e342247d213e02287c8e80a51673f313c9153" },
   "mini.extra": { "branch": "main", "commit": "673bc7d7c3428c55d8d0e3125da1296ddd5ff46f" },
   "mini.indentscope": { "branch": "main", "commit": "c8fdafa7bf603d758986a27eb546c55a5c73b1a3" },

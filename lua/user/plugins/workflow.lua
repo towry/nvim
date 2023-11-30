@@ -120,6 +120,7 @@ plug({
 
   {
     'pze/mini.bufremove',
+    cond = not vim.cfg.runtime__starts_as_gittool,
     dev = false,
     keys = {
       {
