@@ -34,16 +34,6 @@ return {
     ':Cheatsheet',
     description = 'Open cheatsheet',
   },
-
-  ------ mini
-  {
-    ':lua MiniTrailspace.trim()',
-    description = 'Trim all trailing whitespace',
-  },
-  {
-    ':lua MiniTrailspace.trim_last_lines()',
-    description = 'Trim all trailing empty lines',
-  },
   ----------------------------------
   ---https://github.com/mrjones2014/dotfiles/blob/master/nvim/lua/my/legendary/commands.lua
   {

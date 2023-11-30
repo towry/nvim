@@ -3,6 +3,18 @@ local utils = require('userlib.runtime.utils')
 return {
   {
     function()
+      require('userlib.mini.trim').trim()
+    end,
+    description = 'Trim all trailing whitespace',
+  },
+  {
+    function()
+      require('userlib.mini.trim').trim_last_lines()
+    end,
+    description = 'Trim all trailing empty lines',
+  },
+  {
+    function()
       for name, _ in pairs(package.loaded) do
         if name:match('^plugins.') or name:match('^user.') or name:match('userlib.') then package.loaded[name] = nil end
       end

@@ -95,10 +95,15 @@ hi Directory guifg=#00875f guibg=NONE gui=bold cterm=bold
 hi Conceal guifg=#666666 guibg=NONE gui=NONE cterm=NONE
 hi Ignore guifg=NONE guibg=NONE gui=NONE ctermfg=NONE ctermbg=NONE cterm=NONE
 hi Title guifg=#ffd700 guibg=NONE gui=bold cterm=bold
-hi DiffAdd guifg=#ffffff guibg=#5f875f gui=NONE cterm=NONE
-hi DiffChange guifg=#ffffff guibg=#5f87af gui=NONE cterm=NONE
-hi DiffText guifg=#000000 guibg=#c6c6c6 gui=NONE cterm=NONE
-hi DiffDelete guifg=#ffffff guibg=#af5faf gui=NONE cterm=NONE
+hi DiffAdd guifg=#56d364 guibg=#244032 gui=NONE cterm=NONE
+hi DiffChange guifg=#e3b341 guibg=#341a00 gui=NONE cterm=NONE
+hi DiffText guifg=#fff987 guibg=#341a00 gui=NONE cterm=NONE
+hi DiffDelete guifg=#462c32 guibg=#f85149 gui=NONE cterm=NONE
+hi DiffFile guifg=#6cb6ff guibg=NONE gui=NONE
+
+" hi link diffLine DiffFile
+" hi link diffIndexLine DiffFile
+" hi link diffSubName DiffFile
 
 " ==============
 " //Telescope
@@ -154,8 +159,43 @@ hi LspSemanticMethod ctermfg=81 ctermbg=NONE cterm=NONE
 hi LspSemanticKeyword ctermfg=81 ctermbg=NONE cterm=NONE
 hi LspSemanticVariable ctermfg=81 ctermbg=NONE cterm=NONE
 " // mini.cursorword
-hi MiniCursorword guifg=NONE guibg=#4a4a4a gui=NONE cterm=NONE
-hi MiniCursorwordCurrent guifg=NONE guibg=#333333 gui=bold,underline cterm=NONE
+hi MiniCursorword guifg=NONE guibg=NONE gui=bold,italic cterm=NONE
+hi MiniCursorwordCurrent guifg=NONE guibg=NONE gui=bold,underline cterm=NONE
+" // fugitive
+hi! link diffAdded DiffAdd
+hi! link diffRemoved DiffDelete
+hi diffOldFile guifg=#ffd8d3 guibg=#78191b gui=NONE cterm=NONE
+hi diffNewFile guifg=#b4f1b4 guibg=#1b4721 gui=NONE cterm=NONE
+" // git ...
+hi! link gitDateHeader           gitIdentityHeader
+hi! link gitIdentityHeader       gitIdentityKeyword
+hi! link gitIdentityKeyword      Label
+hi! link gitNotesHeader          gitKeyword
+hi! link gitReflogHeader         gitKeyword
+hi! link gitKeyword              Keyword
+hi! link gitIdentity             String
+hi! link gitEmailDelimiter       Delimiter
+hi! link gitEmail                Special
+hi! link gitDate                 Number
+hi! link gitMode                 Number
+hi! link gitHashAbbrev           gitHash
+hi! link gitHash                 Identifier
+hi! link gitReflogMiddle         gitReference
+hi! link gitReference            Function
+hi! link gitStage                gitType
+hi! link gitType                 Type
+hi! link gitDiffAdded            diffAdded
+hi! link gitDiffRemoved          diffRemoved
+hi! link gitcommitDiscardedFile  diffRemoved
+hi! link gitcommitSelectedFile   diffAdded
+hi! link gitcommitUnmergedFile   ErrorMsg
+hi! link gitcommitDiscardedArrow gitcommitDiscardedFile
+hi! link gitcommitSelectedArrow  gitcommitSelectedFile
+hi! link gitcommitUnmergedArrow  gitcommitUnmergedFile
+
+hi! GitGutterAdd     guifg=#437f43 guibg=none
+hi! GitGutterChange  guifg=#7f7f43 guibg=none
+hi! GitGutterDelete  guifg=#a05454 guibg=none
 " ==============
 
 if s:t_Co >= 256

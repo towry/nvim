@@ -41,11 +41,6 @@ pack.plug({
     'tpope/vim-repeat',
     keys = { '.' },
   },
-  {
-    'echasnovski/mini.trailspace',
-    event = require('userlib.runtime.au').user_autocmds.FileOpenedAfter_User,
-    config = true,
-  },
 })
 
 ---dressing
