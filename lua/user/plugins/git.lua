@@ -33,9 +33,14 @@ plug({
       { '<leader>ga', cmdstr([[Dispatch! Git add %]]),                                                         desc = '!Git add current' },
       { '<leader>gA', cmdstr([[Dispatch! Git add .]]),                                                         desc = '!Git add all' },
       { '<leader>gp', cmdstr([[exec "Git! push origin " .. FugitiveHead() | :lua vim.g.escape_cmd="pclose"]]), desc = 'Git push' },
-      { '<leader>gu', cmdstr([[exec "Git! pull origin " .. FugitiveHead() | :lua vim.g.escape_cmd="pclose"]]), desc = 'Git pull',                     silent = false },
-      { '<leader>gs', cmdstr([[vert Git]]),                                                                    desc = 'Git status',                   silent = false, },
-      { '<leader>gF', cmdstr([[Git log --max-count=100 --oneline -- %]]),                                      desc = 'Git show current file history' },
+      { '<leader>gu', cmdstr([[exec "Git! pull origin " .. FugitiveHead() | :lua vim.g.escape_cmd="pclose"]]), desc = 'Git pull',           silent = false },
+      { '<leader>gs', cmdstr([[vert Git]]),                                                                    desc = 'Git status',         silent = false, },
+      {
+        '<leader>gF',
+        cmdstr(
+          [[Git log --max-count=100 --oneline --pretty=format:"%C(blue)%h%C(reset): %C(cyan)%s%C(reset) - %an [%C(bold)%cr%C(reset)]" --no-merges -- %]]),
+        desc = 'Git show current file history'
+      },
       {
         '<leader>gc',
         function()
