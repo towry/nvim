@@ -100,6 +100,8 @@ hi DiffChange guifg=#e3b341 guibg=#341a00 gui=NONE cterm=NONE
 hi DiffText guifg=#fff987 guibg=#341a00 gui=NONE cterm=NONE
 hi DiffDelete guifg=#462c32 guibg=#f85149 gui=NONE cterm=NONE
 hi DiffFile guifg=#6cb6ff guibg=NONE gui=NONE
+hi FloatBorder guifg=#666666 guibg=#444444 gui=NONE cterm=NONE
+hi NormalFloat  guifg=NONE guibg=#444444 gui=NONE cterm=NONE
 
 " hi link diffLine DiffFile
 " hi link diffIndexLine DiffFile
@@ -107,7 +109,9 @@ hi DiffFile guifg=#6cb6ff guibg=NONE gui=NONE
 
 " ==============
 " //Telescope
-hi! link TelescopeSelection CursorLine
+hi TelescopeSelection guifg=NONE guibg=#444444 gui=NONE cterm=NONE
+hi TelescopeBorder guifg=#666666 guibg=#2f2f2f gui=NONE cterm=NONE
+hi TelescopeNormal guifg=NONE guibg=#2f2f2f gui=NONE cterm=NONE
 " //
 " //Treesitter?
 hi! link TSError Error
