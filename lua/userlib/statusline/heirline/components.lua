@@ -228,11 +228,11 @@ local FullFileName = {
     if vim.bo.modified then
       fg = "yellow"
     else
-      fg = conditions.is_active() and "tablinesel_fg" or "tabline_fg"
+      fg = conditions.is_active() and "winbar_fg" or "winbar_nc_fg"
     end
     return {
       fg = fg,
-      -- bg = conditions.is_active() and "tablinesel_bg" or "winbar_bg",
+      bg = conditions.is_active() and "winbar_bg" or "winbar_nc_bg",
     }
   end,
   FileName,
@@ -246,11 +246,11 @@ local DirAndFileName = {
     if vim.bo.modified then
       fg = "yellow"
     else
-      fg = conditions.is_active() and "tablinesel_bg" or "tabline_bg"
+      fg = conditions.is_active() and "winbar_fg" or "winbar_nc_fg"
     end
     return {
       fg = fg,
-      -- bg = conditions.is_active() and "tablinesel_bg" or "winbar_bg",
+      bg = conditions.is_active() and "winbar_bg" or "winbar_nc_bg",
     }
   end,
   lpad(BufferCwd),
@@ -300,6 +300,8 @@ local function setup_colors()
     bg = utils.get_highlight("StatusLine").bg or "none",
     winbar_fg = utils.get_highlight("WinBar").fg or "none",
     winbar_bg = utils.get_highlight("WinBar").bg or "none",
+    winbar_nc_fg = utils.get_highlight("WinBarNC").fg or "none",
+    winbar_nc_bg = utils.get_highlight("WinBarNC").bg or "none",
     tablinesel_fg = utils.get_highlight("TabLineSel").fg or "none",
     tablinesel_bg = utils.get_highlight("TabLineSel").bg or "none",
     tabline_fg = utils.get_highlight("TabLine").fg or "none",

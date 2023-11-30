@@ -34,12 +34,12 @@ hi! link PopupNotification Todo
 
 hi Normal guifg=#ffffff guibg=#262626 gui=NONE cterm=NONE
 hi EndOfBuffer guifg=#5f87d7 guibg=NONE gui=NONE cterm=NONE
-hi StatusLine guifg=#000000 guibg=#afaf87 gui=NONE cterm=NONE
-hi StatusLineNC guifg=#666666 guibg=#afaf87 gui=NONE cterm=NONE
+hi StatusLine guifg=#262626 guibg=#afaf87 gui=NONE cterm=NONE
+hi StatusLineNC guifg=#afafaf guibg=#313129 gui=NONE cterm=NONE
 hi StatusLineTerm guifg=#000000 guibg=#afaf87 gui=NONE cterm=NONE
 hi StatusLineTermNC guifg=#666666 guibg=#afaf87 gui=NONE cterm=NONE
-hi link WinBar StatusLine
-hi link WinBarNC StatusLineNC
+hi! link WinBar StatusLine
+hi! link WinBarNC StatusLineNC
 hi VertSplit guifg=#666666 guibg=#afaf87 gui=NONE cterm=NONE
 hi PmenuSel guifg=#262626 guibg=#afaf87 gui=NONE cterm=NONE
 hi Pmenu guifg=NONE guibg=#4a4a4a gui=NONE cterm=NONE
@@ -59,7 +59,7 @@ hi CursorLine guifg=NONE guibg=#363636 gui=NONE cterm=NONE
 hi CursorColumn guifg=NONE guibg=#363636 gui=NONE cterm=NONE
 hi ColorColumn guifg=NONE guibg=#292929 gui=NONE cterm=NONE
 hi CursorLineNr guifg=NONE guibg=#333333 gui=NONE cterm=NONE
-hi Visual guifg=#d7d787 guibg=#5f8700 gui=NONE cterm=NONE
+hi Visual guifg=#ffd700 guibg=#75754C gui=NONE cterm=NONE
 hi SignColumn guifg=NONE guibg=#262626 gui=NONE cterm=NONE
 hi VisualNOS guifg=#d7d787 guibg=#5f8700 gui=NONE cterm=NONE
 hi LineNr guifg=#666666 guibg=NONE gui=NONE cterm=NONE
