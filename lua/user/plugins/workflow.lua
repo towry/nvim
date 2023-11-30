@@ -530,7 +530,7 @@ plug({
 plug({
   'towry/window-bufstack.nvim',
   cond = not vim.cfg.runtime__starts_as_gittool,
-  dev = true,
+  dev = false,
   opts = {
     ignore_filetype = { 'oil' },
   },
