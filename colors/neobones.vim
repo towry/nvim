@@ -111,7 +111,8 @@ if &background ==# 'dark'
     highlight! link GitGutterDelete GitSignsDelete
     highlight IblIndent guifg=#1D272E guibg=NONE guisp=NONE gui=NONE cterm=NONE
     highlight IblScope guifg=#35444E guibg=NONE guisp=NONE gui=NONE cterm=NONE
-    highlight Identifier guifg=#A7B3AE guibg=NONE guisp=NONE gui=NONE cterm=NONE
+    " highlight Identifier guifg=#A7B3AE guibg=NONE guisp=NONE gui=NONE cterm=NONE
+    highlight Identifier guifg=#BE8CB3 guibg=NONE guisp=NONE gui=NONE cterm=NONE
     highlight IncSearch guifg=#0F191F guibg=#BE8CB3 guisp=NONE gui=bold cterm=bold
     highlight! link CurSearch IncSearch
     highlight Italic guifg=NONE guibg=NONE guisp=NONE gui=italic cterm=italic
@@ -165,7 +166,7 @@ if &background ==# 'dark'
     highlight Underlined guifg=NONE guibg=NONE guisp=NONE gui=underline cterm=underline
     highlight VertSplit guifg=#466273 guibg=NONE guisp=NONE gui=NONE cterm=NONE
     highlight! link WinSeparator VertSplit
-    highlight Visual guifg=NONE guibg=#3A3E3D guisp=NONE gui=NONE cterm=NONE
+    highlight Visual guifg=#FFFFFF guibg=#8190D4 guisp=NONE gui=NONE cterm=NONE
     highlight WarningMsg guifg=#B77E64 guibg=NONE guisp=NONE gui=NONE cterm=NONE
     highlight! link DiagnosticWarn WarningMsg
     highlight! link gitcommitOverflow WarningMsg
@@ -362,7 +363,7 @@ else
     highlight Underlined guifg=NONE guibg=NONE guisp=NONE gui=underline cterm=underline
     highlight VertSplit guifg=#8F9890 guibg=NONE guisp=NONE gui=NONE cterm=NONE
     highlight! link WinSeparator VertSplit
-    highlight Visual guifg=NONE guibg=#ADE48C guisp=NONE gui=NONE cterm=NONE
+    highlight Visual guifg=##944927 guibg=#ADE48C guisp=NONE gui=NONE cterm=NONE
     highlight WarningMsg guifg=#944927 guibg=NONE guisp=NONE gui=NONE cterm=NONE
     highlight! link DiagnosticWarn WarningMsg
     highlight! link gitcommitOverflow WarningMsg
@@ -400,6 +401,19 @@ else
         " no italics light end
     endif
 endif
+
+"""" plugins
+
+" //Telescope
+hi link TelescopeSelection PmenuSel
+" hi link TelescopeBorder FloatBorder
+" hi link TelescopeNormal NormalFloat
+hi link TelescopeMatching Visual
+" // mini.cursorword
+hi MiniCursorword guifg=NONE guibg=NONE gui=bold,italic cterm=NONE
+hi MiniCursorwordCurrent guifg=NONE guibg=NONE gui=bold,underline cterm=NONE
+
+"""" end plugins
 
 if has('terminal')
     highlight! link StatusLineTerm StatusLine
