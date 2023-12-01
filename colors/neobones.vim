@@ -112,7 +112,7 @@ if &background ==# 'dark'
     highlight IblIndent guifg=#1D272E guibg=NONE guisp=NONE gui=NONE cterm=NONE
     highlight IblScope guifg=#35444E guibg=NONE guisp=NONE gui=NONE cterm=NONE
     " highlight Identifier guifg=#A7B3AE guibg=NONE guisp=NONE gui=NONE cterm=NONE
-    highlight Identifier guifg=#BE8CB3 guibg=NONE guisp=NONE gui=NONE cterm=NONE
+    highlight Identifier guifg=#9cdcfe guibg=NONE guisp=NONE gui=NONE cterm=NONE
     highlight IncSearch guifg=#0F191F guibg=#BE8CB3 guisp=NONE gui=bold cterm=bold
     highlight! link CurSearch IncSearch
     highlight Italic guifg=NONE guibg=NONE guisp=NONE gui=italic cterm=italic
