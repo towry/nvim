@@ -476,45 +476,6 @@ plug({
   },
 
   {
-    'echasnovski/mini.visits',
-    event = 'User LazyUIEnterOncePost',
-    keys = {
-      {
-        '<leader>fh',
-        '<cmd>lua require("userlib.mini.visits").select_by_cwd_and_weight(vim.cfg.runtime__starts_cwd)<cr>',
-        desc = 'Show current cwd visits',
-      },
-      --- marks as m also create harpoon mark.
-      {
-        'mm',
-        function()
-          require('mini.visits').add_path(nil, vim.cfg.runtime__starts_cwd)
-        end,
-        expr = true,
-        nowait = true,
-        silent = false,
-        desc = 'Add to visits',
-      },
-      {
-        '<leader>vm',
-        function()
-          require('mini.visits').add_label(nil, nil, vim.cfg.runtime__starts_cwd);
-        end,
-        desc = 'Add label to path',
-      }
-    },
-    opts = function()
-      return {
-        track = {
-          -- event = '',
-        }
-      }
-    end,
-    config = function(_, opts)
-      require('mini.visits').setup(opts)
-    end,
-  },
-  {
     'kwkarlwang/bufjump.nvim',
     keys = {
       '<D-i>',

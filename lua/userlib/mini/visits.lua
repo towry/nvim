@@ -18,4 +18,22 @@ function M.select_by_cwd_and_weight(cwd, weight_name)
   return visits.select_path(cwd, select_opts)
 end
 
+function M.add_project(project_path, cwd)
+  local visits = require('mini.visits')
+  visits.add_path(project_path, cwd)
+  visits.add_label('project', project_path, cwd)
+  visits.write_index()
+end
+
+function M.list_projects_in_cwd(cwd)
+  local extra = require('mini.extra')
+  extra.pickers.visit_paths({ cwd = cwd, filter = 'project', recency_weight = 0 }, {
+    source = {
+      choose = function(item)
+        vim.print(item)
+      end
+    }
+  })
+end
+
 return M
