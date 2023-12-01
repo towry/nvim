@@ -57,32 +57,33 @@ function M.init_interface()
   --- blink cursor see https://github.com/neovim/neovim/pull/26075
   --- set guicursor+=n:blinkon1
   o.colorcolumn =
-  '+1'                                                          -- Draw colored column one step to the right of desired maximum width
-  o.showmode = false                                            --- Don't show things like -- INSERT -- anymore
-  o.modeline = true                                             -- Allow modeline
-  o.ruler = false                                               -- Always show cursor position
-  o.termguicolors = true                                        --- Correct terminal colors
+  '+1'                                                                                          -- Draw colored column one step to the right of desired maximum width
+  o.showmode = false                                                                            --- Don't show things like -- INSERT -- anymore
+  o.modeline = true                                                                             -- Allow modeline
+  o.ruler = false                                                                               -- Always show cursor position
+  o.termguicolors = true                                                                        --- Correct terminal colors
   o.confirm = true
-  o.showtabline = vim.cfg.runtime__starts_as_gittool and 2 or 0 --- Always show tabs
-  o.signcolumn = 'yes:1'                                        --- Add extra sign column next to line number
-  o.relativenumber = vim.cfg.editor__relative_number            --- Enables relative number
+  o.showtabline = vim.cfg.runtime__starts_as_gittool and 2 or 0                                 --- Always show tabs
+  o.signcolumn = 'yes:1'                                                                        --- Add extra sign column next to line number
+  o.relativenumber = vim.cfg.editor__relative_number and
+  not vim.cfg.runtime__starts_as_gittool                                                        --- Enables relative number
   o.numberwidth = 1
-  o.number = true                                               --- Shows current line number
-  o.pumheight = 10                                              --- Max num of items in completion menu
-  o.pumblend = 0                                                -- popup blend
-  o.scrolloff = 10                                              --- Always keep space when scrolling to bottom/top edge
+  o.number = true                                                                               --- Shows current line number
+  o.pumheight = 10                                                                              --- Max num of items in completion menu
+  o.pumblend = 0                                                                                -- popup blend
+  o.scrolloff = 10                                                                              --- Always keep space when scrolling to bottom/top edge
   -- o.smoothscroll = true
-  o.sidescroll = 2                                              --- Used only when 'wrap' option is off and the cursor is moved off the screen.
-  o.mouse = 'a'                                                 --- Enable mouse
-  o.sidescrolloff = 8                                           -- Columns of context
-  o.lazyredraw = false                                          --- Makes macros faster & prevent errors in complicated mappings
-  o.wildmode = { 'longest:full', 'full' }                       -- Command-line completion mode
-  o.cmdheight = 1                                               --- Give more space for displaying messages
-  o.completeopt = { 'menu', 'menuone', 'noselect' }             --- Better autocompletion
-  o.cursorline = true                                           --- Highlight of current line
-  o.emoji = true                                                --- Fix emoji display
+  o.sidescroll = 2                                                                              --- Used only when 'wrap' option is off and the cursor is moved off the screen.
+  o.mouse = 'a'                                                                                 --- Enable mouse
+  o.sidescrolloff = 8                                                                           -- Columns of context
+  o.lazyredraw = false                                                                          --- Makes macros faster & prevent errors in complicated mappings
+  o.wildmode = { 'longest:full', 'full' }                                                       -- Command-line completion mode
+  o.cmdheight = 1                                                                               --- Give more space for displaying messages
+  o.completeopt = { 'menu', 'menuone', 'noselect' }                                             --- Better autocompletion
+  o.cursorline = true                                                                           --- Highlight of current line
+  o.emoji = true                                                                                --- Fix emoji display
   o.cursorlineopt = 'both'
-  o.foldcolumn = '1'                                            -- Folding
+  o.foldcolumn = '1'                                                                            -- Folding
   o.list = true
   o.listchars:append('tab:⇢ ')
   -- o.listchars:append('eol:↲')
