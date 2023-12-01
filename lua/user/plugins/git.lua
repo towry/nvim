@@ -38,7 +38,7 @@ plug({
       {
         '<leader>gF',
         cmdstr(
-          [[Git log --max-count=100 --oneline --date=format:"%Y-%m-%d %H:%M" --pretty=format:"%h %ad: %s - %an" --no-merges -- %]]),
+          [[Git log --max-count=100 --oneline --date=format:"%Y-%m-%d %H:%M" --pretty=format:"%h %ad: %s - %an" -- %]]),
         desc = 'Git show current file history'
       },
       {
