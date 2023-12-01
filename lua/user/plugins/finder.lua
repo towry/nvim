@@ -14,7 +14,13 @@ plug({
     default_ui_mappings = true,
     default_quickfix_mappings = true,
     -- you can override it with vim.b.grep_flags
-    cmd_flags = ("--smart-case --fixed-strings --no-fixed-strings -M 500")
+    cmd_flags = ("--smart-case --fixed-strings --no-fixed-strings -M 500"),
+    colors = {
+      RgFlowInputPath = { link = 'NormalFloat' },
+      RgFlowInputBg = { link = 'NormalFloat' },
+      RgFlowInputFlags = { link = 'NormalFloat' },
+      RgFlowInputPattern = { link = 'NormalFloat' },
+    }
   },
   keys = {
     {
