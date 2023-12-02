@@ -20,17 +20,20 @@ end
 
 function M.add_project(project_path, cwd)
   local visits = require('mini.visits')
-  visits.add_path(project_path, cwd)
   visits.add_label('project', project_path, cwd)
   visits.write_index()
 end
 
 function M.list_projects_in_cwd(cwd)
   local extra = require('mini.extra')
+  local path = require('userlib.runtime.path')
   extra.pickers.visit_paths({ cwd = cwd, filter = 'project', recency_weight = 0 }, {
     source = {
       choose = function(item)
-        vim.print(item)
+        local full_path = path.path_join(cwd, item)
+        vim.schedule(function()
+          require('userlib.mini.clue.folder-action').open(full_path)
+        end)
       end
     }
   })
