@@ -48,7 +48,7 @@ local function setup(lazy_opts, opts)
     },
     performance = {
       cache = {
-        enabled = true,
+        enabled = false,
       },
       rtp = {
         disabled_plugins = {
