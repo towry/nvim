@@ -249,91 +249,53 @@ plug({
     },
   },
   {
-    'telescope.nvim',
-    dependencies = {
+    'pze/project.nvim',
+    branch = 'main',
+    dev = false,
+    cond = not vim.cfg.runtime__starts_as_gittool,
+    name = 'project_nvim',
+    cmd = { 'ProjectRoot' },
+    event = 'VeryLazy',
+    keys = {
       {
-        'pze/project.nvim',
-        branch = 'main',
-        dev = false,
-        cond = not vim.cfg.runtime__starts_as_gittool,
-        name = 'project_nvim',
-        cmd = { 'ProjectRoot' },
-        event = {
-          'BufReadPre',
-          'BufNewFile',
-        },
-        keys = {
-          {
-            '<leader>f[',
-            [[<cmd>lua require('userlib.finder.project_session_picker').session_projects()<cr>]],
-            desc = 'Session projects',
-          },
-          {
-            '<leader>fP',
-            '<cmd>ProjectRoot<cr>',
-            desc = 'Call project root',
-          },
-          {
-            '<leader>fp',
-            function()
-              local actions = require('telescope.actions')
-              local state = require('telescope.actions.state')
-              require('userlib.runtime.utils').plugin_schedule('project_nvim', function()
-                require('telescope').extensions.projects.projects(require('telescope.themes').get_dropdown({
-                  cwd = vim.cfg.runtime__starts_cwd,
-                  attach_mappings = function(prompt_bufnr, _map)
-                    local on_project_selected = function()
-                      local entry_path = state.get_selected_entry().value
-                      if not entry_path then return end
-                      local new_cwd = entry_path
-                      actions.close(prompt_bufnr)
-                      require('userlib.mini.clue.folder-action').open(new_cwd)
-                    end
-                    actions.select_default:replace(on_project_selected)
-                    return true
-                  end,
-                }))
-              end)
-            end,
-            desc = 'Projects',
-          },
-        },
-        config = function(_, opts)
-          require('project_nvim').setup(opts)
-          require('telescope').load_extension('projects')
-        end,
-        opts = {
-          patterns = require('userlib.runtime.utils').root_patterns,
-          --- order matters
-          detection_methods = { 'pattern', 'lsp' },
-          manual_mode = false,
-          -- Table of lsp clients to ignore by name
-          -- eg: { "efm", ... }
-          ignore_lsp = require('userlib.runtime.utils').root_lsp_ignore,
-          -- Don't calculate root dir on specific directories
-          -- Ex: { "~/.cargo/*", ... }
-          exclude_dirs = {
-            '.cargo/',
-            '~/.local',
-            '~/.cache',
-            'Library/',
-            '.cache/',
-            'dist/',
-            'node_modules/',
-            '.pnpm/',
-          },
-          -- Show hidden files in telescope
-          show_hidden = false,
-          -- When set to false, you will get a message when project.nvim changes your
-          -- directory.
-          silent_chdir = true,
-          -- What scope to change the directory, valid options are
-          -- * global (default)
-          -- * tab
-          -- * win
-          scope_chdir = 'tab',
-        },
+        '<leader>fP',
+        '<cmd>ProjectRoot<cr>',
+        desc = 'Call project root',
       },
+    },
+    config = function(_, opts)
+      require('project_nvim').setup(opts)
+    end,
+    opts = {
+      patterns = require('userlib.runtime.utils').root_patterns,
+      --- order matters
+      detection_methods = { 'pattern', 'lsp' },
+      manual_mode = false,
+      -- Table of lsp clients to ignore by name
+      -- eg: { "efm", ... }
+      ignore_lsp = require('userlib.runtime.utils').root_lsp_ignore,
+      -- Don't calculate root dir on specific directories
+      -- Ex: { "~/.cargo/*", ... }
+      exclude_dirs = {
+        '.cargo/',
+        '~/.local',
+        '~/.cache',
+        'Library/',
+        '.cache/',
+        'dist/',
+        'node_modules/',
+        '.pnpm/',
+      },
+      -- Show hidden files in telescope
+      show_hidden = false,
+      -- When set to false, you will get a message when project.nvim changes your
+      -- directory.
+      silent_chdir = true,
+      -- What scope to change the directory, valid options are
+      -- * global (default)
+      -- * tab
+      -- * win
+      scope_chdir = 'tab',
     },
   },
   {
@@ -475,45 +437,6 @@ plug({
     }
   },
 
-  {
-    'echasnovski/mini.visits',
-    event = 'User LazyUIEnterOncePost',
-    keys = {
-      {
-        '<leader>fh',
-        '<cmd>lua require("userlib.mini.visits").select_by_cwd_and_weight(vim.cfg.runtime__starts_cwd)<cr>',
-        desc = 'Show current cwd visits',
-      },
-      --- marks as m also create harpoon mark.
-      {
-        'mm',
-        function()
-          require('mini.visits').add_path(nil, vim.cfg.runtime__starts_cwd)
-        end,
-        expr = true,
-        nowait = true,
-        silent = false,
-        desc = 'Add to visits',
-      },
-      {
-        '<leader>vm',
-        function()
-          require('mini.visits').add_label(nil, nil, vim.cfg.runtime__starts_cwd);
-        end,
-        desc = 'Add label to path',
-      }
-    },
-    opts = function()
-      return {
-        track = {
-          -- event = '',
-        }
-      }
-    end,
-    config = function(_, opts)
-      require('mini.visits').setup(opts)
-    end,
-  },
   {
     'kwkarlwang/bufjump.nvim',
     keys = {

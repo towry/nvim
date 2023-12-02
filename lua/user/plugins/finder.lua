@@ -710,3 +710,68 @@ plug({
     }
   end,
 })
+
+plug({
+  'echasnovski/mini.visits',
+  event = 'User LazyUIEnterOncePost',
+  keys = {
+    {
+      '<leader>pv',
+      '<cmd>lua require("userlib.mini.visits").select_by_cwd_and_weight(vim.cfg.runtime__starts_cwd)<cr>',
+      desc = 'Show current cwd visits',
+    },
+    --- marks as m also create harpoon mark.
+    {
+      'mm',
+      function()
+        require('mini.visits').add_path(nil, vim.cfg.runtime__starts_cwd)
+      end,
+      expr = true,
+      nowait = true,
+      silent = false,
+      desc = 'Add to visits',
+    },
+    {
+      '<leader>pm',
+      function()
+        require('mini.visits').add_label(nil, nil, vim.cfg.runtime__starts_cwd);
+      end,
+      desc = 'Add label to path',
+    },
+    {
+      '<leader>pp',
+      function()
+        require('userlib.mini.visits').list_projects_in_cwd(vim.cfg.runtime__starts_cwd)
+      end,
+      desc = 'List projects in cwd',
+    },
+    {
+      '<leader>pa',
+      function()
+        require('userlib.mini.visits').add_project(vim.uv.cwd(), vim.cfg.runtime__starts_cwd)
+      end,
+      desc = 'Add project',
+    },
+    {
+      '<leader>pP',
+      function()
+        require('mini.visits').write_index()
+      end,
+      desc = 'Write index',
+    }
+  },
+  opts = function()
+    return {
+      store = {
+        autowrite = true,
+      },
+      track = {
+        event = 'BufEnter',
+        delay = 1000,
+      }
+    }
+  end,
+  config = function(_, opts)
+    require('mini.visits').setup(opts)
+  end,
+})

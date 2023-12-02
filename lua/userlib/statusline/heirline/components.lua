@@ -197,7 +197,7 @@ local GitStatus = {
       local count = self.status_dict.added or 0
       return count > 0 and ("+" .. count) or ''
     end,
-    hl = { fg = utils.get_highlight("DiffAdd").bg },
+    hl = { fg = utils.get_highlight("DiffAdd").fg },
   },
   {
     provider = function(self)
@@ -211,7 +211,7 @@ local GitStatus = {
       local count = self.status_dict.removed or 0
       return count > 0 and ("-" .. count) or ''
     end,
-    hl = { fg = utils.get_highlight("DiffDelete").bg },
+    hl = { fg = utils.get_highlight("DiffDelete").fg },
   },
 
   -- {
