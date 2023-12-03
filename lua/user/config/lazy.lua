@@ -18,7 +18,7 @@ local function setup(lazy_opts, opts)
     spec = {},
     defaults = { lazy = true },
     dev = { patterns = is_window and {} or {}, path = is_window and '' or '~/workspace/git-repos' },
-    install = { missing = false, colorscheme = { 'slate' } },
+    install = { missing = false, colorscheme = { 'default' } },
     ui = {
       icons = {
         lazy = ' ',
