@@ -1,5 +1,5 @@
 local user_cfg = {
-  ui__theme_name = 'neobones',
+  ui__theme_name = 'default',
   plug__enable_codeium_vim = false,
 }
 
