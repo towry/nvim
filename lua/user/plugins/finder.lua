@@ -717,14 +717,16 @@ plug({
   keys = {
     {
       '<leader>pv',
-      '<cmd>lua require("userlib.mini.visits").select_by_cwd_and_weight(vim.cfg.runtime__starts_cwd)<cr>',
+      '<cmd>lua require("userlib.mini.visits").select_by_cwd(vim.cfg.runtime__starts_cwd)<cr>',
       desc = 'Show current cwd visits',
     },
     --- marks as m also create harpoon mark.
     {
       'mm',
       function()
-        require('mini.visits').add_path(nil, vim.cfg.runtime__starts_cwd)
+        local visits = require('mini.visits')
+        visits.add_label('harpoon', nil, vim.cfg.runtime__starts_cwd)
+        visits.write_index()
       end,
       expr = true,
       nowait = true,
@@ -732,11 +734,13 @@ plug({
       desc = 'Add to visits',
     },
     {
-      '<leader>pm',
+      '<leader>ph',
       function()
-        require('mini.visits').add_label(nil, nil, vim.cfg.runtime__starts_cwd);
+        require('userlib.mini.visits').select_by_cwd(vim.cfg.runtime__starts_cwd, {
+          filter = 'harpoon'
+        })
       end,
-      desc = 'Add label to path',
+      desc = 'List harpoon visits',
     },
     {
       '<leader>pp',
