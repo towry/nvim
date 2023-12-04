@@ -734,6 +734,18 @@ plug({
       desc = 'Add to visits',
     },
     {
+      'mM',
+      function()
+        local visits = require('mini.visits')
+        visits.remove_label('harpoon', nil, vim.cfg.runtime__starts_cwd)
+        visits.write_index()
+      end,
+      expr = true,
+      nowait = true,
+      silent = false,
+      desc = 'Remove from visits',
+    },
+    {
       '<leader>ph',
       function()
         require('userlib.mini.visits').select_by_cwd(vim.cfg.runtime__starts_cwd, {
