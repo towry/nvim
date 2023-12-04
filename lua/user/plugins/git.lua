@@ -32,7 +32,7 @@ plug({
       { '<leader>gG', ':tab Git<cr>',                                                                          desc = 'Fugitive Git in tab' },
       { '<leader>ga', cmdstr([[Dispatch! Git add %]]),                                                         desc = '!Git add current' },
       { '<leader>gA', cmdstr([[Dispatch! Git add .]]),                                                         desc = '!Git add all' },
-      { '<leader>gp', cmdstr([[exec "Git! push origin " .. FugitiveHead() | :lua vim.g.escape_cmd="pclose"]]), desc = 'Git push' },
+      { '<leader>gp', cmdstr([[exec "Dispatch! Git push origin " .. FugitiveHead()]]),                         desc = 'Git push' },
       { '<leader>gu', cmdstr([[exec "Git! pull origin " .. FugitiveHead() | :lua vim.g.escape_cmd="pclose"]]), desc = 'Git pull',           silent = false },
       { '<leader>gs', cmdstr([[vert Git]]),                                                                    desc = 'Git status',         silent = false, },
       {
