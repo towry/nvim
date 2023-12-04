@@ -244,7 +244,7 @@ function M.extend_hl(name, def, ns)
     -- Do nothing if highlight group not found
     return
   end
-  local current_def = get_highlight(name)
+  local current_def = get_highlight(base_name)
   local combined_def = vim.tbl_deep_extend('force', current_def, def)
   -- print(vim.inspect(combined_def))
 

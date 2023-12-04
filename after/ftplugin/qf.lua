@@ -11,6 +11,7 @@ opt.number = false
 opt.signcolumn = 'yes'
 opt.buflisted = false
 opt.winfixheight = true
+vim.b.minicursorword_disable = true
 
 map('n', 'dd', qf.qf_delete, { desc = 'delete current quickfix entry' })
 map('v', 'd', qf.qf_delete, { desc = 'delete selected quickfix entry' })

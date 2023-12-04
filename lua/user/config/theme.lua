@@ -1,4 +1,5 @@
 local M = {}
+local hi = function(name, data) vim.api.nvim_set_hl(0, name, data) end
 
 function M.custom_theme_wildcharm()
   --- custom wildcharm theme.
@@ -7,13 +8,30 @@ end
 
 function M.custom_theme_default()
   local extend_hl = require('userlib.runtime.utils').extend_hl
+
+  --- mini MiniCursorword
   extend_hl({ 'MiniCursorword', 'Normal' }, {
     italic = true,
   })
   extend_hl({ 'MiniCursorwordCurrent', 'Normal' }, {
-    underline = true,
+    underline = false,
     bold = true,
   })
+  --- git
+  hi('diffAdded', { link = 'DiffAdd' })
+  hi('diffRemoved', { link = 'DiffDelete' })
+  hi('diffChanged', { link = 'DiffChange' })
+  extend_hl({ 'diffFile', 'Type', }, {
+    bold = true
+  })
+  extend_hl({ 'diffOldFile', 'DiffAdd' }, {
+    bg = 'NONE'
+  })
+  extend_hl({ 'diffNewFile', 'DiffDelete' }, {
+    bg = 'NONE'
+  })
+  --- telescope
+  hi('TelescopeMatching', { link = 'Visual' })
 end
 
 local is_setup_theme_done = false
