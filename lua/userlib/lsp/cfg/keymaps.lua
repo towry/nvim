@@ -138,6 +138,12 @@ function M.setup_keybinding(client, buffer)
     )
   end
 
+  set('n', '<leader>tf', function()
+    require('userlib.lsp.servers.null_ls.autoformat').toggle()
+  end, {
+    desc = 'Toggle auto format'
+  })
+
   if cap.renameProvider then
     set(
       'n',
