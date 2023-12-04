@@ -5,10 +5,21 @@ function M.custom_theme_wildcharm()
   vim.cmd([[hi! Visual guifg=#000000 guibg=#ffffff gui=NONE cterm=NONE]])
 end
 
+function M.custom_theme_default()
+  local extend_hl = require('userlib.runtime.utils').extend_hl
+  extend_hl({ 'MiniCursorword', 'Normal' }, {
+    italic = true,
+  })
+  extend_hl({ 'MiniCursorwordCurrent', 'Normal' }, {
+    underline = true,
+    bold = true,
+  })
+end
+
 local is_setup_theme_done = false
 function M.setup_theme()
   if is_setup_theme_done then return end
-  local ok = pcall(vim.cmd, 'colorscheme ' .. vim.cfg.ui__theme_name)
+  local ok = vim.cfg.ui__theme_name == 'default' and true or pcall(vim.cmd, 'colorscheme ' .. vim.cfg.ui__theme_name)
   if ok then
     is_setup_theme_done = true
   else

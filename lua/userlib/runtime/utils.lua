@@ -226,11 +226,18 @@ end
 
 ---@see https://github.com/justchokingaround/nvim/blob/a11aae6d66d025627d7f52f705cbe5951f2f6eb6/lua/modules/utils/init.lua
 ---Extend a highlight group
----@param name string @Target highlight group name
+---@param name string|string[] @Target highlight group name
 ---@param def table @Attributes to be extended
 function M.extend_hl(name, def, ns)
+  ---@type string
+  local base_name = name
+  if type(name) == 'table' then
+    base_name = name[2] or name[1]
+    name = name[1]
+  end
+
   local hlexists = pcall(vim.api.nvim_get_hl, ns or 0, {
-    name = name,
+    name = base_name,
     link = true,
   })
   if not hlexists then
