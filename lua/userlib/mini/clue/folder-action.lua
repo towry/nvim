@@ -74,6 +74,9 @@ M.open = function(new_cwd)
     end, {
       desc = 'Open in terminal',
     })
+    set('n', 'p', function()
+      require('userlib.mini.visits').add_project(new_cwd, vim.cfg.runtime__starts_cwd)
+    end)
   end)
 end
 
