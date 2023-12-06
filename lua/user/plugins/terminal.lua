@@ -96,6 +96,7 @@ plug({
         local opts = { noremap = true, buffer = buffer, nowait = true }
         nvim_buf_set_keymap('t', '<C-\\>', [[<C-\><C-n>:ToggleTerm<CR>]], opts)
         nvim_buf_set_keymap('t', '<C-S-\\>', [[<C-\><C-n>:ToggleTerm<CR>]], opts)
+        nvim_buf_set_keymap('t', '<ESC>', [[<C-\><C-n>]], opts)
 
         if not current_term_is_hidden then
           -- close term if is in normal mode otherwise enter normal mode.
