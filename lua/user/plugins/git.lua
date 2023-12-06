@@ -36,7 +36,7 @@ plug({
       { '<leader>gu', cmdstr([[exec "Git! pull origin " .. FugitiveHead() | :lua vim.g.escape_cmd="pclose"]]), desc = 'Git pull',           silent = false },
       { '<leader>gs', cmdstr([[vert Git]]),                                                                    desc = 'Git status',         silent = false, },
       {
-        '<leader>gF',
+        '<leader>gf',
         cmdstr(
           [[Git log --max-count=100 --oneline --date=format:"%Y-%m-%d %H:%M" --pretty=format:"%h %ad: %s - %an" -- %]]),
         desc = 'Git show current file history'
@@ -57,7 +57,7 @@ plug({
             vim.cmd(string.format('Dispatch! Git commit -m "%s"', input))
           end)
         end,
-        desc = 'Use vim.ui.input to collect message and commit',
+        desc = 'Git commit',
       }
     },
     event = 'VeryLazy',
@@ -105,7 +105,7 @@ plug({
     'sindrets/diffview.nvim',
     keys = {
       {
-        '<leader>gf',
+        '<leader>gF',
         '<cmd>lua require("userlib.git.utils").toggle_files_history()<cr>',
         desc = '[DV] Files history',
       },
