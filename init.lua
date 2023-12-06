@@ -3,5 +3,4 @@ if vim.loader then
 end
 
 pcall(require, 'settings_env')
-vim.cmd('colorscheme vim')
 require('user.config').setup()
