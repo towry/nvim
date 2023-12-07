@@ -112,7 +112,7 @@ plug({
           require('userlib.hydra.file-action').open(file, 0)
         end
       end,
-      ['y'] = 'actions.copy_entry_path',
+      ['Y'] = 'actions.copy_entry_path',
       ['-'] = 'actions.parent',
       ['_'] = function()
         if vim.w.oil_lcwd ~= nil then
