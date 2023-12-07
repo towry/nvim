@@ -14,6 +14,7 @@ plug({
       ignore_install = { 'comment' },
     })
     vim.treesitter.language.register('tsx', 'typescriptreact')
+    vim.treesitter.language.register('markdown', 'mdx')
   end,
   init = function()
     vim.api.nvim_create_augroup('treesitter_start', { clear = true })

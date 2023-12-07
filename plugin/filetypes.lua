@@ -5,6 +5,7 @@ vim.filetype.add({
     ['handlebars'] = 'htmldjango',
     ['tigrc'] = 'bash',
     ['tmux'] = 'bash',
+    ['mdx'] = 'mdx'
   },
   filename = {
     ['.envrc'] = 'bash',
