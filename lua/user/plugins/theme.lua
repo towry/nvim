@@ -1,7 +1,7 @@
 local plug = require('userlib.runtime.pack').plug
 
 plug({
-  'pze/leaf.nvim',
+  'daschw/leaf.nvim',
   event = 'User LazyTheme',
   dev = false,
   priority = 1000,
