@@ -9,6 +9,9 @@ plug({
   enabled = vim.cfg.ui__theme_name == 'leaf',
   opts = {
     overrides = {
+      NonText = {
+        link = 'Comment',
+      },
       MiniCursorword = {
         style = "italic",
       },
