@@ -1,5 +1,5 @@
 local user_cfg = {
-  ui__theme_name = 'leaf',
+  ui__theme_name = vim.g.vscode and 'default' or 'leaf',
   plug__enable_codeium_vim = false,
 }
 

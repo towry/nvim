@@ -9,11 +9,13 @@ pack.plug({
   {
     'echasnovski/mini.cursorword',
     event = 'BufReadPost',
+    vscode = true,
     opts = {
       delay = 150,
     }
   },
   {
+    vscode = true,
     'nvim-lua/plenary.nvim',
   },
   {
@@ -33,6 +35,7 @@ pack.plug({
   },
   {
     'nvim-tree/nvim-web-devicons',
+    vscode = true,
   },
   { 'nvim-lua/popup.nvim' },
   {
@@ -40,6 +43,7 @@ pack.plug({
   },
   {
     'tpope/vim-repeat',
+    vscode = true,
     keys = { '.' },
   },
 })

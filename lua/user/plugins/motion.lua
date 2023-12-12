@@ -6,6 +6,7 @@ plug({
   {
     -- jump html tags.
     'harrisoncramer/jump-tag',
+    vscode = true,
     keys = {
       {
         '[tp',
@@ -34,6 +35,7 @@ plug({
   },
   {
     'pze/mini.ai',
+    vscode = true,
     -- disabled due to not compatible with nvim-treesitter#1.0
     enabled = true,
     dev = false,
@@ -67,6 +69,7 @@ plug({
 
   {
     'kylechui/nvim-surround',
+    vscode = true,
     version = '*',
     event = au.user_autocmds.FileOpened_User,
     opts = {
@@ -79,6 +82,7 @@ plug({
   {
     -- https://github.com/Wansmer/treesj
     'Wansmer/treesj',
+    vscode = true,
     keys = {
       {
         '<leader>mjt',
@@ -106,6 +110,7 @@ plug({
 
   {
     'folke/flash.nvim',
+    vscode = true,
     event = 'User LazyUIEnterOncePost',
     keys = {
       {
@@ -199,6 +204,7 @@ plug({
     --- Readline keybindings,
     --- C-e, C-f, etc.
     'tpope/vim-rsi',
+    vscode = true,
     event = {
       'InsertEnter',
       'CmdlineEnter',

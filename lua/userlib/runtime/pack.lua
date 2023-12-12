@@ -3,6 +3,7 @@ local optional_repos = {}
 local merged = nil
 
 local function plugin(spec)
+  if vim.g.vscode and not spec.vscode then return end
   --- if spec has .optional property, it meant to merge with other spec,
   --- we need put it at the last of repos.
   if spec.optional == true then
