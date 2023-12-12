@@ -53,4 +53,13 @@ set({ 'n' }, '<leader>gs', _call('git.openChange'), {
 set({ 'n', }, 'ghb', _call('gitlens.toggleFileBlame'), {
   desc = 'Toggle file blame',
 })
+set({ 'n' }, 'ghr', _call('git.clean'), {
+  desc = 'Git discard changes',
+})
+set({ 'n' }, '<leader>gc', _call('git.commit'), {
+  desc = 'Git commit'
+})
+set({ 'n' }, '<leader>gg', _call('workbench.view.scm'), {
+  desc = 'Show source control',
+})
 
