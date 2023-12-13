@@ -40,6 +40,11 @@ function M.custom_theme_modus()
   M.custom_theme_default()
 end
 
+local function update_custom_theme()
+  if type(M['custom_theme_' .. vim.cfg.ui__theme_name]) == 'function' then
+    vim.schedule(M['custom_theme_' .. vim.cfg.ui__theme_name])
+  end
+end
 local is_setup_theme_done = false
 function M.setup_theme()
   if is_setup_theme_done then return end
@@ -49,9 +54,20 @@ function M.setup_theme()
   else
     return
   end
-  if type(M['custom_theme_' .. vim.cfg.ui__theme_name]) == 'function' then
-    vim.schedule(M['custom_theme_' .. vim.cfg.ui__theme_name])
-  end
+
+  update_custom_theme()
+
+  vim.api.nvim_create_augroup('update_custom_theme', { clear = true })
+  vim.api.nvim_create_autocmd('OptionSet', {
+    group = 'update_custom_theme',
+    pattern = 'background',
+    callback = update_custom_theme,
+  })
+  vim.api.nvim_create_autocmd('ColorScheme', {
+    group = 'update_custom_theme',
+    pattern = '*',
+    callback = update_custom_theme,
+  })
 end
 
 M.setup = function()
