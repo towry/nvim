@@ -12,10 +12,12 @@ function M.custom_theme_default()
   --- mini MiniCursorword
   extend_hl({ 'MiniCursorword', 'Normal' }, {
     italic = true,
+    bold = true,
   })
   extend_hl({ 'MiniCursorwordCurrent', 'Normal' }, {
     underline = false,
     bold = true,
+    bg = "NONE"
   })
   --- git
   hi('diffAdded', { link = 'DiffAdd' })
@@ -32,6 +34,10 @@ function M.custom_theme_default()
   })
   --- telescope
   hi('TelescopeMatching', { link = 'Visual' })
+end
+
+function M.custom_theme_modus()
+  M.custom_theme_default()
 end
 
 local is_setup_theme_done = false
