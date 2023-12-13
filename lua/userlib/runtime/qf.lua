@@ -1,3 +1,4 @@
+local has_plugin = require('userlib.runtime.utils').has_plugin
 local lodash = require('userlib.runtime.table')
 ---@param list_type "loclist" | "quickfix"
 ---@return boolean
@@ -14,6 +15,8 @@ function M.toggle_qf()
     vim.cmd.cclose(silence)
   elseif #vim.fn.getqflist() > 0 then
     require('userlib.runtime.buffer').preserve_window(vim.cmd.copen, silence)
+  elseif has_plugin('vim-dispatch') then
+    vim.cmd('Copen')
   end
 end
 

@@ -293,6 +293,23 @@ local function setup_basic()
   end, {
     desc = 'zellij run',
   })
+
+  --- function to toggle option and echo the new option and option value.
+  local function toggle_option(option_name)
+    return function()
+      vim.cmd(string.format('set %s!', option_name))
+      local option_value = vim.o[option_name]
+      vim.notify(string.format('[option!] %s: %s', option_name, option_value))
+    end
+  end
+  --- toggle options
+  set('n', '<leader>tow', toggle_option('wrap'), {
+    desc = 'Toggle wrap',
+  })
+  -- number
+  set('n', '<leader>tor', toggle_option('relativenumber'), {
+    desc = 'Toggle number',
+  })
 end
 
 function M.setup() setup_basic() end
