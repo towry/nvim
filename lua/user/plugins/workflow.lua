@@ -470,7 +470,7 @@ plug({
           skip = 0,
           bottom = true,
         })
-        if next_buf then
+        if next_buf and next_buf > 0 then
           vim.api.nvim_win_set_buf(0, next_buf)
         else
           vim.cmd('bprevious')
@@ -486,7 +486,7 @@ plug({
         local next_buf = bufstack.peek_bufstack(0, {
           skip = 1
         })
-        if next_buf then
+        if next_buf and next_buf > 0 then
           bufstack.push(0, 0, { bottom = true })
           vim.api.nvim_win_set_buf(0, next_buf)
         else
