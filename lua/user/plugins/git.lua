@@ -216,12 +216,12 @@ plug({
         desc = 'Preview hunk',
       },
       {
-        'ghb',
+        'ghB',
         '<cmd>Gitsigns blame_line<cr>',
         desc = 'Blame line',
       },
       {
-        'ghB',
+        'ghb',
         '<cmd>Gitsigns toggle_current_line_blame<cr>',
         desc = 'Toggle current line blame',
       },
