@@ -9,10 +9,12 @@ end
 function M.custom_theme_default()
   local extend_hl = require('userlib.runtime.utils').extend_hl
 
+  --- do not change text highlight in the git diff
   --- mini MiniCursorword
   extend_hl({ 'MiniCursorword', 'Normal' }, {
     italic = true,
     bold = true,
+    bg = "NONE",
   })
   extend_hl({ 'MiniCursorwordCurrent', 'Normal' }, {
     underline = false,

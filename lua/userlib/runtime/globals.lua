@@ -58,3 +58,21 @@ Ty.find_string = function(tab, str)
   end
   return found
 end
+
+--- get 'BASE' or 'REMOTE' or 'LOCAL' from the buffer file name in git three way
+--- diff mode.
+Ty.git_three_way_name = function()
+  local bufname = vim.api.nvim_buf_get_name(0)
+  local basename = vim.fn.fnamemodify(bufname, ':t')
+  if basename == 'RCONFL' then return 'REMOTE' end
+  -- if basename contains REMOTE
+  if vim.fn.match(basename, '_REMOTE_') ~= -1 then
+    return 'REMOTE'
+  elseif vim.fn.match(basename, '_LOCAL_') ~= -1 then
+    return 'LOCAL'
+  elseif vim.fn.match(basename, '_BASE_') ~= -1 then
+    return 'BASE'
+  else
+    return 'MERGED'
+  end
+end

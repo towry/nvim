@@ -1,7 +1,7 @@
 local map = require('userlib.runtime.keymap').map_buf_thunk(0)
 local qf  = require('userlib.runtime.qf')
 
-map('n', 'q', '<cmd>cclose<cr>', { silent = true, nowait = true, noremap = true, desc = 'Close qf' })
+map('n', 'q', '<cmd>cclose | lclose<cr>', { silent = true, nowait = true, noremap = true, desc = 'Close qf' })
 
 local opt = vim.opt_local
 

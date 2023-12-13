@@ -119,6 +119,11 @@ plug({
         '<cmd>lua require("userlib.runtime.qf").toggle_qf()<cr>',
         desc = 'Toggle quickfix',
       },
+      {
+        '<leader>tl',
+        '<cmd>lua require("userlib.runtime.qf").toggle_loc()<cr>',
+        desc = 'Toggle loclist',
+      },
     },
     opts = {
       preview = {

@@ -196,7 +196,7 @@ plug({
         desc = "Reset hunk",
       },
       {
-        'ghS',
+        'gha',
         '<cmd>Gitsigns stage_buffer<cr>',
         desc = "Stage buffer",
       },
@@ -224,6 +224,11 @@ plug({
         'ghB',
         '<cmd>Gitsigns toggle_current_line_blame<cr>',
         desc = 'Toggle current line blame',
+      },
+      {
+        'ghv',
+        '<cmd>Gitsigns toggle_signs<cr>',
+        desc = 'Toggle signs',
       },
       {
         'ghx',
@@ -279,12 +284,12 @@ plug({
           },
           untracked = { hl = 'GitSignsAddNr', text = '┃', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
         },
-        signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
-        numhl = false,     -- Toggle with `:Gitsigns toggle_numhl`
-        linehl = false,    -- Toggle with `:Gitsigns toggle_linehl`
-        word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
+        signcolumn = not vim.cfg.runtime__starts_as_gittool, -- Toggle with `:Gitsigns toggle_signs`
+        numhl = false,                                       -- Toggle with `:Gitsigns toggle_numhl`
+        linehl = false,                                      -- Toggle with `:Gitsigns toggle_linehl`
+        word_diff = false,                                   -- Toggle with `:Gitsigns toggle_word_diff`
         watch_gitdir = {
-          interval = 1000,
+          interval = vim.cfg.runtime__starts_as_gittool and 3000 or 1000,
           follow_files = true,
         },
         attach_to_untracked = true,
@@ -297,7 +302,7 @@ plug({
         },
         current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
         sign_priority = 6,
-        update_debounce = 100,
+        update_debounce = vim.cfg.runtime__starts_as_gittool and 1000 or 100,
         status_formatter = nil, -- Use default
         max_file_length = 40000,
         preview_config = {
