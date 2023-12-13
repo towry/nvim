@@ -20,10 +20,15 @@ local function setup_basic()
     silent = false,
     desc = 'execute normal keys',
   })
-  set('n', '<leader>rs', ':lua require("userlib.workflow.run-shell-cmd")()<cr>', {
+  set('n', '<leader>rs', ':lua require("userlib.workflow.run-shell-cmd")({ silent = true })<cr>', {
     silent = true,
     noremap = true,
-    desc = 'run shell command',
+    desc = 'run shell command in silent',
+  })
+  set('n', '<leader>rS', ':lua require("userlib.workflow.run-shell-cmd")({ silent = false })<cr>', {
+    silent = true,
+    noremap = true,
+    desc = 'run shell command, no silent',
   })
 
   --- quickly go into cmd

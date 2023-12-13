@@ -1,10 +1,20 @@
-return function()
+local has_plugin = require('userlib.runtime.utils').has_plugin
+
+---@param opts {silent?:boolean}
+return function(opts)
+  opts = opts or {}
   local has_nui, Input = pcall(require, "nui.input")
   local _, nui_autocmd = pcall(require, "nui.utils.autocmd")
+  local has_dispatch = has_plugin('vim-dispatch')
 
   local run_on_input = function(input)
     input = vim.trim(input or '')
     if input == '' then return end
+    if has_dispatch then
+      local dispatch_cmd_prefix = opts.silent and 'Dispatch!' or 'Dispatch'
+      vim.cmd(dispatch_cmd_prefix .. ' ' .. input)
+      return
+    end
     vim.cmd('!' .. input)
   end
 
@@ -25,7 +35,7 @@ return function()
         winhighlight = "Normal:Normal,FloatBorder:Normal",
       },
     }, {
-      prompt = "!",
+      prompt = "",
       default_value = "",
       on_close = function()
       end,
