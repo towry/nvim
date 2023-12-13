@@ -20,11 +20,14 @@ function M.load_session()
   local session_name = string.format('%s_%s', branch_name, cwd)
   -- replace slash, space, backslash, dot etc specifical char in session_name to underscore
   session_name = string.gsub(session_name, '[/\\ .]', '_')
-  MS.read(session_name, {
+  local _, err = pcall(MS.read, session_name, {
     -- do not delete unsaved buffer.
     force = false,
     verbose = true,
   })
+  if err then
+    vim.notify("Load session fail: " .. session_name, vim.log.levels.ERROR)
+  end
 end
 
 return M
