@@ -103,7 +103,7 @@ function M.init_interface()
     diff = ' ',
   }
   vim.o.statuscolumn =
-  '%s%=%{v:relnum?v:relnum:v:lnum} %{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "-" : "+") : "│") : "│" } '
+  '%s%=%{v:lua.Ty.stl_num()} %{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "-" : "+") : "│") : "│" } '
   -- o.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
   o.shortmess:append({ a = true, c = true, F = true, I = true, T = true, t = true })
   if vim.fn.has('nvim-0.9.0') == 1 then
@@ -167,7 +167,7 @@ function M.setup_statusline()
   vim.opt.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
   if vim.cfg.runtime__starts_as_gittool then
     vim.opt.laststatus = 2
-    vim.opt.statusline = [[%<%n#%f %q%h%m%r[%{v:lua.Ty.git_three_way_name()}]%=%-14.(%l,%c%V%)%p%% %y %w]]
+    vim.opt.statusline = [[%<%n#%f %q%h%m%r[%{v:lua.Ty.stl_git_three_way_name()}]%=%-14.(%l,%c%V%)%p%% %y %w]]
   end
   -- in nvim-tree or windows picker, the laststatus will be modified
 end

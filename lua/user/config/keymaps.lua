@@ -310,6 +310,9 @@ local function setup_basic()
   set('n', '<leader>tor', toggle_option('relativenumber'), {
     desc = 'Toggle number',
   })
+  set('n', '<leader>ton', toggle_option('number'), {
+    desc = 'Toggle number',
+  })
 end
 
 function M.setup() setup_basic() end

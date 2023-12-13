@@ -61,7 +61,7 @@ end
 
 --- get 'BASE' or 'REMOTE' or 'LOCAL' from the buffer file name in git three way
 --- diff mode.
-Ty.git_three_way_name = function()
+Ty.stl_git_three_way_name = function()
   local bufname = vim.api.nvim_buf_get_name(0)
   local basename = vim.fn.fnamemodify(bufname, ':t')
   if basename == 'RCONFL' then return 'REMOTE' end
@@ -75,4 +75,15 @@ Ty.git_three_way_name = function()
   else
     return 'MERGED'
   end
+end
+
+--- return string for statuscolumn's number
+Ty.stl_num = function()
+  --- if option number is off, return empty string
+  if vim.o.number == false then return '' end
+  --- if option relativenumber is on, return relative number
+  if vim.o.relativenumber == true then
+    if vim.v.relnum == 0 then return ' ' .. vim.v.lnum else return ' ' .. vim.v.relnum end
+  end
+  return ' ' .. vim.v.lnum
 end
