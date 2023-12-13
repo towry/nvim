@@ -52,22 +52,29 @@ return plug({
     'TrailBlazerMoveToNearest',
     'TrailBlazerPeekMovePreviousUp',
     'TrailBlazerPeekMoveNextDown',
+    'TrailBlazerLoadSession',
+    'TrailBlazerSaveSession',
   },
   keys = {
-    '<leader><space>',
-    '<leader>v,',
-    '<leader>v.',
-    { '<leader>vn', '<cmd>TrailBlazerMoveToNearest<cr>',       desc = 'trail nearest' },
-    '<leader>vt',
-    { '<leader>va', add_trail_mark_stack,                      desc = 'trailblazer: add stack' },
-    { '<leader>vd', delete_trail_mark_stack,                   desc = 'trailblazer: delete stack' },
-    { '<leader>vg', function() get_available_stacks(true) end, desc = 'trailblazer: get stacks' },
-    { '<leader>vs', '<Cmd>TrailBlazerSaveSession<CR>',         desc = 'trailblazer: save session' },
-    { '<leader>vl', '<Cmd>TrailBlazerLoadSession<CR>',         desc = 'trailblazer: load session' },
+    { '<leader><space>', '<cmd>TrailBlazerNewTrailMark<cr>',          desc = 'New trail mark' },
+    { '<leader>vn',      '<cmd>TrailBlazerMoveToNearest<cr>',         desc = 'Trail nearest' },
+    -- { '<leader>vt',      desc = 'Toggle trail mark list' },
+    { '<leader>vx',      '<cmd>TrailBlazerDeleteAllTrailMarks<cr>',   desc = 'clear all marks' },
+    { '<leader>vX',      '<cmd>TrailBlazerDeleteAllTrailMarks 0<cr>', desc = 'clear all marks in buffer' },
+    { '<leader>va',      add_trail_mark_stack,                        desc = 'Add stack' },
+    { '<leader>vc',      '<cmd>TrailBlazerMoveToTrailMarkCursor<cr>', desc = 'Move to cursor mark' },
+    { '<leader>vd',      delete_trail_mark_stack,                     desc = 'Delete stack' },
+    { '<leader>vg',      function() get_available_stacks(true) end,   desc = 'Get stacks' },
+    { '<leader>vs',      '<Cmd>TrailBlazerSaveSession<CR>',           desc = 'Save session' },
+    { '<leader>vl',      '<Cmd>TrailBlazerLoadSession<CR>',           desc = 'Load session' },
   },
   init = function()
     local set = vim.keymap.set
-    set('n', '<leader>vb', '<cmd>TrailBlazerTrackBack<cr>', {
+    set('n', '<leader>vb', '<cmd>TrailBlazerTrackBack 0<cr>', {
+      silent = false,
+      desc = 'Trace back in buffer'
+    })
+    set('n', '<leader>vv', '<cmd>TrailBlazerTrackBack<cr>', {
       silent = false,
       desc = 'Trace back global'
     })
@@ -120,12 +127,18 @@ return plug({
       cursor_mark_symbol = "▣",
       next_mark_symbol = "↪",
       previous_mark_symbol = "↩",
-      multiple_mark_symbol_counters_enabled = true,
+      multiple_mark_symbol_counters_enabled = false,
       trail_mark_symbol_line_indicators_enabled = true,
+      trail_mark_in_text_highlights_enabled = false,
       trail_mark_list_rows = 5,
       move_to_nearest_before_peek = false,
       move_to_nearest_before_peek_motion_directive_up = "up",
       move_to_nearest_before_peek_motion_directive_down = "down",
+    },
+    hl_groups = {
+      TrailBlazerTrailMark = {
+        guifg = 'blue',
+      }
     },
     event_list = {
       "TrailBlazerTrailMarkStackSaved",
@@ -142,16 +155,16 @@ return plug({
     force_mappings = {
       nv = {
         motions = {
-          new_trail_mark = '<leader><space>',
-          toggle_trail_mark_list = '<leader>vt',
+          -- new_trail_mark = '<leader><space>',
+          -- toggle_trail_mark_list = '<leader>vt',
         },
         actions = {
           -- delete_all_trail_marks = '<A-L>',
           -- paste_at_last_trail_mark = '<A-p>',
           -- paste_at_all_trail_marks = '<A-P>',
           -- set_trail_mark_select_mode = '<A-t>',
-          switch_to_next_trail_mark_stack = '<leader>v.',
-          switch_to_previous_trail_mark_stack = '<leader>v,',
+          -- switch_to_next_trail_mark_stack = '<leader>v.',
+          -- switch_to_previous_trail_mark_stack = '<leader>v,',
           -- set_trail_mark_stack_sort_mode = '<A-s>',
         },
       },

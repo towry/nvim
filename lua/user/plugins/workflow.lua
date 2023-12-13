@@ -1,4 +1,5 @@
 local au = require('userlib.runtime.au')
+local utils = require('userlib.runtime.utils')
 local plug = require('userlib.runtime.pack').plug
 local cmdstr = require('userlib.runtime.keymap').cmdstr
 
@@ -267,13 +268,13 @@ plug({
       require('project_nvim').setup(opts)
     end,
     opts = {
-      patterns = require('userlib.runtime.utils').root_patterns,
+      patterns = utils.root_patterns,
       --- order matters
       detection_methods = { 'pattern', 'lsp' },
       manual_mode = false,
       -- Table of lsp clients to ignore by name
       -- eg: { "efm", ... }
-      ignore_lsp = require('userlib.runtime.utils').root_lsp_ignore,
+      ignore_lsp = utils.root_lsp_ignore,
       -- Don't calculate root dir on specific directories
       -- Ex: { "~/.cargo/*", ... }
       exclude_dirs = {
@@ -516,10 +517,6 @@ plug({
   'echasnovski/mini.sessions',
   cond = not vim.cfg.runtime__starts_as_gittool,
   version = '*',
-  cmd = {
-    'MakeSession',
-    'LoadSession',
-  },
   event = {
     'VeryLazy',
   },
@@ -535,45 +532,46 @@ plug({
           -- because of the proejct.nvim will change each buffer's cwd.
           vim.cmd.tcd(vim.cfg.runtime__starts_cwd)
         end,
+        write = function()
+          if utils.has_plugin('trailblazer.nvim') then
+            vim.cmd('TrailBlazerSaveSession')
+          end
+        end,
       },
       post = {
         read = function()
           vim.g.project_nvim_disable = false
           if cache_tcd then vim.cmd.tcd(cache_tcd) end
+          if utils.has_plugin('trailblazer.nvim') then
+            vim.cmd('TrailBlazerLoadSession')
+          end
         end,
       }
     }
   },
   init = function()
+    vim.api.nvim_create_user_command('MakeSession', function()
+      require('userlib.mini.session').make_session()
+    end, {})
+    vim.api.nvim_create_user_command('LoadSession', function()
+      require('userlib.mini.session').load_session()
+    end, {})
+    -- keymaps
+    local set = require('userlib.runtime.keymap').set
+    set('n', '<leader>/l', '<cmd>LoadSession<cr>', { desc = 'Load session' })
+    set('n', '<leader>/m', '<cmd>MakeSession<cr>', { desc = 'Make session' })
+    -- legendary
     require('userlib.legendary').register('mini_session', function(lg)
       lg.funcs({
         {
           function()
-            local MS = require('mini.sessions')
-            local branch_name = vim.fn['FugitiveHead']() or 'temp'
-            local cwd = vim.fn.fnameescape(vim.cfg.runtime__starts_cwd)
-            local session_name = string.format('%s_%s', branch_name, cwd)
-            -- replace slash, space, backslash, dot etc specifical char in session_name to underscore
-            session_name = string.gsub(session_name, '[/\\ .]', '_')
-            MS.write(session_name, {
-              force = true,
-            })
+            require('userlib.mini.session').make_session()
           end,
           desc = 'Make session',
         },
         {
           function()
-            local MS = require('mini.sessions')
-            local branch_name = vim.fn['FugitiveHead']() or 'temp'
-            local cwd = vim.fn.fnameescape(vim.cfg.runtime__starts_cwd)
-            local session_name = string.format('%s_%s', branch_name, cwd)
-            -- replace slash, space, backslash, dot etc specifical char in session_name to underscore
-            session_name = string.gsub(session_name, '[/\\ .]', '_')
-            MS.read(session_name, {
-              -- do not delete unsaved buffer.
-              force = false,
-              verbose = true,
-            })
+            require('userlib.mini.session').load_session()
           end,
           desc = 'Load session',
         }
