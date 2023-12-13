@@ -75,7 +75,7 @@ function M.init_interface()
   o.pumblend = 0                                    -- popup blend
   o.scrolloff = 10                                  --- Always keep space when scrolling to bottom/top edge
   -- o.smoothscroll = true
-  o.sidescroll = 2                                  --- Used only when 'wrap' option is off and the cursor is moved off the screen.
+  o.sidescroll = 10                                 --- Used only when 'wrap' option is off and the cursor is moved off the screen.
   o.mouse = 'a'                                     --- Enable mouse
   o.sidescrolloff = 8                               -- Columns of context
   o.lazyredraw = false                              --- Makes macros faster & prevent errors in complicated mappings
