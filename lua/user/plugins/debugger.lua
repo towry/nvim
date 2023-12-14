@@ -378,6 +378,7 @@ pack.plug({
     overseer_vscode_variables.precalculate_vars = function()
       local tbl = precalculate_vars()
       tbl['workspaceFolder'] = vim.cfg.runtime__starts_cwd
+      tbl['workspaceRoot'] = vim.cfg.runtime__starts_cwd
       tbl['fileWorkspaceFolder'] = libutils.get_root()
       tbl['workspaceFolderBasename'] = vim.fs.basename(vim.cfg.runtime__starts_cwd)
       return tbl
