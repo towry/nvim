@@ -336,13 +336,14 @@ pack.plug({
     'OverseerTaskAction', 'OverseerClearCache'
   },
   keys = {
-    { '<leader>roo', '<cmd>OverseerToggle<cr>',       desc = 'Toggle' },
-    { '<leader>ror', '<cmd>OverseerRun<cr>',          desc = 'Run' },
-    { '<leader>roR', '<cmd>OverseerRunCmd<cr>',       desc = 'Run shell cmd' },
-    { '<leader>roc', '<cmd>OverseerClose<cr>',        desc = 'Close' },
-    { '<leader>ros', '<cmd>OverseerSaveBundle<cr>',   desc = 'Save bundle' },
-    { '<leader>rol', '<cmd>OverseerLoadBundle<cr>',   desc = 'Load bundle' },
-    { '<leader>rod', '<cmd>OverseerDeleteBundle<cr>', desc = 'Delete bundle' },
+    { '<leader>roo', '<cmd>OverseerToggle<cr>',                                            desc = 'Toggle' },
+    { '<leader>ror', '<cmd>OverseerRun<cr>',                                               desc = 'Run' },
+    { '<leader>roR', '<cmd>OverseerRunCmd<cr>',                                            desc = 'Run shell cmd' },
+    { '<leader>roc', '<cmd>OverseerClose<cr>',                                             desc = 'Close' },
+    { '<leader>ros', '<cmd>OverseerSaveBundle<cr>',                                        desc = 'Save bundle' },
+    { '<leader>rol', '<cmd>OverseerLoadBundle<cr>',                                        desc = 'Load bundle' },
+    { '<leader>rod', '<cmd>OverseerDeleteBundle<cr>',                                      desc = 'Delete bundle' },
+    { '<leader>rov', '<cmd>lua require("userlib.overseers.utils").open_vsplit_last()<cr>', desc = 'Open last in vsplit' },
     {
       '<leader>roq',
       '<cmd>OverseerQuickAction<cr>',
@@ -371,6 +372,16 @@ pack.plug({
     vim.g.plugin_overseer_loaded = 1
     local overseer = require("overseer")
     overseer.setup(opts)
+
+    --- add variable for vscode tasks.
+    overseer.add_template_hook({ module = 'vscode', }, function(task_defn, util)
+      task_defn.env = vim.tbl_extend('force', task_defn.env or {}, {
+        fileWorkspaceFolder = vim.uv.cwd(),
+        cwd = vim.uv.cwd(),
+        workspaceRoot = vim.cfg.runtime__starts_cwd,
+      })
+    end)
+
     -- if has_dap then
     --   require("dap.ext.vscode").json_decode = require("overseer.util").decode_json
     -- end
