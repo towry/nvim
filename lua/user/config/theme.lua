@@ -36,6 +36,8 @@ function M.custom_theme_default()
   })
   --- telescope
   hi('TelescopeMatching', { link = 'Visual' })
+  -- aerial
+  hi('AerialPrivate', { italic = true, })
 end
 
 function M.custom_theme_modus()

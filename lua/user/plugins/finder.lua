@@ -185,9 +185,9 @@ plug({
   cmd = { 'AerialToggle', 'AerialOpen', 'AerialClose' },
   opts = {
     backends = {
-      ['_'] = { 'lsp', 'treesitter', 'man', 'markdown' },
-      typescript = { 'lsp', 'treesitter' },
-      typescriptreact = { 'lsp', 'treesitter' },
+      ['_'] = { 'treesitter', 'lsp', 'man', 'markdown' },
+      typescript = { 'treesitter', 'lsp' },
+      typescriptreact = { 'treesitter', 'lsp' },
     },
     layout = {
       -- These control the width of the aerial window.
@@ -221,6 +221,7 @@ plug({
     close_automatic_events = {},
     -- see :help SymbolKind
     filter_kind = {
+      'Module',
       'Field',
       'Constant',
       'Enum',
@@ -235,7 +236,6 @@ plug({
       'Enum',
       'Function',
       'Interface',
-      'Module',
       'Method',
       'Struct',
     },
@@ -277,10 +277,12 @@ plug({
       diagnostics_trigger_update = false,
       update_when_errors = false,
     },
+    get_highlight = function(symbol, _)
+      if symbol.scope == 'private' then return 'AerialPrivate' end
+    end,
   },
   config = function(_, opts)
     require('aerial').setup(opts)
-    -- vim.api.nvim_set_hl(0, 'AerialPrivate', { default = true, italic = true })
   end,
 })
 
@@ -364,7 +366,7 @@ plug({
       desc = 'List Buffers',
     },
     {
-      '<leader>gb',
+      '<leader>g/',
       function()
         require('userlib.ui.dropdown').select({
           items = {
@@ -789,5 +791,20 @@ plug({
   end,
   config = function(_, opts)
     require('mini.visits').setup(opts)
+  end,
+})
+
+plug({
+  -- https://github.com/pechorin/any-jump.vim
+  'pechorin/any-jump.vim',
+  event = 'LspAttach',
+  cmd = { 'AnyJump', 'AnyJumpArg', 'AnyJumpLastResults' },
+  keys = {
+    { '<leader>fw', '<cmd>AnyJump<cr>',       desc = 'Any-jump: jump' },
+    { '<leader>fw', '<Cmd>AnyJumpVisual<cr>', mode = { 'v', 'x' },             desc = 'Any-jump: Jump in visual' },
+    { '<leader>fW', '<Cmd>AnyJumpArg<cr>',    desc = 'Any-jump: Jump with arg' },
+  },
+  init = function()
+    vim.g.any_jump_disable_default_keybindings = 1
   end,
 })

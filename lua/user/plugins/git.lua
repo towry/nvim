@@ -1,6 +1,7 @@
 local plug = require('userlib.runtime.pack').plug
 local au = require('userlib.runtime.au')
 local cmdstr = require('userlib.runtime.keymap').cmdstr
+local libutils = require('userlib.runtime.utils')
 
 plug({
   'mbbill/undotree',
@@ -36,10 +37,37 @@ plug({
       { '<leader>gu', cmdstr([[exec "Git! pull origin " .. FugitiveHead() | :lua vim.g.escape_cmd="pclose"]]), desc = 'Git pull',           silent = false },
       { '<leader>gs', cmdstr([[vert Git]]),                                                                    desc = 'Git status',         silent = false, },
       {
-        '<leader>gf',
+        '<leader>gl',
+        function()
+          -- https://github.com/niuiic/git-log.nvim/blob/main/lua/git-log/init.lua
+          local file_name = vim.api.nvim_buf_get_name(0)
+          local line_range = libutils.get_range()
+          vim.cmd(string.format([[Git log -L %s,%s:%s]], line_range[1], line_range[2], file_name))
+        end,
+        desc = 'View log for selected chunks',
+        mode = { 'v', 'x' }
+      },
+      {
+        '<leader>gl',
         cmdstr(
           [[Git log --max-count=100 --oneline --date=format:"%Y-%m-%d %H:%M" --pretty=format:"%h %ad: %s - %an" -- %]]),
         desc = 'Git show current file history'
+      },
+      {
+        '<leader>gb',
+        cmdstr([[Git blame -n --color-lines --show-stats %]]),
+        desc = 'Git blame current file',
+      },
+      {
+        '<leader>gb',
+        function()
+          local file_name = vim.api.nvim_buf_get_name(0)
+          local line_range = libutils.get_range()
+          vim.cmd(string.format([[Git blame -n --color-lines --show-stats -L %s,%s %s]], line_range[1], line_range[2],
+            file_name))
+        end,
+        mode = 'x',
+        desc = 'Git blame current file with range',
       },
       {
         '<leader>gc',

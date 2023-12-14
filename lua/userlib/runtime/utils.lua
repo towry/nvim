@@ -336,4 +336,19 @@ M.is_start_as_git_tool = function()
   return false
 end
 
+M.get_range = function()
+  if vim.fn.mode() == "n" then
+    local pos = vim.api.nvim_win_get_cursor(0)
+    return {
+      pos[1],
+      pos[1],
+    }
+  end
+
+  return {
+    vim.fn.getpos("v")[2],
+    vim.fn.getpos(".")[2],
+  }
+end
+
 return M
