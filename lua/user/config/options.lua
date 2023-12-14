@@ -92,6 +92,7 @@ function M.init_interface()
   o.listchars:append('extends:»')
   o.listchars:append('nbsp:␣')
   o.listchars:append('precedes:«')
+  -- o.listchars:append('trail:-')
   o.fillchars = {
     stl = ' ',
     stlnc = ' ',
