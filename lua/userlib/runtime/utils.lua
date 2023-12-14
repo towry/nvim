@@ -351,4 +351,10 @@ M.get_range = function()
   }
 end
 
+M.buf_command_thunk = function(bufnr)
+  return function(...)
+    vim.api.nvim_buf_create_user_command(bufnr, ...)
+  end
+end
+
 return M
