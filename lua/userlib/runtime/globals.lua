@@ -64,6 +64,7 @@ end
 Ty.stl_git_three_way_name = function()
   local bufname = vim.api.nvim_buf_get_name(0)
   local basename = vim.fn.fnamemodify(bufname, ':t')
+  if vim.bo.filetype == 'gitcommit' then return '' end
   if basename == 'RCONFL' then return 'REMOTE' end
   -- if basename contains REMOTE
   if vim.fn.match(basename, '_REMOTE_') ~= -1 then
