@@ -6,6 +6,10 @@
 - Lazy load plugins.
 - Works well with monorepo projects (Search files, folders etc, automatically
   project cwd).
+- Better workflow for open folder and search files, extra actions can be perform
+  on selected folder.
+- Git keymaps for diff, log(file, etc), blame(file, chunks), stage etc.
+- Optimized for using as git mergetool, two way merge is preferred.
 
 ## Screenshots
 

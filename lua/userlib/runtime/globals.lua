@@ -1,5 +1,3 @@
-vim.uv = vim.uv or vim.loop
-
 _G.unpack = _G.unpack or table.unpack
 _G.Ty = {}
 
@@ -17,16 +15,9 @@ Ty.R = function(name)
   return require(name)
 end
 
--- Global fn for cinnamon plugin
-Ty.SCROLL = function(...)
-  require('cinnamon.scroll').scroll(...)
-  -- vim.cmd("Beacon")
-end
-
 Ty.NOTIFY = function(...) vim.notify(...) end
 
-Ty.TS_UTIL = function() return require('nvim-treesitter.ts_utils') end
--- get node type at current cursor
+--- deprecated
 Ty.TS_GET_NODE_TYPE = function() return require('nvim-treesitter.ts_utils').get_node_at_cursor(0):type() end
 Ty.ToggleTheme = function(mode)
   if vim.o.background == mode then return end
