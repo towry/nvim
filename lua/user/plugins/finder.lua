@@ -793,18 +793,3 @@ plug({
     require('mini.visits').setup(opts)
   end,
 })
-
-plug({
-  -- https://github.com/pechorin/any-jump.vim
-  'pechorin/any-jump.vim',
-  event = 'LspAttach',
-  cmd = { 'AnyJump', 'AnyJumpArg', 'AnyJumpLastResults' },
-  keys = {
-    { '<leader>fw', '<cmd>AnyJump<cr>',       desc = 'Any-jump: jump' },
-    { '<leader>fw', '<Cmd>AnyJumpVisual<cr>', mode = { 'v', 'x' },             desc = 'Any-jump: Jump in visual' },
-    { '<leader>fW', '<Cmd>AnyJumpArg<cr>',    desc = 'Any-jump: Jump with arg' },
-  },
-  init = function()
-    vim.g.any_jump_disable_default_keybindings = 1
-  end,
-})
