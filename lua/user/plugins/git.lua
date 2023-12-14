@@ -59,6 +59,16 @@ plug({
         desc = 'Git blame current file',
       },
       {
+        '<leader>gd',
+        cmdstr([[Git diff -- %]]),
+        desc = 'Diff current file',
+      },
+      {
+        '<leader>gD',
+        cmdstr([[Git diff -- %]]),
+        desc = 'Diff current file unified',
+      },
+      {
         '<leader>gb',
         function()
           local file_name = vim.api.nvim_buf_get_name(0)
