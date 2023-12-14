@@ -1,6 +1,7 @@
 -- debugger and runner.
 local cmdstr = require('userlib.runtime.keymap').cmdstr
 local pack = require('userlib.runtime.pack')
+local libutils = require('userlib.runtime.utils')
 
 ---- dap
 pack.plug({
@@ -369,18 +370,24 @@ pack.plug({
     },
   },
   config = function(_, opts)
-    vim.g.plugin_overseer_loaded = 1
-    local overseer = require("overseer")
+    vim.g.plugin_overseer_loaded                = 1
+    local overseer                              = require("overseer")
+    local overseer_vscode_variables             = require('overseer.template.vscode.variables')
+    local precalculate_vars                     = overseer_vscode_variables.precalculate_vars
+
+    overseer_vscode_variables.precalculate_vars = function()
+      local tbl = precalculate_vars()
+      tbl['workspaceFolder'] = vim.cfg.runtime__starts_cwd
+      tbl['fileWorkspaceFolder'] = libutils.get_root()
+      tbl['workspaceFolderBasename'] = vim.fs.basename(vim.cfg.runtime__starts_cwd)
+      return tbl
+    end
+
     overseer.setup(opts)
 
     --- add variable for vscode tasks.
-    overseer.add_template_hook({ module = 'vscode', }, function(task_defn, util)
-      task_defn.env = vim.tbl_extend('force', task_defn.env or {}, {
-        fileWorkspaceFolder = vim.uv.cwd(),
-        cwd = vim.uv.cwd(),
-        workspaceRoot = vim.cfg.runtime__starts_cwd,
-      })
-    end)
+    -- overseer.add_template_hook({ module = 'vscode', }, function(task_defn, _util)
+    -- end)
 
     -- if has_dap then
     --   require("dap.ext.vscode").json_decode = require("overseer.util").decode_json

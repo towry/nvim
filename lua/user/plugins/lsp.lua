@@ -204,18 +204,4 @@ plug({
       auto_cmds = true,
     },
   },
-
-  {
-    -- Garbage collector that stops inactive LSP clients to free RAM
-    'zeioth/garbage-day.nvim',
-    dependencies = "neovim/nvim-lspconfig",
-    cond = not vim.cfg.runtime__starts_as_gittool,
-    event = 'LspAttach',
-    opts = {
-      excluded_lsp_clients = {
-        'null-ls',
-      },
-      notifications = false,
-    }
-  },
 })

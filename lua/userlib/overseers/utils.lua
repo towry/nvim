@@ -49,6 +49,7 @@ M.create_window = function(bufnr, modifier, size)
   count_windows = count_windows + 1
   vim.wo[winid].winfixwidth = true
   vim.wo[winid].winfixheight = true
+  vim.wo[winid].wrap = true
 
   vim.api.nvim_create_autocmd("WinClosed", {
     group = augroup,
