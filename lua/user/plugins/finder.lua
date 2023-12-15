@@ -10,7 +10,7 @@ plug({
     'pze/nvim-bqf',
   },
   opts = {
-    default_trigger_mappings = true,
+    default_trigger_mappings = false,
     default_ui_mappings = true,
     default_quickfix_mappings = true,
     -- you can override it with vim.b.grep_flags

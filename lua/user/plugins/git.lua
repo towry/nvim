@@ -54,11 +54,6 @@ plug({
         desc = 'Git show current file history'
       },
       {
-        '<leader>gb',
-        cmdstr([[Git blame -n --color-lines --show-stats %]]),
-        desc = 'Git blame current file',
-      },
-      {
         '<leader>gd',
         cmdstr([[Git diff -- %]]),
         desc = 'Diff current file',
@@ -70,10 +65,16 @@ plug({
       },
       {
         '<leader>gb',
+        cmdstr([[Git blame -n --date=short --color-lines --show-stats %]]),
+        desc = 'Git blame current file',
+      },
+      {
+        '<leader>gb',
         function()
           local file_name = vim.api.nvim_buf_get_name(0)
           local line_range = libutils.get_range()
-          vim.cmd(string.format([[Git blame -n --color-lines --show-stats -L %s,%s %s]], line_range[1], line_range[2],
+          vim.cmd(string.format([[Git blame -n --date=short --color-lines -L %s,%s %s]], line_range[1],
+            line_range[2],
             file_name))
         end,
         mode = 'x',
