@@ -75,7 +75,29 @@ Ty.stl_num = function()
   if vim.o.number == false then return '' end
   --- if option relativenumber is on, return relative number
   if vim.o.relativenumber == true then
-    if vim.v.relnum == 0 then return ' ' .. vim.v.lnum else return ' ' .. vim.v.relnum end
+    if vim.v.relnum == 0 then return vim.v.lnum else return vim.v.relnum end
   end
-  return ' ' .. vim.v.lnum
+  return vim.v.lnum
+end
+
+
+--- "│"
+Ty.stl_foldlevel = function()
+  if vim.b.stl_foldlevel == false then return '' end
+  local _ = function(c) return ' ' .. c end
+  local level = vim.fn.foldlevel(vim.v.lnum)
+  if level > 0 then
+    if level > vim.fn.foldlevel(vim.v.lnum - 1) then
+      if vim.fn.foldclosed(vim.v.lnum) == -1 then
+        return _('-')
+      else
+        return _('+')
+      end
+    else
+      return _('│')
+    end
+  else
+    return _('│')
+  end
+  return ''
 end

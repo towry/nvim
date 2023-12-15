@@ -89,7 +89,7 @@ function M.init_interface()
   o.foldcolumn = '1'                                -- Folding
   o.list = true
   o.listchars:append('tab:⇢ ')
-  -- o.listchars:append('eol:↲')
+  -- o.listchars:append('eol:↩')
   o.listchars:append('extends:»')
   o.listchars:append('nbsp:␣')
   o.listchars:append('precedes:«')
@@ -105,7 +105,7 @@ function M.init_interface()
     diff = ' ',
   }
   vim.o.statuscolumn =
-  '%s%=%{v:lua.Ty.stl_num()} %{foldlevel(v:lnum) > 0 ? (foldlevel(v:lnum) > foldlevel(v:lnum - 1) ? (foldclosed(v:lnum) == -1 ? "-" : "+") : "│") : "│" } '
+  '%s%=%{v:lua.Ty.stl_num()}%{v:lua.Ty.stl_foldlevel()}'
   -- o.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
   o.shortmess:append({ a = true, c = true, F = true, I = true, T = true, t = true })
   if vim.fn.has('nvim-0.9.0') == 1 then
