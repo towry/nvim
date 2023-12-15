@@ -8,12 +8,15 @@ M.DiagnosticIcons = {
 }
 
 function M.setup()
+  local S = vim.diagnostic.severity
   local signs = {
-    ERROR = M.DiagnosticIcons.error_icon,
-    WARN = M.DiagnosticIcons.warn_icon,
-    HINT = M.DiagnosticIcons
-        .hint_icon,
-    INFO = M.DiagnosticIcons.info_icon
+    text = {
+      [S.ERROR] = M.DiagnosticIcons.error_icon,
+      [S.WARN] = M.DiagnosticIcons.warn_icon,
+      [S.HINT] = M.DiagnosticIcons
+          .hint_icon,
+      [S.INFO] = M.DiagnosticIcons.info_icon
+    }
   }
   local enable_virtual_text = false
   local virtual_text = enable_virtual_text and {
