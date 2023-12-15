@@ -56,6 +56,7 @@ end
 function M.init_interface()
   --- blink cursor see https://github.com/neovim/neovim/pull/26075
   --- set guicursor+=n:blinkon1
+  o.guicursor:append('n-v-c:blinkon500-blinkoff500')
   o.colorcolumn =
   '+1'                                                          -- Draw colored column one step to the right of desired maximum width
   o.showmode = false                                            --- Don't show things like -- INSERT -- anymore
