@@ -232,3 +232,27 @@ plug({
     },
   },
 })
+
+
+plug({
+  'nyngwang/NeoTerm.lua',
+  cmd = { 'NeoTermToggle' },
+  ft = 'terminal',
+  keys = {
+    {
+      '<M-Tab>', function() vim.cmd('NeoTermToggle') end, desc = 'Enter neoterm',
+    },
+    {
+      '<M-Tab>',
+      '<cmd>NeoTermToggle<cr>',
+      desc = 'Back to normal',
+      mode = 't',
+    }
+  },
+  config = function()
+    require('neo-term').setup({
+      exclude_filetype = { 'oil' },
+      term_mode_hl = 'Normal',
+    })
+  end,
+})
