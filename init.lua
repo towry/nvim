@@ -3,8 +3,6 @@ if vim.loader then
 end
 
 if not vim.g.vscode then
-  -- fix default theme loadinng flickering issue.
-  vim.cmd.colorscheme('vim')
   pcall(require, 'settings_env')
 else
   require('user.vscode.startup')
