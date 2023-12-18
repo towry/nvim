@@ -101,3 +101,22 @@ Ty.stl_foldlevel = function()
   end
   return ''
 end
+
+Ty.set_terminal_keymaps = function()
+  local nvim_buf_set_keymap = vim.keymap.set
+  local buffer = vim.api.nvim_get_current_buf()
+  local opts = { noremap = true, buffer = buffer, nowait = true }
+
+  nvim_buf_set_keymap('t', '<ESC>', [[<C-\><C-n>]], opts)
+  --- switch windows
+  nvim_buf_set_keymap('t', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
+  nvim_buf_set_keymap('t', '<C-j>', [[<C-\><C-n><C-W>j]], opts)
+  nvim_buf_set_keymap('t', '<C-k>', [[<C-\><C-n><C-W>k]], opts)
+  nvim_buf_set_keymap('t', '<C-l>', [[<C-\><C-n><C-W>l]], opts)
+
+  --- resize
+  nvim_buf_set_keymap('t', '<A-h>', [[<C-\><C-n><A-h>]], opts)
+  nvim_buf_set_keymap('t', '<A-j>', [[<C-\><C-n><A-j>]], opts)
+  nvim_buf_set_keymap('t', '<A-k>', [[<C-\><C-n><A-k>]], opts)
+  nvim_buf_set_keymap('t', '<A-l>', [[<C-\><C-n><A-l>]], opts)
+end

@@ -6,6 +6,16 @@ function M.load_on_startup()
   -- taken from AstroNvim
   local definitions = {
     {
+      { 'TermOpen' },
+      {
+        group = 'bind_key_on_term_open',
+        pattern = 'term://*',
+        callback = function()
+          Ty.set_terminal_keymaps()
+        end,
+      }
+    },
+    {
       { 'BufReadPost' },
       {
         group = '_clear_fugitive_bufs',

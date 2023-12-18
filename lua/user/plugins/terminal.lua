@@ -1,5 +1,6 @@
 local plug = require('userlib.runtime.pack').plug
 local au = require('userlib.runtime.au')
+local libutils = require('userlib.runtime.utils')
 
 plug({
   {
@@ -96,7 +97,7 @@ plug({
         local opts = { noremap = true, buffer = buffer, nowait = true }
         nvim_buf_set_keymap('t', '<C-\\>', [[<C-\><C-n>:ToggleTerm<CR>]], opts)
         nvim_buf_set_keymap('t', '<C-S-\\>', [[<C-\><C-n>:ToggleTerm<CR>]], opts)
-        nvim_buf_set_keymap('t', '<ESC>', [[<C-\><C-n>]], opts)
+        -- nvim_buf_set_keymap('t', '<ESC>', [[<C-\><C-n>]], opts)
 
         if not current_term_is_hidden then
           -- close term if is in normal mode otherwise enter normal mode.
@@ -114,17 +115,6 @@ plug({
           --   buffer = buffer,
           -- })
         end
-        --- switch windows
-        nvim_buf_set_keymap('t', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
-        nvim_buf_set_keymap('t', '<C-j>', [[<C-\><C-n><C-W>j]], opts)
-        nvim_buf_set_keymap('t', '<C-k>', [[<C-\><C-n><C-W>k]], opts)
-        nvim_buf_set_keymap('t', '<C-l>', [[<C-\><C-n><C-W>l]], opts)
-
-        --- resize
-        nvim_buf_set_keymap('t', '<A-h>', [[<C-\><C-n><A-h>]], opts)
-        nvim_buf_set_keymap('t', '<A-j>', [[<C-\><C-n><A-j>]], opts)
-        nvim_buf_set_keymap('t', '<A-k>', [[<C-\><C-n><A-k>]], opts)
-        nvim_buf_set_keymap('t', '<A-l>', [[<C-\><C-n><A-l>]], opts)
       end
 
       vim.cmd('autocmd! TermOpen term://* lua _plugin_set_terminal_keymaps()')
@@ -165,71 +155,75 @@ plug({
         desc = 'toggle term',
         silent = true,
       })
-
-      -- kill all at exits.
-      -- au.define_autocmd('VimLeavePre', {
-      --   group = '_kill_terms_on_leave',
-      --   callback = function() require('userlib.terminal.toggleterm_kill_all')() end,
-      -- })
     end,
   },
 
   {
     'willothy/flatten.nvim',
-    event = {
-      au.user_autocmds.TermIsOpen_User,
-    },
+    ft = { 'toggleterm', 'terminal', 'neo-term' },
     enabled = true,
-    opts = {
-      callbacks = {
-        should_block = function(argv)
-          -- Note that argv contains all the parts of the CLI command, including
-          -- Neovim's path, commands, options and files.
-          -- See: :help v:argv
+    lazy = vim.env['NVIM'] == nil,
+    priority = 1000,
+    opts = function()
+      local saved_terminal
+      return {
+        one_per = {
+          kitty = true,
+        },
+        callbacks = {
+          should_block = function(argv)
+            -- Note that argv contains all the parts of the CLI command, including
+            -- Neovim's path, commands, options and files.
+            -- See: :help v:argv
 
-          -- In this case, we would block if we find the `-b` flag
-          -- This allows you to use `nvim -b file1` instead of `nvim --cmd 'let g:flatten_wait=1' file1`
-          return vim.tbl_contains(argv, '-b')
-
-          -- Alternatively, we can block if we find the diff-mode option
-          -- return vim.tbl_contains(argv, "-d")
-        end,
-        pre_open = function()
-          -- Close toggleterm when an external open request is received
-          require('toggleterm').toggle(0)
-        end,
-        post_open = function(bufnr, winnr, ft, is_blocking)
-          if is_blocking then
-            -- Hide the terminal while it's blocking
-            require('toggleterm').toggle(0)
-          else
-            -- If it's a normal file, just switch to its window
-            vim.api.nvim_set_current_win(winnr)
-          end
-          if ft == 'gitcommit' then
-            -- If the file is a git commit, create one-shot autocmd to delete it on write
-            -- If you just want the toggleable terminal integration, ignore this bit and only use the
-            -- code in the else block
-            vim.api.nvim_create_autocmd('BufWritePost', {
-              buffer = bufnr,
-              once = true,
-              callback = function()
-                -- This is a bit of a hack, but if you run bufdelete immediately
-                -- the shell can occasionally freeze
-                vim.defer_fn(function() vim.api.nvim_buf_delete(bufnr, {}) end, 50)
-              end,
-            })
-          end
-        end,
-        block_end = function()
-          -- After blocking ends (for a git commit, etc), reopen the terminal
-          require('toggleterm').toggle(0)
-        end,
-      },
-      window = {
-        open = 'alternate',
-      },
-    },
+            -- In this case, we would block if we find the `-b` flag
+            -- This allows you to use `nvim -b file1` instead of `nvim --cmd 'let g:flatten_wait=1' file1`
+            return vim.tbl_contains(argv, '-b') or vim.cfg.runtime__starts_as_gittool
+          end,
+          pre_open = function()
+            if libutils.has_plugin('toggleterm.nvim') then
+              local term = require("toggleterm.terminal")
+              local termid = term.get_focused_id()
+              saved_terminal = term.get(termid)
+            end
+          end,
+          post_open = function(bufnr, winnr, ft, is_blocking)
+            if is_blocking and saved_terminal then
+              -- Hide the terminal while it's blocking
+              saved_terminal:close()
+            else
+              -- If it's a normal file, just switch to its window
+              vim.schedule(function()
+                vim.api.nvim_set_current_win(winnr)
+              end)
+            end
+            if ft == 'gitcommit' or ft == 'gitrebase' then
+              -- If the file is a git commit, create one-shot autocmd to delete it on write
+              -- If you just want the toggleable terminal integration, ignore this bit and only use the
+              -- code in the else block
+              vim.api.nvim_create_autocmd('BufWritePost', {
+                buffer = bufnr,
+                once = true,
+                callback = function()
+                  vim.api.nvim_buf_delete(bufnr, {})
+                end,
+              })
+            end
+          end,
+          block_end = function()
+            vim.schedule(function()
+              if saved_terminal then
+                saved_terminal:open()
+                saved_terminal = nil
+              end
+            end)
+          end,
+        },
+        window = {
+          open = 'vsplit',
+        },
+      }
+    end
   },
 })
 
