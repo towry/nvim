@@ -79,6 +79,14 @@ plug({
         winbar = {
           enabled = false,
         },
+        on_close = function()
+          vim.schedule(function()
+            if vim.g.cmd_on_toggleterm_close ~= nil then
+              vim.cmd(vim.g.cmd_on_toggleterm_close)
+              vim.g.cmd_on_toggleterm_close = nil
+            end
+          end)
+        end,
         on_open = function(_term)
           au.do_useraucmd(au.user_autocmds.TermIsOpen_User)
           vim.cmd('startinsert!')
@@ -189,13 +197,12 @@ plug({
           end,
           post_open = function(bufnr, winnr, ft, is_blocking)
             if is_blocking and saved_terminal then
+              -- vim.g.cmd_on_toggleterm_close = 'lua vim.api.nvim_set_current_win(' .. winnr .. ')'
               -- Hide the terminal while it's blocking
               saved_terminal:close()
             else
               -- If it's a normal file, just switch to its window
-              vim.schedule(function()
-                vim.api.nvim_set_current_win(winnr)
-              end)
+              vim.api.nvim_set_current_win(winnr)
             end
             if ft == 'gitcommit' or ft == 'gitrebase' then
               -- If the file is a git commit, create one-shot autocmd to delete it on write
@@ -215,6 +222,7 @@ plug({
               if saved_terminal then
                 saved_terminal:open()
                 saved_terminal = nil
+                vim.g.cmd_on_toggleterm_close = nil
               end
             end)
           end,
