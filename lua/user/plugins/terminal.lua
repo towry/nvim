@@ -196,9 +196,6 @@ plug({
               saved_terminal = term.get(termid)
             end
             is_neo_term = vim.bo.filetype == 'neo-term'
-            if is_neo_term then
-              vim.cmd.NeoTermToggle()
-            end
           end,
           post_open = function(bufnr, winnr, ft, is_blocking)
             if is_blocking and saved_terminal then
@@ -230,7 +227,6 @@ plug({
                 vim.g.cmd_on_toggleterm_close = nil
               end
               if is_neo_term then
-                vim.cmd.NeoTermToggle()
                 is_neo_term = false
               end
             end)
