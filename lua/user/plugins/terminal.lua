@@ -174,6 +174,7 @@ plug({
     priority = 1000,
     opts = function()
       local saved_terminal
+      local is_neo_term = false
       return {
         one_per = {
           kitty = true,
@@ -194,13 +195,17 @@ plug({
               local termid = term.get_focused_id()
               saved_terminal = term.get(termid)
             end
+            is_neo_term = vim.bo.filetype == 'neo-term'
+            if is_neo_term then
+              vim.cmd.NeoTermToggle()
+            end
           end,
           post_open = function(bufnr, winnr, ft, is_blocking)
             if is_blocking and saved_terminal then
               -- vim.g.cmd_on_toggleterm_close = 'lua vim.api.nvim_set_current_win(' .. winnr .. ')'
               -- Hide the terminal while it's blocking
               saved_terminal:close()
-            else
+            elseif not is_neo_term then
               -- If it's a normal file, just switch to its window
               vim.api.nvim_set_current_win(winnr)
             end
@@ -223,6 +228,10 @@ plug({
                 saved_terminal:open()
                 saved_terminal = nil
                 vim.g.cmd_on_toggleterm_close = nil
+              end
+              if is_neo_term then
+                vim.cmd.NeoTermToggle()
+                is_neo_term = false
               end
             end)
           end,
