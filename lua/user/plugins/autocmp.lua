@@ -687,3 +687,34 @@ pack.plug({
     end,
   },
 })
+
+pack.plug({
+  "sourcegraph/sg.nvim",
+  cmd = {
+    'SourcegraphLogin',
+    'CodyAsk',
+    'CodyChat',
+    'CodyToggle',
+    'CodyTask',
+    'CodyTaskView',
+    'CodyTaskAccept',
+    'CodyTaskPrev',
+    'CodyTaskNext',
+    'CodyRestart',
+    'CodyOpenDoc',
+  },
+  build = "nvim -l build/init.lua",
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    "nvim-telescope/telescope.nvim"
+  },
+  opts = {
+    on_attach = function() end
+  },
+  init = function()
+    -- create user command: CodyOpenDoc to open https://sourcegraph.com/docs/cody/clients/install-neovim
+    vim.api.nvim_create_user_command("CodyOpenDoc", function()
+      vim.ui.open("https://sourcegraph.com/docs/cody/clients/install-neovim")
+    end, {})
+  end,
+})
