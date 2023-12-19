@@ -122,6 +122,7 @@ function M.init_interface()
   o.formatoptions:remove('c')
   o.formatoptions:remove('r')
   o.formatoptions:remove('o')
+  o.formatoptions:remove('t')
   if vim.fn.executable('rg') then
     -- credit: https://github.com/nicknisi/dotfiles/blob/1360edda1bbb39168637d0dff13dd12c2a23d095/config/nvim/init.lua#L73
     -- if ripgrep installed, use that as a grepper
