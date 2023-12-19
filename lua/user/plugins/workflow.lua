@@ -22,8 +22,8 @@ plug({
       'anuvyklack/middleclass',
     },
     keys = {
-      { '<C-w>a', '<cmd>WindowsEnableAutowidth<cr>',  nowait = true, desc = 'Toggle auto size' },
-      { '<C-w>m', '<cmd>WindowsMaximize<cr>',         nowait = true, desc = 'maximize window' },
+      { '<C-w>a', '<cmd>WindowsEnableAutowidth<cr>',  nowait = true, desc = 'Enable auto size' },
+      { '<C-w>m', '<cmd>WindowsMaximize<cr>',         nowait = true, desc = 'Maximize window' },
       { '<C-w>f', '<cmd>WindowsDisableAutowidth<cr>', nowait = true, desc = 'Disable auto size' },
       { '<C-w>=', '<cmd>WindowsEqualize<cr>',         nowait = true, desc = 'Equallize window' },
       {
