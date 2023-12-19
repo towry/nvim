@@ -35,6 +35,7 @@
   "guess-indent.nvim": { "branch": "main", "commit": "b8ae749fce17aa4c267eec80a6984130b94f80b2" },
   "heirline.nvim": { "branch": "master", "commit": "170e1b1fd7c11db00e46d802165fb277db601ae7" },
   "jump-tag": { "branch": "main", "commit": "b323cf42472d774f4e3564398d9a502254776de1" },
+  "kanagawa.nvim": { "branch": "master", "commit": "c19b9023842697ec92caf72cd3599f7dd7be4456" },
   "lazy.nvim": { "branch": "main", "commit": "96584866b9c5e998cbae300594d0ccfd0c464627" },
   "legendary.nvim": { "branch": "master", "commit": "234e2ef8dec65db153c63a8b310c74155bb93ee7" },
   "lspkind-nvim": { "branch": "master", "commit": "57610d5ab560c073c465d6faf0c19f200cb67e6e" },
@@ -111,6 +112,5 @@
   "vim-startuptime": { "branch": "master", "commit": "454b3de856b7bd298700de33d79774ca9b9e3875" },
   "window-bufstack.nvim": { "branch": "main", "commit": "18458afea81bf0f59748ab03af9a78928d02a336" },
   "windows.nvim": { "branch": "main", "commit": "c7492552b23d0ab30325e90b56066ec51242adc8" },
-  "zellij.nvim": { "branch": "master", "commit": "483c855ab7a3aba60e522971991481807ea3a47b" },
   "zen-mode.nvim": { "branch": "main", "commit": "50e2e2a36cc97847d9ab3b1a3555ba2ef6839b50" }
 }
