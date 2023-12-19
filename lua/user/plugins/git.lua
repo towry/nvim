@@ -54,6 +54,13 @@ plug({
         desc = 'Git show current file history'
       },
       {
+        -- git log with -p for current buffer. with limits for performance.
+        '<leader>gL',
+        cmdstr(
+          [[Git log --max-count=100 -p -P -- %]]),
+        desc = 'Git show current file history with diff'
+      },
+      {
         '<leader>gd',
         cmdstr([[Git diff -- %]]),
         desc = 'Diff current file',
@@ -148,11 +155,11 @@ plug({
         '<cmd>lua require("userlib.git.utils").toggle_files_history()<cr>',
         desc = '[DV] Files history',
       },
-      -- {
-      --   '<leader>gF',
-      --   [[<cmd>lua require("userlib.git.utils").toggle_files_history(nil, '%')<cr>]],
-      --   desc = '[DV] Current file history(diffview)',
-      -- },
+      {
+        '<leader>gf',
+        [[<cmd>lua require("userlib.git.utils").toggle_files_history(nil, '%')<cr>]],
+        desc = '[DV] Current file history(diffview)',
+      },
       ---FIXME: <Space>e keymap not reset when exist the diffview. it should be buffer local keymaps.
       {
         '<leader>gS',
