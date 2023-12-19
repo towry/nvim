@@ -19,7 +19,8 @@ function M.custom_theme_default()
   extend_hl({ 'MiniCursorwordCurrent', 'Normal' }, {
     underline = false,
     bold = true,
-    bg = "NONE"
+    bg = "NONE",
+    fg = 'NONE',
   })
   --- git
   hi('diffAdded', { link = 'DiffAdd' })
@@ -41,6 +42,10 @@ function M.custom_theme_default()
 end
 
 function M.custom_theme_modus()
+  M.custom_theme_default()
+end
+
+function M.custom_theme_kanagawa()
   M.custom_theme_default()
 end
 
