@@ -622,6 +622,7 @@ pack.plug({
         { mode = 'n', keys = '<Leader>ro', desc = '+Overseer' },
         ---
         { mode = 'n', keys = 'gh',         desc = '+Gitsigns' },
+        { mode = 'x', keys = 'gh',         desc = '+Gitsigns' },
         --- windows
         miniclue.gen_clues.windows(),
         { mode = 'n', keys = '<C-w>a' },

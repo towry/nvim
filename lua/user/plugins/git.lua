@@ -49,15 +49,29 @@ plug({
       },
       {
         '<leader>gl',
-        cmdstr(
-          [[Git log --max-count=100 --oneline --date=format:"%Y-%m-%d %H:%M" --pretty=format:"%h %ad: %s - %an" -- %]]),
+        function()
+          local vcount = vim.v.count
+          local max_count_arg = ''
+          if vcount ~= 0 and vcount ~= nil and vcount > 0 then
+            max_count_arg = string.format('--max-count=%s', vcount)
+          end
+          vim.cmd(
+            'Git log -P ' ..
+            max_count_arg .. ' --oneline --date=format:"%Y-%m-%d %H:%M" --pretty=format:"%h %ad: %s - %an" -- %')
+        end,
         desc = 'Git show current file history'
       },
       {
         -- git log with -p for current buffer. with limits for performance.
         '<leader>gL',
-        cmdstr(
-          [[Git log --max-count=100 -p -P -- %]]),
+        function()
+          local vcount = vim.v.count
+          local max_count_arg = ''
+          if vcount ~= 0 and vcount ~= nil and vcount > 0 then
+            max_count_arg = string.format('--max-count=%s', vcount)
+          end
+          vim.cmd(string.format([[Git log %s -p -m --first-parent -P -- %s]], max_count_arg, vim.fn.expand('%')))
+        end,
         desc = 'Git show current file history with diff'
       },
       {
@@ -260,6 +274,11 @@ plug({
         'ghp',
         '<cmd>Gitsigns preview_hunk<cr>',
         desc = 'Preview hunk',
+      },
+      {
+        'ghP',
+        '<cmd>Gitsigns preview_hunk_inline<cr>',
+        desc = 'Preview hunk inline',
       },
       {
         'ghB',
