@@ -102,6 +102,16 @@ plug({
         desc = 'Git blame current file with range',
       },
       {
+        '<leader>gC',
+        function()
+          vim.cmd('Git commit')
+          vim.schedule(function()
+            vim.cmd('WriteGitCommitMessage')
+          end)
+        end,
+        desc = 'Let ai write the commit',
+      },
+      {
         '<leader>gc',
         function()
           -- use vim.ui.input to write commit message and then commit with the

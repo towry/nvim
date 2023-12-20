@@ -2,6 +2,8 @@ local pack = require('userlib.runtime.pack')
 local Path = require('userlib.runtime.path')
 local libutils = require('userlib.runtime.utils')
 
+local enable_cody = false
+
 local has_ai_suggestions = function()
   return (vim.b._copilot and vim.b._copilot.suggestions ~= nil)
       or (vim.b._codeium_completions and vim.b._codeium_completions.items ~= nil)
@@ -392,7 +394,7 @@ pack.plug({
         },
       }
 
-      if libutils.has_plugin('sg.nvim') then
+      if enable_cody and libutils.has_plugin('sg.nvim') then
         -- insert cody source to cmp source
         table.insert(cmp_options.sources, {
           name = 'cody',
