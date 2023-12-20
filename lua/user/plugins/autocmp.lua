@@ -823,6 +823,7 @@ pack.plug({
   },
   opts = {
     enable_cody = true,
+    node_executable = Path.path_join(vim.env['FNM_DIR'], 'aliases/default/bin/node'),
     on_attach = function()
     end
   },

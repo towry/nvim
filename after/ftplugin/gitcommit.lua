@@ -34,7 +34,7 @@ You are a git expert and experienced programmer.
 1. Do not contains any information that do not belong to a git commit message.\n
 2. Do not explain how you generate the response.\n
 3. Follow conventional commits standard.\n
-3. please formulate a concise git commit message summarizing the key changes based on current context and the following git diff output:\n
+3. please formulate a concise and accurate git commit message summarizing the key changes based on the following git diff with focus on the changed lines :\n
 ```diff\n%s```
     ]],
     prompt_text)
