@@ -36,6 +36,8 @@ return plug({
         { 'production', 'development', 'test' },
         { "soft",       "medium",      "hard" },
         { "low",        "high" },
+        -- git rebase -i
+        { "pick",       "squash" },
       }
     end,
   }
