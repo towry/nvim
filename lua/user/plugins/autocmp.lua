@@ -1,5 +1,6 @@
 local pack = require('userlib.runtime.pack')
 local Path = require('userlib.runtime.path')
+local libutils = require('userlib.runtime.utils')
 
 local has_ai_suggestions = function()
   return (vim.b._copilot and vim.b._copilot.suggestions ~= nil)
@@ -146,6 +147,7 @@ pack.plug({
       -- ╰──────────────────────────────────────────────────────────╯
       local source_mapping = {
         npm = icons.terminal .. 'NPM',
+        cody = icons.copilot .. 'CODY',
         cmp_tabnine = icons.light,
         codeium = icons.copilot .. 'AI',
         copilot = icons.copilot .. 'AI',
@@ -189,7 +191,7 @@ pack.plug({
         behavior = cmp.SelectBehavior.Insert,
       }
 
-      cmp.setup({
+      local cmp_options = {
         performance = {
           max_view_entries = 15,
           -- debounce = 250,
@@ -388,7 +390,18 @@ pack.plug({
           --   hl_group = "LspCodeLens",
           -- },
         },
-      })
+      }
+
+      if libutils.has_plugin('sg.nvim') then
+        -- insert cody source to cmp source
+        table.insert(cmp_options.sources, {
+          name = 'cody',
+          priority = 9,
+          max_item_count = 4,
+        })
+      end
+
+      cmp.setup(cmp_options)
 
 
       -- `/` cmdline setup.
@@ -689,9 +702,107 @@ pack.plug({
 })
 
 pack.plug({
+  --- require('sg.auth').get(): boolean check if authed.
   "sourcegraph/sg.nvim",
+  event = 'VeryLazy',
+  keys = {
+    {
+      '<leader>ai',
+      '<cmd>CodyChat<cr>',
+      desc = 'AI Assistant',
+    },
+    {
+      '<leader>a<space>',
+      '<cmd>CodyToggle<cr>',
+      desc = 'Toggle cody view',
+    },
+    {
+      '<leader>al',
+      ':CodyTaskView<cr>',
+      desc = 'Open last active cody task view',
+    },
+    {
+      '<leader>ad',
+      function()
+        local doc = require('sg.cody.experimental.documentation')
+        local start_line = vim.fn.line("'<") -- Get the start line of the visual selection
+        local end_line = vim.fn.line("'>")   -- Get the end line of the visual selection
+        if not start_line or not end_line then return end
+        doc.function_documentation(0, start_line, end_line)
+      end,
+      mode = 'v',
+      desc = 'Experimental: Document the code',
+    },
+    {
+      '<leader>a[',
+      ':CodyTaskPrev<cr>',
+      desc = 'Open prev cody task view',
+    },
+    {
+      '<leader>a]',
+      ':CodyTaskNext<cr>',
+      desc = 'Open next cody task view',
+    },
+    {
+      "<leader>ac",
+      function()
+        local ok, res = pcall(vim.fn.input, { prompt = 'CodyTask: ', cancelreturn = false })
+        if not ok or res == false then return end
+        vim.cmd(string.format(':CodyTask %s<cr>', res))
+      end,
+      mode = { "n", "v" },
+      desc = "Let AI Write Code",
+    },
+    {
+      "<leader>aa",
+      ":CodyTaskAccept<CR>",
+      mode = "n",
+      desc = "Confirm AI work",
+    },
+    {
+      "<leader>as",
+      "<cmd>lua require('sg.extensions.telescope').fuzzy_search_results()<CR>",
+      mode = "n",
+      desc = "AI Search",
+    },
+    {
+      "<leader>aa",
+      ":CodyAsk ",
+      mode = { "v", "x" },
+      desc = "Ask Cody about selection",
+    },
+    {
+      "<leader>ar",
+      ":CodyAsk refactor following code<CR>",
+      mode = { "v", "x" },
+      desc = "Request Refactoring",
+    },
+    {
+      "<leader>ae",
+      ":CodyAsk explain selected code<CR>",
+      mode = { "v", "x" },
+      desc = "Request Explanation",
+    },
+    {
+      "<leader>af",
+      ":CodyAsk find potential vulnerabilities from following code<CR>",
+      mode = { "v", "x" },
+      desc = "Request Potential Vulnerabilities",
+    },
+    {
+      "<leader>at",
+      ":CodyAsk rewrite following code more idiomatically<CR>",
+      mode = { "v", "x" },
+      desc = "Request Idiomatic Rewrite",
+    },
+  },
   cmd = {
     'SourcegraphLogin',
+    'SourcegraphLink',
+    'SourcegraphSearch',
+    'SourcegraphInfo',
+    'SourcegraphBuild',
+    'SourcegraphClear',
     'CodyAsk',
     'CodyChat',
     'CodyToggle',
@@ -709,7 +820,9 @@ pack.plug({
     "nvim-telescope/telescope.nvim"
   },
   opts = {
-    on_attach = function() end
+    enable_cody = true,
+    on_attach = function()
+    end
   },
   init = function()
     -- create user command: CodyOpenDoc to open https://sourcegraph.com/docs/cody/clients/install-neovim
