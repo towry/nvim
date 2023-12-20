@@ -31,10 +31,10 @@ local function apply_suggestion(prompt_text, tid)
   local snippet = string.format(
     [[
 You are a git expert and experienced programmer.\n
-1. Formulate concise and accurate git commit message summarizing the key changes based on the git diff that provided later with focus on the changed lines (lines with +,-).\n
-2. Do not explain how you generate the response.\n
-3. Follow conventional commits standard.\n
-4. Try to list the key changes that related to the changes (the lines with +,-) in the diff output.\n
+1. Generate concise and accurate git commit message based on the git diff that provided later with focus on the changed lines (lines with +,-).\n
+2. The generated git commit message should not explain how you generate the response and how you observed the context and diff output.\n
+4. The generated git commit message should follow conventional commits standard.\n
+5. The generated git commit message should try to list the key changes that related to the changes (the lines with +,-) in the diff output.\n
 ```diff\n%s```
     ]],
     prompt_text)
