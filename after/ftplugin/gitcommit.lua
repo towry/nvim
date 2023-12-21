@@ -30,11 +30,19 @@ local function apply_suggestion(prompt_text, tid)
 
   local snippet = string.format(
     [[
-You are a git expert and experienced programmer.\n
-1. Generate concise and accurate git commit message based on the git diff that provided later with focus on the changed lines (lines with +,-).\n
-2. The generated git commit message should not explain how you generate the response and how you observed the context and diff output.\n
-4. The generated git commit message should follow conventional commits standard.\n
-5. The generated git commit message should try to list the key changes that related to the changes (the lines with +,-) in the diff output.\n
+You are a git expert and experienced programmer that are here to help me write a git commit message in a git repo.\n
+1. Generate concise and accurate git commit message based on the git diff that provided later with focus on the changed lines that start with "+","-".\n
+2. Do not add additional information about the response.\n
+4. The generated git commit message follow the Commit Message Guidelines.\n
+6. Avoid duplicating the diff content.\n
+7. The response should be in standard git commit message format that follow following rules:\n
+\t 7.1 Separate subject from body with a blank line.\n
+\t 7.2 Do not end the subject line with a period.\n
+\t 7.3 Capitalize the subject line and each paragraph.\n
+\t 7.4 Use the imperative mood in the subject line.\n
+\t 7.5 Wrap lines at 72 characters.\n
+\t 7.6 Use the body to explain what and why you have done something. In most cases, you can leave out details about how a change has been made.\n
+The diff output:\n
 ```diff\n%s```
     ]],
     prompt_text)
@@ -71,8 +79,11 @@ You are a git expert and experienced programmer.\n
   })
 
   rpc.execute.code_question(snippet, function(res)
+    if not res then
+      vim.print(res)
+      return
+    end
     text = res.text .. '\n'
-    last_task_id = res.data.id
     if res and res.text and ns ~= nil then
       -- clear the ghost text
       vim.api.nvim_buf_clear_namespace(bufnr, ns, 0, -1)
@@ -122,36 +133,38 @@ local function write_message_()
       noremap = true,
     })
   end)
-  -- must force start, otherwise on the second time, it will not work.
-  vim.notify('start cody client')
-  require('sg.cody.rpc').start({ force = true }, function()
-    vim.system({
-      'git',
-      'diff',
-      '--staged',
-      '--unified=0',
-    }, {
-      text = true,
-      cwd = vim.cfg.runtime__starts_cwd,
-    }, on_exit)
-  end)
+  vim.system({
+    'git',
+    'diff',
+    '--staged',
+    '--unified=0',
+  }, {
+    text = true,
+    cwd = vim.cfg.runtime__starts_cwd,
+  }, on_exit)
 end
 
 --- rpc not working on the second time, the response doesn't contain the current
 --- buffer's content as context.
 local function setup_cody()
   if not libutils.has_plugin('sg.nvim') then return end
+  require('sg.cody.rpc').start({ force = false }, function(client_or_nil)
+    if client_or_nil == nil then
+      vim.notify('cody client not started')
+      return
+    end
 
-  set({ 'i', 'n' }, '<localleader>ac', function()
-    write_message_()
-  end, {
-    desc = 'Write git commit message with AI',
-    noremap = true,
-  })
+    set({ 'i', 'n' }, '<localleader>ac', function()
+      write_message_()
+    end, {
+      desc = 'Write git commit message with AI',
+      noremap = true,
+    })
 
-  vim.api.nvim_buf_create_user_command(0, 'WriteGitCommitMessage', write_message_, {
-    desc = 'Write git commit with AI',
-  })
+    vim.api.nvim_buf_create_user_command(0, 'WriteGitCommitMessage', write_message_, {
+      desc = 'Write git commit with AI',
+    })
+  end)
 end
 
 setup_cody()
