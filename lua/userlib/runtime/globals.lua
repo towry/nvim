@@ -71,13 +71,14 @@ end
 
 --- return string for statuscolumn's number
 Ty.stl_num = function()
+  local space = ' '
   --- if option number is off, return empty string
   if vim.o.number == false then return '' end
   --- if option relativenumber is on, return relative number
   if vim.o.relativenumber == true then
-    if vim.v.relnum == 0 then return vim.v.lnum else return vim.v.relnum end
+    if vim.v.relnum == 0 then return space .. vim.v.lnum .. space else return space .. vim.v.relnum .. space end
   end
-  return vim.v.lnum
+  return space .. vim.v.lnum .. space
 end
 
 
@@ -99,7 +100,6 @@ Ty.stl_foldlevel = function()
   else
     return _('│')
   end
-  return ''
 end
 
 Ty.set_terminal_keymaps = function()
