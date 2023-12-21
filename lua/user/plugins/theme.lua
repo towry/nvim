@@ -23,13 +23,17 @@ plug({
 })
 
 plug({
+  -- https://protesilaos.com/emacs/modus-themes-pictures
   'miikanissi/modus-themes.nvim',
   event = 'User LazyTheme',
   dev = false,
   priority = 1000,
   lazy = not string.match(vim.cfg.ui__theme_name, 'modus'),
   enabled = vim.cfg.ui__theme_name == 'modus',
-  opts = {}
+  opts = {
+    variant = 'tritanopia',
+    -- variant = 'tinted'
+  }
 })
 
 plug({
