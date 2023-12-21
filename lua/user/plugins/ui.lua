@@ -93,7 +93,14 @@ plug({
           -- border = "rounded"
         }
       }
-    }
+    },
+    init = function()
+      vim.api.nvim_create_user_command('FidgetHistory', function()
+        require("fidget.notification").show_history()
+      end, {
+        desc = 'Show fidget notification history'
+      })
+    end
   },
 
   {
