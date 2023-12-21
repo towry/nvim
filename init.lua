@@ -4,6 +4,8 @@ end
 
 if not vim.g.vscode then
   pcall(require, 'settings_env')
+  -- fix background flick
+  vim.cmd.colorscheme('vim')
 else
   require('user.vscode.startup')
 end
