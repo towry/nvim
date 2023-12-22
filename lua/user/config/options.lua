@@ -4,6 +4,7 @@ local o = vim.opt
 local g = vim.g
 
 function M.init_edit()
+  o.exrc = true
   o.jumpoptions = 'stack'
   o.breakindent = true
   o.cpoptions:append('>')                    -- append to register with line break
