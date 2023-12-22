@@ -602,6 +602,15 @@ local NavigateDirection = {
   end,
 }
 
+local LastExCommand = {
+  provider = function()
+    local res = vim.fn.getreg(':')
+    if not res or res == '' then return '' end
+    res = vim.fn.strcharpart(res, 0, 20)
+    return '[' .. res .. ']'
+  end,
+}
+
 return {
   TerminalStatusline = TerminalStatusline,
   HelpFileName = HelpFileName,
@@ -632,4 +641,5 @@ return {
   Copilot = Copilot,
   Dap = Dap,
   NavigateDirection = NavigateDirection,
+  LastExCommand = LastExCommand,
 }

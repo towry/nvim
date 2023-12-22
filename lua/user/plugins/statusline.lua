@@ -55,6 +55,7 @@ plug({
         comp.lpad(comp.Tabs),
         { provider = "%=" },
         require("userlib.statusline.heirline").right_components,
+        comp.rpad(comp.LastExCommand),
         comp.rpad(comp.NavigateDirection),
         comp.rpad(comp.Dap),
         comp.rpad(comp.Overseer),

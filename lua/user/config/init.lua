@@ -20,6 +20,7 @@ function M.setup()
   })
 
   require('user.config.theme').setup()
+  require('user.config.commands')
 end
 
 return M
