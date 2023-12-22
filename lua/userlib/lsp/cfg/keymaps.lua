@@ -11,7 +11,7 @@ function M.setup_keybinding(client, buffer)
   local set = keymap.set
   local cmdstr = keymap.cmdstr
   local func_call = function(call_sig) return cmdstr([[lua require("userlib.lsp.func").]] .. call_sig) end
-  -----
+
   set(
     'n',
     ']dd',
@@ -156,7 +156,7 @@ function M.setup_keybinding(client, buffer)
   end
 
   set(
-    'n',
+    { 'n', 'v', 'x' },
     '<leader>cf',
     func_call('format_code(0, { async = true })'),
     opts({

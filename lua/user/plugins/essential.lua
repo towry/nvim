@@ -609,6 +609,7 @@ pack.plug({
         { mode = 'x', keys = '<Leader>f',      desc = '+Finder' },
         { mode = 'n', keys = '<Leader>c',      desc = '+Code' },
         { mode = 'x', keys = '<Leader>c',      desc = '+Code' },
+        { mode = 'v', keys = '<Leader>c',      desc = '+Code' },
         { mode = 'n', keys = '<Leader>/',      desc = '+Outline|Terms' },
         { mode = 'n', keys = '<Leader>v',      desc = '+Trails' },
         { mode = 'n', keys = '<Leader>z',      desc = '+Extended' },
