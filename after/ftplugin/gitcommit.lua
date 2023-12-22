@@ -8,8 +8,16 @@ vim.b[0].autoformat_disable = true
 local use_rpc = true
 local last_task_mark = nil
 local task_id = 0
+local ns = nil
 
 local function reset_buffer()
+  if ns ~= nil then
+    -- clear the ghost text
+    vim.api.nvim_buf_clear_namespace(bufnr, ns, 0, -1)
+    ns = nil
+  end
+
+  if vim.fn.getline(1) == '' then return end
   if last_task_mark ~= nil then
     local end_row = last_task_mark:end_pos().row - 1
     if end_row <= 0 then
@@ -51,7 +59,7 @@ The diff output:\n
   })
   last_task_mark = mark
   local text = ""
-  local ns = vim.api.nvim_create_namespace('sg.cody.gitcommit')
+  ns = vim.api.nvim_create_namespace('sg.cody.gitcommit')
   local function apply(suggestion)
     if tid ~= task_id then return end
     local lines = vim.split(suggestion, '\n')
@@ -78,8 +86,11 @@ The diff output:\n
     end
     text = res.text .. '\n'
     if res and res.text and ns ~= nil then
-      -- clear the ghost text
-      vim.api.nvim_buf_clear_namespace(bufnr, ns, 0, -1)
+      if ns ~= nil then
+        -- clear the ghost text
+        vim.api.nvim_buf_clear_namespace(bufnr, ns, 0, -1)
+        ns = nil
+      end
     end
     apply(text)
   end)
