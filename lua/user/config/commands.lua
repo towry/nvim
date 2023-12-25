@@ -1,7 +1,7 @@
 local create_cmd = vim.api.nvim_create_user_command
 
 -- Define the TmuxRerun command
-vim.api.nvim_create_user_command(
+create_cmd(
   'TmuxRerun',
   function(opts)
     -- Split the input arguments on '--' to separate the pane index and optional shell commands
@@ -60,7 +60,7 @@ create_cmd(
 
     -- Construct the tmux command to split the window and run the user's command
     local tmux_split_command = string.format(
-      "tmux split-window -d -p 40 -c '#{pane_current_path}' '%s ; cat'",
+      "tmux split-window -d -p 15 -c '#{pane_current_path}' '%s ; cat'",
       user_command
     )
 
