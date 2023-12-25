@@ -834,3 +834,13 @@ pack.plug({
     end, {})
   end,
 })
+
+pack.plug({
+  'towry/commit-msg-sg.nvim',
+  dependencies = {
+    'sourcegraph/sg.nvim',
+  },
+  dev = true,
+  ft = 'gitcommit',
+  opts = {}
+})
