@@ -81,7 +81,6 @@ The diff output:\n
 
   rpc.execute.code_question(snippet, function(res)
     if not res then
-      vim.print(res)
       return
     end
     text = res.text .. '\n'
