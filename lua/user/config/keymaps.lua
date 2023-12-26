@@ -92,9 +92,7 @@ local function setup_basic()
     vim.cmd('nohl')
     if vim.g.escape_cmd ~= nil and vim.g.escape_cmd ~= '' then
       local escape_cmd = vim.g.escape_cmd
-      vim.schedule(function()
-        vim.cmd(escape_cmd)
-      end)
+      vim.schedule(function() vim.cmd(escape_cmd) end)
       vim.g.escape_cmd = nil
     end
     return '<esc>'
@@ -240,7 +238,7 @@ local function setup_basic()
 
   set('n', '<leader>tw', cmd('pclose'), {
     desc = 'Close any preview windows',
-    nowait = true
+    nowait = true,
   })
 
   -- works with quickfix
@@ -267,22 +265,22 @@ local function setup_basic()
   local tip_is_loading = false
   set('n', '<leader>/t', function()
     if tip_is_loading then return end
-    local job = require 'plenary.job'
+    local job = require('plenary.job')
     vim.notify('loading tip...')
-    job:new({
-      command = 'curl',
-      args = { 'https://vtip.43z.one' },
-      on_exit = function(j, exit_code)
-        tip_is_loading = false
-        local res = table.concat(j:result())
-        if exit_code ~= 0 then
-          res = 'Error fetching tip: ' .. res
-        end
-        print(res)
-      end,
-    }):start()
+    job
+      :new({
+        command = 'curl',
+        args = { 'https://vtip.43z.one' },
+        on_exit = function(j, exit_code)
+          tip_is_loading = false
+          local res = table.concat(j:result())
+          if exit_code ~= 0 then res = 'Error fetching tip: ' .. res end
+          print(res)
+        end,
+      })
+      :start()
   end, {
-    desc = 'Get a random tip from vtip.43z.one'
+    desc = 'Get a random tip from vtip.43z.one',
   })
 
   set('n', '<leader>rzr', function()
@@ -312,6 +310,11 @@ local function setup_basic()
   })
   set('n', '<leader>ton', toggle_option('number'), {
     desc = 'Toggle number',
+  })
+
+  set('n', '<leader>zr', ':resize<cr>', {
+    desc = 'Resize after window size changed',
+    silent = false,
   })
 end
 
