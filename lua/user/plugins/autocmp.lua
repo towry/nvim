@@ -840,7 +840,18 @@ pack.plug({
   dependencies = {
     'sourcegraph/sg.nvim',
   },
-  dev = true,
+  dev = false,
   ft = 'gitcommit',
-  opts = {}
+  opts = {
+    on_attach = function(_, bufnr)
+      local set = require('userlib.runtime.keymap').map_buf_thunk(bufnr)
+
+      set({ 'i', 'n' }, '<localleader>ac', function()
+        CommitMsgSg.write()
+      end, {
+        desc = 'Write git commit message with AI',
+        noremap = true,
+      })
+    end,
+  }
 })
