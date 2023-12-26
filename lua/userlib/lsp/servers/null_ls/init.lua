@@ -9,9 +9,9 @@ return function()
 
   -- use `filetypes` to specific which filetypes to run the generators.
   local sources = {
-    -- builtins.formatting.stylua.with({
-    -- 	filetypes = { "lua" }
-    -- }),
+    builtins.formatting.stylua.with({
+      filetypes = { "lua", "luau" }
+    }),
     -- only prettier works with monorepo.
     builtins.formatting.prettier,
     -- builtins.code_actions.gitsigns,
