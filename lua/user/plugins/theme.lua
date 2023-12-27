@@ -34,10 +34,14 @@ plug({
     variant = 'tritanopia',
     -- variant = 'tinted'
     on_highlights = function(highlights, colors)
+      local is_dark = vim.o.background == 'dark'
       highlights['FlashLabel'] = {
         fg = colors.bg_main_dim,
         bg = colors.bg_yellow_intense,
         bold = true,
+      }
+      highlights['FlashBackdrop'] = {
+        fg = is_dark and colors.fg_dim or '#9f9f9f',
       }
     end,
   },
