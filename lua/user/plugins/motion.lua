@@ -193,6 +193,8 @@ plug({
           jump_labels = true,
         },
       },
+      -- press ; to continue
+      continue = true,
     },
     config = function(_, opts) require('flash').setup(opts) end,
   },
