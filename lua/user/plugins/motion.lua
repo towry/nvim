@@ -178,6 +178,10 @@ plug({
       search = {
         exclude = vim.cfg.misc__ft_exclude,
       },
+      jump = {
+        autojump = true,
+        nohlsearch = true,
+      },
       modes = {
         -- options used when flash is activated through
         -- a regular search with `/` or `?`
