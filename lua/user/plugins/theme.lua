@@ -13,12 +13,12 @@ plug({
         link = 'Comment',
       },
       MiniCursorword = {
-        style = "italic",
+        style = 'italic',
       },
       MiniCursorwordCurrent = {
-        style = "bold"
-      }
-    }
+        style = 'bold',
+      },
+    },
   },
 })
 
@@ -33,7 +33,14 @@ plug({
   opts = {
     variant = 'tritanopia',
     -- variant = 'tinted'
-  }
+    on_highlights = function(highlights, colors)
+      highlights['FlashLabel'] = {
+        fg = colors.bg_main_dim,
+        bg = colors.bg_yellow_intense,
+        bold = true,
+      }
+    end,
+  },
 })
 
 plug({
@@ -51,15 +58,15 @@ plug({
     globalStatus = true,
     colors = {
       palette = {
-        dragonBlack0 = "#191f24",
-        dragonBlack1 = "#1c2228",
-        dragonBlack2 = "#192024",
-        dragonBlack3 = "#1c2428",
-        dragonBlack4 = "#232c30",
-        dragonBlack5 = "#2b353b",
-        dragonBlack6 = "#3b464f",
-        dragonBlue2 = "#7b96a3",
-        winterBlue = "#223140",
+        dragonBlack0 = '#191f24',
+        dragonBlack1 = '#1c2228',
+        dragonBlack2 = '#192024',
+        dragonBlack3 = '#1c2428',
+        dragonBlack4 = '#232c30',
+        dragonBlack5 = '#2b353b',
+        dragonBlack6 = '#3b464f',
+        dragonBlue2 = '#7b96a3',
+        winterBlue = '#223140',
       },
       theme = {
         all = {
@@ -70,9 +77,9 @@ plug({
       },
     },
     background = {
-      dark = "wave",
+      dark = 'wave',
       -- dark = 'dragon',
-      light = "lotus",
+      light = 'lotus',
     },
   },
 })

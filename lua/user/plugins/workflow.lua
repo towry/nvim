@@ -4,16 +4,11 @@ local plug = require('userlib.runtime.pack').plug
 local cmdstr = require('userlib.runtime.keymap').cmdstr
 
 local function get_window_bufnr(winid)
-  return vim.api.nvim_win_call(winid, function()
-    return vim.fn.bufnr('%')
-  end)
+  return vim.api.nvim_win_call(winid, function() return vim.fn.bufnr('%') end)
 end
 local function change_window_bufnr(winid, bufnr)
-  vim.api.nvim_win_call(winid, function()
-    vim.cmd(string.format('buffer %d', bufnr))
-  end)
+  vim.api.nvim_win_call(winid, function() vim.cmd(string.format('buffer %d', bufnr)) end)
 end
-
 
 plug({
   {
@@ -22,9 +17,27 @@ plug({
       'anuvyklack/middleclass',
     },
     keys = {
-      { '<C-w>a', '<cmd>WindowsToggleAutowidth<cr>', nowait = true, desc = 'Toggle auto size' },
-      { '<C-w>m', '<cmd>WindowsMaximize<cr>',        nowait = true, desc = 'Maximize window' },
-      { '<C-w>=', '<cmd>WindowsEqualize<cr>',        nowait = true, desc = 'Equallize window' },
+      {
+        '<C-w>a',
+        function()
+          local aw = require('windows.autowidth')
+          local awc = require('windows.config')
+          aw.toggle()
+          if awc.autowidth.enable then
+            vim.notify('󰿆 Windows auto width enabled', vim.log.levels.INFO, {
+              key = 'windows',
+            })
+          else
+            vim.notify('󱙱 Windows auto width disabled', vim.log.levels.INFO, {
+              key = 'windows',
+            })
+          end
+        end,
+        nowait = true,
+        desc = 'Toggle auto size',
+      },
+      { '<C-w>m', '<cmd>WindowsMaximize<cr>', nowait = true, desc = 'Maximize window' },
+      { '<C-w>=', '<cmd>WindowsEqualize<cr>', nowait = true, desc = 'Equallize window' },
       {
         '<C-w>x',
         function()
@@ -57,7 +70,7 @@ plug({
           end)
         end,
         desc = 'swap',
-      }
+      },
     },
     enabled = true,
     event = 'WinNew',
@@ -73,10 +86,7 @@ plug({
         enable = false,
       },
     },
-    config = function(_, opts)
-      vim.opt.equalalways = vim.cfg.ui__window_equalalways
-      require('windows').setup(opts)
-    end,
+    config = function(_, opts) require('windows').setup(opts) end,
     init = function()
       au.define_autocmd('VimEnter', {
         once = true,
@@ -104,7 +114,7 @@ plug({
     module = 'close_buffers',
     --- BDelete regex=term://
     keys = {
-      { '<leader>bo', '<cmd>BDelete other<cr>', desc = 'Only' }
+      { '<leader>bo', '<cmd>BDelete other<cr>', desc = 'Only' },
     },
     cmd = {
       'BDelete',
@@ -143,9 +153,7 @@ plug({
       },
       {
         '<C-q>',
-        function()
-          require('userlib.workflow.close-buffer').close()
-        end,
+        function() require('userlib.workflow.close-buffer').close() end,
         desc = 'Quit current buffer',
       },
     },
@@ -236,8 +244,8 @@ plug({
     'cbochs/grapple.nvim',
     keys = {
       { '<leader>bg', '<cmd>GrappleToggle<cr>', desc = 'Toggle grapple' },
-      { '<leader>bp', '<cmd>GrapplePopup<cr>',  desc = 'Popup grapple' },
-      { '<leader>bc', '<cmd>GrappleCycle<cr>',  desc = 'Cycle grapple' },
+      { '<leader>bp', '<cmd>GrapplePopup<cr>', desc = 'Popup grapple' },
+      { '<leader>bc', '<cmd>GrappleCycle<cr>', desc = 'Cycle grapple' },
     },
     cmd = { 'GrappleToggle', 'GrapplePopup', 'GrappleCycle' },
     opts = {
@@ -263,9 +271,7 @@ plug({
         desc = 'Call project root',
       },
     },
-    config = function(_, opts)
-      require('project_nvim').setup(opts)
-    end,
+    config = function(_, opts) require('project_nvim').setup(opts) end,
     opts = {
       patterns = utils.root_patterns,
       --- order matters
@@ -310,7 +316,7 @@ plug({
       'ZellijNavigateRight',
       'ZellijNavigateUp',
       'ZellijNavigateDown',
-    }
+    },
   },
   {
     'mrjones2014/smart-splits.nvim',
@@ -318,50 +324,42 @@ plug({
       {
         '<A-h>',
         cmdstr([[lua require("smart-splits").resize_left(vim.cfg.editor_resize_steps)]]),
-        desc =
-        'Resize window to left'
+        desc = 'Resize window to left',
       },
       {
         '<A-j>',
         cmdstr([[lua require("smart-splits").resize_down(vim.cfg.editor_resize_steps)]]),
-        desc =
-        'Resize window to down'
+        desc = 'Resize window to down',
       },
       {
         '<A-k>',
         cmdstr([[lua require("smart-splits").resize_up(vim.cfg.editor_resize_steps)]]),
-        desc =
-        'Resize window to up'
+        desc = 'Resize window to up',
       },
       {
         '<A-l>',
         cmdstr([[lua require("smart-splits").resize_right(vim.cfg.editor_resize_steps)]]),
-        desc =
-        'Resize window to right'
+        desc = 'Resize window to right',
       },
       {
         '<C-h>',
         cmdstr([[lua require("smart-splits").move_cursor_left()]]),
-        desc =
-        'Move cursor to left window'
+        desc = 'Move cursor to left window',
       },
       {
         '<C-j>',
         cmdstr([[lua require("smart-splits").move_cursor_down()]]),
-        desc =
-        'Move cursor to down window'
+        desc = 'Move cursor to down window',
       },
       {
         '<C-k>',
         cmdstr([[lua require("smart-splits").move_cursor_up()]]),
-        desc =
-        'Move cursor to up window'
+        desc = 'Move cursor to up window',
       },
       {
         '<C-l>',
         cmdstr([[lua require("smart-splits").move_cursor_right()]]),
-        desc =
-        'Move cursor to right window'
+        desc = 'Move cursor to right window',
       },
     },
     dependencies = {
@@ -433,8 +431,8 @@ plug({
           vim.api.nvim_win_set_buf(win, buf)
         end,
         desc = 'Move buffer to another window',
-      }
-    }
+      },
+    },
   },
 
   {
@@ -463,7 +461,7 @@ plug({
     {
       ']b',
       function()
-        vim.g.direction = "next"
+        vim.g.direction = 'next'
         local bufstack = require('window-bufstack.bufstack')
         local next_buf = bufstack.peek_bufstack(0, {
           skip = 0,
@@ -475,15 +473,15 @@ plug({
           vim.cmd('bprevious')
         end
       end,
-      desc = 'Next buffer in window'
+      desc = 'Next buffer in window',
     },
     {
       '[b',
       function()
-        vim.g.direction = "prev"
+        vim.g.direction = 'prev'
         local bufstack = require('window-bufstack.bufstack')
         local next_buf = bufstack.peek_bufstack(0, {
-          skip = 1
+          skip = 1,
         })
         if next_buf and next_buf > 0 then
           bufstack.push(0, 0, { bottom = true })
@@ -492,15 +490,16 @@ plug({
           vim.cmd('bnext')
         end
       end,
-      desc = 'Prev buffer in window'
+      desc = 'Prev buffer in window',
     },
   },
   init = function()
     -- create a user command with nvim api
-    vim.api.nvim_create_user_command('DebugWindowBufStack', function()
-      vim.print(require('window-bufstack.bufstack').debug())
-    end, {
-    })
+    vim.api.nvim_create_user_command(
+      'DebugWindowBufStack',
+      function() vim.print(require('window-bufstack.bufstack').debug()) end,
+      {}
+    )
   end,
 })
 
@@ -532,29 +531,21 @@ plug({
           vim.cmd.tcd(vim.cfg.runtime__starts_cwd)
         end,
         write = function()
-          if utils.has_plugin('trailblazer.nvim') then
-            vim.cmd('TrailBlazerSaveSession')
-          end
+          if utils.has_plugin('trailblazer.nvim') then vim.cmd('TrailBlazerSaveSession') end
         end,
       },
       post = {
         read = function()
           vim.g.project_nvim_disable = false
           if cache_tcd then vim.cmd.tcd(cache_tcd) end
-          if utils.has_plugin('trailblazer.nvim') then
-            vim.cmd('TrailBlazerLoadSession')
-          end
+          if utils.has_plugin('trailblazer.nvim') then vim.cmd('TrailBlazerLoadSession') end
         end,
-      }
-    }
+      },
+    },
   },
   init = function()
-    vim.api.nvim_create_user_command('MakeSession', function()
-      require('userlib.mini.session').make_session()
-    end, {})
-    vim.api.nvim_create_user_command('LoadSession', function()
-      require('userlib.mini.session').load_session()
-    end, {})
+    vim.api.nvim_create_user_command('MakeSession', function() require('userlib.mini.session').make_session() end, {})
+    vim.api.nvim_create_user_command('LoadSession', function() require('userlib.mini.session').load_session() end, {})
     -- keymaps
     local set = require('userlib.runtime.keymap').set
     set('n', '<leader>/l', '<cmd>LoadSession<cr>', { desc = 'Load session' })
@@ -563,17 +554,13 @@ plug({
     require('userlib.legendary').register('mini_session', function(lg)
       lg.funcs({
         {
-          function()
-            require('userlib.mini.session').make_session()
-          end,
+          function() require('userlib.mini.session').make_session() end,
           desc = 'Make session',
         },
         {
-          function()
-            require('userlib.mini.session').load_session()
-          end,
+          function() require('userlib.mini.session').load_session() end,
           desc = 'Load session',
-        }
+        },
       })
     end)
   end,

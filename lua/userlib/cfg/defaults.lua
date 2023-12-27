@@ -117,7 +117,7 @@ return {
     'bashls',
     'html',
     'tsserver',
-    'null_ls'
+    'null_ls',
   },
   lsp__auto_install_servers = {
     -- 'bashls',
@@ -156,7 +156,7 @@ return {
   ---User interfaces
   ui__theme_name = 'default',
   ui__float_border = 'single',
-  ui__window_equalalways = true,
+  ui__window_equalalways = false,
   workbench__lualine_theme = 'default',
   ---misc stuff.
   misc__buf_exclude = {
@@ -169,7 +169,7 @@ return {
     'terminal',
     'nowrite',
     'gitcommit',
-    'git'
+    'git',
   },
   misc__ft_exclude = {
     'diff',
@@ -197,5 +197,5 @@ return {
     'noice',
   },
   ---plugins specific.
-  plugin__whichkey_or_clue = "clue"
+  plugin__whichkey_or_clue = 'clue',
 }

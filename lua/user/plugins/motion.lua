@@ -57,14 +57,12 @@ plug({
             use_nvim_treesitter = false,
           }),
           c = ai.gen_spec.treesitter({ a = '@class.outer', i = '@class.inner' }, {
-            use_nvim_treesitter = false
+            use_nvim_treesitter = false,
           }),
         },
       }
     end,
-    config = function(_, opts)
-      require('mini.ai').setup(opts)
-    end,
+    config = function(_, opts) require('mini.ai').setup(opts) end,
   },
 
   {
@@ -132,6 +130,32 @@ plug({
         desc = 'Flash jump to line',
       },
       {
+        '[s',
+        mode = { 'n', 'o' },
+        function()
+          require('flash').jump({
+            search = { forward = false, wrap = false, multi_window = false },
+            label = {
+              uppercase = false,
+            },
+          })
+        end,
+        desc = 'Flash backward search',
+      },
+      {
+        ']s',
+        mode = { 'n', 'o' },
+        function()
+          require('flash').jump({
+            search = { forward = true, wrap = false, multi_window = false },
+            label = {
+              uppercase = false,
+            },
+          })
+        end,
+        desc = 'Flash forward search',
+      },
+      {
         '.s',
         mode = { 'n', 'x', 'o' },
         function() require('flash').treesitter() end,
@@ -159,6 +183,10 @@ plug({
         -- a regular search with `/` or `?`
         search = {
           enabled = false,
+        },
+        char = {
+          multi_line = false,
+          jump_labels = true,
         },
       },
     },
@@ -221,26 +249,26 @@ plug({
     -- `prefix` is only considered if `default_keymappings_enabled` is true. It configures the prefix
     -- of the keymappings, e.g. `gau ` executes the `current_word` method with `to_upper_case`
     -- and `gaou` executes the `operator` method with `to_upper_case`.
-    prefix = "ga",
+    prefix = 'ga',
     -- By default, all methods are enabled. If you set this option with some methods omitted,
     -- these methods will not be registered in the default keymappings. The methods will still
     -- be accessible when calling the exact lua function e.g.:
     -- "<CMD>lua require('textcase').current_word('to_snake_case')<CR>"
     enabled_methods = {
-      "to_upper_case",
-      "to_lower_case",
-      "to_snake_case",
-      "to_dash_case",
-      "to_title_dash_case",
-      "to_constant_case",
-      "to_dot_case",
-      "to_phrase_case",
-      "to_camel_case",
-      "to_pascal_case",
-      "to_title_case",
-      "to_path_case",
-      "to_upper_phrase_case",
-      "to_lower_phrase_case",
+      'to_upper_case',
+      'to_lower_case',
+      'to_snake_case',
+      'to_dash_case',
+      'to_title_dash_case',
+      'to_constant_case',
+      'to_dot_case',
+      'to_phrase_case',
+      'to_camel_case',
+      'to_pascal_case',
+      'to_title_case',
+      'to_path_case',
+      'to_upper_phrase_case',
+      'to_lower_phrase_case',
     },
-  }
+  },
 })
