@@ -6,7 +6,7 @@ local enable_cody = false
 
 local has_ai_suggestions = function()
   return (vim.b._copilot and vim.b._copilot.suggestions ~= nil)
-      or (vim.b._codeium_completions and vim.b._codeium_completions.items ~= nil)
+    or (vim.b._codeium_completions and vim.b._codeium_completions.items ~= nil)
 end
 local has_ai_suggestion_text = function()
   if vim.b._copilot and vim.b._copilot.suggestions ~= nil then
@@ -54,9 +54,7 @@ pack.plug({
   },
   {
     'lukas-reineke/cmp-rg',
-    cond = function()
-      return vim.fn.executable('rg')
-    end,
+    cond = function() return vim.fn.executable('rg') end,
     ft = 'rgflow',
     dependencies = {
       'hrsh7th/nvim-cmp',
@@ -70,7 +68,7 @@ pack.plug({
           { name = 'buffer' },
         }),
       })
-    end
+    end,
   },
   {
     'hrsh7th/nvim-cmp',
@@ -233,7 +231,7 @@ pack.plug({
             else
               fallback()
             end
-          end),                           -- invoke complete
+          end), -- invoke complete
           ['<C-s>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
           ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
           ['<C-e>'] = cmp.mapping({
@@ -326,13 +324,13 @@ pack.plug({
         },
         -- You should specify your *installed* sources.
         sources = {
-          { name = 'nvim_lsp',                priority = 10, max_item_count = 5 },
+          { name = 'nvim_lsp', priority = 10, max_item_count = 5 },
           -- { name = "copilot",                 priority = 30, max_item_count = 4 },
           -- { name = 'codeium', priority = 7, max_item_count = 4 },
           { name = 'nvim_lsp_signature_help', priority = 10, max_item_count = 3 },
-          { name = 'npm',                     priority = 3 },
+          { name = 'npm', priority = 3 },
           -- { name = 'cmp_tabnine',             priority = 6,  max_item_count = 3 },
-          { name = 'luasnip',                 priority = 6,  max_item_count = 2 },
+          { name = 'luasnip', priority = 6, max_item_count = 2 },
           {
             name = 'buffer',
             priority = 10,
@@ -341,8 +339,8 @@ pack.plug({
             max_item_count = 4,
           },
           { name = 'nvim_lua', priority = 5, ft = 'lua' },
-          { name = 'path',     priority = 4 },
-          { name = 'calc',     priority = 3 },
+          { name = 'path', priority = 4 },
+          { name = 'calc', priority = 3 },
         },
         sorting = {
           comparators = {
@@ -405,7 +403,6 @@ pack.plug({
 
       cmp.setup(cmp_options)
 
-
       -- `/` cmdline setup.
       cmp.setup.cmdline('/', {
         mapping = cmp.mapping.preset.cmdline(),
@@ -420,13 +417,11 @@ pack.plug({
           ['<C-n>'] = cmp.config.disable,
         }),
         sources = cmp.config.sources({
-            { name = 'path' },
-          },
-          {
-            { name = 'cmdline', },
-            -- { name = 'cmdline_history', max_item_count = 3, },
-          }
-        ),
+          { name = 'path' },
+        }, {
+          { name = 'cmdline' },
+          -- { name = 'cmdline_history', max_item_count = 3, },
+        }),
       })
 
       -- ╭────────-─────────────────────────────────────────────────╮
@@ -447,9 +442,7 @@ pack.plug({
         only_semantic_versions = true,
       })
 
-      vim.api.nvim_create_user_command("CmpInfo", function()
-        cmp.status()
-      end, {})
+      vim.api.nvim_create_user_command('CmpInfo', function() cmp.status() end, {})
     end,
   },
 })
@@ -488,8 +481,9 @@ pack.plug({
       if commit_character ~= nil then return end
       -- do not add pairs if in jsx.
       local ts_current_line_node_type = Ty.TS_GET_NODE_TYPE()
-      if vim.tbl_contains({ 'jsx_self_closing_element', 'jsx_opening_element' }, ts_current_line_node_type)
-          and (item.kind == Kind.Function or item.kind == Kind.Method)
+      if
+        vim.tbl_contains({ 'jsx_self_closing_element', 'jsx_opening_element' }, ts_current_line_node_type)
+        and (item.kind == Kind.Function or item.kind == Kind.Method)
       then
         return
       end
@@ -532,7 +526,7 @@ pack.plug({
     cmd = 'Codeium',
     dev = false,
     event = { 'InsertEnter' },
-    enabled = vim.cfg.plug__enable_codeium_vim,
+    enabled = vim.cfg.plug__enable_codeium_nvim,
     dependencies = {
       'nvim-lua/plenary.nvim',
       'MunifTanjim/nui.nvim',
@@ -566,27 +560,38 @@ pack.plug({
     --- have bug when behind proxy.
     'Exafunction/codeium.vim',
     event = { 'InsertEnter' },
-    cmd = { 'Codeium' },
-    enabled = vim.cfg.plug__enable_codeium_vim,
-    config = function()
-      local set = vim.keymap.set
+    cmd = { 'Codeium', 'CodeiumToggle' },
+    keys = {
+      {
+        '<M-u>',
+        function()
+          if has_ai_suggestion_text() then
+            local cmp = require('cmp')
+            if cmp.visible() then cmp.close() end
 
-      set('i', '<M-]>', function() return vim.fn['codeium#CycleCompletions'](1) end, {
+            return vim.fn['codeium#CycleCompletions'](1)
+          end
+        end,
+        mode = 'i',
+        desc = 'Cycle codeium completion next',
         expr = true,
-      })
-      set('i', '<M-[>', function() return vim.fn['codeium#CycleCompletions'](-1) end, {
+      },
+      {
+        '<M-y>',
+        function() return vim.fn['codeium#Complete']() end,
+        mode = 'i',
+        desc = 'Manually trigger codeium suggestion',
         expr = true,
-      })
-      -- force trigger ai completion.
-      set('i', '<D-/>', function() return vim.fn['codeium#Complete']() end, {
-        expr = true,
-      })
-    end,
+      },
+    },
+    enabled = vim.cfg.plug__enable_codeium_vim,
+    config = function() end,
     init = function()
       vim.g.codeium_disable_bindings = 1
       vim.g.codeium_no_map_tab = true
       vim.g.codeium_filetypes = {
         ['*'] = true,
+        ['gitcommit'] = true,
         ['TelescopePrompt'] = false,
         ['TelescopeResults'] = false,
       }
@@ -595,7 +600,7 @@ pack.plug({
   {
     -- https://github.com/dermoumi/dotfiles/blob/418de1a521e4f4ac6dc0aa10e75ffb890b0cb908/nvim/lua/plugins/copilot.lua#L4
     'github/copilot.vim',
-    enabled = true,
+    enabled = vim.cfg.plug__enable_copilot_vim,
     event = { 'InsertEnter' },
     keys = {
       {
@@ -623,11 +628,10 @@ pack.plug({
         '<leader>tc',
         '<cmd>ToggleCopilotAutoMode<cr>',
         desc = 'Toggle copilot',
-      }
+      },
     },
     cmd = { 'Copilot' },
-    config = function()
-    end,
+    config = function() end,
     init = function()
       vim.g.copilot_filetypes = {
         ['*'] = false,
@@ -655,15 +659,15 @@ pack.plug({
           -- disable
           vim.g.copilot_auto_mode = false
           vim.g.copilot_filetypes = vim.tbl_extend('keep', {
-            ["*"] = false
+            ['*'] = false,
           }, vim.g.copilot_filetypes)
-          vim.notify("Copilot auto mode disabled X")
+          vim.notify('Copilot auto mode disabled X')
         else
           vim.g.copilot_auto_mode = true
           vim.g.copilot_filetypes = vim.tbl_extend('keep', {
-            ["*"] = true
+            ['*'] = true,
           }, vim.g.copilot_filetypes)
-          vim.notify("Copilot auto mode enabled ✔")
+          vim.notify('Copilot auto mode enabled ✔')
         end
         vim.api.nvim_exec_autocmds('User', {
           pattern = 'CopilotStatus',
@@ -697,7 +701,7 @@ pack.plug({
           end
           -- trigger user autocmd
           vim.api.nvim_command('doautocmd User CopilotStatus')
-        end
+        end,
       })
     end,
   },
@@ -705,7 +709,7 @@ pack.plug({
 
 pack.plug({
   --- require('sg.auth').get(): boolean check if authed.
-  "sourcegraph/sg.nvim",
+  'sourcegraph/sg.nvim',
   event = 'VeryLazy',
   keys = {
     {
@@ -728,7 +732,7 @@ pack.plug({
       function()
         local doc = require('sg.cody.experimental.documentation')
         local start_line = vim.fn.line("'<") -- Get the start line of the visual selection
-        local end_line = vim.fn.line("'>")   -- Get the end line of the visual selection
+        local end_line = vim.fn.line("'>") -- Get the end line of the visual selection
         if not start_line or not end_line then return end
         doc.function_documentation(0, start_line, end_line)
       end,
@@ -746,56 +750,56 @@ pack.plug({
       desc = 'Open next cody task view',
     },
     {
-      "<leader>ac",
+      '<leader>ac',
       function()
         local ok, res = pcall(vim.fn.input, { prompt = 'CodyTask: ', cancelreturn = false })
         if not ok or res == false then return end
         vim.cmd(string.format(':CodyTask %s<cr>', res))
       end,
-      mode = { "n", "v" },
-      desc = "Let AI Write Code",
+      mode = { 'n', 'v' },
+      desc = 'Let AI Write Code',
     },
     {
-      "<leader>aa",
-      ":CodyTaskAccept<CR>",
-      mode = "n",
-      desc = "Confirm AI work",
+      '<leader>aa',
+      ':CodyTaskAccept<CR>',
+      mode = 'n',
+      desc = 'Confirm AI work',
     },
     {
-      "<leader>as",
+      '<leader>as',
       "<cmd>lua require('sg.extensions.telescope').fuzzy_search_results()<CR>",
-      mode = "n",
-      desc = "AI Search",
+      mode = 'n',
+      desc = 'AI Search',
     },
     {
-      "<leader>aa",
-      ":CodyAsk ",
-      mode = { "v", "x" },
-      desc = "Ask Cody about selection",
+      '<leader>aa',
+      ':CodyAsk ',
+      mode = { 'v', 'x' },
+      desc = 'Ask Cody about selection',
     },
     {
-      "<leader>ar",
-      ":CodyAsk refactor following code<CR>",
-      mode = { "v", "x" },
-      desc = "Request Refactoring",
+      '<leader>ar',
+      ':CodyAsk refactor following code<CR>',
+      mode = { 'v', 'x' },
+      desc = 'Request Refactoring',
     },
     {
-      "<leader>ae",
-      ":CodyAsk explain selected code<CR>",
-      mode = { "v", "x" },
-      desc = "Request Explanation",
+      '<leader>ae',
+      ':CodyAsk explain selected code<CR>',
+      mode = { 'v', 'x' },
+      desc = 'Request Explanation',
     },
     {
-      "<leader>af",
-      ":CodyAsk find potential vulnerabilities from following code<CR>",
-      mode = { "v", "x" },
-      desc = "Request Potential Vulnerabilities",
+      '<leader>af',
+      ':CodyAsk find potential vulnerabilities from following code<CR>',
+      mode = { 'v', 'x' },
+      desc = 'Request Potential Vulnerabilities',
     },
     {
-      "<leader>at",
-      ":CodyAsk rewrite following code more idiomatically<CR>",
-      mode = { "v", "x" },
-      desc = "Request Idiomatic Rewrite",
+      '<leader>at',
+      ':CodyAsk rewrite following code more idiomatically<CR>',
+      mode = { 'v', 'x' },
+      desc = 'Request Idiomatic Rewrite',
     },
   },
   cmd = {
@@ -816,22 +820,23 @@ pack.plug({
     'CodyRestart',
     'CodyOpenDoc',
   },
-  build = "nvim -l build/init.lua",
+  build = 'nvim -l build/init.lua',
   dependencies = {
-    "nvim-lua/plenary.nvim",
-    "nvim-telescope/telescope.nvim"
+    'nvim-lua/plenary.nvim',
+    'nvim-telescope/telescope.nvim',
   },
   opts = {
     enable_cody = true,
     node_executable = Path.path_join(vim.env['FNM_DIR'], 'aliases/default/bin/node'),
-    on_attach = function()
-    end
+    on_attach = function() end,
   },
   init = function()
     -- create user command: CodyOpenDoc to open https://sourcegraph.com/docs/cody/clients/install-neovim
-    vim.api.nvim_create_user_command("CodyOpenDoc", function()
-      vim.ui.open("https://sourcegraph.com/docs/cody/clients/install-neovim")
-    end, {})
+    vim.api.nvim_create_user_command(
+      'CodyOpenDoc',
+      function() vim.ui.open('https://sourcegraph.com/docs/cody/clients/install-neovim') end,
+      {}
+    )
   end,
 })
 
@@ -846,12 +851,10 @@ pack.plug({
     on_attach = function(_, bufnr)
       local set = require('userlib.runtime.keymap').map_buf_thunk(bufnr)
 
-      set({ 'i', 'n' }, '<localleader>ac', function()
-        CommitMsgSg.write()
-      end, {
+      set({ 'i', 'n' }, '<localleader>ac', function() CommitMsgSg.write() end, {
         desc = 'Write git commit message with AI',
         noremap = true,
       })
     end,
-  }
+  },
 })

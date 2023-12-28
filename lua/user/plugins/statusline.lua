@@ -3,25 +3,25 @@ local plug = require('userlib.runtime.pack').plug
 plug({
   --- Copied from stevearc's dotfiles
   ---@see https://github.com/stevearc/dotfiles/blob/860e18ee85d30a72cea5a51acd9983830259075e/.config/nvim/lua/plugins/heirline.lua#L4
-  "rebelot/heirline.nvim",
+  'rebelot/heirline.nvim',
   event = 'VeryLazy',
   cond = not vim.cfg.runtime__starts_as_gittool,
-  dependencies = { "nvim-tree/nvim-web-devicons" },
+  dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
     local comp = require('userlib.statusline.heirline.components')
     local heirline_utils = require('heirline.utils')
 
-    require("heirline").load_colors(comp.setup_colors())
-    local aug = vim.api.nvim_create_augroup("Heirline", { clear = true })
-    vim.api.nvim_create_autocmd("ColorScheme", {
-      desc = "Update Heirline colors",
+    require('heirline').load_colors(comp.setup_colors())
+    local aug = vim.api.nvim_create_augroup('Heirline', { clear = true })
+    vim.api.nvim_create_autocmd('ColorScheme', {
+      desc = 'Update Heirline colors',
       group = aug,
       callback = function()
         local colors = comp.setup_colors()
         heirline_utils.on_colorscheme(colors)
       end,
     })
-    require("heirline").setup({
+    require('heirline').setup({
       winbar = {
         comp.DirAndFileName,
       },
@@ -40,21 +40,22 @@ plug({
       statusline = heirline_utils.insert(
         {
           static = comp.stl_static,
-          hl = { fg = 'fg', bg = "bg" },
+          hl = { fg = 'fg', bg = 'bg' },
         },
         comp.ViMode,
         comp.lpad(comp.Branch),
         comp.lpad(comp.GitStatus),
         -- comp.lpad(comp.ProfileRecording),
         comp.lpad(comp.Copilot),
+        comp.lpad(comp.Codeium),
         comp.lpad(comp.Harpoon),
         comp.lpad(require('userlib.statusline.heirline.component_diagnostic')),
         comp.lpad(comp.TerminalStatusline),
-        require("userlib.statusline.heirline").left_components,
-        { provider = "%=" },
+        require('userlib.statusline.heirline').left_components,
+        { provider = '%=' },
         comp.lpad(comp.Tabs),
-        { provider = "%=" },
-        require("userlib.statusline.heirline").right_components,
+        { provider = '%=' },
+        require('userlib.statusline.heirline').right_components,
         comp.rpad(comp.LastExCommand),
         comp.rpad(comp.NavigateDirection),
         comp.rpad(comp.Dap),
@@ -64,7 +65,7 @@ plug({
         comp.rpad(comp.FileType),
         comp.rpad(comp.DiagnosticsDisabled),
         comp.rpad(comp.WorkspaceRoot)
-      -- comp.Ruler
+        -- comp.Ruler
       ),
 
       opts = {
@@ -72,19 +73,19 @@ plug({
           local buf = args.buf
           local ignore_buftype = vim.tbl_contains(vim.cfg.misc__buf_exclude, vim.bo[buf].buftype)
           local filetype = vim.bo[buf].filetype
-          local ignore_filetype = filetype == "fugitive" or filetype == "qf" or filetype:match("^git")
-          local is_float = vim.api.nvim_win_get_config(0).relative ~= ""
+          local ignore_filetype = filetype == 'fugitive' or filetype == 'qf' or filetype:match('^git')
+          local is_float = vim.api.nvim_win_get_config(0).relative ~= ''
           return ignore_buftype or ignore_filetype or is_float
         end,
       },
     })
 
     vim.api.nvim_create_user_command(
-      "HeirlineResetStatusline",
+      'HeirlineResetStatusline',
       function() vim.o.statusline = "%{%v:lua.require'heirline'.eval_statusline()%}" end,
       {}
     )
     -- Because heirline is lazy loaded, we need to manually set the winbar on startup
     vim.opt_local.winbar = "%{%v:lua.require'heirline'.eval_winbar()%}"
-  end
+  end,
 })
