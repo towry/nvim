@@ -399,7 +399,7 @@ local Branch = {
   update = {
     'User',
     -- doesn't work if current dir is changed
-    pattern = 'FugitiveChanged',
+    pattern = { 'FugitiveChanged', 'FugitiveIndex', 'FugitiveObject' },
   },
 }
 

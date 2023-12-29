@@ -29,13 +29,44 @@ plug({
       'tpope/vim-dispatch',
     },
     keys = {
-      { '<leader>gg', ':Git<cr>',                                                                              desc = 'Fugitive Git' },
-      { '<leader>gG', ':tab Git<cr>',                                                                          desc = 'Fugitive Git in tab' },
-      { '<leader>ga', cmdstr([[Dispatch! Git add %]]),                                                         desc = '!Git add current' },
-      { '<leader>gA', cmdstr([[Dispatch! Git add .]]),                                                         desc = '!Git add all' },
-      { '<leader>gp', cmdstr([[exec "Dispatch! Git push origin " .. FugitiveHead()]]),                         desc = 'Git push' },
-      { '<leader>gu', cmdstr([[exec "Git! pull origin " .. FugitiveHead() | :lua vim.g.escape_cmd="pclose"]]), desc = 'Git pull',           silent = false },
-      { '<leader>gs', cmdstr([[vert Git]]),                                                                    desc = 'Git status',         silent = false, },
+      { '<leader>gm', ':Git merge', desc = 'Fugitive start git merge' },
+      {
+        '<leader>gg',
+        ':Git<cr>',
+        desc = 'Fugitive Git',
+      },
+      {
+        '<leader>gG',
+        ':tab Git<cr>',
+        desc = 'Fugitive Git in tab',
+      },
+      {
+        '<leader>ga',
+        cmdstr([[Dispatch! Git add %]]),
+        desc = '!Git add current',
+      },
+      {
+        '<leader>gA',
+        cmdstr([[Dispatch! Git add .]]),
+        desc = '!Git add all',
+      },
+      {
+        '<leader>gp',
+        cmdstr([[exec "Dispatch! Git push origin " .. FugitiveHead()]]),
+        desc = 'Git push',
+      },
+      {
+        '<leader>gu',
+        cmdstr([[exec "Git! pull origin " .. FugitiveHead() | :lua vim.g.escape_cmd="pclose"]]),
+        desc = 'Git pull',
+        silent = false,
+      },
+      {
+        '<leader>gs',
+        cmdstr([[vert Git]]),
+        desc = 'Git status',
+        silent = false,
+      },
       {
         '<leader>gl',
         function()
@@ -45,7 +76,7 @@ plug({
           vim.cmd(string.format([[Git log -L %s,%s:%s]], line_range[1], line_range[2], file_name))
         end,
         desc = 'View log for selected chunks',
-        mode = { 'v', 'x' }
+        mode = { 'v', 'x' },
       },
       {
         '<leader>gl',
@@ -56,10 +87,12 @@ plug({
             max_count_arg = string.format('--max-count=%s', vcount)
           end
           vim.cmd(
-            'Git log -P ' ..
-            max_count_arg .. ' --oneline --date=format:"%Y-%m-%d %H:%M" --pretty=format:"%h %ad: %s - %an" -- %')
+            'Git log -P '
+              .. max_count_arg
+              .. ' --oneline --date=format:"%Y-%m-%d %H:%M" --pretty=format:"%h %ad: %s - %an" -- %'
+          )
         end,
-        desc = 'Git show current file history'
+        desc = 'Git show current file history',
       },
       {
         -- git log with -p for current buffer. with limits for performance.
@@ -72,7 +105,7 @@ plug({
           end
           vim.cmd(string.format([[Git log %s -p -m --first-parent -P -- %s]], max_count_arg, vim.fn.expand('%')))
         end,
-        desc = 'Git show current file history with diff'
+        desc = 'Git show current file history with diff',
       },
       {
         '<leader>gd',
@@ -94,9 +127,14 @@ plug({
         function()
           local file_name = vim.api.nvim_buf_get_name(0)
           local line_range = libutils.get_range()
-          vim.cmd(string.format([[Git blame -n --date=short --color-lines -L %s,%s %s]], line_range[1],
-            line_range[2],
-            file_name))
+          vim.cmd(
+            string.format(
+              [[Git blame -n --date=short --color-lines -L %s,%s %s]],
+              line_range[1],
+              line_range[2],
+              file_name
+            )
+          )
         end,
         mode = 'x',
         desc = 'Git blame current file with range',
@@ -105,9 +143,7 @@ plug({
         '<leader>gC',
         function()
           vim.cmd('Git commit')
-          vim.schedule(function()
-            vim.cmd('WriteGitCommitMessage')
-          end)
+          vim.schedule(function() vim.cmd('WriteGitCommitMessage') end)
         end,
         desc = 'Let ai write the commit',
       },
@@ -121,14 +157,14 @@ plug({
           }, function(input)
             -- if input is trimmed empty
             if vim.trim(input or '') == '' then
-              vim.notify("Empty commit message", vim.log.levels.ERROR)
+              vim.notify('Empty commit message', vim.log.levels.ERROR)
               return
             end
             vim.cmd(string.format('Dispatch! Git commit -m "%s"', input))
           end)
         end,
         desc = 'Git commit',
-      }
+      },
     },
     event = 'VeryLazy',
     cmd = {
@@ -253,32 +289,32 @@ plug({
       {
         'ghd',
         '<cmd>Gitsigns diffthis<cr>',
-        desc = "Diff this",
+        desc = 'Diff this',
       },
       {
         'ghs',
         '<cmd>Gitsigns stage_hunk<cr>',
-        desc = "Stage hunk",
+        desc = 'Stage hunk',
       },
       {
         'ghr',
         '<cmd>Gitsigns reset_hunk<cr>',
-        desc = "Reset hunk",
+        desc = 'Reset hunk',
       },
       {
         'gha',
         '<cmd>Gitsigns stage_buffer<cr>',
-        desc = "Stage buffer",
+        desc = 'Stage buffer',
       },
       {
         'ghu',
         '<cmd>Gitsigns undo_stage_hunk<cr>',
-        desc = "Undo stage hunk",
+        desc = 'Undo stage hunk',
       },
       {
         'ghR',
         '<cmd>Gitsigns reset_buffer<cr>',
-        desc = "Reset buffer",
+        desc = 'Reset buffer',
       },
       {
         'ghp',
@@ -317,18 +353,16 @@ plug({
           if vim.wo.diff then return end
           vim.schedule(function() gs.next_hunk() end)
         end,
-        desc = 'Next hunk'
+        desc = 'Next hunk',
       },
       {
         'gh[',
         function()
           local gs = require('gitsigns')
           if vim.wo.diff then return end
-          vim.schedule(function()
-            gs.prev_hunk()
-          end)
+          vim.schedule(function() gs.prev_hunk() end)
         end,
-        desc = 'Prev hunk'
+        desc = 'Prev hunk',
       },
     },
     event = au.user_autocmds.FileOpenedAfter_User,
@@ -360,9 +394,9 @@ plug({
           untracked = { hl = 'GitSignsAddNr', text = '┃', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
         },
         signcolumn = not vim.cfg.runtime__starts_as_gittool, -- Toggle with `:Gitsigns toggle_signs`
-        numhl = false,                                       -- Toggle with `:Gitsigns toggle_numhl`
-        linehl = false,                                      -- Toggle with `:Gitsigns toggle_linehl`
-        word_diff = false,                                   -- Toggle with `:Gitsigns toggle_word_diff`
+        numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
+        linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
+        word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
         watch_gitdir = {
           interval = vim.cfg.runtime__starts_as_gittool and 3000 or 1000,
           follow_files = true,
@@ -454,8 +488,7 @@ plug({
 plug({
   'whiteinge/diffconflicts',
   lazy = not vim.cfg.runtime__starts_as_gittool,
-  config = function()
-  end,
+  config = function() end,
 })
 plug({
   -- 'pze/git-conflict.nvim',
@@ -504,7 +537,7 @@ plug({
       '<leader>gcr',
       '<cmd>GitConflictRefresh<cr>',
       desc = 'Git conflict refresh',
-    }
+    },
   },
   cmd = {
     'GitConflictChooseBoth',
@@ -520,7 +553,7 @@ plug({
     local conflict = require('git-conflict')
 
     conflict.setup({
-      default_mappings = true,    -- disable buffer local mapping created by this plugin
+      default_mappings = true, -- disable buffer local mapping created by this plugin
       default_commands = true,
       disable_diagnostics = true, -- This will disable the diagnostics in a buffer whilst it is conflicted
       -- highlights = {              -- They must have background color, otherwise the default color will be used
@@ -540,7 +573,7 @@ plug({
       '<leader>gw',
       '<cmd>lua require("telescope").extensions.git_worktree.git_worktrees()<cr>',
       desc = 'Git worktree',
-    }
+    },
   },
   opts = {
     autopush = false,
@@ -548,9 +581,7 @@ plug({
   init = function()
     au.define_user_autocmd({
       pattern = 'TelTelescopeConfigDone',
-      callback = function()
-        require('telescope').load_extension('git_worktree')
-      end,
+      callback = function() require('telescope').load_extension('git_worktree') end,
     })
   end,
 })
