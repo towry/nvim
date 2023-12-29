@@ -319,6 +319,11 @@ local function setup_basic()
     desc = 'Resize after window size changed',
     silent = false,
   })
+  set('n', '<leader>z<space>', ':ToggleDark<CR>', {
+    desc = 'Toggle dark mode',
+    noremap = true,
+    silent = true,
+  })
 end
 
 function M.setup() setup_basic() end

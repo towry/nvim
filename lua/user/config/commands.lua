@@ -1,9 +1,32 @@
 local create_cmd = vim.api.nvim_create_user_command
+local package_path_updated = false
 
-create_cmd('OnDarkMode', function()
+local function update_background_from_script()
   package.loaded['lua.settings_env'] = nil
+  if not package_path_updated then
+    package.path = package.path .. ';' .. vim.fn.fnamemodify(vim.env.MYVIMRC, ':h') .. '/?.lua'
+    package_path_updated = true
+  end
   pcall(require, 'lua.settings_env')
+end
+
+create_cmd('ToggleDark', function()
+  local old_mode = vim.opt.background:get()
+  update_background_from_script()
+  if old_mode ~= vim.opt.background:get() then
+    -- just sync the changes.
+    return
+  end
+
+  local mode = old_mode == 'dark' and 'light' or 'dark'
+
+  local cmds =
+    string.format([[:silent !python3 %s %s]], vim.fn.expand('$HOME/.dotfiles/conf/commands/color_mode.py'), mode)
+  vim.cmd(cmds)
+  vim.cmd(':silent OnDarkMode')
 end, {})
+
+create_cmd('OnDarkMode', update_background_from_script, {})
 
 -- Define the TmuxRerun command
 create_cmd('TmuxRerun', function(opts)
