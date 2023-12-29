@@ -312,7 +312,10 @@ local function setup_basic()
     desc = 'Toggle number',
   })
 
-  set('n', '<leader>zr', ':resize<cr>', {
+  set('n', '<leader>zr', function()
+    vim.cmd.resize()
+    vim.cmd('OnDarkMode')
+  end, {
     desc = 'Resize after window size changed',
     silent = false,
   })

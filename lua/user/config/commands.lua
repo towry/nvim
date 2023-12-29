@@ -1,5 +1,10 @@
 local create_cmd = vim.api.nvim_create_user_command
 
+create_cmd('OnDarkMode', function()
+  package.loaded['lua.settings_env'] = nil
+  pcall(require, 'lua.settings_env')
+end, {})
+
 -- Define the TmuxRerun command
 create_cmd('TmuxRerun', function(opts)
   -- Split the input arguments on '--' to separate the pane index and optional shell commands
