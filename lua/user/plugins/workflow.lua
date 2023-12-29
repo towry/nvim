@@ -440,6 +440,20 @@ plug({
     keys = {
       '<D-i>',
       '<D-o>',
+      {
+        -- super + i
+        '<Char-0xAF>',
+        "<cmd>lua require('bufjump').forward()<cr>",
+        desc = 'Forward buf jump',
+        noremap = true,
+      },
+      {
+        -- super + o
+        '<Char-0xBA>',
+        "<cmd>lua require('bufjump').backward()<cr>",
+        desc = 'Backward buf jump',
+        noremap = true,
+      },
     },
     opts = {
       forward = '<D-i>',

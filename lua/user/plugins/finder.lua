@@ -14,27 +14,23 @@ plug({
     default_ui_mappings = true,
     default_quickfix_mappings = true,
     -- you can override it with vim.b.grep_flags
-    cmd_flags = ("--smart-case --fixed-strings --no-fixed-strings -M 500"),
+    cmd_flags = '--smart-case --fixed-strings --no-fixed-strings -M 500',
     colors = {
       RgFlowInputPath = { link = 'NormalFloat' },
       RgFlowInputBg = { link = 'NormalFloat' },
       RgFlowInputFlags = { link = 'NormalFloat' },
       RgFlowInputPattern = { link = 'NormalFloat' },
-    }
+    },
   },
   keys = {
     {
       '<localleader>fg',
-      function()
-        require('rgflow').open(nil, vim.b.grep_flags or nil, vim.cfg.runtime__starts_cwd)
-      end,
+      function() require('rgflow').open(nil, vim.b.grep_flags or nil, vim.cfg.runtime__starts_cwd) end,
       desc = 'Grep search in all project',
     },
     {
       '<localleader>fs',
-      function()
-        require('rgflow').open(nil, vim.b.grep_flags or nil, vim.uv.cwd())
-      end,
+      function() require('rgflow').open(nil, vim.b.grep_flags or nil, vim.uv.cwd()) end,
       desc = 'Grep search current project',
     },
     {
@@ -72,8 +68,8 @@ plug({
       '<leader>sgh',
       '<cmd>lua require("rgflow").show_rg_help()<cr>',
       desc = 'Show rg help in float window',
-    }
-  }
+    },
+  },
 })
 
 plug({
@@ -180,7 +176,9 @@ plug({
   keys = {
     { '<leader>/o', '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
     -- <CMD-l> open the outline.
-    { '<D-l>',      '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
+    { '<D-l>', '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
+    -- same as above in tmux.
+    { '<Char-0xAE>', '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
   },
   cmd = { 'AerialToggle', 'AerialOpen', 'AerialClose' },
   opts = {
@@ -281,9 +279,7 @@ plug({
       if symbol.scope == 'private' then return 'AerialPrivate' end
     end,
   },
-  config = function(_, opts)
-    require('aerial').setup(opts)
-  end,
+  config = function(_, opts) require('aerial').setup(opts) end,
 })
 
 plug({
@@ -487,7 +483,7 @@ plug({
       desc = 'Show commits for current buffer with diff preview',
     },
     {
-      '<D-\\>',
+      '<leader>fj',
       '<cmd>Telescope jumplist fname_width=60 show_line=false<cr>',
       desc = 'Show jumplist',
     },
@@ -511,8 +507,8 @@ plug({
     {
       'jvgrootveld/telescope-zoxide',
       keys = {
-        { '<leader>fz', ':lua require("telescope").extensions.zoxide.list()<cr>', desc = 'zoxide', silent = true }
-      }
+        { '<leader>fz', ':lua require("telescope").extensions.zoxide.list()<cr>', desc = 'zoxide', silent = true },
+      },
     },
   },
   config = function(_, opts)
@@ -582,8 +578,7 @@ plug({
             preview_cutoff = 0,
             width = 0.98,
           },
-          flex = {
-          },
+          flex = {},
           bottom_pane = {
             preview_width = 0.4,
             -- When columns are less than this value, the preview will be disabled
@@ -672,7 +667,7 @@ plug({
         live_grep_args = {
           disable_coordinates = true,
           auto_quoting = true, -- enable/disable auto-quoting
-          layout_strategy = "vertical",
+          layout_strategy = 'vertical',
           layout_config = {
             width = 0.95,
             mirror = false,
@@ -751,32 +746,26 @@ plug({
       '<leader>ph',
       function()
         require('userlib.mini.visits').select_by_cwd(vim.cfg.runtime__starts_cwd, {
-          filter = 'harpoon'
+          filter = 'harpoon',
         })
       end,
       desc = 'List harpoon visits',
     },
     {
       '<leader>pp',
-      function()
-        require('userlib.mini.visits').list_projects_in_cwd(vim.cfg.runtime__starts_cwd)
-      end,
+      function() require('userlib.mini.visits').list_projects_in_cwd(vim.cfg.runtime__starts_cwd) end,
       desc = 'List projects in cwd',
     },
     {
       '<leader>pa',
-      function()
-        require('userlib.mini.visits').add_project(vim.uv.cwd(), vim.cfg.runtime__starts_cwd)
-      end,
+      function() require('userlib.mini.visits').add_project(vim.uv.cwd(), vim.cfg.runtime__starts_cwd) end,
       desc = 'Add project',
     },
     {
       '<leader>pP',
-      function()
-        require('mini.visits').write_index()
-      end,
+      function() require('mini.visits').write_index() end,
       desc = 'Write index',
-    }
+    },
   },
   opts = function()
     return {
@@ -786,10 +775,8 @@ plug({
       track = {
         event = 'BufEnter',
         delay = 1000,
-      }
+      },
     }
   end,
-  config = function(_, opts)
-    require('mini.visits').setup(opts)
-  end,
+  config = function(_, opts) require('mini.visits').setup(opts) end,
 })
