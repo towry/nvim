@@ -11,7 +11,7 @@ local xk = utils.utf8keys({
   [ [[<C-'>]] ] = 0xAD,
   [ [[<C-;>]] ] = 0xAB,
   [ [[<C-i>]] ] = 0xAC,
-}, true)
+}, false)
 
 local function setup_basic()
   --->>
@@ -112,11 +112,6 @@ local function setup_basic()
     desc = 'Case change in visual mode',
   })
 
-  -- this is what <D-s> output in zellij.
-  set({ 'n', 'i' }, 'ª', '<ESC>:silent! update<cr>', {
-    desc = 'Save buffer',
-    silent = true,
-  })
   set({ 'n', 'i' }, xk([[<D-s>]]), '<ESC>:silent! update<cr>', {
     desc = 'Save current buffer',
     silent = true,
