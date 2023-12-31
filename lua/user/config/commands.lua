@@ -1,3 +1,4 @@
+local pathlib = require('userlib.runtime.path')
 local create_cmd = vim.api.nvim_create_user_command
 local package_path_updated = false
 
@@ -94,4 +95,37 @@ end, {
   nargs = '+', -- This command requires at least one argument (the command to run)
   desc = 'Run a command in a new tmux split-window',
   complete = 'shellcmd', -- Use shell command completion
+})
+
+create_cmd('TryMake', function(opts)
+  local cwd = vim.uv.cwd()
+  local target = opts.fargs[1]
+  if target == nil then
+    target = ''
+  else
+    target = ' ' .. target
+  end
+  if vim.bo.buftype == '' then cwd = vim.fn.expand('%:p:h') end
+  pathlib.search_ancestors(cwd, function(dir)
+    if pathlib.is_home_dir(dir) then
+      vim.notify('Makefile not found, homedir reached.')
+      return true
+    end
+    if type(dir) ~= 'string' then
+      vim.notify('invalid path found, return')
+      return true
+    end
+    local mk = pathlib.join(dir, 'Makefile')
+    if vim.fn.filereadable(mk) == 1 then
+      local cwd = vim.uv.cwd()
+      vim.cmd.lcd(dir)
+      local cmds = string.format([[Make -f %s%s]], mk, target)
+      vim.cmd(cmds)
+      vim.cmd.lcd(cwd)
+      return true
+    end
+  end)
+end, {
+  nargs = '*',
+  desc = 'Find makefile and run',
 })

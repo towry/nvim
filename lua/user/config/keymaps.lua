@@ -319,6 +319,11 @@ local function setup_basic()
     noremap = true,
     silent = true,
   })
+
+  set('n', '<localleader>m', ':TryMake', {
+    desc = 'Run make',
+    silent = false,
+  })
 end
 
 function M.setup() setup_basic() end
