@@ -1,14 +1,21 @@
 local M = {}
 
 function M.setup()
+  vim.g.mapleader = ' '
+  vim.g.maplocalleader = ','
+
   require('userlib.runtime.globals')
   require('user.config.custom').setup()
-  require('user.config.options').setup()
+  require('user.config.options').init_edit()
 
   require('user.config.autocmd').setup({
     -- lazy
     resize_kitty = false,
-    on_very_lazy = function() require('user.config.keymaps').setup() end,
+    on_very_lazy = function()
+      require('user.config.options').setup()
+      require('user.config.keymaps').setup()
+      require('user.config.commands')
+    end,
   })
 
   require('user.config.lazy').setup({}, {
@@ -20,7 +27,6 @@ function M.setup()
   })
 
   require('user.config.theme').setup()
-  require('user.config.commands')
 end
 
 return M

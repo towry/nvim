@@ -7,48 +7,48 @@ function M.init_edit()
   o.exrc = true
   o.jumpoptions = 'stack'
   o.breakindent = true
-  o.cpoptions:append('>')                    -- append to register with line break
-  o.inccommand = 'nosplit'                   -- preview incremental substitute
+  o.cpoptions:append('>') -- append to register with line break
+  o.inccommand = 'nosplit' -- preview incremental substitute
   o.clipboard = { 'unnamed', 'unnamedplus' } --- Copy-paste between vim and everything else
-  o.expandtab = true                         --- Use spaces instead of tabs
-  o.ignorecase = true                        --- Needed for smartcase
+  o.expandtab = true --- Use spaces instead of tabs
+  o.ignorecase = true --- Needed for smartcase
   o.textwidth = 80
-  o.shiftwidth = 2                           --- Change a number of space characeters inseted for indentation
-  o.shiftround = true                        -- round indent.
-  o.smartcase = true                         --- Uses case in search
-  o.smartindent = true                       --- Makes indenting smart
-  o.smarttab = true                          --- Makes tabbing smarter will realize you have 2 vs 4
-  o.softtabstop = 2                          --- Insert 2 spaces for a tab
-  o.splitright = true                        --- Vertical splits will automatically be to the right
+  o.shiftwidth = 2 --- Change a number of space characeters inseted for indentation
+  o.shiftround = true -- round indent.
+  o.smartcase = true --- Uses case in search
+  o.smartindent = true --- Makes indenting smart
+  o.smarttab = true --- Makes tabbing smarter will realize you have 2 vs 4
+  o.softtabstop = 2 --- Insert 2 spaces for a tab
+  o.splitright = true --- Vertical splits will automatically be to the right
   o.splitbelow = false
-  o.swapfile = false                         --- Swap not needed
-  o.tabstop = 2                              --- Insert 2 spaces for a tab
-  o.timeoutlen = 400                         --- Key sequence wait time | Faster completion (cannot be lower than 200 because then commenting doesn't work)
+  o.swapfile = false --- Swap not needed
+  o.tabstop = 2 --- Insert 2 spaces for a tab
+  o.timeoutlen = 400 --- Key sequence wait time | Faster completion (cannot be lower than 200 because then commenting doesn't work)
   o.showcmd = true
   o.showcmdloc = 'last'
   o.winminwidth = 10
   o.winwidth = 10
   o.equalalways = vim.cfg.ui__window_equalalways
-  o.showmatch = false                                            -- show {} match and jump
-  o.undofile = true                                              --- Sets undo to file
-  o.updatetime = 250                                             --- Faster completion
+  o.showmatch = false -- show {} match and jump
+  o.undofile = true --- Sets undo to file
+  o.updatetime = 250 --- Faster completion
   -- o.viminfo        = "'1000" --- Increase the size of file history
   o.wildignore = { '*node_modules/**', '.git/**', '*.DS_Store' } --- Don't search inside Node.js modules (works for gutentag)
-  o.wrap = false                                                 --- Display long lines as just one line
+  o.wrap = false --- Display long lines as just one line
   -- enable line-wrapping with left and right cursor movement
   vim.opt.whichwrap:append({ ['<'] = true, ['>'] = true, ['h'] = true, ['l'] = true, ['['] = true, [']'] = true })
   -- add @, -, and $ as keywords for full SCSS support
   vim.opt.iskeyword:append({ '@-@', '-', '$' })
-  o.writebackup = false                      --- Not needed
-  o.autoindent = true                        --- Good auto indent
+  o.writebackup = false --- Not needed
+  o.autoindent = true --- Good auto indent
   o.backspace = { 'indent', 'eol', 'start' } --- Making sure backspace works
-  o.backup = false                           --- Recommended by coc
-  o.conceallevel = 0                         --- Show `` in markdown files
-  o.encoding = 'utf-8'                       --- The encoding displayed
-  o.errorbells = false                       --- Disables sound effect for errors
-  o.fileencoding = 'utf-8'                   --- The encoding written to file
-  o.incsearch = true                         --- Start searching before pressing enter
-  o.switchbuf = 'usetab'                     -- Use already opened buffers when switching
+  o.backup = false --- Recommended by coc
+  o.conceallevel = 0 --- Show `` in markdown files
+  o.encoding = 'utf-8' --- The encoding displayed
+  o.errorbells = false --- Disables sound effect for errors
+  o.fileencoding = 'utf-8' --- The encoding written to file
+  o.incsearch = true --- Start searching before pressing enter
+  o.switchbuf = 'usetab' -- Use already opened buffers when switching
   o.diffopt:append({ 'algorithm:histogram', 'foldcolumn:0', 'vertical', 'linematch:50' })
   -- o.shellcmdflag = '-ic' --- Make shell alias works, has bugs.
   o.virtualedit = 'onemore'
@@ -58,36 +58,32 @@ function M.init_interface()
   --- blink cursor see https://github.com/neovim/neovim/pull/26075
   --- set guicursor+=n:blinkon1
   o.guicursor:append('n-v-c:blinkon500-blinkoff500')
-  o.colorcolumn =
-  '+1'                                                          -- Draw colored column one step to the right of desired maximum width
-  o.showmode = false                                            --- Don't show things like -- INSERT -- anymore
-  o.modeline = true                                             -- Allow modeline
-  o.ruler = false                                               -- Always show cursor position
-  o.termguicolors = true                                        --- Correct terminal colors
+  o.colorcolumn = '+1' -- Draw colored column one step to the right of desired maximum width
+  o.showmode = false --- Don't show things like -- INSERT -- anymore
+  o.modeline = true -- Allow modeline
+  o.ruler = false -- Always show cursor position
+  o.termguicolors = true --- Correct terminal colors
   o.confirm = true
   o.showtabline = vim.cfg.runtime__starts_as_gittool and 2 or 0 --- Always show tabs
-  o.signcolumn =
-  'yes:1'                                                       --- Add extra sign column next to line number
-  o.relativenumber = vim.cfg.editor__relative_number and
-      not vim.cfg
-      .runtime__starts_as_gittool                   --- Enables relative number
+  o.signcolumn = 'yes:1' --- Add extra sign column next to line number
+  o.relativenumber = vim.cfg.editor__relative_number and not vim.cfg.runtime__starts_as_gittool --- Enables relative number
   o.numberwidth = 1
-  o.number = true                                   --- Shows current line number
-  o.pumheight = 10                                  --- Max num of items in completion menu
-  o.pumblend = 0                                    -- popup blend
-  o.scrolloff = 10                                  --- Always keep space when scrolling to bottom/top edge
+  o.number = true --- Shows current line number
+  o.pumheight = 10 --- Max num of items in completion menu
+  o.pumblend = 0 -- popup blend
+  o.scrolloff = 10 --- Always keep space when scrolling to bottom/top edge
   -- o.smoothscroll = true
-  o.sidescroll = 10                                 --- Used only when 'wrap' option is off and the cursor is moved off the screen.
-  o.mouse = 'a'                                     --- Enable mouse
-  o.sidescrolloff = 8                               -- Columns of context
-  o.lazyredraw = false                              --- Makes macros faster & prevent errors in complicated mappings
-  o.wildmode = { 'longest:full', 'full' }           -- Command-line completion mode
-  o.cmdheight = 1                                   --- Give more space for displaying messages
+  o.sidescroll = 10 --- Used only when 'wrap' option is off and the cursor is moved off the screen.
+  o.mouse = 'a' --- Enable mouse
+  o.sidescrolloff = 8 -- Columns of context
+  o.lazyredraw = false --- Makes macros faster & prevent errors in complicated mappings
+  o.wildmode = { 'longest:full', 'full' } -- Command-line completion mode
+  o.cmdheight = 1 --- Give more space for displaying messages
   o.completeopt = { 'menu', 'menuone', 'noselect' } --- Better autocompletion
-  o.cursorline = true                               --- Highlight of current line
-  o.emoji = true                                    --- Fix emoji display
+  o.cursorline = true --- Highlight of current line
+  o.emoji = true --- Fix emoji display
   o.cursorlineopt = 'both'
-  o.foldcolumn = '1'                                -- Folding
+  o.foldcolumn = '1' -- Folding
   o.list = true
   o.listchars:append('tab:⇢ ')
   -- o.listchars:append('eol:↩')
@@ -105,8 +101,7 @@ function M.init_interface()
     foldclose = '',
     diff = ' ',
   }
-  vim.o.statuscolumn =
-  '%s%=%{v:lua.Ty.stl_num()}%{v:lua.Ty.stl_foldlevel()}'
+  vim.o.statuscolumn = '%s%=%{v:lua.Ty.stl_num()}%{v:lua.Ty.stl_foldlevel()}'
   -- o.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
   o.shortmess:append({ a = true, c = true, F = true, I = true, T = true, t = true })
   if vim.fn.has('nvim-0.9.0') == 1 then
@@ -134,8 +129,8 @@ end
 
 function M.init_folds()
   if vim.g.vscode then return end
-  o.foldnestmax = 10    -- deepest fold is 10 levels
-  o.foldlevel = 99      --- Using ufo provider need a large value
+  o.foldnestmax = 10 -- deepest fold is 10 levels
+  o.foldlevel = 99 --- Using ufo provider need a large value
   o.foldlevelstart = 99 --- Expand all folds by default
 
   M.enable_foldexpr_for_buf()
@@ -182,10 +177,6 @@ function M.setup_lsp()
 end
 
 function M.setup()
-  vim.g.mapleader = ' '
-  vim.g.maplocalleader = ','
-
-  M.init_edit()
   M.init_interface()
   M.init_other()
   M.init_folds()

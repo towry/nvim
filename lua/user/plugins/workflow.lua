@@ -470,7 +470,7 @@ plug({
   opts = {
     ignore_filetype = { 'oil' },
   },
-  lazy = false,
+  event = 'VeryLazy',
   keys = {
     {
       ']b',
