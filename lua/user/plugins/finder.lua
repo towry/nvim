@@ -833,8 +833,20 @@ plug({
       desc = 'Fzf',
       silent = true,
     },
+    {
+      '<C-x><C-f>',
+      '<cmd>lua require("fzf-lua").complete_path()<cr>',
+      desc = 'Complete file path',
+      mode = { 'i' },
+    },
   },
   config = function()
-    require('fzf-lua').setup({ 'max-perf' })
+    -- https://github.com/ibhagwan/fzf-lua?tab=readme-ov-file#default-options
+    require('fzf-lua').setup({
+      'max-perf',
+      winopts = {
+        fullscreen = true,
+      },
+    })
   end,
 })
