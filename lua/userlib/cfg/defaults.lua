@@ -198,4 +198,5 @@ return {
   },
   ---plugins specific.
   plugin__whichkey_or_clue = 'clue',
+  plugin_fzf_or_telescope = 'fzf',
 }

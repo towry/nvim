@@ -143,14 +143,12 @@ plug({
     },
   },
   keys = {
-    -- {
-    --   '<leader>fo',
-    --   function() require('oil').open(vim.cfg.runtime__starts_cwd) end,
-    --   desc = 'Open oil(Root) file browser',
-    -- },
     {
       '<leader>fO',
       function()
+        if vim.bo.buftype ~= '' then
+          return
+        end
         require('oil').open(require('userlib.runtime.utils').get_root())
       end,
       desc = 'Open oil(BUF) file browser',
@@ -158,6 +156,9 @@ plug({
     {
       '-',
       function()
+        if vim.bo.buftype ~= '' then
+          return
+        end
         require('oil').open()
       end,
       desc = 'Open oil file browser(buf)',
@@ -165,6 +166,9 @@ plug({
     {
       '_',
       function()
+        if vim.bo.buftype ~= '' then
+          return
+        end
         require('oil').open_float()
       end,
       desc = 'Open oil file browser(buf|float)',
@@ -815,5 +819,22 @@ plug({
   end,
   config = function(_, opts)
     require('mini.visits').setup(opts)
+  end,
+})
+
+plug({
+  'ibhagwan/fzf-lua',
+  dependencies = { 'nvim-tree/nvim-web-devicons' },
+  cmd = 'FzfLua',
+  keys = {
+    {
+      '<localleader>,',
+      ':FzfLua<cr>',
+      desc = 'Fzf',
+      silent = true,
+    },
+  },
+  config = function()
+    require('fzf-lua').setup({})
   end,
 })
