@@ -54,6 +54,16 @@ function M.startup()
   -- load this early to avoid :intro screen.
   o.shortmess:append({ a = true, c = true, F = true, I = true, T = true, t = true })
   vim.opt.laststatus = 0 --- never on startup, setup later by plugin
+  o.fillchars = {
+    stl = ' ',
+    stlnc = ' ',
+    eob = ' ',
+    fold = ' ',
+    foldsep = ' ',
+    foldopen = '',
+    foldclose = '',
+    diff = ' ',
+  }
 end
 
 function M.init_interface()
@@ -94,16 +104,6 @@ function M.init_interface()
   o.listchars:append('nbsp:␣')
   o.listchars:append('precedes:«')
   -- o.listchars:append('trail:-')
-  o.fillchars = {
-    stl = ' ',
-    stlnc = ' ',
-    eob = ' ',
-    fold = ' ',
-    foldsep = ' ',
-    foldopen = '',
-    foldclose = '',
-    diff = ' ',
-  }
   vim.o.statuscolumn = '%s%=%{v:lua.Ty.stl_num()}%{v:lua.Ty.stl_foldlevel()}'
   -- o.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
   -- o.formatoptions:append {
