@@ -449,10 +449,10 @@ local Tabs = {
   utils.make_tablist({ -- component for each tab
     provider = function(self) return (self and self.tabnr) and '%' .. self.tabnr .. 'T ' .. self.tabnr .. ' %T' or '' end,
     hl = function(self)
-      if self.is_active then
-        return { fg = 'Green' }
+      if not self.is_active then
+        return { fg = 'Green', bg = 'Gray' }
       else
-        return { fg = 'Gray' }
+        return { fg = 'Gray', bg = 'Green' }
       end
     end,
   }),

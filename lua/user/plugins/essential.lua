@@ -20,6 +20,13 @@ pack.plug({
   },
   {
     'tpope/vim-dispatch',
+    keys = {
+      {
+        '<leader>rd',
+        ':Dispatch',
+        desc = 'Start Dispatch',
+      },
+    },
     cmd = {
       'Dispatch',
       'Make',
@@ -27,6 +34,7 @@ pack.plug({
       'FocusDispatch',
       'Start',
       'Copen',
+      'AbortDispatch',
     },
     config = function() end,
     init = function()
