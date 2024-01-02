@@ -846,6 +846,18 @@ plug({
       'max-perf',
       winopts = {
         fullscreen = true,
+        preview = {
+          default = 'bat',
+          wrap = 'wrap',
+          horizontal = 'right:40%',
+          vertical = 'down:45%',
+        },
+      },
+      keymap = {
+        fzf = {
+          ['ctrl-d'] = 'preview-page-down',
+          ['ctrl-p'] = 'preview-page-up',
+        },
       },
     })
   end,
