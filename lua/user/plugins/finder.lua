@@ -81,6 +81,7 @@ plug({
   'stevearc/oil.nvim',
   lazy = not vim.cfg.runtime__starts_in_buffer,
   event = { 'TabEnter' },
+  cmd = 'Oil',
   opts = {
     default_file_explorer = true,
     keymaps = {
