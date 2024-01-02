@@ -855,8 +855,8 @@ plug({
       },
       keymap = {
         fzf = {
-          ['ctrl-d'] = 'preview-page-down',
-          ['ctrl-p'] = 'preview-page-up',
+          -- ['ctrl-d'] = 'preview-page-down',
+          -- ['ctrl-f'] = 'preview-page-up',
         },
       },
     })
