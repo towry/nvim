@@ -1,21 +1,23 @@
 local M = {}
 
+local function on_very_lazy()
+  require('user.config.options').setup()
+  require('user.config.keymaps').setup()
+  require('user.config.commands')
+end
+
 function M.setup()
   vim.g.mapleader = ' '
   vim.g.maplocalleader = ','
 
   require('userlib.runtime.globals')
   require('user.config.custom').setup()
-  require('user.config.options').init_edit()
+  require('user.config.options').startup()
 
   require('user.config.autocmd').setup({
     -- lazy
     resize_kitty = false,
-    on_very_lazy = function()
-      require('user.config.options').setup()
-      require('user.config.keymaps').setup()
-      require('user.config.commands')
-    end,
+    on_very_lazy = on_very_lazy,
   })
 
   require('user.config.lazy').setup({}, {
@@ -25,6 +27,8 @@ function M.setup()
       return spec
     end,
   })
+
+  if not package.loaded.lazy then on_very_lazy() end
 
   require('user.config.theme').setup()
 end

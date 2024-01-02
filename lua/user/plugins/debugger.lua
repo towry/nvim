@@ -1,5 +1,6 @@
 -- debugger and runner.
-local cmdstr = require('userlib.runtime.keymap').cmdstr
+-- local cmdstr = require('userlib.runtime.keymap').cmdstr
+local au = require('userlib.runtime.au')
 local pack = require('userlib.runtime.pack')
 local libutils = require('userlib.runtime.utils')
 
@@ -207,7 +208,7 @@ pack.plug({
     'nvim-treesitter/nvim-treesitter',
     'haydenmeade/neotest-jest',
   },
-  init = function()
+  init = au.schedule_lazy(function()
     require('userlib.legendary').register('neotest', function(lg)
       lg.funcs({
         {
@@ -237,7 +238,7 @@ pack.plug({
         },
       })
     end)
-  end,
+  end),
   config = function()
     local present, neotest = pcall(require, 'neotest')
     if not present then return end
@@ -403,7 +404,7 @@ pack.plug({
       end
     end, {})
   end,
-  init = function()
+  init = au.schedule_lazy(function()
     require('userlib.legendary').register('overseer', function(lg)
       lg.commands({
         {
@@ -439,7 +440,7 @@ pack.plug({
         }
       })
     end)
-  end
+  end)
 })
 
 pack.plug({

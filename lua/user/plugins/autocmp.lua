@@ -1,3 +1,4 @@
+local au = require('userlib.runtime.au')
 local pack = require('userlib.runtime.pack')
 local Path = require('userlib.runtime.path')
 local libutils = require('userlib.runtime.utils')
@@ -632,7 +633,7 @@ pack.plug({
     },
     cmd = { 'Copilot' },
     config = function() end,
-    init = function()
+    init = au.schedule_lazy(function()
       vim.g.copilot_filetypes = {
         ['*'] = false,
         ['TelescopePrompt'] = false,
@@ -703,7 +704,7 @@ pack.plug({
           vim.api.nvim_command('doautocmd User CopilotStatus')
         end,
       })
-    end,
+    end),
   },
 })
 

@@ -92,7 +92,7 @@ return plug({
         end,
       })
     end,
-    init = function()
+    init = au.schedule_lazy(function()
       -- listen enter dashboard event.
       au.define_autocmds({
         {
@@ -112,6 +112,6 @@ return plug({
           },
         },
       })
-    end,
+    end),
   },
 })

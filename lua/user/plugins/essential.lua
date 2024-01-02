@@ -544,7 +544,9 @@ pack.plug({
     })
     require('telescope').load_extension('yank_history')
   end,
-  init = function() require('userlib.legendary').pre_hook('setup_yanky_lg', setup_yanky_legendary) end,
+  init = au.schedule_lazy(
+    function() require('userlib.legendary').pre_hook('setup_yanky_lg', setup_yanky_legendary) end
+  ),
 })
 
 pack.plug({

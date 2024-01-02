@@ -142,7 +142,7 @@ return plug({
     MF.setup(opts)
     vim.schedule(function() vim.cmd('hi! link MiniFilesBorder NormalFloat') end)
   end,
-  init = function()
+  init = au.schedule_lazy(function()
     au.define_user_autocmd({
       pattern = 'MiniFilesBufferCreate',
       callback = function(args)
@@ -256,5 +256,5 @@ return plug({
     -- vim.wo[win_id].winblend = 10
     --   end,
     -- })
-  end,
+  end),
 })

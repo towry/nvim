@@ -507,14 +507,14 @@ plug({
       desc = 'Prev buffer in window',
     },
   },
-  init = function()
+  init = au.schedule_lazy(function()
     -- create a user command with nvim api
     vim.api.nvim_create_user_command(
       'DebugWindowBufStack',
       function() vim.print(require('window-bufstack.bufstack').debug()) end,
       {}
     )
-  end,
+  end),
 })
 
 plug({
@@ -557,7 +557,7 @@ plug({
       },
     },
   },
-  init = function()
+  init = au.schedule_lazy(function()
     vim.api.nvim_create_user_command('MakeSession', function() require('userlib.mini.session').make_session() end, {})
     vim.api.nvim_create_user_command('LoadSession', function() require('userlib.mini.session').load_session() end, {})
     -- keymaps
@@ -577,7 +577,7 @@ plug({
         },
       })
     end)
-  end,
+  end),
 })
 
 plug({

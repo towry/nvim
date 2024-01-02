@@ -1,5 +1,6 @@
 --- https://github.com/razak17/nvim/blob/32bb5b4df9fe5063b468324465afcf8c34b1db70/lua/user/plugins/motions.lua#L57
 local plug = require('userlib.runtime.pack').plug
+local au = require('userlib.runtime.au')
 local fmt = string.format
 
 local function get_available_stacks(notify)
@@ -56,27 +57,27 @@ return plug({
     'TrailBlazerSaveSession',
   },
   keys = {
-    { '<leader><space>', '<cmd>TrailBlazerNewTrailMark<cr>',          desc = 'New trail mark' },
-    { '<leader>vn',      '<cmd>TrailBlazerMoveToNearest<cr>',         desc = 'Trail nearest' },
+    { '<leader><space>', '<cmd>TrailBlazerNewTrailMark<cr>', desc = 'New trail mark' },
+    { '<leader>vn', '<cmd>TrailBlazerMoveToNearest<cr>', desc = 'Trail nearest' },
     -- { '<leader>vt',      desc = 'Toggle trail mark list' },
-    { '<leader>vx',      '<cmd>TrailBlazerDeleteAllTrailMarks<cr>',   desc = 'clear all marks' },
-    { '<leader>vX',      '<cmd>TrailBlazerDeleteAllTrailMarks 0<cr>', desc = 'clear all marks in buffer' },
-    { '<leader>va',      add_trail_mark_stack,                        desc = 'Add stack' },
-    { '<leader>vc',      '<cmd>TrailBlazerMoveToTrailMarkCursor<cr>', desc = 'Move to cursor mark' },
-    { '<leader>vd',      delete_trail_mark_stack,                     desc = 'Delete stack' },
-    { '<leader>vg',      function() get_available_stacks(true) end,   desc = 'Get stacks' },
-    { '<leader>vs',      '<Cmd>TrailBlazerSaveSession<CR>',           desc = 'Save session' },
-    { '<leader>vl',      '<Cmd>TrailBlazerLoadSession<CR>',           desc = 'Load session' },
+    { '<leader>vx', '<cmd>TrailBlazerDeleteAllTrailMarks<cr>', desc = 'clear all marks' },
+    { '<leader>vX', '<cmd>TrailBlazerDeleteAllTrailMarks 0<cr>', desc = 'clear all marks in buffer' },
+    { '<leader>va', add_trail_mark_stack, desc = 'Add stack' },
+    { '<leader>vc', '<cmd>TrailBlazerMoveToTrailMarkCursor<cr>', desc = 'Move to cursor mark' },
+    { '<leader>vd', delete_trail_mark_stack, desc = 'Delete stack' },
+    { '<leader>vg', function() get_available_stacks(true) end, desc = 'Get stacks' },
+    { '<leader>vs', '<Cmd>TrailBlazerSaveSession<CR>', desc = 'Save session' },
+    { '<leader>vl', '<Cmd>TrailBlazerLoadSession<CR>', desc = 'Load session' },
   },
-  init = function()
+  init = au.schedule_lazy(function()
     local set = vim.keymap.set
     set('n', '<leader>vb', '<cmd>TrailBlazerTrackBack 0<cr>', {
       silent = false,
-      desc = 'Trace back in buffer'
+      desc = 'Trace back in buffer',
     })
     set('n', '<leader>vv', '<cmd>TrailBlazerTrackBack<cr>', {
       silent = false,
-      desc = 'Trace back global'
+      desc = 'Trace back global',
     })
     set('n', '<leader>v]', '<cmd>TrailBlazerPeekMoveNextDown %<cr>', {
       silent = true,
@@ -98,59 +99,59 @@ return plug({
       noremap = true,
       desc = 'Trail pre global',
     })
-  end,
+  end),
   opts = {
     -- hl_groups = {
     --
     -- },
-    lang = "en",
+    lang = 'en',
     auto_save_trailblazer_state_on_exit = false,
     auto_load_trailblazer_state_on_enter = false,
     trail_options = {
       trail_mark_priority = 10001,
       --- Available modes to cycle through.
       available_trail_mark_modes = {
-        "global_chron",
-        "global_buf_line_sorted",
-        "global_fpath_line_sorted",
-        "global_chron_buf_line_sorted",
-        "global_chron_fpath_line_sorted",
-        "global_chron_buf_switch_group_chron",
-        "global_chron_buf_switch_group_line_sorted",
-        "buffer_local_chron",
-        "buffer_local_line_sorted"
+        'global_chron',
+        'global_buf_line_sorted',
+        'global_fpath_line_sorted',
+        'global_chron_buf_line_sorted',
+        'global_chron_fpath_line_sorted',
+        'global_chron_buf_switch_group_chron',
+        'global_chron_buf_switch_group_line_sorted',
+        'buffer_local_chron',
+        'buffer_local_line_sorted',
       },
-      current_trail_mark_mode = "global_chron_buf_switch_group_chron",
+      current_trail_mark_mode = 'global_chron_buf_switch_group_chron',
       verbose_trail_mark_select = false,
-      mark_symbol = "▢",
-      newest_mark_symbol = "■",
-      cursor_mark_symbol = "▣",
-      next_mark_symbol = "↪",
-      previous_mark_symbol = "↩",
+      mark_symbol = '▢',
+      newest_mark_symbol = '■',
+      cursor_mark_symbol = '▣',
+      next_mark_symbol = '↪',
+      previous_mark_symbol = '↩',
       multiple_mark_symbol_counters_enabled = false,
       trail_mark_symbol_line_indicators_enabled = true,
       trail_mark_in_text_highlights_enabled = false,
       trail_mark_list_rows = 5,
       move_to_nearest_before_peek = false,
-      move_to_nearest_before_peek_motion_directive_up = "up",
-      move_to_nearest_before_peek_motion_directive_down = "down",
+      move_to_nearest_before_peek_motion_directive_up = 'up',
+      move_to_nearest_before_peek_motion_directive_down = 'down',
     },
     hl_groups = {
       TrailBlazerTrailMark = {
         guifg = 'blue',
-      }
+      },
     },
     event_list = {
-      "TrailBlazerTrailMarkStackSaved",
-      "TrailBlazerCurrentTrailMarkStackChanged",
+      'TrailBlazerTrailMarkStackSaved',
+      'TrailBlazerCurrentTrailMarkStackChanged',
     },
     quickfix_mappings = {
       v = {
         actions = {
-          qf_action_move_selected_trail_marks_down = "<C-k>",
-          qf_action_move_selected_trail_marks_up = "<C-l>",
-        }
-      }
+          qf_action_move_selected_trail_marks_down = '<C-k>',
+          qf_action_move_selected_trail_marks_up = '<C-l>',
+        },
+      },
     },
     force_mappings = {
       nv = {
@@ -169,5 +170,5 @@ return plug({
         },
       },
     },
-  }
+  },
 })

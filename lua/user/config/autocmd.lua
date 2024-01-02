@@ -10,10 +10,8 @@ function M.load_on_startup()
       {
         group = 'bind_key_on_term_open',
         pattern = 'term://*',
-        callback = function()
-          Ty.set_terminal_keymaps()
-        end,
-      }
+        callback = function() Ty.set_terminal_keymaps() end,
+      },
     },
     {
       { 'BufReadPost' },
@@ -64,7 +62,7 @@ function M.load_on_startup()
     },
     -- disable something on large buffer.
     {
-      { 'BufReadPre', },
+      { 'BufReadPre' },
       {
         group = '_disable_on_large_buf',
         callback = function(ctx)
@@ -193,10 +191,8 @@ function M.load_on_startup()
       {
         group = '_after_buf_rename',
         pattern = '*',
-        callback = function(ctx)
-          vim.b[ctx.buf].project_nvim_cwd = nil
-        end
-      }
+        callback = function(ctx) vim.b[ctx.buf].project_nvim_cwd = nil end,
+      },
     },
     {
       { 'UIEnter' },
@@ -254,8 +250,8 @@ function M.load_on_startup()
         vim.b[ctx.buf].did_set_cwd_short = cwd
         -- set cwd on this buffer.
         vim.b[ctx.buf].project_nvim_cwd_short = cwd_short
-        vim.b[ctx.buf].relative_path = require('userlib.runtime.path').make_relative(vim.api.nvim_buf_get_name(ctx.buf),
-          cwd)
+        vim.b[ctx.buf].relative_path =
+          require('userlib.runtime.path').make_relative(vim.api.nvim_buf_get_name(ctx.buf), cwd)
       end,
     },
     {

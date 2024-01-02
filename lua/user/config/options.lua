@@ -3,13 +3,12 @@ local M = {}
 local o = vim.opt
 local g = vim.g
 
-function M.init_edit()
+function M.startup()
   o.exrc = true
   o.jumpoptions = 'stack'
   o.breakindent = true
   o.cpoptions:append('>') -- append to register with line break
   o.inccommand = 'nosplit' -- preview incremental substitute
-  o.clipboard = { 'unnamed', 'unnamedplus' } --- Copy-paste between vim and everything else
   o.expandtab = true --- Use spaces instead of tabs
   o.ignorecase = true --- Needed for smartcase
   o.textwidth = 80
@@ -52,9 +51,13 @@ function M.init_edit()
   o.diffopt:append({ 'algorithm:histogram', 'foldcolumn:0', 'vertical', 'linematch:50' })
   -- o.shellcmdflag = '-ic' --- Make shell alias works, has bugs.
   o.virtualedit = 'onemore'
+  -- load this early to avoid :intro screen.
+  o.shortmess:append({ a = true, c = true, F = true, I = true, T = true, t = true })
+  vim.opt.laststatus = 0 --- never on startup, setup later by plugin
 end
 
 function M.init_interface()
+  o.clipboard = { 'unnamed', 'unnamedplus' } --- Copy-paste between vim and everything else
   --- blink cursor see https://github.com/neovim/neovim/pull/26075
   --- set guicursor+=n:blinkon1
   o.guicursor:append('n-v-c:blinkon500-blinkoff500')
@@ -76,7 +79,7 @@ function M.init_interface()
   o.sidescroll = 10 --- Used only when 'wrap' option is off and the cursor is moved off the screen.
   o.mouse = 'a' --- Enable mouse
   o.sidescrolloff = 8 -- Columns of context
-  o.lazyredraw = false --- Makes macros faster & prevent errors in complicated mappings
+  o.lazyredraw = true --- lazyredraw on startup
   o.wildmode = { 'longest:full', 'full' } -- Command-line completion mode
   o.cmdheight = 1 --- Give more space for displaying messages
   o.completeopt = { 'menu', 'menuone', 'noselect' } --- Better autocompletion
@@ -103,11 +106,6 @@ function M.init_interface()
   }
   vim.o.statuscolumn = '%s%=%{v:lua.Ty.stl_num()}%{v:lua.Ty.stl_foldlevel()}'
   -- o.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
-  o.shortmess:append({ a = true, c = true, F = true, I = true, T = true, t = true })
-  if vim.fn.has('nvim-0.9.0') == 1 then
-    o.splitkeep = 'screen'
-    o.shortmess:append({ C = true })
-  end
   -- o.formatoptions:append {
   --   r = true, -- Automatically insert comment leader after <Enter> in Insert mode.
   --   o = true, -- Automatically insert comment leader after 'o' or 'O' in Normal mode.
@@ -119,6 +117,11 @@ function M.init_interface()
   o.formatoptions:remove('r')
   o.formatoptions:remove('o')
   o.formatoptions:remove('t')
+  if vim.fn.has('nvim-0.9.0') == 1 then
+    o.splitkeep = 'screen'
+    o.shortmess:append({ C = true })
+  end
+  o.lazyredraw = false --- Makes macros faster & prevent errors in complicated mappings
   if vim.fn.executable('rg') then
     -- credit: https://github.com/nicknisi/dotfiles/blob/1360edda1bbb39168637d0dff13dd12c2a23d095/config/nvim/init.lua#L73
     -- if ripgrep installed, use that as a grepper
