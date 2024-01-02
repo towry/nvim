@@ -119,7 +119,7 @@ create_cmd('TryMake', function(opts)
     if vim.fn.filereadable(mk) == 1 then
       local cwd = vim.uv.cwd()
       vim.cmd.lcd(dir)
-      local cmds = string.format([[Make -f %s%s]], mk, target)
+      local cmds = string.format([[Make%s -f %s%s]], opts.bang and '!' or '', mk, target)
       vim.cmd(cmds)
       vim.cmd.lcd(cwd)
       return true
@@ -127,5 +127,6 @@ create_cmd('TryMake', function(opts)
   end)
 end, {
   nargs = '*',
+  bang = true,
   desc = 'Find makefile and run',
 })

@@ -31,7 +31,7 @@ pack.plug({
     config = function() end,
     init = function()
       vim.g.dispatch_no_maps = 1
-      vim.g.dispatch_no_tmux_make = 1 -- do not use tmux strategy in tmux.
+      -- vim.g.dispatch_no_tmux_make = 1 -- do not use tmux strategy in tmux.
     end,
   },
   {
