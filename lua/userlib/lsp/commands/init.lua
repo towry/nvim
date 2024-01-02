@@ -6,7 +6,9 @@ end
 
 return {
   OrganizeImports = {
-    function() OrganizeImports() end,
-    description = "Organize imports",
-  }
+    function()
+      OrganizeImports()
+    end,
+    description = 'Organize imports',
+  },
 }

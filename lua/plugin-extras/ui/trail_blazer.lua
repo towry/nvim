@@ -13,7 +13,9 @@ end
 
 local function add_trail_mark_stack()
   vim.ui.input({ prompt = 'stack name: ' }, function(name)
-    if not name then return end
+    if not name then
+      return
+    end
     local available_stacks = get_available_stacks()
     if Ty.find_string(available_stacks, name) then
       vim.notify(fmt('"%s" stack already exists.', name), 'warn', { title = 'TrailBlazer' })
@@ -27,7 +29,9 @@ end
 
 local function delete_trail_mark_stack()
   vim.ui.input({ prompt = 'stack name: ' }, function(name)
-    if not name then return end
+    if not name then
+      return
+    end
     local available_stacks = get_available_stacks()
     if not Ty.find_string(available_stacks, name) then
       vim.notify(fmt('"%s" stack does not exist.', name), 'warn', { title = 'TrailBlazer' })
@@ -65,7 +69,13 @@ return plug({
     { '<leader>va', add_trail_mark_stack, desc = 'Add stack' },
     { '<leader>vc', '<cmd>TrailBlazerMoveToTrailMarkCursor<cr>', desc = 'Move to cursor mark' },
     { '<leader>vd', delete_trail_mark_stack, desc = 'Delete stack' },
-    { '<leader>vg', function() get_available_stacks(true) end, desc = 'Get stacks' },
+    {
+      '<leader>vg',
+      function()
+        get_available_stacks(true)
+      end,
+      desc = 'Get stacks',
+    },
     { '<leader>vs', '<Cmd>TrailBlazerSaveSession<CR>', desc = 'Save session' },
     { '<leader>vl', '<Cmd>TrailBlazerLoadSession<CR>', desc = 'Load session' },
   },

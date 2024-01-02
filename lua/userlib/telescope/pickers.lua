@@ -16,7 +16,9 @@ end
 
 local use_find_files_instead_of_git = true
 
-M.project_files_toggle_between_git_and_fd = function() use_find_files_instead_of_git = not use_find_files_instead_of_git end
+M.project_files_toggle_between_git_and_fd = function()
+  use_find_files_instead_of_git = not use_find_files_instead_of_git
+end
 
 M.project_files = function(opts)
   local action_state = require('telescope.actions.state')
@@ -29,12 +31,9 @@ M.project_files = function(opts)
   local iconwidth = strings.strdisplaywidth(def_icon)
 
   local map_i_actions = function(_, map)
-    map(
-      'i',
-      '<C-o>',
-      function(prompt_bufnr) require('userlib.telescope.picker_keymaps').open_selected_in_window(prompt_bufnr) end,
-      { noremap = true, silent = true }
-    )
+    map('i', '<C-o>', function(prompt_bufnr)
+      require('userlib.telescope.picker_keymaps').open_selected_in_window(prompt_bufnr)
+    end, { noremap = true, silent = true })
     --- not working.
     --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/master/lua/telescope/_extensions/file_browser/actions.lua#L598
     map('i', '<C-g>', function(prompt_bufnr)
@@ -84,7 +83,7 @@ M.project_files = function(opts)
       local icon, iconhl = utils.get_devicons(tail_raw)
 
       return displayer({
-        { icon,            iconhl },
+        { icon, iconhl },
         tail,
         { path_to_display, 'TelescopeResultsComment' },
       })
@@ -98,17 +97,23 @@ M.project_files = function(opts)
     opts.include_current_session = true
     --- we want recent files inside monorepo root folder, not a sub project root.
     --- see https://github.com/nvim-telescope/telescope.nvim/blob/276362a8020c6e94c7a76d49aa00d4923b0c02f3/lua/telescope/builtin/__internal.lua#L533C61-L533C61
-    if opts.cwd then opts.cwd_only = false end
+    if opts.cwd then
+      opts.cwd_only = false
+    end
     require('telescope.builtin').oldfiles(opts)
     return
   end
 
   -- use find_files or git_files.
   local use_all_files = opts.use_all_files or false
-  if (opts and opts.no_gitfiles) or use_find_files_instead_of_git then use_all_files = true end
+  if (opts and opts.no_gitfiles) or use_find_files_instead_of_git then
+    use_all_files = true
+  end
 
   local ok = (function()
-    if use_all_files then return false end
+    if use_all_files then
+      return false
+    end
     opts.results_title = '  Git Files: '
     local is_git_ok = pcall(require('telescope.builtin').git_files, opts)
     return is_git_ok
@@ -127,8 +132,12 @@ M.command_history = function()
     color_devicons = true,
     winblend = 4,
     layout_config = {
-      width = function(_, max_columns, _) return math.min(max_columns, 100) end,
-      height = function(_, _, max_lines) return math.min(max_lines, 15) end,
+      width = function(_, max_columns, _)
+        return math.min(max_columns, 100)
+      end,
+      height = function(_, _, max_lines)
+        return math.min(max_lines, 15)
+      end,
     },
     filter_fn = function(cmd)
       return not vim.tbl_contains({
@@ -246,7 +255,9 @@ function M.buffers()
         -- local picker = actionstate.get_current_picker(prompt_bufnr)
         local selection = actionstate.get_selected_entry()
         actions.close(prompt_bufnr)
-        if not vim.api.nvim_buf_is_valid(selection.bufnr) then return end
+        if not vim.api.nvim_buf_is_valid(selection.bufnr) then
+          return
+        end
         vim.api.nvim_buf_delete(selection.bufnr, { force = false })
         local state = require('telescope.state')
         local cached_pickers = state.get_global_key('cached_pickers') or {}
@@ -256,27 +267,27 @@ function M.buffers()
 
       local open_selected = function()
         local entry = actionstate.get_selected_entry()
-        if not vim.api.nvim_buf_is_valid(prompt_bufnr) then return end
+        if not vim.api.nvim_buf_is_valid(prompt_bufnr) then
+          return
+        end
         actions.close(prompt_bufnr)
         if not entry or not entry.bufnr then
           vim.notify('no selected entry found')
           return
         end
         local bufnr = entry.bufnr
-        if not vim.api.nvim_buf_is_valid(bufnr) then return end
+        if not vim.api.nvim_buf_is_valid(bufnr) then
+          return
+        end
         Buffer.set_current_buffer_focus(bufnr)
       end
 
       map('i', '<C-h>', close_buf)
       map('i', '<CR>', open_selected)
       -- pick window to open.
-      map(
-        'i',
-        '<C-o>',
-        function(prompt_bufnr_) require('userlib.telescope.picker_keymaps').open_selected_in_window(prompt_bufnr_) end,
-        { noremap = true, silent = true }
-      )
-
+      map('i', '<C-o>', function(prompt_bufnr_)
+        require('userlib.telescope.picker_keymaps').open_selected_in_window(prompt_bufnr_)
+      end, { noremap = true, silent = true })
 
       return true
     end,
@@ -326,9 +337,9 @@ function M.gen_from_buffer(opts)
     })
 
     return displayer({
-      { entry.bufnr,     'TelescopeResultsNumber' },
+      { entry.bufnr, 'TelescopeResultsNumber' },
       { entry.indicator, 'TelescopeResultsComment' },
-      { icon,            hl_group },
+      { icon, hl_group },
       bufname_tail,
       { path_to_display .. ':' .. entry.lnum, 'TelescopeResultsComment' },
     })

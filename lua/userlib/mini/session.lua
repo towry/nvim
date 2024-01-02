@@ -1,6 +1,5 @@
 local M = {}
 
-
 function M.make_session()
   local MS = require('mini.sessions')
   local branch_name = vim.fn['FugitiveHead']() or 'temp'
@@ -26,7 +25,7 @@ function M.load_session()
     verbose = true,
   })
   if err then
-    vim.notify("Load session fail: " .. session_name, vim.log.levels.ERROR)
+    vim.notify('Load session fail: ' .. session_name, vim.log.levels.ERROR)
   end
 end
 

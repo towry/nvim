@@ -17,9 +17,10 @@ local function toggleterm_kill_all()
     end
   end
 
-  if is_shut then vim.fn.jobwait(job_ids, 2000) end
+  if is_shut then
+    vim.fn.jobwait(job_ids, 2000)
+  end
   return is_shut
 end
-
 
 return toggleterm_kill_all

@@ -16,7 +16,9 @@ return {
   {
     function()
       for name, _ in pairs(package.loaded) do
-        if name:match('^plugins.') or name:match('^user.') or name:match('userlib.') then package.loaded[name] = nil end
+        if name:match('^plugins.') or name:match('^user.') or name:match('userlib.') then
+          package.loaded[name] = nil
+        end
       end
 
       dofile(vim.env.MYVIMRC)
@@ -25,41 +27,57 @@ return {
     description = 'Reload nvimrc',
   },
   {
-    function() require('userlib.telescope.pickers').edit_neovim() end,
+    function()
+      require('userlib.telescope.pickers').edit_neovim()
+    end,
     description = 'Edit Neovim dotfiles(nvimrc)',
   },
   {
-    function() vim.cmd('e ' .. vim.fs.dirname(vim.fn.expand('$MYVIMRC')) .. '/lua/ty/contrib/editing/switch_rc.lua') end,
+    function()
+      vim.cmd('e ' .. vim.fs.dirname(vim.fn.expand('$MYVIMRC')) .. '/lua/ty/contrib/editing/switch_rc.lua')
+    end,
     description = 'Edit switch definitions',
   },
   -- dismiss notify
   {
-    function() require('notify').dismiss() end,
+    function()
+      require('notify').dismiss()
+    end,
     description = 'Dismiss notifications',
   },
   -- toggle light mode.
   {
-    function() Ty.ToggleTheme() end,
+    function()
+      Ty.ToggleTheme()
+    end,
     description = 'Toggle dark/light mode',
   },
   {
     -- function() require('userlib.lsp.fmt').toggle_formatting_enabled() end,
-    function() require('userlib.lsp.servers.null_ls.autoformat').toggle() end,
+    function()
+      require('userlib.lsp.servers.null_ls.autoformat').toggle()
+    end,
     description = 'Toggle auto format',
   },
   {
-    function() require('userlib.telescope.pickers').project_files({ no_gitfiles = true }) end,
+    function()
+      require('userlib.telescope.pickers').project_files({ no_gitfiles = true })
+    end,
     description = 'Telescope find project files (No Git)',
   },
   {
     itemgroup = 'Navigation UI',
     funcs = {
       {
-        function() require('harpoon.ui').toggle_quick_menu() end,
+        function()
+          require('harpoon.ui').toggle_quick_menu()
+        end,
         description = "harpoon marks menu',",
       },
       {
-        function() require('grapple').popup_tags() end,
+        function()
+          require('grapple').popup_tags()
+        end,
         description = 'grapple popup tags',
       },
     },
@@ -90,7 +108,9 @@ return {
       vim.ui.input({
         prompt = 'Are you sure? (y/n)',
       }, function(input)
-        if input ~= 'y' and input ~= 'Y' and input ~= 'yes' then return end
+        if input ~= 'y' and input ~= 'Y' and input ~= 'yes' then
+          return
+        end
         vim.cmd('e!')
         vim.notify('Changes reverted')
       end)

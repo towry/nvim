@@ -22,11 +22,13 @@ plug({
       group = 'treesitter_start',
       pattern = 'TreeSitterStart',
       callback = function()
-        if vim.b.treesitter_disable then return end
+        if vim.b.treesitter_disable then
+          return
+        end
         vim.opt_local.indentexpr = [[v:lua.require('nvim-treesitter').indentexpr()]]
-      end
+      end,
     })
-  end
+  end,
 })
 
 plug({
@@ -158,7 +160,7 @@ plug({
       local todo_comments = require('todo-comments')
 
       todo_comments.setup({
-        signs = false,     -- show icons in the signs column
+        signs = false, -- show icons in the signs column
         sign_priority = 8, -- sign priority
         -- keywords recognized as todo comments
         keywords = {
@@ -169,14 +171,14 @@ plug({
           PERF = { alt = { 'OPTIM', 'PERFORMANCE', 'OPTIMIZE' } },
         },
         highlight = {
-          before = '',                     -- "fg" or "bg" or empty
+          before = '', -- "fg" or "bg" or empty
           -- keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
-          keyword = 'wide',                -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
-          after = '',                      -- "fg" or "bg" or empty
+          keyword = 'wide', -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
+          after = '', -- "fg" or "bg" or empty
           pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
-          comments_only = true,            -- uses treesitter to match keywords in comments only
-          max_line_len = 1500,             -- ignore lines longer than this
-          exclude = {},                    -- list of file types to exclude highlighting
+          comments_only = true, -- uses treesitter to match keywords in comments only
+          max_line_len = 1500, -- ignore lines longer than this
+          exclude = {}, -- list of file types to exclude highlighting
         },
       })
     end,
@@ -185,7 +187,9 @@ plug({
   {
     'iamcco/markdown-preview.nvim',
     build = 'cd app && npm install && rm -f package-lock.json && git restore .',
-    init = function() vim.g.mkdp_filetypes = { 'markdown' } end,
+    init = function()
+      vim.g.mkdp_filetypes = { 'markdown' }
+    end,
     ft = { 'markdown' },
   },
 
@@ -216,17 +220,17 @@ plug({
       require('package-info').setup({
         colors = {
           up_to_date = '#3C4048', -- Text color for up to date package virtual text
-          outdated = '#fc514e',   -- Text color for outdated package virtual text
+          outdated = '#fc514e', -- Text color for outdated package virtual text
         },
         icons = {
-          enable = true,                    -- Whether to display icons
+          enable = true, -- Whether to display icons
           style = {
             up_to_date = icons.checkSquare, -- Icon for up to date packages
-            outdated = icons.gitRemove,     -- Icon for outdated packages
+            outdated = icons.gitRemove, -- Icon for outdated packages
           },
         },
-        autostart = true,               -- Whether to autostart when `package.json` is opened
-        hide_up_to_date = true,         -- It hides up to date versions when displaying virtual text
+        autostart = true, -- Whether to autostart when `package.json` is opened
+        hide_up_to_date = true, -- It hides up to date versions when displaying virtual text
         hide_unstable_versions = false, -- It hides unstable versions from version list e.g next-11.1.3-canary3
         -- Can be `npm` or `yarn`. Used for `delete`, `install` etc...
         -- The plugin will try to auto-detect the package manager based on

@@ -1,13 +1,17 @@
 local plug = require('userlib.runtime.pack').plug
 local au = require('userlib.runtime.au')
 
-if vim.cfg.mf_tabpage_cwd_paths == nil then vim.cfg.mf_tabpage_cwd_paths = {} end
+if vim.cfg.mf_tabpage_cwd_paths == nil then
+  vim.cfg.mf_tabpage_cwd_paths = {}
+end
 
 local map_split = function(buf_id, lhs, direction)
   local rhs = function()
     local MF = require('mini.files')
     local fsentry = MF.get_fs_entry()
-    if fsentry.fs_type ~= 'file' then return end
+    if fsentry.fs_type ~= 'file' then
+      return
+    end
     -- Make new window and set it as target
     local new_target_window
     vim.api.nvim_win_call(MF.get_target_window(), function()
@@ -37,7 +41,9 @@ end
 local get_current_dir = function()
   local MF = require('mini.files')
   local fsentry = MF.get_fs_entry()
-  if not fsentry then return nil end
+  if not fsentry then
+    return nil
+  end
   return vim.fs.dirname(fsentry.path)
 end
 
@@ -110,14 +116,18 @@ return plug({
         end
         local mf = require('mini.files')
         local is_closed = mf.close()
-        if is_closed == true then return end
+        if is_closed == true then
+          return
+        end
         require('mini.files').open(path, true)
       end,
       desc = 'Open mini.files (directory of current file)',
     },
     {
       '<leader>fi',
-      function() require('mini.files').open(vim.uv.cwd(), true) end,
+      function()
+        require('mini.files').open(vim.uv.cwd(), true)
+      end,
       desc = 'Open mini.files (cwd)',
     },
     {
@@ -131,7 +141,9 @@ return plug({
         end
         local mf = require('mini.files')
         local is_closed = mf.close()
-        if is_closed == true then return end
+        if is_closed == true then
+          return
+        end
         require('mini.files').open(path, true)
       end,
       desc = 'Open mini.files (directory of current file)',
@@ -140,7 +152,9 @@ return plug({
   config = function(_, opts)
     local MF = require('mini.files')
     MF.setup(opts)
-    vim.schedule(function() vim.cmd('hi! link MiniFilesBorder NormalFloat') end)
+    vim.schedule(function()
+      vim.cmd('hi! link MiniFilesBorder NormalFloat')
+    end)
   end,
   init = au.schedule_lazy(function()
     au.define_user_autocmd({
@@ -185,7 +199,9 @@ return plug({
         })
         -- x in normal is yanked to register x.
 
-        set('n', '<BS>', function() MF.go_out() end)
+        set('n', '<BS>', function()
+          MF.go_out()
+        end)
         set('n', '-', function()
           local lcwd = vim.cfg.mf_tabpage_cwd_paths[tabpage]
           if lcwd ~= nil then
@@ -200,24 +216,32 @@ return plug({
         end)
         set('n', 'm', function()
           local fsentry = MF.get_fs_entry()
-          if not fsentry then return nil end
+          if not fsentry then
+            return nil
+          end
           MF.close()
           require('userlib.mini.clue.folder-action').open(fsentry.path)
         end, keyopts)
         set('n', 'M', function()
           local cwd = get_current_dir()
-          require('userlib.hydra.file-action').open(cwd, bufnr, function() MF.close() end)
+          require('userlib.hydra.file-action').open(cwd, bufnr, function()
+            MF.close()
+          end)
         end, keyopts)
         set('n', 'g.', toggle_dotfiles, keyopts)
         set('n', '<ESC>', MF.close, keyopts)
-        set('n', '<C-c>', function() MF.close() end, keyopts)
+        set('n', '<C-c>', function()
+          MF.close()
+        end, keyopts)
         set('n', 's', function()
           require('flash').jump({
             search = {
               mode = 'search',
               max_length = 0,
               exclude = {
-                function(win) return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= 'minifiles' end,
+                function(win)
+                  return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= 'minifiles'
+                end,
               },
             },
             label = { after = { 0, 0 } },
@@ -237,7 +261,9 @@ return plug({
             -- hint = 'floating-big-letter',
             include_current_win = true,
           })
-          if win_picked then MF.set_target_window(win_picked) end
+          if win_picked then
+            MF.set_target_window(win_picked)
+          end
           MF.go_in()
           MF.close()
         end, keyopts)

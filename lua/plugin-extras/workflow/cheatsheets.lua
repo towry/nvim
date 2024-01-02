@@ -30,6 +30,8 @@ return plug({
     dependencies = {
       'RishabhRD/popfix',
     },
-    init = function() vim.g.cheat_default_window_layout = 'vertical_split' end,
+    init = function()
+      vim.g.cheat_default_window_layout = 'vertical_split'
+    end,
   },
 })

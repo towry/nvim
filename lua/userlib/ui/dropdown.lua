@@ -1,24 +1,24 @@
 --- credits to softinio/nvim-metals
-local has_telescope, _ = pcall(require, "telescope")
+local has_telescope, _ = pcall(require, 'telescope')
 
 if not has_telescope then
-  local msg = "Telescope must be installed to use this functionality (https://github.com/nvim-telescope/telescope.nvim)"
+  local msg = 'Telescope must be installed to use this functionality (https://github.com/nvim-telescope/telescope.nvim)'
   print(msg)
   return
 end
 
-local actions = require("telescope.actions")
-local action_state = require("telescope.actions.state")
-local conf = require("telescope.config").values
-local entry_display = require("telescope.pickers.entry_display")
-local finders = require("telescope.finders")
-local themes = require("telescope.themes")
-local pickers = require("telescope.pickers")
+local actions = require('telescope.actions')
+local action_state = require('telescope.actions.state')
+local conf = require('telescope.config').values
+local entry_display = require('telescope.pickers.entry_display')
+local finders = require('telescope.finders')
+local themes = require('telescope.themes')
+local pickers = require('telescope.pickers')
 
 local function command_entry_maker(max_width)
   local make_display = function(en)
     local displayer = entry_display.create({
-      separator = " ",
+      separator = ' ',
       items = {
         { width = max_width },
         { remaining = true },
@@ -26,8 +26,8 @@ local function command_entry_maker(max_width)
     })
 
     return displayer({
-      { en.label, "Type" },
-      { en.hint, "Comment" },
+      { en.label, 'Type' },
+      { en.hint, 'Comment' },
     })
   end
 
@@ -78,18 +78,20 @@ local function commands(ouropts, opts)
     end
   end
 
-  pickers.new(opts, {
-    finder = finders.new_table({
-      results = ouropts.items,
-      entry_maker = command_entry_maker(get_max_width(ouropts.items)),
-    }),
-    sorter = conf.generic_sorter(opts),
-    attach_mappings = function(_, map)
-      map("i", "<CR>", execute_command)
-      map("n", "<CR>", execute_command)
-      return true
-    end,
-  }):find()
+  pickers
+    .new(opts, {
+      finder = finders.new_table({
+        results = ouropts.items,
+        entry_maker = command_entry_maker(get_max_width(ouropts.items)),
+      }),
+      sorter = conf.generic_sorter(opts),
+      attach_mappings = function(_, map)
+        map('i', '<CR>', execute_command)
+        map('n', '<CR>', execute_command)
+        return true
+      end,
+    })
+    :find()
 end
 
 return {

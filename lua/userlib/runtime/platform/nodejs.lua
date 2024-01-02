@@ -8,15 +8,21 @@ local M = {}
 
 -- Some path utilities
 M.resolve_path_in_nvim_npm_folder = function(...)
-  if select('#', ...) <= 0 then error('path segments is required') end
+  if select('#', ...) <= 0 then
+    error('path segments is required')
+  end
   return Path.join(nvim_npm_folder, ...)
 end
-M.nvim_npm_bin_prefix = function(bin_name) return M.resolve_path_in_nvim_npm_folder('bin', bin_name) end
+M.nvim_npm_bin_prefix = function(bin_name)
+  return M.resolve_path_in_nvim_npm_folder('bin', bin_name)
+end
 
 ---@deprecated
 M.get_nvm_node_path = function()
   local ok, md = pcall(require, 'nvm_node_path_generated')
-  if ok then return md.node_bin_path end
+  if ok then
+    return md.node_bin_path
+  end
   return nil
 end
 
@@ -30,16 +36,22 @@ M.compile_nvm_node_path = function()
   end
 
   local node_version = nil
-  if pcall(function() io.input(Path.join(nvm_dir, 'alias', nvm_alias_for_nvim)) end) then
+  if pcall(function()
+    io.input(Path.join(nvm_dir, 'alias', nvm_alias_for_nvim))
+  end) then
     node_version = io.read()
     io.close()
   end
 
-  if not node_version then return end
+  if not node_version then
+    return
+  end
 
   local node_bin_path = Path.join(nvm_dir, 'versions', 'node', node_version, 'bin', 'node')
   local output_file = io.open(output_path, 'w')
-  if not output_file then return end
+  if not output_file then
+    return
+  end
   output_file:write(string.format(
     [[
 		local M = {}
@@ -64,15 +76,21 @@ M.get_nvim_node_cmd = function(cmd_name, ...)
 end
 
 M.resolve_path_in_node_modules = function(root_dir, path_segs)
-  if path_segs == nil or #path_segs <= 0 then error('path segments is required') end
+  if path_segs == nil or #path_segs <= 0 then
+    error('path segments is required')
+  end
 
   local found_ts = nil
   local function check_dir(path)
     found_ts = Path.join(path, unpack(path_segs))
-    if Path.exists(found_ts) then return found_ts end
+    if Path.exists(found_ts) then
+      return found_ts
+    end
   end
 
-  if Path.search_ancestors(root_dir, check_dir) then return found_ts end
+  if Path.search_ancestors(root_dir, check_dir) then
+    return found_ts
+  end
   return nil
 end
 

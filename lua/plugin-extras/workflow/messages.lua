@@ -7,8 +7,8 @@ return {
     {
       '<leader>tm',
       '<cmd>Messages messages<cr>',
-      desc = 'Show messages in float'
-    }
+      desc = 'Show messages in float',
+    },
   },
   config = function(_, opts)
     opts.post_open_float = function(winnr)

@@ -2,26 +2,26 @@ local plug = require('userlib.runtime.pack').plug
 
 return plug({
   {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
+    'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
+    event = 'InsertEnter',
     opts = {
       panel = {
         enabled = true,
       },
       suggestion = {
         enabled = true,
-      }
+      },
     },
     config = function(_, opts)
-      require("copilot").setup(opts)
+      require('copilot').setup(opts)
     end,
   },
 
   {
-    "zbirenbaum/copilot-cmp",
+    'zbirenbaum/copilot-cmp',
     opts = {
-      event = { "InsertEnter", "LspAttach" },
+      event = { 'InsertEnter', 'LspAttach' },
       fix_pairs = true,
     },
     dependencies = {
@@ -33,27 +33,27 @@ return plug({
           },
           suggestion = {
             enabled = false,
-          }
-        }
-      }
+          },
+        },
+      },
     },
     config = function(_, opts)
-      require("copilot_cmp").setup(opts)
-    end
+      require('copilot_cmp').setup(opts)
+    end,
   },
   {
-    "jonahgoldwastaken/copilot-status.nvim",
-    dependencies = { "zbirenbaum/copilot.lua" }, -- or "zbirenbaum/copilot.lua"
+    'jonahgoldwastaken/copilot-status.nvim',
+    dependencies = { 'zbirenbaum/copilot.lua' }, -- or "zbirenbaum/copilot.lua"
     lazy = true,
     opts = {
       icons = {
-        idle = " ",
-        error = "✗ ",
-        offline = " ",
-        warning = "𥉉",
-        loading = " ",
+        idle = ' ',
+        error = '✗ ',
+        offline = ' ',
+        warning = '𥉉',
+        loading = ' ',
       },
       debug = false,
-    }
+    },
   },
 })

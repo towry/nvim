@@ -1,7 +1,7 @@
 local M = {}
 
 M.root_patterns =
-{ '_darcs', '.bzr', '.vscode', 'package.json', 'pnpm-workspace.yaml', 'Cargo.toml', '.git', '.gitmodules', '.svn' }
+  { '_darcs', '.bzr', '.vscode', 'package.json', 'pnpm-workspace.yaml', 'Cargo.toml', '.git', '.gitmodules', '.svn' }
 --- ignore jsonls: inside package.json, it give root to parent root.
 M.root_lsp_ignore = { 'tailwindcss', 'jsonls', 'copilot', 'null-ls', 'eslint' }
 
@@ -29,20 +29,28 @@ M.get_relative_gitpath = function()
   return relative_gitpath
 end
 
-M.sleep = function(n) os.execute('sleep ' .. tonumber(n)) end
+M.sleep = function(n)
+  os.execute('sleep ' .. tonumber(n))
+end
 
 M.toggle_quicklist = function()
   if vim.fn.empty(vim.fn.filter(vim.fn.getwininfo(), 'v:val.quickfix')) == 1 then
-    if not vim.o.modifiable then return end
+    if not vim.o.modifiable then
+      return
+    end
     vim.cmd('copen')
   else
     vim.cmd('cclose')
   end
 end
 
-M.starts_with = function(str, start) return str:sub(1, #start) == start end
+M.starts_with = function(str, start)
+  return str:sub(1, #start) == start
+end
 
-M.end_with = function(str, ending) return ending == '' or str:sub(- #ending) == ending end
+M.end_with = function(str, ending)
+  return ending == '' or str:sub(-#ending) == ending
+end
 
 M.split = function(s, delimiter)
   local result = {}
@@ -54,26 +62,46 @@ M.split = function(s, delimiter)
 end
 
 M.handle_job_data = function(data)
-  if not data then return nil end
-  if data[#data] == '' then table.remove(data, #data) end
-  if #data < 1 then return nil end
+  if not data then
+    return nil
+  end
+  if data[#data] == '' then
+    table.remove(data, #data)
+  end
+  if #data < 1 then
+    return nil
+  end
   return data
 end
 
-M.log = function(message, title) vim.notify(message, vim.log.levels.INFO, { title = title or 'Info' }) end
+M.log = function(message, title)
+  vim.notify(message, vim.log.levels.INFO, { title = title or 'Info' })
+end
 
-M.warnlog = function(message, title) vim.notify(message, vim.log.levels.WARN, { title = title or 'Warning' }) end
+M.warnlog = function(message, title)
+  vim.notify(message, vim.log.levels.WARN, { title = title or 'Warning' })
+end
 
-M.errorlog = function(message, title) vim.notify(message, vim.log.levels.ERROR, { title = title or 'Error' }) end
+M.errorlog = function(message, title)
+  vim.notify(message, vim.log.levels.ERROR, { title = title or 'Error' })
+end
 
-M.remove_whitespaces = function(string) return string:gsub('%s+', '') end
+M.remove_whitespaces = function(string)
+  return string:gsub('%s+', '')
+end
 
-M.add_whitespaces = function(number) return string.rep(' ', number) end
+M.add_whitespaces = function(number)
+  return string.rep(' ', number)
+end
 
 -- has_plugin("noice.nvim")
-M.has_plugin = function(plugin_name_string) return require('lazy.core.config').plugins[plugin_name_string] ~= nil end
+M.has_plugin = function(plugin_name_string)
+  return require('lazy.core.config').plugins[plugin_name_string] ~= nil
+end
 
-M.pkg_loaded = function(mod_path) return package.loaded[mod_path] ~= nil end
+M.pkg_loaded = function(mod_path)
+  return package.loaded[mod_path] ~= nil
+end
 
 function M.normname(name)
   local ret = name:lower():gsub('^n?vim%-', ''):gsub('%.n?vim$', ''):gsub('%.lua', ''):gsub('[^a-z]+', '')
@@ -99,7 +127,9 @@ function M.get_root(root_opts)
     local is_ok, project_nvim = pcall(require, 'project_nvim.project')
     if is_ok then
       local project_root, _ = project_nvim.get_project_root()
-      if project_root ~= nil then return project_root end
+      if project_root ~= nil then
+        return project_root
+      end
     end
   end
 
@@ -114,17 +144,21 @@ function M.get_root(root_opts)
     for _, client in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
       if not vim.tbl_contains(lsp_ignore, client.name or '') then
         local workspace = client.config.workspace_folders
-        local paths = workspace and vim.tbl_map(function(ws) return vim.uri_to_fname(ws.uri) end, workspace)
-            or client.config.root_dir and { client.config.root_dir }
-            or {}
+        local paths = workspace and vim.tbl_map(function(ws)
+          return vim.uri_to_fname(ws.uri)
+        end, workspace) or client.config.root_dir and { client.config.root_dir } or {}
         for _, p in ipairs(paths) do
           local r = vim.uv.fs_realpath(p)
-          if path:find(r, 1, true) then roots[#roots + 1] = r end
+          if path:find(r, 1, true) then
+            roots[#roots + 1] = r
+          end
         end
       end
     end
   end
-  table.sort(roots, function(a, b) return #a > #b end)
+  table.sort(roots, function(a, b)
+    return #a > #b
+  end)
   ---@type string?
   local root = roots[1]
   if not root then
@@ -133,13 +167,17 @@ function M.get_root(root_opts)
     root = vim.fs.find(rootPatterns, { path = path, upward = true })[1]
     root = root and vim.fs.dirname(root) or vim.uv.cwd()
   end
-  if root == vim.uv.os_homedir() then return vim.uv.cwd() end
+  if root == vim.uv.os_homedir() then
+    return vim.uv.cwd()
+  end
   ---@cast root string
   return root
 end
 
 M.use_plugin = function(plugin_name, callback, on_fail)
-  if not callback then return end
+  if not callback then
+    return
+  end
   local ok, plugin = pcall(require, plugin_name)
   if not ok then
     if on_fail then
@@ -154,7 +192,9 @@ end
 
 ---@usage load_plugins({'dression.nvim'})
 M.load_plugins = function(plugins)
-  if type(plugins) ~= 'table' then plugins = { plugins } end
+  if type(plugins) ~= 'table' then
+    plugins = { plugins }
+  end
   require('lazy').load({ plugins = plugins })
 end
 
@@ -173,9 +213,13 @@ end
 M.plugin_schedule_wrap = function(plugins, cb)
   return function(...)
     local args = ...
-    if type(cb) ~= 'function' then return end
+    if type(cb) ~= 'function' then
+      return
+    end
     M.load_plugins(plugins)
-    vim.schedule(function() cb(unpack(args)) end)
+    vim.schedule(function()
+      cb(unpack(args))
+    end)
   end
 end
 
@@ -183,7 +227,9 @@ end
 ---@param style string @The style config
 ---@return table
 local function parse_style(style)
-  if not style or style == 'NONE' then return {} end
+  if not style or style == 'NONE' then
+    return {}
+  end
 
   local result = {}
   for field in string.gmatch(style, '([^,]+)') do
@@ -201,7 +247,9 @@ local function get_highlight(hl_group)
     name = hl_group,
     link = true,
   })
-  if hl.link then return get_highlight(hl.link) end
+  if hl.link then
+    return get_highlight(hl.link)
+  end
 
   local result = parse_style(hl.style)
   result.fg = hl.foreground and string.format('#%06x', hl.foreground)
@@ -258,14 +306,20 @@ function M.extend_hl(name, def, ns)
   vim.api.nvim_set_hl(ns or 0, name, combined_def)
 end
 
-M.vim_starts_without_buffer = function() return vim.fn.argc(-1) == 0 end
+M.vim_starts_without_buffer = function()
+  return vim.fn.argc(-1) == 0
+end
 
 function M.change_cwd(cwd, cmd, silent)
-  if not cwd then return end
+  if not cwd then
+    return
+  end
   cwd = require('userlib.runtime.path').remove_path_last_separator(cwd)
   vim.cmd((cmd or 'cd') .. ' ' .. cwd)
   M.update_cwd_env(cwd)
-  if not silent then vim.notify(('New cwd: %s'):format(vim.t.cwd_short), vim.log.levels.INFO) end
+  if not silent then
+    vim.notify(('New cwd: %s'):format(vim.t.cwd_short), vim.log.levels.INFO)
+  end
 end
 
 ---@param cwd string
@@ -281,8 +335,12 @@ end
 ---- UTF-8
 -- Convert a number to a utf8 string
 M.utf8 = function(decimal)
-  if type(decimal) == 'string' then decimal = vim.fn.char2nr(decimal) end
-  if decimal < 128 then return string.char(decimal) end
+  if type(decimal) == 'string' then
+    decimal = vim.fn.char2nr(decimal)
+  end
+  if decimal < 128 then
+    return string.char(decimal)
+  end
   local charbytes = {}
   for bytes, vals in ipairs({ { 0x7FF, 192 }, { 0xFFFF, 224 }, { 0x1FFFFF, 240 } }) do
     if decimal <= vals[1] then
@@ -306,38 +364,52 @@ M.utf8keys = function(keys, disable)
     _keys[string.lower(k)] = disable and k or M.utf8(v)
   end
   return setmetatable(_keys, {
-    __index = function(self, k) return rawget(self, string.lower(k)) end,
-    __call = function(self, k) return self[k] end,
+    __index = function(self, k)
+      return rawget(self, string.lower(k))
+    end,
+    __call = function(self, k)
+      return self[k]
+    end,
   })
 end
 
 M.is_start_as_git_tool = function()
-  if vim.fn.argc(-1) == 0 then return false end
+  if vim.fn.argc(-1) == 0 then
+    return false
+  end
   local argv = vim.v.argv
-  local args = { { '-d' }, { '-c', 'DiffConflicts' }, }
+  local args = { { '-d' }, { '-c', 'DiffConflicts' } }
   -- each table in args is pairs of args that may exists in argv to determin the
   -- return value is true or false.
   for _, arg in ipairs(args) do
     local is_match = true
     for _, v in ipairs(arg) do
-      if not vim.tbl_contains(argv, v) then is_match = false end
+      if not vim.tbl_contains(argv, v) then
+        is_match = false
+      end
     end
-    if is_match then return true end
+    if is_match then
+      return true
+    end
   end
 
   argv = { vim.fn.expand('%:t') }
-  args = { "MERGE_MSG", "COMMIT_EDITMSG" }
+  args = { 'MERGE_MSG', 'COMMIT_EDITMSG' }
   for _, arg in ipairs(args) do
     local is_match = true
-    if not vim.tbl_contains(argv, arg) then is_match = false end
-    if is_match then return true end
+    if not vim.tbl_contains(argv, arg) then
+      is_match = false
+    end
+    if is_match then
+      return true
+    end
   end
 
   return false
 end
 
 M.get_range = function()
-  if vim.fn.mode() == "n" then
+  if vim.fn.mode() == 'n' then
     local pos = vim.api.nvim_win_get_cursor(0)
     return {
       pos[1],
@@ -346,8 +418,8 @@ M.get_range = function()
   end
 
   return {
-    vim.fn.getpos("v")[2],
-    vim.fn.getpos(".")[2],
+    vim.fn.getpos('v')[2],
+    vim.fn.getpos('.')[2],
   }
 end
 

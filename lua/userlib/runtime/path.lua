@@ -4,8 +4,12 @@ local is_windows = uv.os_uname().version:match('Windows')
 local path_separator = is_windows and '\\' or '/'
 
 local function remove_path_last_separator(path)
-  if not path then return '' end
-  if path:sub(#path) == path_separator then return path:sub(1, #path - 1) end
+  if not path then
+    return ''
+  end
+  if path:sub(#path) == path_separator then
+    return path:sub(1, #path - 1)
+  end
   return path
 end
 
@@ -14,7 +18,9 @@ end
 ---@return string
 local function shorten(path, segments_left)
   local ok, pathlib = pcall(require, 'plenary.path')
-  if not ok then return vim.fn.pathshorten(path) end
+  if not ok then
+    return vim.fn.pathshorten(path)
+  end
   return pathlib:new(path):shorten(segments_left)
 end
 
@@ -23,18 +29,24 @@ end
 ---@return string
 local function make_relative(path, cwd)
   local ok, pathlib = pcall(require, 'plenary.path')
-  if not ok then return path end
+  if not ok then
+    return path
+  end
   return pathlib:new(path):make_relative(cwd)
 end
 
-local function escape_wildcards(path) return path:gsub('([%[%]%?%*])', '\\%1') end
+local function escape_wildcards(path)
+  return path:gsub('([%[%]%?%*])', '\\%1')
+end
 
 ---@param path string
 ---@param opts? {shorten?:boolean}
 ---@return string
 local function home_to_tilde(path, opts)
   opts = opts or {}
-  if not path then return '/tmp/wonderland' end
+  if not path then
+    return '/tmp/wonderland'
+  end
   -- local home = vim.loop.os_homedir()
   -- if path:sub(1, #home) == home then
   --   return '~' .. path:sub(#home + 1)
@@ -42,7 +54,9 @@ local function home_to_tilde(path, opts)
   -- return path
   -- below not work for some case.
   local trimed = vim.fn.fnamemodify(path, ':~')
-  if opts.shorten then return shorten(trimed, 2) end
+  if opts.shorten then
+    return shorten(trimed, 2)
+  end
   return trimed
 end
 
@@ -59,9 +73,13 @@ local function exists(filename)
   return stat and stat.type or false
 end
 
-local function is_dir(filename) return exists(filename) == 'directory' end
+local function is_dir(filename)
+  return exists(filename) == 'directory'
+end
 
-local function is_file(filename) return exists(filename) == 'file' end
+local function is_file(filename)
+  return exists(filename) == 'file'
+end
 
 local function is_home_dir(path)
   local homeDir = os.getenv('HOME') or os.getenv('USERPROFILE') or vim.uv.os_homedir()
@@ -89,7 +107,9 @@ end
 local function dirname(path)
   local strip_dir_pat = '/([^/]+)$'
   local strip_sep_pat = '/$'
-  if not path or #path == 0 then return end
+  if not path or #path == 0 then
+    return
+  end
   local result = path:gsub(strip_sep_pat, ''):gsub(strip_dir_pat, '')
   if #result == 0 then
     if is_windows then
@@ -124,16 +144,24 @@ end
 ---@param level_number number
 ---@return string
 local function level_up_by(path_string, level_number)
-  if type(path_string) ~= 'string' then return '/tmp/error/level_up_by' end
-  if level_number <= 0 or level_number >= 20 then return path_string end
+  if type(path_string) ~= 'string' then
+    return '/tmp/error/level_up_by'
+  end
+  if level_number <= 0 or level_number >= 20 then
+    return path_string
+  end
   local parts = path_split(path_string)
   local head_num = #parts - level_number - 1
-  if head_num <= 0 then head_num = 1 end
+  if head_num <= 0 then
+    head_num = 1
+  end
   local results = Table.head(head_num, parts)
 
   --- path_split removed the first `/` in path_string, add it back.
   --- FIXME: buggy
-  if is_windows then return path_join(results) end
+  if is_windows then
+    return path_join(results)
+  end
   return path_join('', unpack(results))
 end
 
@@ -144,10 +172,16 @@ local function traverse_parents(path, cb)
   -- Just in case our algo is buggy, don't infinite loop.
   for _ = 1, 100 do
     dir = dirname(dir)
-    if not dir then return end
+    if not dir then
+      return
+    end
     -- If we can't ascend further, then stop looking.
-    if cb(dir, path) then return dir, path end
-    if is_fs_root(dir) then break end
+    if cb(dir, path) then
+      return dir, path
+    end
+    if is_fs_root(dir) then
+      break
+    end
   end
 end
 
@@ -171,21 +205,31 @@ end
 
 local function search_ancestors(startpath, func)
   vim.validate({ func = { func, 'f' } })
-  if func(startpath) then return startpath end
+  if func(startpath) then
+    return startpath
+  end
   local guard = 100
   for path in iterate_parents(startpath) do
     -- Prevent infinite recursion if our algorithm breaks
     guard = guard - 1
-    if guard == 0 then return end
+    if guard == 0 then
+      return
+    end
 
-    if func(path) then return path end
+    if func(path) then
+      return path
+    end
   end
 end
 
 local function is_descendant(root, path)
-  if not path then return false end
+  if not path then
+    return false
+  end
 
-  local function cb(dir, _) return dir == root end
+  local function cb(dir, _)
+    return dir == root
+  end
 
   local dir, _ = traverse_parents(path, cb)
 

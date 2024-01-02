@@ -2,25 +2,25 @@ local plug = require('userlib.runtime.pack').plug
 
 return plug({
   {
-    "folke/noice.nvim",
-    event = "VeryLazy",
+    'folke/noice.nvim',
+    event = 'VeryLazy',
     dependencies = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify"
+      'MunifTanjim/nui.nvim',
+      'rcarriga/nvim-notify',
     },
     opts = {
       cmdline = {
         -- Posiiton - https://github.com/folke/noice.nvim/issues/32
         enabled = true, -- enables the Noice cmdline UI
         format = {
-          cmdline = { icon = ' ' }
-        }
+          cmdline = { icon = ' ' },
+        },
       },
       lsp = {
         override = {
-          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-          ["vim.lsp.util.stylize_markdown"] = true,
-          ["cmp.entry.get_documentation"] = true,
+          ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+          ['vim.lsp.util.stylize_markdown'] = true,
+          ['cmp.entry.get_documentation'] = true,
         },
       },
       -- you can enable a preset for easier configuration
@@ -32,5 +32,5 @@ return plug({
         lsp_doc_border = false, -- add a border to hover docs and signature help
       },
     },
-  }
+  },
 })

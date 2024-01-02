@@ -25,12 +25,16 @@ plug({
   keys = {
     {
       '<localleader>fg',
-      function() require('rgflow').open(nil, vim.b.grep_flags or nil, vim.cfg.runtime__starts_cwd) end,
+      function()
+        require('rgflow').open(nil, vim.b.grep_flags or nil, vim.cfg.runtime__starts_cwd)
+      end,
       desc = 'Grep search in all project',
     },
     {
       '<localleader>fs',
-      function() require('rgflow').open(nil, vim.b.grep_flags or nil, vim.uv.cwd()) end,
+      function()
+        require('rgflow').open(nil, vim.b.grep_flags or nil, vim.uv.cwd())
+      end,
       desc = 'Grep search current project',
     },
     {
@@ -145,17 +149,23 @@ plug({
     -- },
     {
       '<leader>fO',
-      function() require('oil').open(require('userlib.runtime.utils').get_root()) end,
+      function()
+        require('oil').open(require('userlib.runtime.utils').get_root())
+      end,
       desc = 'Open oil(BUF) file browser',
     },
     {
       '-',
-      function() require('oil').open() end,
+      function()
+        require('oil').open()
+      end,
       desc = 'Open oil file browser(buf)',
     },
     {
       '_',
-      function() require('oil').open_float() end,
+      function()
+        require('oil').open_float()
+      end,
       desc = 'Open oil file browser(buf|float)',
     },
   },
@@ -276,10 +286,14 @@ plug({
       update_when_errors = false,
     },
     get_highlight = function(symbol, _)
-      if symbol.scope == 'private' then return 'AerialPrivate' end
+      if symbol.scope == 'private' then
+        return 'AerialPrivate'
+      end
     end,
   },
-  config = function(_, opts) require('aerial').setup(opts) end,
+  config = function(_, opts)
+    require('aerial').setup(opts)
+  end,
 })
 
 plug({
@@ -295,14 +309,18 @@ plug({
   keys = {
     {
       '<leader>sp',
-      function() require('spectre').open_visual() end,
+      function()
+        require('spectre').open_visual()
+      end,
       desc = 'Open Search and replace panel',
     },
     {
       '<leader>sP',
       function()
         local path = vim.fn.fnameescape(vim.fn.expand('%:p:.'))
-        if vim.uv.os_uname().sysname == 'Windows_NT' then path = vim.fn.substitute(path, '\\', '/', 'g') end
+        if vim.uv.os_uname().sysname == 'Windows_NT' then
+          path = vim.fn.substitute(path, '\\', '/', 'g')
+        end
         require('spectre').open({
           path = path,
           is_close = true,
@@ -606,19 +624,25 @@ plug({
             ['<C-f>'] = false,
             ['<S-BS>'] = function()
               --- delete previous W
-              if vim.fn.mode() == 'n' then return end
+              if vim.fn.mode() == 'n' then
+                return
+              end
               vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>gEldEa', true, true, true), 'n', false)
             end,
             ['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
             ['<C-s>'] = actions.cycle_previewers_next,
             ['<C-a>'] = actions.cycle_previewers_prev,
             ['<C-h>'] = function()
-              if vim.fn.mode() == 'n' then return end
+              if vim.fn.mode() == 'n' then
+                return
+              end
               -- jump between WORD
               vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>gEa', true, true, true), 'n', false)
             end,
             ['<C-l>'] = function()
-              if vim.fn.mode() == 'n' then return end
+              if vim.fn.mode() == 'n' then
+                return
+              end
               vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>Ea', true, true, true), 'n', false)
             end,
             ['<ESC>'] = function(prompt_bufnr)
@@ -682,7 +706,9 @@ plug({
             },
             ['n'] = {
               -- your custom normal mode mappings
-              ['/'] = function() vim.cmd('startinsert') end,
+              ['/'] = function()
+                vim.cmd('startinsert')
+              end,
             },
           },
         },
@@ -691,7 +717,9 @@ plug({
           prompt_title = 'Zz...',
           mappings = {
             default = {
-              after_action = function(selection) print('Update to (' .. selection.z_score .. ') ' .. selection.path) end,
+              after_action = function(selection)
+                print('Update to (' .. selection.z_score .. ') ' .. selection.path)
+              end,
             },
             -- ["<C-s>"] = {
             --   before_action = function(selection) print("before C-s") end,
@@ -753,17 +781,23 @@ plug({
     },
     {
       '<leader>pp',
-      function() require('userlib.mini.visits').list_projects_in_cwd(vim.cfg.runtime__starts_cwd) end,
+      function()
+        require('userlib.mini.visits').list_projects_in_cwd(vim.cfg.runtime__starts_cwd)
+      end,
       desc = 'List projects in cwd',
     },
     {
       '<leader>pa',
-      function() require('userlib.mini.visits').add_project(vim.uv.cwd(), vim.cfg.runtime__starts_cwd) end,
+      function()
+        require('userlib.mini.visits').add_project(vim.uv.cwd(), vim.cfg.runtime__starts_cwd)
+      end,
       desc = 'Add project',
     },
     {
       '<leader>pP',
-      function() require('mini.visits').write_index() end,
+      function()
+        require('mini.visits').write_index()
+      end,
       desc = 'Write index',
     },
   },
@@ -778,5 +812,7 @@ plug({
       },
     }
   end,
-  config = function(_, opts) require('mini.visits').setup(opts) end,
+  config = function(_, opts)
+    require('mini.visits').setup(opts)
+  end,
 })

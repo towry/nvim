@@ -1,7 +1,7 @@
 local M = {}
 
 M.filetypes = {
-  "vue"
+  'vue',
 }
 
 M.init_options = {
@@ -9,38 +9,38 @@ M.init_options = {
     css = {},
     emmet = {},
     html = {
-      suggest = {}
+      suggest = {},
     },
     javascript = {
-      format = {}
+      format = {},
     },
     stylusSupremacy = {},
     typescript = {
-      format = {}
+      format = {},
     },
     vetur = {
       completion = {
         autoImport = true,
-        tagCasing = "kebab",
-        useScaffoldSnippets = false
+        tagCasing = 'kebab',
+        useScaffoldSnippets = false,
       },
       format = {
         defaultFormatter = {
-          js = "none",
-          ts = "none"
+          js = 'none',
+          ts = 'none',
         },
         defaultFormatterOptions = {},
         scriptInitialIndent = false,
-        styleInitialIndent = false
+        styleInitialIndent = false,
       },
       useWorkspaceDependencies = false,
       validation = {
         script = true,
         style = true,
-        template = true
-      }
-    }
-  }
+        template = true,
+      },
+    },
+  },
 }
 
 return M

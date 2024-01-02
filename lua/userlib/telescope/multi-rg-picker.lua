@@ -8,55 +8,59 @@
 -- │ Default keybinding is <S-P>                              │
 -- ╰──────────────────────────────────────────────────────────╯
 
-local conf = require("telescope.config").values
-local finders = require "telescope.finders"
-local make_entry = require "telescope.make_entry"
-local pickers = require "telescope.pickers"
+local conf = require('telescope.config').values
+local finders = require('telescope.finders')
+local make_entry = require('telescope.make_entry')
+local pickers = require('telescope.pickers')
 
 local flatten = vim.tbl_flatten
 
-local function is_table(t) return type(t) == 'table' end
-local function is_string(t) return type(t) == 'string' end
+local function is_table(t)
+  return type(t) == 'table'
+end
+local function is_string(t)
+  return type(t) == 'string'
+end
 
 return function(opts)
   opts = opts or {}
-  opts.cwd = opts.cwd and vim.fn.expand(opts.cwd) or require("userlib.runtime.utils").get_root()
+  opts.cwd = opts.cwd and vim.fn.expand(opts.cwd) or require('userlib.runtime.utils').get_root()
   opts.shortcuts = opts.shortcuts
-      or {
-        ["c"] = "*.c",
-        ["js"] = "*.{js,jsx}",
-        ["json"] = "*.json",
-        ["l"] = "*.lua",
-        ["lua"] = "*.lua",
-        ["md"] = "*.md",
-        ["styles"] = "{styles.tsx,styles.ts,styles.js,*.styles.tsx,*.styles.ts,*.styles.js}",
-        ["stories"] = "{stories.tsx,stories.ts,stories.js,*.stories.tsx,*.stories.ts,*.stories.js}",
-        ["test"] = "*{.test.tsx,.test.ts,.test.js,-test.tsx,-test.ts,-test.js}",
-        ["tests"] = "*{.test.tsx,.test.ts,.test.js,-test.tsx,-test.ts,-test.js}",
-        ["ts"] = {
-          "*.{ts,tsx}",
-          "!*{.test.tsx,.test.ts,.test.js,-test.tsx,-test.ts,-test.js}"
-        },
-        ["tsx"] = {
-          "*.tsx",
-          "!*{.test.tsx,.test.ts,.test.js,-test.tsx,-test.ts,-test.js}"
-        },
-        ["xml"] = "*.xml",
-      }
-  opts.pattern = opts.pattern or "%s"
-  opts.prompt_title = opts.prompt_title or require("userlib.runtime.path").home_to_tilde(opts.cwd)
+    or {
+      ['c'] = '*.c',
+      ['js'] = '*.{js,jsx}',
+      ['json'] = '*.json',
+      ['l'] = '*.lua',
+      ['lua'] = '*.lua',
+      ['md'] = '*.md',
+      ['styles'] = '{styles.tsx,styles.ts,styles.js,*.styles.tsx,*.styles.ts,*.styles.js}',
+      ['stories'] = '{stories.tsx,stories.ts,stories.js,*.stories.tsx,*.stories.ts,*.stories.js}',
+      ['test'] = '*{.test.tsx,.test.ts,.test.js,-test.tsx,-test.ts,-test.js}',
+      ['tests'] = '*{.test.tsx,.test.ts,.test.js,-test.tsx,-test.ts,-test.js}',
+      ['ts'] = {
+        '*.{ts,tsx}',
+        '!*{.test.tsx,.test.ts,.test.js,-test.tsx,-test.ts,-test.js}',
+      },
+      ['tsx'] = {
+        '*.tsx',
+        '!*{.test.tsx,.test.ts,.test.js,-test.tsx,-test.ts,-test.js}',
+      },
+      ['xml'] = '*.xml',
+    }
+  opts.pattern = opts.pattern or '%s'
+  opts.prompt_title = opts.prompt_title or require('userlib.runtime.path').home_to_tilde(opts.cwd)
 
-  local custom_grep = finders.new_async_job {
+  local custom_grep = finders.new_async_job({
     command_generator = function(prompt)
-      if not prompt or prompt == "" then
+      if not prompt or prompt == '' then
         return nil
       end
 
-      local prompt_split = vim.split(prompt, "  ")
+      local prompt_split = vim.split(prompt, '  ')
 
-      local args = { "rg" }
+      local args = { 'rg' }
       if prompt_split[1] then
-        table.insert(args, "-e")
+        table.insert(args, '-e')
         table.insert(args, prompt_split[1])
       end
 
@@ -64,7 +68,7 @@ return function(opts)
         local pattern
 
         for _, value in pairs(opts.shortcuts[prompt_split[2]]) do
-          table.insert(args, "-g")
+          table.insert(args, '-g')
           if opts.shortcuts[prompt_split[2]] then
             pattern = value
           else
@@ -76,7 +80,7 @@ return function(opts)
       end
 
       if prompt_split[2] and is_string(opts.shortcuts[prompt_split[2]]) then
-        table.insert(args, "-g")
+        table.insert(args, '-g')
 
         local pattern
         if opts.shortcuts[prompt_split[2]] then
@@ -88,20 +92,22 @@ return function(opts)
         table.insert(args, string.format(opts.pattern, pattern))
       end
 
-      return flatten {
+      return flatten({
         args,
-        { "--color=never", "--no-heading", "--with-filename", "--line-number", "--column", "--smart-case" },
-      }
+        { '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case' },
+      })
     end,
     entry_maker = make_entry.gen_from_vimgrep(opts),
     cwd = opts.cwd,
-  }
+  })
 
-  pickers.new(opts, {
-    debounce = 100,
-    results_title = opts.results_title or " Live Grep (with shortcuts)",
-    finder = custom_grep,
-    previewer = conf.grep_previewer(opts),
-    sorter = require("telescope.sorters").empty(),
-  }):find()
+  pickers
+    .new(opts, {
+      debounce = 100,
+      results_title = opts.results_title or ' Live Grep (with shortcuts)',
+      finder = custom_grep,
+      previewer = conf.grep_previewer(opts),
+      sorter = require('telescope.sorters').empty(),
+    })
+    :find()
 end

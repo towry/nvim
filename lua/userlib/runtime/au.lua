@@ -59,12 +59,16 @@ M.user_autocmds = setmetatable({
 ---@param name string the augroup name
 function M.clear_augroup(name)
   vim.schedule(function()
-    pcall(function() vim.api.nvim_clear_autocmds({ group = name }) end)
+    pcall(function()
+      vim.api.nvim_clear_autocmds({ group = name })
+    end)
   end)
 end
 
 ---@param name string `User <name>`
-function M.do_useraucmd(name) vim.cmd('do ' .. name) end
+function M.do_useraucmd(name)
+  vim.cmd('do ' .. name)
+end
 
 --- do user autocmds
 ---@param name string the autocmd pattern name
@@ -101,7 +105,9 @@ end
 function M.define_autocmd(event, opts)
   if type(opts.group) == 'string' and opts.group ~= '' then
     local exists, _ = pcall(vim.api.nvim_get_autocmds, { group = opts.group })
-    if not exists then vim.api.nvim_create_augroup(opts.group, {}) end
+    if not exists then
+      vim.api.nvim_create_augroup(opts.group, {})
+    end
   end
   vim.api.nvim_create_autocmd(event, opts)
 end
@@ -109,10 +115,14 @@ end
 --- Define User autocmd
 ---@param opts {pattern?:string,once?:boolean,callback?:function,group?:string}
 function M.define_user_autocmd(opts)
-  if not opts then return end
+  if not opts then
+    return
+  end
   if type(opts.group) == 'string' and opts.group ~= '' then
     local exists, _ = pcall(vim.api.nvim_get_autocmds, { group = opts.group })
-    if not exists then vim.api.nvim_create_augroup(opts.group, {}) end
+    if not exists then
+      vim.api.nvim_create_augroup(opts.group, {})
+    end
   end
   vim.api.nvim_create_autocmd('User', opts)
 end
@@ -143,7 +153,9 @@ function M.on_lsp_attach(callback)
 end
 
 ---@param args table see `:h nvim_get_autocmds`
-function M.has_autocmds(args) return pcall(vim.api.nvim_get_autocmds, args) end
+function M.has_autocmds(args)
+  return pcall(vim.api.nvim_get_autocmds, args)
+end
 
 --- Add event to be fired.
 ---@param event_name string: The event name.
@@ -170,7 +182,9 @@ end
 ---@param event_name string
 ---@param handler_name string
 function M.remove_event(event_name, handler_name)
-  if not events_registry[event_name] then return end
+  if not events_registry[event_name] then
+    return
+  end
   events_registry[event_name].callbacks[handler_name] = nil
 end
 
@@ -197,7 +211,9 @@ end
 ---@param opts? {buffer?:number}
 function M.exec_whichkey_refresh(opts)
   opts = opts or {}
-  if not opts.buffer then opts.buffer = vim.api.nvim_get_current_buf() end
+  if not opts.buffer then
+    opts.buffer = vim.api.nvim_get_current_buf()
+  end
 
   M.exec_useraucmd('WhichKeyRefresh', {
     data = {

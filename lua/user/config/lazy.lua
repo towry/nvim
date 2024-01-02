@@ -1,7 +1,9 @@
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 
 local function prepend_lazy()
-  if not vim.uv.fs_stat(lazypath) then return false end
+  if not vim.uv.fs_stat(lazypath) then
+    return false
+  end
   vim.opt.rtp:prepend(lazypath)
   return true
 end
@@ -75,7 +77,9 @@ local function setup(lazy_opts, opts)
       output = 'user/plugins_bundle.lua',
       glob_dir = { 'user/plugins/*.lua', 'plugin-extras/**/*.lua' },
     })
-    if vim.loader then vim.loader.reset() end
+    if vim.loader then
+      vim.loader.reset()
+    end
     vim.notify('PrebundlePlugins DONE!')
   end, {})
 
@@ -95,7 +99,9 @@ local function setup(lazy_opts, opts)
     return
   end
 
-  if opts and type(opts.getspec) == 'function' then lazy_opts.spec = opts.getspec() end
+  if opts and type(opts.getspec) == 'function' then
+    lazy_opts.spec = opts.getspec()
+  end
 
   require('lazy').setup(lazy_opts)
 end

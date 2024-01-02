@@ -52,7 +52,9 @@ M.open = function(new_cwd)
     })
     set('n', 'w', function()
       require('userlib.runtime.utils').change_cwd(new_cwd, 'tcd')
-      vim.schedule(function() au.exec_useraucmd(au.user_autocmds.DoEnterDashboard) end)
+      vim.schedule(function()
+        au.exec_useraucmd(au.user_autocmds.DoEnterDashboard)
+      end)
       unset()
     end, {
       desc = 'Change cwd',

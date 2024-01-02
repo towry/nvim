@@ -4,5 +4,5 @@ return plug({
   {
     'alanfortlink/blackjack.nvim',
     vscode = true,
-  }
+  },
 })

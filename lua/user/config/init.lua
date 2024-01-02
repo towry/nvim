@@ -24,12 +24,16 @@ function M.setup()
   require('user.config.lazy').setup({}, {
     getspec = function()
       local bundle_ok, spec = pcall(require, 'user.plugins_bundle')
-      if not bundle_ok then spec = require('user.config.plugs') end
+      if not bundle_ok then
+        spec = require('user.config.plugs')
+      end
       return spec
     end,
   })
 
-  if not package.loaded.lazy then on_very_lazy() end
+  if not package.loaded.lazy then
+    on_very_lazy()
+  end
 end
 
 return M

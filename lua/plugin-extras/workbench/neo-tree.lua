@@ -18,7 +18,9 @@ plug({
       desc = 'Locate current file in tree',
     },
   },
-  init = function() vim.g.neo_tree_remove_legacy_commands = true end,
+  init = function()
+    vim.g.neo_tree_remove_legacy_commands = true
+  end,
   opts = function()
     return {
       auto_clean_after_session_restore = true,
@@ -38,7 +40,9 @@ plug({
         indent = { padding = 0 },
       },
       commands = {
-        system_open = function(state) (vim.ui.open)(state.tree:get_node():get_id()) end,
+        system_open = function(state)
+          (vim.ui.open)(state.tree:get_node():get_id())
+        end,
         parent_or_close = function(state)
           local node = state.tree:get_node()
           if (node.type == 'directory' or node:has_children()) and node:is_expanded() then
@@ -75,7 +79,9 @@ plug({
             ['URI'] = vim.uri_from_fname(filepath),
           }
 
-          local options = vim.tbl_filter(function(val) return vals[val] ~= '' end, vim.tbl_keys(vals))
+          local options = vim.tbl_filter(function(val)
+            return vals[val] ~= ''
+          end, vim.tbl_keys(vals))
           if vim.tbl_isempty(options) then
             vim.notify('No values to copy', vim.log.levels.WARN)
             return
@@ -83,7 +89,9 @@ plug({
           table.sort(options)
           vim.ui.select(options, {
             prompt = 'Choose to copy to clipboard:',
-            format_item = function(item) return ('%s: %s'):format(item, vals[item]) end,
+            format_item = function(item)
+              return ('%s: %s'):format(item, vals[item])
+            end,
           }, function(choice)
             local result = vals[choice]
             if result then
@@ -126,7 +134,9 @@ plug({
       event_handlers = {
         {
           event = 'neo_tree_buffer_enter',
-          handler = function(_) vim.opt_local.signcolumn = 'auto' end,
+          handler = function(_)
+            vim.opt_local.signcolumn = 'auto'
+          end,
         },
         {
           event = 'neo_tree_window_after_open',

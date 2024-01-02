@@ -1,5 +1,7 @@
 local M = {}
-local hi = function(name, data) vim.api.nvim_set_hl(0, name, data) end
+local hi = function(name, data)
+  vim.api.nvim_set_hl(0, name, data)
+end
 
 function M.custom_theme_wildcharm()
   --- custom wildcharm theme.
@@ -14,31 +16,31 @@ function M.custom_theme_default()
   extend_hl({ 'MiniCursorword', 'Normal' }, {
     italic = true,
     bold = true,
-    bg = "NONE",
+    bg = 'NONE',
   })
   extend_hl({ 'MiniCursorwordCurrent', 'Normal' }, {
     underline = false,
     bold = true,
-    bg = "NONE",
+    bg = 'NONE',
     fg = 'NONE',
   })
   --- git
   hi('diffAdded', { link = 'DiffAdd' })
   hi('diffRemoved', { link = 'DiffDelete' })
   hi('diffChanged', { link = 'DiffChange' })
-  extend_hl({ 'diffFile', 'Type', }, {
-    bold = true
+  extend_hl({ 'diffFile', 'Type' }, {
+    bold = true,
   })
   extend_hl({ 'diffOldFile', 'DiffAdd' }, {
-    bg = 'NONE'
+    bg = 'NONE',
   })
   extend_hl({ 'diffNewFile', 'DiffDelete' }, {
-    bg = 'NONE'
+    bg = 'NONE',
   })
   --- telescope
   hi('TelescopeMatching', { link = 'Visual' })
   -- aerial
-  hi('AerialPrivate', { italic = true, })
+  hi('AerialPrivate', { italic = true })
 end
 
 function M.custom_theme_modus()
@@ -56,7 +58,9 @@ local function update_custom_theme()
 end
 local is_setup_theme_done = false
 function M.setup_theme()
-  if is_setup_theme_done then return end
+  if is_setup_theme_done then
+    return
+  end
   local ok = vim.cfg.ui__theme_name == 'default' and true or pcall(vim.cmd, 'colorscheme ' .. vim.cfg.ui__theme_name)
   if ok then
     is_setup_theme_done = true
@@ -80,7 +84,9 @@ function M.setup_theme()
 end
 
 M.setup = function()
-  if vim.cfg.runtime__starts_in_buffer then M.setup_theme() end
+  if vim.cfg.runtime__starts_in_buffer then
+    M.setup_theme()
+  end
 end
 
 return M

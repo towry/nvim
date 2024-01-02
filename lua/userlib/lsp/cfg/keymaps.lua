@@ -7,10 +7,14 @@ function M.setup_keybinding(client, buffer)
       buffer = buffer,
     }, e or {})
   end
-  local _ = function(d) return '' .. d end
+  local _ = function(d)
+    return '' .. d
+  end
   local set = keymap.set
   local cmdstr = keymap.cmdstr
-  local func_call = function(call_sig) return cmdstr([[lua require("userlib.lsp.func").]] .. call_sig) end
+  local func_call = function(call_sig)
+    return cmdstr([[lua require("userlib.lsp.func").]] .. call_sig)
+  end
 
   set(
     'n',
@@ -141,7 +145,7 @@ function M.setup_keybinding(client, buffer)
   set('n', '<leader>tf', function()
     require('userlib.lsp.servers.null_ls.autoformat').toggle()
   end, {
-    desc = 'Toggle auto format'
+    desc = 'Toggle auto format',
   })
 
   if cap.renameProvider then
@@ -245,7 +249,9 @@ function M.setup_keybinding(client, buffer)
   set(
     'n',
     '<leader>wl',
-    function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
+    function()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end,
     opts({
       desc = _('List workspace folders'),
     })

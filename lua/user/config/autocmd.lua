@@ -10,7 +10,9 @@ function M.load_on_startup()
       {
         group = 'bind_key_on_term_open',
         pattern = 'term://*',
-        callback = function() Ty.set_terminal_keymaps() end,
+        callback = function()
+          Ty.set_terminal_keymaps()
+        end,
       },
     },
     {
@@ -18,7 +20,9 @@ function M.load_on_startup()
       {
         group = '_clear_fugitive_bufs',
         pattern = 'fugitive://*',
-        callback = function() vim.cmd('set bufhidden=delete') end,
+        callback = function()
+          vim.cmd('set bufhidden=delete')
+        end,
       },
     },
     {
@@ -41,7 +45,9 @@ function M.load_on_startup()
         group = '_check_exit',
         callback = function()
           local disable = true
-          if disable then return end
+          if disable then
+            return
+          end
           --- https://github.com/neovim/neovim/issues/17256
           -- local tabs_count = #vim.api.nvim_list_tabpages()
           local tabs_count = 0
@@ -54,7 +60,9 @@ function M.load_on_startup()
             local is_true_modifed = vim.bo.modified
             vim.cmd('set modified')
             vim.defer_fn(function()
-              if not is_true_modifed then vim.cmd('set nomodified') end
+              if not is_true_modifed then
+                vim.cmd('set nomodified')
+              end
             end, 1)
           end
         end,
@@ -87,7 +95,9 @@ function M.load_on_startup()
             au.do_useraucmd(au.user_autocmds.FileOpened_User)
 
             vim.defer_fn(function()
-              vim.schedule(function() au.do_useraucmd(au.user_autocmds.FileOpenedAfter_User) end)
+              vim.schedule(function()
+                au.do_useraucmd(au.user_autocmds.FileOpenedAfter_User)
+              end)
             end, 10)
           end
         end,
@@ -97,7 +107,9 @@ function M.load_on_startup()
       'ColorScheme',
       {
         group = '_colorscheme',
-        callback = function() au.fire_event(au.events.AfterColorschemeChanged) end,
+        callback = function()
+          au.fire_event(au.events.AfterColorschemeChanged)
+        end,
       },
     },
     {
@@ -143,7 +155,9 @@ function M.load_on_startup()
       {
         group = 'clear_search_hl_on_buf_enter',
         callback = function()
-          vim.schedule(function() vim.cmd('nohl') end)
+          vim.schedule(function()
+            vim.cmd('nohl')
+          end)
         end,
       },
     },
@@ -174,14 +188,11 @@ function M.load_on_startup()
               data = ctx.data,
             })
             --- maybe post event should be fired inside above event.
-            vim.defer_fn(
-              function()
-                au.exec_useraucmd(au.user_autocmds.LazyUIEnterOncePost, {
-                  data = ctx.data,
-                })
-              end,
-              1
-            )
+            vim.defer_fn(function()
+              au.exec_useraucmd(au.user_autocmds.LazyUIEnterOncePost, {
+                data = ctx.data,
+              })
+            end, 1)
           end)
         end,
       },
@@ -191,7 +202,9 @@ function M.load_on_startup()
       {
         group = '_after_buf_rename',
         pattern = '*',
-        callback = function(ctx) vim.b[ctx.buf].project_nvim_cwd = nil end,
+        callback = function(ctx)
+          vim.b[ctx.buf].project_nvim_cwd = nil
+        end,
       },
     },
     {
@@ -219,14 +232,11 @@ function M.load_on_startup()
             au.exec_useraucmd(au.user_autocmds.LazyUIEnter, {
               data = ctx.data,
             })
-            vim.defer_fn(
-              function()
-                au.exec_useraucmd(au.user_autocmds.LazyUIEnterPost, {
-                  data = ctx.data,
-                })
-              end,
-              1
-            )
+            vim.defer_fn(function()
+              au.exec_useraucmd(au.user_autocmds.LazyUIEnterPost, {
+                data = ctx.data,
+              })
+            end, 1)
           end)
         end,
       },
@@ -239,14 +249,20 @@ function M.load_on_startup()
       pattern = 'ProjectNvimSetPwd',
       group = '_set_dir_on_change_',
       callback = function(ctx)
-        if vim.bo.buftype ~= '' then return end
+        if vim.bo.buftype ~= '' then
+          return
+        end
         local data = ctx.data or {}
         local new_cwd = data.dir or nil
         ---@diagnostic disable-next-line: undefined-field
-        if not new_cwd then new_cwd = vim.uv.cwd() end
+        if not new_cwd then
+          new_cwd = vim.uv.cwd()
+        end
         local buf_cwd, buf_cwd_short = vim.b[ctx.buf].project_nvim_cwd, vim.b[ctx.buf].project_nvim_cwd_short
         local cwd, cwd_short = require('userlib.runtime.utils').update_cwd_env(buf_cwd, buf_cwd_short)
-        if vim.b[ctx.buf].did_set_cwd_short == cwd then return end
+        if vim.b[ctx.buf].did_set_cwd_short == cwd then
+          return
+        end
         vim.b[ctx.buf].did_set_cwd_short = cwd
         -- set cwd on this buffer.
         vim.b[ctx.buf].project_nvim_cwd_short = cwd_short
@@ -256,28 +272,32 @@ function M.load_on_startup()
     },
     {
       pattern = 'AlphaClosed',
-      callback = function() au.do_useraucmd(au.user_autocmds.OnLeaveDashboard_User) end,
+      callback = function()
+        au.do_useraucmd(au.user_autocmds.OnLeaveDashboard_User)
+      end,
     },
     {
       pattern = 'VeryLazy',
       once = true,
-      callback = function() require('user.config.theme').setup_theme() end,
+      callback = function()
+        require('user.config.theme').setup_theme()
+      end,
     },
     {
       --- start dashboard
       pattern = au.user_autocmds.LazyUIEnter,
       once = true,
       callback = function()
-        if vim.fn.argc(-1) ~= 0 then return end
-        vim.schedule(
-          function()
-            au.exec_useraucmd(au.user_autocmds.DoEnterDashboard, {
-              data = {
-                in_vimenter = true,
-              },
-            })
-          end
-        )
+        if vim.fn.argc(-1) ~= 0 then
+          return
+        end
+        vim.schedule(function()
+          au.exec_useraucmd(au.user_autocmds.DoEnterDashboard, {
+            data = {
+              in_vimenter = true,
+            },
+          })
+        end)
       end,
     },
   }
@@ -317,7 +337,9 @@ local function resize_kitty()
     group = kitty_aug,
     pattern = '*',
     callback = function()
-      if resized then return end
+      if resized then
+        return
+      end
       vim.schedule(function()
         resized = true
         vim.cmd(':silent !kitty @ --to=$KITTY_LISTEN_ON set-spacing padding=0 margin=0')
@@ -328,7 +350,9 @@ local function resize_kitty()
     group = kitty_aug,
     pattern = '*',
     callback = function()
-      if not resized then return end
+      if not resized then
+        return
+      end
       vim.cmd(':silent !kitty @ --to=$KITTY_LISTEN_ON set-spacing padding=8 margin=0')
     end,
   })
@@ -343,7 +367,9 @@ function M.setup(opts)
   M.load_on_startup()
   M.setup_events_on_startup()
 
-  if opts.resize_kitty then resize_kitty() end
+  if opts.resize_kitty then
+    resize_kitty()
+  end
   if type(opts.on_very_lazy) == 'function' then
     au.define_user_autocmd({
       pattern = 'VeryLazy',

@@ -3,7 +3,7 @@ local M = {}
 M.Weights = {
   Recent = 1,
   Frecent = 0.5,
-  Frequent = 0
+  Frequent = 0,
 }
 
 ---@param cwd string
@@ -12,7 +12,9 @@ function M.select_by_cwd(cwd, local_opts)
   local_opts = local_opts or {}
   local weight_name = local_opts.weight_name or 'Recent'
   local weight = M.Weights[weight_name]
-  if weight == nil then weight = M.Weights.Recent end
+  if weight == nil then
+    weight = M.Weights.Recent
+  end
   local visits = require('mini.visits')
   local sort = visits.gen_sort.default({ recency_weight = weight })
   local select_opts = { sort = sort, filter = local_opts.filter }
@@ -36,8 +38,8 @@ function M.list_projects_in_cwd(cwd)
         vim.schedule(function()
           require('userlib.mini.clue.folder-action').open(full_path)
         end)
-      end
-    }
+      end,
+    },
   })
 end
 

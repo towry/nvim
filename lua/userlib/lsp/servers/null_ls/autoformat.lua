@@ -5,7 +5,9 @@ local M = {}
 --- Is auto format is disabled
 function M.disabled(bufnr)
   -- do not format on git merge.
-  if vim.cfg.runtime__starts_as_gittool then return end
+  if vim.cfg.runtime__starts_as_gittool then
+    return
+  end
   if (bufnr or bufnr == 0) and vim.b[bufnr].autoformat_disable then
     return true
   end
@@ -50,15 +52,15 @@ local function attach_autoformat_with_autocmd(_client, bufnr)
         group = group,
         buffer = bufnr,
         nested = false,
-        desc = "Auto format for buffer: " .. bufnr,
+        desc = 'Auto format for buffer: ' .. bufnr,
         callback = function()
           require('userlib.lsp.servers.null_ls.fmt').format(bufnr, {
             auto = true,
             async = async,
           })
-        end
-      }
-    }
+        end,
+      },
+    },
   })
 end
 

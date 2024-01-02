@@ -143,7 +143,9 @@ plug({
         '<leader>gC',
         function()
           vim.cmd('Git commit')
-          vim.schedule(function() vim.cmd('WriteGitCommitMessage') end)
+          vim.schedule(function()
+            vim.cmd('WriteGitCommitMessage')
+          end)
         end,
         desc = 'Let ai write the commit',
       },
@@ -192,7 +194,9 @@ plug({
         callback = function()
           vim.schedule(function()
             local ft = vim.bo.filetype
-            if ft ~= 'fugitive' then return end
+            if ft ~= 'fugitive' then
+              return
+            end
             vim.cmd('normal! gg5j')
           end)
         end,
@@ -204,7 +208,9 @@ plug({
     'tpope/vim-git',
     event = { 'BufReadPre' },
     enabled = true,
-    cond = function() return true end,
+    cond = function()
+      return true
+    end,
   },
 
   {
@@ -267,7 +273,9 @@ plug({
         end,
       },
     },
-    config = function(_, opts) require('diffview').setup(opts) end,
+    config = function(_, opts)
+      require('diffview').setup(opts)
+    end,
     init = function()
       au.define_autocmd('BufEnter', {
         pattern = 'diffview://*',
@@ -275,7 +283,9 @@ plug({
         callback = function(args)
           local buf = args.buf
           local set = require('userlib.runtime.keymap').map_buf_thunk(buf)
-          set('n', '<C-q>', function() require('userlib.git.utils').close_git_views() end, {
+          set('n', '<C-q>', function()
+            require('userlib.git.utils').close_git_views()
+          end, {
             desc = 'quit diffview',
           })
         end,
@@ -350,8 +360,12 @@ plug({
         'gh]',
         function()
           local gs = require('gitsigns')
-          if vim.wo.diff then return end
-          vim.schedule(function() gs.next_hunk() end)
+          if vim.wo.diff then
+            return
+          end
+          vim.schedule(function()
+            gs.next_hunk()
+          end)
         end,
         desc = 'Next hunk',
       },
@@ -359,8 +373,12 @@ plug({
         'gh[',
         function()
           local gs = require('gitsigns')
-          if vim.wo.diff then return end
-          vim.schedule(function() gs.prev_hunk() end)
+          if vim.wo.diff then
+            return
+          end
+          vim.schedule(function()
+            gs.prev_hunk()
+          end)
         end,
         desc = 'Prev hunk',
       },
@@ -371,10 +389,9 @@ plug({
       local autocmd = require('userlib.runtime.au')
 
       local signs = require('gitsigns')
-      require('userlib.legendary').pre_hook(
-        'git_lg',
-        function(lg) lg.commands(require('userlib.legendary.commands.git')) end
-      )
+      require('userlib.legendary').pre_hook('git_lg', function(lg)
+        lg.commands(require('userlib.legendary.commands.git'))
+      end)
 
       -- ╭──────────────────────────────────────────────────────────╮
       -- │ Setup                                                    │
@@ -479,7 +496,11 @@ plug({
         imap('<C-k>', '<Plug>(committia-scroll-diff-up)')
 
         -- if no commit message, start in insert mode.
-        if info.vcs == 'git' and vim.fn.getline(1) == '' then vim.schedule(function() vim.cmd.startinsert() end) end
+        if info.vcs == 'git' and vim.fn.getline(1) == '' then
+          vim.schedule(function()
+            vim.cmd.startinsert()
+          end)
+        end
       end,
     }
   end,
@@ -562,7 +583,9 @@ plug({
       -- },
     })
 
-    vim.schedule(function() vim.cmd('GitConflictRefresh') end)
+    vim.schedule(function()
+      vim.cmd('GitConflictRefresh')
+    end)
   end,
 })
 
@@ -581,7 +604,9 @@ plug({
   init = function()
     au.define_user_autocmd({
       pattern = 'TelTelescopeConfigDone',
-      callback = function() require('telescope').load_extension('git_worktree') end,
+      callback = function()
+        require('telescope').load_extension('git_worktree')
+      end,
     })
   end,
 })

@@ -1,7 +1,7 @@
 return function()
-  local present, nls = pcall(require, "null-ls")
+  local present, nls = pcall(require, 'null-ls')
   if not present then
-    Ty.NOTIFY("null-ls is not installed")
+    Ty.NOTIFY('null-ls is not installed')
     return
   end
   -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
@@ -10,7 +10,7 @@ return function()
   -- use `filetypes` to specific which filetypes to run the generators.
   local sources = {
     builtins.formatting.stylua.with({
-      filetypes = { "lua", "luau" }
+      filetypes = { 'lua', 'luau' },
     }),
     -- only prettier works with monorepo.
     builtins.formatting.prettier,
@@ -35,6 +35,6 @@ return function()
     -- root_dir = function()
     --   return require('userlib.runtime.utils').get_root()
     -- end
-    root_dir = require("null-ls.utils").root_pattern(unpack(require('userlib.runtime.utils').root_patterns)),
+    root_dir = require('null-ls.utils').root_pattern(unpack(require('userlib.runtime.utils').root_patterns)),
   })
 end

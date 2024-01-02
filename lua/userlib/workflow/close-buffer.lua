@@ -6,7 +6,7 @@ function M.close()
   local bufstack = require('window-bufstack.bufstack')
   local next_buf = bufstack.peek_bufstack(0, {
     -- skip current.
-    skip = 1
+    skip = 1,
   })
   --- buffer is displayed in other window.
   if #vim.fn.win_findbuf(vim.fn.bufnr('%')) > 1 then

@@ -131,7 +131,9 @@ function M.init_interface()
 end
 
 function M.init_folds()
-  if vim.g.vscode then return end
+  if vim.g.vscode then
+    return
+  end
   o.foldnestmax = 10 -- deepest fold is 10 levels
   o.foldlevel = 99 --- Using ufo provider need a large value
   o.foldlevelstart = 99 --- Expand all folds by default
@@ -176,7 +178,9 @@ end
 
 --- need to lazy setup, otherwise bunch mods needed to be load.
 function M.setup_lsp()
-  if vim.cfg.lsp__log_level then vim.lsp.set_log_level(vim.cfg.lsp__log_level) end
+  if vim.cfg.lsp__log_level then
+    vim.lsp.set_log_level(vim.cfg.lsp__log_level)
+  end
 end
 
 function M.setup()
@@ -185,7 +189,9 @@ function M.setup()
   M.init_folds()
   M.setup_statusline()
 
-  if vim.g.vscode then return end
+  if vim.g.vscode then
+    return
+  end
 
   local ftau = vim.api.nvim_create_augroup('option_ft', { clear = true })
   vim.api.nvim_create_autocmd('FileType', {
@@ -194,14 +200,26 @@ function M.setup()
       local buf = args.buf
       local ft = vim.bo[buf].filetype
       -- NOTE: nvim-treesitter on comment have some bugs.
-      if ft == 'comment' then return end
-      if vim.cfg.runtime__starts_as_gittool then return end
+      if ft == 'comment' then
+        return
+      end
+      if vim.cfg.runtime__starts_as_gittool then
+        return
+      end
 
-      if vim.b[buf].treesitter_disable == true then return end
-      if not vim.api.nvim_buf_is_valid(buf) then return end
-      if Buffer.is_big_file(buf) then return end
+      if vim.b[buf].treesitter_disable == true then
+        return
+      end
+      if not vim.api.nvim_buf_is_valid(buf) then
+        return
+      end
+      if Buffer.is_big_file(buf) then
+        return
+      end
       -- start highlighter.
-      if not pcall(vim.treesitter.start, buf) then return end
+      if not pcall(vim.treesitter.start, buf) then
+        return
+      end
       require('userlib.runtime.au').do_useraucmd('User TreeSitterStart')
     end,
   })

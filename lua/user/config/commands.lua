@@ -97,7 +97,9 @@ if vim.env['TMUX'] ~= nil then
 
     -- Execute the tmux command
     local success, _, _ = os.execute(tmux_split_command)
-    if not success then print('Failed to execute tmux split-window command.') end
+    if not success then
+      print('Failed to execute tmux split-window command.')
+    end
   end, {
     nargs = '+', -- This command requires at least one argument (the command to run)
     desc = 'Run a command in a new tmux split-window',
@@ -118,7 +120,9 @@ create_cmd('TryMake', function(opts)
   else
     target = ' ' .. target
   end
-  if vim.bo.buftype == '' then cwd = vim.fn.expand('%:p:h') end
+  if vim.bo.buftype == '' then
+    cwd = vim.fn.expand('%:p:h')
+  end
   pathlib.search_ancestors(cwd, function(dir)
     if pathlib.is_home_dir(dir) then
       vim.notify('Makefile not found, homedir reached.')

@@ -2,14 +2,15 @@ local vscode = require('vscode-neovim')
 local keymap = require('userlib.runtime.keymap')
 local set = keymap.set
 
-
 --- keymaps
-local _call = function(call_cmd) return "<cmd>lua require('vscode-neovim').call('" .. call_cmd .. "')<cr>" end
+local _call = function(call_cmd)
+  return "<cmd>lua require('vscode-neovim').call('" .. call_cmd .. "')<cr>"
+end
 set({ 'x' }, '<leader>cf', _call('editor.action.formatSelection'), {
   desc = 'format selection',
 })
 set({ 'n' }, '<leader>cf', _call('prettier.forceFormatDocument'), {
-  desc = 'format with prettier if prettier exists'
+  desc = 'format with prettier if prettier exists',
 })
 set({ 'n' }, 'KK', _call('editor.action.showDefinitionPreviewHover'), {
   desc = 'Show Definition Preview Hover',
@@ -50,16 +51,15 @@ set({ 'n' }, 'ghs', _call('git.stage'), {
 set({ 'n' }, '<leader>gs', _call('git.openChange'), {
   desc = 'Open git changes',
 })
-set({ 'n', }, 'ghb', _call('gitlens.toggleFileBlame'), {
+set({ 'n' }, 'ghb', _call('gitlens.toggleFileBlame'), {
   desc = 'Toggle file blame',
 })
 set({ 'n' }, 'ghr', _call('git.clean'), {
   desc = 'Git discard changes',
 })
 set({ 'n' }, '<leader>gc', _call('git.commit'), {
-  desc = 'Git commit'
+  desc = 'Git commit',
 })
 set({ 'n' }, '<leader>gg', _call('workbench.view.scm'), {
   desc = 'Show source control',
 })
-

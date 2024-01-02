@@ -62,7 +62,9 @@ plug({
         },
       }
     end,
-    config = function(_, opts) require('mini.ai').setup(opts) end,
+    config = function(_, opts)
+      require('mini.ai').setup(opts)
+    end,
   },
 
   {
@@ -114,7 +116,9 @@ plug({
       {
         's',
         mode = { 'n', 'x', 'o' },
-        function() require('flash').jump() end,
+        function()
+          require('flash').jump()
+        end,
         desc = 'Flash',
       },
       {
@@ -158,19 +162,25 @@ plug({
       {
         '.s',
         mode = { 'n', 'x', 'o' },
-        function() require('flash').treesitter() end,
+        function()
+          require('flash').treesitter()
+        end,
         desc = 'Flash treesitter',
       },
       {
         'r',
         mode = 'o',
-        function() require('flash').remote() end,
+        function()
+          require('flash').remote()
+        end,
         desc = 'Remote Flash',
       },
       {
         'R',
         mode = { 'o', 'x' },
-        function() require('flash').treesitter_search() end,
+        function()
+          require('flash').treesitter_search()
+        end,
         desc = 'Treesitter Search',
       },
     },
@@ -196,7 +206,9 @@ plug({
       -- press ; to continue
       continue = true,
     },
-    config = function(_, opts) require('flash').setup(opts) end,
+    config = function(_, opts)
+      require('flash').setup(opts)
+    end,
   },
   {
     'nvim-telescope/telescope.nvim',
@@ -215,7 +227,9 @@ plug({
           search = {
             mode = 'search',
             exclude = {
-              function(win) return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= 'TelescopeResults' end,
+              function(win)
+                return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= 'TelescopeResults'
+              end,
             },
           },
           action = function(match)

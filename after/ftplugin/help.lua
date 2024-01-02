@@ -7,7 +7,6 @@ opt.wrap = false
 opt.spell = true
 opt.textwidth = 78
 
-
 local opts = { buffer = 0 }
 
 -- if this a vim help file create mappings to make navigation easier otherwise enable preferred editing settings

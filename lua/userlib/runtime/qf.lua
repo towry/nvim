@@ -3,7 +3,9 @@ local lodash = require('userlib.runtime.table')
 ---@param list_type "loclist" | "quickfix"
 ---@return boolean
 local function is_list_open(list_type)
-  return lodash.find(function(win) return not lodash.falsy(win[list_type]) end, vim.fn.getwininfo()) ~= nil
+  return lodash.find(function(win)
+    return not lodash.falsy(win[list_type])
+  end, vim.fn.getwininfo()) ~= nil
 end
 
 local M = {}
@@ -39,7 +41,9 @@ function M.qf_delete(buf)
     local first_line = vim.fn.getpos("'<")[2]
     local last_line = vim.fn.getpos("'>")[2]
     list = lodash.fold(function(accum, item, i)
-      if i < first_line or i > last_line then accum[#accum + 1] = item end
+      if i < first_line or i > last_line then
+        accum[#accum + 1] = item
+      end
       return accum
     end, list)
   else

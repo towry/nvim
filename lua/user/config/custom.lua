@@ -7,5 +7,7 @@ local user_cfg = {
 }
 
 return {
-  setup = function() require('userlib.cfg').setup(user_cfg) end,
+  setup = function()
+    require('userlib.cfg').setup(user_cfg)
+  end,
 }

@@ -1,8 +1,8 @@
 local M = {}
 
 function M.get_available_formatters(ft)
-  local sources = require("null-ls.sources")
-  local available = sources.get_available(ft, "NULL_LS_FORMATTING")
+  local sources = require('null-ls.sources')
+  local available = sources.get_available(ft, 'NULL_LS_FORMATTING')
   return available
 end
 
@@ -18,7 +18,12 @@ function M.format_available_formatters(available, seprator)
   if not available or type(available) ~= 'table' or #available == 0 then
     return nil
   end
-  return table.concat(vim.tbl_map(function(x) return x.name end, available), seprator)
+  return table.concat(
+    vim.tbl_map(function(x)
+      return x.name
+    end, available),
+    seprator
+  )
 end
 
 return M

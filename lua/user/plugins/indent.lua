@@ -12,7 +12,7 @@ pack.plug({
       auto_cmd = true, -- Set to false to disable automatic execution
       filetype_exclude = vim.cfg.misc__ft_exclude,
       buftype_exclude = vim.cfg.misc__buf_exclude,
-    }
+    },
   },
 
   ---================================
@@ -44,7 +44,7 @@ pack.plug({
       })
 
       au.register_event(au.events.AfterColorschemeChanged, {
-        name = "update_indentline_hl",
+        name = 'update_indentline_hl',
         immediate = true,
         callback = function()
           -- local utils = require('userlib.runtime.utils')
@@ -69,12 +69,12 @@ pack.plug({
       })
     end,
     init = function()
-      vim.api.nvim_create_autocmd("FileType", {
+      vim.api.nvim_create_autocmd('FileType', {
         pattern = vim.cfg.misc__ft_exclude,
         callback = function()
           vim.b.miniindentscope_disable = true
         end,
       })
     end,
-  }
+  },
 })

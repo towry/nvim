@@ -12,15 +12,15 @@ M.settings = {
       enable = true,
     },
     runtime = {
-      pathStrict = true
+      pathStrict = true,
     },
     format = {
       enable = true,
       defaultConfig = {
         indent_style = 'space',
-        indent_size = '2'
-      }
-    }
+        indent_size = '2',
+      },
+    },
   },
 }
 

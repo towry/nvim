@@ -30,18 +30,19 @@ function M.filter(callback, t)
 end
 
 function M.map(callback, t)
-  return M.reduce(
-    function(carry, v)
-      table.insert(carry, callback(v))
-      return carry
-    end, {}, t)
+  return M.reduce(function(carry, v)
+    table.insert(carry, callback(v))
+    return carry
+  end, {}, t)
 end
 
 ---@param value_or_matcher string|number|function
 function M.find(value_or_matcher, t)
   if type(value_or_matcher) == 'function' then
     for _, needle in ipairs(t) do
-      if value_or_matcher(needle) then return needle end
+      if value_or_matcher(needle) then
+        return needle
+      end
     end
     return
   end
@@ -69,12 +70,22 @@ end
 ---@param item any
 ---@return boolean?
 function M.falsy(item)
-  if not item then return true end
+  if not item then
+    return true
+  end
   local item_type = type(item)
-  if item_type == 'boolean' then return not item end
-  if item_type == 'string' then return item == '' end
-  if item_type == 'number' then return item <= 0 end
-  if item_type == 'table' then return vim.tbl_isempty(item) end
+  if item_type == 'boolean' then
+    return not item
+  end
+  if item_type == 'string' then
+    return item == ''
+  end
+  if item_type == 'number' then
+    return item <= 0
+  end
+  if item_type == 'table' then
+    return vim.tbl_isempty(item)
+  end
   return item ~= nil
 end
 

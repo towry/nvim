@@ -41,7 +41,7 @@ function M.map_buf_thunk(bufnr)
       map_buf_thunk_defered[bufnr] = true
       vim.schedule(function()
         require('userlib.runtime.au').exec_whichkey_refresh({
-          buffer = bufnr
+          buffer = bufnr,
         })
       end)
     end

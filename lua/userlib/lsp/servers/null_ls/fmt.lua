@@ -24,7 +24,9 @@ local function setup_async_formatting()
       return
     end
 
-    if result == nil then return end
+    if result == nil then
+      return
+    end
 
     local is_ok, format_changedtick = pcall(vim.api.nvim_buf_get_var, ctx.bufnr, 'format_changedtick')
     local _, changedtick = pcall(vim.api.nvim_buf_get_var, ctx.bufnr, 'changedtick')
@@ -44,7 +46,7 @@ end
 
 --- @perf use ft instead of specific bufnr.
 local function choose_formatter_for_buf(client, buf)
-  local ft = vim.api.nvim_get_option_value("filetype", {
+  local ft = vim.api.nvim_get_option_value('filetype', {
     buf = buf,
   })
 
@@ -61,8 +63,8 @@ local function choose_formatter_for_buf(client, buf)
     enable = client.name == 'null-ls'
     specific_formatter_name = nls.format_available_formatters(nls_available_formatters)
   else
-    enable = client.server_capabilities.documentFormattingProvider and
-        not vim.tbl_contains({ 'null-ls', 'tsserver' }, client.name)
+    enable = client.server_capabilities.documentFormattingProvider
+      and not vim.tbl_contains({ 'null-ls', 'tsserver' }, client.name)
   end
 
   if enable then
@@ -83,7 +85,9 @@ function M.format(bufnr, opts)
     return
   end
 
-  if autoformat.disabled(bufnr) and opts.auto then return end
+  if autoformat.disabled(bufnr) and opts.auto then
+    return
+  end
   if vim.b.format_saving then
     return
   end
@@ -101,18 +105,21 @@ function M.format(bufnr, opts)
 
   vim.lsp.buf.format(fmt_opts)
   if not opts.auto then
-    vim.notify("format with " .. (impl_formatter_name or name or "default"), vim.log.levels.INFO, { key = 'format' })
+    vim.notify('format with ' .. (impl_formatter_name or name or 'default'), vim.log.levels.INFO, { key = 'format' })
   else
     vim.defer_fn(function()
-      vim.notify("written! also format with " .. (impl_formatter_name or name or "default"), vim.log.levels.INFO,
-        { key = 'format' })
+      vim.notify(
+        'written! also format with ' .. (impl_formatter_name or name or 'default'),
+        vim.log.levels.INFO,
+        { key = 'format' }
+      )
     end, 1)
   end
 end
 
 ---@return string|nil, string|nil
 function M.current_formatter_name(bufnr)
-  local ft = vim.api.nvim_get_option_value("filetype", {
+  local ft = vim.api.nvim_get_option_value('filetype', {
     buf = bufnr,
   })
 

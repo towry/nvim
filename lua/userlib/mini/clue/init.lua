@@ -25,7 +25,9 @@ M.shortly_open = function(fn)
   local is_unset = false
   --- actually this is not neccessary
   local unset = function()
-    if is_unset then return end
+    if is_unset then
+      return
+    end
     is_unset = true
     vim.b[buf].miniclue_config = {}
   end
@@ -36,7 +38,7 @@ M.shortly_open = function(fn)
     clues = clues,
     window = {
       delay = 30,
-    }
+    },
   }
   vim.schedule(function()
     require('mini.clue').ensure_buf_triggers(buf)

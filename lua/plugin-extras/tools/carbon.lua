@@ -6,20 +6,20 @@ return plug({
   vscode = true,
   cmd = 'CarbonNow',
   opts = {
-    open_cmd = "open",
-    base_url = "https://carbon.now.sh/",
+    open_cmd = 'open',
+    base_url = 'https://carbon.now.sh/',
     options = {
-      theme = "zenburn",
-      font_family = "JetBrains Mono"
-    }
+      theme = 'zenburn',
+      font_family = 'JetBrains Mono',
+    },
   },
   keys = {
     {
       '<leader>tc',
-      ":CarbonNow<CR>",
+      ':CarbonNow<CR>',
       desc = 'Carbon code sharing',
       mode = 'v',
       silent = true,
-    }
-  }
+    },
+  },
 })

@@ -4,9 +4,11 @@ local windows = {}
 local count_windows = 0
 ---@type number?
 local last_window
-local get_size = function() return vim.o.columns * 0.4 end
+local get_size = function()
+  return vim.o.columns * 0.4
+end
 
-local augroup = vim.api.nvim_create_augroup("overseer_user_open_on_start", {})
+local augroup = vim.api.nvim_create_augroup('overseer_user_open_on_start', {})
 
 M.resize_windows_on_stack = function()
   local each_height = math.floor(vim.o.lines / count_windows)
@@ -17,29 +19,27 @@ end
 
 M.add_window_to_stack = function(bufnr)
   if not last_window or not vim.api.nvim_win_is_valid(last_window) then
-    M.create_window(bufnr, "botright vertical", get_size())
+    M.create_window(bufnr, 'botright vertical', get_size())
     return
   end
   vim.api.nvim_set_current_win(last_window)
-  M.create_window(bufnr, "belowright")
+  M.create_window(bufnr, 'belowright')
   M.resize_windows_on_stack()
 end
 
 M.create_window = function(bufnr, modifier, size)
-  if size == nil
-  then
-    size = ""
-  elseif type(size) == "function"
-  then
+  if size == nil then
+    size = ''
+  elseif type(size) == 'function' then
     size = size()
   end
 
   local set = keymap.map_buf_thunk(bufnr)
   set('n', 'q', '<cmd>q<cr>', { desc = 'quit' })
 
-  local cmd = "split"
-  if modifier ~= "" then
-    cmd = modifier .. " " .. size .. cmd
+  local cmd = 'split'
+  if modifier ~= '' then
+    cmd = modifier .. ' ' .. size .. cmd
   end
   vim.cmd(cmd)
 
@@ -51,13 +51,13 @@ M.create_window = function(bufnr, modifier, size)
   vim.wo[winid].winfixheight = true
   vim.wo[winid].wrap = true
 
-  vim.api.nvim_create_autocmd("WinClosed", {
+  vim.api.nvim_create_autocmd('WinClosed', {
     group = augroup,
     pattern = tostring(winid),
     callback = function()
       windows[bufnr] = nil
       return true
-    end
+    end,
   })
 end
 
@@ -76,7 +76,7 @@ M.close_window = function(bufnr)
 end
 
 function M.get_last_task()
-  local overseer = require("overseer")
+  local overseer = require('overseer')
   local tasks = overseer.list_tasks({ recent_first = true })
   if vim.tbl_isempty(tasks) then
     return nil

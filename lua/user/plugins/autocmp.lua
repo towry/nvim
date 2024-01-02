@@ -12,7 +12,9 @@ end
 local has_ai_suggestion_text = function()
   if vim.b._copilot and vim.b._copilot.suggestions ~= nil then
     local suggestion = vim.b._copilot.suggestions[1]
-    if suggestion ~= nil then suggestion = suggestion.displayText end
+    if suggestion ~= nil then
+      suggestion = suggestion.displayText
+    end
     return suggestion ~= nil
   end
 
@@ -20,7 +22,9 @@ local has_ai_suggestion_text = function()
     local index = vim.b._codeium_completions.index or 0
     local suggestion = vim.b._codeium_completions.items[index + 1] or {}
     local parts = suggestion.completionParts or {}
-    if type(parts) ~= 'table' then return false end
+    if type(parts) ~= 'table' then
+      return false
+    end
     return #parts >= 1
   end
 
@@ -55,7 +59,9 @@ pack.plug({
   },
   {
     'lukas-reineke/cmp-rg',
-    cond = function() return vim.fn.executable('rg') end,
+    cond = function()
+      return vim.fn.executable('rg')
+    end,
     ft = 'rgflow',
     dependencies = {
       'hrsh7th/nvim-cmp',
@@ -93,7 +99,9 @@ pack.plug({
     },
     config = function()
       local has_words_before = function()
-        if vim.api.nvim_get_option_value('buftype', { buf = 0 }) == 'prompt' then return false end
+        if vim.api.nvim_get_option_value('buftype', { buf = 0 }) == 'prompt' then
+          return false
+        end
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match('^%s*$') == nil
       end
@@ -110,10 +118,14 @@ pack.plug({
       -- if not cmp_tabnine_status_ok then return end
 
       local cmp_status_ok, cmp = pcall(require, 'cmp')
-      if not cmp_status_ok then return end
+      if not cmp_status_ok then
+        return
+      end
 
       local snip_status_ok, luasnip = pcall(require, 'luasnip')
-      if not snip_status_ok then return end
+      if not snip_status_ok then
+        return
+      end
 
       -- TODO: move to config
       local select_first_on_enter = false
@@ -139,8 +151,12 @@ pack.plug({
       end
 
       local function deprioritize_snippet(entry1, entry2)
-        if entry1:get_kind() == types.lsp.CompletionItemKind.Snippet then return false end
-        if entry2:get_kind() == types.lsp.CompletionItemKind.Snippet then return true end
+        if entry1:get_kind() == types.lsp.CompletionItemKind.Snippet then
+          return false
+        end
+        if entry2:get_kind() == types.lsp.CompletionItemKind.Snippet then
+          return true
+        end
       end
 
       -- ╭──────────────────────────────────────────────────────────╮
@@ -202,7 +218,9 @@ pack.plug({
         -- https://github.com/hrsh7th/nvim-cmp/issues/1271
         preselect = cmp.PreselectMode.None,
         snippet = {
-          expand = function(args) luasnip.lsp_expand(args.body) end,
+          expand = function(args)
+            luasnip.lsp_expand(args.body)
+          end,
         },
         mapping = cmp.mapping.preset.insert({
           ['<C-p>'] = cmp.mapping.select_prev_item(select_option),
@@ -210,7 +228,9 @@ pack.plug({
           ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
           ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
           ['<C-f>'] = cmp.mapping(function(fallback)
-            if vim.bo.buftype == 'prompt' then return fallback() end
+            if vim.bo.buftype == 'prompt' then
+              return fallback()
+            end
             local entry = cmp.get_selected_entry()
             -- copilot.vim
             if not entry and has_ai_suggestions() then
@@ -443,7 +463,9 @@ pack.plug({
         only_semantic_versions = true,
       })
 
-      vim.api.nvim_create_user_command('CmpInfo', function() cmp.status() end, {})
+      vim.api.nvim_create_user_command('CmpInfo', function()
+        cmp.status()
+      end, {})
     end,
   },
 })
@@ -479,7 +501,9 @@ pack.plug({
     local handlers = require('nvim-autopairs.completion.handlers')
     local default_handler = function(char, item, bufnr, commit_character)
       -- do not add pairs if commit characters exists, like `.`, or `,`.
-      if commit_character ~= nil then return end
+      if commit_character ~= nil then
+        return
+      end
       -- do not add pairs if in jsx.
       local ts_current_line_node_type = Ty.TS_GET_NODE_TYPE()
       if
@@ -514,7 +538,9 @@ pack.plug({
     local rules = require('userlib.autopairs-rules')
     for _, rule in ipairs(allowed_rules) do
       -- if rule exist in module and is a function, call it.
-      if rules[rule] and type(rules[rule]) == 'function' then rules[rule]() end
+      if rules[rule] and type(rules[rule]) == 'function' then
+        rules[rule]()
+      end
     end
   end,
 })
@@ -568,7 +594,9 @@ pack.plug({
         function()
           if has_ai_suggestion_text() then
             local cmp = require('cmp')
-            if cmp.visible() then cmp.close() end
+            if cmp.visible() then
+              cmp.close()
+            end
 
             return vim.fn['codeium#CycleCompletions'](1)
           end
@@ -579,7 +607,9 @@ pack.plug({
       },
       {
         '<M-y>',
-        function() return vim.fn['codeium#Complete']() end,
+        function()
+          return vim.fn['codeium#Complete']()
+        end,
         mode = 'i',
         desc = 'Manually trigger codeium suggestion',
         expr = true,
@@ -607,9 +637,13 @@ pack.plug({
       {
         '<C-]>',
         function()
-          if vim.b.copilot_enabled == false then return end
+          if vim.b.copilot_enabled == false then
+            return
+          end
           local cmp = require('cmp')
-          if cmp.visible() then cmp.close() end
+          if cmp.visible() then
+            cmp.close()
+          end
           if has_ai_suggestion_text() then
             vim.cmd([[call copilot#Next()]])
           else
@@ -679,7 +713,9 @@ pack.plug({
           local client_id = args.data.client_id
           -- get client name by client_id
           local client_name = vim.lsp.get_client_by_id(client_id).name
-          if client_name ~= 'copilot' then return end
+          if client_name ~= 'copilot' then
+            return
+          end
           local request = args.data.request
           if request.type == 'pending' then
             vim.g.copilot_status = 'pending'
@@ -734,7 +770,9 @@ pack.plug({
         local doc = require('sg.cody.experimental.documentation')
         local start_line = vim.fn.line("'<") -- Get the start line of the visual selection
         local end_line = vim.fn.line("'>") -- Get the end line of the visual selection
-        if not start_line or not end_line then return end
+        if not start_line or not end_line then
+          return
+        end
         doc.function_documentation(0, start_line, end_line)
       end,
       mode = 'v',
@@ -754,7 +792,9 @@ pack.plug({
       '<leader>ac',
       function()
         local ok, res = pcall(vim.fn.input, { prompt = 'CodyTask: ', cancelreturn = false })
-        if not ok or res == false then return end
+        if not ok or res == false then
+          return
+        end
         vim.cmd(string.format(':CodyTask %s<cr>', res))
       end,
       mode = { 'n', 'v' },
@@ -833,11 +873,9 @@ pack.plug({
   },
   init = function()
     -- create user command: CodyOpenDoc to open https://sourcegraph.com/docs/cody/clients/install-neovim
-    vim.api.nvim_create_user_command(
-      'CodyOpenDoc',
-      function() vim.ui.open('https://sourcegraph.com/docs/cody/clients/install-neovim') end,
-      {}
-    )
+    vim.api.nvim_create_user_command('CodyOpenDoc', function()
+      vim.ui.open('https://sourcegraph.com/docs/cody/clients/install-neovim')
+    end, {})
   end,
 })
 
@@ -852,7 +890,9 @@ pack.plug({
     on_attach = function(_, bufnr)
       local set = require('userlib.runtime.keymap').map_buf_thunk(bufnr)
 
-      set({ 'i', 'n' }, '<localleader>ac', function() CommitMsgSg.write() end, {
+      set({ 'i', 'n' }, '<localleader>ac', function()
+        CommitMsgSg.write()
+      end, {
         desc = 'Write git commit message with AI',
         noremap = true,
       })

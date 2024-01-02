@@ -8,19 +8,27 @@ Ty.P = function(v)
   return v
 end
 
-Ty.RELOAD = function(...) return require('plenary.reload').reload_module(...) end
+Ty.RELOAD = function(...)
+  return require('plenary.reload').reload_module(...)
+end
 
 Ty.R = function(name)
   Ty.RELOAD(name)
   return require(name)
 end
 
-Ty.NOTIFY = function(...) vim.notify(...) end
+Ty.NOTIFY = function(...)
+  vim.notify(...)
+end
 
 --- deprecated
-Ty.TS_GET_NODE_TYPE = function() return require('nvim-treesitter.ts_utils').get_node_at_cursor(0):type() end
+Ty.TS_GET_NODE_TYPE = function()
+  return require('nvim-treesitter.ts_utils').get_node_at_cursor(0):type()
+end
 Ty.ToggleTheme = function(mode)
-  if vim.o.background == mode then return end
+  if vim.o.background == mode then
+    return
+  end
 
   if vim.o.background == 'light' then
     vim.o.background = 'dark'
@@ -37,7 +45,9 @@ Ty.StartProfile = function(filename, opts)
   opts = opts or {}
   require('plenary.profile').start(filename or 'profile.log', opts)
 end
-Ty.StopProfile = function() require('plenary.profile').stop() end
+Ty.StopProfile = function()
+  require('plenary.profile').stop()
+end
 
 Ty.find_string = function(tab, str)
   local found = false
@@ -55,8 +65,12 @@ end
 Ty.stl_git_three_way_name = function()
   local bufname = vim.api.nvim_buf_get_name(0)
   local basename = vim.fn.fnamemodify(bufname, ':t')
-  if vim.bo.filetype == 'gitcommit' then return '' end
-  if basename == 'RCONFL' then return 'REMOTE' end
+  if vim.bo.filetype == 'gitcommit' then
+    return ''
+  end
+  if basename == 'RCONFL' then
+    return 'REMOTE'
+  end
   -- if basename contains REMOTE
   if vim.fn.match(basename, '_REMOTE_') ~= -1 then
     return 'REMOTE'
@@ -73,19 +87,28 @@ end
 Ty.stl_num = function()
   local space = ' '
   --- if option number is off, return empty string
-  if vim.o.number == false then return '' end
+  if vim.o.number == false then
+    return ''
+  end
   --- if option relativenumber is on, return relative number
   if vim.o.relativenumber == true then
-    if vim.v.relnum == 0 then return space .. vim.v.lnum .. space else return space .. vim.v.relnum .. space end
+    if vim.v.relnum == 0 then
+      return space .. vim.v.lnum .. space
+    else
+      return space .. vim.v.relnum .. space
+    end
   end
   return space .. vim.v.lnum .. space
 end
 
-
 --- "│"
 Ty.stl_foldlevel = function()
-  if vim.b.stl_foldlevel == false then return '' end
-  local _ = function(c) return ' ' .. c end
+  if vim.b.stl_foldlevel == false then
+    return ''
+  end
+  local _ = function(c)
+    return ' ' .. c
+  end
   local level = vim.fn.foldlevel(vim.v.lnum)
   if level > 0 then
     if level > vim.fn.foldlevel(vim.v.lnum - 1) then

@@ -54,7 +54,9 @@ return plug({
             show_lazy_cb = false
           end
           local bufnr = ctx.buf
-          if not bufnr then return end
+          if not bufnr then
+            return
+          end
           vim.keymap.set(
             'n',
             ']',
@@ -104,7 +106,9 @@ return plug({
               local data = ctx.data or {}
               pcall(function()
                 local bufnr = nil
-                if data.in_vimenter == true then bufnr = vim.api.nvim_get_current_buf() end
+                if data.in_vimenter == true then
+                  bufnr = vim.api.nvim_get_current_buf()
+                end
                 require('mini.starter').open(bufnr)
                 vim.cmd('do User LazyVimStarted')
               end)

@@ -15,7 +15,9 @@ local xk = utils.utf8keys({
 
 local function setup_basic()
   --->>
-  set('n', '<leader>rn', function() require('userlib.workflow.run-normal-keys')() end, {
+  set('n', '<leader>rn', function()
+    require('userlib.workflow.run-normal-keys')()
+  end, {
     noremap = true,
     silent = false,
     desc = 'execute normal keys',
@@ -92,7 +94,9 @@ local function setup_basic()
     vim.cmd('nohl')
     if vim.g.escape_cmd ~= nil and vim.g.escape_cmd ~= '' then
       local escape_cmd = vim.g.escape_cmd
-      vim.schedule(function() vim.cmd(escape_cmd) end)
+      vim.schedule(function()
+        vim.cmd(escape_cmd)
+      end)
       vim.g.escape_cmd = nil
     end
     return '<esc>'
@@ -124,7 +128,9 @@ local function setup_basic()
   -- yanks
   set({ 'n', 'v' }, 'd', function()
     -- NOTE: add different char for different buffer, for example, in oil, use o|O
-    if vim.v.register == 'd' or vim.v.register == 'D' then return '"' .. vim.v.register .. 'd' end
+    if vim.v.register == 'd' or vim.v.register == 'D' then
+      return '"' .. vim.v.register .. 'd'
+    end
     return '"dd'
   end, {
     silent = true,
@@ -140,7 +146,9 @@ local function setup_basic()
   })
   --- do not cut on normal mode.
   set({ 'n', 'v' }, 'x', function()
-    if vim.v.register == 'x' or vim.v.register == 'X' then return '"' .. vim.v.register .. 'x' end
+    if vim.v.register == 'x' or vim.v.register == 'X' then
+      return '"' .. vim.v.register .. 'x'
+    end
     return '"xx'
   end, {
     expr = true,
@@ -149,7 +157,9 @@ local function setup_basic()
     desc = 'Cut chars and do not yank to register',
   })
   set({ 'n', 'v' }, 'X', function()
-    if vim.v.register == 'x' or vim.v.register == 'X' then return '"' .. vim.v.register .. 'X' end
+    if vim.v.register == 'x' or vim.v.register == 'X' then
+      return '"' .. vim.v.register .. 'X'
+    end
     return '"xX'
   end, {
     expr = true,
@@ -259,7 +269,9 @@ local function setup_basic()
 
   local tip_is_loading = false
   set('n', '<leader>/t', function()
-    if tip_is_loading then return end
+    if tip_is_loading then
+      return
+    end
     local job = require('plenary.job')
     vim.notify('loading tip...')
     job
@@ -269,7 +281,9 @@ local function setup_basic()
         on_exit = function(j, exit_code)
           tip_is_loading = false
           local res = table.concat(j:result())
-          if exit_code ~= 0 then res = 'Error fetching tip: ' .. res end
+          if exit_code ~= 0 then
+            res = 'Error fetching tip: ' .. res
+          end
           print(res)
         end,
       })
@@ -281,7 +295,9 @@ local function setup_basic()
   set('n', '<leader>rzr', function()
     -- https://github.com/echasnovski/mini.visits/blob/7f2836d9f3957843e0d00762a3f3bb47cf88b92e/lua/mini/visits.lua#L1407
     local ok, res = pcall(vim.fn.input, { prompt = '[zellij] Command to run: ', cancelreturn = false })
-    if not ok or res == false then return end
+    if not ok or res == false then
+      return
+    end
     vim.cmd(string.format('Dispatch! zellij run -d down -- %s', res))
   end, {
     desc = 'zellij run',
@@ -326,6 +342,8 @@ local function setup_basic()
   })
 end
 
-function M.setup() setup_basic() end
+function M.setup()
+  setup_basic()
+end
 
 return M

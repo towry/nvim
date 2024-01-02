@@ -99,8 +99,12 @@ local ViMode = {
       t = 'TERMINAL',
     },
   },
-  provider = function(self) return ' ' .. self.mode_names[self.mode] .. ' ' end,
-  hl = function(self) return { fg = self:mode_color(), bold = true } end,
+  provider = function(self)
+    return ' ' .. self.mode_names[self.mode] .. ' '
+  end,
+  hl = function(self)
+    return { fg = self:mode_color(), bold = true }
+  end,
   update = {
     'ModeChanged',
   },
@@ -111,12 +115,18 @@ local FileIcon = {
     self.icon, self.icon_color =
       require('nvim-web-devicons').get_icon_color_by_filetype(vim.bo.filetype, { default = true })
   end,
-  provider = function(self) return self.icon and (self.icon .. ' ') end,
-  hl = function(self) return { fg = self.icon_color } end,
+  provider = function(self)
+    return self.icon and (self.icon .. ' ')
+  end,
+  hl = function(self)
+    return { fg = self.icon_color }
+  end,
 }
 
 local FileType = {
-  condition = function() return vim.bo.filetype ~= '' end,
+  condition = function()
+    return vim.bo.filetype ~= ''
+  end,
   FileIcon,
   {
     provider = function()
@@ -134,10 +144,14 @@ local FileType = {
 local FileName = {
   provider = function()
     local filename = vim.b.relative_path or vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':.')
-    if filename == '' then return '[No Name]' end
+    if filename == '' then
+      return '[No Name]'
+    end
     -- now, if the filename would occupy more than 90% of the available
     -- space, we trim the file path to its initials
-    if not conditions.width_percent_below(#filename, 0.90) then filename = vim.fn.pathshorten(filename) end
+    if not conditions.width_percent_below(#filename, 0.90) then
+      filename = vim.fn.pathshorten(filename)
+    end
     return filename
   end,
 }
@@ -145,7 +159,9 @@ local FileName = {
 local BufferCwd = {
   provider = function()
     local cwd = vim.fn.fnamemodify(vim.b.project_nvim_cwd or vim.uv.cwd(), ':t')
-    if not cwd or cwd == '' then return '' end
+    if not cwd or cwd == '' then
+      return ''
+    end
 
     return ' ' .. cwd
   end,
@@ -153,18 +169,24 @@ local BufferCwd = {
 
 local FileFlags = {
   {
-    condition = function() return vim.bo.modified end,
+    condition = function()
+      return vim.bo.modified
+    end,
     provider = ' [+]',
   },
   {
-    condition = function() return not vim.bo.modifiable or vim.bo.readonly end,
+    condition = function()
+      return not vim.bo.modifiable or vim.bo.readonly
+    end,
     provider = ' ',
   },
 }
 
 local GitStatus = {
   condition = function()
-    if not vim.b.gitsigns_status_dict then return false end
+    if not vim.b.gitsigns_status_dict then
+      return false
+    end
     local status = vim.b.gitsigns_status_dict
     return status.added ~= 0 or status.removed ~= 0 or status.changed ~= 0
   end,
@@ -257,8 +279,12 @@ local DirAndFileName = {
 
 local function OverseerTasksForStatus(status)
   return {
-    condition = function(self) return self.tasks[status] end,
-    provider = function(self) return string.format('%s%d', self.symbols[status], #self.tasks[status]) end,
+    condition = function(self)
+      return self.tasks[status]
+    end,
+    provider = function(self)
+      return string.format('%s%d', self.symbols[status], #self.tasks[status])
+    end,
     hl = function()
       return {
         fg = utils.get_highlight(string.format('Overseer%s', status)).fg,
@@ -267,7 +293,9 @@ local function OverseerTasksForStatus(status)
   }
 end
 local Overseer = {
-  condition = function() return package.loaded.overseer end,
+  condition = function()
+    return package.loaded.overseer
+  end,
   init = function(self)
     local tasks = require('overseer.task_list').list_tasks({ unique = true })
     local tasks_by_status = require('overseer.util').tbl_group_by(tasks, 'status')
@@ -314,12 +342,18 @@ local function setup_colors()
 end
 
 local ArduinoStatus = {
-  condition = function() return vim.bo.filetype == 'arduino' end,
+  condition = function()
+    return vim.bo.filetype == 'arduino'
+  end,
   provider = function()
     local port = vim.fn['arduino#GetPort']()
     local line = string.format('[%s]', vim.g.arduino_board)
-    if vim.g.arduino_programmer ~= '' then line = line .. string.format(' [%s]', vim.g.arduino_programmer) end
-    if port ~= 0 then line = line .. string.format(' (%s:%s)', port, vim.g.arduino_serial_baud) end
+    if vim.g.arduino_programmer ~= '' then
+      line = line .. string.format(' [%s]', vim.g.arduino_programmer)
+    end
+    if port ~= 0 then
+      line = line .. string.format(' (%s:%s)', port, vim.g.arduino_serial_baud)
+    end
     return line
   end,
 }
@@ -383,11 +417,15 @@ local LSPActive = {
 
 local Ruler = {
   provider = ' %P %l:%c ',
-  hl = function(self) return { fg = 'black', bg = self:mode_color(), bold = true } end,
+  hl = function(self)
+    return { fg = 'black', bg = self:mode_color(), bold = true }
+  end,
 }
 
 local Branch = {
-  condition = function() return vim.fn.exists('*FugitiveHead') == 1 end,
+  condition = function()
+    return vim.fn.exists('*FugitiveHead') == 1
+  end,
   init = function(self)
     if vim.fn.exists('*FugitiveHead') then
       self.head = vim.fn['FugitiveHead']()
@@ -395,7 +433,9 @@ local Branch = {
       self.head = ''
     end
   end,
-  provider = function(self) return self.head ~= '' and ' ' .. self.head or '' end,
+  provider = function(self)
+    return self.head ~= '' and ' ' .. self.head or ''
+  end,
   update = {
     'User',
     -- doesn't work if current dir is changed
@@ -406,12 +446,18 @@ local Branch = {
 local Harpoon = {
   condition = function()
     local loaded = package.loaded.harpoon
-    if not loaded then return false end
+    if not loaded then
+      return false
+    end
     return true
   end,
-  init = function(self) self.harpoon_idx = require('harpoon.mark').status() end,
+  init = function(self)
+    self.harpoon_idx = require('harpoon.mark').status()
+  end,
   provider = function(self)
-    if not self.harpoon_idx or self.harpoon_idx == '' then return '' end
+    if not self.harpoon_idx or self.harpoon_idx == '' then
+      return ''
+    end
     return ' ' .. self.harpoon_idx
   end,
   hl = function()
@@ -426,8 +472,12 @@ local ProfileRecording = {
     local profile = package.loaded.profile
     return profile and profile.is_recording()
   end,
-  provider = function() return '󰑊 ' end,
-  hl = function() return { fg = 'red' } end,
+  provider = function()
+    return '󰑊 '
+  end,
+  hl = function()
+    return { fg = 'red' }
+  end,
   update = {
     'User',
     pattern = { 'ProfileStart', 'ProfileStop' },
@@ -435,19 +485,31 @@ local ProfileRecording = {
 }
 
 local DiagnosticsDisabled = {
-  condition = function() return vim.diagnostic.is_disabled() end,
-  provider = function() return ' ' end,
+  condition = function()
+    return vim.diagnostic.is_disabled()
+  end,
+  provider = function()
+    return ' '
+  end,
 }
 
 local WorkspaceRoot = {
-  condition = function() return vim.cfg.runtime__starts_cwd_short ~= nil end,
-  provider = function() return ' ' .. vim.cfg.runtime__starts_cwd_short end,
+  condition = function()
+    return vim.cfg.runtime__starts_cwd_short ~= nil
+  end,
+  provider = function()
+    return ' ' .. vim.cfg.runtime__starts_cwd_short
+  end,
 }
 
 local Tabs = {
-  condition = function() return #vim.api.nvim_list_tabpages() >= 2 end, -- only show tabs if there are more than one
+  condition = function()
+    return #vim.api.nvim_list_tabpages() >= 2
+  end, -- only show tabs if there are more than one
   utils.make_tablist({ -- component for each tab
-    provider = function(self) return (self and self.tabnr) and '%' .. self.tabnr .. 'T ' .. self.tabnr .. ' %T' or '' end,
+    provider = function(self)
+      return (self and self.tabnr) and '%' .. self.tabnr .. 'T ' .. self.tabnr .. ' %T' or ''
+    end,
     hl = function(self)
       if not self.is_active then
         return { fg = 'Green', bg = 'Gray' }
@@ -468,8 +530,12 @@ local LspFormatter = {
     self.disabled = auto_format_disabled(0)
   end,
   provider = function(self)
-    if self.formatter_name == '' then return '' end
-    if self.disabled then return self.formatter_disable_icon end
+    if self.formatter_name == '' then
+      return ''
+    end
+    if self.disabled then
+      return self.formatter_disable_icon
+    end
     return string.format('%s%s', self.formatter_icon, self.formatter_name)
   end,
   update = { 'User', pattern = 'StatuslineUpdate' },
@@ -477,29 +543,41 @@ local LspFormatter = {
 
 local Dap = {
   condition = function()
-    if package.loaded.dap == nil then return false end
+    if package.loaded.dap == nil then
+      return false
+    end
     local session = require('dap').session()
     return session ~= nil
   end,
-  provider = function() return ' ' .. require('dap').status() end,
+  provider = function()
+    return ' ' .. require('dap').status()
+  end,
   hl = 'Debug',
 }
 
 local Codeium = {
-  condition = function() return vim.fn.exists('*codeium#GetStatusString') == 1 end,
+  condition = function()
+    return vim.fn.exists('*codeium#GetStatusString') == 1
+  end,
   {
     provider = function()
       local str = vim.api.nvim_call_function('codeium#GetStatusString', {})
       str = vim.trim(str)
-      if str == '' or str == 0 then str = '-' end
+      if str == '' or str == 0 then
+        str = '-'
+      end
       return '{C:' .. str .. '}'
     end,
   },
 }
 
 local Copilot = {
-  condition = function() return vim.g.loaded_copilot == 1 end,
-  init = function(self) self.enable = self.get_status() == 1 end,
+  condition = function()
+    return vim.g.loaded_copilot == 1
+  end,
+  init = function(self)
+    self.enable = self.get_status() == 1
+  end,
   static = {
     running = false,
     count = -1,
@@ -513,16 +591,24 @@ local Copilot = {
         return 0
       end
     end,
-    is_running = function() return vim.g.copilot_status == 'pending' end,
+    is_running = function()
+      return vim.g.copilot_status == 'pending'
+    end,
   },
   provider = function(self)
-    if not self.enable then return '󱚧' end
-    if not self.is_running() then return '󰚩' end
+    if not self.enable then
+      return '󱚧'
+    end
+    if not self.is_running() then
+      return '󰚩'
+    end
     return '󰆄'
   end,
   hl = function(self)
     local fg = vim.g.copilot_auto_mode == true and 'orange' or ''
-    if self.is_running() then fg = 'green' end
+    if self.is_running() then
+      fg = 'green'
+    end
     return {
       fg = fg,
     }
@@ -530,7 +616,9 @@ local Copilot = {
   update = {
     'User',
     pattern = 'CopilotStatus',
-    callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end),
+    callback = vim.schedule_wrap(function()
+      vim.cmd.redrawstatus()
+    end),
   },
 }
 
@@ -547,7 +635,9 @@ local TerminalName = {
 }
 
 local HelpFileName = {
-  condition = function() return vim.bo.filetype == 'help' end,
+  condition = function()
+    return vim.bo.filetype == 'help'
+  end,
   provider = function()
     local filename = vim.api.nvim_buf_get_name(0)
     return vim.fn.fnamemodify(filename, ':t')
@@ -556,12 +646,16 @@ local HelpFileName = {
 }
 
 local TerminalStatusline = {
-  condition = function() return conditions.buffer_matches({ buftype = { 'terminal' } }) end,
+  condition = function()
+    return conditions.buffer_matches({ buftype = { 'terminal' } })
+  end,
   { TerminalName },
 }
 
 local NavigateDirection = {
-  condition = function() return vim.g.direction ~= nil end,
+  condition = function()
+    return vim.g.direction ~= nil
+  end,
   provider = function()
     return ({
       next = '[NEXT]',
@@ -573,7 +667,9 @@ local NavigateDirection = {
 local LastExCommand = {
   provider = function()
     local res = vim.fn.getreg(':')
-    if not res or res == '' then return '' end
+    if not res or res == '' then
+      return ''
+    end
     res = vim.fn.strcharpart(res, 0, 20)
     return '[' .. res .. ']'
   end,

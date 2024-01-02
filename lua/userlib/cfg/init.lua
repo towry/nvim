@@ -8,14 +8,14 @@ return {
     vim.validate({
       user_cfg = {
         user_cfg,
-        "table",
-        "expect user configurations to be table"
-      }
+        'table',
+        'expect user configurations to be table',
+      },
     })
     vim.cfg = setmetatable(user_cfg, {
       __index = function(_, key)
         return defaults[key]
-      end
+      end,
     })
-  end
+  end,
 }

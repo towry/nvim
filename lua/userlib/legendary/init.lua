@@ -7,7 +7,9 @@ local pre_hook_records = {}
 ---@param name string
 ---@param callback function
 function M.pre_hook(name, callback)
-  if pre_hook_records[name] then return end
+  if pre_hook_records[name] then
+    return
+  end
   local autocmd_id
   autocmd_id = vim.api.nvim_create_autocmd('User', {
     pattern = 'LegendaryUiPre',

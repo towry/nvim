@@ -5,5 +5,5 @@ return plug({
     'dstein64/vim-startuptime',
     cmd = { 'StartupTime' },
     lazy = vim.env.PROFILE ~= 1,
-  }
+  },
 })

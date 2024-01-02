@@ -52,12 +52,16 @@ local efm_customizations = {
 }
 
 local function load_efm_modules(mods, mod_type)
-  if not mods then return nil end
+  if not mods then
+    return nil
+  end
 
   -- normalize type to string[]
   mods = type(mods) == 'string' and { mods } or mods
   return vim.tbl_map(function(mod)
-    if efm_customizations[mod] then return efm_customizations[mod]() end
+    if efm_customizations[mod] then
+      return efm_customizations[mod]()
+    end
 
     local ok, module = pcall(require, string.format('efmls-configs.%s.%s', mod_type, mod))
     if not ok then
@@ -68,9 +72,13 @@ local function load_efm_modules(mods, mod_type)
   end, mods)
 end
 
-local function load_linters(linters) return load_efm_modules(linters, 'linters') or {} end
+local function load_linters(linters)
+  return load_efm_modules(linters, 'linters') or {}
+end
 
-local function load_formatters(formatters) return load_efm_modules(formatters, 'formatters') or {} end
+local function load_formatters(formatters)
+  return load_efm_modules(formatters, 'formatters') or {}
+end
 
 function M.efmls_config(capabilities)
   local languages = {}

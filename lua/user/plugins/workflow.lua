@@ -4,10 +4,14 @@ local plug = require('userlib.runtime.pack').plug
 local cmdstr = require('userlib.runtime.keymap').cmdstr
 
 local function get_window_bufnr(winid)
-  return vim.api.nvim_win_call(winid, function() return vim.fn.bufnr('%') end)
+  return vim.api.nvim_win_call(winid, function()
+    return vim.fn.bufnr('%')
+  end)
 end
 local function change_window_bufnr(winid, bufnr)
-  vim.api.nvim_win_call(winid, function() vim.cmd(string.format('buffer %d', bufnr)) end)
+  vim.api.nvim_win_call(winid, function()
+    vim.cmd(string.format('buffer %d', bufnr))
+  end)
 end
 
 plug({
@@ -57,7 +61,9 @@ plug({
                 include_current_win = false,
                 hint = 'floating-big-letter',
               })
-              if not picked then return end
+              if not picked then
+                return
+              end
               local current_bufnr = get_window_bufnr(cur_win)
               local target_bufnr = get_window_bufnr(picked)
               change_window_bufnr(picked, current_bufnr)
@@ -86,13 +92,19 @@ plug({
         enable = false,
       },
     },
-    config = function(_, opts) require('windows').setup(opts) end,
+    config = function(_, opts)
+      require('windows').setup(opts)
+    end,
     init = function()
       au.define_autocmd('VimEnter', {
         once = true,
         callback = function()
-          if vim.cfg.ui__window_equalalways then return end
-          if vim.cfg.runtime__starts_in_buffer and vim.wo.diff then vim.cmd('WindowsEqualize') end
+          if vim.cfg.ui__window_equalalways then
+            return
+          end
+          if vim.cfg.runtime__starts_in_buffer and vim.wo.diff then
+            vim.cmd('WindowsEqualize')
+          end
         end,
       })
     end,
@@ -148,12 +160,16 @@ plug({
       },
       {
         '<leader>bh',
-        function() require('mini.bufremove').unshow(0) end,
+        function()
+          require('mini.bufremove').unshow(0)
+        end,
         desc = 'Unshow current buffer',
       },
       {
         '<C-q>',
-        function() require('userlib.workflow.close-buffer').close() end,
+        function()
+          require('userlib.workflow.close-buffer').close()
+        end,
         desc = 'Quit current buffer',
       },
     },
@@ -271,7 +287,9 @@ plug({
         desc = 'Call project root',
       },
     },
-    config = function(_, opts) require('project_nvim').setup(opts) end,
+    config = function(_, opts)
+      require('project_nvim').setup(opts)
+    end,
     opts = {
       patterns = utils.root_patterns,
       --- order matters
@@ -386,7 +404,9 @@ plug({
             resize_keys = { 'h', 'j', 'k', 'l' },
           },
           hooks = {
-            on_leave = function() require('bufresize').register() end,
+            on_leave = function()
+              require('bufresize').register()
+            end,
           },
         },
         ignored_events = {
@@ -424,7 +444,9 @@ plug({
             autoselect_one = false,
             include_current_win = false,
           })
-          if not win then return end
+          if not win then
+            return
+          end
           require('mini.bufremove').unshow(buf)
           -- TODO: use bufstack.
           vim.api.nvim_set_current_win(win)
@@ -509,11 +531,9 @@ plug({
   },
   init = au.schedule_lazy(function()
     -- create a user command with nvim api
-    vim.api.nvim_create_user_command(
-      'DebugWindowBufStack',
-      function() vim.print(require('window-bufstack.bufstack').debug()) end,
-      {}
-    )
+    vim.api.nvim_create_user_command('DebugWindowBufStack', function()
+      vim.print(require('window-bufstack.bufstack').debug())
+    end, {})
   end),
 })
 
@@ -545,21 +565,31 @@ plug({
           vim.cmd.tcd(vim.cfg.runtime__starts_cwd)
         end,
         write = function()
-          if utils.has_plugin('trailblazer.nvim') then vim.cmd('TrailBlazerSaveSession') end
+          if utils.has_plugin('trailblazer.nvim') then
+            vim.cmd('TrailBlazerSaveSession')
+          end
         end,
       },
       post = {
         read = function()
           vim.g.project_nvim_disable = false
-          if cache_tcd then vim.cmd.tcd(cache_tcd) end
-          if utils.has_plugin('trailblazer.nvim') then vim.cmd('TrailBlazerLoadSession') end
+          if cache_tcd then
+            vim.cmd.tcd(cache_tcd)
+          end
+          if utils.has_plugin('trailblazer.nvim') then
+            vim.cmd('TrailBlazerLoadSession')
+          end
         end,
       },
     },
   },
   init = au.schedule_lazy(function()
-    vim.api.nvim_create_user_command('MakeSession', function() require('userlib.mini.session').make_session() end, {})
-    vim.api.nvim_create_user_command('LoadSession', function() require('userlib.mini.session').load_session() end, {})
+    vim.api.nvim_create_user_command('MakeSession', function()
+      require('userlib.mini.session').make_session()
+    end, {})
+    vim.api.nvim_create_user_command('LoadSession', function()
+      require('userlib.mini.session').load_session()
+    end, {})
     -- keymaps
     local set = require('userlib.runtime.keymap').set
     set('n', '<leader>/l', '<cmd>LoadSession<cr>', { desc = 'Load session' })
@@ -568,11 +598,15 @@ plug({
     require('userlib.legendary').register('mini_session', function(lg)
       lg.funcs({
         {
-          function() require('userlib.mini.session').make_session() end,
+          function()
+            require('userlib.mini.session').make_session()
+          end,
           desc = 'Make session',
         },
         {
-          function() require('userlib.mini.session').load_session() end,
+          function()
+            require('userlib.mini.session').load_session()
+          end,
           desc = 'Load session',
         },
       })

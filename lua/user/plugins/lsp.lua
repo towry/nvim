@@ -5,7 +5,9 @@ local au = require('userlib.runtime.au')
 
 local function default_lspconfig_ui_options()
   local present, win = pcall(require, 'lspconfig.ui.windows')
-  if not present then return end
+  if not present then
+    return
+  end
   win.default_options.border = vim.cfg.ui__float_border
 end
 
@@ -35,7 +37,7 @@ plug({
       },
       {
         'creativenull/efmls-configs-nvim',
-        enabled = false
+        enabled = false,
       },
     },
     config = function()

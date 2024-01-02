@@ -14,9 +14,13 @@ set('n', '<C-q>', function()
   end
   local ok, bufstack = pcall(require, 'window-bufstack.bufstack')
   local pre_buf = nil
-  if ok then pre_buf = bufstack.peek_bufstack() end
+  if ok then
+    pre_buf = bufstack.peek_bufstack()
+  end
   require('oil').close()
-  if not ok then return end
+  if not ok then
+    return
+  end
   if not pre_buf and #vim.fn.tabpagebuflist(vim.fn.tabpagenr()) > 1 then
     vim.cmd('q')
   end
@@ -35,10 +39,16 @@ set('n', '<C-o>', function()
   local cache = require('oil.cache')
   local entry = require('oil').get_cursor_entry()
   local bufname = vim.api.nvim_buf_get_name(0)
-  if entry.type ~= 'file' then return end
+  if entry.type ~= 'file' then
+    return
+  end
   -- https://github.com/stevearc/oil.nvim/blob/4088efb8ff664b6f1624aab5dac6c3fe11d3962c/lua/oil/init.lua#L495C44-L495C49
-  if entry.id == nil or (entry.id and cache.get_parent_url(entry.id) ~= bufname) or (entry.parsed_name ~= entry.name) then
-    vim.notify("New or Moved or Renamed file, please save it first before open")
+  if
+    entry.id == nil
+    or (entry.id and cache.get_parent_url(entry.id) ~= bufname)
+    or (entry.parsed_name ~= entry.name)
+  then
+    vim.notify('New or Moved or Renamed file, please save it first before open')
     return
   end
   local scheme, dir = util.parse_url(bufname)
@@ -46,7 +56,7 @@ set('n', '<C-o>', function()
   local url = scheme .. child
   local adapter = util.get_adapter(0)
   if not adapter then
-    vim.notify("Could not find adapter to current buffer")
+    vim.notify('Could not find adapter to current buffer')
     return
   end
 
@@ -64,12 +74,14 @@ set('n', '<C-o>', function()
   local current_win = vim.api.nvim_get_current_win()
   get_edit_path(function(normalized_url)
     local filename = util.escape_filename(normalized_url)
-    local win = require("window-picker").pick_window({
+    local win = require('window-picker').pick_window({
       autoselect_one = true,
       -- hint = 'floating-big-letter',
       include_current_win = true,
     })
-    if not win then return end
+    if not win then
+      return
+    end
 
     if current_win == win then
       require('oil').close()
@@ -84,7 +96,7 @@ set('n', '<C-o>', function()
         horizontal = false,
         keepalt = true,
         emsg_silent = true,
-      }
+      },
     })
   end)
 end, {
@@ -99,7 +111,9 @@ set('n', 's', function()
       mode = 'search',
       max_length = 0,
       exclude = {
-        function(win) return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= 'oil' end,
+        function(win)
+          return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= 'oil'
+        end,
       },
     },
     label = { after = { 0, 0 } },
@@ -109,11 +123,15 @@ end, {
   nowait = true,
 })
 
-set('n', 'W', function() require('oil').open(vim.cfg.runtime__starts_cwd) end, {
+set('n', 'W', function()
+  require('oil').open(vim.cfg.runtime__starts_cwd)
+end, {
   nowait = true,
   desc = 'Open in root',
 })
-set('n', '_', function() require('oil').open(require('userlib.runtime.utils').get_root()) end, {
+set('n', '_', function()
+  require('oil').open(require('userlib.runtime.utils').get_root())
+end, {
   nowait = true,
   desc = 'Open in project',
 })

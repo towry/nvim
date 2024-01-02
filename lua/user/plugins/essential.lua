@@ -1,6 +1,8 @@
 local au = require('userlib.runtime.au')
 local pack = require('userlib.runtime.pack')
-local function t(str) return vim.api.nvim_replace_termcodes(str, true, true, true) end
+local function t(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
 
 ---- core
 pack.plug({
@@ -407,7 +409,9 @@ pack.plug({
       pattern = 'WhichKeyRefresh',
       callback = function(ctx)
         local ok, _ = pcall(require, 'which-key')
-        if not ok then return end
+        if not ok then
+          return
+        end
         local Key = require('which-key.keys')
         vim.schedule(function()
           local data = ctx.data
@@ -429,11 +433,15 @@ pack.plug({
 --- yanky
 local function setup_yanky_legendary()
   local has_legendary = require('userlib.runtime.utils').has_plugin('legendary.nvim')
-  if not has_legendary then return end
+  if not has_legendary then
+    return
+  end
   local legendary = require('legendary')
 
   legendary.func({
-    function() require('telescope').extensions.yank_history.yank_history({}) end,
+    function()
+      require('telescope').extensions.yank_history.yank_history({})
+    end,
     description = 'Paste from yanky',
   })
   legendary.keymaps({
@@ -469,7 +477,9 @@ pack.plug({
         local reg = vim.v.register
         local keys = t(('%s<Plug>(%s)'):format((not reg) and '' or '"' .. reg, ynk_mtd))
         vim.fn.feedkeys(keys)
-        vim.schedule(function() require('userlib.hydra.yanky').open_yanky_ring_hydra(reg) end)
+        vim.schedule(function()
+          require('userlib.hydra.yanky').open_yanky_ring_hydra(reg)
+        end)
       end,
       mode = { 'n', 'v' },
       noremap = true,
@@ -482,7 +492,9 @@ pack.plug({
         local reg = vim.v.register
         local keys = t(('%s<Plug>(%s)'):format((not reg) and '' or '"' .. reg, ynk_mtd))
         vim.fn.feedkeys(keys)
-        vim.schedule(function() require('userlib.hydra.yanky').open_yanky_ring_hydra(reg) end)
+        vim.schedule(function()
+          require('userlib.hydra.yanky').open_yanky_ring_hydra(reg)
+        end)
       end,
       mode = { 'n', 'v' },
       desc = 'Yanky put before',
@@ -491,7 +503,9 @@ pack.plug({
       'gp',
       function()
         vim.fn.feedkeys(t(('"%s<Plug>(YankyGPutAfter)'):format(vim.v.register)))
-        vim.schedule(function() require('userlib.hydra.yanky').open_yanky_ring_hydra() end)
+        vim.schedule(function()
+          require('userlib.hydra.yanky').open_yanky_ring_hydra()
+        end)
       end,
       mode = { 'n', 'x' },
       desc = 'Yanky gput after',
@@ -500,7 +514,9 @@ pack.plug({
       'gP',
       function()
         vim.fn.feedkeys(t(('"%s<Plug>(YankyGPutBefore)'):format(vim.v.register)))
-        vim.schedule(function() require('userlib.hydra.yanky').open_yanky_ring_hydra() end)
+        vim.schedule(function()
+          require('userlib.hydra.yanky').open_yanky_ring_hydra()
+        end)
       end,
       mode = { 'n', 'x' },
       desc = 'Yanky gput before',
@@ -509,7 +525,9 @@ pack.plug({
       ']p',
       function()
         vim.fn.feedkeys(t(('"%s<Plug>(YankyPutIndentAfter)'):format(vim.v.register)))
-        vim.schedule(function() require('userlib.hydra.yanky').open_yanky_ring_hydra() end)
+        vim.schedule(function()
+          require('userlib.hydra.yanky').open_yanky_ring_hydra()
+        end)
       end,
       mode = { 'n', 'x' },
       desc = 'Yanky put after with indent',
@@ -518,7 +536,9 @@ pack.plug({
       '[p',
       function()
         vim.fn.feedkeys(t(('"%s<Plug>(YankyPutIndentAfter)'):format(vim.v.register)))
-        vim.schedule(function() require('userlib.hydra.yanky').open_yanky_ring_hydra() end)
+        vim.schedule(function()
+          require('userlib.hydra.yanky').open_yanky_ring_hydra()
+        end)
       end,
       mode = { 'n', 'x' },
       desc = 'Yanky put before with indent',
@@ -552,9 +572,9 @@ pack.plug({
     })
     require('telescope').load_extension('yank_history')
   end,
-  init = au.schedule_lazy(
-    function() require('userlib.legendary').pre_hook('setup_yanky_lg', setup_yanky_legendary) end
-  ),
+  init = au.schedule_lazy(function()
+    require('userlib.legendary').pre_hook('setup_yanky_lg', setup_yanky_legendary)
+  end),
 })
 
 pack.plug({
@@ -658,7 +678,9 @@ pack.plug({
       pattern = 'WhichKeyRefresh',
       callback = function(ctx)
         local ok, miniclue = pcall(require, 'mini.clue')
-        if not ok then return end
+        if not ok then
+          return
+        end
         vim.schedule(function()
           local data = ctx.data
           local buf = data.buffer

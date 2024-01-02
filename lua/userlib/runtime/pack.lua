@@ -3,7 +3,9 @@ local optional_repos = {}
 local merged = nil
 
 local function plugin(spec)
-  if vim.g.vscode and not spec.vscode then return end
+  if vim.g.vscode and not spec.vscode then
+    return
+  end
   --- if spec has .optional property, it meant to merge with other spec,
   --- we need put it at the last of repos.
   if spec.optional == true then
@@ -35,7 +37,9 @@ end
 
 return {
   repos = function()
-    if merged ~= nil then return merged end
+    if merged ~= nil then
+      return merged
+    end
     merged = repos
     for _, v in ipairs(optional_repos) do
       table.insert(merged, v)
