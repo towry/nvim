@@ -63,7 +63,7 @@ plug({
       },
       {
         '<leader>gs',
-        cmdstr([[vert Git]]),
+        cmdstr([[tab Git diff HEAD]]),
         desc = 'Git status',
         silent = false,
       },
