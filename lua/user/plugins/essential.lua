@@ -11,7 +11,7 @@ pack.plug({
     event = 'BufReadPost',
     vscode = true,
     opts = {
-      delay = 150,
+      delay = 350,
     },
   },
   {
