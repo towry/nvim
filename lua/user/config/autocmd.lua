@@ -168,18 +168,18 @@ function M.load_on_startup()
         callback = function(ctx)
           local should_defer = not vim.cfg.runtime__starts_in_buffer
           if not should_defer then
-            au.exec_useraucmd(au.user_autocmds.LazyTheme, {
-              data = ctx.data,
-            })
+            -- au.exec_useraucmd(au.user_autocmds.LazyTheme, {
+            --   data = ctx.data,
+            -- })
             au.exec_useraucmd(au.user_autocmds.LazyUIEnterOncePre, {
               data = ctx.data,
             })
           end
           vim.schedule(function()
+            au.exec_useraucmd(au.user_autocmds.LazyTheme, {
+              data = ctx.data,
+            })
             if should_defer then
-              au.exec_useraucmd(au.user_autocmds.LazyTheme, {
-                data = ctx.data,
-              })
               au.exec_useraucmd(au.user_autocmds.LazyUIEnterOncePre, {
                 data = ctx.data,
               })

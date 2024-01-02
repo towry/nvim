@@ -23,6 +23,7 @@ plug({
   -- https://protesilaos.com/emacs/modus-themes-pictures
   'miikanissi/modus-themes.nvim',
   event = 'User LazyTheme',
+  priority = 1000,
   enabled = vim.cfg.ui__theme_name == 'modus',
   opts = {
     variant = 'tritanopia',
@@ -44,6 +45,7 @@ plug({
 plug({
   'rebelot/kanagawa.nvim',
   event = 'User LazyTheme',
+  priority = 1000,
   enabled = string.match(vim.cfg.ui__theme_name, 'kanagawa') ~= nil,
   opts = {
     undercurl = true, -- enable undercurls
