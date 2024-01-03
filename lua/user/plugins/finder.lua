@@ -191,9 +191,7 @@ plug({
   keys = {
     { '<leader>/o', '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
     -- <CMD-l> open the outline.
-    { '<D-l>', '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
-    -- same as above in tmux.
-    { '<Char-0xAE>', '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
+    { keymap.super('l'), '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
   },
   cmd = { 'AerialToggle', 'AerialOpen', 'AerialClose' },
   opts = {
@@ -380,7 +378,7 @@ plug({
       desc = 'Fuzzy search in current buffer',
     },
     {
-      '<Tab>',
+      '<C-e>',
       cmd_modcall(pickers_mod, 'buffers_or_recent()'),
       desc = 'List Buffers',
     },

@@ -1,7 +1,8 @@
 local au = require('userlib.runtime.au')
 local utils = require('userlib.runtime.utils')
 local plug = require('userlib.runtime.pack').plug
-local cmdstr = require('userlib.runtime.keymap').cmdstr
+local keymap = require('userlib.runtime.keymap')
+local cmdstr = keymap.cmdstr
 
 local function get_window_bufnr(winid)
   return vim.api.nvim_win_call(winid, function()
@@ -460,26 +461,24 @@ plug({
   {
     'kwkarlwang/bufjump.nvim',
     keys = {
-      '<D-i>',
-      '<D-o>',
       {
         -- super + i
-        '<Char-0xAF>',
+        keymap.super('i'),
         "<cmd>lua require('bufjump').forward()<cr>",
         desc = 'Forward buf jump',
         noremap = true,
       },
       {
         -- super + o
-        '<Char-0xBA>',
+        keymap.super('o'),
         "<cmd>lua require('bufjump').backward()<cr>",
         desc = 'Backward buf jump',
         noremap = true,
       },
     },
     opts = {
-      forward = '<D-i>',
-      backward = '<D-o>',
+      forward = nil,
+      backward = nil,
       on_success = nil,
     },
   },

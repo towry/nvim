@@ -1,17 +1,8 @@
 local keymap = require('userlib.runtime.keymap')
-local utils = require('userlib.runtime.utils')
 local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 
 local M = {}
 local is_profiling = false
-
---- only do this in tmux.
-local xk = utils.utf8keys({
-  [ [[<D-s>]] ] = 0xAA,
-  [ [[<C-'>]] ] = 0xAD,
-  [ [[<C-;>]] ] = 0xAB,
-  [ [[<C-i>]] ] = 0xAC,
-}, false)
 
 local function setup_basic()
   --->>
@@ -33,26 +24,17 @@ local function setup_basic()
     desc = 'run shell command, no silent',
   })
 
-  --- quickly go into cmd
-  set('n', '«', ':<C-u>', {
+  set('n', keymap.super(';'), ':<C-u>', {
     expr = false,
     noremap = true,
   })
-  set('i', '«', '<esc>:<C-u>', {
-    expr = false,
-    noremap = true,
-  })
-  set('n', xk([[<C-;>]]), ':<C-u>', {
-    expr = false,
-    noremap = true,
-  })
-  set('i', '<C-;>', '<esc>:<C-u>', {
+  set('i', keymap.super(';'), '<esc>:<C-u>', {
     expr = false,
     noremap = true,
     desc = 'Enter cmdline easily',
   })
   --- command line history.
-  set('c', xk([[<C-;>]]), function()
+  set('c', keymap.super(';'), function()
     return [[lua require('userlib.telescope.pickers').command_history()<CR>]]
     --   return vim.api.nvim_replace_termcodes('<C-u><C-p>', true, false, true)
   end, {
@@ -60,23 +42,6 @@ local function setup_basic()
     noremap = false,
     desc = 'Previous command in cmdline',
   })
-  ---///
-  --- tab is mapped to buffers, since tab&<c-i> has same func, we
-  --- need to map <c-i> to its original func.
-  set('n', xk([[<C-i>]]), '<C-i>', {
-    noremap = true,
-    expr = false,
-  })
-  --- <C-i> that works in zellij.
-  set('n', '¬', '<C-i>', {
-    noremap = true,
-    expr = false,
-    nowait = true,
-  })
-  --- provided by rsi.vim
-  -- set('i', '<C-e>', '<End>', {
-  --   desc = 'Insert mode: move to end of line',
-  -- })
   set('n', '<leader>/q', ':qa<cr>', {
     desc = 'Quit vim',
   })
@@ -116,7 +81,7 @@ local function setup_basic()
     desc = 'Case change in visual mode',
   })
 
-  set({ 'n', 'i' }, xk([[<D-s>]]), '<ESC>:silent! update<cr>', {
+  set({ 'n', 'i' }, keymap.super('s'), '<ESC>:silent! update<cr>', {
     desc = 'Save current buffer',
     silent = true,
   })

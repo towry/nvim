@@ -144,9 +144,12 @@ function M.get_root(root_opts)
     for _, client in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
       if not vim.tbl_contains(lsp_ignore, client.name or '') then
         local workspace = client.config.workspace_folders
-        local paths = workspace and vim.tbl_map(function(ws)
-          return vim.uri_to_fname(ws.uri)
-        end, workspace) or client.config.root_dir and { client.config.root_dir } or {}
+        local paths = workspace
+            and vim.tbl_map(function(ws)
+              return vim.uri_to_fname(ws.uri)
+            end, workspace)
+          or client.config.root_dir and { client.config.root_dir }
+          or {}
         for _, p in ipairs(paths) do
           local r = vim.uv.fs_realpath(p)
           if path:find(r, 1, true) then
@@ -330,47 +333,6 @@ function M.update_cwd_env(cwd, cwd_short)
   -- only show last part of path.
   vim.t.cwd_short = cwd_short or require('userlib.runtime.path').home_to_tilde(cwd, { shorten = true })
   return cwd, vim.t.cwd_short
-end
-
----- UTF-8
--- Convert a number to a utf8 string
-M.utf8 = function(decimal)
-  if type(decimal) == 'string' then
-    decimal = vim.fn.char2nr(decimal)
-  end
-  if decimal < 128 then
-    return string.char(decimal)
-  end
-  local charbytes = {}
-  for bytes, vals in ipairs({ { 0x7FF, 192 }, { 0xFFFF, 224 }, { 0x1FFFFF, 240 } }) do
-    if decimal <= vals[1] then
-      for b = bytes + 1, 2, -1 do
-        local mod = decimal % 64
-        decimal = (decimal - mod) / 64
-        charbytes[b] = string.char(128 + mod)
-      end
-      charbytes[1] = string.char(vals[2] + decimal)
-      break
-    end
-  end
-  return table.concat(charbytes)
-end
-
--- For each { k = v } in keys, return a table that when indexed by any k' such
--- that tolower(k') == tolower(k) returns utf8(v)
-M.utf8keys = function(keys, disable)
-  local _keys = {}
-  for k, v in pairs(keys) do
-    _keys[string.lower(k)] = disable and k or M.utf8(v)
-  end
-  return setmetatable(_keys, {
-    __index = function(self, k)
-      return rawget(self, string.lower(k))
-    end,
-    __call = function(self, k)
-      return self[k]
-    end,
-  })
 end
 
 M.is_start_as_git_tool = function()

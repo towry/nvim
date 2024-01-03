@@ -132,14 +132,6 @@ function M.setup_keybinding(client, buffer)
         desc = _('Code Source Action'),
       })
     )
-    set(
-      'n',
-      '<D-.>',
-      func_call('open_code_action()'),
-      opts({
-        desc = _('Code Action'),
-      })
-    )
   end
 
   set('n', '<leader>tf', function()

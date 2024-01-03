@@ -1,5 +1,8 @@
 local M = {}
 
+local is_in_tmux = vim.env['TMUX'] ~= nil
+local is_mimic_super = vim.env['MIMIC_SUPER'] ~= nil
+
 ---@see vim.keymap.set
 M.set = vim.keymap.set
 
@@ -46,6 +49,13 @@ function M.map_buf_thunk(bufnr)
       end)
     end
   end
+end
+
+function M.super(c)
+  if not is_in_tmux or not is_mimic_super then
+    return string.format('<D-%s>', c)
+  end
+  return string.format('<Char-0xAE>%s', c)
 end
 
 return M
