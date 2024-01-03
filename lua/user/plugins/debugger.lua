@@ -491,3 +491,9 @@ pack.plug({
     })
   end,
 })
+
+pack.plug({
+  --- hex view tool.
+  'mattn/vim-xxdcursor',
+  ft = 'xxd',
+})
