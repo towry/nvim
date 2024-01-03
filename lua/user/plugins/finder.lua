@@ -931,10 +931,12 @@ plug({
     require('fzf-lua').setup({
       'max-perf',
       winopts = {
-        fullscreen = true,
+        border = 'single',
+        fullscreen = false,
+        delay = 360,
         preview = {
-          default = 'bat',
-          wrap = 'wrap',
+          default = 'builtin',
+          wrap = 'nowrap',
           horizontal = 'right:40%',
           vertical = 'down:45%',
         },
@@ -951,6 +953,7 @@ plug({
           ['ctrl-t'] = actions.file_tabedit,
           ['alt-q'] = actions.file_sel_to_qf,
           ['alt-l'] = actions.file_sel_to_ll,
+          ['ctrl-g'] = { actions.toggle_ignore },
         },
         buffers = {
           ['default'] = local_actions.buffers_open_default,
@@ -959,6 +962,17 @@ plug({
           ['ctrl-v'] = actions.buf_vsplit,
           ['ctrl-t'] = actions.buf_tabedit,
         },
+      },
+      -- options are sent as `<left>=<right>`
+      -- set to `false` to remove a flag
+      -- set to '' for a non-value flag
+      -- for raw args use `fzf_args` instead
+      fzf_opts = {
+        ['--ansi'] = '',
+        ['--info'] = 'inline',
+        ['--height'] = '100%',
+        ['--layout'] = 'reverse',
+        ['--border'] = 'none',
       },
     })
   end,

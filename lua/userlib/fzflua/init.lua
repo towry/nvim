@@ -10,6 +10,7 @@ function M.files(opts)
     opts.cwd = vim.t.cwd or vim.uv.cwd()
   end
 
+  opts.fullscreen = true
   opts.ignore_current_file = true
 
   return fzflua.files(opts)
@@ -34,6 +35,7 @@ function M.folders(opts)
   local cmd = string.format([[fd --type directory --max-depth %s]], opts.max_depth or 4)
   local has_exa = vim.fn.executable('exa')
 
+  opts.fullscreen = true
   opts.fzf_opts = {
     ['--preview-window'] = 'nohidden,down,50%',
     ['--preview'] = fzflua.shell.preview_action_cmd(function(items)
