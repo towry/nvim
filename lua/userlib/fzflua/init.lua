@@ -89,7 +89,7 @@ function M.git_branches()
   local fzflua = require('fzf-lua')
   local winopts = {
     fullscreen = false,
-    width = 0.3,
+    width = 0.8,
     height = 0.4,
   }
 
