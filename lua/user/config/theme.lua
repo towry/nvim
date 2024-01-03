@@ -42,12 +42,16 @@ function M.custom_theme_default()
   -- aerial
   hi('AerialPrivate', { italic = true })
   --- fzf lua
-  hi('FzfLuaNormal', { link = 'NormalFloat' })
-  hi('FzfLuaBorder', { link = 'NormalFloat' })
+  hi('FzfLuaNormal', { link = 'Normal' })
+  hi('FzfLuaBorder', { link = 'LineNr' })
+  --- builtin preview main
+  hi('FzfLuaPreviewNormal', { link = 'Normal' })
 end
 
 function M.custom_theme_modus()
   M.custom_theme_default()
+  -- hi('LineNr', { link = 'Normal' })
+  -- hi('FoldColumn', { link = 'Normal' })
 end
 
 function M.custom_theme_kanagawa()

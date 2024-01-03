@@ -86,9 +86,6 @@ end
 --- return string for statuscolumn's number
 Ty.stl_num = function()
   local space = ' '
-  if vim.wo.previewwindow then
-    space = ''
-  end
   --- if option number is off, return empty string
   if vim.o.number == false then
     return ''
@@ -106,11 +103,12 @@ end
 
 --- "│"
 Ty.stl_foldlevel = function()
-  if vim.b.stl_foldlevel == false then
-    return ''
+  if vim.b.stl_foldlevel == false or not vim.wo[0].foldenable then
+    return ' '
   end
+
   local _ = function(c)
-    return ' ' .. c
+    return ' ' .. c .. ''
   end
   local level = vim.fn.foldlevel(vim.v.lnum)
   if level > 0 then

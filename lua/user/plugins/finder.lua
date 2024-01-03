@@ -934,7 +934,7 @@ plug({
         border = 'single',
         fullscreen = true,
         preview = {
-          delay = 360,
+          delay = 150,
           scrollbar = false,
           default = 'builtin',
           wrap = 'wrap',
@@ -942,6 +942,7 @@ plug({
           vertical = 'down:40%',
           winopts = {
             cursorlineopt = 'line',
+            foldcolumn = 0,
           },
         },
       },

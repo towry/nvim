@@ -95,7 +95,7 @@ function M.init_interface()
   o.completeopt = { 'menu', 'menuone', 'noselect' } --- Better autocompletion
   o.cursorline = true --- Highlight of current line
   o.emoji = true --- Fix emoji display
-  o.cursorlineopt = 'both'
+  o.cursorlineopt = 'line'
   o.foldcolumn = '1' -- Folding
   o.list = true
   o.listchars:append('tab:⇢ ')
@@ -104,7 +104,8 @@ function M.init_interface()
   o.listchars:append('nbsp:␣')
   o.listchars:append('precedes:«')
   -- o.listchars:append('trail:-')
-  vim.o.statuscolumn = '%s%=%{v:lua.Ty.stl_num()}%{v:lua.Ty.stl_foldlevel()}'
+  vim.o.statuscolumn =
+    '%#SignColumn#%s%=%#LineNr#%{v:lua.Ty.stl_num()}%#FoldColumn#%{v:lua.Ty.stl_foldlevel()}%#Normal# '
   -- o.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
   -- o.formatoptions:append {
   --   r = true, -- Automatically insert comment leader after <Enter> in Insert mode.
