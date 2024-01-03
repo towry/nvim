@@ -6,6 +6,15 @@ function M.load_on_startup()
   -- taken from AstroNvim
   local definitions = {
     {
+      { 'VimLeavePre' },
+      {
+        group = 'force_shutdown_clients',
+        callback = function()
+          vim.lsp.stop_client(vim.lsp.get_clients(), true)
+        end,
+      },
+    },
+    {
       { 'TermOpen' },
       {
         group = 'bind_key_on_term_open',

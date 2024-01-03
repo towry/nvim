@@ -139,7 +139,9 @@ end
 function M.command_history()
   local fzflua = require('fzf-lua')
 
-  fzflua.command_history()
+  fzflua.command_history({
+    fullscreen = false,
+  })
 end
 
 return M
