@@ -23,10 +23,6 @@ return {
     description = 'Stop markdown preview',
   },
   {
-    ':Telescope keymaps',
-    description = 'Show all  keymaps',
-  },
-  {
     ':Cheat',
     description = 'Open cheat.sh',
   },

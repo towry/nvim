@@ -35,7 +35,7 @@ local function setup_basic()
   })
   --- command line history.
   set('c', keymap.super(';'), function()
-    return [[lua require('userlib.telescope.pickers').command_history()<CR>]]
+    return [[lua require('userlib.fzflua').command_history()<CR>]]
     --   return vim.api.nvim_replace_termcodes('<C-u><C-p>', true, false, true)
   end, {
     expr = true,

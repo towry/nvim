@@ -623,6 +623,7 @@ pack.plug({
       vim.g.codeium_filetypes = {
         ['*'] = true,
         ['gitcommit'] = true,
+        ['fzf'] = false,
         ['TelescopePrompt'] = false,
         ['TelescopeResults'] = false,
       }
@@ -670,6 +671,7 @@ pack.plug({
     init = au.schedule_lazy(function()
       vim.g.copilot_filetypes = {
         ['*'] = false,
+        ['fzf'] = false,
         ['TelescopePrompt'] = false,
         ['TelescopeResults'] = false,
         ['OverseerForm'] = true,
@@ -807,12 +809,6 @@ pack.plug({
       desc = 'Confirm AI work',
     },
     {
-      '<leader>as',
-      "<cmd>lua require('sg.extensions.telescope').fuzzy_search_results()<CR>",
-      mode = 'n',
-      desc = 'AI Search',
-    },
-    {
       '<leader>aa',
       ':CodyAsk ',
       mode = { 'v', 'x' },
@@ -864,7 +860,6 @@ pack.plug({
   build = 'nvim -l build/init.lua',
   dependencies = {
     'nvim-lua/plenary.nvim',
-    'nvim-telescope/telescope.nvim',
   },
   opts = {
     enable_cody = true,

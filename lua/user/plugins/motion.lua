@@ -211,44 +211,6 @@ plug({
     end,
   },
   {
-    'nvim-telescope/telescope.nvim',
-    optional = true,
-    --- see https://github.com/folke/flash.nvim#%EF%B8%8F-configuration
-    opts = function(_, opts)
-      local function flash(prompt_bufnr)
-        require('flash').jump({
-          pattern = '^',
-          label = {
-            after = { 0, 0 },
-          },
-          highlight = {
-            backdrop = true,
-          },
-          search = {
-            mode = 'search',
-            exclude = {
-              function(win)
-                return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= 'TelescopeResults'
-              end,
-            },
-          },
-          action = function(match)
-            local picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
-            picker:set_selection(match.pos[1] - 1)
-          end,
-        })
-      end
-
-      opts.defaults = vim.tbl_deep_extend('force', opts.defaults or {}, {
-        mappings = {
-          n = { ['-'] = flash },
-          i = { ['<c-->'] = flash },
-        },
-      })
-    end,
-  },
-
-  {
     --- Readline keybindings,
     --- C-e, C-f, etc.
     'tpope/vim-rsi',

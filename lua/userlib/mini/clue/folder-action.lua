@@ -8,28 +8,27 @@ M.open = function(new_cwd)
   require('userlib.mini.clue').shortly_open(function(set, unset)
     set('n', '1', '<cmd>echo expand("%")<cr>', { desc = ' :' .. nicely_cwd })
     set('n', 'f', function()
-      require('userlib.telescope.pickers').project_files({
+      require('userlib.fzflua').files({
         cwd = new_cwd,
-        use_all_files = true,
+        cwd_header = true,
       })
       unset()
     end, {
       desc = 'Open files',
     })
     set('n', 'p', function()
-      require('telescope').extensions.file_browser.file_browser({
-        files = false,
-        use_fd = true,
+      require('userlib.fzflua').folders({
         cwd = new_cwd,
-        respect_gitignore = true,
+        cwd_header = true,
       })
       unset()
     end, {
       desc = 'Open folders',
     })
     set('n', 's', function()
-      require('userlib.telescope.live_grep_call')({
+      require('fzf-lua').live_grep({
         cwd = new_cwd,
+        cwd_header = true,
       })
       unset()
     end, {
@@ -41,10 +40,13 @@ M.open = function(new_cwd)
       desc = 'Grep on it',
     })
     set('n', 'r', function()
-      require('userlib.telescope.pickers').project_files({
-        oldfiles = true,
-        cwd_only = false,
+      require('fzf-lua').oldfiles({
+        cwd_header = true,
         cwd = new_cwd,
+        cwd_only = true,
+        winopts = {
+          fullscreen = false,
+        },
       })
       unset()
     end, {

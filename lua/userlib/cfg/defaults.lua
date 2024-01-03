@@ -177,6 +177,7 @@ return {
     'starter',
     'lazy',
     'TelescopePrompt',
+    'fzf',
     'toggleterm',
     'nofile',
     'spectre_panel',

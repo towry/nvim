@@ -830,7 +830,7 @@ plug({
     },
     {
       '<leader>fb',
-      cmd_modcall('fzf-lua', [[grep_curbuf()]]),
+      cmd_modcall('fzf-lua', [[grep_curbuf({ cwd_header = true })]]),
       desc = 'Fuzzy search in current buffer',
     },
     {
@@ -840,7 +840,7 @@ plug({
     },
     {
       '<leader>ff',
-      cmd_modcall(fzf_mod, [[files()]]),
+      cmd_modcall(fzf_mod, [[files({ cwd_header = true })]]),
       desc = 'Project find files',
     },
     {
@@ -877,6 +877,7 @@ plug({
       function()
         require('userlib.fzflua').folders({
           cwd = vim.cfg.runtime__starts_cwd,
+          cwd_header = true,
         })
       end,
       desc = 'Find all folders',
@@ -884,58 +885,42 @@ plug({
     {
       '<leader>fl',
       function()
-        -- https://github.com/ibhagwan/fzf-lua/commit/36d850b29b387768e76e59799029d1e69aee2522
-        --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
-        require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
-          results_title = vim.t.cwd_short,
-          files = false,
-          use_fd = true,
-          previewer = false,
-          respect_gitignore = true,
-          hidden = false,
-          depth = 5,
-          git_status = false,
-          collapse_dirs = true,
-          hide_parent_dir = true,
-          display_stat = false,
+        require('userlib.fzflua').folders({
           cwd = require('userlib.runtime.utils').get_root(),
-        }))
+        })
       end,
       desc = 'Find project folders',
     },
     {
       '<leader>fg',
-      function()
-        require('userlib.telescope.live_grep_call')({
-          cwd = vim.cfg.runtime__starts_cwd,
-        })
-      end,
+      cmd_modcall('fzf-lua', [[live_grep({ cwd = vim.cfg.runtime__starts_cwd })]]),
       desc = 'Grep search in all projects',
     },
     {
       '<leader>fs',
-      cmd_modcall('userlib.telescope.live_grep_call', '()'),
+      cmd_modcall('fzf-lua', [[live_grep({ cwd = vim.t.cwd or vim.uv.cwd(), cwd_header = true })]]),
       desc = 'Grep search in project',
     },
     {
       '<leader>fs',
-      cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_visual_selection()'),
+      cmd_modcall('fzf-lua', [[grep_visual({ cwd = vim.t.cwd or vim.uv.cwd() })]]),
       desc = 'Grep search on selection in project',
       mode = { 'v', 'x' },
     },
     {
       '<leader>fS',
-      cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_word_under_cursor()'),
+      cmd_modcall('fzf-lua', [[grep_visual({ cwd = vim.cfg.runtime__starts_cwd })]]),
       desc = 'Grep search on selection in project',
     },
     {
-      '<leader>g.',
-      '<cmd>Telescope git_bcommits<cr>',
-      desc = 'Show commits for current buffer with diff preview',
+      '<leader>fS',
+      cmd_modcall('fzf-lua', [[grep_visual({ cwd = vim.cfg.runtime__starts_cwd })]]),
+      desc = 'Grep search on selection in project',
+      mode = { 'v', 'x' },
     },
     {
       '<leader>fj',
-      '<cmd>Telescope jumplist fname_width=60 show_line=false<cr>',
+      cmd_modcall('fzf-lua', [[jumps()]]),
       desc = 'Show jumplist',
     },
   },

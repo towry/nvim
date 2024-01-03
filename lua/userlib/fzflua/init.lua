@@ -134,4 +134,10 @@ function M.git_branches()
   })
 end
 
+function M.command_history()
+  local fzflua = require('fzf-lua')
+
+  fzflua.command_history()
+end
+
 return M
