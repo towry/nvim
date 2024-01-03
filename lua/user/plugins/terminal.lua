@@ -95,7 +95,10 @@ plug({
     end,
     init = function()
       local nvim_buf_set_keymap = vim.keymap.set
-      _G._plugin_set_terminal_keymaps = function()
+      _G._plugin_set_terminal_keymaps = vim.schedule_wrap(function()
+        if vim.bo.filetype == 'fzf' then
+          return
+        end
         local Terminal = require('toggleterm.terminal')
 
         local buffer = vim.api.nvim_get_current_buf()
@@ -103,37 +106,22 @@ plug({
         if not current_term then
           return
         end
-        local current_term_is_hidden = current_term.hidden
+        -- local current_term_is_hidden = current_term.hidden
         local opts = { noremap = true, buffer = buffer, nowait = true }
         nvim_buf_set_keymap('t', '<C-\\>', [[<C-\><C-n>:ToggleTerm<CR>]], opts)
         nvim_buf_set_keymap('t', '<C-S-\\>', [[<C-\><C-n>:ToggleTerm<CR>]], opts)
-        -- nvim_buf_set_keymap('t', '<ESC>', [[<C-\><C-n>]], opts)
-
-        if not current_term_is_hidden then
-          -- close term if is in normal mode otherwise enter normal mode.
-          -- nvim_buf_set_keymap({ 't' }, '<ESC>', function() vim.cmd('noau stopinsert') end, {
-          --   nowait = true,
-          --   noremap = true,
-          --   expr = true,
-          --   buffer = buffer,
-          -- })
-          -- nvim_buf_set_keymap('n', '<ESC>', function()
-          --   if vim.api.nvim_get_mode().mode == 'nt' then return [[<C-\><C-n>:ToggleTerm<CR>]] end
-          -- end, {
-          --   nowait = true,
-          --   expr = true,
-          --   buffer = buffer,
-          -- })
-        end
-      end
+      end)
 
       vim.cmd('autocmd! TermOpen term://* lua _plugin_set_terminal_keymaps()')
       --- open in project root.
+      local misc_fts = {
+        'NvimTree',
+        'lazy',
+        'fzf',
+        'aerial',
+      }
       vim.keymap.set('n', '<C-\\>', function()
-        if vim.tbl_contains({
-          'NvimTree',
-          'lazy',
-        }, vim.bo.filetype) then
+        if vim.tbl_contains(misc_fts, vim.bo.filetype) then
           vim.notify('please open in normal buffer')
           return
         end
@@ -149,10 +137,7 @@ plug({
       --- open in workspace root.
       --- super+ctrl+/
       vim.keymap.set('n', vim.api.nvim_replace_termcodes('<C-S-\\>', true, true, false), function()
-        if vim.tbl_contains({
-          'NvimTree',
-          'lazy',
-        }, vim.bo.filetype) then
+        if vim.tbl_contains(misc_fts, vim.bo.filetype) then
           vim.notify('please open in normal buffer')
           return
         end

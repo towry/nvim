@@ -125,10 +125,18 @@ Ty.stl_foldlevel = function()
   end
 end
 
-Ty.set_terminal_keymaps = function()
+Ty.set_terminal_keymaps = vim.schedule_wrap(function()
   local nvim_buf_set_keymap = vim.keymap.set
   local buffer = vim.api.nvim_get_current_buf()
   local opts = { noremap = true, buffer = buffer, nowait = true }
+
+  --- prevent <C-z> behavior in all terminals in neovim
+  nvim_buf_set_keymap('t', '<C-z>', '<NOP>', opts)
+
+  -- do not bind below keys in fzf-lua terminal window.
+  if vim.bo.filetype == 'fzf' then
+    return
+  end
 
   nvim_buf_set_keymap('t', '<ESC>', [[<C-\><C-n>]], opts)
   --- switch windows
@@ -142,4 +150,4 @@ Ty.set_terminal_keymaps = function()
   nvim_buf_set_keymap('t', '<A-j>', [[<C-\><C-n><A-j>]], opts)
   nvim_buf_set_keymap('t', '<A-k>', [[<C-\><C-n><A-k>]], opts)
   nvim_buf_set_keymap('t', '<A-l>', [[<C-\><C-n><A-l>]], opts)
-end
+end)
