@@ -26,6 +26,7 @@ function M.folders(opts)
   if not opts.cwd then
     opts.cwd = vim.t.cwd or vim.uv.cwd()
   end
+  local preview_cwd = opts.cwd
 
   -- https://github.com/ibhagwan/fzf-lua/commit/36d850b29b387768e76e59799029d1e69aee2522
   -- opts.fd_opts = string.format('--type directory  --max-depth %s', opts.max_depth or 4)
@@ -36,11 +37,14 @@ function M.folders(opts)
   opts.fzf_opts = {
     ['--preview-window'] = 'nohidden,down,50%',
     ['--preview'] = fzflua.shell.preview_action_cmd(function(items)
-      return 'ls'
-      -- if has_exa then
-      --   return string.format('exa --color=auto --icons --group-directories-first -a %s', items[1])
-      -- end
-      -- return string.format('ls %s', items[1])
+      if has_exa then
+        return string.format(
+          'cd %s ; exa --color=always --icons --group-directories-first -a %s',
+          preview_cwd,
+          items[1]
+        )
+      end
+      return string.format('cd %s ; ls %s', preview_cwd, items[1])
     end),
   }
 
@@ -51,7 +55,6 @@ function M.folders(opts)
         return
       end
       local entry = path.entry_to_file(first_selected, selected_opts)
-      vim.print(entry)
       local entry_path = entry.path
       if not entry_path then
         return
