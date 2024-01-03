@@ -542,16 +542,6 @@ plug({
     --- Telescope file_browser files=false
     require('telescope').load_extension('file_browser')
     au.do_useraucmd(au.user_autocmds.TelescopeConfigDone_User)
-
-    -- colorscheme
-    -- au.register_event(au.events.AfterColorschemeChanged, {
-    --   name = 'telescope_ui',
-    --   immediate = true,
-    --   callback = function()
-    --     vim.cmd('hi! link TelescopeNormal NormalFloat')
-    --     vim.cmd('hi! link TelescopeBorder NormalFloat')
-    --   end,
-    -- })
   end,
   opts = function()
     -- local au = require('userlib.runtime.au')
