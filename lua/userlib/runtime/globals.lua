@@ -86,6 +86,9 @@ end
 --- return string for statuscolumn's number
 Ty.stl_num = function()
   local space = ' '
+  if vim.wo.previewwindow then
+    space = ''
+  end
   --- if option number is off, return empty string
   if vim.o.number == false then
     return ''

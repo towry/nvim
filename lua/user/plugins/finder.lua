@@ -932,13 +932,17 @@ plug({
       'max-perf',
       winopts = {
         border = 'single',
-        fullscreen = false,
-        delay = 360,
+        fullscreen = true,
         preview = {
+          delay = 360,
+          scrollbar = false,
           default = 'builtin',
-          wrap = 'nowrap',
-          horizontal = 'right:40%',
-          vertical = 'down:45%',
+          wrap = 'wrap',
+          horizontal = 'right:45%',
+          vertical = 'down:40%',
+          winopts = {
+            cursorlineopt = 'line',
+          },
         },
       },
       keymap = {

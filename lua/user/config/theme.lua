@@ -41,6 +41,9 @@ function M.custom_theme_default()
   hi('TelescopeMatching', { link = 'Visual' })
   -- aerial
   hi('AerialPrivate', { italic = true })
+  --- fzf lua
+  hi('FzfLuaNormal', { link = 'NormalFloat' })
+  hi('FzfLuaBorder', { link = 'NormalFloat' })
 end
 
 function M.custom_theme_modus()
