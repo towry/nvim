@@ -32,8 +32,8 @@ function M.folders(opts)
   -- https://github.com/ibhagwan/fzf-lua/commit/36d850b29b387768e76e59799029d1e69aee2522
   -- opts.fd_opts = string.format('--type directory  --max-depth %s', opts.max_depth or 4)
   -- opts.find_opts = [[-type d -not -path '*/\.git/*' -printf '%P\n']]
-  local cmd = string.format([[fd --type directory --max-depth %s]], opts.max_depth or 4)
-  local has_exa = vim.fn.executable('exa')
+  local cmd = string.format([[fd --color always --type directory --max-depth %s]], opts.max_depth or 4)
+  local has_exa = vim.fn.executable('eza') == 1
 
   opts.fullscreen = true
   opts.fzf_opts = {
@@ -41,7 +41,7 @@ function M.folders(opts)
     ['--preview'] = fzflua.shell.preview_action_cmd(function(items)
       if has_exa then
         return string.format(
-          'cd %s ; exa --color=always --icons --group-directories-first -a %s',
+          'cd %s ; eza --color=always --icons=always --group-directories-first -a %s',
           preview_cwd,
           items[1]
         )

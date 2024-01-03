@@ -123,7 +123,7 @@ function M.init_interface()
     o.shortmess:append({ C = true })
   end
   o.lazyredraw = false --- Makes macros faster & prevent errors in complicated mappings
-  if vim.fn.executable('rg') then
+  if vim.fn.executable('rg') == 1 then
     -- credit: https://github.com/nicknisi/dotfiles/blob/1360edda1bbb39168637d0dff13dd12c2a23d095/config/nvim/init.lua#L73
     -- if ripgrep installed, use that as a grepper
     o.grepprg = 'rg --vimgrep --color=never --with-filename --line-number --no-heading --smart-case --'

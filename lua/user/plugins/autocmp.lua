@@ -60,7 +60,7 @@ pack.plug({
   {
     'lukas-reineke/cmp-rg',
     cond = function()
-      return vim.fn.executable('rg')
+      return vim.fn.executable('rg') == 1
     end,
     ft = 'rgflow',
     dependencies = {
