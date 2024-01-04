@@ -1,3 +1,4 @@
+local utils = require('userlib.runtime.utils')
 local M = {}
 
 local function get_diagnostic_at_cursor()
@@ -44,6 +45,25 @@ function M.goto_definition_in_file(command)
   require('gtd').exec({ command = command or 'edit' })
 end
 
+function M.goto_declaration()
+  utils.use_plugin('fzf-lua', function(fzf)
+    fzf.lsp_declarations({
+      fullscreen = false,
+    })
+  end)
+end
+
+function M.lsp_workspace_symbol()
+  utils.use_plugin('fzf-lua', function(fzf)
+    -- <c-g> to toggle live query
+    fzf.lsp_workspace_symbols({
+      fullscreen = false,
+      no_autoclose = true,
+      cwd_only = true,
+    })
+  end)
+end
+
 function M.goto_definition()
   -- vim.lsp.buf.definition()
   require('userlib.telescope.lsp').lsp_references()
@@ -81,11 +101,23 @@ function M.hover_action()
 end
 
 function M.peek_definition()
-  vim.lsp.buf.definition()
+  utils.use_plugin('fzf-lua', function(fzf)
+    fzf.lsp_definitions({
+      fullscreen = false,
+    })
+  end, function()
+    vim.lsp.buf.definition()
+  end)
 end
 
 function M.peek_type_definition()
-  vim.lsp.buf.type_definition()
+  utils.use_plugin('fzf-lua', function(fzf)
+    fzf.lsp_typedefs({
+      fullscreen = false,
+    })
+  end, function()
+    vim.lsp.buf.type_definition()
+  end)
 end
 
 -- function M.format_code(bufnr) require('userlib.lsp.fmt').format_document(bufnr) end

@@ -897,6 +897,12 @@ plug({
       desc = 'Grep search in all projects',
     },
     {
+      '<leader>fg',
+      cmd_modcall('fzf-lua', [[grep_visual({ cwd = vim.cfg.runtime__starts_cwd })]]),
+      desc = 'Grep search on selection in all projects',
+      mode = { 'v', 'x' },
+    },
+    {
       '<leader>fs',
       cmd_modcall('fzf-lua', [[live_grep({ cwd = vim.t.cwd or vim.uv.cwd(), cwd_header = true })]]),
       desc = 'Grep search in project',
@@ -908,15 +914,14 @@ plug({
       mode = { 'v', 'x' },
     },
     {
-      '<leader>fS',
-      cmd_modcall('fzf-lua', [[grep_visual({ cwd = vim.cfg.runtime__starts_cwd })]]),
-      desc = 'Grep search on selection in project',
+      '<leader>fw',
+      cmd_modcall('fzf-lua', [[live_grep({ cwd = vim.t.cwd or vim.uv.cwd(), query = vim.fn.expand("<cword>") })]]),
+      desc = 'Grep search word in current project',
     },
     {
-      '<leader>fS',
-      cmd_modcall('fzf-lua', [[grep_visual({ cwd = vim.cfg.runtime__starts_cwd })]]),
-      desc = 'Grep search on selection in project',
-      mode = { 'v', 'x' },
+      '<leader>fW',
+      cmd_modcall('fzf-lua', [[live_grep({ cwd = vim.cfg.runtime__starts_cwd, query = vim.fn.expand("<cword>") })]]),
+      desc = 'Grep search word in all project',
     },
     {
       '<leader>fj',
@@ -958,7 +963,7 @@ plug({
           ['ctrl-t'] = actions.file_tabedit,
           ['alt-q'] = actions.file_sel_to_qf,
           ['alt-l'] = actions.file_sel_to_ll,
-          ['ctrl-g'] = { actions.toggle_ignore },
+          ['ctrl-g'] = actions.toggle_ignore,
         },
         buffers = {
           ['default'] = local_actions.buffers_open_default,

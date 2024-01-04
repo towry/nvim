@@ -152,3 +152,17 @@ Ty.set_terminal_keymaps = vim.schedule_wrap(function()
   nvim_buf_set_keymap('t', '<A-k>', [[<C-\><C-n><A-k>]], opts)
   nvim_buf_set_keymap('t', '<A-l>', [[<C-\><C-n><A-l>]], opts)
 end)
+
+Ty.lsp_methods = function()
+  return require('vim.lsp.protocol').Methods
+end
+
+--- Return false if client doesn't support method
+--- Return true if client supports method or neovim not sure about it.
+--- bug: https://github.com/neovim/neovim/issues/18686
+Ty.client_support = function(client, method)
+  if client.supports_method then
+    return client.supports_method(method)
+  end
+  return true
+end

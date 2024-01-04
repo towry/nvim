@@ -1,6 +1,6 @@
 local M = {}
 
----@param opts {cwd?:string}
+---@param opts {cwd?:string} | table
 function M.files(opts)
   opts = opts or {}
 
@@ -17,7 +17,7 @@ function M.files(opts)
 end
 
 --- @see https://github.com/ibhagwan/fzf-lua/wiki/Advanced#preview-overview
----@param opts {hidden?:boolean,max_depth?:number}
+---@param opts {max_depth?:number,cwd?:string} | table
 function M.folders(opts)
   opts = opts or {}
 

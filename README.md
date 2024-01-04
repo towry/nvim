@@ -11,10 +11,18 @@
 
 ## Screenshots
 
-<details><summary><h4>TO BE UPDATED</h4></summary>
-</details>
+<a href="https://github.com/towry/nvim/issues/26">checkout this issue for
+screenshots</a>
 
 ## Commands
+
+## Prerequisites
+
+- [fzf](https://github.com/junegunn/fzf), For fuzzy searching and various kind
+  of pickers
+- [fd](https://github.com/sharkdp/fd), For find files/folders
+- [rg](https://github.com/BurntSushi/ripgrep), For grep/searching
+- [eza](https://github.com/eza-community/eza), For fzf preview
 
 ### `PrebundlePlugins`
 

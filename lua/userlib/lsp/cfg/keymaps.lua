@@ -1,7 +1,10 @@
 local M = {}
 function M.setup_keybinding(client, buffer)
   local keymap = require('userlib.runtime.keymap')
-  local cap = client.server_capabilities
+  local ms = require('vim.lsp.protocol').Methods
+  local support = function(method)
+    return Ty.client_support(client, method)
+  end
   local opts = function(e)
     return vim.tbl_extend('force', {
       buffer = buffer,
@@ -90,7 +93,7 @@ function M.setup_keybinding(client, buffer)
   )
   set(
     'n',
-    '<leader>cd',
+    '<leader>cld',
     ':lua vim.diagnostic.setloclist()<cr>',
     opts({
       desc = _('Diagnostics in location list'),
@@ -106,8 +109,16 @@ function M.setup_keybinding(client, buffer)
     })
   )
 
+  if support(ms.textDocument_declaration) then
+    set('n', '<leader>ct', func_call('goto_declaration()'), opts({ desc = _('goto declaration') }))
+  end
+
+  if support(ms.workspace_symbol) then
+    set('n', '<leader>cs', func_call('lsp_workspace_symbol()'), opts({ desc = _('search workspace symbols') }))
+  end
+
   -- Code actions.
-  if cap.codeActionProvider then
+  if support(ms.textDocument_codeAction) then
     set(
       'n',
       '<leader>co',
@@ -140,7 +151,7 @@ function M.setup_keybinding(client, buffer)
     desc = 'Toggle auto format',
   })
 
-  if cap.renameProvider then
+  if support(ms.textDocument_rename) then
     set(
       'n',
       '<leader>cr',
@@ -161,7 +172,7 @@ function M.setup_keybinding(client, buffer)
   )
   set(
     'n',
-    '<leader>ct',
+    '<leader>cD',
     func_call('peek_type_definition()'),
     opts({
       desc = _('Peek type definition'),
@@ -169,7 +180,7 @@ function M.setup_keybinding(client, buffer)
   )
   set(
     'n',
-    '<leader>cp',
+    '<leader>cd',
     func_call('peek_definition()'),
     opts({
       desc = _('Peek definition'),
