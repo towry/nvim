@@ -1,3 +1,4 @@
+local libutils = require('userlib.runtime.utils')
 local M = {}
 
 ---@param opts {cwd?:string} | table
@@ -75,6 +76,11 @@ function M.folders(opts)
         return fzflua.fzf_exec(opts.cmd, opts)
       end
       actions.toggle_ignore(nil, opts)
+    end,
+    ['ctrl-h'] = function()
+      --- toggle hidden
+      opts.cmd = libutils.toggle_cmd_option(opts.cmd, '--hidden')
+      return fzflua.fzf_exec(opts.cmd, opts)
     end,
   }
 

@@ -670,7 +670,7 @@ pack.plug({
     config = function() end,
     init = au.schedule_lazy(function()
       vim.g.copilot_filetypes = {
-        ['*'] = false,
+        ['*'] = true,
         ['fzf'] = false,
         ['TelescopePrompt'] = false,
         ['TelescopeResults'] = false,
