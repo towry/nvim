@@ -89,6 +89,19 @@ function M.load_on_startup()
             vim.b[ctx.buf].copilot_enabled = false
             vim.b[ctx.buf].autoformat_disable = true
             vim.cmd('syntax clear')
+
+            --- disable lsp on large buffer.
+            local buf = ctx.buf
+            vim.api.nvim_create_augroup('disable_lsp_on_buf_' .. ctx.buf, { clear = true })
+            vim.api.nvim_create_autocmd({ 'LspAttach' }, {
+              group = 'disable_lsp_on_buf_' .. buf,
+              buffer = buf,
+              callback = vim.schedule_wrap(function(lsp_ctx)
+                local client_id = lsp_ctx.data.client_id
+                vim.lsp.buf_detach_client(buf, client_id)
+                vim.notify(string.format('Disabled client: %s on buf: %s', client_id, buf), vim.log.levels.INFO)
+              end),
+            })
           end
         end,
       },
