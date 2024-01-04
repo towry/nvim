@@ -679,11 +679,11 @@ pack.plug({
     config = function() end,
     init = au.schedule_lazy(function()
       vim.g.copilot_filetypes = {
-        ['*'] = true,
+        ['*'] = false, -- start manually
         ['fzf'] = false,
         ['TelescopePrompt'] = false,
         ['TelescopeResults'] = false,
-        ['OverseerForm'] = true,
+        ['OverseerForm'] = false,
       }
       vim.g.copilot_no_tab_map = true
       vim.g.copilot_tab_fallback = ''
