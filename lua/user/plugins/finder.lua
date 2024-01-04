@@ -984,6 +984,13 @@ plug({
         ['--layout'] = 'reverse',
         ['--border'] = 'none',
       },
+      previewers = {
+        builtin = {
+          syntax_limit_l = 8000,
+          syntax_limit_b = 1024 * 500,
+          limit_b = 1024 * 1000,
+        },
+      },
     })
   end,
 })

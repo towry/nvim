@@ -83,6 +83,7 @@ function M.load_on_startup()
       {
         group = '_disable_on_large_buf',
         callback = function(ctx)
+          local buf = ctx.buf
           -- if file size is big than 100000
           if require('userlib.runtime.buffer').is_big_file(ctx.buf) then
             vim.b[ctx.buf].is_big_file = true
@@ -90,30 +91,34 @@ function M.load_on_startup()
             vim.b[ctx.buf].autoformat_disable = true
             vim.b[ctx.buf].minicursorword_disable = true
 
+            local buftype = vim.bo[buf].buftype
+
+            --- set to nofile can dodge many plugins including lspconfig
+            vim.api.nvim_set_option_value('buftype', 'nofile', {
+              buf = buf,
+            })
+
             --- disable lsp on large buffer.
-            local buf = ctx.buf
-            vim.api.nvim_create_augroup('disable_lsp_on_buf_' .. ctx.buf, { clear = true })
-            vim.api.nvim_create_autocmd({ 'LspAttach' }, {
+            vim.api.nvim_create_augroup('disable_lsp_on_buf_' .. buf, { clear = true })
+            vim.api.nvim_create_autocmd('BufReadPost', {
               group = 'disable_lsp_on_buf_' .. buf,
               buffer = buf,
-              callback = vim.schedule_wrap(function(lsp_ctx)
-                local client_id = lsp_ctx.data.client_id
-                vim.lsp.buf_detach_client(buf, client_id)
-                vim.notify(string.format('Disabled client: %s on buf: %s', client_id, buf), vim.log.levels.INFO)
+              once = true,
+              callback = vim.schedule_wrap(function()
+                local current_buf = vim.api.nvim_get_current_buf()
+                if current_buf == buf then
+                  vim.cmd('setlocal syntax=OFF')
+                end
+
+                if not vim.api.nvim_buf_is_valid(buf) then
+                  return
+                end
+                -- set buftype back
+                vim.api.nvim_set_option_value('buftype', buftype, {
+                  buf = buf,
+                })
               end),
             })
-          end
-        end,
-      },
-    },
-    {
-      { 'FileType' },
-      {
-        group = 'disable_syntax_on_big_file',
-        pattern = '*',
-        callback = function(ctx)
-          if vim.b[ctx.buf].is_big_file then
-            vim.cmd('setlocal syntax=OFF')
           end
         end,
       },

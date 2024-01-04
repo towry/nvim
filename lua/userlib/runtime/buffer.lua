@@ -235,7 +235,7 @@ function M.buffer_display_in_other_window(bufnr)
 end
 
 function M.is_big_file(buf)
-  if M.getfsize(buf) > 100000 then
+  if M.getfsize(buf) > (1024 * 1000) then
     return true
   end
   if vim.api.nvim_buf_line_count(buf) > 20000 then
