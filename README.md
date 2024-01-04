@@ -28,6 +28,10 @@ screenshots</a>
 
 Bundles all files within `user.plugins` into a single file named `user.plugins_bundle`.
 
+## TODO
+
+- [ ] Make lsp attach more controlable, for example, do not start lsp on large file.
+
 ## Special Thanks To
 
 - https://github.com/LazyVim/LazyVim
