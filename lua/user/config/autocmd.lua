@@ -88,7 +88,7 @@ function M.load_on_startup()
             vim.b[ctx.buf].is_big_file = true
             vim.b[ctx.buf].copilot_enabled = false
             vim.b[ctx.buf].autoformat_disable = true
-            vim.cmd('syntax clear')
+            vim.b[ctx.buf].minicursorword_disable = true
 
             --- disable lsp on large buffer.
             local buf = ctx.buf
@@ -102,6 +102,18 @@ function M.load_on_startup()
                 vim.notify(string.format('Disabled client: %s on buf: %s', client_id, buf), vim.log.levels.INFO)
               end),
             })
+          end
+        end,
+      },
+    },
+    {
+      { 'FileType' },
+      {
+        group = 'disable_syntax_on_big_file',
+        pattern = '*',
+        callback = function(ctx)
+          if vim.b[ctx.buf].is_big_file then
+            vim.cmd('setlocal syntax=OFF')
           end
         end,
       },

@@ -31,39 +31,45 @@ plug({
   end,
 })
 
+local fts = {
+  'html',
+  'css',
+  'javascript',
+  'typescript',
+  'typescriptreact',
+  'javascriptreact',
+  'lua',
+  'sass',
+  'scss',
+  'less',
+}
 plug({
   {
     'NvChad/nvim-colorizer.lua',
-    ft = {
-      'html',
-      'css',
-      'javascript',
-      'typescript',
-      'typescriptreact',
-      'javascriptreact',
-      'lua',
-      'sass',
-      'scss',
-      'less',
-    },
     opts = {
-      filetypes = {
-        'html',
-        'css',
-        'javascript',
-        'typescript',
-        'typescriptreact',
-        'javascriptreact',
-        'lua',
-        'sass',
-        'scss',
-        'less',
-      },
+      filetypes = fts,
       user_default_options = {
         mode = 'background',
         tailwind = true, -- Enable tailwind colors
       },
     },
+    init = function()
+      vim.api.nvim_create_augroup('load_colorizer_', { clear = true })
+      vim.api.nvim_create_autocmd('FileType', {
+        group = 'load_colorizer_',
+        pattern = fts,
+        callback = function()
+          if vim.b.is_big_file then
+            return
+          end
+          require('userlib.runtime.utils').load_plugins('nvim-colorizer.lua')
+          vim.api.nvim_clear_autocmds({
+            event = 'FileType',
+            group = 'load_colorizer_',
+          })
+        end,
+      })
+    end,
   },
 
   {

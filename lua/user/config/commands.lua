@@ -160,3 +160,9 @@ end, {
   bang = true,
   desc = 'Start or stop profile',
 })
+
+create_cmd('OpenProfileView', function()
+  vim.ui.open('https://www.speedscope.app/')
+end, {
+  desc = 'Open online profile view',
+})

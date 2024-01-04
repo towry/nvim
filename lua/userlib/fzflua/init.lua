@@ -5,13 +5,13 @@ local M = {}
 local function callgrep(opts, callfn)
   opts = opts or {}
 
-  opts.cwd_prompt = true
   opts.cwd_header = true
 
   if not opts.cwd then
     opts.cwd = vim.t.cwd or vim.uv.cwd()
   end
 
+  opts.no_header = false
   opts.fullscreen = true
   opts.rg_opts = [[--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e]]
 
@@ -19,12 +19,19 @@ local function callgrep(opts, callfn)
     ['ctrl-h'] = function()
       --- toggle hidden files search.
       opts.rg_opts = libutils.toggle_cmd_option(opts.rg_opts, '--hidden')
-      vim.print(opts)
       return callfn(opts)
     end,
     ['ctrl-i'] = function()
       --- toggle rg_glob
       opts.rg_glob = not opts.rg_glob
+      if opts.rg_glob then
+        opts.prompt = opts.prompt .. '(G): '
+      else
+        -- remove (G): from prompt
+        opts.prompt = string.gsub(opts.prompt, '%(G%): ', '')
+      end
+      -- usage: {search_query} --{glob pattern}
+      -- hello --*.md *.js
       return callfn(opts)
     end,
   }
@@ -38,7 +45,11 @@ function M.grep(opts, is_live)
     is_live = true
   end
   local fzflua = require('fzf-lua')
-  opts.prompt = is_live and '󰥨  Live Grep❯ ' or '󰥨  Grep❯ '
+  if is_live then
+    opts.prompt = '󰥨  Live Grep❯ '
+  else
+    opts.input_prompt = '󰥨  Grep❯ '
+  end
   return callgrep(opts, function(opts_local)
     if is_live then
       return fzflua.live_grep(opts_local)
