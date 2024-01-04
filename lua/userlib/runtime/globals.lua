@@ -42,8 +42,10 @@ end
 ---@param filename? string
 ---@param opts? {flame?:boolean}
 Ty.StartProfile = function(filename, opts)
-  opts = opts or {}
-  require('plenary.profile').start(filename or 'profile.log', opts)
+  opts = opts or {
+    flame = true,
+  }
+  require('plenary.profile').start(filename or vim.fn.expand('$HOME/nvim-profile.log'), opts)
 end
 Ty.StopProfile = function()
   require('plenary.profile').stop()

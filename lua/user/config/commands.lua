@@ -147,3 +147,16 @@ end, {
   bang = true,
   desc = 'Find makefile and run',
 })
+
+-- accept an argument as filename
+create_cmd('Profile', function(opts)
+  if opts.bang then
+    Ty.StopProfile()
+  else
+    Ty.StartProfile(opts.fargs[1] or nil)
+  end
+end, {
+  nargs = '?',
+  bang = true,
+  desc = 'Start or stop profile',
+})

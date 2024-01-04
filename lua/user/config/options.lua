@@ -138,16 +138,6 @@ function M.init_folds()
   o.foldnestmax = 10 -- deepest fold is 10 levels
   o.foldlevel = 99 --- Using ufo provider need a large value
   o.foldlevelstart = 99 --- Expand all folds by default
-
-  M.enable_foldexpr_for_buf()
-end
-
---- https://github.dev/lewis6991/dotfiles/blob/main/config/nvim/lua/lewis6991/lsp.lua
-function M.enable_foldexpr_for_buf()
-  vim.opt.foldmethod = 'expr'
-  -- vim.opt.foldtext = 'v:lua.vim.treesitter.foldtext()'
-  vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-  -- vim.cmd.normal('zx')
 end
 
 function M.init_other()

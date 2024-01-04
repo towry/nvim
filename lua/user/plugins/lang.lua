@@ -72,7 +72,10 @@ plug({
     dependencies = {
       'nvim-treesitter/nvim-treesitter',
     },
-    opts = {},
+    lazy = true,
+    opts = {
+      enable_autocmd = false,
+    },
   },
 
   {
@@ -80,7 +83,7 @@ plug({
     cond = not vim.cfg.runtime__starts_as_gittool,
     event = { 'BufReadPost', 'BufNewFile' },
     opts = function()
-      local pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook()
+      local pre_hook = nil
       return {
         ---Add a space b/w comment and the line
         ---@type boolean
@@ -122,6 +125,12 @@ plug({
         ---Pre-hook, called before commenting the line
         ---@type function|nil
         pre_hook = function(ctx)
+          if vim.b.is_big_file then
+            return
+          end
+          if not pre_hook then
+            pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook()
+          end
           return pre_hook(ctx)
         end,
         ---Post-hook, called after commenting is done

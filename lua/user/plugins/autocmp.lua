@@ -182,6 +182,9 @@ pack.plug({
       local buffer_option = {
         -- Complete from all visible buffers (splits)
         get_bufnrs = function()
+          if vim.b.is_big_file then
+            return {}
+          end
           --- from all loaded buffers
           local bufs = {}
           local loaded_bufs = vim.api.nvim_list_bufs()
@@ -209,6 +212,9 @@ pack.plug({
       }
 
       local cmp_options = {
+        enabled = function()
+          return not vim.b.is_big_file
+        end,
         performance = {
           max_view_entries = 15,
           -- debounce = 250,
@@ -325,6 +331,9 @@ pack.plug({
         },
         formatting = {
           format = function(entry, vim_item)
+            if vim.b.is_big_file then
+              return vim_item
+            end
             vim_item.kind = lspkind.symbolic(vim_item.kind, { with_text = true })
             local menu = source_mapping[entry.source.name]
             local maxwidth = 50
@@ -750,6 +759,7 @@ pack.plug({
   --- require('sg.auth').get(): boolean check if authed.
   'sourcegraph/sg.nvim',
   event = 'VeryLazy',
+  enabled = false,
   keys = {
     {
       '<leader>ai',
@@ -879,6 +889,7 @@ pack.plug({
   dependencies = {
     'sourcegraph/sg.nvim',
   },
+  enabled = false,
   dev = false,
   ft = 'gitcommit',
   opts = {

@@ -7,6 +7,9 @@ capabilities.textDocument.colorProvider = { dynamicRegistration = false }
 -- Settings
 
 local attach_colorizer_to_buffer = function(bufnr, opts)
+  if vim.b[bufnr].is_big_file then
+    return
+  end
   local utils = require('userlib.runtime.utils')
   if utils.has_plugin('nvim-colorizer.lua') then
     require('colorizer').attach_to_buffer(bufnr, opts)
@@ -14,6 +17,9 @@ local attach_colorizer_to_buffer = function(bufnr, opts)
 end
 
 local on_attach = function(client, bufnr)
+  if vim.b[bufnr].is_big_file then
+    return
+  end
   if client.server_capabilities.colorProvider then
     -- require('userlib.lsp.cfg.documentcolors').buf_attach(bufnr)
     attach_colorizer_to_buffer(bufnr, {

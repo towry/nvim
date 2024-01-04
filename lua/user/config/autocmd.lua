@@ -84,9 +84,28 @@ function M.load_on_startup()
         group = '_disable_on_large_buf',
         callback = function(ctx)
           -- if file size is big than 100000
-          if vim.fn.getfsize(ctx.file) > 100000 then
+          if require('userlib.runtime.buffer').is_big_file(ctx.buf) then
+            vim.b[ctx.buf].is_big_file = true
             vim.b[ctx.buf].copilot_enabled = false
             vim.b[ctx.buf].autoformat_disable = true
+            vim.cmd('syntax clear')
+          end
+        end,
+      },
+    },
+    -- enable foldexpr
+    {
+      { 'BufReadPost' },
+      {
+        group = 'enable_foldexpr_for_buf',
+        callback = function(ctx)
+          local buf = ctx.buf
+          if not vim.b[buf].is_big_file then
+            vim.wo.foldmethod = 'expr'
+            vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+          else
+            vim.wo.foldmethod = 'manual'
+            vim.wo.foldexpr = ''
           end
         end,
       },
