@@ -21,7 +21,7 @@ local function callgrep(opts, callfn)
       opts.rg_opts = libutils.toggle_cmd_option(opts.rg_opts, '--hidden')
       return callfn(opts)
     end,
-    ['ctrl-i'] = function()
+    ['ctrl-a'] = function()
       --- toggle rg_glob
       opts.rg_glob = not opts.rg_glob
       if opts.rg_glob then
