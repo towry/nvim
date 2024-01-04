@@ -86,10 +86,11 @@ function M.load_on_startup()
           local buf = ctx.buf
           -- if file size is big than 100000
           if require('userlib.runtime.buffer').is_big_file(ctx.buf) then
-            vim.b[ctx.buf].is_big_file = true
-            vim.b[ctx.buf].copilot_enabled = false
-            vim.b[ctx.buf].autoformat_disable = true
-            vim.b[ctx.buf].minicursorword_disable = true
+            vim.b[buf].is_big_file = true
+            vim.b[buf].copilot_enabled = false
+            vim.b[buf].autoformat_disable = true
+            vim.b[buf].minicursorword_disable = true
+            vim.b[buf].diagnostic_disable = true
 
             local buftype = vim.bo[buf].buftype
 
@@ -156,7 +157,7 @@ function M.load_on_startup()
               vim.schedule(function()
                 au.do_useraucmd(au.user_autocmds.FileOpenedAfter_User)
               end)
-            end, 10)
+            end, 1)
           end
         end,
       },
@@ -362,27 +363,6 @@ function M.load_on_startup()
 
   au.define_autocmds(definitions)
   au.define_user_autocmds(user_definitions)
-
-  -- vim.api.nvim_create_autocmd({ 'InsertLeave', 'WinEnter' }, {
-  --   callback = function()
-  --     if vim.bo.buftype ~= '' then return end
-  --     local ok, cl = pcall(vim.api.nvim_win_get_var, 0, 'auto-cursorline')
-  --     if ok and cl then
-  --       vim.wo.cursorline = true
-  --       vim.api.nvim_win_del_var(0, 'auto-cursorline')
-  --     end
-  --   end,
-  -- })
-  -- vim.api.nvim_create_autocmd({ 'InsertEnter', 'WinLeave' }, {
-  --   callback = function()
-  --     if vim.bo.buftype ~= '' then return end
-  --     local cl = vim.wo.cursorline
-  --     if cl then
-  --       vim.api.nvim_win_set_var(0, 'auto-cursorline', cl)
-  --       vim.wo.cursorline = false
-  --     end
-  --   end,
-  -- })
 end
 
 function M.setup_events_on_startup() end
