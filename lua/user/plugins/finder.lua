@@ -1,7 +1,7 @@
 local plug = require('userlib.runtime.pack').plug
 local keymap = require('userlib.runtime.keymap')
 local cmd_modcall = keymap.cmd_modcall
-local pickers_mod = 'userlib.telescope.pickers'
+-- local pickers_mod = 'userlib.telescope.pickers'
 local fzf_mod = 'userlib.fzflua'
 local au = require('userlib.runtime.au')
 
@@ -893,34 +893,34 @@ plug({
     },
     {
       '<leader>fg',
-      cmd_modcall('fzf-lua', [[live_grep({ cwd = vim.cfg.runtime__starts_cwd })]]),
+      cmd_modcall(fzf_mod, [[ grep({ cwd = vim.cfg.runtime__starts_cwd }, true) ]]),
       desc = 'Grep search in all projects',
     },
     {
       '<leader>fg',
-      cmd_modcall('fzf-lua', [[grep_visual({ cwd = vim.cfg.runtime__starts_cwd })]]),
+      cmd_modcall(fzf_mod, [[grep_visual({ cwd = vim.cfg.runtime__starts_cwd })]]),
       desc = 'Grep search on selection in all projects',
       mode = { 'v', 'x' },
     },
     {
       '<leader>fs',
-      cmd_modcall('fzf-lua', [[live_grep({ cwd = vim.t.cwd or vim.uv.cwd(), cwd_header = true })]]),
+      cmd_modcall(fzf_mod, [[ grep({ cwd = vim.t.cwd or vim.uv.cwd(), cwd_header = true }, true) ]]),
       desc = 'Grep search in project',
     },
     {
       '<leader>fs',
-      cmd_modcall('fzf-lua', [[grep_visual({ cwd = vim.t.cwd or vim.uv.cwd() })]]),
+      cmd_modcall(fzf_mod, [[ grep_visual({ cwd = vim.t.cwd or vim.uv.cwd() }) ]]),
       desc = 'Grep search on selection in project',
       mode = { 'v', 'x' },
     },
     {
       '<leader>fw',
-      cmd_modcall('fzf-lua', [[live_grep({ cwd = vim.t.cwd or vim.uv.cwd(), query = vim.fn.expand("<cword>") })]]),
+      cmd_modcall(fzf_mod, [[grep({ cwd = vim.t.cwd or vim.uv.cwd(), query = vim.fn.expand("<cword>") }, true)]]),
       desc = 'Grep search word in current project',
     },
     {
       '<leader>fW',
-      cmd_modcall('fzf-lua', [[live_grep({ cwd = vim.cfg.runtime__starts_cwd, query = vim.fn.expand("<cword>") })]]),
+      cmd_modcall(fzf_mod, [[grep({ cwd = vim.cfg.runtime__starts_cwd, query = vim.fn.expand("<cword>") }, true)]]),
       desc = 'Grep search word in all project',
     },
     {

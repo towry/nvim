@@ -638,6 +638,7 @@ pack.plug({
         { mode = 'x', keys = '<Leader>g', desc = '+Git' },
         { mode = 'n', keys = '<Leader>f', desc = '+Finder' },
         { mode = 'x', keys = '<Leader>f', desc = '+Finder' },
+        { mode = 'v', keys = '<Leader>f', desc = '+Finder' },
         { mode = 'n', keys = '<Leader>c', desc = '+Code' },
         { mode = 'x', keys = '<Leader>c', desc = '+Code' },
         { mode = 'v', keys = '<Leader>c', desc = '+Code' },

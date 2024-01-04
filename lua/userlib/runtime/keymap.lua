@@ -15,6 +15,7 @@ end
 
 ---wrap string inside `<cmd>lua require(<module_path>)[call_sig]()<cr>`
 function M.cmd_modcall(module_path, call_sig)
+  call_sig = vim.trim(call_sig)
   if call_sig ~= '()' then
     call_sig = '.' .. call_sig
   end
