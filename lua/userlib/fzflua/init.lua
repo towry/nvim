@@ -21,6 +21,7 @@ end
 function M.folders(opts)
   opts = opts or {}
 
+  local actions = require('fzf-lua.actions')
   local fzflua = require('fzf-lua')
   local path = require('fzf-lua.path')
 
@@ -35,6 +36,11 @@ function M.folders(opts)
   local cmd = string.format([[fd --color always --type directory --max-depth %s]], opts.max_depth or 4)
   local has_exa = vim.fn.executable('eza') == 1
 
+  opts.prompt = '󰥨  Folders❯ '
+  opts.cmd = cmd
+  opts.cwd_header = true
+  opts.cwd_prompt = true
+  opts.toggle_ignore_flag = '--no-ignore'
   opts.fullscreen = true
   opts.fzf_opts = {
     ['--preview-window'] = 'nohidden,down,50%',
@@ -62,6 +68,13 @@ function M.folders(opts)
         return
       end
       require('userlib.mini.clue.folder-action').open(entry_path)
+    end,
+    ['ctrl-g'] = function()
+      opts.__ACT_TO = function(o)
+        opts = vim.tbl_extend('force', opts, o)
+        return fzflua.fzf_exec(opts.cmd, opts)
+      end
+      actions.toggle_ignore(nil, opts)
     end,
   }
 
