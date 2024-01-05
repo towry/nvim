@@ -26,7 +26,7 @@ plug({
 
   {
     'neovim/nvim-lspconfig',
-    event = { 'BufRead', 'BufNewFile' },
+    lazy = true,
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
       'williamboman/mason-lspconfig.nvim',
@@ -48,39 +48,8 @@ plug({
         ensure_installed = vim.cfg.lsp__auto_install_servers,
         automatic_installation = vim.cfg.lsp__automatic_installation,
       })
-      local servers_path = 'userlib.lsp.servers.'
-      local handlers = require('userlib.lsp.cfg.handlers')
-      local capabilities = require('userlib.lsp.cfg.capbilities')(require('cmp_nvim_lsp').default_capabilities())
-      local lsp_flags = {
-        debounce_text_changes = 150,
-        allow_incremental_sync = true,
-      }
 
       default_lspconfig_ui_options()
-
-      -- loop over lsp__enable_servers list
-      for _, server in ipairs(vim.cfg.lsp__enable_servers) do
-        local load_ok, server_rc = pcall(require, servers_path .. server)
-        if type(server_rc) == 'function' then
-          server_rc({
-            flags = lsp_flags,
-            capabilities = capabilities,
-            handlers = handlers,
-          })
-        elseif load_ok then
-          lspconfig[server].setup(vim.tbl_extend('force', {
-            flags = lsp_flags,
-            capabilities = capabilities,
-            handlers = handlers,
-          }, server_rc))
-        else
-          lspconfig[server].setup({
-            flags = lsp_flags,
-            capabilities,
-            handlers,
-          })
-        end
-      end
 
       au.do_useraucmd(au.user_autocmds.LspConfigDone_User)
       require('userlib.lsp.cfg.diagnostic').setup()
@@ -90,6 +59,7 @@ plug({
       })
     end,
     init = function()
+      au.on_verylazy(require('userlib.lsp').setup)
       au.on_lsp_attach(function(client, bufnr)
         require('userlib.lsp.cfg.commands').setup_commands(client, bufnr)
         require('userlib.lsp.cfg.keymaps').setup_keybinding(client, bufnr)

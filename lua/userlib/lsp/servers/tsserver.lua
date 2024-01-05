@@ -64,9 +64,4 @@ M.init_options = {
   },
 }
 
-return function(opts)
-  if vim.cfg.lsp__server_volar_takeover_mode then
-    return
-  end
-  require('lspconfig').tsserver.setup(vim.tbl_extend('force', opts, M))
-end
+return M

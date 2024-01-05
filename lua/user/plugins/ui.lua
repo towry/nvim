@@ -83,7 +83,7 @@ plug({
   {
     'j-hui/fidget.nvim',
     event = { 'User LazyUIEnter', 'LspAttach' },
-    enabled = true,
+    enabled = false,
     opts = {
       progress = {
         ignore = {
@@ -107,6 +107,33 @@ plug({
         require('fidget.notification').show_history()
       end, {
         desc = 'Show fidget notification history',
+      })
+    end,
+  },
+
+  {
+    'echasnovski/mini.notify',
+    event = { 'User LazyUIEnter', 'LspAttach' },
+    enabled = true,
+    config = function()
+      require('mini.notify').setup({
+        lsp_progress = {
+          duration_last = 3000,
+        },
+        window = {
+          config = {
+            -- solid, shadow, rounded
+            border = 'solid',
+          },
+          winblend = 50,
+        },
+      })
+      local opts = { ERROR = { duration = 10000 } }
+      vim.notify = require('mini.notify').make_notify(opts)
+      vim.api.nvim_create_user_command('Notifyhistory', function()
+        require('mini.notify').show_history()
+      end, {
+        desc = 'Show mini notify history',
       })
     end,
   },
