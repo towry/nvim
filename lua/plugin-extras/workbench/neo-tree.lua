@@ -79,9 +79,10 @@ plug({
             ['URI'] = vim.uri_from_fname(filepath),
           }
 
-          local options = vim.tbl_filter(function(val)
+          local options = vim.iter(vim.tbl_keys(vals)):filter(function(val)
             return vals[val] ~= ''
-          end, vim.tbl_keys(vals))
+          end)
+
           if vim.tbl_isempty(options) then
             vim.notify('No values to copy', vim.log.levels.WARN)
             return
