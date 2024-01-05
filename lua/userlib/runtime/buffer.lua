@@ -3,7 +3,9 @@ local M = {}
 
 function M.is_empty_buffer(bufnr)
   bufnr = bufnr or 0
-  if not vim.api.nvim_buf_is_valid(bufnr) then return true end
+  if not vim.api.nvim_buf_is_valid(bufnr) then
+    return true
+  end
   local buftype = vim.api.nvim_get_option_value('buftype', {
     buf = bufnr,
   })
@@ -69,8 +71,8 @@ end
 function M.list_normal_bufnrs()
   return M.list_bufnrs(function(b)
     if vim.api.nvim_get_option_value('buftype', {
-          buf = b,
-        }) ~= '' then
+      buf = b,
+    }) ~= '' then
       return false
     end
   end)

@@ -19,9 +19,9 @@ return {
   ['vue'] = {
     filetypes = vim.cfg.lsp__server_volar_takeover_mode
         and { 'vue', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }
-        or { 'vue' },
+      or { 'vue' },
     lspconfig = { 'volar' },
-    treesitter = { 'vue' }
+    treesitter = { 'vue' },
   },
   ['typescript'] = {
     filetypes = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact' },
@@ -56,14 +56,14 @@ return {
   --   formatter = 'nixfmt',
   -- },
   ['toml'] = {
-    lspconfig = { 'taplo', }
+    lspconfig = { 'taplo' },
   },
   ['fish'] = {
     formatter = 'fish_indent',
     linter = 'fish',
   },
   ['yaml'] = {
-    lspconfig = { 'yamlls', },
+    lspconfig = { 'yamlls' },
     treesitter = { 'yaml' },
   },
 }

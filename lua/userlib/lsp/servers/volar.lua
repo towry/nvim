@@ -27,7 +27,7 @@ local node_util = require('userlib.runtime.platform.nodejs')
 
 local fts = vim.cfg.lsp__server_volar_takeover_mode
     and { 'vue', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }
-    or { 'vue' }
+  or { 'vue' }
 local tsdk_path = node_util.get_typescript_server_path(node_root)
 
 return vim.tbl_extend('force', {}, {

@@ -312,7 +312,7 @@ function M.load_on_startup()
         -- set cwd on this buffer.
         vim.b[ctx.buf].project_nvim_cwd_short = cwd_short
         vim.b[ctx.buf].relative_path =
-            require('userlib.runtime.path').make_relative(vim.api.nvim_buf_get_name(ctx.buf), cwd)
+          require('userlib.runtime.path').make_relative(vim.api.nvim_buf_get_name(ctx.buf), cwd)
       end,
     },
     {

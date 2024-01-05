@@ -3,17 +3,19 @@
 --
 local au = require('userlib.runtime.au')
 
+--- handle multiple files being added in short time.
+
 local M = {}
 
 local server_configurations_done = {}
 local CustomServerSetup = {
   ['null-ls'] = function()
     require('userlib.lsp.servers.null_ls').setup()
-  end
+  end,
 }
 
 function M.get_supported_filetypes(server_name)
-  local status_ok, config = pcall(require, ("lspconfig.server_configurations.%s"):format(server_name))
+  local status_ok, config = pcall(require, ('lspconfig.server_configurations.%s'):format(server_name))
   if not status_ok then
     return {}
   end
@@ -65,9 +67,9 @@ end
 -- which seems to occur only when attaching to single-files
 function M.client_is_configured(server_name, ft)
   ft = ft or vim.bo.filetype
-  local active_autocmds = vim.api.nvim_get_autocmds { event = "FileType", pattern = ft }
+  local active_autocmds = vim.api.nvim_get_autocmds({ event = 'FileType', pattern = ft })
   for _, result in ipairs(active_autocmds) do
-    if result.desc ~= nil and result.desc:match("server " .. server_name .. " ") then
+    if result.desc ~= nil and result.desc:match('server ' .. server_name .. ' ') then
       return true
     end
   end
@@ -84,17 +86,17 @@ function M.setup_server(server_name, config)
     if not server_configurations_done[server_name] or is_autostart == true then
       local command = config.cmd
           or (function()
-            local default_config = require("lspconfig.server_configurations." .. server_name).default_config
+            local default_config = require('lspconfig.server_configurations.' .. server_name).default_config
             return default_config.cmd
           end)()
       -- some servers have dynamic commands defined with on_new_config
-      if type(command) == "table" and type(command[1]) == "string" and vim.fn.executable(command[1]) ~= 1 then
+      if type(command) == 'table' and type(command[1]) == 'string' and vim.fn.executable(command[1]) ~= 1 then
         vim.notify('LSP server ' .. server_name .. ' is not installed', vim.log.levels.ERROR)
         return
       end
 
       config.autostart = is_autostart
-      require("lspconfig")[server_name].setup(config)
+      require('lspconfig')[server_name].setup(config)
       server_configurations_done[server_name] = true
     end
   end)
@@ -103,7 +105,9 @@ end
 function M.launch_server_on_buf(server_name, config, bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
 
-  if vim.b[bufnr].lsp_disable then return end
+  if vim.b[bufnr].lsp_disable then
+    return
+  end
 
   config = config or {}
   M.setup_server(server_name, config)
@@ -113,21 +117,28 @@ end
 function M.toggle_buf_lsp(server_name, bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
   if M.is_client_active(server_name, bufnr) then
-    vim.lsp.stop_client(vim.lsp.get_client_by_id(vim.lsp.get_clients({
-      bufnr = bufnr,
-      name = server_name,
-    }), true))
+    vim.lsp.stop_client(vim.lsp.get_client_by_id(
+      vim.lsp.get_clients({
+        bufnr = bufnr,
+        name = server_name,
+      }),
+      true
+    ))
   else
     M.buf_try_add_lspconfig(server_name, bufnr)
   end
 end
 
 local function current_buf_matches_filetypes(bufnr, filetypes)
-  if not bufnr then return false end
+  if not bufnr then
+    return false
+  end
   local buf_filetype = vim.api.nvim_get_option_value('filetype', {
     buf = bufnr,
   })
-  if not buf_filetype or buf_filetype == '' then return false end
+  if not buf_filetype or buf_filetype == '' then
+    return false
+  end
   return vim.tbl_contains(filetypes, buf_filetype)
 end
 
@@ -141,6 +152,7 @@ end
 
 local function setup_lspconfig_servers(servers, bufnr)
   local lspcfg = require('userlib.lsp.cfg')
+  if not vim.api.nvim_buf_is_valid(bufnr) then return end
 
   for _, server_name in ipairs(servers) do
     if CustomServerSetup[server_name] then
@@ -153,23 +165,42 @@ local function setup_lspconfig_servers(servers, bufnr)
   end
 end
 
+local function setup_lspconfig_servers_lazy_without_block_neovim(servers, bufnr)
+  vim.defer_fn(function()
+    setup_lspconfig_servers(servers, bufnr)
+  end, 1)
+end
+
 local function setup_lspconfig_servers_once(filetypes, servers)
   local bufnr = vim.api.nvim_get_current_buf()
   if current_buf_matches_filetypes(bufnr, filetypes) then
     setup_lspconfig_servers(servers, bufnr)
   end
+  local bufcount = #vim.api.nvim_list_bufs()
+
   --- TODO: handle rename.
   if #filetypes > 0 then
     au.define_autocmd('FileType', {
       group = string.format('lspconfig_filetype'),
       pattern = filetypes,
       callback = function(ctx)
-        setup_lspconfig_servers(servers, ctx.buf)
+        local buf = ctx.buf
+        vim.schedule(function()
+          if vim.api.nvim_get_current_buf() == buf then
+            setup_lspconfig_servers(servers, buf)
+            return
+          end
+          local bufcount_now = #vim.api.nvim_list_bufs()
+          if bufcount_now - bufcount < 10 then
+            setup_lspconfig_servers(servers, buf)
+          else
+            setup_lspconfig_servers_lazy_without_block_neovim(servers, buf)
+          end
+        end)
       end,
     })
   end
 end
-
 
 function M.setup()
   local cfg = require('userlib.filetypes.config')
