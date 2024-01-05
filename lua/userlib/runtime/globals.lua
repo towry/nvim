@@ -106,7 +106,7 @@ end
 --- "│"
 Ty.stl_foldlevel = function()
   if vim.b.stl_foldlevel == false or not vim.wo[0].foldenable then
-    return ' '
+    return ''
   end
 
   local _ = function(c)
