@@ -27,14 +27,22 @@ plug({
     {
       '<localleader>fg',
       function()
-        require('rgflow').open(nil, vim.b.grep_flags or nil, vim.cfg.runtime__starts_cwd)
+        require('rgflow').open(nil, vim.b.grep_flags or nil, vim.cfg.runtime__starts_cwd, {
+          custom_start = function(pattern, flags, path)
+            require('userlib.fzflua').grep({ cwd = path, query = pattern, rg_opts = flags })
+          end,
+        })
       end,
       desc = 'Grep search in all project',
     },
     {
       '<localleader>fs',
       function()
-        require('rgflow').open(nil, vim.b.grep_flags or nil, vim.uv.cwd())
+        require('rgflow').open(nil, vim.b.grep_flags or nil, vim.uv.cwd(), {
+          custom_start = function(pattern, flags, path)
+            require('userlib.fzflua').grep({ cwd = path, query = pattern, rg_opts = flags })
+          end,
+        })
       end,
       desc = 'Grep search current project',
     },
@@ -46,18 +54,31 @@ plug({
     -- open_cword
     {
       '<localleader>fw',
-      '<cmd>lua require("rgflow").open_cword()<cr>',
+      function()
+        require('rgflow').open(vim.fn.expand('<cword>'), vim.b.grep_flags or nil, vim.t.cwd or vim.uv.cwd(), {
+          custom_start = function(pattern, flags, path)
+            require('userlib.fzflua').grep({ cwd = path, query = pattern, rg_opts = flags })
+          end,
+        })
+      end,
       desc = 'Open rg flow with current word',
     },
     {
-      '<localleader>fp',
-      '<cmd>lua require("rgflow").open_paste()<cr>',
-      desc = 'Open rg flow with paste',
-    },
-    {
-      '<localleader>fv',
-      '<cmd>lua require("rgflow").open_visual()<cr>',
+      '<localleader>fs',
+      function()
+        local utils = require('rgflow.utils')
+        local content = utils.get_visual_selection(vim.fn.mode())
+        local first_line = utils.get_first_line(content)
+        -- Exit visual mode
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, true, true), 'x', true)
+        require('rgflow').open(first_line, vim.b.grep_flags or nil, vim.t.cwd or vim.uv.cwd(), {
+          custom_start = function(pattern, flags, path)
+            require('userlib.fzflua').grep({ cwd = path, query = pattern, rg_opts = flags })
+          end,
+        })
+      end,
       desc = 'Open rg flow with visual selection',
+      mode = { 'v', 'x' },
     },
     {
       '<localleader>fx',

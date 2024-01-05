@@ -59,9 +59,9 @@ function M.grep(opts, is_live)
   end
   local fzflua = require('fzf-lua')
   if is_live then
-    opts.prompt = '󰥨  Live Grep❯ '
+    opts.prompt = '󱙓  Live Grep❯ '
   else
-    opts.input_prompt = '󰥨  Grep❯ '
+    opts.input_prompt = '󱙓  Grep❯ '
   end
   return callgrep(opts, function(opts_local)
     if is_live then
