@@ -81,6 +81,7 @@ pack.plug({
     'hrsh7th/nvim-cmp',
     event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
+      'noearc/cmp-registers',
       'hrsh7th/cmp-nvim-lsp-signature-help',
       'onsails/lspkind-nvim',
       'hrsh7th/cmp-nvim-lua',
@@ -163,6 +164,7 @@ pack.plug({
       -- │ Setup                                                    │
       -- ╰──────────────────────────────────────────────────────────╯
       local source_mapping = {
+        registers = icons.bomb .. 'REG',
         npm = icons.terminal .. 'NPM',
         cody = icons.copilot .. 'CODY',
         cmp_tabnine = icons.light,
@@ -438,6 +440,7 @@ pack.plug({
         mapping = cmp.mapping.preset.cmdline(),
         sources = {
           { name = 'buffer' },
+          { name = 'registers' },
         },
       })
       -- `:` cmdline setup.
@@ -450,6 +453,7 @@ pack.plug({
           { name = 'path' },
         }, {
           { name = 'cmdline' },
+          { name = 'registers' },
           -- { name = 'cmdline_history', max_item_count = 3, },
         }),
       })
