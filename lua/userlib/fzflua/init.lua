@@ -3,6 +3,7 @@ local M = {}
 
 --- @param opts table
 local function callgrep(opts, callfn)
+  local fzflua = require('fzf-lua')
   opts = opts or {}
 
   opts.cwd_header = true
@@ -16,6 +17,18 @@ local function callgrep(opts, callfn)
   opts.rg_opts = [[--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e]]
 
   opts.actions = {
+    -- press ctrl-e in fzf picker to switch to rgflow.
+    ['ctrl-e'] = function()
+      -- bring up rgflow ui to change rg args.
+      require('rgflow').open(fzflua.config.__resume_data.last_query, opts.rg_opts, opts.cwd, {
+        custom_start = function(pattern, flags, path)
+          opts.cwd = path
+          opts.rg_opts = flags
+          opts.query = pattern
+          return callfn(opts)
+        end,
+      })
+    end,
     ['ctrl-h'] = function()
       --- toggle hidden files search.
       opts.rg_opts = libutils.toggle_cmd_option(opts.rg_opts, '--hidden')
