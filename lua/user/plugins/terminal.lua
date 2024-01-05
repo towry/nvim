@@ -41,20 +41,21 @@ plug({
         -- f24 = shift + f12
         open_mapping = nil,
         hide_numbers = true, -- hide the number column in toggleterm buffers
+        -- this can affect fzf-lua terminal.
         highlights = {
           -- highlights which map to a highlight group name and a table of it's values
           -- NOTE: this is only a subset of values, any group placed here will be set for the terminal window split
-          Normal = {
-            link = 'Normal',
-          },
-          NormalFloat = {
-            link = 'NormalFloat',
-          },
-          FloatBorder = {
-            -- guifg = <VALUE-HERE>,
-            -- guibg = <VALUE-HERE>,
-            link = 'FloatBorder',
-          },
+          -- Normal = {
+          --   link = 'Normal',
+          -- },
+          -- NormalFloat = {
+          --   link = 'NormalFloat',
+          -- },
+          -- FloatBorder = {
+          --   -- guifg = <VALUE-HERE>,
+          --   -- guibg = <VALUE-HERE>,
+          --   link = 'FloatBorder',
+          -- },
         },
         shade_filetypes = { 'none' },
         shade_terminals = true,

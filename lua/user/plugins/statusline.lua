@@ -71,7 +71,14 @@ plug({
       opts = {
         disable_winbar_cb = function(args)
           local buf = args.buf
-          local ignore_buftype = vim.tbl_contains(vim.cfg.misc__buf_exclude, vim.bo[buf].buftype)
+          local buftype = vim.bo[buf].buftype
+          local ignore_buftype = vim.tbl_contains({
+            'nowrite',
+            'nofile',
+            'quickfix',
+            'tutor',
+            'netrw',
+          }, buftype)
           local filetype = vim.bo[buf].filetype
           local ignore_filetype = filetype == 'fugitive' or filetype == 'qf' or filetype:match('^git')
           local is_float = vim.api.nvim_win_get_config(0).relative ~= ''
