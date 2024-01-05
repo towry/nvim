@@ -19,7 +19,7 @@ return {
   ['vue'] = {
     filetypes = vim.cfg.lsp__server_volar_takeover_mode
         and { 'vue', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }
-      or { 'vue' },
+        or { 'vue' },
     lspconfig = { 'volar' },
     treesitter = { 'vue' },
   },
@@ -30,7 +30,6 @@ return {
   },
   ['lua'] = {
     lspconfig = { 'lua_ls', 'null-ls' },
-    -- formatter = 'stylua',
     linter = 'luacheck',
     treesitter = { 'lua', 'luadoc' },
   },
@@ -39,7 +38,6 @@ return {
   },
   -- ['go'] = {
   --   lspconfig = 'gopls',
-  --   formatter = 'gofmt',
   -- },
   ['markdown'] = {
     lspconfig = { 'marksman', 'null-ls' },
@@ -47,19 +45,15 @@ return {
   },
   ['sh'] = {
     linter = 'shellcheck',
-    formatter = 'shfmt',
     treesitter = { 'bash' },
   },
   -- ['nix'] = {
   --   lspconfig = 'nil_ls',
-  --   linter = 'statix',
-  --   formatter = 'nixfmt',
   -- },
   ['toml'] = {
     lspconfig = { 'taplo' },
   },
   ['fish'] = {
-    formatter = 'fish_indent',
     linter = 'fish',
   },
   ['yaml'] = {
