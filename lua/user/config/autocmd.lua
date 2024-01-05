@@ -91,18 +91,11 @@ function M.load_on_startup()
             vim.b[buf].autoformat_disable = true
             vim.b[buf].minicursorword_disable = true
             vim.b[buf].diagnostic_disable = true
+            vim.b[buf].lsp_disable = true
 
-            local buftype = vim.bo[buf].buftype
-
-            --- set to nofile can dodge many plugins including lspconfig
-            vim.api.nvim_set_option_value('buftype', 'nofile', {
-              buf = buf,
-            })
-
-            --- disable lsp on large buffer.
-            vim.api.nvim_create_augroup('disable_lsp_on_buf_' .. buf, { clear = true })
+            vim.api.nvim_create_augroup('disable_syntax_on_buf_' .. buf, { clear = true })
             vim.api.nvim_create_autocmd('BufReadPost', {
-              group = 'disable_lsp_on_buf_' .. buf,
+              group = 'disable_syntax_on_buf_' .. buf,
               buffer = buf,
               once = true,
               callback = vim.schedule_wrap(function()
@@ -110,14 +103,6 @@ function M.load_on_startup()
                 if current_buf == buf then
                   vim.cmd('setlocal syntax=OFF')
                 end
-
-                if not vim.api.nvim_buf_is_valid(buf) then
-                  return
-                end
-                -- set buftype back
-                vim.api.nvim_set_option_value('buftype', buftype, {
-                  buf = buf,
-                })
               end),
             })
           end
@@ -195,6 +180,7 @@ function M.load_on_startup()
           assert(bufnr ~= nil)
           vim.b[bufnr].diagnostic_disable = true
           vim.b[bufnr].autoformat_disable = true
+          vim.b[bufnr].lsp_disable = true
         end,
       },
     },
@@ -326,7 +312,7 @@ function M.load_on_startup()
         -- set cwd on this buffer.
         vim.b[ctx.buf].project_nvim_cwd_short = cwd_short
         vim.b[ctx.buf].relative_path =
-          require('userlib.runtime.path').make_relative(vim.api.nvim_buf_get_name(ctx.buf), cwd)
+            require('userlib.runtime.path').make_relative(vim.api.nvim_buf_get_name(ctx.buf), cwd)
       end,
     },
     {

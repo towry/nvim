@@ -1,7 +1,13 @@
+-- treesitter is not used
+-- formatter and linter is configured by null-ls
 return {
   ['css'] = {
-    patterns = { '*.css', '*.scss' },
+    patterns = { '*.css', },
     lspconfig = { 'cssls', 'null-ls' },
+  },
+  ['scss>css'] = {
+    filetypes = { 'scss', 'css' },
+    patterns = { '*.css', '*.scss' },
   },
   ['html'] = {
     lspconfig = { 'html', 'null-ls' },
@@ -19,12 +25,13 @@ return {
     treesitter = { 'vue' }
   },
   ['typescript'] = {
+    filetypes = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact' },
     patterns = { '*.ts', '*.tsx', '*.js', '*.jsx' },
     lspconfig = { 'tsserver', 'eslint', 'null-ls' },
     treesitter = { 'typescript', 'javascript', 'tsx' },
   },
   ['lua'] = {
-    lspconfig = { 'lua_ls', },
+    lspconfig = { 'lua_ls', 'null-ls' },
     -- formatter = 'stylua',
     linter = 'luacheck',
     treesitter = { 'lua', 'luadoc' },

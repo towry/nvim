@@ -80,6 +80,7 @@ function M.setup_server(server_name, config)
           end)()
       -- some servers have dynamic commands defined with on_new_config
       if type(command) == "table" and type(command[1]) == "string" and vim.fn.executable(command[1]) ~= 1 then
+        vim.notify('LSP server ' .. server_name .. ' is not installed', vim.log.levels.ERROR)
         return
       end
 
@@ -92,6 +93,9 @@ end
 
 function M.launch_server_on_buf(server_name, config, bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
+
+  if vim.b[bufnr].lsp_disable then return end
+
   config = config or {}
   M.setup_server(server_name, config)
   M.buf_try_add_lspconfig(server_name, bufnr)
@@ -184,7 +188,15 @@ end
 
 
 function M.setup()
-  for filetype, filetype_config in pairs(require('userlib.filetypes.config')) do
+  local cfg = require('userlib.filetypes.config')
+  for filetype, filetype_config in pairs(cfg) do
+    -- if filetype is like less>css, it means less filetype extends cfg[css] or {}, css is base filetype.
+    -- split child filetype and base filetype.
+    if filetype:match('>') then
+      local child_filetype, base_filetype = unpack(vim.split(filetype, '>'))
+      filetype_config = vim.tbl_extend('keep', filetype_config, cfg[base_filetype] or {})
+      filetype = child_filetype
+    end
     if type(filetype_config.lspconfig) == 'table' then
       local file_patterns = filetype_config.patterns or { string.format('*.%s', filetype) }
       local filetypes = filetype_config.filetypes or { filetype }
