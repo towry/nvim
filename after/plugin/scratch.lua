@@ -12,7 +12,7 @@ local function create(filetype)
   M.bufnr = vim.api.nvim_create_buf(true, true)
 
   vim.api.nvim_buf_set_name(M.bufnr, 'scratch.' .. filetype)
-  vim.api.nvim_set_option_value('filetype', 'scratch.' .. filetype, {
+  vim.api.nvim_set_option_value('filetype', filetype, {
     buf = M.bufnr,
   })
   vim.bo[M.bufnr].buftype = 'nofile'

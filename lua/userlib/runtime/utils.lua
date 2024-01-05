@@ -141,7 +141,7 @@ function M.get_root(root_opts)
   ---@type string[]
   local roots = {}
   if path and not only_pattern then
-    for _, client in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
+    for _, client in pairs(vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })) do
       if not vim.tbl_contains(lsp_ignore, client.name or '') then
         local workspace = client.config.workspace_folders
         local paths = workspace

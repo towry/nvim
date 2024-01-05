@@ -126,8 +126,10 @@ function M.toggle_buf_lsp(server_name, bufnr)
       }),
       true
     ))
+    return 0
   else
     M.buf_try_add_lspconfig(server_name, bufnr)
+    return 1
   end
 end
 

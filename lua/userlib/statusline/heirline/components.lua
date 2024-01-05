@@ -364,8 +364,7 @@ local ArduinoStatus = {
 -- with the require("vim.lsp") call deep in the vim metatable __index function. I don't know the
 -- root cause, but I'm done debugging this for today.
 conditions.lsp_attached = function()
-  local lsp = rawget(vim, 'lsp')
-  return lsp and next(lsp.get_active_clients({ bufnr = 0 })) ~= nil
+  return next(vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })) ~= nil
 end
 
 local LSPActive = {
@@ -375,9 +374,9 @@ local LSPActive = {
   {
     provider = function()
       local names = {}
-      local lsp = rawget(vim, 'lsp')
+      local lsp = vim.lsp
       if lsp then
-        for _, server in pairs(lsp.get_active_clients({ bufnr = 0 })) do
+        for _, server in pairs(lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })) do
           table.insert(names, server.name)
         end
       end
