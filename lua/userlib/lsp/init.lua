@@ -27,7 +27,7 @@ end
 function M.get_active_clients_by_ft(filetype, opts)
   opts = opts or {}
   local ignores = { 'null-ls' }
-  if type(opts.ignores) == 'table' then 
+  if type(opts.ignores) == 'table' then
     ignores = opts.ignores
   end
 
@@ -48,7 +48,7 @@ end
 
 function M.buf_try_add_lspconfig(server_name, bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
-  require('lspconfig')[server_name].manager:try_add_wrapper(buf)
+  require('lspconfig')[server_name].manager:try_add_wrapper(bufnr)
 end
 
 -- check if the manager autocomd has already been configured since some servers can take a while to initialize
@@ -68,27 +68,26 @@ end
 function M.setup_server(server_name, config)
   config = config or {}
   local is_autostart = false
-  if connfig.autostart == true then 
+  if config.autostart == true then
     is_autostart = true
   end
   pcall(function()
     if not server_configurations_done[server_name] or is_autostart == true then
       local command = config.cmd
-        or (function()
-          local default_config = require("lspconfig.server_configurations." .. server_name).default_config
-          return default_config.cmd
-        end)()
+          or (function()
+            local default_config = require("lspconfig.server_configurations." .. server_name).default_config
+            return default_config.cmd
+          end)()
       -- some servers have dynamic commands defined with on_new_config
       if type(command) == "table" and type(command[1]) == "string" and vim.fn.executable(command[1]) ~= 1 then
-        Log:debug(string.format("[%q] is either not installed, missing from PATH, or not executable.", server_name))
         return
       end
-      
+
       config.autostart = is_autostart
       require("lspconfig")[server_name].setup(config)
       server_configurations_done[server_name] = true
     end
-  end))
+  end)
 end
 
 function M.launch_server_on_buf(server_name, config, bufnr)
@@ -104,7 +103,7 @@ function M.toggle_buf_lsp(server_name, bufnr)
     vim.lsp.stop_client(vim.lsp.get_client_by_id(vim.lsp.get_clients({
       bufnr = bufnr,
       name = server_name,
-    }), true)
+    }), true))
   else
     M.buf_try_add_lspconfig(server_name, bufnr)
   end
@@ -132,7 +131,7 @@ local function current_buf_matches_filetypes(bufnr, filetypes)
   return vim.tbl_contains(filetypes, buf_filetype)
 end
 
-local functionn get_lspconfig_for_server(server_name)
+function M.get_lspconfig_for_server(server_name)
   local lspconfig = require('lspconfig')
   if lspconfig[server_name] then
     return lspconfig[server_name]
@@ -142,8 +141,9 @@ end
 
 local function setup_lspconfig_server_once(filetypes, file_patterns, server_name)
   local bufnr = vim.api.nvim_get_current_buf()
+  local lspcfg = require('userlib.lsp.cfg')
   if current_buf_matches_file_patterns(bufnr, file_patterns) or current_buf_matches_filetypes(bufnr, filetypes) then
-    M.launch_server_on_buf(server_name, bufnr)
+    M.launch_server_on_buf(server_name, lspcfg.get_config_for_server(server_name), bufnr)
   end
   --- TODO: handle rename.
   au.define_autocmds({
@@ -154,7 +154,7 @@ local function setup_lspconfig_server_once(filetypes, file_patterns, server_name
         pattern = filetypes,
         callback = function(ctx)
           if M.is_client_active(server_name, ctx.buf) then return end
-          M.launch_server_on_buf(server_name, ctx.buf)
+          M.launch_server_on_buf(server_name, lspcfg.get_config_for_server(server_name), ctx.buf)
         end,
       },
     },
@@ -165,7 +165,7 @@ local function setup_lspconfig_server_once(filetypes, file_patterns, server_name
         pattern = file_patterns,
         callback = function(ctx)
           if M.is_client_active(server_name, ctx.buf) then return end
-          M.launch_server_on_buf(server_name, ctx.buf)
+          M.launch_server_on_buf(server_name, lspcfg.get_config_for_server(server_name), ctx.buf)
         end,
       },
     },
@@ -188,7 +188,6 @@ function M.setup()
     if type(filetype_config.lspconfig) == 'table' then
       local file_patterns = filetype_config.patterns or { string.format('*.%s', filetype) }
       local filetypes = filetype_config.filetypes or { filetype }
-      ---@type table<string>
       local servers = filetype_config.lspconfig
 
       setup_lspconfig_servers_once(filetypes, file_patterns, servers)

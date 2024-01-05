@@ -24,6 +24,4 @@ M.settings = {
   },
 }
 
-return function(opts)
-  require('lspconfig').lua_ls.setup(vim.tbl_extend('force', opts, M))
-end
+return M

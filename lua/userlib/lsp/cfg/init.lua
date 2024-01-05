@@ -20,7 +20,7 @@ function M.get_config_for_server(server_name)
   end
 
   local lsp_configs = {}
-  local load_ok, server_rc = pcall(require, servers_path .. server)
+  local load_ok, server_rc = pcall(require, servers_path .. server_name)
   if type(server_rc) ~= 'table' then
     load_ok = false
   end

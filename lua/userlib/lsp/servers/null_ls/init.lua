@@ -3,7 +3,7 @@ local M = {}
 local setup_done = false
 
 --- TODO: add buffer check.
-local inject_nls_methods(nls)
+local function inject_nls_methods(nls)
   local client = require('null-ls.client')
   local rpc = require('null-ls.rpc')
 
