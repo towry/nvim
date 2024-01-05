@@ -1,19 +1,18 @@
 -- treesitter is not used
 -- formatter and linter is configured by null-ls
+-- use vim.filettype.add to manage pattern and filetype.
+
 return {
   ['css'] = {
-    patterns = { '*.css', },
     lspconfig = { 'cssls', 'null-ls' },
   },
   ['scss>css'] = {
     filetypes = { 'scss', 'css' },
-    patterns = { '*.css', '*.scss' },
   },
   ['html'] = {
     lspconfig = { 'html', 'null-ls' },
   },
   ['json'] = {
-    patterns = { '*.json', '*.jsonc' },
     lspconfig = { 'jsonls' },
     treesitter = { 'json', 'jsonc' },
   },
@@ -26,7 +25,6 @@ return {
   },
   ['typescript'] = {
     filetypes = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact' },
-    patterns = { '*.ts', '*.tsx', '*.js', '*.jsx' },
     lspconfig = { 'tsserver', 'eslint', 'null-ls' },
     treesitter = { 'typescript', 'javascript', 'tsx' },
   },
@@ -37,21 +35,17 @@ return {
     treesitter = { 'lua', 'luadoc' },
   },
   ['rust'] = {
-    patterns = { '*.rs' },
     lspconfig = 'rust_analyzer',
   },
   -- ['go'] = {
-  --   patterns = { '*.go', 'go.mod' },
   --   lspconfig = 'gopls',
   --   formatter = 'gofmt',
   -- },
   ['markdown'] = {
-    patterns = { '*.md', '*.markdown' },
     lspconfig = { 'marksman', 'null-ls' },
     treesitter = { 'markdown', 'markdown_inline' },
   },
   ['sh'] = {
-    patterns = { '*.sh', '*.bash', '*.zsh' },
     linter = 'shellcheck',
     formatter = 'shfmt',
     treesitter = { 'bash' },

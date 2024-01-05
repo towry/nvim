@@ -12,6 +12,15 @@ local CustomServerSetup = {
   end
 }
 
+function M.get_supported_filetypes(server_name)
+  local status_ok, config = pcall(require, ("lspconfig.server_configurations.%s"):format(server_name))
+  if not status_ok then
+    return {}
+  end
+
+  return config.default_config.filetypes or {}
+end
+
 ---@param name string
 ---@param bufnr? number
 function M.is_client_active(name, bufnr)
@@ -113,19 +122,6 @@ function M.toggle_buf_lsp(server_name, bufnr)
   end
 end
 
-local function current_buf_matches_file_patterns(bufnr, patterns)
-  if not bufnr then return false end
-  local bufname = vim.api.nvim_buf_get_name(bufnr)
-  if not bufname then return false end
-
-  for _, pattern in ipairs(patterns) do
-    if string.match(bufname, string.format('.%s', pattern)) then
-      return true
-    end
-  end
-  return false
-end
-
 local function current_buf_matches_filetypes(bufnr, filetypes)
   if not bufnr then return false end
   local buf_filetype = vim.api.nvim_get_option_value('filetype', {
@@ -143,46 +139,34 @@ function M.get_lspconfig_for_server(server_name)
   return {}
 end
 
-local function setup_lspconfig_server_once(filetypes, file_patterns, server_name)
-  local bufnr = vim.api.nvim_get_current_buf()
+local function setup_lspconfig_servers(servers, bufnr)
   local lspcfg = require('userlib.lsp.cfg')
-  if current_buf_matches_file_patterns(bufnr, file_patterns) or current_buf_matches_filetypes(bufnr, filetypes) then
-    M.launch_server_on_buf(server_name, lspcfg.get_config_for_server(server_name), bufnr)
-  end
-  --- TODO: handle rename.
-  au.define_autocmds({
-    {
-      'FileType',
-      {
-        group = string.format('lspconfig_filetype_%s', server_name),
-        pattern = filetypes,
-        callback = function(ctx)
-          if M.is_client_active(server_name, ctx.buf) then return end
-          M.launch_server_on_buf(server_name, lspcfg.get_config_for_server(server_name), ctx.buf)
-        end,
-      },
-    },
-    {
-      'BufReadPost',
-      {
-        group = string.format('lspconfig_bufread_%s', server_name),
-        pattern = file_patterns,
-        callback = function(ctx)
-          if M.is_client_active(server_name, ctx.buf) then return end
-          M.launch_server_on_buf(server_name, lspcfg.get_config_for_server(server_name), ctx.buf)
-        end,
-      },
-    },
-  })
-end
 
-local function setup_lspconfig_servers_once(filetypes, file_patterns, servers)
   for _, server_name in ipairs(servers) do
     if CustomServerSetup[server_name] then
       CustomServerSetup[server_name]()
     else
-      setup_lspconfig_server_once(filetypes, file_patterns, server_name)
+      if not M.is_client_active(server_name, bufnr) then
+        M.launch_server_on_buf(server_name, lspcfg.get_config_for_server(server_name), bufnr)
+      end
     end
+  end
+end
+
+local function setup_lspconfig_servers_once(filetypes, servers)
+  local bufnr = vim.api.nvim_get_current_buf()
+  if current_buf_matches_filetypes(bufnr, filetypes) then
+    setup_lspconfig_servers(servers, bufnr)
+  end
+  --- TODO: handle rename.
+  if #filetypes > 0 then
+    au.define_autocmd('FileType', {
+      group = string.format('lspconfig_filetype'),
+      pattern = filetypes,
+      callback = function(ctx)
+        setup_lspconfig_servers(servers, ctx.buf)
+      end,
+    })
   end
 end
 
@@ -198,11 +182,10 @@ function M.setup()
       filetype = child_filetype
     end
     if type(filetype_config.lspconfig) == 'table' then
-      local file_patterns = filetype_config.patterns or { string.format('*.%s', filetype) }
       local filetypes = filetype_config.filetypes or { filetype }
       local servers = filetype_config.lspconfig
 
-      setup_lspconfig_servers_once(filetypes, file_patterns, servers)
+      setup_lspconfig_servers_once(filetypes, servers)
     end
   end
 end
