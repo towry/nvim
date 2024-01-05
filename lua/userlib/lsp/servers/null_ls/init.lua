@@ -1,9 +1,34 @@
-return function()
+local M = {}
+
+local setup_done = false
+
+--- TODO: add buffer check.
+local inject_nls_methods(nls)
+  local client = require('null-ls.client')
+  local rpc = require('null-ls.rpc')
+
+  local original_flush = rpc.flush
+  rpc.flush = function()
+    original_flush()
+  end
+
+  local original_try_add = client.try_add
+  client.try_add = function()
+    original_try_add()
+  end
+end
+
+M.setup = function()
+  if setup_done then return end
+
   local present, nls = pcall(require, 'null-ls')
   if not present then
     Ty.NOTIFY('null-ls is not installed')
     return
   end
+
+  inject_nls_methods()
+
   -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
   local builtins = nls.builtins
 
@@ -38,3 +63,6 @@ return function()
     root_dir = require('null-ls.utils').root_pattern(unpack(require('userlib.runtime.utils').root_patterns)),
   })
 end
+
+
+return M
