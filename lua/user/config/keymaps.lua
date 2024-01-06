@@ -305,6 +305,23 @@ local function setup_basic()
     desc = 'Run make',
     silent = false,
   })
+
+  if vim.cfg.edit__use_native_cmp then
+    -- Move inside completion list with <TAB>
+    set({ 'i' }, [[<Tab>]], function()
+      if vim.fn.pumvisible() ~= 0 then
+        return '<C-n>'
+      end
+      return [[<Plug>(neotab-out)]]
+    end, { expr = true, silent = true })
+    set({ 'i' }, [[<S-Tab>]], function()
+      if vim.fn.pumvisible() ~= 0 then
+        return '<C-p>'
+      else
+        return '<S-Tab>'
+      end
+    end, { expr = true, silent = true })
+  end
 end
 
 function M.setup()

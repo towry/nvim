@@ -12,7 +12,7 @@ local lsp_flags = {
 function M.get_config_for_server(server_name)
   local handlers = require('userlib.lsp.cfg.handlers')
   if not capabilities then
-    capabilities = require('userlib.lsp.cfg.capbilities')(require('cmp_nvim_lsp').default_capabilities())
+    capabilities = require('userlib.lsp.cfg.capbilities')()
   end
 
   if lspconfig_cache[server_name] then

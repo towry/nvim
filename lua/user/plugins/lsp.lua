@@ -28,7 +28,7 @@ plug({
     'neovim/nvim-lspconfig',
     lazy = true,
     dependencies = {
-      'hrsh7th/cmp-nvim-lsp',
+      -- 'hrsh7th/cmp-nvim-lsp',
       'williamboman/mason-lspconfig.nvim',
       'williamboman/mason.nvim',
       {

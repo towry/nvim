@@ -35,13 +35,51 @@ local MAX_INDEX_FILE_SIZE = 2000
 
 pack.plug({
   {
+    'echasnovski/mini.completion',
+    enabled = vim.cfg.edit__use_native_cmp,
+    event = { 'LspAttach', 'InsertEnter' },
+    config = function()
+      local MC = require('mini.completion')
+      MC.setup({
+        set_vim_settings = false,
+        fallback_action = '<C-x><C-i>',
+        lsp_completion = {
+          source_func = 'omnifunc',
+          auto_setup = false,
+          process_items = function(items, base)
+            -- Don't show 'Text' and 'Snippet' suggestions
+            -- items = vim.tbl_filter(function(x)
+            --   -- return x.kind ~= 1 and x.kind ~= 15
+            -- end, items)
+            return MC.default_process_items(items, base)
+          end,
+        },
+        window = {
+          info = { border = 'none', winblend = 30 },
+          signature = { border = 'none', winblend = 30 },
+        },
+      })
+    end,
+    init = function()
+      au.on_lsp_attach(function(_, bufnr)
+        vim.api.nvim_set_option_value('omnifunc', 'v:lua.MiniCompletion.completefunc_lsp', {
+          buf = bufnr,
+        })
+      end)
+    end,
+  },
+  {
     'L3MON4D3/LuaSnip',
     lazy = true,
-    dependencies = { 'rafamadriz/friendly-snippets', 'saadparwaiz1/cmp_luasnip' },
+    dependencies = {
+      'rafamadriz/friendly-snippets',
+      --'saadparwaiz1/cmp_luasnip'
+    },
   },
   {
     'petertriho/cmp-git',
     ft = 'gitcommit',
+    enabled = not vim.cfg.edit__use_native_cmp,
     dependencies = {
       'hrsh7th/nvim-cmp',
       'hrsh7th/cmp-buffer',
@@ -60,7 +98,7 @@ pack.plug({
   {
     'lukas-reineke/cmp-rg',
     cond = function()
-      return vim.fn.executable('rg') == 1
+      return vim.fn.executable('rg') == 1 and not vim.cfg.edit__use_native_cmp
     end,
     ft = 'rgflow',
     dependencies = {
@@ -79,6 +117,7 @@ pack.plug({
   },
   {
     'hrsh7th/nvim-cmp',
+    enabled = not vim.cfg.edit__use_native_cmp,
     event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
       'noearc/cmp-registers',
@@ -158,26 +197,6 @@ pack.plug({
           return true
         end
       end
-
-      -- ╭──────────────────────────────────────────────────────────╮
-      -- │ Setup                                                    │
-      -- ╰──────────────────────────────────────────────────────────╯
-      local source_mapping = {
-        registers = icons.bomb .. 'REG',
-        npm = icons.terminal .. 'NPM',
-        cody = icons.copilot .. 'CODY',
-        cmp_tabnine = icons.light,
-        codeium = icons.copilot .. 'AI',
-        copilot = icons.copilot .. 'AI',
-        nvim_lsp = icons.paragraph .. 'LSP',
-        nvim_lsp_signature_help = icons.typeParameter .. 'ARG',
-        buffer = icons.buffer .. 'BUF',
-        nvim_lua = icons.bomb,
-        luasnip = icons.snippet .. 'SNP',
-        path = icons.folderOpen2,
-        treesitter = icons.tree,
-        zsh = icons.terminal .. 'ZSH',
-      }
 
       local buffer_option = {
         -- Complete from all visible buffers (splits)

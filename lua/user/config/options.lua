@@ -52,7 +52,19 @@ function M.startup()
   -- o.shellcmdflag = '-ic' --- Make shell alias works, has bugs.
   o.virtualedit = 'onemore'
   -- load this early to avoid :intro screen.
-  o.shortmess:append({ a = true, c = true, F = true, I = true, T = true, t = true })
+  o.shortmess:append({
+    a = true,
+    -- don't give ins-completion-menu messages.
+    c = true,
+    -- don't give messages while scanning for ins-completion-menu
+    C = true,
+    F = true,
+    I = true,
+    T = true,
+    W = true,
+    q = false,
+    t = true,
+  })
   vim.opt.laststatus = 0 --- never on startup, setup later by plugin
   o.fillchars = {
     stl = ' ',
@@ -83,7 +95,8 @@ function M.init_interface()
   o.numberwidth = 1
   o.number = true --- Shows current line number
   o.pumheight = 10 --- Max num of items in completion menu
-  o.pumblend = 0 -- popup blend
+  o.pumblend = 10 -- popup blend
+  o.infercase = true -- Infer letter cases for a richer built-in keyword completion
   o.scrolloff = 10 --- Always keep space when scrolling to bottom/top edge
   -- o.smoothscroll = true
   o.sidescroll = 10 --- Used only when 'wrap' option is off and the cursor is moved off the screen.
@@ -92,7 +105,9 @@ function M.init_interface()
   o.lazyredraw = true --- lazyredraw on startup
   o.wildmode = { 'longest:full', 'full' } -- Command-line completion mode
   o.cmdheight = 1 --- Give more space for displaying messages
-  o.completeopt = { 'menu', 'menuone', 'noselect' } --- Better autocompletion
+  o.completeopt = { 'menu', 'menuone', 'noselect', 'popup' } --- Better autocompletion
+  -- o.complete:append('kspell') -- Add spellcheck options for autocomplete
+  o.complete:remove('t')
   o.cursorline = true --- Highlight of current line
   o.emoji = true --- Fix emoji display
   o.cursorlineopt = 'line'
@@ -118,10 +133,7 @@ function M.init_interface()
   o.formatoptions:remove('r')
   o.formatoptions:remove('o')
   o.formatoptions:remove('t')
-  if vim.fn.has('nvim-0.9.0') == 1 then
-    o.splitkeep = 'screen'
-    o.shortmess:append({ C = true })
-  end
+  o.splitkeep = 'screen'
   o.lazyredraw = false --- Makes macros faster & prevent errors in complicated mappings
   if vim.fn.executable('rg') == 1 then
     -- credit: https://github.com/nicknisi/dotfiles/blob/1360edda1bbb39168637d0dff13dd12c2a23d095/config/nvim/init.lua#L73

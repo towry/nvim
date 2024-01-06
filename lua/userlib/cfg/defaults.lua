@@ -47,6 +47,8 @@ return {
     'python3',
   },
   runtime__python3_host_prog = '$HOME/.pyenv/shims/python',
+  ---editing
+  edit__use_native_cmp = true,
   ---editor stuff
   --enable relative number or not.
   editor__relative_number = true,

@@ -1,6 +1,14 @@
 ---@param default_capabilities? table
 return function(default_capabilities)
-  local capabilities = default_capabilities or require('cmp_nvim_lsp').default_capabilities()
+  local capabilities = default_capabilities
+  if not capabilities then
+    if vim.cfg.edit__use_native_cmp then
+      capabilities = vim.lsp.protocol.make_client_capabilities()
+    else
+      print("---")
+      capabilities = require('cmp_nvim_lsp').default_capabilities()
+    end
+  end
 
   capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
