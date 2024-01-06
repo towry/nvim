@@ -94,8 +94,8 @@ function M.init_interface()
   o.relativenumber = vim.cfg.editor__relative_number and not vim.cfg.runtime__starts_as_gittool --- Enables relative number
   o.numberwidth = 1
   o.number = true --- Shows current line number
-  o.pumheight = 10 --- Max num of items in completion menu
-  o.pumblend = 10 -- popup blend
+  o.pumheight = 8 --- Max num of items in completion menu
+  o.pumblend = 20 -- popup blend
   o.infercase = true -- Infer letter cases for a richer built-in keyword completion
   o.scrolloff = 10 --- Always keep space when scrolling to bottom/top edge
   -- o.smoothscroll = true
@@ -105,8 +105,14 @@ function M.init_interface()
   o.lazyredraw = true --- lazyredraw on startup
   o.wildmode = { 'longest:full', 'full' } -- Command-line completion mode
   o.cmdheight = 1 --- Give more space for displaying messages
-  o.completeopt = { 'menu', 'menuone', 'noselect', 'popup' } --- Better autocompletion
-  -- o.complete:append('kspell') -- Add spellcheck options for autocomplete
+  o.completeopt = { 'menu', 'menuone', 'noselect' } --- Better autocompletion
+  o.complete:append('kspell') -- Add spellcheck options for autocomplete
+  -- scan current and included files.
+  o.complete:append('i')
+  -- scan current and included files for defined name or macro
+  o.complete:append('d')
+  -- scan buffer name
+  o.complete:append('f')
   o.complete:remove('t')
   o.cursorline = true --- Highlight of current line
   o.emoji = true --- Fix emoji display

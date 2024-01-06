@@ -321,6 +321,26 @@ local function setup_basic()
         return '<S-Tab>'
       end
     end, { expr = true, silent = true })
+    local keys = {
+      ['cr'] = vim.api.nvim_replace_termcodes('<CR>', true, true, true),
+      ['ctrl-y'] = vim.api.nvim_replace_termcodes('<C-y>', true, true, true),
+      ['ctrl-y_cr'] = vim.api.nvim_replace_termcodes('<C-y><CR>', true, true, true),
+    }
+    set({ 'i' }, '<C-f>', function()
+      -- accept ai or completion selection.
+      if vim.fn.pumvisible() ~= 0 then
+        local item_selected = vim.fn.complete_info()['selected'] ~= -1
+        return item_selected and keys['ctrl-y'] or keys['ctrl-y_cr']
+      elseif Ty.has_ai_suggestions() and Ty.has_ai_suggestion_text() then
+        if vim.b._copilot then
+          vim.fn.feedkeys(vim.fn['copilot#Accept'](), 'i')
+        elseif vim.b._codeium_completions then
+          vim.fn.feedkeys(vim.fn['codeium#Accept'](), 'i')
+        end
+      end
+    end, {
+      desc = 'Complete AI or nvim completion',
+    })
   end
 end
 

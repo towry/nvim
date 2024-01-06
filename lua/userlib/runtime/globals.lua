@@ -168,3 +168,29 @@ Ty.client_support = function(client, method)
   end
   return true
 end
+
+Ty.has_ai_suggestions = function()
+  return (vim.b._copilot and vim.b._copilot.suggestions ~= nil)
+    or (vim.b._codeium_completions and vim.b._codeium_completions.items ~= nil)
+end
+Ty.has_ai_suggestion_text = function()
+  if vim.b._copilot and vim.b._copilot.suggestions ~= nil then
+    local suggestion = vim.b._copilot.suggestions[1]
+    if suggestion ~= nil then
+      suggestion = suggestion.displayText
+    end
+    return suggestion ~= nil
+  end
+
+  if vim.b._codeium_completions and vim.b._codeium_completions.items then
+    local index = vim.b._codeium_completions.index or 0
+    local suggestion = vim.b._codeium_completions.items[index + 1] or {}
+    local parts = suggestion.completionParts or {}
+    if type(parts) ~= 'table' then
+      return false
+    end
+    return #parts >= 1
+  end
+
+  return false
+end

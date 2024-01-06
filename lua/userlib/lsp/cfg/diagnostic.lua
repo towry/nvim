@@ -30,10 +30,11 @@ function M.setup()
 
   vim.diagnostic.config({
     float = {
-      border = 'single',
+      border = 'solid',
       focused = false,
       style = 'minimal',
       source = 'always',
+      winblend = 10,
     },
     severity_sort = true,
     -- @see https://github.com/neovim/neovim/pull/26193

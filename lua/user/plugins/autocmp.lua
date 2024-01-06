@@ -5,32 +5,6 @@ local libutils = require('userlib.runtime.utils')
 
 local enable_cody = false
 
-local has_ai_suggestions = function()
-  return (vim.b._copilot and vim.b._copilot.suggestions ~= nil)
-    or (vim.b._codeium_completions and vim.b._codeium_completions.items ~= nil)
-end
-local has_ai_suggestion_text = function()
-  if vim.b._copilot and vim.b._copilot.suggestions ~= nil then
-    local suggestion = vim.b._copilot.suggestions[1]
-    if suggestion ~= nil then
-      suggestion = suggestion.displayText
-    end
-    return suggestion ~= nil
-  end
-
-  if vim.b._codeium_completions and vim.b._codeium_completions.items then
-    local index = vim.b._codeium_completions.index or 0
-    local suggestion = vim.b._codeium_completions.items[index + 1] or {}
-    local parts = suggestion.completionParts or {}
-    if type(parts) ~= 'table' then
-      return false
-    end
-    return #parts >= 1
-  end
-
-  return false
-end
-
 local MAX_INDEX_FILE_SIZE = 2000
 
 pack.plug({
@@ -42,7 +16,8 @@ pack.plug({
       local MC = require('mini.completion')
       MC.setup({
         set_vim_settings = false,
-        fallback_action = '<C-x><C-i>',
+        -- h: ins-completion
+        fallback_action = '<C-x><C-l>',
         lsp_completion = {
           source_func = 'omnifunc',
           auto_setup = false,
@@ -258,8 +233,8 @@ pack.plug({
             end
             local entry = cmp.get_selected_entry()
             -- copilot.vim
-            if not entry and has_ai_suggestions() then
-              if not has_ai_suggestion_text() then
+            if not entry and Ty.has_ai_suggestions() then
+              if not Ty.has_ai_suggestion_text() then
                 if cmp.visible() and has_words_before() then
                   cmp.confirm({ select = true })
                 else
@@ -614,7 +589,7 @@ pack.plug({
       {
         '<M-u>',
         function()
-          if has_ai_suggestion_text() then
+          if Ty.has_ai_suggestion_text() then
             local cmp = require('cmp')
             if cmp.visible() then
               cmp.close()
@@ -674,7 +649,7 @@ pack.plug({
           if cmp.visible() then
             cmp.close()
           end
-          if has_ai_suggestion_text() then
+          if Ty.has_ai_suggestion_text() then
             vim.cmd([[call copilot#Next()]])
           else
             vim.cmd([[call copilot#Schedule()]])
