@@ -10,10 +10,14 @@ local MAX_INDEX_FILE_SIZE = 2000
 pack.plug({
   {
     'echasnovski/mini.completion',
+    dependencies = {
+      'echasnovski/mini.fuzzy',
+    },
     enabled = vim.cfg.edit__use_native_cmp,
     event = { 'LspAttach', 'InsertEnter' },
     config = function()
       local MC = require('mini.completion')
+      local MiniFuzzy = require('mini.fuzzy')
       MC.setup({
         set_vim_settings = false,
         -- h: ins-completion
@@ -27,7 +31,9 @@ pack.plug({
             -- items = vim.tbl_filter(function(x)
             --   -- return x.kind ~= 1 and x.kind ~= 15
             -- end, items)
-            return MC.default_process_items(items, base)
+            -- return MC.default_process_items(items, base)
+            -- better
+            return MiniFuzzy.process_lsp_items(items, base)
           end,
         },
         window = {
