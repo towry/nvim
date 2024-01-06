@@ -337,8 +337,16 @@ local function setup_basic()
         elseif vim.b._codeium_completions then
           vim.fn.feedkeys(vim.fn['codeium#Accept'](), 'i')
         end
+      else
+        -- trigger ai
+        if vim.b._copilot then
+          vim.fn['copilot#Suggest']()
+        else
+          vim.fn['codeium#Complete']()
+        end
       end
     end, {
+      silent = true,
       desc = 'Complete AI or nvim completion',
     })
   end
