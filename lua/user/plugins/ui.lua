@@ -73,15 +73,17 @@ plug({
     event = { 'User LazyUIEnter', 'LspAttach' },
     enabled = true,
     config = function()
+      local win_config = function()
+        local has_statusline = vim.o.laststatus > 0
+        local bottom_space = vim.o.cmdheight + (has_statusline and 1 or 0)
+        return { border = 'single', anchor = 'SE', col = vim.o.columns, row = vim.o.lines - bottom_space }
+      end
       require('mini.notify').setup({
         lsp_progress = {
           duration_last = 3000,
         },
         window = {
-          config = {
-            -- solid, shadow, rounded
-            border = 'solid',
-          },
+          config = win_config,
           winblend = 50,
         },
       })
