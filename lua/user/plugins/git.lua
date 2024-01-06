@@ -14,6 +14,13 @@ plug({
       end,
       desc = 'Toggle neogit',
     },
+    {
+      '<localleader>gc',
+      function()
+        require('neogit').open({ 'commit' })
+      end,
+      desc = 'Neogit commit',
+    },
   },
   opts = function()
     return {}

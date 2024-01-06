@@ -115,6 +115,12 @@ function M.setup_keybinding(client, buffer)
 
   if support(ms.workspace_symbol) then
     set('n', '<leader>cs', func_call('lsp_workspace_symbol()'), opts({ desc = _('search workspace symbols') }))
+    set(
+      'n',
+      '<leader>cS',
+      func_call([[lsp_workspace_symbol(vim.fn.expand("<cword>"))]]),
+      opts({ desc = _('search workspace symbols') })
+    )
   end
 
   -- Code actions.

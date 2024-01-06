@@ -3,6 +3,12 @@ local Table = require('userlib.runtime.table')
 local is_windows = uv.os_uname().version:match('Windows')
 local path_separator = is_windows and '\\' or '/'
 
+--- @param path string
+--- @param sep? string
+local function serialize_path_by_sep(path, sep)
+  return string.gsub(path, '[/\\ .]', sep or '_')
+end
+
 local function remove_path_last_separator(path)
   if not path then
     return ''
@@ -259,4 +265,5 @@ return {
   make_relative = make_relative,
   is_home_dir = is_home_dir,
   is_fs_root = is_fs_root,
+  serialize_path_by_sep = serialize_path_by_sep,
 }

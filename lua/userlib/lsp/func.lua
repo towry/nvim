@@ -53,10 +53,11 @@ function M.goto_declaration()
   end)
 end
 
-function M.lsp_workspace_symbol()
+function M.lsp_workspace_symbol(initial_query)
   utils.use_plugin('fzf-lua', function(fzf)
     -- <c-g> to toggle live query
-    fzf.lsp_workspace_symbols({
+    fzf.lsp_live_workspace_symbols({
+      query = initial_query,
       fullscreen = false,
       no_autoclose = true,
       cwd_only = true,

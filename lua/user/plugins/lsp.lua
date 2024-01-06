@@ -53,7 +53,7 @@ plug({
       au.do_useraucmd(au.user_autocmds.LspConfigDone_User)
       require('userlib.lsp.cfg.diagnostic').setup()
       require('userlib.lsp.cfg.inlayhints').setup({
-        enabled = true,
+        enabled = false,
         insert_only = false,
         highlight = 'NonText',
       })
