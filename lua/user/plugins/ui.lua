@@ -38,9 +38,40 @@ plug({
   },
 
   {
-    'echasnovski/mini.notify',
+    'j-hui/fidget.nvim',
     event = { 'User LazyUIEnter', 'LspAttach' },
     enabled = true,
+    opts = {
+      progress = {
+        ignore = {
+          'null-ls',
+          'tailwindcss',
+          'jsonls',
+          -- 'copilot',
+        },
+      },
+      notification = {
+        override_vim_notify = true,
+        window = {
+          winblend = 150,
+          max_width = 200,
+          -- border = "rounded"
+        },
+      },
+    },
+    init = function()
+      vim.api.nvim_create_user_command('FidgetHistory', function()
+        require('fidget.notification').show_history()
+      end, {
+        desc = 'Show fidget notification history',
+      })
+    end,
+  },
+
+  {
+    'echasnovski/mini.notify',
+    event = { 'User LazyUIEnter', 'LspAttach' },
+    enabled = false,
     config = function()
       local win_config = function()
         local has_statusline = vim.o.laststatus > 0
@@ -53,7 +84,7 @@ plug({
         },
         window = {
           config = win_config,
-          winblend = 50,
+          winblend = 20,
         },
       })
       local opts = { ERROR = { duration = 10000 } }

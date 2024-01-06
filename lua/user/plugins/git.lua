@@ -4,6 +4,23 @@ local cmdstr = require('userlib.runtime.keymap').cmdstr
 local libutils = require('userlib.runtime.utils')
 
 plug({
+  'NeogitOrg/neogit',
+  cmd = 'Neogit',
+  keys = {
+    {
+      '<localleader>gg',
+      function()
+        require('userlib.neogit').toggle()
+      end,
+      desc = 'Toggle neogit',
+    },
+  },
+  opts = function()
+    return {}
+  end,
+})
+
+plug({
   'mbbill/undotree',
   keys = {
     {
