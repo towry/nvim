@@ -38,37 +38,6 @@ plug({
   },
 
   {
-    'j-hui/fidget.nvim',
-    event = { 'User LazyUIEnter', 'LspAttach' },
-    enabled = false,
-    opts = {
-      progress = {
-        ignore = {
-          'null-ls',
-          'tailwindcss',
-          'jsonls',
-          -- 'copilot',
-        },
-      },
-      notification = {
-        override_vim_notify = true,
-        window = {
-          winblend = 150,
-          max_width = 200,
-          -- border = "rounded"
-        },
-      },
-    },
-    init = function()
-      vim.api.nvim_create_user_command('FidgetHistory', function()
-        require('fidget.notification').show_history()
-      end, {
-        desc = 'Show fidget notification history',
-      })
-    end,
-  },
-
-  {
     'echasnovski/mini.notify',
     event = { 'User LazyUIEnter', 'LspAttach' },
     enabled = true,
