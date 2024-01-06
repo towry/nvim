@@ -167,4 +167,19 @@ plug({
       auto_cmds = true,
     },
   },
+
+  {
+    'mhanberg/output-panel.nvim',
+    keys = {
+      {
+        '<leader>clg',
+        ':OutputPanel<CR>',
+        desc = 'LSP Log view',
+      },
+    },
+    event = 'LspAttach',
+    config = function()
+      require('output_panel').setup()
+    end,
+  },
 })
