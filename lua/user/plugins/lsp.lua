@@ -81,31 +81,22 @@ plug({
     ft = 'lua',
   },
   {
-    'simrat39/rust-tools.nvim',
+    'mrcjkb/rustaceanvim',
+    version = '^3',
+    ft = { 'rust' },
     dependencies = {
       'neovim/nvim-lspconfig',
     },
-    config = function()
-      local opts = {
-        tools = {
-          executor = require('rust-tools/executors').termopen,
-          -- These apply to the default RustSetInlayHints command
-          inlay_hints = {
-            auto = true,
-            show_parameter_hints = true,
-            parameter_hints_prefix = '<- ',
-            other_hints_prefix = '=> ',
-            max_len_align = false,
-            max_len_align_padding = 1,
-            right_align = false,
-            right_align_padding = 7,
-          },
-          hover_actions = {
-            auto_focus = true,
-          },
-        },
-        -- send our rust-analyzer configuration to lspconfig
+    -- https://github.com/mrcjkb/rustaceanvim
+    init = function()
+      vim.g.rustaceanvim = {
+        -- Plugin configuration
+        tools = {},
+        -- LSP configuration
         server = {
+          on_attach = function(client, bufnr)
+            -- you can also put keymaps in here
+          end,
           settings = {
             ['rust-analyzer'] = {
               cargo = {
@@ -147,11 +138,10 @@ plug({
               },
             },
           },
-          -- on_attach = on_lsp_attach,
-        }, -- rust-analyer options
+        },
+        -- DAP configuration
+        dap = {},
       }
-
-      require('rust-tools').setup(opts)
     end,
     event = 'BufReadPre Cargo.toml,*.rs',
   },
