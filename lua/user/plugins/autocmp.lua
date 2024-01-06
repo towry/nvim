@@ -18,6 +18,7 @@ pack.plug({
         set_vim_settings = false,
         -- h: ins-completion
         fallback_action = '<C-x><C-l>',
+        delay = { completion = 150, info = 150, signature = 50 },
         lsp_completion = {
           source_func = 'omnifunc',
           auto_setup = false,
@@ -31,7 +32,7 @@ pack.plug({
         },
         window = {
           info = { border = 'solid', winblend = 30 },
-          signature = { border = 'solid', winblend = 30 },
+          signature = { border = 'single', winblend = 80 },
         },
       })
     end,
