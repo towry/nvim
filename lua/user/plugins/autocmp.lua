@@ -285,7 +285,8 @@ pack.plug({
             elseif check_backspace() then
               fallback()
             else
-              fallback()
+              require('neotab').tabout()
+              -- fallback()
             end
           end, {
             'i',
@@ -297,6 +298,7 @@ pack.plug({
             elseif luasnip.jumpable(-1) then
               luasnip.jump(-1)
             else
+              -- require('neotab').tabout()
               fallback()
             end
           end, {
@@ -483,6 +485,14 @@ pack.plug({
   },
 })
 
+pack.plug({
+  'kawre/neotab.nvim',
+  event = 'InsertEnter',
+  opts = {
+    tabkey = '',
+  },
+})
+
 ---autopairs
 pack.plug({
   enabled = not vim.cfg.lang__treesitter_next,
@@ -501,7 +511,7 @@ pack.plug({
       disable_in_macro = true,
       disable_in_replace_mode = true,
       enable_check_bracket_line = true,
-      check_ts = true,
+      check_ts = false,
       ts_config = {
         lua = { 'string' },
         javascript = { 'template_string' },
@@ -546,7 +556,7 @@ pack.plug({
     --- setup rules.
     -- TODO: move to config.
     local allowed_rules = {
-      'auto_jsx_closing',
+      -- 'auto_jsx_closing',
     }
     local rules = require('userlib.autopairs-rules')
     for _, rule in ipairs(allowed_rules) do
@@ -600,7 +610,7 @@ pack.plug({
     --- have bug when behind proxy.
     'Exafunction/codeium.vim',
     event = { 'InsertEnter' },
-    cmd = { 'Codeium', 'CodeiumToggle' },
+    cmd = { 'Codeium' },
     keys = {
       {
         '<M-u>',
@@ -619,6 +629,12 @@ pack.plug({
         expr = true,
       },
       {
+        '<leader>ta',
+        '<cmd>Codeium Toggle<cr>',
+        desc = 'Toggle AI',
+      },
+
+      {
         '<M-y>',
         function()
           return vim.fn['codeium#Complete']()
@@ -631,6 +647,7 @@ pack.plug({
     enabled = vim.cfg.plug__enable_codeium_vim,
     config = function() end,
     init = function()
+      vim.g.codeium_enabled = false
       vim.g.codeium_disable_bindings = 1
       vim.g.codeium_no_map_tab = true
       vim.g.codeium_filetypes = {
