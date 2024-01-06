@@ -103,7 +103,7 @@ function M.init_interface()
   o.mouse = 'a' --- Enable mouse
   o.sidescrolloff = 8 -- Columns of context
   o.lazyredraw = true --- lazyredraw on startup
-  o.wildmode = { 'longest:full', 'full' } -- Command-line completion mode
+  o.wildmode = { 'list:full', 'full' } -- Command-line completion mode
   o.cmdheight = 1 --- Give more space for displaying messages
   o.completeopt = { 'menu', 'menuone', 'noselect' } --- Better autocompletion
   o.complete:append('kspell') -- Add spellcheck options for autocomplete
