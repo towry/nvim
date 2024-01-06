@@ -326,7 +326,7 @@ local function setup_basic()
       ['ctrl-y'] = vim.api.nvim_replace_termcodes('<C-y>', true, true, true),
       ['ctrl-y_cr'] = vim.api.nvim_replace_termcodes('<C-y><CR>', true, true, true),
     }
-    set({ 'i' }, '<C-f>', function()
+    set({ 'i' }, '<C-y>', function()
       -- accept ai or completion selection.
       if vim.fn.pumvisible() ~= 0 then
         local item_selected = vim.fn.complete_info()['selected'] ~= -1
@@ -340,13 +340,14 @@ local function setup_basic()
       else
         -- trigger ai
         if vim.b._copilot then
-          vim.fn['copilot#Suggest']()
+          vim.fn.feedkeys(vim.fn['copilot#Suggest'](), 'i')
         else
-          vim.fn['codeium#Complete']()
+          vim.fn.feedkeys(vim.fn['codeium#Complete'](), 'i')
         end
       end
     end, {
-      silent = true,
+      silent = false,
+      expr = true,
       desc = 'Complete AI or nvim completion',
     })
   end

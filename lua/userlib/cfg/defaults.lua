@@ -157,7 +157,7 @@ return {
   lsp__plugin_lspsaga = true,
   ---User interfaces
   ui__theme_name = 'default',
-  ui__float_border = 'solid',
+  ui__float_border = 'single',
   ui__window_equalalways = false,
   workbench__lualine_theme = 'default',
   ---misc stuff.
