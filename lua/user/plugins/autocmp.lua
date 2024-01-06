@@ -30,8 +30,8 @@ pack.plug({
           end,
         },
         window = {
-          info = { border = 'none', winblend = 30 },
-          signature = { border = 'none', winblend = 30 },
+          info = { border = 'solid', winblend = 30 },
+          signature = { border = 'solid', winblend = 30 },
         },
       })
     end,
