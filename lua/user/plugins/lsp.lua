@@ -41,7 +41,6 @@ plug({
       },
     },
     config = function()
-      local lspconfig = require('lspconfig')
       require('user.config.options').setup_lsp()
       require('mason')
       require('mason-lspconfig').setup({
@@ -54,8 +53,9 @@ plug({
       au.do_useraucmd(au.user_autocmds.LspConfigDone_User)
       require('userlib.lsp.cfg.diagnostic').setup()
       require('userlib.lsp.cfg.inlayhints').setup({
-        enabled = false,
-        insert_only = true,
+        enabled = true,
+        insert_only = false,
+        highlight = 'NonText',
       })
     end,
     init = function()

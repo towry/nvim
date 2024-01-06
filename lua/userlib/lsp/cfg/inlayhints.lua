@@ -14,7 +14,7 @@ function M.setup(opts)
     return
   end
 
-  if vim.fn.has('nvim-0.10') ~= 1 or vim.lsp.buf.inlay_hint == nil then
+  if vim.lsp.inlay_hint == nil then
     vim.notify_once('LSP Inlayhints requires Neovim 0.10.0+ (ca5de93)', vim.log.levels.ERROR)
     return
   end
@@ -53,7 +53,7 @@ function M.on_attach(client, bufnr, opts)
   M.state[bufnr] = client.id
 
   if not opts.insert_only then
-    vim.lsp.buf.inlay_hint(bufnr, true)
+    vim.lsp.inlay_hint.enable(bufnr, true)
   end
   if opts.insert_only then
     local gr = vim.api.nvim_create_augroup('_inlayhint_buf_' .. bufnr, { clear = true })
@@ -61,14 +61,14 @@ function M.on_attach(client, bufnr, opts)
       group = gr,
       buffer = bufnr,
       callback = function()
-        vim.lsp.buf.inlay_hint(bufnr, true)
+        vim.lsp.inlay_hint.enable(bufnr, true)
       end,
     })
     vim.api.nvim_create_autocmd('InsertLeave', {
       group = gr,
       buffer = bufnr,
       callback = function()
-        vim.lsp.buf.inlay_hint(bufnr, false)
+        vim.lsp.inlay_hint.enable(bufnr, false)
       end,
     })
   end
