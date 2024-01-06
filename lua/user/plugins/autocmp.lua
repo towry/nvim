@@ -84,13 +84,12 @@ pack.plug({
       'noearc/cmp-registers',
       'hrsh7th/cmp-nvim-lsp-signature-help',
       'onsails/lspkind-nvim',
-      'hrsh7th/cmp-nvim-lua',
+      -- 'hrsh7th/cmp-nvim-lua',
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
       -- 'dmitmel/cmp-cmdline-history',
-      'hrsh7th/cmp-calc',
       -- {
       --   'tzachar/cmp-tabnine',
       --   build = './install.sh',
@@ -175,7 +174,6 @@ pack.plug({
         buffer = icons.buffer .. 'BUF',
         nvim_lua = icons.bomb,
         luasnip = icons.snippet .. 'SNP',
-        calc = icons.calculator,
         path = icons.folderOpen2,
         treesitter = icons.tree,
         zsh = icons.terminal .. 'ZSH',
@@ -334,27 +332,10 @@ pack.plug({
           completeopt = 'menu,menuone,noinsert,noselect',
         },
         formatting = {
-          format = function(entry, vim_item)
-            if vim.b.is_big_file then
-              return vim_item
-            end
-            vim_item.kind = lspkind.symbolic(vim_item.kind, { with_text = true })
-            local menu = source_mapping[entry.source.name]
-            local maxwidth = 50
-
-            if entry.source.name == 'cmp_tabnine' then
-              if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-                menu = menu .. entry.completion_item.data.detail
-              else
-                menu = menu .. 'TBN'
-              end
-            end
-
-            vim_item.menu = menu
-            vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth)
-
-            return vim_item
-          end,
+          format = lspkind.cmp_format({
+            mode = 'text_symbol',
+            maxwidth = 40,
+          }),
         },
         -- You should specify your *installed* sources.
         sources = {
@@ -367,14 +348,13 @@ pack.plug({
           { name = 'luasnip', priority = 6, max_item_count = 2 },
           {
             name = 'buffer',
-            priority = 10,
+            priority = 8,
             keyword_length = 2,
             option = buffer_option,
             max_item_count = 4,
           },
-          { name = 'nvim_lua', priority = 5, ft = 'lua' },
+          -- { name = 'nvim_lua', priority = 5, ft = 'lua' },
           { name = 'path', priority = 4 },
-          { name = 'calc', priority = 3 },
         },
         sorting = {
           comparators = {
