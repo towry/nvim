@@ -38,7 +38,7 @@ function M.custom_theme_default()
     bg = 'NONE',
   })
   --- telescope
-  hi('TelescopeMatching', { link = 'Visual' })
+  -- hi('TelescopeMatching', { link = 'Visual' })
   -- aerial
   hi('AerialPrivate', { italic = true })
   --- fzf lua
