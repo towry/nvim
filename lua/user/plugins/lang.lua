@@ -21,11 +21,17 @@ plug({
     vim.api.nvim_create_autocmd('User', {
       group = 'treesitter_start',
       pattern = 'TreeSitterStart',
-      callback = function()
-        if vim.b.treesitter_disable then
+      callback = function(ctx)
+        local buf = ctx.data.bufnr
+        if vim.b[buf].treesitter_disable then
           return
         end
-        vim.opt_local.indentexpr = [[v:lua.require('nvim-treesitter').indentexpr()]]
+        local lines = vim.api.nvim_buf_line_count(buf)
+        if vim.b[buf].is_big_file or lines > 10000 then
+          vim.bo[buf].indentexpr = ''
+          return
+        end
+        vim.bo[buf].indentexpr = [[v:lua.require('nvim-treesitter').indentexpr()]]
       end,
     })
   end,

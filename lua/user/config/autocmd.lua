@@ -116,7 +116,8 @@ function M.load_on_startup()
         group = 'enable_foldexpr_for_buf',
         callback = function(ctx)
           local buf = ctx.buf
-          if not vim.b[buf].is_big_file then
+          local lines = vim.api.nvim_buf_line_count(buf)
+          if not vim.b[buf].is_big_file and lines < 10000 then
             vim.wo.foldmethod = 'expr'
             vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
           else

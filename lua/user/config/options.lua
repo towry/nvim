@@ -223,14 +223,18 @@ function M.setup()
       if not vim.api.nvim_buf_is_valid(buf) then
         return
       end
-      if Buffer.is_big_file(buf) then
+      if vim.b[buf].is_big_file or Buffer.is_big_file(buf) then
         return
       end
       -- start highlighter.
       if not pcall(vim.treesitter.start, buf) then
         return
       end
-      require('userlib.runtime.au').do_useraucmd('User TreeSitterStart')
+      require('userlib.runtime.au').exec_useraucmd('TreeSitterStart', {
+        data = {
+          bufnr = buf,
+        },
+      })
     end,
   })
 end
