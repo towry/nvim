@@ -223,7 +223,9 @@ function M.setup()
       if not vim.api.nvim_buf_is_valid(buf) then
         return
       end
-      if vim.b[buf].is_big_file or Buffer.is_big_file(buf) then
+      if vim.b[buf].is_big_file or Buffer.is_big_file(buf, {
+        size = 1024 * 100,
+      }) then
         return
       end
       -- start highlighter.

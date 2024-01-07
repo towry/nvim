@@ -237,11 +237,16 @@ function M.buffer_display_in_other_window(bufnr)
   return #vim.fn.win_findbuf(bufnr) > 1
 end
 
-function M.is_big_file(buf)
-  if M.getfsize(buf) > (1024 * 1000) then
+---@param opts {size?:number,lines?:number}
+function M.is_big_file(buf, opts)
+  opts = opts or {}
+  local size = opts.size or (1024 * 1000)
+  local lines = opts.lines or 20000
+
+  if M.getfsize(buf) > size then
     return true
   end
-  if vim.api.nvim_buf_line_count(buf) > 20000 then
+  if vim.api.nvim_buf_line_count(buf) > lines then
     return true
   end
 end
