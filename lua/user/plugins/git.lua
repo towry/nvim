@@ -6,6 +6,7 @@ local libutils = require('userlib.runtime.utils')
 plug({
   'NeogitOrg/neogit',
   cmd = 'Neogit',
+  enabled = false,
   keys = {
     {
       '<localleader>gg',
@@ -20,6 +21,77 @@ plug({
         require('neogit').open({ 'commit' })
       end,
       desc = 'Neogit commit',
+    },
+    {
+      '<localleader>gp',
+      function()
+        require('neogit').open({ 'push' })
+      end,
+      desc = 'Neogit push',
+    },
+    {
+      '<localleader>gd',
+      function()
+        require('neogit').open({ 'diff' })
+      end,
+      desc = 'Neogit diff',
+    },
+    {
+      '<localleader>gb',
+      function()
+        require('neogit').open({ 'branch' })
+      end,
+      desc = 'Neogit branch',
+    },
+    {
+      '<localleader>gl',
+      function()
+        require('neogit').open({ 'log' })
+      end,
+      desc = 'Neogit log',
+      mode = { 'n', 'x', 'v' },
+    },
+    {
+      '<localleader>gS',
+      function()
+        require('neogit').open({ 'stash' })
+      end,
+      desc = 'Neogit stash',
+    },
+    {
+      '<localleader>gC',
+      function()
+        require('neogit').open({ 'config' })
+      end,
+      desc = 'Neogit config',
+    },
+    {
+      '<localleader>gR',
+      function()
+        require('neogit').open({ 'remote' })
+      end,
+      desc = 'Neogit remote',
+    },
+    {
+      '<localleader>gT',
+      function()
+        require('neogit').open({ 'tag' })
+      end,
+      desc = 'Neogit tag',
+    },
+    {
+      '<localleader>gM',
+      function()
+        require('neogit').open({ 'merge' })
+      end,
+      desc = 'Neogit merge',
+    },
+    {
+      '<localleader>gu',
+      function()
+        require('neogit').open({ 'fetch' })
+      end,
+      desc = 'Neogit fetch',
     },
   },
   opts = function()
@@ -87,7 +159,10 @@ plug({
       },
       {
         '<leader>gs',
-        cmdstr([[tab Git diff HEAD]]),
+        function()
+          vim.cmd([[tab Git diff HEAD]])
+          vim.cmd([[:lua vim.bo.syntax="diff"]])
+        end,
         desc = 'Git status',
         silent = false,
       },
@@ -230,11 +305,7 @@ plug({
   {
     -- git runtimes. ft etc.
     'tpope/vim-git',
-    event = { 'BufReadPre' },
-    enabled = true,
-    cond = function()
-      return true
-    end,
+    ft = { 'git', 'gitcommit' },
   },
 
   {

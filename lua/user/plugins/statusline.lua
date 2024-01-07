@@ -73,7 +73,7 @@ plug({
           local buf = args.buf
           local buftype = vim.bo[buf].buftype
           local ignore_buftype = vim.tbl_contains({
-            'nowrite',
+            -- 'nowrite',
             -- 'nofile',
             'quickfix',
             'tutor',

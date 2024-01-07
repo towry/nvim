@@ -101,7 +101,7 @@ function M.load_on_startup()
               callback = vim.schedule_wrap(function()
                 local current_buf = vim.api.nvim_get_current_buf()
                 if current_buf == buf then
-                  vim.cmd('setlocal syntax=OFF')
+                  vim.bo[buf].syntax = ''
                 end
               end),
             })
