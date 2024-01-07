@@ -161,7 +161,7 @@ plug({
         '<leader>gs',
         function()
           vim.cmd([[tab Git diff HEAD]])
-          vim.cmd([[:lua vim.bo.syntax="diff"]])
+          -- vim.cmd([[:lua vim.bo.syntax="diff"]])
         end,
         desc = 'Git status',
         silent = false,
