@@ -50,4 +50,6 @@ M.buffers_open_default = wrap(function(selected, opts)
   Buffer.set_current_buffer_focus(entry.bufnr)
 end)
 
+M.flash = wrap(function(selected, opts) end)
+
 return M

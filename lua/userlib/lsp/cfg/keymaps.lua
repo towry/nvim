@@ -136,7 +136,21 @@ function M.setup_keybinding(client, buffer)
     set(
       { 'n', 'v' },
       '<leader>ca',
-      cmdstr([[lua vim.lsp.buf.code_action()]]),
+      -- cmdstr([[lua vim.lsp.buf.code_action()]]),
+      function()
+        require('fzf-lua').lsp_code_actions({
+          winopts = {
+            fullscreen = false,
+            height = 0.8,
+            width = 0.5,
+            preview = {
+              hidden = 'hidden',
+              layout = 'vertical',
+              vertical = 'down:30%',
+            },
+          },
+        })
+      end,
       opts({
         desc = _('Code Action'),
       })
