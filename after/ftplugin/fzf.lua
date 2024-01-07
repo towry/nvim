@@ -5,6 +5,7 @@ set('n', 'q', ':fclose<cr>', { nowait = true, silent = true })
 set('n', '<C-q>', ':fclose<cr>', { nowait = true, silent = true })
 set('n', '<ESC>', ':fclose<cr>', { nowait = true, silent = true })
 set('t', '<C-a>', function()
+  local cur_win = vim.api.nvim_get_current_win()
   require('flash').jump({
     pattern = '^',
     label = { after = { 0, 0 } },
@@ -12,14 +13,14 @@ set('t', '<C-a>', function()
       mode = 'search',
       exclude = {
         function(win)
-          return false
+          return win ~= cur_win
         end,
       },
     },
     action = function(match)
-      vim.print(match)
-      -- local picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
-      -- picker:set_selection(match.pos[1] - 1)
+      local pos = { match.pos[1], 0 }
+      vim.api.nvim_win_set_cursor(0, { 8, 1 })
+      vim.cmd('norm! zvzz')
     end,
   })
 end, { nowait = true })
