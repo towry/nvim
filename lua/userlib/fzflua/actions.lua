@@ -50,6 +50,25 @@ M.buffers_open_default = wrap(function(selected, opts)
   Buffer.set_current_buffer_focus(entry.bufnr)
 end)
 
-M.flash = wrap(function(selected, opts) end)
+--- TODO: finish this
+M.flash = function(selected, opts)
+  require('flash').jump({
+    pattern = '^',
+    label = { after = { 0, 0 } },
+    search = {
+      mode = 'search',
+      exclude = {
+        function(win)
+          return false
+        end,
+      },
+    },
+    action = function(match)
+      vim.print(match)
+      -- local picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
+      -- picker:set_selection(match.pos[1] - 1)
+    end,
+  })
+end
 
 return M
