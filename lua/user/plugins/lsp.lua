@@ -167,19 +167,4 @@ plug({
       auto_cmds = true,
     },
   },
-
-  {
-    'mhanberg/output-panel.nvim',
-    -- it only works if you toggle this first.
-    keys = {
-      {
-        '<leader>clg',
-        ':OutputPanel<CR>',
-        desc = 'LSP Log view',
-      },
-    },
-    config = function()
-      require('output_panel').setup()
-    end,
-  },
 })
