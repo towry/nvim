@@ -19,8 +19,9 @@ set('t', '<C-a>', function()
     },
     action = function(match)
       local pos = { match.pos[1], 0 }
-      vim.api.nvim_win_set_cursor(0, { 8, 1 })
-      vim.cmd('norm! zvzz')
+      -- vim.api.nvim_win_set_cursor(0, { 8, 1 })
+      local key = vim.api.nvim_replace_termcodes('3<Down>', true, false, true)
+      vim.api.nvim_feedkeys(key, 't', false)
     end,
   })
 end, { nowait = true })
