@@ -170,6 +170,7 @@ plug({
 
   {
     'mhanberg/output-panel.nvim',
+    -- it only works if you toggle this first.
     keys = {
       {
         '<leader>clg',
@@ -177,7 +178,6 @@ plug({
         desc = 'LSP Log view',
       },
     },
-    event = 'LspAttach',
     config = function()
       require('output_panel').setup()
     end,
