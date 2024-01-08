@@ -21,7 +21,13 @@ pack.plug({
       MC.setup({
         set_vim_settings = false,
         -- h: ins-completion
-        fallback_action = '<C-x><C-l>',
+        fallback_action = function()
+          if vim.bo.completefunc then
+            return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-x><C-U>', true, false, true), 'i', true)
+          end
+
+          return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-x><C-n>', true, false, true), 'i', true)
+        end,
         delay = { completion = 150, info = 150, signature = 50 },
         lsp_completion = {
           source_func = 'omnifunc',
