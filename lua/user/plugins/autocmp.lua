@@ -65,6 +65,32 @@ pack.plug({
       'rafamadriz/friendly-snippets',
       --'saadparwaiz1/cmp_luasnip'
     },
+    config = function()
+      local luasnip = require('luasnip')
+      luasnip.config.set_config({
+        update_events = { 'TextChangedI', 'TextChanged' },
+      })
+      -- make sure the package.json exists and is valid json file.
+      luasnip.log.set_loglevel('error')
+      require('luasnip.loaders.from_vscode').lazy_load({
+        paths = {
+          './user-snippets',
+          vim.uv.cwd() .. '/.vscode',
+          Path.path_join(vim.cfg.runtime__starts_cwd, '.vscode'),
+        },
+      })
+
+      -- vim.api.nvim_create_autocmd('InsertLeave', {
+      --   callback = function()
+      --     if
+      --       require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]
+      --       and not require('luasnip').session.jump_active
+      --     then
+      --       require('luasnip').unlink_current()
+      --     end
+      --   end,
+      -- })
+    end,
   },
   {
     'petertriho/cmp-git',
@@ -158,16 +184,6 @@ pack.plug({
 
       -- TODO: move to config
       local select_first_on_enter = false
-
-      -- make sure the package.json exists and is valid json file.
-      luasnip.log.set_loglevel('error')
-      require('luasnip.loaders.from_vscode').lazy_load({
-        paths = {
-          './user-snippets',
-          vim.uv.cwd() .. '/.vscode',
-          Path.path_join(vim.cfg.runtime__starts_cwd, '.vscode'),
-        },
-      })
 
       -- ╭──────────────────────────────────────────────────────────╮
       -- │ Utils                                                    │
