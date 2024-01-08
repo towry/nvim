@@ -19,6 +19,19 @@ local settings = {
 local on_attach = function(client, bufnr)
   client.server_capabilities.documentFormattingProvider = false
   client.server_capabilities.documentRangeFormattingProvider = false
+
+  vim.schedule(function()
+    local set = require('userlib.runtime.keymap').map_buf_thunk(bufnr)
+    set('n', '<leader>cO', ':TSToolsOrganizeImports<cr>', {
+      desc = 'Sorts and removes used imports',
+    })
+    set('n', '<leader>co', ':TSToolsSortImports<cr>', {
+      desc = 'Sorts imports',
+    })
+    set('n', '<leader>ci', ':TSToolsAddMissingImports<cr>', {
+      desc = 'Add missing imports',
+    })
+  end)
 end
 
 local capabilities = require('userlib.lsp.cfg.capbilities')()
