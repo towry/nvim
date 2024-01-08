@@ -172,7 +172,7 @@ plug({
           -- https://github.com/niuiic/git-log.nvim/blob/main/lua/git-log/init.lua
           local file_name = vim.api.nvim_buf_get_name(0)
           local line_range = libutils.get_range()
-          vim.cmd(string.format([[Git log -L %s,%s:%s]], line_range[1], line_range[2], file_name))
+          vim.cmd(string.format([[vert Git log -L %s,%s:%s]], line_range[1], line_range[2], file_name))
         end,
         desc = 'View log for selected chunks',
         mode = { 'v', 'x' },
@@ -186,7 +186,7 @@ plug({
             max_count_arg = string.format('--max-count=%s', vcount)
           end
           vim.cmd(
-            'Git log -P '
+            'vert Git log -P '
               .. max_count_arg
               .. ' --oneline --date=format:"%Y-%m-%d %H:%M" --pretty=format:"%h %ad: %s - %an" -- %'
           )
@@ -305,7 +305,7 @@ plug({
   {
     -- git runtimes. ft etc.
     'tpope/vim-git',
-    ft = { 'git', 'gitcommit' },
+    event = 'User LazyUIEnter',
   },
 
   {
