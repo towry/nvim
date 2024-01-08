@@ -80,16 +80,24 @@ pack.plug({
         },
       })
 
-      -- vim.api.nvim_create_autocmd('InsertLeave', {
-      --   callback = function()
-      --     if
-      --       require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]
-      --       and not require('luasnip').session.jump_active
-      --     then
-      --       require('luasnip').unlink_current()
-      --     end
-      --   end,
-      -- })
+      local luasnip_ns = vim.api.nvim_create_namespace('luasnip')
+
+      Ty.luasnip_notify_clear = function()
+        vim.api.nvim_buf_clear_namespace(0, luasnip_ns, 0, -1)
+      end
+
+      Ty.luasnip_notify = function()
+        if not luasnip.expandable() then
+          Ty.luasnip_notify_clear()
+          return
+        end
+
+        local line = vim.api.nvim_win_get_cursor(0)[1] - 1
+        vim.api.nvim_buf_set_virtual_text(0, luasnip_ns, line, { { '>=', 'Special' } }, {})
+      end
+
+      vim.cmd([[au InsertEnter,CursorMovedI,TextChangedI,TextChangedP * lua pcall(Ty.luasnip_notify)]])
+      vim.cmd([[au InsertLeave * lua pcall(Ty.luasnip_notify_clear)]])
     end,
   },
   {

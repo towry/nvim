@@ -312,8 +312,10 @@ local function setup_basic()
       local has_luasnip, luasnip = pcall(require, 'luasnip')
       if vim.fn.pumvisible() ~= 0 then
         return '<C-n>'
-      elseif has_luasnip and luasnip.expand_or_locally_jumpable() then
-        luasnip.expand_or_jump()
+      elseif has_luasnip and luasnip.expand_or_jumpable() then
+        vim.schedule(function()
+          luasnip.expand_or_jump()
+        end)
       else
         -- final fallback
         return [[<Plug>(neotab-out)]]
@@ -325,7 +327,9 @@ local function setup_basic()
       if vim.fn.pumvisible() ~= 0 then
         return '<C-p>'
       elseif has_luasnip and luasnip.jumpable(-1) then
-        luasnip.jump(-1)
+        vim.schedule(function()
+          luasnip.jump(-1)
+        end)
       else
         return '<S-Tab>'
       end
