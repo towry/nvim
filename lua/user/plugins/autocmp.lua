@@ -87,13 +87,16 @@ pack.plug({
       end
 
       Ty.luasnip_notify = function()
+        Ty.luasnip_notify_clear()
         if not luasnip.expandable() then
-          Ty.luasnip_notify_clear()
           return
         end
 
         local line = vim.api.nvim_win_get_cursor(0)[1] - 1
-        vim.api.nvim_buf_set_virtual_text(0, luasnip_ns, line, { { '>=', 'Special' } }, {})
+        vim.api.nvim_buf_set_extmark(0, luasnip_ns, line, 0, {
+          virt_text = { { '!', 'Special' } },
+          virt_text_pos = 'eol',
+        })
       end
 
       vim.cmd([[au InsertEnter,CursorMovedI,TextChangedI,TextChangedP * lua pcall(Ty.luasnip_notify)]])
