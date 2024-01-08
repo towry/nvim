@@ -13,7 +13,7 @@ end, {
   nowait = true,
 })
 set('n', '<leader>gp', function()
-  vim.cmd([[Git! push | :lua vim.g.escape_cmd="pclose"]])
+  vim.cmd([[Dispatch! Git push]])
 end, {
   desc = 'Push',
 })
