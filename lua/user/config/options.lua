@@ -109,9 +109,9 @@ function M.init_interface()
   o.completeopt = { 'menu', 'menuone', 'noselect' } --- Better autocompletion
   o.complete:append('kspell') -- Add spellcheck options for autocomplete
   -- scan current and included files.
-  o.complete:append('i')
+  -- o.complete:append('i')
   -- scan current and included files for defined name or macro
-  o.complete:append('d')
+  -- o.complete:append('d')
   -- scan buffer name
   o.complete:append('f')
   o.complete:remove('t')

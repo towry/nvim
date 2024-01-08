@@ -309,14 +309,25 @@ local function setup_basic()
   if vim.cfg.edit__use_native_cmp then
     -- Move inside completion list with <TAB>
     set({ 'i' }, [[<Tab>]], function()
+      local has_luasnip, luasnip = pcall(require, 'luasnip')
       if vim.fn.pumvisible() ~= 0 then
         return '<C-n>'
+      elseif has_luasnip and luasnip.expandable() then
+        luasnip.expand()
+      elseif has_luasnip and luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jumpable()
+      else
+        -- final fallback
+        return [[<Plug>(neotab-out)]]
       end
-      return [[<Plug>(neotab-out)]]
     end, { expr = true, silent = true })
     set({ 'i' }, [[<S-Tab>]], function()
+      local has_luasnip, luasnip = pcall(require, 'luasnip')
+
       if vim.fn.pumvisible() ~= 0 then
         return '<C-p>'
+      elseif has_luasnip and luasnip.jumpable(-1) then
+        luasnip.jump(-1)
       else
         return '<S-Tab>'
       end
