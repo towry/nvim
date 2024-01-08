@@ -23,7 +23,7 @@ pack.plug({
         -- h: ins-completion
         fallback_action = function()
           if vim.bo.completefunc then
-            return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-x><C-U>', true, false, true), 'i', true)
+            return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-x><C-u>', true, false, true), 'i', true)
           end
 
           return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-x><C-n>', true, false, true), 'i', true)
