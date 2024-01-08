@@ -78,18 +78,26 @@ function M.client_is_configured(server_name, ft)
   return false
 end
 
-function M.setup_server(server_name, config)
-  config = config or {}
+function M.setup_server(server_name, config_tbl_or_func)
+  local config = {}
+  if type(config_tbl_or_func) == 'function' then
+    config = config_tbl_or_func({})
+  else
+    config = config_tbl_or_func
+  end
   local is_autostart = false
   if config.autostart == true then
     is_autostart = true
   end
-  pcall(function()
+  local _, error = pcall(function()
     if not server_configurations_done[server_name] or is_autostart == true then
       local command = config.cmd
         or (function()
-          local default_config = require('lspconfig.server_configurations.' .. server_name).default_config
-          return default_config.cmd
+          local ok, cfg_in_lspconfig = pcall(require, 'lspconfig.server_configurations.' .. server_name)
+          if ok then
+            return cfg_in_lspconfig.default_config.cmd
+          end
+          return nil
         end)()
       -- some servers have dynamic commands defined with on_new_config
       if type(command) == 'table' and type(command[1]) == 'string' and vim.fn.executable(command[1]) ~= 1 then
@@ -102,6 +110,9 @@ function M.setup_server(server_name, config)
       server_configurations_done[server_name] = true
     end
   end)
+  if error then
+    vim.notify(error, vim.log.levels.ERROR)
+  end
 end
 
 function M.launch_server_on_buf(server_name, config, bufnr)
@@ -146,14 +157,6 @@ local function current_buf_matches_filetypes(bufnr, filetypes)
   return vim.tbl_contains(filetypes, buf_filetype)
 end
 
-function M.get_lspconfig_for_server(server_name)
-  local lspconfig = require('lspconfig')
-  if lspconfig[server_name] then
-    return lspconfig[server_name]
-  end
-  return {}
-end
-
 local function setup_lspconfig_servers(servers, bufnr)
   local lspcfg = require('userlib.lsp.cfg')
   if not vim.api.nvim_buf_is_valid(bufnr) then
@@ -162,7 +165,7 @@ local function setup_lspconfig_servers(servers, bufnr)
 
   for _, server_name in ipairs(servers) do
     if CustomServerSetup[server_name] then
-      CustomServerSetup[server_name]()
+      CustomServerSetup[server_name](bufnr)
     else
       if not M.is_client_active(server_name, bufnr) then
         M.launch_server_on_buf(server_name, lspcfg.get_config_for_server(server_name), bufnr)

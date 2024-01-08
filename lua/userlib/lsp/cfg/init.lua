@@ -24,6 +24,11 @@ function M.get_config_for_server(server_name)
   if type(server_rc) ~= 'table' then
     load_ok = false
   end
+  if type(server_rc) == 'function' then
+    return function(income_cfgs)
+      return server_rc(income_cfgs)
+    end
+  end
   if load_ok then
     lsp_configs = vim.tbl_extend('force', {
       flags = lsp_flags,

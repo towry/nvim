@@ -838,6 +838,12 @@ plug({
   cmd = 'FzfLua',
   keys = {
     {
+      '<localleader>p',
+      ':FzfLua commands<cr>',
+      desc = 'Command panel',
+      silent = true,
+    },
+    {
       '<localleader>,',
       ':FzfLua<cr>',
       desc = 'Fzf',

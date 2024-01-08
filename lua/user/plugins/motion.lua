@@ -225,7 +225,7 @@ plug({
 plug({
   --- gaod -> (motion)aw(a word)
   'johmsalas/text-case.nvim',
-  event = 'VeryLazy',
+  event = 'User FileOpenedAfter',
   opts = {
     default_keymappings_enabled = true,
     -- `prefix` is only considered if `default_keymappings_enabled` is true. It configures the prefix

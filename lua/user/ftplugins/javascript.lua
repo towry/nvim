@@ -6,6 +6,7 @@ M.attach = function()
   end
   require('userlib.keymaps.neotest').attach()
   require('userlib.keymaps.dap').attach()
+  require('typescript-tools.user_commands').setup_user_commands()
 end
 
 return M

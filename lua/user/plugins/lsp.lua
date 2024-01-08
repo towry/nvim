@@ -13,6 +13,11 @@ end
 
 plug({
   {
+    -- replace tsserver setup.
+    'pmizio/typescript-tools.nvim',
+    config = function() end,
+  },
+  {
     'williamboman/mason.nvim',
     cmd = { 'Mason', 'MasonInstall', 'MasonLog', 'MasonUpdate', 'MasonUninstall', 'MasonUninstallAll' },
     opts = {
