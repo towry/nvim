@@ -68,7 +68,7 @@ pack.plug({
     config = function()
       local luasnip = require('luasnip')
       luasnip.config.set_config({
-        update_events = { 'TextChangedI', 'TextChanged' },
+        -- update_events = { 'TextChangedI', 'TextChanged' },
       })
       -- make sure the package.json exists and is valid json file.
       luasnip.log.set_loglevel('error')
