@@ -851,7 +851,18 @@ plug({
     },
     {
       '<C-x><C-f>',
-      '<cmd>lua require("fzf-lua").complete_path()<cr>',
+      function()
+        require('fzf-lua').complete_file({
+          actions = {
+            ['ctrl-o'] = function(selected, opts)
+              local selected_single = selected[1]
+              require('fzf-lua.actions').complete({
+                selected_single,
+              }, opts)
+            end,
+          },
+        })
+      end,
       desc = 'Complete file path',
       mode = { 'i' },
     },
