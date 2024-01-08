@@ -53,9 +53,10 @@ plug({
       notification = {
         override_vim_notify = true,
         window = {
-          winblend = 150,
+          winblend = 80,
+          normal_hl = 'NormalFloat',
           max_width = 200,
-          -- border = "rounded"
+          border = 'solid',
         },
       },
     },
