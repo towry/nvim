@@ -782,6 +782,15 @@ plug({
       desc = 'Remove from visits',
     },
     {
+      '<localleader>h',
+      function()
+        require('userlib.mini.visits').select_by_cwd(vim.cfg.runtime__starts_cwd, {
+          filter = 'harpoon',
+        })
+      end,
+      desc = 'List harpoon visits',
+    },
+    {
       '<leader>ph',
       function()
         require('userlib.mini.visits').select_by_cwd(vim.cfg.runtime__starts_cwd, {
