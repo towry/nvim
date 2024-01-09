@@ -836,6 +836,7 @@ plug({
   'ibhagwan/fzf-lua',
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   cmd = 'FzfLua',
+  event = 'User LazyUIEnterOncePost',
   keys = {
     {
       '<localleader>p',
@@ -970,8 +971,9 @@ plug({
   config = function()
     local actions = require('fzf-lua.actions')
     local local_actions = require('userlib.fzflua.actions')
+    local fzflua = require('fzf-lua')
     -- https://github.com/ibhagwan/fzf-lua?tab=readme-ov-file#default-options
-    require('fzf-lua').setup({
+    fzflua.setup({
       'max-perf',
       winopts = {
         on_create = function()
@@ -1032,6 +1034,14 @@ plug({
           syntax_limit_b = 1024 * 50,
           limit_b = 1024 * 50,
         },
+      },
+    })
+
+    fzflua.register_ui_select({
+      winopts = {
+        fullscreen = false,
+        height = 0.6,
+        width = 0.4,
       },
     })
   end,

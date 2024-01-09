@@ -117,7 +117,7 @@ pack.plug({
       },
       select = {
         -- Set to false to disable the vim.ui.select implementation
-        enabled = true,
+        enabled = false,
         -- Priority list of preferred vim.select implementations
         backend = { 'fzf', 'telescope', 'nui', 'builtin' },
         -- Options for nui Menu
