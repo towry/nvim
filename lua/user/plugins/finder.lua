@@ -768,8 +768,6 @@ plug({
         visits.add_label('harpoon', nil, vim.cfg.runtime__starts_cwd)
         visits.write_index()
       end,
-      expr = true,
-      nowait = true,
       silent = false,
       desc = 'Add to visits',
     },
@@ -780,8 +778,6 @@ plug({
         visits.remove_label('harpoon', nil, vim.cfg.runtime__starts_cwd)
         visits.write_index()
       end,
-      expr = true,
-      nowait = true,
       silent = false,
       desc = 'Remove from visits',
     },
