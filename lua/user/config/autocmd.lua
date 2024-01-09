@@ -392,9 +392,6 @@ function M.setup(opts)
   M.load_on_startup()
   M.setup_events_on_startup()
 
-  if opts.resize_kitty then
-    resize_kitty()
-  end
   if type(opts.on_very_lazy) == 'function' then
     au.define_user_autocmd({
       pattern = 'VeryLazy',
@@ -402,6 +399,14 @@ function M.setup(opts)
       once = true,
       callback = opts.on_very_lazy,
     })
+  end
+
+  if vim.g.vscode then
+    return
+  end
+
+  if opts.resize_kitty then
+    resize_kitty()
   end
 end
 

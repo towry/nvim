@@ -210,7 +210,7 @@ function M.setup()
       local buf = args.buf
       local ft = vim.bo[buf].filetype
       -- NOTE: nvim-treesitter on comment have some bugs.
-      if ft == 'comment' then
+      if ft == 'comment' or vim.g.vscode then
         return
       end
       if vim.cfg.runtime__starts_as_gittool then
