@@ -684,11 +684,22 @@ local Gitinfo = {
     provider = function()
       local unstaged = gitinfo.gitinfo.unstaged
       if unstaged > 0 then
-        return string.format('M%d', unstaged)
+        return string.format('!%d', unstaged)
       end
       return ''
     end,
-    hl = { fg = utils.get_highlight('DiffChange').bg },
+    hl = { fg = utils.get_highlight('DiffChange').fg, bg = utils.get_highlight('DiffChange').bg },
+  },
+  --- staged
+  {
+    provider = function()
+      local staged = gitinfo.gitinfo.staged
+      if staged > 0 then
+        return string.format('+%d', staged)
+      end
+      return ''
+    end,
+    hl = { fg = utils.get_highlight('DiffAdd').fg, bg = utils.get_highlight('DiffAdd').bg },
   },
   -- untracked ??
   {
@@ -699,7 +710,7 @@ local Gitinfo = {
       end
       return ''
     end,
-    hl = { fg = utils.get_highlight('DiffAdd').bg },
+    hl = { fg = utils.get_highlight('DiffAdd').fg, bg = utils.get_highlight('DiffAdd').bg },
   },
   -- aheads
   {
@@ -710,7 +721,7 @@ local Gitinfo = {
       end
       return ''
     end,
-    hl = { fg = utils.get_highlight('DiffChange').bg },
+    hl = { fg = utils.get_highlight('DiffChange').fg, bg = utils.get_highlight('DiffChange').bg },
   },
   -- behinds
   {
@@ -721,7 +732,7 @@ local Gitinfo = {
       end
       return ''
     end,
-    hl = { fg = utils.get_highlight('DiffChange').bg },
+    hl = { fg = utils.get_highlight('DiffChange').fg, bg = utils.get_highlight('DiffChange').bg },
   },
 }
 

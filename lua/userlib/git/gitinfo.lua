@@ -9,7 +9,10 @@ M.loading = false
 
 M.gitinfo = {
   untracked = 0,
+  -- _M
   unstaged = 0,
+  -- M_ or MM
+  staged = 0,
   aheads = 0,
   behinds = 0,
 }
@@ -36,6 +39,7 @@ function M.update()
     '--porcelain',
     '--branch',
     '--ahead-behind',
+    '--verbose',
   }
 
   local on_exit = function(obj)
@@ -53,20 +57,20 @@ function M.update()
 
     local untracked = 0
     local unstaged = 0
+    local staged = 0
     local aheads = 0
     local behinds = 0
 
     for _, line in ipairs(output) do
       if line:find('^%s*%?') then
         untracked = untracked + 1
-      elseif
-        line:find('^%s*M')
-        or line:find('^%s*A')
-        or line:find('^%s*D')
-        or line:find('^%s*R')
-        or line:find('^%s*C')
-        or line:find('^%sU')
-      then
+      elseif line:find('^%s*M%s') or line:find('^%s*[ADRCU]%sM') then
+        if line:find('^%s*M%s') then
+          unstaged = unstaged + 1
+        else
+          staged = staged + 1
+        end
+      elseif line:find('^%s*[ADRCU]') then
         unstaged = unstaged + 1
       else
         local ahead = line:match('%[ahead%s+(%d+)%]')
@@ -82,6 +86,7 @@ function M.update()
 
     M.gitinfo.untracked = untracked
     M.gitinfo.unstaged = unstaged
+    M.gitinfo.staged = staged
     M.gitinfo.aheads = aheads
     M.gitinfo.behinds = behinds
   end
