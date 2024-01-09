@@ -27,7 +27,7 @@ pack.plug({
           end
           vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-g><C-g><C-n>', true, false, true), 'n', false)
         end),
-        delay = { completion = 150, info = 150, signature = 50 },
+        delay = { completion = 250, info = 250, signature = 100 },
         lsp_completion = {
           source_func = 'omnifunc',
           auto_setup = false,
