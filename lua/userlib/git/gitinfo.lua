@@ -1,7 +1,7 @@
 local M = {}
 
 -- ms
-M.interval = 2 * 1000
+M.interval = 4 * 1000
 M.ticks = 0
 ---@type vim.uv.Timer?
 M.timer = nil
@@ -28,6 +28,7 @@ function M.update()
     return
   end
 
+  --
   M.loading = true
   local cmd = {
     'git',
@@ -38,9 +39,9 @@ function M.update()
   }
 
   local on_exit = function(obj)
+    M.loading = false
     if obj.code ~= 0 then
       -- failed
-      M.loading = false
       return
     end
 
@@ -52,27 +53,22 @@ function M.update()
 
     local untracked = 0
     local unstaged = 0
-    local uncommitted = 0
     local aheads = 0
     local behinds = 0
 
     for _, line in ipairs(output) do
-      if line:find('^%??') then
+      if line:find('^%?') then
         untracked = untracked + 1
-      elseif line:find('^%sM') then
+      elseif
+        line:find('^M')
+        or line:find('^A')
+        or line:find('^D')
+        or line:find('^R')
+        or line:find('^C')
+        or line:find('^U')
+      then
         unstaged = unstaged + 1
-      elseif line:find('^%sA') then
-        unstaged = unstaged + 1
-      elseif line:find('^%sD') then
-        unstaged = unstaged + 1
-      elseif line:find('^%sR') then
-        unstaged = unstaged + 1
-      elseif line:find('^%sC') then
-        unstaged = unstaged + 1
-      elseif line:find('^%sU') then
-        unstaged = unstaged + 1
-      --- if match [ahead 123] or [behind 123]
-      elseif line:find('^%[%w+%s%d+%]') then
+      else
         local ahead = line:match('%[ahead%s+(%d+)%]')
         local behind = line:match('%[behind%s+(%d+)%]')
         if ahead then
@@ -91,8 +87,6 @@ function M.update()
   end
 
   vim.system(cmd, {}, on_exit)
-
-  M.loading = false
 end
 
 function M.start()
