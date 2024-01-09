@@ -21,12 +21,12 @@ pack.plug({
       MC.setup({
         set_vim_settings = false,
         -- h: ins-completion
-        fallback_action = function()
-          if vim.bo.completefunc then
+        fallback_action = vim.schedule_wrap(function()
+          if vim.bo.completefunc and vim.bo.completefunc ~= '' then
             vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-x><C-u>', true, false, true), 'i', false)
           end
           vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-g><C-g><C-n>', true, false, true), 'n', false)
-        end,
+        end),
         delay = { completion = 150, info = 150, signature = 50 },
         lsp_completion = {
           source_func = 'omnifunc',
@@ -99,8 +99,8 @@ pack.plug({
         })
       end
 
-      vim.cmd([[au InsertEnter,CursorMovedI,TextChangedI,TextChangedP * lua pcall(Ty.luasnip_notify)]])
-      vim.cmd([[au InsertLeave * lua pcall(Ty.luasnip_notify_clear)]])
+      -- vim.cmd([[au InsertEnter,CursorMovedI,TextChangedI,TextChangedP * lua pcall(Ty.luasnip_notify)]])
+      -- vim.cmd([[au InsertLeave * lua pcall(Ty.luasnip_notify_clear)]])
     end,
   },
   {
