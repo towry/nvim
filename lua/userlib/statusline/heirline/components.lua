@@ -320,8 +320,8 @@ local function setup_colors()
   return {
     fg = utils.get_highlight('StatusLine').fg or 'none',
     bg = utils.get_highlight('StatusLine').bg or 'none',
-    winbar_fg = utils.get_highlight('WinBar').fg or 'none',
-    winbar_bg = utils.get_highlight('WinBar').bg or 'none',
+    winbar_fg = utils.get_highlight('StatusLineNC').fg or 'none',
+    winbar_bg = utils.get_highlight('StatusLineNC').bg or 'none',
     winbar_nc_fg = utils.get_highlight('WinBarNC').fg or 'none',
     winbar_nc_bg = utils.get_highlight('WinBarNC').bg or 'none',
     tablinesel_fg = utils.get_highlight('TabLineSel').fg or 'none',
@@ -511,9 +511,9 @@ local Tabs = {
     end,
     hl = function(self)
       if not self.is_active then
-        return { fg = 'Green', bg = 'Gray' }
+        return { fg = 'tabline_fg', bg = 'tabline_bg' }
       else
-        return { fg = 'Gray', bg = 'Green' }
+        return { fg = 'tablinesel_fg', bg = 'tablinesel_bg' }
       end
     end,
   }),
