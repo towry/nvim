@@ -1037,7 +1037,7 @@ plug({
       winopts = {
         fullscreen = false,
         height = 0.6,
-        width = 0.4,
+        width = 0.7,
       },
     })
   end,
