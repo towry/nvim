@@ -856,6 +856,14 @@ plug({
       silent = true,
     },
     {
+      '<C-x><C-e>',
+      function()
+        require('userlib.snippets.luasnip').fzf_complete_snippet()
+      end,
+      mode = { 'i' },
+      desc = 'Complete snippets',
+    },
+    {
       '<C-x><C-f>',
       function()
         require('fzf-lua').complete_file({
