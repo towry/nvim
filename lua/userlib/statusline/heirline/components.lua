@@ -674,6 +674,57 @@ local LastExCommand = {
   end,
 }
 
+local gitinfo = require('userlib.git.gitinfo')
+local Gitinfo = {
+  condition = function()
+    return vim.fn.exists('*FugitiveHead') == 1
+  end,
+  -- unstaged
+  {
+    provider = function()
+      local unstaged = gitinfo.gitinfo.unstaged
+      if unstaged > 0 then
+        return string.format('M%d', unstaged)
+      end
+      return ''
+    end,
+    hl = { fg = utils.get_highlight('DiffChange').bg },
+  },
+  -- untracked ??
+  {
+    provider = function()
+      local untracked = gitinfo.gitinfo.untracked
+      if untracked > 0 then
+        return string.format('?%d', untracked)
+      end
+      return ''
+    end,
+    hl = { fg = utils.get_highlight('DiffAdd').bg },
+  },
+  -- aheads
+  {
+    provider = function()
+      local aheads = gitinfo.gitinfo.aheads
+      if aheads > 0 then
+        return string.format('↑%d', aheads)
+      end
+      return ''
+    end,
+    hl = { fg = utils.get_highlight('DiffChange').bg },
+  },
+  -- behinds
+  {
+    provider = function()
+      local behinds = gitinfo.gitinfo.behinds
+      if behinds > 0 then
+        return string.format('↓%d', behinds)
+      end
+      return ''
+    end,
+    hl = { fg = utils.get_highlight('DiffChange').bg },
+  },
+}
+
 return {
   TerminalStatusline = TerminalStatusline,
   HelpFileName = HelpFileName,
@@ -706,4 +757,5 @@ return {
   NavigateDirection = NavigateDirection,
   LastExCommand = LastExCommand,
   Codeium = Codeium,
+  Gitinfo = Gitinfo,
 }

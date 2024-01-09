@@ -44,6 +44,7 @@ plug({
         },
         comp.ViMode,
         comp.lpad(comp.Branch),
+        comp.lpad(comp.Gitinfo),
         comp.lpad(comp.GitStatus),
         -- comp.lpad(comp.ProfileRecording),
         comp.lpad(comp.Copilot),
