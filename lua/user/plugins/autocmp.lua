@@ -942,3 +942,25 @@ pack.plug({
     end,
   },
 })
+
+pack.plug({
+  'chrisgrieser/nvim-scissors',
+  cmd = { 'NewSnippet', 'EditSnippet' },
+  config = function()
+    require('scissors').setup({
+      snippetDir = vim.fn.stdpath('config') .. '/user-snippets',
+      jsonFormatter = vim.fn.executable('jq') == 1 and 'jq' or 'none',
+    })
+
+    vim.api.nvim_create_user_command('NewSnippet', function()
+      require('scissors').addNewSnippet()
+    end, {
+      desc = 'Create new snippet',
+    })
+    vim.api.nvim_create_user_command('EditSnippet', function()
+      require('scissors').editSnippet()
+    end, {
+      desc = 'Edit snippet',
+    })
+  end,
+})

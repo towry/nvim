@@ -62,6 +62,7 @@
   "nvim-gtd": { "branch": "main", "commit": "d2f34debfd8c0af3a0a81708933e33f4478fe120" },
   "nvim-lastplace": { "branch": "main", "commit": "0bb6103c506315044872e0f84b1f736c4172bb20" },
   "nvim-lspconfig": { "branch": "master", "commit": "796394fd19fb878e8dbc4fd1e9c9c186ed07a5f4" },
+  "nvim-scissors": { "branch": "main", "commit": "b7f2d6a34b599d97deb5fd9753b4c0c506cfbc2c" },
   "nvim-spectre": { "branch": "master", "commit": "d8906855f1949ac97b1e77aaf8d3fe12ed158ddc" },
   "nvim-surround": { "branch": "main", "commit": "703ec63aa798e5e07d309b35e42def34bebe0174" },
   "nvim-treesitter": { "branch": "main", "commit": "42a56d2ad691ff7e46a3ad8a05c66815e555ba7e" },
