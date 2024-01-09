@@ -57,15 +57,15 @@ function M.update()
     local behinds = 0
 
     for _, line in ipairs(output) do
-      if line:find('^%?') then
+      if line:find('^%s*%?') then
         untracked = untracked + 1
       elseif
-        line:find('^M')
-        or line:find('^A')
-        or line:find('^D')
-        or line:find('^R')
-        or line:find('^C')
-        or line:find('^U')
+        line:find('^%s*M')
+        or line:find('^%s*A')
+        or line:find('^%s*D')
+        or line:find('^%s*R')
+        or line:find('^%s*C')
+        or line:find('^%sU')
       then
         unstaged = unstaged + 1
       else
