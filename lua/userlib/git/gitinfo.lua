@@ -10,9 +10,16 @@ M.loading = false
 M.gitinfo = {
   untracked = 0,
   unstaged = 0,
+  aheads = 0,
+  behinds = 0,
 }
 
----
+--- debug
+_G.gitinfo = function()
+  vim.print(M.gitinfo)
+end
+
+--- gather gitinfo by using vim.system and git command
 function M.update()
   if M.timer == nil then
     return
@@ -20,6 +27,72 @@ function M.update()
   if M.loading then
     return
   end
+
+  M.loading = true
+  local cmd = {
+    'git',
+    'status',
+    '--porcelain',
+    '--branch',
+    '--ahead-behind',
+  }
+
+  local on_exit = function(obj)
+    if obj.code ~= 0 then
+      -- failed
+      M.loading = false
+      return
+    end
+
+    local output = obj.stdout
+    --- output is string
+    if type(output) == 'string' then
+      output = vim.split(output, '\n')
+    end
+
+    local untracked = 0
+    local unstaged = 0
+    local uncommitted = 0
+    local aheads = 0
+    local behinds = 0
+
+    for _, line in ipairs(output) do
+      if line:find('^%??') then
+        untracked = untracked + 1
+      elseif line:find('^%sM') then
+        unstaged = unstaged + 1
+      elseif line:find('^%sA') then
+        unstaged = unstaged + 1
+      elseif line:find('^%sD') then
+        unstaged = unstaged + 1
+      elseif line:find('^%sR') then
+        unstaged = unstaged + 1
+      elseif line:find('^%sC') then
+        unstaged = unstaged + 1
+      elseif line:find('^%sU') then
+        unstaged = unstaged + 1
+      --- if match [ahead 123] or [behind 123]
+      elseif line:find('^%[%w+%s%d+%]') then
+        local ahead = line:match('%[ahead%s+(%d+)%]')
+        local behind = line:match('%[behind%s+(%d+)%]')
+        if ahead then
+          aheads = aheads + tonumber(ahead)
+        end
+        if behind then
+          behinds = behinds + tonumber(behind)
+        end
+      end
+    end
+
+    M.gitinfo.untracked = untracked
+    M.gitinfo.unstaged = unstaged
+    M.gitinfo.aheads = aheads
+    M.gitinfo.behinds = behinds
+  end
+
+  vim.system(cmd, {}, on_exit)
+
+  M.loading = false
 end
 
 function M.start()
@@ -42,6 +115,15 @@ function M.stop()
     M.timer:stop()
     M.timer = nil
   end)
+end
+
+function M.running()
+  return M.timer ~= nil
+end
+
+--- simple detect
+function M.util_is_git_repo()
+  return vim.b.gitsigns_status_dict ~= nil
 end
 
 return M

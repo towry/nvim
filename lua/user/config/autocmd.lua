@@ -327,6 +327,8 @@ function M.load_on_startup()
       once = true,
       callback = function()
         require('user.config.theme').setup_theme()
+        --- TODO: fix me
+        require('userlib.git.gitinfo').start()
       end,
     },
     {
