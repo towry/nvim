@@ -1020,7 +1020,6 @@ plug({
           ['alt-q'] = actions.file_sel_to_qf,
           ['alt-l'] = actions.file_sel_to_ll,
           ['ctrl-g'] = actions.toggle_ignore,
-          ['ctrl-a'] = { fn = local_actions.flash, exec_silent = true },
         },
         buffers = {
           ['default'] = local_actions.buffers_open_default,
