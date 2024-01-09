@@ -103,7 +103,7 @@ local ViMode = {
     return ' ' .. self.mode_names[self.mode] .. ' '
   end,
   hl = function(self)
-    return { fg = self:mode_color(), bold = true }
+    return { bg = self:mode_color(), fg = 'white', bold = true }
   end,
   update = {
     'ModeChanged',
