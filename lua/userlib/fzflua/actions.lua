@@ -66,6 +66,10 @@ M.flash = function(selected, opts)
     },
     action = function(match)
       local pos = { match.pos[1], 0 }
+      vim.api.nvim_win_call(cur_win, function()
+        -- lcoal buf = vim.api.nvim_get_current_win()
+        vim.api.nvim_win_set_cursor(cur_win, { 8, 0 })
+      end)
     end,
   })
 end
