@@ -52,6 +52,7 @@ end)
 
 --- TODO: finish this
 M.flash = function(selected, opts)
+  local cur_win = vim.api.nvim_get_current_win()
   require('flash').jump({
     pattern = '^',
     label = { after = { 0, 0 } },
@@ -59,14 +60,12 @@ M.flash = function(selected, opts)
       mode = 'search',
       exclude = {
         function(win)
-          return false
+          return win ~= cur_win
         end,
       },
     },
     action = function(match)
-      vim.print(match)
-      -- local picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
-      -- picker:set_selection(match.pos[1] - 1)
+      local pos = { match.pos[1], 0 }
     end,
   })
 end
