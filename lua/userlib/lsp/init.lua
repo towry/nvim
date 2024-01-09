@@ -61,7 +61,16 @@ end
 
 function M.buf_try_add_lspconfig(server_name, bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
-  require('lspconfig')[server_name].manager:try_add_wrapper(bufnr)
+  local lspconfig_for_server = require('lspconfig')[server_name]
+  if not lspconfig_for_server then
+    vim.notify(string.format("_%s_ doesn't have lspconfig configuration", server_name), vim.log.levels.ERROR)
+    return
+  end
+  if not lspconfig_for_server.manager then
+    -- vim.notify(string.format('_%s_ not installed', server_name), vim.log.levels.ERROR)
+    return
+  end
+  lspconfig_for_server.manager:try_add_wrapper(bufnr)
 end
 
 -- check if the manager autocomd has already been configured since some servers can take a while to initialize
