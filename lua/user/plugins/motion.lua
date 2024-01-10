@@ -179,10 +179,9 @@ plug({
         function()
           require('userlib.workflow.flashs').jump_to_line({
             action = function(match)
-              vim.api.nvim_win_call(match.win, function()
-                vim.api.nvim_win_set_cursor(match.win, match.pos)
-                vim.cmd('normal! o')
-              end)
+              vim.api.nvim_set_current_win(match.win)
+              vim.api.nvim_win_set_cursor(match.win, match.pos)
+              vim.cmd('normal! o')
             end,
           })
         end,
@@ -190,14 +189,13 @@ plug({
       {
         '<C-o>O',
         mode = 'i',
-        desc = 'O after flash',
+        desc = 'O after flash in insert mode',
         function()
           require('userlib.workflow.flashs').jump_to_line({
             action = function(match)
-              vim.api.nvim_win_call(match.win, function()
-                vim.api.nvim_win_set_cursor(match.win, match.pos)
-                vim.cmd('normal! O')
-              end)
+              vim.api.nvim_set_current_win(match.win)
+              vim.api.nvim_win_set_cursor(match.win, match.pos)
+              vim.cmd('normal! O')
             end,
           })
         end,
