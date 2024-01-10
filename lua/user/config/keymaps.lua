@@ -306,6 +306,15 @@ local function setup_basic()
     silent = false,
   })
 
+  set('n', '<leader>rl', function()
+    local line = 'lua ' .. vim.trim(vim.api.nvim_get_current_line())
+    vim.print('RL: ' .. line)
+    vim.api.nvim_command(line)
+    -- vim.api.nvim_input('<Down>')
+  end, {
+    desc = 'Execute current line as lua command',
+  })
+
   if vim.cfg.edit__use_native_cmp then
     -- Move inside completion list with <TAB>
     set({ 'i' }, [[<Tab>]], function()
