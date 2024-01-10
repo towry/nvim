@@ -20,6 +20,8 @@ function M.jump_to_line(opts)
   })
 end
 
+--- copy remote line in current cursor position and insert it at current cursor
+--- position.
 function M.copy_remote_line()
   M.jump_to_line({
     action = function(match)
