@@ -120,6 +120,8 @@ function M.update()
       unstaged = 0,
       staged = 0,
       dirty = 0,
+      aheads = 0,
+      behinds = 0,
     }
 
     for _, line in ipairs(output) do
@@ -130,10 +132,10 @@ function M.update()
         local ahead = line:match('%[ahead%s+(%d+)%]')
         local behind = line:match('%[behind%s+(%d+)%]')
         if ahead then
-          gitinfo.aheads = tonumber(ahead)
+          o.aheads = tonumber(ahead)
         end
         if behind then
-          gitinfo.behinds = tonumber(behind)
+          o.behinds = tonumber(behind)
         end
       elseif short_status ~= nil then
         o.dirty = o.dirty + 1
@@ -152,6 +154,8 @@ function M.update()
     -- gitinfo.typechanged = o.typechanged
     -- gitinfo.conflicted = o.conflicted
     gitinfo.dirty = o.dirty
+    gitinfo.aheads = o.aheads
+    gitinfo.behinds = o.behinds
   end
 
   vim.system(cmd, {}, on_exit)
