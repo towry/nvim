@@ -354,7 +354,7 @@ local function setup_basic()
         -- trigger ai
         if vim.b._copilot then
           vim.fn.feedkeys(vim.fn['copilot#Suggest'](), 'i')
-        elseif vim.b._codeium_completions then
+        elseif vim.fn.exists('*codeium#Complete') == 1 then
           vim.fn.feedkeys(vim.fn['codeium#Complete'](), 'i')
         end
       end
