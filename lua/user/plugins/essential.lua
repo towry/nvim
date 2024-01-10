@@ -197,6 +197,7 @@ pack.plug({
 --- legendary
 pack.plug({
   'mrjones2014/legendary.nvim',
+  enabled = false,
   dependencies = {
     'dressing.nvim',
     -- used for frecency sort
@@ -222,7 +223,6 @@ pack.plug({
     end
 
     local lg = require('legendary')
-    local au = require('userlib.runtime.au')
     lg.setup({
       funcs = require('userlib.legendary.funcs.migrate'),
       commands = require('userlib.legendary.commands.migrate'),
