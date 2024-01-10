@@ -40,10 +40,17 @@ function M.is_buf_harpoon(bufnr, cwd)
   local visits = require('mini.visits')
   local list = visits.list_paths(cwd, {
     filter = function(path_data)
-      return bufpath == path_data.path and (path_data.labels or {})['harpoon']
+      return (path_data.labels or {})['harpoon'] and (bufpath == path_data.path)
     end,
   })
-  return list and #list > 0
+  local is = list and #list > 0
+  -- cache
+  if is then
+    vim.b[bufnr].is_harpoon = true
+  else
+    vim.b[bufnr].is_harpoon = false
+  end
+  return is
 end
 
 function M.list_projects_in_cwd(cwd)
