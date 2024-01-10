@@ -866,23 +866,6 @@ plug({
       desc = 'Complete snippets',
     },
     {
-      '<C-x><C-f>',
-      function()
-        require('fzf-lua').complete_file({
-          actions = {
-            ['ctrl-o'] = function(selected, opts)
-              local selected_single = selected[1]
-              require('fzf-lua.actions').complete({
-                selected_single,
-              }, opts)
-            end,
-          },
-        })
-      end,
-      desc = 'Complete file path',
-      mode = { 'i' },
-    },
-    {
       '<leader>fb',
       cmd_modcall('fzf-lua', [[grep_curbuf({ cwd_header = true })]]),
       desc = 'Fuzzy search in current buffer',
