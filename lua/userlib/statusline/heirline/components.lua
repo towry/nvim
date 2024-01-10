@@ -113,7 +113,7 @@ local ViMode = {
 local FileIcon = {
   init = function(self)
     self.icon, self.icon_color =
-      require('nvim-web-devicons').get_icon_color_by_filetype(vim.bo.filetype, { default = true })
+        require('nvim-web-devicons').get_icon_color_by_filetype(vim.bo.filetype, { default = true })
   end,
   provider = function(self)
     return self.icon and (self.icon .. ' ')
@@ -197,8 +197,8 @@ local GitStatus = {
       return
     end
     self.has_changes = self.status_dict ~= nil and self.status_dict.added ~= 0
-      or self.status_dict.removed ~= 0
-      or self.status_dict.changed ~= 0
+        or self.status_dict.removed ~= 0
+        or self.status_dict.changed ~= 0
   end,
 
   hl = { fg = utils.get_highlight('Constant').fg },
@@ -504,7 +504,7 @@ local WorkspaceRoot = {
 local Tabs = {
   condition = function()
     return #vim.api.nvim_list_tabpages() >= 2
-  end, -- only show tabs if there are more than one
+  end,                 -- only show tabs if there are more than one
   utils.make_tablist({ -- component for each tab
     provider = function(self)
       return (self and self.tabnr) and '%' .. self.tabnr .. 'T ' .. self.tabnr .. ' %T' or ''
@@ -679,38 +679,15 @@ local Gitinfo = {
   condition = function()
     return vim.fn.exists('*FugitiveHead') == 1
   end,
-  -- unstaged
   {
     provider = function()
-      local unstaged = gitinfo.gitinfo.unstaged
-      if unstaged > 0 then
-        return string.format('!%d', unstaged)
+      local dirty = gitinfo.gitinfo.dirty
+      if dirty > 0 then
+        return string.format('*%d', dirty)
       end
       return ''
     end,
     hl = { fg = utils.get_highlight('DiffChange').fg, bg = utils.get_highlight('DiffChange').bg },
-  },
-  --- staged
-  {
-    provider = function()
-      local staged = gitinfo.gitinfo.staged
-      if staged > 0 then
-        return string.format('+%d', staged)
-      end
-      return ''
-    end,
-    hl = { fg = utils.get_highlight('DiffAdd').fg, bg = utils.get_highlight('DiffAdd').bg },
-  },
-  -- untracked ??
-  {
-    provider = function()
-      local untracked = gitinfo.gitinfo.untracked
-      if untracked > 0 then
-        return string.format('?%d', untracked)
-      end
-      return ''
-    end,
-    hl = { fg = utils.get_highlight('DiffAdd').fg, bg = utils.get_highlight('DiffAdd').bg },
   },
   -- aheads
   {

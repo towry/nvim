@@ -6,11 +6,12 @@ local au = require('userlib.runtime.au')
 pack.plug({
   {
     'NMAC427/guess-indent.nvim',
-    event = 'InsertEnter',
+    event = 'User LazyUIEnterOncePost',
     cmd = { 'GuessIndent' },
     opts = {
       auto_cmd = true, -- Set to false to disable automatic execution
       filetype_exclude = vim.cfg.misc__ft_exclude,
+      override_editorconfig = false,
       buftype_exclude = vim.cfg.misc__buf_exclude,
     },
   },
