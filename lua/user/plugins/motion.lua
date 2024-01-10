@@ -201,6 +201,14 @@ plug({
         end,
       },
       {
+        '<C-s>v',
+        mode = { 'i', 'n' },
+        desc = 'Copy after flash',
+        function()
+          require('userlib.workflow.flashs').copy_remote_line()
+        end,
+      },
+      {
         'R',
         mode = { 'o', 'x' },
         function()
