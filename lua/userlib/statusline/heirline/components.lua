@@ -113,7 +113,7 @@ local ViMode = {
 local FileIcon = {
   init = function(self)
     self.icon, self.icon_color =
-        require('nvim-web-devicons').get_icon_color_by_filetype(vim.bo.filetype, { default = true })
+      require('nvim-web-devicons').get_icon_color_by_filetype(vim.bo.filetype, { default = true })
   end,
   provider = function(self)
     return self.icon and (self.icon .. ' ')
@@ -197,8 +197,8 @@ local GitStatus = {
       return
     end
     self.has_changes = self.status_dict ~= nil and self.status_dict.added ~= 0
-        or self.status_dict.removed ~= 0
-        or self.status_dict.changed ~= 0
+      or self.status_dict.removed ~= 0
+      or self.status_dict.changed ~= 0
   end,
 
   hl = { fg = utils.get_highlight('Constant').fg },
@@ -504,7 +504,7 @@ local WorkspaceRoot = {
 local Tabs = {
   condition = function()
     return #vim.api.nvim_list_tabpages() >= 2
-  end,                 -- only show tabs if there are more than one
+  end, -- only show tabs if there are more than one
   utils.make_tablist({ -- component for each tab
     provider = function(self)
       return (self and self.tabnr) and '%' .. self.tabnr .. 'T ' .. self.tabnr .. ' %T' or ''
@@ -713,6 +713,23 @@ local Gitinfo = {
   },
 }
 
+local BufVisited = {
+  condition = function()
+    return package.loaded['mini.visits'] ~= nil
+  end,
+  init = function(self)
+    local is = require('userlib.mini.visits').is_buf_harpoon(0)
+    self.is = is
+  end,
+  provider = function(self)
+    local is = self.is
+    if is then
+      return '[Harpoon]'
+    end
+    return ''
+  end,
+}
+
 return {
   TerminalStatusline = TerminalStatusline,
   HelpFileName = HelpFileName,
@@ -746,4 +763,5 @@ return {
   LastExCommand = LastExCommand,
   Codeium = Codeium,
   Gitinfo = Gitinfo,
+  BufVisited = BufVisited,
 }

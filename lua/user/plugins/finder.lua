@@ -765,6 +765,7 @@ plug({
       'mm',
       function()
         local visits = require('mini.visits')
+        vim.b[0].is_harpoon = true
         visits.add_label('harpoon', nil, vim.cfg.runtime__starts_cwd)
         visits.write_index()
       end,
@@ -774,6 +775,7 @@ plug({
     {
       'mM',
       function()
+        vim.b[0].is_harpoon = false
         local visits = require('mini.visits')
         visits.remove_label('harpoon', nil, vim.cfg.runtime__starts_cwd)
         visits.write_index()

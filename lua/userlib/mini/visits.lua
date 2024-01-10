@@ -28,6 +28,24 @@ function M.add_project(project_path, cwd)
   visits.write_index()
 end
 
+--- @param bufnr number
+--- @param cwd? string
+function M.is_buf_harpoon(bufnr, cwd)
+  if vim.b[bufnr].is_harpoon ~= nil then
+    return vim.b[bufnr].is_harpoon
+  end
+
+  cwd = cwd or vim.cfg.runtime__starts_cwd
+  local bufpath = vim.api.nvim_buf_get_name(bufnr)
+  local visits = require('mini.visits')
+  local list = visits.list_paths(cwd, {
+    filter = function(path_data)
+      return bufpath == path_data.path and (path_data.labels or {})['harpoon']
+    end,
+  })
+  return list and #list > 0
+end
+
 function M.list_projects_in_cwd(cwd)
   local extra = require('mini.extra')
   local path = require('userlib.runtime.path')
