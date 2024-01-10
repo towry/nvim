@@ -87,6 +87,8 @@ function M.update()
   M.loading = true
   local cmd = {
     'git',
+    '-C',
+    vim.cfg.runtime__starts_cwd or vim.uv.cwd(),
     'status',
     '--porcelain',
     '--branch',
@@ -127,7 +129,7 @@ function M.update()
     for _, line in ipairs(output) do
       -- take first characters that until a space.
       -- can starts with a space.
-      local short_status = string.match(line, "^%s*[^%s]+")
+      local short_status = string.match(line, '^%s*[^%s]+')
       if short_status and short_status:find('##') then
         local ahead = line:match('%[ahead%s+(%d+)%]')
         local behind = line:match('%[behind%s+(%d+)%]')
