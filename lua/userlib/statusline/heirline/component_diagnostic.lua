@@ -57,10 +57,4 @@ return {
     end,
     hl = 'DiagnosticHint',
   },
-  -- {
-  --   provider = function(self)
-  --     return self.total == 0 and " " or ""
-  --   end,
-  --   hl = "DiagnosticInfo",
-  -- },
 }

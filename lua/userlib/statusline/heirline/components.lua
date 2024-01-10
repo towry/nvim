@@ -433,7 +433,7 @@ local Branch = {
     end
   end,
   provider = function(self)
-    return self.head ~= '' and ' ' .. self.head or ''
+    return self.head ~= '' and ' ' .. (self.head or '')
   end,
   update = {
     'User',
@@ -596,12 +596,12 @@ local Copilot = {
   },
   provider = function(self)
     if not self.enable then
-      return '󱚧'
+      return '󱚧 '
     end
     if not self.is_running() then
-      return '󰚩'
+      return '󰚩 '
     end
-    return '󰆄'
+    return '󰆄 '
   end,
   hl = function(self)
     local fg = vim.g.copilot_auto_mode == true and 'orange' or ''
@@ -678,7 +678,11 @@ local gitinfo = require('userlib.git.gitinfo')
 local Gitinfo = {
   condition = function()
     return vim.fn.exists('*FugitiveHead') == 1
+      and (gitinfo.gitinfo.dirty > 0 or gitinfo.gitinfo.aheads > 0 or gitinfo.gitinfo.behinds > 0)
   end,
+  {
+    provider = '[',
+  },
   {
     provider = function()
       local dirty = gitinfo.gitinfo.dirty
@@ -710,6 +714,9 @@ local Gitinfo = {
       return ''
     end,
     hl = { fg = utils.get_highlight('DiffChange').fg, bg = utils.get_highlight('DiffChange').bg },
+  },
+  {
+    provider = ']',
   },
 }
 
