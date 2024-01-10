@@ -83,3 +83,27 @@ plug({
     },
   },
 })
+
+plug({
+  'EdenEast/nightfox.nvim',
+  event = 'User LazyTheme',
+  priority = 1000,
+  enabled = string.match(vim.cfg.ui__theme_name, 'fox') ~= nil,
+  config = function()
+    -- https://github.com/EdenEast/nightfox.nvim?tab=readme-ov-file#configuration
+    require('nightfox').setup({
+      options = {
+        styles = {
+          comments = 'italic',
+          keywords = 'bold',
+          types = 'italic,bold',
+        },
+      },
+      palettes = {
+        all = {},
+      },
+      specs = {},
+      groups = {},
+    })
+  end,
+})
