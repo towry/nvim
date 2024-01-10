@@ -329,6 +329,12 @@ function M.load_on_startup()
       end,
     },
     {
+      pattern = 'GitSignsUpdate',
+      callback = function()
+        vim.defer_fn(require('userlib.git.gitinfo').update, 500)
+      end,
+    },
+    {
       pattern = 'VeryLazy',
       once = true,
       callback = function()
