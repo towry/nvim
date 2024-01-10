@@ -124,12 +124,9 @@ plug({
       {
         '<C-s>',
         mode = { 'n' },
+        nowait = false,
         function()
-          require('flash').jump({
-            search = { mode = 'search', max_length = 0 },
-            label = { after = { 0, 0 } },
-            pattern = '\\(^\\s*\\)\\@<=\\S',
-          })
+          require('userlib.workflow.flashs').jump_to_line()
         end,
         desc = 'Flash jump to line',
       },
@@ -176,6 +173,36 @@ plug({
         desc = 'Remote Flash',
       },
       {
+        '<C-o>o',
+        mode = 'i',
+        desc = 'o after flash',
+        function()
+          require('userlib.workflow.flashs').jump_to_line({
+            action = function(match)
+              vim.api.nvim_win_call(match.win, function()
+                vim.api.nvim_win_set_cursor(match.win, match.pos)
+                vim.cmd('normal! o')
+              end)
+            end,
+          })
+        end,
+      },
+      {
+        '<C-o>O',
+        mode = 'i',
+        desc = 'O after flash',
+        function()
+          require('userlib.workflow.flashs').jump_to_line({
+            action = function(match)
+              vim.api.nvim_win_call(match.win, function()
+                vim.api.nvim_win_set_cursor(match.win, match.pos)
+                vim.cmd('normal! O')
+              end)
+            end,
+          })
+        end,
+      },
+      {
         'R',
         mode = { 'o', 'x' },
         function()
@@ -189,6 +216,8 @@ plug({
         exclude = vim.cfg.misc__ft_exclude,
       },
       jump = {
+        pos = 'start', -- jump to end of label, useful in insert mode jump.
+        offset = 1, -- affect pos.
         autojump = true,
         nohlsearch = true,
       },
