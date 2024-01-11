@@ -656,8 +656,6 @@ pack.plug({
         -- Registers
         { mode = 'n', keys = '"' },
         { mode = 'x', keys = '"' },
-        { mode = 'i', keys = '<C-r>' },
-        { mode = 'c', keys = '<C-r>' },
         -- `z` key
         { mode = 'n', keys = 'z' },
         { mode = 'x', keys = 'z' },
