@@ -851,12 +851,12 @@ plug({
       desc = 'Command panel',
       silent = true,
     },
-    {
-      '<localleader>,',
-      ':FzfLua<cr>',
-      desc = 'Fzf',
-      silent = true,
-    },
+    -- {
+    --   '<localleader>,',
+    --   ':FzfLua<cr>',
+    --   desc = 'Fzf',
+    --   silent = true,
+    -- },
     {
       '<C-x><C-e>',
       function()
@@ -871,9 +871,9 @@ plug({
       desc = 'Fuzzy search in current buffer',
     },
     {
-      '<leader><space>',
+      '<localleader>,',
       cmd_modcall(fzf_mod, 'buffers_or_recent()'),
-      nowait = false,
+      nowait = true,
       desc = 'List Buffers',
     },
     {
@@ -903,11 +903,12 @@ plug({
       desc = 'Resume fzf',
     },
     {
-      '<leader><Tab>',
+      '<localleader><Tab>',
       cmd_modcall(
         'fzf-lua',
         [[oldfiles({ cwd_only = true, include_current_session = true, cwd = vim.cfg.runtime__starts_cwd, winopts = { fullscreen = false } })]]
       ),
+      nowait = true,
       desc = 'Open recent files',
     },
     {
