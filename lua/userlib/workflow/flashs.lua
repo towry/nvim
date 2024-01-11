@@ -27,13 +27,18 @@ function M.copy_remote_line()
     action = function(match)
       local win = match.win
       local match_pos = match.pos
-
+      -- run in target win
       vim.api.nvim_win_call(win, function()
         -- copy line in win at match_pos and insert it into current cursor
         -- position.
         vim.fn.setreg('+', vim.fn.getline(match_pos[1]))
-        vim.api.nvim_command('normal! "+p')
-        vim.api.nvim_command('normal! V=')
+        --- run in current win.
+        vim.api.nvim_win_call(0, function()
+          vim.schedule(function()
+            vim.api.nvim_command('normal! "+p')
+            vim.api.nvim_command('normal! V=')
+          end)
+        end)
       end)
     end,
   })

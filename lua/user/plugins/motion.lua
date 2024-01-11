@@ -201,7 +201,7 @@ plug({
         end,
       },
       {
-        '<C-s>sv',
+        '<C-s>v',
         mode = { 'i', 'n' },
         desc = 'Copy after flash',
         function()
