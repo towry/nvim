@@ -871,7 +871,7 @@ plug({
       desc = 'Fuzzy search in current buffer',
     },
     {
-      '<localleader>b',
+      '<leader><space>',
       cmd_modcall(fzf_mod, 'buffers_or_recent()'),
       nowait = false,
       desc = 'List Buffers',
