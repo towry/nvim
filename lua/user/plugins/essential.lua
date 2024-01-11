@@ -601,8 +601,7 @@ pack.plug({
         -- Built-in completion
         { mode = 'i', keys = '<C-x>' },
         { mode = 'i', keys = '<C-o>' },
-        { mode = 'i', keys = '<C-s>' },
-        { mode = 'n', keys = '<C-s>' },
+        { mode = 'i', keys = '<C-s>s' },
 
         -- `g` key
         { mode = 'n', keys = 'g' },
