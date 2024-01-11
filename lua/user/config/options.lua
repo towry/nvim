@@ -22,7 +22,7 @@ function M.startup()
   o.splitbelow = false
   o.swapfile = false --- Swap not needed
   o.tabstop = 2 --- Insert 2 spaces for a tab
-  o.timeoutlen = 400 --- Key sequence wait time | Faster completion (cannot be lower than 200 because then commenting doesn't work)
+  o.timeoutlen = 450 --- Key sequence wait time | Faster completion (cannot be lower than 200 because then commenting doesn't work)
   o.showcmd = true
   o.showcmdloc = 'last'
   o.winminwidth = 10
