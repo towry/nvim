@@ -315,12 +315,12 @@ local function setup_basic()
     desc = 'Execute current line as lua command',
   })
 
-  set('n', '<leader>np', 'o<esc>"*p`[v`]gq<esc>$', {
+  set('n', '<leader>np', 'o<esc>"*p`[v`]=<esc>$', {
     expr = false,
     noremap = true,
     desc = 'Paste in next line and format',
   })
-  set('n', '<leader>nP', 'O<esc>"*p`[v`]gq<esc>$', {
+  set('n', '<leader>nP', 'O<esc>"*p`[v`]=<esc>$', {
     expr = false,
     noremap = true,
     desc = 'Paste in above line and format',
