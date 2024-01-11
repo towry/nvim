@@ -315,12 +315,12 @@ local function setup_basic()
     desc = 'Execute current line as lua command',
   })
 
-  set('n', '<leader>np', 'o<esc>p`[v`]gq<esc>$', {
+  set('n', '<leader>np', 'o<esc>"*p`[v`]gq<esc>$', {
     expr = false,
     noremap = true,
     desc = 'Paste in next line and format',
   })
-  set('n', '<leader>nP', 'O<esc>p`[v`]gq<esc>$', {
+  set('n', '<leader>nP', 'O<esc>"*p`[v`]gq<esc>$', {
     expr = false,
     noremap = true,
     desc = 'Paste in above line and format',
@@ -332,6 +332,12 @@ local function setup_basic()
   })
 
   if vim.cfg.edit__use_native_cmp then
+    local keys = {
+      ['cr'] = vim.api.nvim_replace_termcodes('<CR>', true, true, true),
+      ['ctrl-y'] = vim.api.nvim_replace_termcodes('<C-y>', true, true, true),
+      ['ctrl-y_cr'] = vim.api.nvim_replace_termcodes('<C-y><CR>', true, true, true),
+    }
+
     -- Move inside completion list with <TAB>
     set({ 'i' }, [[<Tab>]], function()
       local has_luasnip, luasnip = pcall(require, 'luasnip')
@@ -346,6 +352,15 @@ local function setup_basic()
         return [[<Plug>(neotab-out)]]
       end
     end, { expr = true, silent = false })
+
+    set({ 'i' }, [[<CR>]], function()
+      if vim.fn.pumvisible() ~= 0 then
+        local item_selected = vim.fn.complete_info()['selected'] ~= -1
+        return item_selected and keys['ctrl-y'] or keys['ctrl-y_cr']
+      end
+      return keys['cr']
+    end, { expr = true, silent = true })
+
     set({ 'i' }, [[<S-Tab>]], function()
       local has_luasnip, luasnip = pcall(require, 'luasnip')
 
@@ -359,11 +374,7 @@ local function setup_basic()
         return '<S-Tab>'
       end
     end, { expr = true, silent = true })
-    local keys = {
-      ['cr'] = vim.api.nvim_replace_termcodes('<CR>', true, true, true),
-      ['ctrl-y'] = vim.api.nvim_replace_termcodes('<C-y>', true, true, true),
-      ['ctrl-y_cr'] = vim.api.nvim_replace_termcodes('<C-y><CR>', true, true, true),
-    }
+
     set({ 'i' }, '<C-y>', function()
       -- accept ai or completion selection.
       if vim.fn.pumvisible() ~= 0 then
