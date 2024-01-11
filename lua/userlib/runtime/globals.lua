@@ -195,3 +195,19 @@ Ty.has_ai_suggestion_text = function()
 
   return false
 end
+
+Ty.capture_tmux_pane = function(pid)
+  if not pid or pid == 0 then
+    -- rerun last
+    local last_cmd = vim.b.dispatch or ''
+    -- if last_cmd contains "tmux capture-pane"
+    if vim.fn.match(last_cmd, 'tmux capture-pane') ~= -1 then
+      -- rerun current scope's dispatch command
+      vim.cmd('Dispatch')
+      vim.cmd('Copen')
+      return
+    end
+    return
+  end
+  vim.cmd(string.format('Dispatch tmux capture-pane -t %s -p', pid))
+end

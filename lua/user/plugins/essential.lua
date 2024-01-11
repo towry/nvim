@@ -28,6 +28,41 @@ pack.plug({
         ':Dispatch',
         desc = 'Start Dispatch',
       },
+      {
+        '<localleader>xo1',
+        ':lua Ty.capture_tmux_pane(1)<cr>',
+        desc = 'Capture tmux pane 1',
+      },
+      {
+        '<localleader>xo2',
+        ':lua Ty.capture_tmux_pane(2)<cr>',
+        desc = 'Capture tmux pane 2',
+      },
+      {
+        '<localleader>xo3',
+        ':lua Ty.capture_tmux_pane(3)<cr>',
+        desc = 'Capture tmux pane 3',
+      },
+      {
+        '<localleader>xo4',
+        ':lua Ty.capture_tmux_pane(4)<cr>',
+        desc = 'Capture tmux pane 4',
+      },
+      {
+        '<localleader>xo5',
+        ':lua Ty.capture_tmux_pane(5)<cr>',
+        desc = 'Capture tmux pane 5',
+      },
+      {
+        '<localleader>xo6',
+        ':lua Ty.capture_tmux_pane(6)<cr>',
+        desc = 'Capture tmux pane 6',
+      },
+      {
+        '<localleader>xo7',
+        ':lua Ty.capture_tmux_pane(7)<cr>',
+        desc = 'Capture tmux pane 7',
+      },
     },
     cmd = {
       'Dispatch',
