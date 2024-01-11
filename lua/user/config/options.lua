@@ -97,7 +97,7 @@ function M.init_interface()
   o.pumheight = 8 --- Max num of items in completion menu
   o.pumblend = 0 -- popup blend
   o.infercase = true -- Infer letter cases for a richer built-in keyword completion
-  o.scrolloff = 10 --- Always keep space when scrolling to bottom/top edge
+  o.scrolloff = 2 --- Always keep space when scrolling to bottom/top edge
   -- o.smoothscroll = true
   o.sidescroll = 10 --- Used only when 'wrap' option is off and the cursor is moved off the screen.
   o.mouse = 'a' --- Enable mouse
