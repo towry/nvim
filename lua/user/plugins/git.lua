@@ -312,12 +312,12 @@ plug({
     'sindrets/diffview.nvim',
     keys = {
       {
-        '<leader>gF',
+        '<leader>gf',
         '<cmd>lua require("userlib.git.utils").toggle_files_history()<cr>',
-        desc = '[DV] Files history',
+        desc = '[DV] Files history, commits view',
       },
       {
-        '<leader>gf',
+        '<leader>gF',
         [[<cmd>lua require("userlib.git.utils").toggle_files_history(nil, '%')<cr>]],
         desc = '[DV] Current file history(diffview)',
       },
