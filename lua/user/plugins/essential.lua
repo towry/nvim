@@ -636,6 +636,7 @@ pack.plug({
         { mode = 'n', keys = '<Leader>a', desc = '+AI Assistant' },
         { mode = 'v', keys = '<Leader>a', desc = '+AI Assistant' },
         { mode = 'x', keys = '<Leader>a', desc = '+AI Assistant' },
+        { mode = 'n', keys = '<Leader>n', desc = '+Normal mode utils' },
         { mode = 'n', keys = '<LocalLeader>a', desc = '+AI Assistant' },
         { mode = 'n', keys = '<LocalLeader>x', desc = '+Tmux' },
         { mode = 'n', keys = 'ga', desc = '+TextChanges' },

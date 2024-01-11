@@ -315,6 +315,17 @@ local function setup_basic()
     desc = 'Execute current line as lua command',
   })
 
+  set('n', '<leader>np', 'o<esc>p`[v`]gq<esc>$', {
+    expr = false,
+    noremap = true,
+    desc = 'Paste in next line and format',
+  })
+  set('n', '<leader>nP', 'O<esc>p`[v`]gq<esc>$', {
+    expr = false,
+    noremap = true,
+    desc = 'Paste in above line and format',
+  })
+
   if vim.cfg.edit__use_native_cmp then
     -- Move inside completion list with <TAB>
     set({ 'i' }, [[<Tab>]], function()
