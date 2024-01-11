@@ -9,11 +9,55 @@ local MAX_INDEX_FILE_SIZE = 2000
 
 pack.plug({
   {
+    'ms-jpq/coq_nvim',
+    branch = 'coq',
+    cmd = {
+      'COQhelp',
+      'COQnow',
+      'COQdeps',
+    },
+    dependencies = {
+      { 'ms-jpq/coq.artifacts', branch = 'artifacts' },
+      {
+        'ms-jpq/coq.thirdparty',
+        branch = '3p',
+      },
+    },
+    enabled = vim.cfg.edit__use_coq_cmp,
+    event = { 'LspAttach', 'InsertEnter' },
+    config = function()
+      require('coq')
+    end,
+    init = function()
+      vim.g.coq_settings = {
+        auto_start = 'shut-up',
+        keymap = {
+          recommended = false,
+          manual_complete = '',
+          jump_to_mark = '',
+          bigger_preview = '',
+        },
+        display = {
+          ghost_text = {
+            --- chars surrounding the ghost_text for current selection item.
+            context = { ' ', '' },
+          },
+          pum = {
+            fast_close = false,
+          },
+        },
+        completion = {
+          skip_after = {},
+        },
+      }
+    end,
+  },
+  {
     'echasnovski/mini.completion',
     dependencies = {
       'echasnovski/mini.fuzzy',
     },
-    enabled = vim.cfg.edit__use_native_cmp,
+    enabled = vim.cfg.edit__use_native_cmp and not vim.cfg.edit__use_coq_cmp,
     event = { 'LspAttach', 'InsertEnter' },
     config = function()
       local MC = require('mini.completion')
