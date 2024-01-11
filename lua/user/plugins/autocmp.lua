@@ -46,6 +46,11 @@ pack.plug({
             fast_close = false,
           },
         },
+        clients = {
+          tabnine = {
+            enabled = true,
+          },
+        },
         completion = {
           skip_after = {},
         },
