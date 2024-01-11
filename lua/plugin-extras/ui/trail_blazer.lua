@@ -61,7 +61,7 @@ return plug({
     'TrailBlazerSaveSession',
   },
   keys = {
-    { '<leader>vm', '<cmd>TrailBlazerNewTrailMark<cr>', desc = 'New trail mark' },
+    { '<leader>v<space>', '<cmd>TrailBlazerNewTrailMark<cr>', desc = 'New trail mark' },
     { '<leader>vn', '<cmd>TrailBlazerMoveToNearest<cr>', desc = 'Trail nearest' },
     -- { '<leader>vt',      desc = 'Toggle trail mark list' },
     { '<leader>vx', '<cmd>TrailBlazerDeleteAllTrailMarks<cr>', desc = 'clear all marks' },
