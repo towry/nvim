@@ -846,7 +846,7 @@ plug({
   event = 'User LazyUIEnterOncePost',
   keys = {
     {
-      '<localleader>p',
+      '<localleader>:',
       ':FzfLua commands<cr>',
       desc = 'Command panel',
       silent = true,

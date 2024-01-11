@@ -197,7 +197,6 @@ pack.plug({
 --- legendary
 pack.plug({
   'mrjones2014/legendary.nvim',
-  enabled = false,
   dependencies = {
     'dressing.nvim',
     -- used for frecency sort
@@ -210,6 +209,11 @@ pack.plug({
       '<cmd>LegendaryRepeat<cr>',
       desc = 'Legendary repeat last',
     },
+    {
+      '<localleader>p',
+      '<cmd>Legendary<cr>',
+      desc = 'Legendary',
+    },
   },
   config = function()
     local function my_formatter(item)
@@ -218,7 +222,7 @@ pack.plug({
       default_columns[2] = default_columns[3]
       default_columns[3] = swap
       -- remove the key|command column.
-      table.remove(default_columns, 3)
+      -- table.remove(default_columns, 3)
       return default_columns
     end
 
@@ -233,6 +237,7 @@ pack.plug({
       default_opts = {
         keymaps = { silent = true, noremap = true },
       },
+      col_separator_char = '#',
       select_prompt = ' ⚒ ',
       icons = {
         fn = ' ',
