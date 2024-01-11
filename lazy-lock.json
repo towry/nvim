@@ -79,7 +79,7 @@
   "registers": { "branch": "main", "commit": "22bb98f93a423252fffeb3531f7bc12a3e07b63f" },
   "rgflow.nvim": { "branch": "master", "commit": "626707af7abac54ac710a85a5a9d8131b2d9728b" },
   "rustaceanvim": { "branch": "master", "commit": "73854d5e720d4ea135e7508d9d24fb82b4ec8223" },
-  "smart-splits.nvim": { "branch": "master", "commit": "403ad1a4fd7eb39388690a5657e7cbfb16da6668" },
+  "smart-splits.nvim": { "branch": "master", "commit": "958d385f5f791ee4f8d63b9999b13d5f26eaff56" },
   "sqlite.lua": { "branch": "master", "commit": "b7e28c8463254c46a8e61c52d27d6a2040492fc3" },
   "ssr.nvim": { "branch": "main", "commit": "bb323ba621ac647b4ac5638b47666e3ef3c279e1" },
   "stay-in-place.nvim": { "branch": "main", "commit": "0628b6db8970fc731abf9608d6f80659b58932c9" },

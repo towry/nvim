@@ -336,7 +336,9 @@ plug({
     },
   },
   {
-    'mrjones2014/smart-splits.nvim',
+    -- 'mrjones2014/smart-splits.nvim',
+    'pze/smart-splits.nvim',
+    dev = false,
     keys = {
       {
         '<A-h>',
