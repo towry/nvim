@@ -122,9 +122,9 @@ plug({
         desc = 'Flash',
       },
       {
-        '<C-s>',
+        '<C-s><C-s>',
         mode = { 'n' },
-        nowait = false,
+        nowait = true,
         function()
           require('userlib.workflow.flashs').jump_to_line()
         end,

@@ -871,18 +871,10 @@ plug({
       desc = 'Fuzzy search in current buffer',
     },
     {
-      '<C-e>',
+      '<localleader>b',
       cmd_modcall(fzf_mod, 'buffers_or_recent()'),
       nowait = false,
       desc = 'List Buffers',
-    },
-    {
-      -- scroll up oneline, <C-y> scroll down oneline
-      '<C-e><C-e>',
-      '<C-e>',
-      expr = false,
-      noremap = true,
-      nowait = true,
     },
     {
       '<leader>ff',
