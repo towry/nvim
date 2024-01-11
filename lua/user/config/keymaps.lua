@@ -325,6 +325,11 @@ local function setup_basic()
     noremap = true,
     desc = 'Paste in above line and format',
   })
+  set('n', '<leader>nv', '`[v`]', {
+    expr = false,
+    noremap = true,
+    desc = 'Visual select pasted content',
+  })
 
   if vim.cfg.edit__use_native_cmp then
     -- Move inside completion list with <TAB>
