@@ -356,6 +356,8 @@ local function setup_basic()
 
     -- when item selected, complete it.
     set({ 'i' }, [[<Space>]], function()
+      -- in coq, when press space, it will complete the selected but also add
+      -- extra space.
       if vim.fn.pumvisible() ~= 0 then
         local item_selected = vim.fn.complete_info()['selected'] ~= -1
         return item_selected and keys['ctrl-y'] or keys['space']

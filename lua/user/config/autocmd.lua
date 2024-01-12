@@ -6,6 +6,22 @@ function M.load_on_startup()
   -- taken from AstroNvim
   local definitions = {
     {
+      -- lazy insert enter
+      { 'InsertEnter' },
+      {
+        group = 'lazy_insert_enter',
+        once = true,
+        callback = function()
+          vim.defer_fn(
+            vim.schedule_wrap(function()
+              au.do_useraucmd('User LazyInsertEnter')
+            end),
+            10
+          )
+        end,
+      },
+    },
+    {
       { 'VimLeavePre' },
       {
         group = 'force_shutdown_clients',

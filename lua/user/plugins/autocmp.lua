@@ -28,7 +28,7 @@ pack.plug({
       },
     },
     enabled = vim.cfg.edit__use_coq_cmp,
-    event = { 'LspAttach', 'InsertEnter' },
+    event = { 'LspAttach', 'User LazyInsertEnter', 'CmdlineEnter' },
     lazy = true,
     config = function() end,
     init = function()
@@ -67,7 +67,7 @@ pack.plug({
       'echasnovski/mini.fuzzy',
     },
     enabled = vim.cfg.edit__use_native_cmp and not vim.cfg.edit__use_coq_cmp,
-    event = { 'LspAttach', 'InsertEnter' },
+    event = { 'LspAttach', 'User LazyInsertEnter' },
     config = function()
       local MC = require('mini.completion')
       local MiniFuzzy = require('mini.fuzzy')
@@ -112,7 +112,7 @@ pack.plug({
   {
     'L3MON4D3/LuaSnip',
     lazy = true,
-    event = 'InsertEnter',
+    event = 'User LazyInsertEnter',
     build = 'make install_jsregexp',
     version = 'v2.*',
     dependencies = {
@@ -199,7 +199,7 @@ pack.plug({
   {
     'hrsh7th/nvim-cmp',
     enabled = not vim.cfg.edit__use_native_cmp,
-    event = { 'InsertEnter', 'CmdlineEnter' },
+    event = { 'User LazyInsertEnter', 'CmdlineEnter' },
     dependencies = {
       'noearc/cmp-registers',
       'hrsh7th/cmp-nvim-lsp-signature-help',
