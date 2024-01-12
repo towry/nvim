@@ -125,6 +125,7 @@ plug({
       'tpope/vim-dispatch',
     },
     keys = {
+      { '<leader>g.', ':Git', desc = 'Fugitive start :Git' },
       { '<leader>gm', ':Git merge', desc = 'Fugitive start git merge' },
       {
         '<leader>gg',
