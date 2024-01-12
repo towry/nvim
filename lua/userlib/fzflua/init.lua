@@ -181,6 +181,7 @@ function M.buffers_or_recent()
     return
   end
   return fzflua.buffers({
+    sort_lastused = true,
     winopts = {
       fullscreen = false,
     },

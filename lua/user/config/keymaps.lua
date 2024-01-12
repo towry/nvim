@@ -356,18 +356,18 @@ local function setup_basic()
     end, { expr = true, silent = false })
 
     -- when item selected, complete it.
-    set({ 'i' }, [[<Space>]], function()
-      -- in coq, when press space, it will complete the selected but also add
-      -- extra space.
-      if vim.fn.pumvisible() ~= 0 then
-        local item_selected = vim.fn.complete_info()['selected'] ~= -1
-        return item_selected and keys['ctrl-y'] or keys['space']
-      end
-      return keys['space']
-    end, {
-      expr = true,
-      silent = true,
-    })
+    -- set({ 'i' }, [[<Space>]], function()
+    --   -- in coq, when press space, it will complete the selected but also add
+    --   -- extra space.
+    --   if vim.fn.pumvisible() ~= 0 then
+    --     local item_selected = vim.fn.complete_info()['selected'] ~= -1
+    --     return item_selected and keys['ctrl-y'] or keys['space']
+    --   end
+    --   return keys['space']
+    -- end, {
+    --   expr = true,
+    --   silent = true,
+    -- })
     set({ 'i' }, [[<CR>]], function()
       if vim.fn.pumvisible() ~= 0 then
         local item_selected = vim.fn.complete_info()['selected'] ~= -1

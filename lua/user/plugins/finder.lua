@@ -5,6 +5,8 @@ local cmd_modcall = keymap.cmd_modcall
 local fzf_mod = 'userlib.fzflua'
 local au = require('userlib.runtime.au')
 
+local BufferListKey = '<localleader>,'
+
 plug({
   'mangelozzi/rgflow.nvim',
   dependencies = {
@@ -756,7 +758,8 @@ plug({
   event = 'User LazyUIEnterOncePost',
   keys = {
     {
-      '<leader>pv',
+      -- '<leader>pv',
+      BufferListKey,
       '<cmd>lua require("userlib.mini.visits").select_by_cwd(vim.cfg.runtime__starts_cwd)<cr>',
       desc = 'Show current cwd visits',
     },
@@ -871,7 +874,7 @@ plug({
       desc = 'Fuzzy search in current buffer',
     },
     {
-      '<localleader>,',
+      '<localleader>b',
       cmd_modcall(fzf_mod, 'buffers_or_recent()'),
       nowait = true,
       desc = 'List Buffers',
