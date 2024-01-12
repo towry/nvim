@@ -336,6 +336,7 @@ local function setup_basic()
       ['cr'] = vim.api.nvim_replace_termcodes('<CR>', true, true, true),
       ['ctrl-y'] = vim.api.nvim_replace_termcodes('<C-y>', true, true, true),
       ['ctrl-y_cr'] = vim.api.nvim_replace_termcodes('<C-y><CR>', true, true, true),
+      ['space'] = vim.api.nvim_replace_termcodes('<Space>', true, true, true),
     }
 
     -- Move inside completion list with <TAB>
@@ -353,6 +354,17 @@ local function setup_basic()
       end
     end, { expr = true, silent = false })
 
+    -- when item selected, complete it.
+    set({ 'i' }, [[<Space>]], function()
+      if vim.fn.pumvisible() ~= 0 then
+        local item_selected = vim.fn.complete_info()['selected'] ~= -1
+        return item_selected and keys['ctrl-y'] or keys['space']
+      end
+      return keys['space']
+    end, {
+      expr = true,
+      silent = true,
+    })
     set({ 'i' }, [[<CR>]], function()
       if vim.fn.pumvisible() ~= 0 then
         local item_selected = vim.fn.complete_info()['selected'] ~= -1
