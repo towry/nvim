@@ -56,7 +56,7 @@ pack.plug({
           },
         },
         completion = {
-          skip_after = {},
+          skip_after = { ';', ',', ':', '[', ']', '{', '}' },
         },
       }
     end,
