@@ -334,7 +334,8 @@ local function setup_basic()
   if vim.cfg.edit__use_native_cmp then
     local keys = {
       ['cr'] = vim.api.nvim_replace_termcodes('<CR>', true, true, true),
-      ['ctrl-y'] = vim.api.nvim_replace_termcodes('<C-y>', true, true, true),
+      -- close pum after completion
+      ['ctrl-y'] = vim.api.nvim_replace_termcodes('<C-y><C-e>', true, true, true),
       ['ctrl-y_cr'] = vim.api.nvim_replace_termcodes('<C-y><CR>', true, true, true),
       ['space'] = vim.api.nvim_replace_termcodes('<Space>', true, true, true),
     }
