@@ -31,7 +31,7 @@ Bundles all files within `user.plugins` into a single file named `user.plugins_b
 
 ## TODO
 
-- [ ] Make lsp attach more controlable, for example, do not start lsp on large file.
+- [x] Make lsp attach more controlable, for example, do not start lsp on large file.
 - [ ] TODO: fix project nvim not working well in nowrite buffers.
 
 ## Special Thanks To
