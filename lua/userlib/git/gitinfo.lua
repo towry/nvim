@@ -1,4 +1,5 @@
 local M = {}
+local disable = true
 
 -- ms
 M.interval = 4 * 1000
@@ -76,7 +77,7 @@ end
 
 --- gather gitinfo by using vim.system and git command
 function M.update()
-  if M.timer == nil then
+  if M.timer == nil or disable then
     return
   end
   if M.loading then
@@ -164,7 +165,7 @@ function M.update()
 end
 
 function M.start()
-  if M.timer or vim.g.vscode then
+  if M.timer or vim.g.vscode or disable then
     return
   end
 
