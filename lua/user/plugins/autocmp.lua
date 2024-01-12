@@ -50,8 +50,9 @@ pack.plug({
           },
         },
         clients = {
+          -- high cpu
           tabnine = {
-            enabled = true,
+            enabled = false,
           },
         },
         completion = {
