@@ -32,6 +32,7 @@ pack.plug({
     lazy = true,
     config = function() end,
     init = function()
+      -- https://github.com/ms-jpq/coq_nvim/blob/4337cb19c7bd922fa9b374456470a753dc1618d4/config/defaults.yml#L1C1-L1C1
       vim.g.coq_settings = {
         auto_start = 'shut-up',
         keymap = {
@@ -50,6 +51,10 @@ pack.plug({
           },
         },
         clients = {
+          lsp = {
+            resolve_timeout = 0.04,
+            weight_adjust = 1,
+          },
           -- high cpu
           tabnine = {
             enabled = false,
