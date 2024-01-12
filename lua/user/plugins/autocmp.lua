@@ -11,6 +11,10 @@ pack.plug({
   {
     'ms-jpq/coq_nvim',
     branch = 'coq',
+    build = function(plug)
+      local cwd = plug.dir
+      vim.cmd(string.format('tabe term://%s//%s', cwd, 'make .venv/bin/mypy ; python3 -u -m coq deps'))
+    end,
     cmd = {
       'COQhelp',
       'COQnow',
@@ -25,9 +29,8 @@ pack.plug({
     },
     enabled = vim.cfg.edit__use_coq_cmp,
     event = { 'LspAttach', 'InsertEnter' },
-    config = function()
-      require('coq')
-    end,
+    lazy = true,
+    config = function() end,
     init = function()
       vim.g.coq_settings = {
         auto_start = 'shut-up',

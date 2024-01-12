@@ -161,6 +161,13 @@ end
 
 function M.init_other()
   g.python3_host_prog = vim.cfg.runtime__python3_host_prog
+  local has_py = g.python3_host_prog ~= nil and vim.fn.executable(g.python3_host_prog) == 1
+  if not has_py and vim.fn.executable('/usr/local/bin/python3') == 1 then
+    vim.g.python3_host_prog = '/usr/local/bin/python3'
+  elseif not has_py and vim.fn.executable('/usr/bin/python3') == 1 then
+    vim.g.python3_host_prog = '/usr/bin/python3'
+  end
+
   -- Fix markdown indentation settings
   g.markdown_recommended_style = 0
 
