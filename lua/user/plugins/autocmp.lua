@@ -741,26 +741,6 @@ pack.plug({
     event = { 'InsertEnter' },
     keys = {
       {
-        '<C-]>',
-        function()
-          if vim.b.copilot_enabled == false then
-            return
-          end
-          local cmp = require('cmp')
-          if cmp.visible() then
-            cmp.close()
-          end
-          if Ty.has_ai_suggestion_text() then
-            vim.cmd([[call copilot#Next()]])
-          else
-            vim.cmd([[call copilot#Schedule()]])
-            vim.cmd([[call copilot#Suggest()]])
-          end
-        end,
-        mode = 'i',
-        silent = false,
-      },
-      {
         '<leader>zp',
         '<cmd>Copilot panel<cr>',
         desc = 'Open Copilot panel',
