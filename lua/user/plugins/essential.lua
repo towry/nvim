@@ -6,6 +6,22 @@ end
 
 ---- core
 pack.plug({
+  {
+    'rhysd/accelerated-jk',
+    keys = {
+      {
+        'j',
+        '<Plug>(accelerated_jk_gj)',
+      },
+      {
+        'k',
+        '<Plug>(accelerated_jk_gk)',
+      },
+    },
+    config = function()
+      vim.o.lazyredraw = false
+    end,
+  },
   { 'echasnovski/mini.pick' },
   { 'echasnovski/mini.extra' },
   {
