@@ -166,3 +166,33 @@ create_cmd('OpenProfileView', function()
 end, {
   desc = 'Open online profile view',
 })
+
+create_cmd('Fixmes', function()
+  require('fzf-lua').grep({ search = [[FIXME:|fixme!\(.*\)]], no_esc = true })
+end, {
+  desc = 'List fixmes',
+})
+
+create_cmd('Comtag', function(opts)
+  if not vim.tbl_contains({
+    'NOTE',
+    'TODO',
+    'FIXME',
+  }, opts.args) then
+    return
+  end
+  require('fzf-lua').grep({
+    search = string.format([[%s:|%s!\(.*\)]], opts.args, string.lower(opts.args)),
+    no_esc = true,
+  })
+end, {
+  desc = 'List fixmes',
+  nargs = '?',
+  complete = function()
+    return {
+      'NOTE',
+      'TODO',
+      'FIXME',
+    }
+  end,
+})
