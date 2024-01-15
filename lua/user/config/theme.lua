@@ -96,4 +96,11 @@ M.setup = function()
   end
 end
 
+M.toggleterm = function()
+  if vim.cfg.ui__theme_name == 'rose-pine' then
+    return require('rose-pine.plugins.toggleterm')
+  end
+  return {}
+end
+
 return M

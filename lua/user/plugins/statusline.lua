@@ -66,7 +66,10 @@ plug({
         comp.rpad(comp.HelpFileName),
         comp.rpad(comp.FileType),
         comp.rpad(comp.DiagnosticsDisabled),
-        comp.rpad(comp.WorkspaceRoot)
+        comp.rpad(comp.WorkspaceRoot),
+        {
+          provider = '❤ ',
+        }
         -- comp.Ruler
       ),
 

@@ -28,6 +28,7 @@ plug({
     -- tag = 'v2.2.1',
     config = function()
       -- local au = require('userlib.runtime.au')
+      local highlights = require('user.config.theme').toggleterm()
 
       require('toggleterm').setup({
         -- size can be a number or function which is passed the current terminal
@@ -42,21 +43,7 @@ plug({
         open_mapping = nil,
         hide_numbers = true, -- hide the number column in toggleterm buffers
         -- this can affect fzf-lua terminal.
-        highlights = {
-          -- highlights which map to a highlight group name and a table of it's values
-          -- NOTE: this is only a subset of values, any group placed here will be set for the terminal window split
-          -- Normal = {
-          --   link = 'Normal',
-          -- },
-          -- NormalFloat = {
-          --   link = 'NormalFloat',
-          -- },
-          -- FloatBorder = {
-          --   -- guifg = <VALUE-HERE>,
-          --   -- guibg = <VALUE-HERE>,
-          --   link = 'FloatBorder',
-          -- },
-        },
+        highlights = highlights,
         shade_filetypes = { 'none' },
         shade_terminals = true,
         shading_factor = 1, -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light

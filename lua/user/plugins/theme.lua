@@ -1,6 +1,24 @@
 local plug = require('userlib.runtime.pack').plug
 
 plug({
+  'rose-pine/neovim',
+  name = 'rose-pine',
+  event = 'User LazyTheme',
+  priority = 1000,
+  enabled = vim.cfg.ui__theme_name == 'rose-pine',
+  --- https://github.com/rose-pine/neovim?tab=readme-ov-file#options
+  config = function()
+    require('rose-pine').setup({
+      -- dark_variant = 'moon',
+      highlight_groups = {
+        StatusLine = { fg = 'love', bg = 'love', blend = 10 },
+        StatusLineNC = { fg = 'subtle', bg = 'surface' },
+      },
+    })
+  end,
+})
+
+plug({
   'daschw/leaf.nvim',
   event = 'User LazyTheme',
   enabled = vim.cfg.ui__theme_name == 'leaf',
