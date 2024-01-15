@@ -4,102 +4,6 @@ local cmdstr = require('userlib.runtime.keymap').cmdstr
 local libutils = require('userlib.runtime.utils')
 
 plug({
-  'NeogitOrg/neogit',
-  cmd = 'Neogit',
-  enabled = false,
-  keys = {
-    {
-      '<localleader>gg',
-      function()
-        require('userlib.neogit').toggle()
-      end,
-      desc = 'Toggle neogit',
-    },
-    {
-      '<localleader>gc',
-      function()
-        require('neogit').open({ 'commit' })
-      end,
-      desc = 'Neogit commit',
-    },
-    {
-      '<localleader>gp',
-      function()
-        require('neogit').open({ 'push' })
-      end,
-      desc = 'Neogit push',
-    },
-    {
-      '<localleader>gd',
-      function()
-        require('neogit').open({ 'diff' })
-      end,
-      desc = 'Neogit diff',
-    },
-    {
-      '<localleader>gb',
-      function()
-        require('neogit').open({ 'branch' })
-      end,
-      desc = 'Neogit branch',
-    },
-    {
-      '<localleader>gl',
-      function()
-        require('neogit').open({ 'log' })
-      end,
-      desc = 'Neogit log',
-      mode = { 'n', 'x', 'v' },
-    },
-    {
-      '<localleader>gS',
-      function()
-        require('neogit').open({ 'stash' })
-      end,
-      desc = 'Neogit stash',
-    },
-    {
-      '<localleader>gC',
-      function()
-        require('neogit').open({ 'config' })
-      end,
-      desc = 'Neogit config',
-    },
-    {
-      '<localleader>gR',
-      function()
-        require('neogit').open({ 'remote' })
-      end,
-      desc = 'Neogit remote',
-    },
-    {
-      '<localleader>gT',
-      function()
-        require('neogit').open({ 'tag' })
-      end,
-      desc = 'Neogit tag',
-    },
-    {
-      '<localleader>gM',
-      function()
-        require('neogit').open({ 'merge' })
-      end,
-      desc = 'Neogit merge',
-    },
-    {
-      '<localleader>gu',
-      function()
-        require('neogit').open({ 'fetch' })
-      end,
-      desc = 'Neogit fetch',
-    },
-  },
-  opts = function()
-    return {}
-  end,
-})
-
-plug({
   'mbbill/undotree',
   keys = {
     {
@@ -141,6 +45,11 @@ plug({
         '<leader>ga',
         cmdstr([[Dispatch! Git add %]]),
         desc = '!Git add current',
+      },
+      {
+        '<leader>gtd',
+        cmdstr([[tab Gdiffsplit]]),
+        desc = 'Git diff in tab',
       },
       {
         '<leader>gA',
