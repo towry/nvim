@@ -155,7 +155,7 @@ plug({
         '<leader>bq',
         function()
           require('mini.bufremove').delete(0)
-          vim.cmd('hide')
+          vim.cmd('q')
         end,
         desc = 'Close current buffer and window',
       },
