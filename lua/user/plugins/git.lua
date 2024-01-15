@@ -147,11 +147,11 @@ plug({
         cmdstr([[Dispatch! Git add .]]),
         desc = '!Git add all',
       },
-      {
-        '<leader>gp',
-        cmdstr([[exec "Dispatch! Git push origin " .. FugitiveHead()]]),
-        desc = 'Git push',
-      },
+      -- {
+      --   '<leader>gp',
+      --   cmdstr([[exec "Dispatch! Git push origin " .. FugitiveHead()]]),
+      --   desc = 'Git push',
+      -- },
       {
         '<leader>gu',
         cmdstr([[exec "Git! pull origin " .. FugitiveHead() | :lua vim.g.escape_cmd="pclose"]]),
@@ -509,7 +509,7 @@ plug({
         signcolumn = not vim.cfg.runtime__starts_as_gittool, -- Toggle with `:Gitsigns toggle_signs`
         numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
         linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
-        word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
+        word_diff = false, -- Toggle with`:Gitsigns toggle_word_diff`
         watch_gitdir = {
           interval = vim.cfg.runtime__starts_as_gittool and 3000 or 1000,
           follow_files = true,

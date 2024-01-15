@@ -353,6 +353,26 @@ pack.plug({
     'OverseerClearCache',
   },
   keys = {
+    {
+      '<leader>gp',
+      function()
+        local overseer = require('overseer')
+        local task = overseer.new_task({
+          cmd = 'git push',
+          components = {
+            'on_exit_set_status',
+            { 'on_output_quickfix', open = false, open_height = 8 },
+            { 'on_complete_notify_with_key', key = 'git_push', annote = 'Git' },
+          },
+        })
+        vim.notify('git push', vim.log.levels.INFO, {
+          key = 'git_push',
+          annote = 'Git',
+        })
+        task:start()
+      end,
+      desc = 'Git push',
+    },
     { '<leader>roo', '<cmd>OverseerToggle<cr>', desc = 'Toggle' },
     { '<leader>ror', '<cmd>OverseerRun<cr>', desc = 'Run' },
     { '<leader>roR', '<cmd>OverseerRunCmd<cr>', desc = 'Run shell cmd' },

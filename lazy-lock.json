@@ -11,7 +11,7 @@
   "cheatsheet.nvim": { "branch": "master", "commit": "aa14d90e37fe267f5ef2444bf01c538e276bbabc" },
   "close-buffers.nvim": { "branch": "master", "commit": "3acbcad1211572342632a6c0151f839e7dead27f" },
   "cmd-parser.nvim": { "branch": "master", "commit": "6363b8bddef968c3ec51a38172af44f675f01ef3" },
-  "copilot.vim": { "branch": "release", "commit": "1a55183ef9347d6f420406a3746474b6b9fb9ef5" },
+  "codeium.vim": { "branch": "main", "commit": "4063291e335e74e9ee2be04beb47d40b376312fa" },
   "coq.artifacts": { "branch": "artifacts", "commit": "e7202d1a1b5cfa91446d5b7a035f915934e4d713" },
   "coq.thirdparty": { "branch": "3p", "commit": "99393e405c28883e92e39ad6cdb41120ecfb6f32" },
   "coq_nvim": { "branch": "coq", "commit": "4337cb19c7bd922fa9b374456470a753dc1618d4" },
@@ -107,7 +107,6 @@
   "vim-rsi": { "branch": "master", "commit": "45540637ead22f011e8215f1c90142e49d946a54" },
   "vim-startuptime": { "branch": "master", "commit": "454b3de856b7bd298700de33d79774ca9b9e3875" },
   "vim-xxdcursor": { "branch": "master", "commit": "81f5bf8e5db1f34004314db956eee72f8177cf08" },
-  "window-bufstack.nvim": { "branch": "main", "commit": "20c6ae9c2d106b7cb1570ecaf7425ca55535d354" },
   "windows.nvim": { "branch": "main", "commit": "c7492552b23d0ab30325e90b56066ec51242adc8" },
   "zen-mode.nvim": { "branch": "main", "commit": "50e2e2a36cc97847d9ab3b1a3555ba2ef6839b50" }
 }

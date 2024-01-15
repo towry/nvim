@@ -155,7 +155,14 @@ plug({
         '<leader>bq',
         function()
           require('mini.bufremove').delete(0)
-          vim.cmd('q')
+          vim.schedule(function()
+            local _, error = pcall(vim.cmd, 'hide')
+            if error then
+              vim.api.nvim_echo({ { 'Last window, press `<leader>bq` again to quit', 'Error' } }, false, {})
+              local set = require('userlib.runtime.keymap').map_buf_thunk(0)
+              set('n', '<leader>bq', '<cmd>q!<cr>', { desc = 'Force quit' })
+            end
+          end)
         end,
         desc = 'Close current buffer and window',
       },

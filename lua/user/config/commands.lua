@@ -178,6 +178,7 @@ create_cmd('Comtag', function(opts)
     'NOTE',
     'TODO',
     'FIXME',
+    'DEBUG',
   }, opts.args) then
     return
   end
@@ -193,6 +194,7 @@ end, {
       'NOTE',
       'TODO',
       'FIXME',
+      'DEBUG',
     }
   end,
 })

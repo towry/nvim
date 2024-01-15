@@ -4,7 +4,6 @@ local M = {}
 
 --- @param opts table
 local function callgrep(opts, callfn)
-  local fzflua = require('fzf-lua')
   opts = opts or {}
 
   opts.cwd_header = true

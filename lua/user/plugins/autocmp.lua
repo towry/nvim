@@ -746,7 +746,7 @@ pack.plug({
         desc = 'Open Copilot panel',
       },
       {
-        '<leader>tc',
+        '<leader>ta',
         '<cmd>ToggleCopilotAutoMode<cr>',
         desc = 'Toggle copilot',
       },
