@@ -12,11 +12,11 @@ end, {
   desc = 'Close',
   nowait = true,
 })
-set('n', '<leader>gp', function()
-  vim.cmd([[Dispatch! Git push]])
-end, {
-  desc = 'Push',
-})
+-- set('n', '<leader>gp', function()
+--   vim.cmd([[Dispatch! Git push]])
+-- end, {
+--   desc = 'Push',
+-- })
 
 -- vim.api.nvim_buf_set_keymap(0, 'n', 'cc', "", {
 --   callback = function()
