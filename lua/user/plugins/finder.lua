@@ -758,8 +758,8 @@ plug({
   event = 'User LazyUIEnterOncePost',
   keys = {
     {
-      -- '<leader>pv',
-      BufferListKey,
+      '<leader>pv',
+      -- BufferListKey,
       '<cmd>lua require("userlib.mini.visits").select_by_cwd(vim.cfg.runtime__starts_cwd)<cr>',
       desc = 'Show current cwd visits',
     },
@@ -874,7 +874,8 @@ plug({
       desc = 'Fuzzy search in current buffer',
     },
     {
-      '<localleader>b',
+      -- '<localleader>b',
+      BufferListKey,
       cmd_modcall(fzf_mod, 'buffers_or_recent()'),
       nowait = true,
       desc = 'List Buffers',

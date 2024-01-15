@@ -1,4 +1,5 @@
 local libutils = require('userlib.runtime.utils')
+local utils = require('userlib.fzflua.utils')
 local M = {}
 
 --- @param opts table
@@ -20,7 +21,7 @@ local function callgrep(opts, callfn)
     -- press ctrl-e in fzf picker to switch to rgflow.
     ['ctrl-e'] = function()
       -- bring up rgflow ui to change rg args.
-      require('rgflow').open(fzflua.config.__resume_data.last_query, opts.rg_opts, opts.cwd, {
+      require('rgflow').open(utils.get_last_query(), opts.rg_opts, opts.cwd, {
         custom_start = function(pattern, flags, path)
           opts.cwd = path
           opts.rg_opts = flags
@@ -167,25 +168,60 @@ end
 
 function M.buffers_or_recent()
   local fzflua = require('fzf-lua')
-
-  local count = #vim.fn.getbufinfo({ buflisted = 1 })
-  if count <= 1 then
-    --- open recent.
-    fzflua.oldfiles({
-      cwd = vim.cfg.runtime__starts_cwd,
-      cwd_only = true,
-      winopts = {
-        fullscreen = false,
-      },
-    })
-    return
-  end
-  return fzflua.buffers({
+  local bufopts = {
     sort_lastused = true,
     winopts = {
       fullscreen = false,
     },
-  })
+  }
+  local oldfiles_opts = {
+    cwd = vim.cfg.runtime__starts_cwd,
+    cwd_only = true,
+    winopts = {
+      fullscreen = false,
+    },
+  }
+  local buffers_actions = {}
+
+  local oldfiles_actions = {
+    actions = {
+      ['ctrl-e'] = function()
+        return fzflua.buffers(vim.tbl_extend('force', {
+          query = utils.get_last_query(),
+        }, bufopts, buffers_actions))
+      end,
+      ['ctrl-f'] = function()
+        local query = utils.get_last_query()
+        if query == '' or not query then
+          vim.notify('please provide query before switch to find files mode.')
+          return
+        end
+
+        M.files({
+          cwd = oldfiles_opts.cwd,
+          query = query,
+        })
+      end,
+    },
+  }
+  buffers_actions = {
+    actions = {
+      ['ctrl-e'] = function()
+        fzflua.oldfiles(vim.tbl_extend('force', {
+          query = utils.get_last_query(),
+        }, oldfiles_opts, oldfiles_actions))
+      end,
+    },
+  }
+
+  local count = #vim.fn.getbufinfo({ buflisted = 1 })
+  if count <= 1 then
+    --- open recent.
+    fzflua.oldfiles(vim.tbl_extend('force', {}, oldfiles_opts, oldfiles_actions))
+    return
+  end
+  local _bo = vim.tbl_extend('force', {}, bufopts, buffers_actions)
+  return fzflua.buffers(_bo)
 end
 
 function M.git_branches()

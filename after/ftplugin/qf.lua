@@ -16,8 +16,8 @@ vim.b.minicursorword_disable = true
 
 map('n', 'dd', qf.qf_delete, { desc = 'delete current quickfix entry' })
 map('v', 'd', qf.qf_delete, { desc = 'delete selected quickfix entry' })
-map('n', 'H', ':colder<CR>', { desc = 'qf: older' })
-map('n', 'L', ':cnewer<CR>', { desc = 'qf: newer' })
+map('n', ',q', ':colder<CR>', { desc = 'qf: older' })
+map('n', '.q', ':cnewer<CR>', { desc = 'qf: newer' })
 map('n', '<C-r>', function()
   Ty.capture_tmux_pane(0)
   vim.defer_fn(function()

@@ -148,30 +148,28 @@ plug({
     keys = {
       {
         '<leader>bx',
-        '<cmd>lua require("mini.bufremove").wipeout(0)<cr>',
+        '<cmd>lua require("mini.bufremove").delete(0)<cr>',
         desc = 'Close current buffer',
       },
       {
         '<leader>bq',
         function()
-          require('mini.bufremove').wipeout(0)
-          vim.cmd('q')
+          require('mini.bufremove').delete(0)
+          vim.cmd('hide')
         end,
         desc = 'Close current buffer and window',
       },
       {
-        '<leader>bh',
-        function()
-          require('mini.bufremove').unshow(0)
-        end,
-        desc = 'Unshow current buffer',
+        '<leader>bk',
+        ':hide<cr>',
+        desc = 'Hide current window',
       },
       {
-        '<C-q>',
+        '<leader>bh',
         function()
-          require('userlib.workflow.close-buffer').close()
+          require('mini.bufremove').unshow_in_window(0)
         end,
-        desc = 'Quit current buffer',
+        desc = 'Unshow current buffer',
       },
     },
   },
@@ -488,6 +486,7 @@ plug({
   'towry/window-bufstack.nvim',
   cond = not vim.cfg.runtime__starts_as_gittool,
   dev = false,
+  enabled = false,
   opts = {
     ignore_filetype = { 'oil' },
   },
