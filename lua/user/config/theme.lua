@@ -59,7 +59,7 @@ function M.custom_theme_kanagawa()
 end
 
 M['custom_theme_rose-pine'] = function()
-  M.custom_theme_default()
+  -- M.custom_theme_default()
 end
 
 local function update_custom_theme()

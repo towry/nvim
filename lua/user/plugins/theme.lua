@@ -11,8 +11,33 @@ plug({
     require('rose-pine').setup({
       -- dark_variant = 'moon',
       highlight_groups = {
+        Pmenu = {
+          fg = 'subtle',
+          bg = 'overlay',
+        },
+        PmenuExtra = {
+          link = 'Pmenu',
+        },
+        PmenuSel = {
+          bg = 'gold',
+        },
         StatusLine = { fg = 'love', bg = 'love', blend = 10 },
         StatusLineNC = { fg = 'subtle', bg = 'surface' },
+        MiniCursorword = {
+          italic = true,
+          bold = true,
+          bg = 'NONE',
+          fg = 'text',
+        },
+        MiniCursorwordCurrent = {
+          underline = false,
+          bold = true,
+          bg = 'NONE',
+          fg = 'NONE',
+        },
+        FzfLuaNormal = { link = 'Normal' },
+        FzfLuaBorder = { link = 'LineNr' },
+        FzfLuaPreviewNormal = { link = 'Normal' },
       },
     })
   end,
