@@ -313,10 +313,10 @@ local Overseer = {
     },
   },
 
-  rpad(OverseerTasksForStatus('CANCELED')),
-  rpad(OverseerTasksForStatus('RUNNING')),
-  rpad(OverseerTasksForStatus('SUCCESS')),
-  rpad(OverseerTasksForStatus('FAILURE')),
+  OverseerTasksForStatus('CANCELED'),
+  OverseerTasksForStatus('RUNNING'),
+  OverseerTasksForStatus('SUCCESS'),
+  OverseerTasksForStatus('FAILURE'),
 }
 
 local function setup_colors()
