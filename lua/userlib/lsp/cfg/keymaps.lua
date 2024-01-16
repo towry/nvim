@@ -229,7 +229,7 @@ function M.setup_keybinding(client, buffer)
   )
   set(
     'n',
-    'gdf',
+    'gd',
     func_call('goto_definition_in_file()'),
     opts({
       desc = _('Go find definition in file'),
@@ -237,7 +237,7 @@ function M.setup_keybinding(client, buffer)
   )
   set(
     'n',
-    'gds',
+    '<localleader>gds',
     func_call("goto_definition_in_file('split')"),
     opts({
       desc = _('Go find definition in file in split'),
@@ -245,7 +245,7 @@ function M.setup_keybinding(client, buffer)
   )
   set(
     'n',
-    'gdv',
+    '<localleader>gdv',
     func_call("goto_definition_in_file('vsplit')"),
     opts({
       desc = _('Go find definition in file in vsplit'),
