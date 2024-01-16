@@ -283,6 +283,9 @@ local function OverseerTasksForStatus(status)
       return self.tasks[status]
     end,
     provider = function(self)
+      if #self.tasks[status] <= 0 then
+        return ''
+      end
       return string.format('%s%d', self.symbols[status], #self.tasks[status])
     end,
     hl = function()
