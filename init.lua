@@ -1,7 +1,3 @@
-if vim.loader then
-  vim.loader.enable()
-end
-
 if not vim.g.vscode then
   pcall(require, 'settings_env')
   -- fix background flickering.
