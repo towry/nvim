@@ -6,13 +6,7 @@ M.root_patterns =
 M.root_lsp_ignore = { 'tailwindcss', 'jsonls', 'copilot', 'null-ls', 'eslint' }
 
 M.file_exists = function(path)
-  local f = io.open(path, 'r')
-  if f ~= nil then
-    io.close(f)
-    return true
-  else
-    return false
-  end
+  return vim.fn.filereadable(path) == 1
 end
 
 M.get_relative_fname = function()
