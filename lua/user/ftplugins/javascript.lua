@@ -1,7 +1,7 @@
 local M = {}
 
 M.attach = function()
-  if vim.b.is_big_file then
+  if vim.b.is_big_file or vim.g.vscode then
     return
   end
   require('userlib.keymaps.neotest').attach()
