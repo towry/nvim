@@ -358,7 +358,8 @@ pack.plug({
       function()
         local overseer = require('overseer')
         local task = overseer.new_task({
-          cmd = 'git push',
+          cmd = [[echo "git push..." ; git push]],
+          cwd = vim.cfg.runtime__starts_cwd,
           components = {
             'on_exit_set_status',
             { 'on_output_quickfix', open = false, open_height = 8 },
