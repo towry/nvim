@@ -50,6 +50,10 @@ pack.plug({
             fast_close = false,
           },
         },
+        -- https://github.com/ms-jpq/coq_nvim/blob/coq/docs/FUZZY.md
+        weights = {
+          prefix_matches = 4,
+        },
         clients = {
           lsp = {
             resolve_timeout = 0.04,
