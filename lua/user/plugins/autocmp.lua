@@ -27,7 +27,7 @@ pack.plug({
         branch = '3p',
       },
     },
-    enabled = vim.cfg.edit__use_coq_cmp,
+    enabled = vim.cfg.edit__use_coq_cmp and vim.cfg.edit__use_native_cmp,
     event = { 'LspAttach', 'User LazyInsertEnter', 'CmdlineEnter' },
     lazy = true,
     config = function() end,
