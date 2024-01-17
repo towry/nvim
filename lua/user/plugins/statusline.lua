@@ -43,6 +43,9 @@ plug({
           hl = { fg = 'fg', bg = 'bg' },
         },
         comp.ViMode,
+        comp.lpad({
+          provider = [[$%{v:lua.Ty.stl_bufcount()}]],
+        }),
         comp.lpad(comp.Branch),
         comp.lpad(comp.Gitinfo),
         comp.lpad(comp.GitStatus),
@@ -66,10 +69,7 @@ plug({
         comp.rpad(comp.HelpFileName),
         comp.rpad(comp.FileType),
         comp.rpad(comp.DiagnosticsDisabled),
-        comp.rpad(comp.WorkspaceRoot),
-        {
-          provider = '❤ ',
-        }
+        comp.rpad(comp.WorkspaceRoot)
         -- comp.Ruler
       ),
 

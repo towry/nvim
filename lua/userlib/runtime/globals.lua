@@ -128,6 +128,11 @@ Ty.stl_foldlevel = function()
     return _('│')
   end
 end
+Ty.stl_bufcount = function()
+  return #vim.fn.getbufinfo({
+    buflisted = 1,
+  })
+end
 
 Ty.set_terminal_keymaps = vim.schedule_wrap(function()
   local nvim_buf_set_keymap = vim.keymap.set
