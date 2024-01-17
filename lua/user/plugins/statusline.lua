@@ -13,9 +13,10 @@ plug({
 
     require('heirline').load_colors(comp.setup_colors())
     local aug = vim.api.nvim_create_augroup('Heirline', { clear = true })
-    vim.api.nvim_create_autocmd('ColorScheme', {
+    vim.api.nvim_create_autocmd('OptionSet', {
       desc = 'Update Heirline colors',
       group = aug,
+      pattern = 'background',
       callback = function()
         local colors = comp.setup_colors()
         heirline_utils.on_colorscheme(colors)
