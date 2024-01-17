@@ -48,6 +48,10 @@ local function setup(opts)
     readme = {
       enabled = false,
     },
+    profiling = {
+      loader = true,
+      require = true,
+    },
     performance = {
       cache = {
         enabled = true,
