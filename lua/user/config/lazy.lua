@@ -14,13 +14,13 @@ local function install_lazy_vim()
 end
 
 ---@param opts {getspec:function}
-local function setup(lazy_opts, opts)
+local function setup(opts)
   local is_window = jit.os:find('Windows')
-  lazy_opts = vim.tbl_deep_extend('force', {
+  local lazy_opts = {
     spec = {},
     defaults = { lazy = true },
     dev = { patterns = is_window and {} or {}, path = is_window and '' or '~/workspace/git-repos' },
-    install = { missing = false, colorscheme = { 'vim' } },
+    install = { missing = true, colorscheme = { 'default' } },
     ui = {
       icons = {
         lazy = ' ',
@@ -50,13 +50,13 @@ local function setup(lazy_opts, opts)
     },
     performance = {
       cache = {
-        enabled = false,
+        enabled = true,
       },
       rtp = {
         disabled_plugins = {
           'gzip',
           'matchit',
-          'matchparen',
+          -- 'matchparen',
           'netrwPlugin',
           'rplugin',
           'tarPlugin',
@@ -67,7 +67,7 @@ local function setup(lazy_opts, opts)
       },
     },
     debug = false,
-  }, lazy_opts or {})
+  }
 
   local ok = prepend_lazy()
 
