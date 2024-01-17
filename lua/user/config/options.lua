@@ -106,7 +106,7 @@ function M.init_interface()
   o.wildmode = { 'full:longest', 'list:full', 'lastused' } -- Command-line completion mode
   -- o.wildchar = 9 -- trigger char, default <Tab>
   o.cmdheight = 1 --- Give more space for displaying messages
-  o.completeopt = { 'menu', 'menuone', 'noselect' } --- Better autocompletion
+  o.completeopt = { 'menu', 'menuone', 'noselect', 'popup' } --- Better autocompletion
   o.complete:append('kspell') -- Add spellcheck options for autocomplete
   -- scan current and included files.
   -- o.complete:append('i')
