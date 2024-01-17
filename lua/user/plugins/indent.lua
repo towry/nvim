@@ -5,6 +5,21 @@ local au = require('userlib.runtime.au')
 ---Identation.
 pack.plug({
   {
+    'utilyre/sentiment.nvim',
+    version = '*',
+    event = 'User LazyUIEnterOncePost',
+    enabled = true,
+    cmd = {
+      'NoMatchParen',
+      'DoMatchParen',
+    },
+    opts = {
+      excluded_filetypes = {},
+      included_modes = { n = true, i = true },
+      delay = 100,
+    },
+  },
+  {
     'NMAC427/guess-indent.nvim',
     event = 'User LazyUIEnterOncePost',
     cmd = { 'GuessIndent' },

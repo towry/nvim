@@ -56,7 +56,7 @@ local function setup(opts)
         disabled_plugins = {
           'gzip',
           'matchit',
-          -- 'matchparen',
+          'matchparen',
           'netrwPlugin',
           'rplugin',
           'tarPlugin',
