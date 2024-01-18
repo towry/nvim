@@ -58,6 +58,10 @@ function M.custom_theme_kanagawa()
   M.custom_theme_default()
 end
 
+function M.custom_theme_everforest()
+  M.custom_theme_default()
+end
+
 M['custom_theme_rose-pine'] = function()
   -- M.custom_theme_default()
 end
