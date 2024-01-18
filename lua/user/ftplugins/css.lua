@@ -1,10 +1,9 @@
-local set = require('userlib.runtime.keymap').map_buf_thunk(0)
-
 return {
   attach = function()
     if vim.g.vscode then
       return
     end
+    local set = require('userlib.runtime.keymap').map_buf_thunk(0)
     -- https://github.com/chrisgrieser/.config/blob/main/nvim/after/ftplugin/css.lua
     -- toggle !important (useful for debugging selectors)
     set('n', '<localleader>ti', function()
