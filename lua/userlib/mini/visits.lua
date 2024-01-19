@@ -1,3 +1,4 @@
+-- TODO: handle deleted path
 local M = {}
 
 M.Weights = {
