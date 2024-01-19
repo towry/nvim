@@ -393,23 +393,31 @@ local function setup_basic()
     end, { expr = true, silent = true })
 
     set({ 'i' }, '<C-y>', function()
-      -- accept ai or completion selection.
-      if vim.fn.pumvisible() ~= 0 then
-        local item_selected = vim.fn.complete_info()['selected'] ~= -1
-        return item_selected and keys['ctrl-y'] or keys['ctrl-y_cr']
-      elseif Ty.has_ai_suggestions() and Ty.has_ai_suggestion_text() then
-        if vim.b._copilot then
-          vim.fn.feedkeys(vim.fn['copilot#Accept'](), 'i')
-        elseif vim.b._codeium_completions then
-          vim.fn.feedkeys(vim.fn['codeium#Accept'](), 'i')
-        end
-      else
+      local trigger_ai = function()
         -- trigger ai
         if vim.b._copilot then
           vim.fn.feedkeys(vim.fn['copilot#Suggest'](), 'i')
         elseif vim.fn.exists('*codeium#Complete') == 1 then
           vim.fn.feedkeys(vim.fn['codeium#Complete'](), 'i')
         end
+      end
+
+      -- accept ai or completion selection.
+      if vim.fn.pumvisible() ~= 0 then
+        local item_selected = vim.fn.complete_info()['selected'] ~= -1
+        if item_selected then
+          return keys['ctrl-y']
+        end
+      end
+
+      if Ty.has_ai_suggestions() and Ty.has_ai_suggestion_text() then
+        if vim.b._copilot then
+          vim.fn.feedkeys(vim.fn['copilot#Accept'](), 'i')
+        elseif vim.b._codeium_completions then
+          vim.fn.feedkeys(vim.fn['codeium#Accept'](), 'i')
+        end
+      else
+        trigger_ai()
       end
     end, {
       silent = false,
