@@ -113,7 +113,7 @@ local ViMode = {
 local FileIcon = {
   init = function(self)
     self.icon, self.icon_color =
-      require('nvim-web-devicons').get_icon_color_by_filetype(vim.bo.filetype, { default = true })
+      require('nvim-web-devicons').get_icon_color_by_filetype(vim.bo[self.bufnr].filetype, { default = true })
   end,
   provider = function(self)
     return self.icon and (self.icon .. ' ')
