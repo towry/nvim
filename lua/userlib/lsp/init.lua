@@ -207,6 +207,16 @@ local function setup_lspconfig_servers_once(filetypes, servers)
           return
         end
         bufcache[buf] = true
+
+        --- invalid the cache on buf unload
+        au.define_autocmd('BufUnload', {
+          group = 'invalid_buf_cache',
+          buffer = buf,
+          callback = function()
+            bufcache[buf] = false
+          end,
+        })
+
         vim.schedule(function()
           if vim.api.nvim_get_current_buf() == buf then
             setup_lspconfig_servers(servers, buf)
