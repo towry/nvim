@@ -112,8 +112,9 @@ local ViMode = {
 
 local FileIcon = {
   init = function(self)
+    -- not working
     self.icon, self.icon_color =
-      require('nvim-web-devicons').get_icon_color_by_filetype(vim.bo[self.bufnr].filetype, { default = true })
+      require('nvim-web-devicons').get_icon_color_by_filetype(vim.bo[self.bufnr or 0].filetype, { default = true })
   end,
   provider = function(self)
     return self.icon and (self.icon .. ' ')
@@ -157,8 +158,11 @@ local FileName = {
 }
 
 local BufferCwd = {
-  provider = function()
-    local cwd = vim.fn.fnamemodify(vim.b.project_nvim_cwd or vim.uv.cwd(), ':t')
+  init = function(self)
+    self.bufnr = self.bufnr or 0
+  end,
+  provider = function(self)
+    local cwd = vim.fn.fnamemodify(vim.b[self.bufnr].project_nvim_cwd or vim.uv.cwd(), ':t')
     if not cwd or cwd == '' then
       return ''
     end
@@ -832,7 +836,6 @@ local TablineFileNameBlock = {
     name = 'heirline_tabline_buffer_callback',
   },
   TablineBufnr,
-  FileIcon, -- turns out the version defined in #crash-course-part-ii-filename-and-friends can be reutilized as is here!
   TablineFileName,
   TablineFileFlags,
 }
