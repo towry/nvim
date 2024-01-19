@@ -78,6 +78,21 @@ function M.list_normal_bufnrs()
   end)
 end
 
+--- Get current tab's visible buffers.
+function M.list_tab_buffers()
+  local tab_wins = vim.api.nvim_tabpage_list_wins(0)
+  local bufnrs = {}
+  for _, win in ipairs(tab_wins) do
+    local bufnr = vim.api.nvim_win_get_buf(win)
+    if vim.api.nvim_get_option_value('buflisted', {
+      buf = bufnr,
+    }) then
+      table.insert(bufnrs, bufnr)
+    end
+  end
+  return bufnrs
+end
+
 --- filter buffers
 function M.filter_bufnrs(filter)
   local all_buffers = vim.api.nvim_list_bufs()

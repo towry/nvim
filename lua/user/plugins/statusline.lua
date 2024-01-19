@@ -23,13 +23,11 @@ plug({
       end,
     })
     require('heirline').setup({
-      winbar = {
-        comp.DirAndFileName,
-      },
+      -- winbar = {
+      --   comp.DirAndFileName,
+      -- },
       -- https://github.com/rebelot/heirline.nvim/blob/master/cookbook.md#tabline
-      tabline = {
-        comp.TabPages,
-      },
+      tabline = comp.TabLine,
       -- mode
       -- branch
       -- harpoon
@@ -62,8 +60,8 @@ plug({
         comp.lpad(comp.TerminalStatusline),
         comp.lpad(comp.BufVisited),
         require('userlib.statusline.heirline').left_components,
-        { provider = '%=' },
-        comp.lpad(comp.Tabs),
+        --{ provider = '%=' },
+        -- comp.lpad(comp.Tabs),
         { provider = '%=' },
         require('userlib.statusline.heirline').right_components,
         comp.rpad(comp.Overseer),
@@ -79,7 +77,7 @@ plug({
       ),
 
       opts = {
-        disable_winbar_cb = function(args)
+        not_used_disable_winbar_cb = function(args)
           local buf = args.buf
           local buftype = vim.bo[buf].buftype
           local ignore_buftype = vim.tbl_contains({
@@ -97,11 +95,11 @@ plug({
       },
     })
 
-    -- vim.o.showtabline = 2
+    vim.o.showtabline = 2
     vim.api.nvim_create_user_command('HeirlineResetStatusline', function()
       vim.o.statusline = "%{%v:lua.require'heirline'.eval_statusline()%}"
     end, {})
     -- Because heirline is lazy loaded, we need to manually set the winbar on startup
-    vim.opt_local.winbar = "%{%v:lua.require'heirline'.eval_winbar()%}"
+    -- vim.opt_local.winbar = "%{%v:lua.require'heirline'.eval_winbar()%}"
   end,
 })
