@@ -26,6 +26,10 @@ plug({
       winbar = {
         comp.DirAndFileName,
       },
+      -- https://github.com/rebelot/heirline.nvim/blob/master/cookbook.md#tabline
+      tabline = {
+        comp.TabPages,
+      },
       -- mode
       -- branch
       -- harpoon
@@ -93,6 +97,7 @@ plug({
       },
     })
 
+    -- vim.o.showtabline = 2
     vim.api.nvim_create_user_command('HeirlineResetStatusline', function()
       vim.o.statusline = "%{%v:lua.require'heirline'.eval_statusline()%}"
     end, {})
