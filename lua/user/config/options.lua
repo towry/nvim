@@ -32,7 +32,8 @@ function M.startup()
   o.undofile = true --- Sets undo to file
   o.updatetime = 250 --- Faster completion
   -- o.viminfo        = "'1000" --- Increase the size of file history
-  o.wildignore = { '*node_modules/**', '.git/**', '*.DS_Store' } --- Don't search inside Node.js modules (works for gutentag)
+  o.wildignorecase = true
+  o.wildignore = { '*node_modules/**', '.git/**', '*.DS_Store', '*.min.js', '*.obj' } --- Don't search inside Node.js modules (works for gutentag)
   o.wrap = false --- Display long lines as just one line
   -- enable line-wrapping with left and right cursor movement
   vim.opt.whichwrap:append({ ['<'] = true, ['>'] = true, ['h'] = true, ['l'] = true, ['['] = true, [']'] = true })
