@@ -357,6 +357,14 @@ local function setup_basic()
       end
     end, { expr = true, silent = false })
 
+    set({ 'c' }, [[<Tab>]], function()
+      if vim.fn.pumvisible() ~= 0 then
+        return '<C-n>'
+      else
+        return '<C-z>'
+      end
+    end, { expr = true, silent = true })
+
     -- when item selected, complete it.
     -- set({ 'i' }, [[<Space>]], function()
     --   -- in coq, when press space, it will complete the selected but also add

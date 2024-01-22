@@ -33,7 +33,7 @@ function M.startup()
   o.updatetime = 250 --- Faster completion
   -- o.viminfo        = "'1000" --- Increase the size of file history
   o.wildignorecase = true
-  o.wildoptions = 'fuzzy'
+  o.wildoptions = { 'fuzzy', 'pum', 'tagfile' }
   o.wildignore = { '*.pyc', '*node_modules/**', '.git/**', '*.DS_Store', '*.min.js', '*.obj' } --- Don't search inside Node.js modules (works for gutentag)
   o.wrap = false --- Display long lines as just one line
   -- enable line-wrapping with left and right cursor movement
@@ -105,7 +105,9 @@ function M.init_interface()
   o.mouse = 'a' --- Enable mouse
   o.sidescrolloff = 8 -- Columns of context
   o.lazyredraw = true --- lazyredraw on startup
-  o.wildmode = { 'full:longest', 'list:full', 'lastused' } -- Command-line completion mode
+  -- use <C-z> to trigger cmp and remap <Tab> to call <C-z>
+  o.wildchar = ('<C-z>'):byte()
+  o.wildmode = { 'full', 'full:longest', 'list:full', 'lastused' } -- Command-line completion mode
   -- o.wildchar = 9 -- trigger char, default <Tab>
   o.cmdheight = 1 --- Give more space for displaying messages
   o.completeopt = { 'menu', 'menuone', 'noselect', 'popup' } --- Better autocompletion
