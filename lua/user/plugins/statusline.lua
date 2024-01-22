@@ -59,7 +59,7 @@ plug({
         comp.lpad(require('userlib.statusline.heirline.component_diagnostic')),
         comp.lpad(comp.TerminalStatusline),
         comp.lpad(comp.BufVisited),
-        comp.rpad(comp.Overseer),
+        comp.lpad(comp.Overseer),
         require('userlib.statusline.heirline').left_components,
         --{ provider = '%=' },
         -- comp.lpad(comp.Tabs),
