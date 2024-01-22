@@ -265,7 +265,7 @@ local function setup_basic()
     if not ok or res == false then
       return
     end
-    vim.cmd(string.format('Dispatch! zellij run -d down -- %s', res))
+    vim.cmd(string.format('OverDispatch! zellij run -d down -- %s', res))
   end, {
     desc = 'zellij run',
   })

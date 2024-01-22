@@ -215,8 +215,10 @@ create_cmd('OverMake', function(params)
     },
   })
 
-  vim.api.nvim_echo({ { 'OverMake: ', 'InfoFloat' }, { cmd, 'Comment' } }, false, {})
   task:start()
+  vim.schedule(function()
+    vim.api.nvim_echo({ { 'OverMake: ', 'InfoFloat' }, { cmd, 'Comment' } }, true, {})
+  end)
 end, {
   desc = 'Run your makeprg as an Overseer task',
   nargs = '*',
@@ -238,8 +240,10 @@ create_cmd('OverDispatch', function(params)
       'default',
     },
   })
-  vim.api.nvim_echo({ { 'OverDispatch: ', 'InfoFloat' }, { expanded_cmd, 'Comment' } }, false, {})
   task:start()
+  vim.schedule(function()
+    vim.api.nvim_echo({ { 'OverDispatch: ', 'InfoFloat' }, { expanded_cmd, 'Comment' } }, true, {})
+  end)
 end, {
   desc = 'Run your cmd as an Overseer task',
   nargs = '*',

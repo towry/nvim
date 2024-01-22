@@ -43,7 +43,7 @@ plug({
       },
       {
         '<leader>ga',
-        cmdstr([[Dispatch! Git add %]]),
+        cmdstr([[OverDispatch! Git add %]]),
         desc = '!Git add current',
       },
       {
@@ -53,7 +53,7 @@ plug({
       },
       {
         '<leader>gA',
-        cmdstr([[Dispatch! Git add .]]),
+        cmdstr([[OverDispatch! Git add .]]),
         desc = '!Git add all',
       },
       -- {
@@ -171,7 +171,7 @@ plug({
               vim.notify('Empty commit message', vim.log.levels.ERROR)
               return
             end
-            vim.cmd(string.format('Dispatch! Git commit -m "%s"', input))
+            vim.cmd(string.format('OverDispatch! Git commit -m "%s"', input))
           end)
         end,
         desc = 'Git commit',

@@ -10,7 +10,7 @@ au.on_verylazy(function()
 
   setca('avo', 'vertical Oil')
   setca('alp', 'Lazy profile')
-  setca('ad', 'Dispatch')
+  setca('ad', 'OverDispatch')
   setca('asb', 'ScratchBuffer')
   setca('ams', 'MakeSession')
   setca('als', 'LoadSession')
