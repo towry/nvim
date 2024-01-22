@@ -86,7 +86,7 @@ function M.list_tab_buffers()
     local bufnr = vim.api.nvim_win_get_buf(win)
     if vim.api.nvim_get_option_value('buflisted', {
       buf = bufnr,
-    }) then
+    }) or vim.bo[bufnr].buftype == 'acwrite' then
       table.insert(bufnrs, bufnr)
     end
   end
