@@ -39,7 +39,7 @@ if vim.env['TMUX'] ~= nil then
     local shell_command = table.concat(vim.list_slice(args, 2), ' ') -- The rest is the optional shell command
 
     -- Get the current tmux pane ID
-    local current_pane = os.getenv('TMUX_PANE')
+    -- local current_pane = os.getenv('TMUX_PANE')
 
     -- Construct the tmux command to get the active pane index
     local tmux_active_pane_command = "tmux display-message -p '#{pane_index}'"
@@ -197,4 +197,51 @@ end, {
       'DEBUG',
     }
   end,
+})
+
+-- Make with overseer
+create_cmd('OverMake', function(params)
+  -- Insert args at the '$*' in the makeprg
+  local cmd, num_subs = vim.o.makeprg:gsub('%$%*', params.args)
+  if num_subs == 0 then
+    cmd = cmd .. ' ' .. params.args
+  end
+  cmd = vim.fn.expandcmd(cmd)
+  local task = require('overseer').new_task({
+    cmd = cmd,
+    components = {
+      { 'on_output_quickfix', open = not params.bang, open_height = 8 },
+      'default',
+    },
+  })
+
+  vim.api.nvim_echo({ { cmd, 'InfoText' } }, false, {})
+  task:start()
+end, {
+  desc = 'Run your makeprg as an Overseer task',
+  nargs = '*',
+  bang = true,
+})
+
+-- Dispatch with overseer
+create_cmd('OverDispatch', function(params)
+  local cmd = vim.trim(params.args or '')
+  if cmd == '' and vim.b.over_dispatch then
+    cmd = vim.b.over_dispatch
+  end
+  vim.b.over_dispatch = cmd
+  local expanded_cmd = vim.fn.expandcmd(cmd)
+  local task = require('overseer').new_task({
+    cmd = expanded_cmd,
+    components = {
+      { 'on_output_quickfix', open = not params.bang, open_height = 8 },
+      'default',
+    },
+  })
+  vim.api.nvim_echo({ { expanded_cmd, 'InfoText' } }, false, {})
+  task:start()
+end, {
+  desc = 'Run your cmd as an Overseer task',
+  nargs = '*',
+  bang = true,
 })
