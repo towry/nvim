@@ -108,7 +108,6 @@ function M.init_interface()
   -- use <C-z> to trigger cmp and remap <Tab> to call <C-z>
   o.wildchar = ('<C-z>'):byte()
   o.wildmode = { 'full', 'full:longest', 'list:full', 'lastused' } -- Command-line completion mode
-  -- o.wildchar = 9 -- trigger char, default <Tab>
   o.cmdheight = 1 --- Give more space for displaying messages
   o.completeopt = { 'menu', 'menuone', 'noselect', 'popup' } --- Better autocompletion
   o.complete:append('kspell') -- Add spellcheck options for autocomplete
