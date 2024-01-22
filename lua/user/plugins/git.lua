@@ -56,11 +56,11 @@ plug({
         cmdstr([[OverDispatch! Git add .]]),
         desc = '!Git add all',
       },
-      -- {
-      --   '<leader>gp',
-      --   cmdstr([[exec "Dispatch! Git push origin " .. FugitiveHead()]]),
-      --   desc = 'Git push',
-      -- },
+      {
+        '<leader>gp',
+        cmdstr([[exec "OverDispatch! Git push origin " .. FugitiveHead()]]),
+        desc = 'Git push',
+      },
       {
         '<leader>gu',
         cmdstr([[exec "Git! pull origin " .. FugitiveHead() | :lua vim.g.escape_cmd="pclose"]]),
