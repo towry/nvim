@@ -162,7 +162,7 @@ local BufferCwd = {
     self.bufnr = self.bufnr or 0
   end,
   provider = function(self)
-    local cwd = vim.fn.fnamemodify(vim.b[self.bufnr].project_nvim_cwd or vim.uv.cwd(), ':t')
+    local cwd = vim.fn.fnamemodify(vim.b[self.bufnr].project_nvim_cwd or vim.uv.cwd() or '', ':t')
     if not cwd or cwd == '' then
       return ''
     end
@@ -784,18 +784,20 @@ local TablineFileName = {
 local TablineFileFlags = {
   {
     condition = function(self)
-      return vim.api.nvim_buf_get_option(self.bufnr, 'modified')
+      return vim.api.nvim_get_option_value('modified', { buf = self.bufnr })
     end,
     provider = '[+]',
     hl = { fg = 'green' },
   },
   {
     condition = function(self)
-      return not vim.api.nvim_buf_get_option(self.bufnr, 'modifiable')
-        or vim.api.nvim_buf_get_option(self.bufnr, 'readonly')
+      return not vim.api.nvim_get_option_value('modifiable', { buf = self.bufnr })
+        or vim.api.nvim_get_option_value('readonly', { buf = self.bufnr })
     end,
     provider = function(self)
-      if vim.api.nvim_buf_get_option(self.bufnr, 'buftype') == 'terminal' then
+      if vim.api.nvim_get_option_value('buftype', {
+        buf = self.bufnr,
+      }) == 'terminal' then
         return '  '
       else
         return ''
