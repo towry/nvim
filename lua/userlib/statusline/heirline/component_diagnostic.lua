@@ -1,7 +1,16 @@
 local DiagnosticIcons = require('userlib.lsp.cfg.diagnostic').DiagnosticIcons
 
+-- TODO: fix pad
 return {
   static = DiagnosticIcons,
+
+  condition = function()
+    if vim.diagnostic.count then
+      if #vim.diagnostic.count(0) <= 0 then
+        return false
+      end
+    end
+  end,
 
   init = function(self)
     if vim.diagnostic.count then
