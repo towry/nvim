@@ -222,8 +222,9 @@ plug({
         exclude = vim.cfg.misc__ft_exclude,
       },
       jump = {
-        pos = 'start', -- jump to end of label, useful in insert mode jump.
-        offset = 1, -- affect pos.
+        ----- affect t motion
+        -- pos = 'start', -- jump to end of label, useful in insert mode jump.
+        -- offset = 1, -- affect pos.
         autojump = true,
         nohlsearch = true,
       },
