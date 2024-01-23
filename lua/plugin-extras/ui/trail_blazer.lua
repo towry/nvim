@@ -6,7 +6,11 @@ local fmt = string.format
 local function get_available_stacks(notify)
   local available_stacks = require('trailblazer.trails').stacks.get_sorted_stack_names()
   if notify then
-    vim.notify(fmt('Available stacks: %s', table.concat(available_stacks, ', ')), 'info', { title = 'TrailBlazer' })
+    vim.notify(
+      fmt('Available stacks: %s', table.concat(available_stacks, ', ')),
+      vim.log.levels.INFO,
+      { title = 'TrailBlazer' }
+    )
   end
   return available_stacks
 end
@@ -18,12 +22,12 @@ local function add_trail_mark_stack()
     end
     local available_stacks = get_available_stacks()
     if Ty.find_string(available_stacks, name) then
-      vim.notify(fmt('"%s" stack already exists.', name), 'warn', { title = 'TrailBlazer' })
+      vim.notify(fmt('"%s" stack already exists.', name), vim.log.levels.WARN, { title = 'TrailBlazer' })
       return
     end
     local tb = require('trailblazer')
     tb.add_trail_mark_stack(name)
-    vim.notify(fmt('"%s" stack created.', name), 'info', { title = 'TrailBlazer' })
+    vim.notify(fmt('"%s" stack created.', name), vim.log.levels.INFO, { title = 'TrailBlazer' })
   end)
 end
 
@@ -34,12 +38,12 @@ local function delete_trail_mark_stack()
     end
     local available_stacks = get_available_stacks()
     if not Ty.find_string(available_stacks, name) then
-      vim.notify(fmt('"%s" stack does not exist.', name), 'warn', { title = 'TrailBlazer' })
+      vim.notify(fmt('"%s" stack does not exist.', name), vim.log.levels.INFO, { title = 'TrailBlazer' })
       return
     end
     local tb = require('trailblazer')
     tb.delete_trail_mark_stack(name)
-    vim.notify(fmt('"%s" stack deleted.', name), 'info', { title = 'TrailBlazer' })
+    vim.notify(fmt('"%s" stack deleted.', name), vim.log.levels.INFO, { title = 'TrailBlazer' })
   end)
 end
 
@@ -61,7 +65,7 @@ return plug({
     'TrailBlazerSaveSession',
   },
   keys = {
-    { '<leader>v<space>', '<cmd>TrailBlazerNewTrailMark<cr>', desc = 'New trail mark' },
+    { '<leader><space>', '<cmd>TrailBlazerNewTrailMark<cr>', desc = 'New trail mark' },
     { '<leader>vn', '<cmd>TrailBlazerMoveToNearest<cr>', desc = 'Trail nearest' },
     -- { '<leader>vt',      desc = 'Toggle trail mark list' },
     { '<leader>vx', '<cmd>TrailBlazerDeleteAllTrailMarks<cr>', desc = 'clear all marks' },
