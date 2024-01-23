@@ -6,6 +6,7 @@ local is_profiling = false
 
 local function setup_basic()
   --->>
+  set('n', '<CR>', 'viw', { desc = 'V in word', silent = true })
   set('n', ']b', '<cmd>bnext<cr>', { desc = 'Next buffer' })
   set('n', '[b', '<cmd>bpre<cr>', { desc = 'Prev buffer' })
   set('n', '<leader>rn', function()
