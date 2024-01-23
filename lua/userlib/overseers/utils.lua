@@ -5,7 +5,7 @@ local count_windows = 0
 ---@type number?
 local last_window
 local get_size = function()
-  return vim.o.columns * 0.4
+  return vim.o.columns * 0.6
 end
 
 local augroup = vim.api.nvim_create_augroup('overseer_user_open_on_start', {})
