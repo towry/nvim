@@ -83,7 +83,7 @@ plug({
     event = 'WinNew',
     opts = {
       autowidth = {
-        enable = true,
+        enable = vim.cfg.runtime__starts_as_gittool and true or false,
         winwidth = 40,
         winminwidth = 20,
       },
@@ -97,6 +97,9 @@ plug({
     },
     config = function(_, opts)
       vim.o.equalalways = false
+      if vim.cfg.runtime__starts_as_gittool then
+        vim.o.equalalways = true
+      end
       require('windows').setup(opts)
     end,
     init = function()
@@ -106,7 +109,7 @@ plug({
           if vim.cfg.ui__window_equalalways then
             return
           end
-          if vim.cfg.runtime__starts_in_buffer and vim.wo.diff then
+          if (vim.cfg.runtime__starts_in_buffer and vim.wo.diff) or vim.cfg.runtime__starts_as_gittool then
             vim.cmd('WindowsEqualize')
           end
         end,
