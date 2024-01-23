@@ -4,6 +4,7 @@ local o = vim.opt
 local g = vim.g
 
 function M.startup()
+  o.startofline = true
   o.exrc = true
   o.jumpoptions = 'stack'
   o.breakindent = true
@@ -22,7 +23,7 @@ function M.startup()
   o.splitbelow = false
   o.swapfile = false --- Swap not needed
   o.tabstop = 2 --- Insert 2 spaces for a tab
-  o.timeoutlen = 380 --- Key sequence wait time | Faster completion (cannot be lower than 200 because then commenting doesn't work)
+  o.timeoutlen = 480 --- Key sequence wait time | Faster completion (cannot be lower than 200 because then commenting doesn't work)
   o.showcmd = true
   o.showcmdloc = 'last'
   o.winminwidth = 10
@@ -44,7 +45,7 @@ function M.startup()
   o.autoindent = true --- Good auto indent
   o.backspace = { 'indent', 'eol', 'start' } --- Making sure backspace works
   o.backup = false --- Recommended by coc
-  o.conceallevel = 0 --- Show `` in markdown files
+  o.conceallevel = 1 --- Show `` in markdown files
   o.encoding = 'utf-8' --- The encoding displayed
   o.errorbells = false --- Disables sound effect for errors
   o.fileencoding = 'utf-8' --- The encoding written to file
@@ -85,6 +86,7 @@ function M.init_interface()
   --- blink cursor see https://github.com/neovim/neovim/pull/26075
   --- set guicursor+=n:blinkon1
   o.guicursor:append('n-v-c:blinkon500-blinkoff500')
+  o.report = 9001 -- Threshold for reporting number of lines channged.
   o.colorcolumn = '+1' -- Draw colored column one step to the right of desired maximum width
   o.showmode = false --- Don't show things like -- INSERT -- anymore
   o.modeline = true -- Allow modeline
