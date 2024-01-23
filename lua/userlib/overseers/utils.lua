@@ -5,7 +5,7 @@ local count_windows = 0
 ---@type number?
 local last_window
 local get_size = function()
-  return vim.o.columns * 0.6
+  return vim.o.lines * 0.7
 end
 
 local augroup = vim.api.nvim_create_augroup('overseer_user_open_on_start', {})
@@ -19,11 +19,11 @@ end
 
 M.add_window_to_stack = function(bufnr)
   if not last_window or not vim.api.nvim_win_is_valid(last_window) then
-    M.create_window(bufnr, 'botright vertical', get_size())
+    M.create_window(bufnr, 'topleft', get_size)
     return
   end
   vim.api.nvim_set_current_win(last_window)
-  M.create_window(bufnr, 'belowright')
+  M.create_window(bufnr, 'topleft')
   M.resize_windows_on_stack()
 end
 
