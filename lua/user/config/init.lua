@@ -4,7 +4,6 @@ local function on_very_lazy()
   require('user.config.options').setup()
   require('user.config.keymaps').setup()
   require('user.config.commands')
-  require('user.config.theme').setup()
 end
 
 function M.setup()
@@ -31,6 +30,7 @@ function M.setup()
     end,
   })
 
+  require('user.config.theme').setup()
   if not package.loaded.lazy then
     on_very_lazy()
   end
