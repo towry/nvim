@@ -272,12 +272,12 @@ pack.plug({
       default_opts = {
         keymaps = { silent = true, noremap = true },
       },
-      col_separator_char = '#',
-      select_prompt = ' ⚒ ',
+      -- col_separator_char = '#',
+      select_prompt = 'Legendary: ',
       icons = {
-        fn = ' ',
-        command = ' ',
-        key = ' ',
+        fn = '',
+        command = '',
+        key = '',
       },
       extensions = {
         diffview = true,
