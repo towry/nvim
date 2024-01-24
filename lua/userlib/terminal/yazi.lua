@@ -8,7 +8,7 @@ function M.toggle(opts)
 
   local yazi = Terminal:new({
     cmd = 'yazi',
-    cwd = opts.cwd,
+    dir = opts.cwd,
     direction = 'tab',
     close_on_exit = true,
     hidden = true,

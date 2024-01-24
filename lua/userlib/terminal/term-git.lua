@@ -18,7 +18,7 @@ local function get_tig_term()
   local tig_ = Terminal:new({
     cmd = 'tig',
     dir = git_dir,
-    direction = 'vertical',
+    direction = 'tab',
     close_on_exit = true,
     hidden = true,
     float_opts = {
@@ -60,12 +60,13 @@ M.toggle_tig_file_history = function()
     local Terminal = require('toggleterm.terminal').Terminal
     local tig_ = Terminal:new({
       cmd = string.format('tig %s', vim.fn.expand('%')),
-      direction = 'vertical',
+      direction = 'horizontal',
       close_on_exit = true,
       hidden = true,
       float_opts = {
-        border = 'double',
+        border = 'single',
       },
+      size = vim.o.lines * 0.7,
       -- function to run on opening the terminal
       on_open = function(term)
         vim.cmd('startinsert!')
