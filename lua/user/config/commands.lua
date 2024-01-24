@@ -249,3 +249,10 @@ end, {
   nargs = '*',
   bang = true,
 })
+
+create_cmd('Yazi', function()
+  require('userlib.terminal.yazi').toggle()
+end, {
+  desc = 'Open yazi',
+  nargs = '*',
+})
