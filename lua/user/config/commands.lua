@@ -206,7 +206,9 @@ create_cmd('OverMake', function(params)
   if num_subs == 0 then
     cmd = cmd .. ' ' .. params.args
   end
-  cmd = vim.fn.expandcmd(cmd)
+  --- expandcmd raise error about backtick like cmd: Git commit -m "some
+  --- `backtick`"
+  cmd = vim.fn.expandcmd(vim.fn.fnameescape(cmd))
   local task = require('overseer').new_task({
     cmd = cmd,
     components = {
@@ -232,7 +234,7 @@ create_cmd('OverDispatch', function(params)
     cmd = vim.b.over_dispatch
   end
   vim.b.over_dispatch = cmd
-  local expanded_cmd = vim.fn.expandcmd(cmd)
+  local expanded_cmd = vim.fn.expandcmd(vim.fn.fnameescape(cmd))
   local task = require('overseer').new_task({
     cmd = expanded_cmd,
     components = {
