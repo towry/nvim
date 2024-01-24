@@ -843,7 +843,9 @@ plug({
 })
 
 plug({
-  'ibhagwan/fzf-lua',
+  -- 'ibhagwan/fzf-lua',
+  'pze/fzf-lua',
+  dev = false,
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   cmd = 'FzfLua',
   event = 'User LazyUIEnterOncePost',
@@ -1044,7 +1046,11 @@ plug({
       winopts = {
         fullscreen = false,
         height = 0.6,
-        width = 0.7,
+        width = 0.75,
+      },
+      fzf_opts = {
+        ['--ansi'] = '',
+        ['--info'] = 'inline',
       },
     })
   end,
