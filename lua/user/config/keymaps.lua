@@ -352,6 +352,7 @@ local function setup_basic()
       ['ctrl-y_cr'] = vim.api.nvim_replace_termcodes('<C-y><CR>', true, true, true),
       ['space'] = vim.api.nvim_replace_termcodes('<Space>', true, true, true),
       ['ctrl-z'] = vim.api.nvim_replace_termcodes('<C-z>', true, true, true),
+      ['bs-ctrl-z'] = vim.api.nvim_replace_termcodes('<C-h><C-z>', true, true, true),
     }
 
     -- Move inside completion list with <TAB>
@@ -375,6 +376,13 @@ local function setup_basic()
       else
         return '<C-z>'
       end
+    end, { expr = true, silent = false, noremap = true })
+    --- back a whitespace and then trigger completion.
+    set('c', [[<C-h>]], function()
+      if vim.fn.pumvisible() ~= 0 then
+        return '<C-n>'
+      end
+      return keys['bs-ctrl-z']
     end, { expr = true, silent = false, noremap = true })
 
     -- when item selected, complete it.
