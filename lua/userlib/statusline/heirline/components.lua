@@ -872,6 +872,13 @@ local TabPages = {
     return #vim.api.nvim_list_tabpages() >= 2
   end,
   utils.make_tablist(Tabpage),
+  {
+    provider = '┃',
+    hl = {
+      bg = utils.get_highlight('TabLine').bg,
+      fg = utils.get_highlight('TabLineSel').fg,
+    },
+  },
 }
 
 local TabLine = {
