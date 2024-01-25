@@ -875,13 +875,13 @@ local TabPages = {
 }
 
 local TabLine = {
+  TabPages,
   {
     rpad(lpad(BufferCwd)),
     hl = 'TabLine',
   },
   TablineBufferLine,
   { provider = '%=' },
-  TabPages,
 }
 
 return {
