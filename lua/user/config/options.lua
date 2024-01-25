@@ -42,7 +42,7 @@ function M.startup()
   o.autoindent = true --- Good auto indent
   o.backspace = { 'indent', 'eol', 'start' } --- Making sure backspace works
   o.backup = false --- Recommended by coc
-  o.conceallevel = 3 --- Show `` in markdown files
+  o.conceallevel = 2 --- Show `` in markdown files
   o.concealcursor = 'n'
   o.encoding = 'utf-8' --- The encoding displayed
   o.errorbells = false --- Disables sound effect for errors
@@ -101,6 +101,9 @@ function M.init_interface()
   o.infercase = true -- Infer letter cases for a richer built-in keyword completion
   o.scrolloff = 2 --- Always keep space when scrolling to bottom/top edge
   -- o.smoothscroll = true
+  if vim.fn.has('nvim-0.10') == 1 then
+    o.smoothscroll = true
+  end
   o.sidescroll = 10 --- Used only when 'wrap' option is off and the cursor is moved off the screen.
   o.mouse = 'a' --- Enable mouse
   o.sidescrolloff = 8 -- Columns of context
@@ -155,6 +158,7 @@ function M.init_interface()
     o.grepprg = 'rg --vimgrep --color=never --with-filename --line-number --no-heading --smart-case --'
     o.grepformat = '%f:%l:%c:%m,%f:%l:%m'
   end
+  o.sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help', 'globals', 'skiprtp', 'folds' }
 end
 
 function M.init_folds()
