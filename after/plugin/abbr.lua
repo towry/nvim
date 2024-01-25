@@ -3,9 +3,9 @@ local au = require('userlib.runtime.au')
 au.on_verylazy(function()
   ---- create abbreviations for command line.
   --- @param abbr string
-  --- @param expand string
+  --- @param expand string|function
   local setca = function(abbr, expand)
-    vim.api.nvim_set_keymap('ca', abbr, expand, { expr = false })
+    vim.keymap.set('ca', abbr, expand, { expr = type(expand) == 'function' and true or false })
   end
 
   setca('avo', 'vertical Oil')
@@ -14,4 +14,14 @@ au.on_verylazy(function()
   setca('asb', 'ScratchBuffer')
   setca('ams', 'MakeSession')
   setca('als', 'LoadSession')
+  --- name without ext
+  setca('aname', function()
+    return vim.fn.expand('%:t:r')
+  end)
+  setca('afile', function()
+    return vim.fn.expand('%:t')
+  end)
+  setca('apath', function()
+    return vim.fn.expand('%')
+  end)
 end)
