@@ -341,6 +341,7 @@ local function setup_basic()
       ['ctrl-y'] = vim.api.nvim_replace_termcodes('<C-y><C-e>', true, true, true),
       ['ctrl-y_cr'] = vim.api.nvim_replace_termcodes('<C-y><CR>', true, true, true),
       ['space'] = vim.api.nvim_replace_termcodes('<Space>', true, true, true),
+      ['ctrl-z'] = vim.api.nvim_replace_termcodes('<C-z>', true, true, true),
     }
 
     -- Move inside completion list with <TAB>
@@ -364,7 +365,7 @@ local function setup_basic()
       else
         return '<C-z>'
       end
-    end, { expr = true, silent = true })
+    end, { expr = true, silent = false, noremap = true })
 
     -- when item selected, complete it.
     -- set({ 'i' }, [[<Space>]], function()
@@ -385,7 +386,7 @@ local function setup_basic()
         return item_selected and keys['ctrl-y'] or keys['ctrl-y_cr']
       end
       return keys['cr']
-    end, { expr = true, silent = true })
+    end, { expr = true, silent = false })
 
     set({ 'i' }, [[<S-Tab>]], function()
       local has_luasnip, luasnip = pcall(require, 'luasnip')
@@ -399,7 +400,7 @@ local function setup_basic()
       else
         return '<S-Tab>'
       end
-    end, { expr = true, silent = true })
+    end, { expr = true, silent = false })
 
     set({ 'i' }, '<C-y>', function()
       local trigger_ai = function()
