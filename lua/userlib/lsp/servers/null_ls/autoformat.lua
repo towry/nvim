@@ -5,8 +5,8 @@ local M = {}
 --- Is auto format is disabled
 function M.disabled(bufnr)
   -- do not format on git merge.
-  if vim.cfg.runtime__starts_as_gittool then
-    return
+  if vim.cfg.runtime__starts_as_gittool or vim.wo.diff then
+    return true
   end
   if (bufnr or bufnr == 0) and vim.b[bufnr].autoformat_disable then
     return true
