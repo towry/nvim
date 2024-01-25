@@ -843,8 +843,8 @@ plug({
 })
 
 plug({
-  -- 'ibhagwan/fzf-lua',
-  'pze/fzf-lua',
+  'ibhagwan/fzf-lua',
+  -- 'pze/fzf-lua',
   dev = false,
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   cmd = 'FzfLua',
@@ -1051,6 +1051,10 @@ plug({
       fzf_opts = {
         ['--ansi'] = '',
         ['--info'] = 'inline',
+        ------===
+        ['--delimiter'] = '[\\.]',
+        ['--with-nth'] = '2..',
+        -------===
       },
     })
   end,
