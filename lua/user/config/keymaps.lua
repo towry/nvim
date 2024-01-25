@@ -317,15 +317,24 @@ local function setup_basic()
   end, {
     desc = 'Execute current line as lua command',
   })
-
-  set('n', '<leader>np', 'o<esc>"*p`[v`]=<esc>$', {
+  set('n', '<leader>np', function()
+    local reg = vim.v.register or '"'
+    vim.cmd(':put ' .. reg)
+    vim.cmd([[normal! `[v`]=]])
+  end, {
     expr = false,
     noremap = true,
+    silent = false,
     desc = 'Paste in next line and format',
   })
-  set('n', '<leader>nP', 'O<esc>"*p`[v`]=<esc>$', {
+  set('n', '<leader>nP', function()
+    local reg = vim.v.register or '"'
+    vim.cmd(':put! ' .. reg)
+    vim.cmd([[normal! `[v`]=]])
+  end, {
     expr = false,
     noremap = true,
+    silent = false,
     desc = 'Paste in above line and format',
   })
   set('n', '<leader>nv', '`[v`]', {
