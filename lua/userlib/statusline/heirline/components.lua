@@ -867,20 +867,18 @@ local TablineBufferLine = utils.make_buflist(
 )
 
 local TabPages = {
-  {
-    -- only show this component if there's 2 or more tabpages
-    condition = function()
-      return #vim.api.nvim_list_tabpages() >= 2
-    end,
-    utils.make_tablist(Tabpage),
-  },
+  -- only show this component if there's 2 or more tabpages
+  condition = function()
+    return #vim.api.nvim_list_tabpages() >= 2
+  end,
+  utils.make_tablist(Tabpage),
+}
+
+local TabLine = {
   {
     rpad(lpad(BufferCwd)),
     hl = 'TabLine',
   },
-}
-
-local TabLine = {
   TablineBufferLine,
   { provider = '%=' },
   TabPages,
