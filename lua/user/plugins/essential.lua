@@ -267,7 +267,7 @@ pack.plug({
       commands = require('userlib.legendary.commands.migrate'),
       -- autocmds =
       default_item_formatter = my_formatter,
-      include_builtin = false,
+      include_builtin = true,
       include_legendary_cmds = false,
       default_opts = {
         keymaps = { silent = true, noremap = true },
