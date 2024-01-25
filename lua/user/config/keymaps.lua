@@ -186,6 +186,8 @@ local function setup_basic()
       desc = 'Go to tab ' .. i,
     })
   end
+  set('n', '<space>0', cmd('tabnext'), { desc = 'Tab next' })
+  set('n', '<space><Tab>', cmd('tabp'), { desc = 'Tab previous' })
   set('n', '<leader>tn', cmd('tabnew'), {
     desc = 'New tab',
   })
