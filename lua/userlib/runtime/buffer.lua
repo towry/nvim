@@ -78,6 +78,87 @@ function M.list_normal_bufnrs()
   end)
 end
 
+local function buf_navigatable(buf)
+  local getopt = function(opt)
+    return vim.api.nvim_get_option_value(opt, { buf = buf })
+  end
+
+  return getopt('buflisted') and getopt('buftype') == '' and getopt('modifiable')
+end
+function M.next_bufnr(curbuf)
+  curbuf = curbuf or 0
+  curbuf = curbuf == 0 and vim.api.nvim_get_current_buf() or curbuf
+  local bufs = vim.api.nvim_list_bufs()
+  local current_idx = 0
+  local next_bufnr = nil
+
+  for idx, bufnr in ipairs(bufs) do
+    if bufnr == curbuf then
+      current_idx = idx
+      break
+    end
+  end
+
+  for i = current_idx + 1, #bufs do
+    local bufnr = bufs[i]
+    if buf_navigatable(bufnr) then
+      next_bufnr = bufnr
+      break
+    end
+  end
+
+  -- loop through
+  if next_bufnr == nil then
+    for i = 1, current_idx - 1 do
+      local bufnr = bufs[i]
+      if buf_navigatable(bufnr) then
+        next_bufnr = bufnr
+        break
+      end
+    end
+  end
+
+  return next_bufnr
+end
+
+function M.prev_bufnr(curbuf)
+  curbuf = curbuf or 0
+  curbuf = curbuf == 0 and vim.api.nvim_get_current_buf() or curbuf
+  local bufs = vim.api.nvim_list_bufs()
+  local current_idx = 0
+  local prev_bufnr = nil
+
+  for idx, bufnr in ipairs(bufs) do
+    if bufnr == curbuf then
+      current_idx = idx
+      break
+    end
+  end
+
+  if current_idx > 1 then
+    for i = current_idx - 1, 1, -1 do
+      local bufnr = bufs[i]
+      if buf_navigatable(bufnr) then
+        prev_bufnr = bufnr
+        break
+      end
+    end
+  elseif current_idx == 1 then
+    local last_idx = #bufs
+    for i = last_idx, 1, -1 do
+      local bufnr = bufs[i]
+      if buf_navigatable(bufnr) then
+        prev_bufnr = bufnr
+        break
+      end
+    end
+  end
+
+  return prev_bufnr
+end
+-- _G.prev_bufnr = M.prev_bufnr
+-- _G.next_bufnr = M.next_bufnr
+
 --- Get current tab's visible buffers.
 function M.list_tab_buffers()
   local tab_wins = vim.api.nvim_tabpage_list_wins(0)

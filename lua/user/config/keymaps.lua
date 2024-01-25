@@ -7,8 +7,16 @@ local is_profiling = false
 local function setup_basic()
   --->>
   set('n', '<CR>', 'viw', { desc = 'V in word', silent = true })
-  set('n', ']b', '<cmd>bnext<cr>', { desc = 'Next buffer' })
-  set('n', '[b', '<cmd>bpre<cr>', { desc = 'Prev buffer' })
+  set('n', ']b', function()
+    local Buffer = require('userlib.runtime.buffer')
+    local next_bufnr = Buffer.next_bufnr()
+    Buffer.set_current_buffer_focus(next_bufnr)
+  end, { desc = 'Next buffer' })
+  set('n', '[b', function()
+    local Buffer = require('userlib.runtime.buffer')
+    local next_bufnr = Buffer.prev_bufnr()
+    Buffer.set_current_buffer_focus(next_bufnr)
+  end, { desc = 'Prev buffer' })
   set('n', '<leader>rn', function()
     require('userlib.workflow.run-normal-keys')()
   end, {
