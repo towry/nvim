@@ -4,6 +4,7 @@ local o = vim.opt
 local g = vim.g
 
 function M.startup()
+  o.autowrite = true
   o.startofline = true
   o.exrc = true
   o.jumpoptions = 'stack'
