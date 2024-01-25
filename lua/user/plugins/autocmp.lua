@@ -428,7 +428,7 @@ pack.plug({
         completion = {
           -- this is important
           -- @see https://github.com/hrsh7th/nvim-cmp/discussions/1411
-          completeopt = 'menu,menuone,noinsert,noselect',
+          completeopt = 'menuone,noinsert,noselect',
         },
         formatting = {
           format = lspkind.cmp_format({

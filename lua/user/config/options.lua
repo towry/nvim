@@ -33,9 +33,6 @@ function M.startup()
   o.undofile = true --- Sets undo to file
   o.updatetime = 250 --- Faster completion
   -- o.viminfo        = "'1000" --- Increase the size of file history
-  o.wildignorecase = true
-  o.wildoptions = { 'fuzzy', 'pum', 'tagfile' }
-  o.wildignore = { '*.pyc', '*node_modules/**', '.git/**', '*.DS_Store', '*.min.js', '*.obj' } --- Don't search inside Node.js modules (works for gutentag)
   o.wrap = false --- Display long lines as just one line
   -- enable line-wrapping with left and right cursor movement
   vim.opt.whichwrap:append({ ['<'] = true, ['>'] = true, ['h'] = true, ['l'] = true, ['['] = true, [']'] = true })
@@ -45,7 +42,8 @@ function M.startup()
   o.autoindent = true --- Good auto indent
   o.backspace = { 'indent', 'eol', 'start' } --- Making sure backspace works
   o.backup = false --- Recommended by coc
-  o.conceallevel = 1 --- Show `` in markdown files
+  o.conceallevel = 3 --- Show `` in markdown files
+  o.concealcursor = 'n'
   o.encoding = 'utf-8' --- The encoding displayed
   o.errorbells = false --- Disables sound effect for errors
   o.fileencoding = 'utf-8' --- The encoding written to file
@@ -110,8 +108,11 @@ function M.init_interface()
   -- use <C-z> to trigger cmp and remap <Tab> to call <C-z>
   o.wildchar = ('<C-z>'):byte()
   o.wildmode = { 'full', 'full:longest', 'list:full', 'lastused' } -- Command-line completion mode
+  o.wildignorecase = true
+  o.wildoptions = { 'fuzzy', 'pum', 'tagfile' }
+  o.wildignore = { '*.pyc', '*node_modules/**', '.git/**', '*.DS_Store', '*.min.js', '*.obj' } --- Don't search inside Node.js modules (works for gutentag)
   o.cmdheight = 1 --- Give more space for displaying messages
-  o.completeopt = { 'menu', 'menuone', 'noselect', 'popup' } --- Better autocompletion
+  o.completeopt = 'menuone,popup,noinsert' --- Better autocompletion
   o.complete:append('kspell') -- Add spellcheck options for autocomplete
   -- scan current and included files.
   -- o.complete:append('i')
