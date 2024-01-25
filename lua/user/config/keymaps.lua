@@ -340,6 +340,7 @@ local function setup_basic()
   set('n', '<leader>nv', '`[v`]', {
     expr = false,
     noremap = true,
+    silent = false,
     desc = 'Visual select pasted content',
   })
 
