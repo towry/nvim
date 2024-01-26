@@ -7,8 +7,7 @@
 
 ---@toc user-notes.contents
 
----@mod user-notes.pattern Pattern
----@mod user-notes.pattern.lookahead-and-lookbehind Lookahead and lookbehind
+---@mod user-notes.pattern-lookahead-n-lookbehind Lookahead and lookbehind
 ---@brief [[
 ---refs ~
 ---- https://vim.fandom.com/wiki/Regex_lookahead_and_lookbehind
