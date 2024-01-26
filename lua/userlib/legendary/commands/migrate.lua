@@ -9,6 +9,10 @@ return {
     description = 'Make doc, user-notes',
   },
   {
+    ':h user-notes',
+    description = 'View user-notes',
+  },
+  {
     ':Copilot disable',
     description = 'Disable github copilot',
   },
