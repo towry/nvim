@@ -26,7 +26,7 @@ function M.startup()
   o.tabstop = 2 --- Insert 2 spaces for a tab
   o.timeoutlen = 480 --- Key sequence wait time | Faster completion (cannot be lower than 200 because then commenting doesn't work)
   o.showcmd = true
-  o.showcmdloc = 'last'
+  o.showcmdloc = 'statusline'
   o.winminwidth = 10
   o.winwidth = 10
   o.equalalways = vim.cfg.ui__window_equalalways
