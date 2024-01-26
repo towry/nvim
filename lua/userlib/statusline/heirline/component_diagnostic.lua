@@ -3,15 +3,6 @@ local DiagnosticIcons = require('userlib.lsp.cfg.diagnostic').DiagnosticIcons
 return {
   static = DiagnosticIcons,
 
-  -- condition is needed otherwise there will be extra space
-  condition = function()
-    if vim.diagnostic.count then
-      if #vim.diagnostic.count(0) <= 0 then
-        return false
-      end
-    end
-  end,
-
   init = function(self)
     if vim.diagnostic.count then
       local count = vim.diagnostic.count(0)
@@ -29,41 +20,50 @@ return {
   end,
 
   update = { 'DiagnosticChanged', 'BufEnter' },
+  {
 
-  {
     condition = function(self)
-      return self.errors > 0
+      if self.total <= 0 then
+        return false
+      end
+      return true
     end,
-    provider = function(self)
-      return '' .. (self.error_icon or '') .. self.errors
-    end,
-    hl = 'DiagnosticError',
-  },
-  {
-    condition = function(self)
-      return self.warnings > 0
-    end,
-    provider = function(self)
-      return '' .. (self.warn_icon or '') .. self.warnings
-    end,
-    hl = 'DiagnosticWarn',
-  },
-  {
-    condition = function(self)
-      return self.info > 0
-    end,
-    provider = function(self)
-      return '' .. (self.info_icon or '') .. self.info
-    end,
-    hl = 'DiagnosticInfo',
-  },
-  {
-    condition = function(self)
-      return self.hints > 0
-    end,
-    provider = function(self)
-      return '' .. (self.hint_icon or '') .. self.hints
-    end,
-    hl = 'DiagnosticHint',
+
+    {
+      condition = function(self)
+        return self.errors > 0
+      end,
+      provider = function(self)
+        return '' .. (self.error_icon or '') .. self.errors
+      end,
+      hl = 'DiagnosticError',
+    },
+    {
+      condition = function(self)
+        return self.warnings > 0
+      end,
+      provider = function(self)
+        return '' .. (self.warn_icon or '') .. self.warnings
+      end,
+      hl = 'DiagnosticWarn',
+    },
+    {
+      condition = function(self)
+        return self.info > 0
+      end,
+      provider = function(self)
+        return '' .. (self.info_icon or '') .. self.info
+      end,
+      hl = 'DiagnosticInfo',
+    },
+    {
+      condition = function(self)
+        return self.hints > 0
+      end,
+      provider = function(self)
+        return '' .. (self.hint_icon or '') .. self.hints
+      end,
+      hl = 'DiagnosticHint',
+    },
   },
 }

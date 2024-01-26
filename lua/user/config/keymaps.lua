@@ -10,11 +10,17 @@ local function setup_basic()
   set('n', ']b', function()
     local Buffer = require('userlib.runtime.buffer')
     local next_bufnr = Buffer.next_bufnr()
+    if not next_bufnr then
+      return
+    end
     Buffer.set_current_buffer_focus(next_bufnr)
   end, { desc = 'Next buffer' })
   set('n', '[b', function()
     local Buffer = require('userlib.runtime.buffer')
     local next_bufnr = Buffer.prev_bufnr()
+    if not next_bufnr then
+      return
+    end
     Buffer.set_current_buffer_focus(next_bufnr)
   end, { desc = 'Prev buffer' })
   set('n', '<leader>rn', function()
