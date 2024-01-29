@@ -136,6 +136,8 @@ function M.load_on_startup()
           if not vim.b[buf].is_big_file and lines < 10000 then
             vim.wo.foldmethod = 'expr'
             vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+            -- foldtext with ts hi
+            vim.wo.foldtext = ''
           else
             vim.wo.foldmethod = 'manual'
             vim.wo.foldexpr = ''
