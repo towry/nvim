@@ -30,6 +30,11 @@ return {
     end,
 
     {
+      -- left pad
+      provider = ' ',
+    },
+
+    {
       condition = function(self)
         return self.errors > 0
       end,

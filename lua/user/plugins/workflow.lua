@@ -84,8 +84,8 @@ plug({
     opts = {
       autowidth = {
         enable = not vim.cfg.runtime__starts_as_gittool and true or false,
-        winwidth = 40,
-        winminwidth = 20,
+        winwidth = 30,
+        winminwidth = 40,
       },
       ignore = {
         buftype = vim.cfg.misc__buf_exclude,

@@ -206,13 +206,6 @@ local GitStatus = {
   end,
 
   hl = { fg = utils.get_highlight('Constant').fg },
-
-  -- {
-  --   condition = function(self)
-  --     return self.has_changes
-  --   end,
-  --   provider = " ",
-  -- },
   {
     provider = function(self)
       local count = self.status_dict.added or 0
@@ -234,13 +227,6 @@ local GitStatus = {
     end,
     hl = { fg = utils.get_highlight('DiffDelete').fg },
   },
-
-  -- {
-  --   condition = function(self)
-  --     return self.has_changes
-  --   end,
-  --   provider = " ",
-  -- },
 }
 
 local FullFileName = {
