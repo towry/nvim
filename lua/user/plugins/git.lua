@@ -63,7 +63,10 @@ plug({
       },
       {
         '<leader>gu',
-        cmdstr([[exec "Git! pull origin " .. FugitiveHead() | :lua vim.g.escape_cmd="pclose"]]),
+        function()
+          vim.g.escape_cmd = 'pclose'
+          vim.cmd('Git! pull origin ' .. vim.fn.FugitiveHead())
+        end,
         desc = 'Git pull',
         silent = false,
       },
