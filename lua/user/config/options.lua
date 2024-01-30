@@ -44,7 +44,7 @@ function M.startup()
   o.backspace = { 'indent', 'eol', 'start' } --- Making sure backspace works
   o.backup = false --- Recommended by coc
   o.conceallevel = 2 --- Show `` in markdown files
-  o.concealcursor = 'n'
+  -- o.concealcursor = 'n'
   o.encoding = 'utf-8' --- The encoding displayed
   o.errorbells = false --- Disables sound effect for errors
   o.fileencoding = 'utf-8' --- The encoding written to file
