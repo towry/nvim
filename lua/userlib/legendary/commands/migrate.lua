@@ -5,10 +5,6 @@ return {
     description = 'Enable github copilot',
   },
   {
-    ':OverMake! doc',
-    description = 'Make doc, user-notes',
-  },
-  {
     ':h user-notes',
     description = 'View user-notes',
   },

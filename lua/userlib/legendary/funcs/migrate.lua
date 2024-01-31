@@ -22,6 +22,13 @@ return {
   },
   {
     function()
+      local user_config_dir = vim.fn.fnamemodify(vim.env.MYVIMRC, ':p:h')
+      vim.cmd(([[OverDispatch! cd %s && make doc]]):format(user_config_dir))
+    end,
+    description = 'Make user notes',
+  },
+  {
+    function()
       require('userlib.mini.trim').trim()
     end,
     description = 'Trim all trailing whitespace',
