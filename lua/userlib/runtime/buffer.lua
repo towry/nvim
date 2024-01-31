@@ -83,12 +83,16 @@ local function buf_navigatable(buf)
     return vim.api.nvim_get_option_value(opt, { buf = buf })
   end
 
+  local buflisted = getopt('buflisted')
+  if not buflisted then
+    return false
+  end
   local buftype = getopt('buftype')
   if buftype == 'terminal' then
     return true
   end
 
-  return getopt('buflisted') and buftype == '' and getopt('modifiable')
+  return buftype == '' and getopt('modifiable')
 end
 function M.next_bufnr(curbuf)
   curbuf = curbuf or 0
