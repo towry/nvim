@@ -171,13 +171,35 @@ function M.buffers_or_recent()
     sort_lastused = true,
     winopts = {
       fullscreen = false,
+      preview = {
+        hidden = 'hidden',
+      },
     },
+    -- keymap = {
+    --   fzf = {
+    --     ['tab'] = 'down',
+    --     ['btab'] = 'up',
+    --     ['ctrl-j'] = 'toggle+down',
+    --     ['ctrl-i'] = 'down',
+    --   },
+    -- },
   }
   local oldfiles_opts = {
     cwd = vim.cfg.runtime__starts_cwd,
     cwd_only = true,
     winopts = {
       fullscreen = false,
+      preview = {
+        hidden = 'hidden',
+      },
+    },
+    keymap = {
+      -- fzf = {
+      --   ['tab'] = 'down',
+      --   ['btab'] = 'up',
+      --   ['ctrl-j'] = 'toggle+down',
+      --   ['ctrl-i'] = 'down',
+      -- },
     },
   }
   local buffers_actions = {}
