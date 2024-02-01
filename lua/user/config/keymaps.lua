@@ -237,6 +237,32 @@ local function setup_basic()
   set('n', ']q', ':cnext<cr>', {
     desc = 'Jump to next quickfix item',
   })
+  set('n', '[qf', function()
+    pcall(function()
+      vim.cmd('1000cabove')
+    end)
+    local ok = pcall(function()
+      vim.cmd('cprev')
+    end)
+    if not ok then
+      vim.notify('No more items', vim.log.levels.ERROR)
+    end
+  end, {
+    desc = "Jump to prev file's first error item in quickfix",
+  })
+  set('n', ']qf', function()
+    pcall(function()
+      vim.cmd('1000cbelow')
+    end)
+    local ok = pcall(function()
+      vim.cmd('cnext')
+    end)
+    if not ok then
+      vim.notify('No more items', vim.log.levels.ERROR)
+    end
+  end, {
+    desc = "Jump to next file's first error item in quickfix",
+  })
 
   set('n', '<leader>tp', function()
     if is_profiling then
