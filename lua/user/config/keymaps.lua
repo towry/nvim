@@ -5,6 +5,7 @@ local M = {}
 local is_profiling = false
 
 local function setup_basic()
+  vim.keymap.set('n', '<c-i>', '<c-i>')
   --->>
   set('n', '<CR>', 'viw', { desc = 'V in word', silent = true })
   set('n', ']b', function()

@@ -5,7 +5,7 @@ local cmd_modcall = keymap.cmd_modcall
 local fzf_mod = 'userlib.fzflua'
 local au = require('userlib.runtime.au')
 
-local BufferListKey = '<localleader>,'
+local BufferListKey = '<Tab>'
 
 plug({
   'mangelozzi/rgflow.nvim',

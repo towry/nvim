@@ -649,3 +649,36 @@ plug({
     })
   end,
 })
+
+plug({
+  'ghillb/cybu.nvim',
+  branch = 'main',
+  enabled = false,
+  keys = {
+    {
+      '<Tab>',
+      '<plug>(CybuLastusedNext)',
+    },
+    {
+      '<S-Tab>',
+      '<plug>(CybuLastusedPrev)',
+    },
+  },
+  opts = {
+    position = {
+      relative_to = 'editor',
+      ---@type "topleft" | "topcenter" | "topright" | "centerleft" | "center" |
+      ---"bottomleft"
+      anchor = 'topleft',
+    },
+    display_time = 1500,
+    behavior = {
+      mode = {
+        default = {
+          switch = 'on_close',
+        },
+      },
+      show_on_autocmd = false,
+    },
+  },
+})
