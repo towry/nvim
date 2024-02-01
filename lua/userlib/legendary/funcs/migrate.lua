@@ -22,6 +22,13 @@ return {
   },
   {
     function()
+      vim.fn.setreg('*', vim.fn.expand('%'))
+      vim.notify('File path copied to register *', vim.log.levels.INFO)
+    end,
+    description = 'Copy current file path to register *',
+  },
+  {
+    function()
       local user_config_dir = vim.fn.fnamemodify(vim.env.MYVIMRC, ':p:h')
       vim.cmd(([[OverDispatch! cd %s && make doc]]):format(user_config_dir))
     end,
