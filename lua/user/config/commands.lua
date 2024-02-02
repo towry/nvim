@@ -258,3 +258,17 @@ end, {
   desc = 'Open yazi',
   nargs = '*',
 })
+
+-- used in keymap to quickly close popup and quickfix in esc press.
+create_cmd('PcloseNextEsc', function()
+  vim.g.escape_cmd = 'pclose'
+end, {
+  nargs = 0,
+  bar = true,
+})
+create_cmd('QfCloseNextEsc', function()
+  vim.g.escape_cmd = 'cclose'
+end, {
+  nargs = 0,
+  bar = true,
+})
