@@ -31,5 +31,6 @@ require('plugin-extras.tools.games')
 require('plugin-extras.ui.trail_blazer')
 -- require('plugin-extras.tools.wakatime')
 require('plugin-extras.tools.carbon')
+require('plugin-extras.tools.gist')
 
 return require('userlib.runtime.pack').repos()
