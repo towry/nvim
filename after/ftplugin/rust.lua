@@ -1,6 +1,12 @@
 local set = require('userlib.runtime.keymap').map_buf_thunk(0)
 
 set('n', '<localleader>cr', ':QfCloseNextEsc | OverDispatch cargo run<CR>', { noremap = true, desc = 'Run cargo run' })
+set(
+  'n',
+  '<localleader>cb',
+  ':QfCloseNextEsc | OverDispatch! cargo build<cr>',
+  { noremap = true, desc = 'Run cargo build' }
+)
 
 set('n', '<localleader>b', function()
   local cwd = require('userlib.runtime.utils').get_root()
