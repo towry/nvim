@@ -756,11 +756,12 @@ local TablineFileName = {
   provider = function(self)
     -- self.filename will be defined later, just keep looking at the example!
     local filename = self.filename
+    filename = vim.b[self.bufnr].relative_path or vim.fn.fnamemodify(filename, ':.')
     -- handle oil buf etc
     if vim.bo[self.bufnr].buftype ~= '' then
       return filename == '' and '[No Name]' or filename
     end
-    filename = filename == '' and '[No Name]' or vim.fn.fnamemodify(filename, ':t')
+    filename = filename == '' and '[No Name]' or filename
     return filename
   end,
   hl = function(self)
@@ -847,7 +848,8 @@ local TablineBufferLine = utils.make_buflist(
   { provider = ' ', hl = { fg = 'gray' } },
   -- out buf_func simply returns the buflist_cache
   function()
-    return require('userlib.runtime.buffer').list_tab_buffers()
+    return { vim.api.nvim_get_current_buf() }
+    -- return require('userlib.runtime.buffer').list_tab_buffers()
   end,
   false
 )
