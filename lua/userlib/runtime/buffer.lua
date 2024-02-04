@@ -89,7 +89,8 @@ local function buf_navigatable(buf)
   end
   local buftype = getopt('buftype')
   if buftype == 'terminal' then
-    return true
+    return false
+    -- return true
   end
 
   return buftype == '' and getopt('modifiable')
