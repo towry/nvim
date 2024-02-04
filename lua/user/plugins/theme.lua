@@ -1,10 +1,22 @@
 local plug = require('userlib.runtime.pack').plug
 
 plug({
-  'sainnhe/everforest',
+  'neanias/everforest-nvim',
+  version = false,
   event = 'User LazyTheme',
   priority = 1000,
   enabled = vim.cfg.ui__theme_name == 'everforest',
+  config = function()
+    require('everforest').setup({})
+  end,
+})
+
+plug({
+  'sainnhe/everforest',
+  event = 'User LazyTheme',
+  priority = 1000,
+  -- enabled = vim.cfg.ui__theme_name == 'everforest',
+  enabledf = false,
   init = function()
     vim.g.everforest_background = 'medium'
     vim.g.everforest_ui_contrast = 'high'

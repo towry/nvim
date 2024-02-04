@@ -3,12 +3,14 @@ local hi = function(name, data)
   vim.api.nvim_set_hl(0, name, data)
 end
 
-function M.custom_theme_wildcharm()
-  --- custom wildcharm theme.
-  vim.cmd([[hi! Visual guifg=#000000 guibg=#ffffff gui=NONE cterm=NONE]])
+local hi_fzflua = function()
+  --- fzf lua
+  hi('FzfLuaNormal', { link = 'Normal' })
+  hi('FzfLuaBorder', { link = 'LineNr' })
+  --- builtin preview main
+  hi('FzfLuaPreviewNormal', { link = 'Normal' })
 end
-
-function M.custom_theme_default()
+local hi_minicursorword = function()
   local extend_hl = require('userlib.runtime.utils').extend_hl
 
   --- do not change text highlight in the git diff
@@ -24,6 +26,17 @@ function M.custom_theme_default()
     bg = 'NONE',
     fg = 'NONE',
   })
+end
+
+function M.custom_theme_wildcharm()
+  --- custom wildcharm theme.
+  vim.cmd([[hi! Visual guifg=#000000 guibg=#ffffff gui=NONE cterm=NONE]])
+end
+
+function M.custom_theme_default()
+  local extend_hl = require('userlib.runtime.utils').extend_hl
+
+  hi_minicursorword()
   --- git
   hi('diffAdded', { link = 'DiffAdd' })
   hi('diffRemoved', { link = 'DiffDelete' })
@@ -41,11 +54,7 @@ function M.custom_theme_default()
   -- hi('TelescopeMatching', { link = 'Visual' })
   -- aerial
   hi('AerialPrivate', { italic = true })
-  --- fzf lua
-  hi('FzfLuaNormal', { link = 'Normal' })
-  hi('FzfLuaBorder', { link = 'LineNr' })
-  --- builtin preview main
-  hi('FzfLuaPreviewNormal', { link = 'Normal' })
+  hi_fzflua()
 end
 
 function M.custom_theme_modus()
@@ -59,7 +68,8 @@ function M.custom_theme_kanagawa()
 end
 
 function M.custom_theme_everforest()
-  M.custom_theme_default()
+  hi_minicursorword()
+  hi_fzflua()
 end
 
 M['custom_theme_rose-pine'] = function()
