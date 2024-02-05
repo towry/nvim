@@ -756,7 +756,7 @@ local TablineFileName = {
   provider = function(self)
     -- self.filename will be defined later, just keep looking at the example!
     local filename = self.filename
-    filename = vim.b[self.bufnr].relative_path or vim.fn.fnamemodify(filename, ':.')
+    filename = vim.fn.fnamemodify(vim.b[self.bufnr].relative_path or filename, ':~.')
     -- handle oil buf etc
     if vim.bo[self.bufnr].buftype ~= '' then
       return filename == '' and '[No Name]' or filename
