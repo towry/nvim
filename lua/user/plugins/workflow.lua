@@ -83,7 +83,7 @@ plug({
     event = 'WinNew',
     opts = {
       autowidth = {
-        enable = not vim.cfg.runtime__starts_as_gittool and true or false,
+        enable = not vim.cfg.runtime__starts_as_gittool and false or false,
         winwidth = 30,
         winminwidth = 40,
       },
