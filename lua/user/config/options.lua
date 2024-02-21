@@ -43,8 +43,8 @@ function M.startup()
   o.autoindent = true --- Good auto indent
   o.backspace = { 'indent', 'eol', 'start' } --- Making sure backspace works
   o.backup = false --- Recommended by coc
-  o.conceallevel = 2 --- Show `` in markdown files
-  -- o.concealcursor = 'n'
+  o.conceallevel = 1 --- Show `` in markdown files
+  -- o.concealcursor = 'i'
   o.encoding = 'utf-8' --- The encoding displayed
   o.errorbells = false --- Disables sound effect for errors
   o.fileencoding = 'utf-8' --- The encoding written to file
