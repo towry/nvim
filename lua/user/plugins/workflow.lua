@@ -150,7 +150,7 @@ plug({
     dev = false,
     keys = {
       {
-        '<leader>bx',
+        '<leader>bd',
         '<cmd>lua require("mini.bufremove").delete(0)<cr>',
         desc = 'Close current buffer',
       },

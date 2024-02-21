@@ -188,12 +188,6 @@ local function setup_basic()
   set('n', '<leader>be', [[:earlier 1f<cr>]], {
     desc = 'Most earlier buffer changes',
   })
-  set('n', '<leader>bd', function()
-    -- TODO: select next buffer.
-    vim.cmd('bdelete')
-  end, {
-    desc = 'Close buffer and window',
-  })
 
   for i = 1, 9 do
     set('n', '<space>' .. i, cmd(i .. 'tabnext'), {
