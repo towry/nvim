@@ -117,7 +117,11 @@ plug({
         's',
         mode = { 'n', 'x', 'o' },
         function()
-          require('flash').jump()
+          require('flash').jump({
+            search = {
+              multi_window = false,
+            },
+          })
         end,
         desc = 'Flash',
       },
