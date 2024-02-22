@@ -19,6 +19,7 @@ local hi_minicursorword = function()
     italic = true,
     bold = true,
     bg = 'NONE',
+    fg = 'NONE',
   })
   extend_hl({ 'MiniCursorwordCurrent', 'Normal' }, {
     underline = false,
