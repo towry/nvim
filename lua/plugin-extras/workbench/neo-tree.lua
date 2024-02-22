@@ -124,9 +124,10 @@ plug({
           O = 'system_open',
           Y = 'copy_selector',
           h = 'parent_or_close',
-          l = 'child_or_open',
+          L = 'child_or_open',
           o = 'open',
           e = false,
+          E = 'toggle_auto_expand_width',
         },
         fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
           ['<C-j>'] = 'move_cursor_down',
