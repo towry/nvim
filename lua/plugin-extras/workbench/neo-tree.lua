@@ -18,6 +18,11 @@ plug({
       desc = 'Toggle explore tree',
     },
     {
+      '\\',
+      '<cmd>Neotree source=buffers position=right action=show toggle=true reveal=true<cr>',
+      desc = 'Toggle buffers',
+    },
+    {
       '<leader>f.',
       '<cmd>Neotree reveal float<cr>',
       desc = 'Locate current file in tree',
@@ -106,12 +111,19 @@ plug({
             end
           end)
         end,
-        find_in_dir = function(state)
+        -- run action on folder
+        action_in_dir = function(state)
           local node = state.tree:get_node()
           local path = node:get_id()
-          require('telescope.builtin').find_files({
-            cwd = node.type == 'directory' and path or vim.fn.fnamemodify(path, ':h'),
-          })
+          local cwd = node.type == 'directory' and path or vim.fn.fnamemodify(path, ':h')
+
+          require('userlib.mini.clue.folder-action').open(cwd)
+        end,
+        open_buffers = function()
+          vim.cmd('Neotree source=buffers position=right reveal=true')
+        end,
+        open_filesystem = function()
+          vim.cmd('Neotree source=filesystem position=right reveal=true')
         end,
       },
       window = {
@@ -120,7 +132,9 @@ plug({
           ['<space>'] = false, -- disable space until we figure out which-key disabling
           ['[b'] = 'prev_source',
           [']b'] = 'next_source',
-          F = 'find_in_dir',
+          ['-'] = 'action_in_dir',
+          ['1'] = 'open_filesystem',
+          ['2'] = 'open_buffers',
           O = 'system_open',
           Y = 'copy_selector',
           h = 'parent_or_close',
@@ -135,7 +149,7 @@ plug({
         },
       },
       filesystem = {
-        follow_current_file = { enabled = true },
+        follow_current_file = { enabled = false },
         hijack_netrw_behavior = 'open_current',
         use_libuv_file_watcher = true,
       },
