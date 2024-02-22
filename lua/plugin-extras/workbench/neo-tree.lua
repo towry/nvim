@@ -121,6 +121,7 @@ plug({
           h = 'parent_or_close',
           l = 'child_or_open',
           o = 'open',
+          e = false,
         },
         fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
           ['<C-j>'] = 'move_cursor_down',
