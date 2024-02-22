@@ -22,6 +22,20 @@ function M.load_on_startup()
       },
     },
     {
+      { 'InsertEnter' },
+      {
+        group = 'set_conceallevel',
+        command = 'setlocal conceallevel=0',
+      },
+    },
+    {
+      { 'InsertLeave' },
+      {
+        group = 'set_conceallevel',
+        command = 'setlocal conceallevel=1',
+      },
+    },
+    {
       { 'VimLeavePre' },
       {
         group = 'force_shutdown_clients',
