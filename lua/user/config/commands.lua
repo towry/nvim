@@ -136,7 +136,7 @@ create_cmd('TryMake', function(opts)
     if vim.fn.filereadable(mk) == 1 then
       local cwd = vim.uv.cwd()
       vim.cmd.lcd(dir)
-      local cmds = string.format([[Make%s -f %s%s]], opts.bang and '!' or '', mk, target)
+      local cmds = string.format([[OverMake%s -f %s%s]], opts.bang and '!' or '', mk, target)
       vim.cmd(cmds)
       vim.cmd.lcd(cwd)
       return true
