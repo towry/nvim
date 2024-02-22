@@ -159,10 +159,10 @@ plug({
     --   return vim.startswith(name, ".")
     -- end,
     float = {
-      padding = 3,
+      padding = 4,
       border = vim.cfg.ui__float_border,
       win_options = {
-        winblend = 10,
+        winblend = 0,
       },
     },
   },

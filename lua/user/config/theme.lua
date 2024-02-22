@@ -59,7 +59,7 @@ end
 
 function M.custom_theme_modus()
   M.custom_theme_default()
-  -- hi('LineNr', { link = 'Normal' })
+  hi('LineNr', { link = 'Normal', bg = 'NONE' })
   -- hi('FoldColumn', { link = 'Normal' })
 end
 

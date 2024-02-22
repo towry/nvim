@@ -426,7 +426,7 @@ local Branch = {
     end
   end,
   provider = function(self)
-    return self.head ~= '' and ' ' .. (self.head or '')
+    return self.head ~= '' and ' ' .. (self.head or '')
   end,
   update = {
     'User',
