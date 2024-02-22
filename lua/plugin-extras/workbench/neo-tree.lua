@@ -19,7 +19,12 @@ plug({
     },
     {
       '\\',
-      '<cmd>Neotree source=buffers position=right action=show toggle=true reveal=true<cr>',
+      function()
+        local cwd = vim.cfg.runtime__starts_cwd or vim.uv.cwd()
+        vim.cmd(
+          string.format([[Neotree source=buffers position=right action=focus toggle=true reveal=true dir=%s]], cwd)
+        )
+      end,
       desc = 'Toggle buffers',
     },
     {
