@@ -115,7 +115,7 @@ plug({
     keys = {
       {
         's',
-        mode = { 'n', 'x', 'o' },
+        mode = { 'n' },
         function()
           require('flash').jump({
             search = {
@@ -124,6 +124,32 @@ plug({
           })
         end,
         desc = 'Flash',
+      },
+      {
+        's',
+        mode = { 'o', 'x' },
+        function()
+          require('flash').jump({
+            search = { forward = true, wrap = false, multi_window = false },
+            label = {
+              uppercase = false,
+            },
+          })
+        end,
+        desc = 'Flash in motion',
+      },
+      {
+        'v',
+        mode = { 'o', 'x' },
+        function()
+          require('flash').jump({
+            search = { forward = false, wrap = false, multi_window = false },
+            label = {
+              uppercase = false,
+            },
+          })
+        end,
+        desc = 'Flash in motion',
       },
       {
         '<C-s><C-s>',
