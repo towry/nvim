@@ -34,6 +34,17 @@ M.open = function(new_cwd)
     end, {
       desc = 'Search content',
     })
+
+    set('n', '|', function()
+      require('neo-tree.command').execute({
+        position = 'right',
+        reveal_file = new_cwd,
+        reveal_force_cwd = true,
+      })
+    end, {
+      desc = 'Open in tree',
+    })
+
     set('n', 'g', function()
       require('rgflow').open(nil, nil, new_cwd)
     end, {
