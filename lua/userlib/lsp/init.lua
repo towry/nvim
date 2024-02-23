@@ -110,7 +110,9 @@ function M.setup_server(server_name, config_tbl_or_func)
         end)()
       -- some servers have dynamic commands defined with on_new_config
       if type(command) == 'table' and type(command[1]) == 'string' and vim.fn.executable(command[1]) ~= 1 then
-        vim.notify('LSP server ' .. server_name .. ' is not installed', vim.log.levels.ERROR)
+        vim.schedule(function()
+          vim.notify('LSP server ' .. server_name .. ' is not installed', vim.log.levels.ERROR)
+        end)
         return
       end
 
@@ -120,7 +122,9 @@ function M.setup_server(server_name, config_tbl_or_func)
     end
   end)
   if error then
-    vim.notify(error, vim.log.levels.ERROR)
+    vim.schedule(function()
+      vim.notify(error, vim.log.levels.ERROR)
+    end)
   end
 end
 
