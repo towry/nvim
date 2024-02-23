@@ -108,6 +108,7 @@ plug({
   cmd = 'Oil',
   opts = {
     default_file_explorer = true,
+    columns = {},
     keymaps = {
       ['g?'] = 'actions.show_help',
       ['<CR>'] = 'actions.select',
@@ -154,10 +155,10 @@ plug({
       ['g.'] = 'actions.toggle_hidden',
     },
     use_default_keymaps = false,
+    lsp_rename_autosave = 'unmodified',
+    skip_confirm_for_simple_edits = true,
     delete_to_trash = false,
-    -- is_hidden_file = function(name, bufnr)
-    --   return vim.startswith(name, ".")
-    -- end,
+    view_options = {},
     float = {
       padding = 4,
       border = vim.cfg.ui__float_border,
