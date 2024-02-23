@@ -260,7 +260,7 @@ local DirAndFileName = {
       bg = conditions.is_active() and 'winbar_bg' or 'winbar_nc_bg',
     }
   end,
-  lpad(BufferCwd),
+  -- lpad(BufferCwd),
   lpad(FileName),
   { provider = '#%1.3n.%{tabpagewinnr(tabpagenr())}' },
   FileFlags,
@@ -313,10 +313,10 @@ local function setup_colors()
   return {
     fg = utils.get_highlight('StatusLine').fg or 'none',
     bg = utils.get_highlight('StatusLine').bg or 'none',
-    winbar_fg = utils.get_highlight('StatusLineNC').fg or 'none',
-    winbar_bg = utils.get_highlight('StatusLineNC').bg or 'none',
-    winbar_nc_fg = utils.get_highlight('WinBarNC').fg or 'none',
-    winbar_nc_bg = utils.get_highlight('WinBarNC').bg or 'none',
+    winbar_fg = utils.get_highlight('Winbar').fg or 'none',
+    winbar_bg = utils.get_highlight('Winbar').bg or 'none',
+    winbar_nc_fg = utils.get_highlight('WinbarNC').fg or 'none',
+    winbar_nc_bg = utils.get_highlight('WinbarNC').bg or 'none',
     tablinesel_fg = utils.get_highlight('TabLineSel').fg or 'none',
     tablinesel_bg = utils.get_highlight('TabLineSel').bg or 'none',
     tabline_fg = utils.get_highlight('TabLine').fg or 'none',
@@ -426,7 +426,7 @@ local Branch = {
     end
   end,
   provider = function(self)
-    return self.head ~= '' and ' ' .. (self.head or '')
+    return self.head ~= '' and ' ' .. (self.head or '')
   end,
   update = {
     'User',
@@ -875,7 +875,7 @@ local TabLine = {
     rpad(lpad(BufferCwd)),
     hl = 'TabLine',
   },
-  TablineBufferLine,
+  -- TablineBufferLine,
   { provider = '%=' },
 }
 
