@@ -76,7 +76,11 @@ plug({
             'netrw',
           }, buftype)
           local filetype = vim.bo[buf].filetype
-          local ignore_filetype = filetype == 'fugitive' or filetype == 'qf' or filetype:match('^git')
+          local ignore_filetype = vim.tbl_contains({
+            'fugitive',
+            'qf',
+            'fzf-lua',
+          }, filetype) or filetype:match('^git')
           local is_float = vim.api.nvim_win_get_config(0).relative ~= ''
           return ignore_buftype or ignore_filetype or is_float
         end,
