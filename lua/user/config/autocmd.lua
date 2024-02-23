@@ -6,6 +6,15 @@ function M.load_on_startup()
   -- taken from AstroNvim
   local definitions = {
     {
+      { 'TextYankPost' },
+      {
+        group = 'hl_on_yank',
+        callback = function()
+          vim.highlight.on_yank()
+        end,
+      },
+    },
+    {
       -- lazy insert enter
       { 'InsertEnter' },
       {
