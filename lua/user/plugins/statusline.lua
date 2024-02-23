@@ -27,7 +27,7 @@ plug({
         comp.DirAndFileName,
       },
       -- https://github.com/rebelot/heirline.nvim/blob/master/cookbook.md#tabline
-      tabline = comp.TabLine,
+      -- tabline = comp.TabLine,
       statusline = heirline_utils.insert(
         {
           static = comp.stl_static,
@@ -48,8 +48,8 @@ plug({
         comp.lpad(comp.BufVisited),
         comp.lpad(comp.Overseer),
         require('userlib.statusline.heirline').left_components,
-        --{ provider = '%=' },
-        -- comp.lpad(comp.Tabs),
+        { provider = '%=' },
+        comp.lpad(comp.Tabs),
         { provider = '%=' },
         require('userlib.statusline.heirline').right_components,
         comp.rpad({ provider = '%S' }),
@@ -83,7 +83,7 @@ plug({
       },
     })
 
-    vim.o.showtabline = 2
+    vim.o.showtabline = 0
     vim.api.nvim_create_user_command('HeirlineResetStatusline', function()
       vim.o.statusline = "%{%v:lua.require'heirline'.eval_statusline()%}"
     end, {})
