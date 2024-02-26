@@ -203,6 +203,7 @@ pack.plug({
 
 ---neotest
 pack.plug({
+  cmd = 'Neotest',
   'rcarriga/neotest',
   dependencies = {
     'nvim-lua/plenary.nvim',
