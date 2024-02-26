@@ -261,6 +261,7 @@ local DirAndFileName = {
     }
   end,
   -- lpad(BufferCwd),
+  FileIcon,
   lpad(FileName),
   { provider = '#%1.3n.%{tabpagewinnr(tabpagenr())}' },
   FileFlags,

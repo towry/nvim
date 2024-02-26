@@ -65,7 +65,7 @@ plug({
       ),
 
       opts = {
-        not_used_disable_winbar_cb = function(args)
+        disable_winbar_cb = function(args)
           local buf = args.buf
           local buftype = vim.bo[buf].buftype
           local ignore_buftype = vim.tbl_contains({
