@@ -12,64 +12,33 @@ plug({
 })
 
 plug({
-  'rose-pine/neovim',
-  name = 'rose-pine',
+  'ellisonleao/gruvbox.nvim',
   event = 'User LazyTheme',
   priority = 1000,
-  enabled = vim.cfg.ui__theme_name == 'rose-pine',
-  --- https://github.com/rose-pine/neovim?tab=readme-ov-file#options
-  config = function()
-    require('rose-pine').setup({
-      -- dark_variant = 'moon',
-      highlight_groups = {
-        Pmenu = {
-          fg = 'subtle',
-          bg = 'overlay',
-        },
-        PmenuExtra = {
-          link = 'Pmenu',
-        },
-        PmenuSel = {
-          bg = 'gold',
-        },
-        StatusLine = { fg = 'love', bg = 'love', blend = 10 },
-        StatusLineNC = { fg = 'subtle', bg = 'surface' },
-        MiniCursorword = {
-          italic = true,
-          bold = true,
-          bg = 'NONE',
-          fg = 'text',
-        },
-        MiniCursorwordCurrent = {
-          underline = false,
-          bold = true,
-          bg = 'NONE',
-          fg = 'NONE',
-        },
-        FzfLuaNormal = { link = 'Normal' },
-        FzfLuaBorder = { link = 'LineNr' },
-        FzfLuaPreviewNormal = { link = 'Normal' },
-      },
-    })
-  end,
-})
-
-plug({
-  'daschw/leaf.nvim',
-  event = 'User LazyTheme',
-  enabled = vim.cfg.ui__theme_name == 'leaf',
+  enabled = vim.cfg.ui__theme_name == 'gruvbox',
   opts = {
-    overrides = {
-      NonText = {
-        link = 'Comment',
-      },
-      MiniCursorword = {
-        style = 'italic',
-      },
-      MiniCursorwordCurrent = {
-        style = 'bold',
-      },
+    terminal_colors = true, -- add neovim terminal colors
+    undercurl = true,
+    underline = true,
+    bold = true,
+    italic = {
+      strings = true,
+      emphasis = true,
+      comments = true,
+      operators = false,
+      folds = true,
     },
+    strikethrough = true,
+    invert_selection = false,
+    invert_signs = false,
+    invert_tabline = false,
+    invert_intend_guides = false,
+    inverse = true, -- invert background for search, diffs, statuslines and errors
+    contrast = '', -- can be "hard", "soft" or empty string
+    palette_overrides = {},
+    overrides = {},
+    dim_inactive = false,
+    transparent_mode = false,
   },
 })
 

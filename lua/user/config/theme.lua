@@ -34,6 +34,11 @@ function M.custom_theme_wildcharm()
   vim.cmd([[hi! Visual guifg=#000000 guibg=#ffffff gui=NONE cterm=NONE]])
 end
 
+function M.custom_theme_gruvbox()
+  hi_minicursorword()
+  hi_fzflua()
+end
+
 function M.custom_theme_default()
   local extend_hl = require('userlib.runtime.utils').extend_hl
 
