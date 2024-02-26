@@ -208,7 +208,10 @@ pack.plug({
   dependencies = {
     'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter',
+    -- lang:js
     'haydenmeade/neotest-jest',
+    -- lang:rust
+    -- https://nexte.st/
     'rouge8/neotest-rust',
   },
   init = au.schedule_lazy(function()
