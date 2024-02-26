@@ -26,3 +26,8 @@ set('n', '<localleader>B', function()
   end
   require('userlib.terminal.rust-bacon-term').toggle_bacon_term(cwd)
 end, { noremap = true, desc = 'Run bacon on workspace root' })
+
+if not (vim.b.is_big_file and vim.g.vscode) then
+  require('userlib.keymaps.neotest').attach()
+  require('userlib.keymaps.dap').attach()
+end

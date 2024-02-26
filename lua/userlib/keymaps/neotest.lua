@@ -12,9 +12,14 @@ M.attach = function(bufnr)
   })
 
   set('n', '<localleader>to', function()
-    require('neotest').output.open({ entery = true })
+    require('neotest').output.open({ enter = true, short = true })
   end, {
     desc = 'Neotest output',
+  })
+  set('n', '<localleader>tO', function()
+    require('neotest').output_panel.toggle()
+  end, {
+    desc = 'Neotest output pane',
   })
   set('n', '<localleader>tt', function()
     require('neotest').run.run()
