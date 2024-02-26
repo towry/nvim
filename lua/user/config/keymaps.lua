@@ -201,11 +201,11 @@ local function setup_basic()
   })
   -- map alt+number to navigate to window by ${number} . wincmd w<cr>
   for i = 1, 9 do
-    set('n', '<M-' .. i .. '>', cmd(i .. 'wincmd w'), {
+    set('n', '<leader>w' .. i, cmd(i .. 'wincmd w'), {
       desc = 'which_key_ignore',
     })
   end
-  set('n', '<M-`>', cmd('wincmd p'), {
+  set('n', '<leader>wp', cmd('wincmd p'), {
     desc = 'which_key_ignore',
   })
 
