@@ -208,6 +208,7 @@ pack.plug({
     'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter',
     'haydenmeade/neotest-jest',
+    'rouge8/neotest-rust',
   },
   init = au.schedule_lazy(function()
     require('userlib.legendary').register('neotest', function(lg)
@@ -248,6 +249,9 @@ pack.plug({
 
     neotest.setup({
       adapters = {
+        require('neotest-rust')({
+          args = { '--no-capture' },
+        }),
         require('neotest-jest')({
           jestCommand = 'pnpm test --',
           env = { CI = true },
