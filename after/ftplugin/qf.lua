@@ -15,7 +15,7 @@ opt.listchars:append('trail: ')
 vim.b.minicursorword_disable = true
 
 map('n', 'dd', qf.qf_delete, { desc = 'delete current quickfix entry' })
-map('v', 'd', qf.qf_delete, { desc = 'delete selected quickfix entry' })
+-- map('v', 'd', qf.qf_delete, { desc = 'delete selected quickfix entry' })
 map('n', ',q', ':colder<CR>', { desc = 'qf: older' })
 map('n', '.q', ':cnewer<CR>', { desc = 'qf: newer' })
 map('n', '<C-r>', function()
