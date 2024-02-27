@@ -243,6 +243,7 @@ create_cmd('OverDispatch', function(params)
     },
   })
   task:start()
+
   local echo_label = params.bang and 'OverDispatch[!]: ' or 'OverDispatch: '
   vim.schedule(function()
     vim.api.nvim_echo({ { echo_label, 'InfoFloat' }, { expanded_cmd, 'Comment' } }, true, {})
