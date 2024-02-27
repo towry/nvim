@@ -709,8 +709,12 @@ local Gitinfo = {
 }
 
 local BufVisited = {
-  condition = function()
-    return package.loaded['mini.visits'] ~= nil
+  condition = function(self)
+    local loaded = package.loaded['mini.visits'] ~= nil
+    if not loaded then
+      return false
+    end
+    return require('userlib.mini.visits').is_buf_harpoon(0)
   end,
   init = function(self)
     local is = require('userlib.mini.visits').is_buf_harpoon(0)
