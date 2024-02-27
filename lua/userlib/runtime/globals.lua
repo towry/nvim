@@ -216,3 +216,7 @@ Ty.capture_tmux_pane = function(pid)
   end
   vim.cmd(string.format('OverDispatch tmux capture-pane -t %s -p', pid))
 end
+
+Ty.feedkeys = function(keys)
+  vim.fn.feedkeys(vim.api.nvim_replace_termcodes(keys, true, true, true))
+end
