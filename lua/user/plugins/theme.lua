@@ -12,7 +12,9 @@ plug({
 })
 
 plug({
-  'ellisonleao/gruvbox.nvim',
+  -- 'ellisonleao/gruvbox.nvim',
+  'pze/gruvbox.nvim',
+  dev = false,
   event = 'User LazyTheme',
   priority = 1000,
   enabled = vim.cfg.ui__theme_name == 'gruvbox',

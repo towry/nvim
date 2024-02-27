@@ -35,16 +35,7 @@ function M.custom_theme_wildcharm()
 end
 
 function M.custom_theme_gruvbox()
-  local fg = require('userlib.runtime.utils').fg
-
-  hi_minicursorword()
-  hi_fzflua()
-  hi('LineNr', { link = 'Comment', bg = 'NONE' })
-  hi('SignColumn', { link = 'Normal' })
-  hi('MiniIndentscopeSymbol', { link = 'NonText' })
-
-  local NonText = fg('NonText')
-  hi('FoldColumn', { bg = 'NONE', fg = NonText.fg })
+  -- hi('LineNr', { link = 'Comment', bg = 'NONE' })
 end
 
 function M.custom_theme_default()
