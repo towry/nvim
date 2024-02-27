@@ -1,10 +1,10 @@
 local M = {}
 
 M.DiagnosticIcons = {
-  error_icon = 'E',
-  warn_icon = 'W',
-  info_icon = 'I',
-  hint_icon = 'H',
+  error_icon = '⬤',
+  warn_icon = '⬤',
+  info_icon = '⬤',
+  hint_icon = '⬤',
 }
 
 function M.setup()
