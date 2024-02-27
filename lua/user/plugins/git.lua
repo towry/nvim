@@ -174,7 +174,7 @@ plug({
               vim.notify('Empty commit message', vim.log.levels.ERROR)
               return
             end
-            vim.cmd(string.format('OverDispatch! Git commit -m "%s"', input))
+            vim.cmd(string.format('OverDispatch! git commit -m "%s"', input))
           end)
         end,
         desc = 'Git commit',
