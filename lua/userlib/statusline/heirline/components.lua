@@ -503,7 +503,10 @@ local Tabs = {
     self.total_tabs = #vim.api.nvim_list_tabpages()
   end,
   provider = function(self)
-    return 'T' .. self.total_tabs .. '·%{tabpagenr()}'
+    return ' T' .. self.total_tabs .. '·%{tabpagenr()} '
+  end,
+  hl = function()
+    return { bg = 'fg', fg = 'bg', bold = true }
   end,
   update = { 'VimEnter', 'TabNew', 'TabLeave' },
 }

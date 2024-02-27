@@ -34,10 +34,10 @@ plug({
           hl = { fg = 'fg', bg = 'bg' },
         },
         comp.ViMode,
+        comp.Tabs,
         comp.lpad({
           provider = [[B%{v:lua.Ty.stl_bufcount()}]],
         }),
-        comp.lpad(comp.Tabs),
         comp.lpad(comp.Branch),
         comp.lpad(comp.Gitinfo),
         comp.lpad(comp.GitStatus),
