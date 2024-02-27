@@ -3,7 +3,9 @@ local plug = require('userlib.runtime.pack').plug
 local leet_arg = 'leet'
 
 return plug({
-  'kawre/leetcode.nvim',
+  -- 'kawre/leetcode.nvim',
+  'pze/leetcode.nvim',
+  dev = true,
   cmd = { 'Leet' },
   lazy = leet_arg ~= vim.fn.argv()[1],
   dependencies = {
@@ -18,6 +20,7 @@ return plug({
     cn = {
       enabled = true,
     },
+    hooks = {},
     storage = {
       home = vim.fn.expand('~/.leetcode/src/problems'),
     },

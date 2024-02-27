@@ -499,18 +499,12 @@ local Tabs = {
   condition = function()
     return #vim.api.nvim_list_tabpages() >= 2
   end, -- only show tabs if there are more than one
-  utils.make_tablist({ -- component for each tab
-    provider = function(self)
-      return (self and self.tabnr) and '%' .. self.tabnr .. 'T ' .. self.tabnr .. ' %T' or ''
-    end,
-    hl = function(self)
-      if not self.is_active then
-        return { fg = 'tabline_fg', bg = 'tabline_bg' }
-      else
-        return { fg = 'tablinesel_fg', bg = 'tablinesel_bg' }
-      end
-    end,
-  }),
+  init = function(self)
+    self.total_tabs = #vim.api.nvim_list_tabpages()
+  end,
+  provider = function(self)
+    return 'T' .. self.total_tabs .. '·%{tabpagenr()}'
+  end,
   update = { 'VimEnter', 'TabNew', 'TabLeave' },
 }
 

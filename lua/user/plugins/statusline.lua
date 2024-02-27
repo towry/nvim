@@ -37,6 +37,7 @@ plug({
         comp.lpad({
           provider = [[B%{v:lua.Ty.stl_bufcount()}]],
         }),
+        comp.lpad(comp.Tabs),
         comp.lpad(comp.Branch),
         comp.lpad(comp.Gitinfo),
         comp.lpad(comp.GitStatus),
@@ -49,7 +50,6 @@ plug({
         comp.lpad(comp.Overseer),
         require('userlib.statusline.heirline').left_components,
         { provider = '%=' },
-        comp.lpad(comp.Tabs),
         { provider = '%=' },
         require('userlib.statusline.heirline').right_components,
         comp.rpad({ provider = '%S' }),
