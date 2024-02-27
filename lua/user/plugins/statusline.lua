@@ -52,7 +52,7 @@ plug({
         { provider = '%=' },
         { provider = '%=' },
         require('userlib.statusline.heirline').right_components,
-        comp.rpad({ provider = '%S' }),
+        { provider = '%S ', hl = { fg = 'red' } },
         comp.rpad(comp.LastExCommand),
         comp.rpad(comp.NavigateDirection),
         comp.rpad(comp.Dap),
