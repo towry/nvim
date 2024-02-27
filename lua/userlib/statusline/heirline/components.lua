@@ -723,10 +723,13 @@ local BufVisited = {
   provider = function(self)
     local is = self.is
     if is then
-      return '[Harpoon]'
+      return ' '
     end
     return ''
   end,
+  hl = {
+    fg = 'red',
+  },
 }
 
 ----- tabline
