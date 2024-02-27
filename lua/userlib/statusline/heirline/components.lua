@@ -251,7 +251,7 @@ local DirAndFileName = {
   hl = function()
     local fg
     if vim.bo.modified then
-      fg = 'yellow'
+      fg = 'red'
     else
       fg = conditions.is_active() and 'winbar_fg' or 'winbar_nc_fg'
     end
@@ -261,9 +261,17 @@ local DirAndFileName = {
     }
   end,
   -- lpad(BufferCwd),
+  {
+    init = function(self)
+      self.total_tabs = #vim.api.nvim_list_tabpages()
+      self.tabnrstr = self.total_tabs >= 2 and 'T%{tabpagenr()} ' or ' '
+    end,
+    provider = function(self)
+      return ' B%1.3nW%{tabpagewinnr(tabpagenr())}' .. self.tabnrstr
+    end,
+  },
   FileIcon,
   lpad(FileName),
-  { provider = '#%1.3n.%{tabpagewinnr(tabpagenr())}' },
   FileFlags,
   { provider = '%=' },
 }
