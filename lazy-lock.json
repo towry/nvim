@@ -28,7 +28,7 @@
   "heirline.nvim": { "branch": "master", "commit": "03cff30d7e7d3ba6fdc00925f015822f79cef908" },
   "jump-tag": { "branch": "main", "commit": "b323cf42472d774f4e3564398d9a502254776de1" },
   "lazy.nvim": { "branch": "main", "commit": "aedcd79811d491b60d0a6577a9c1701063c2a609" },
-  "leetcode.nvim": { "branch": "master", "commit": "0ee58f235b0473a9b372a2b25b5d059c0cd1adee" },
+  "leetcode.nvim": { "branch": "master", "commit": "de2554f90f58ed6ae4173d2b70c8baeab8f7e43b" },
   "legendary.nvim": { "branch": "master", "commit": "8277e7ffbde3d32cc582e81b5d109f4071bbbc4b" },
   "lua-gf.nvim": { "branch": "master", "commit": "acd0d043cab6a118a069979e8081651f2ecf6637" },
   "markdown-preview.nvim": { "branch": "master", "commit": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee" },

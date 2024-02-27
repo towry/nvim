@@ -5,7 +5,7 @@ local leet_arg = 'leet'
 return plug({
   -- 'kawre/leetcode.nvim',
   'pze/leetcode.nvim',
-  dev = true,
+  dev = false,
   cmd = { 'Leet' },
   lazy = leet_arg ~= vim.fn.argv()[1],
   dependencies = {
