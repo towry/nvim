@@ -243,8 +243,9 @@ create_cmd('OverDispatch', function(params)
     },
   })
   task:start()
+  local echo_label = params.bang and 'OverDispatch[!]: ' or 'OverDispatch: '
   vim.schedule(function()
-    vim.api.nvim_echo({ { 'OverDispatch: ', 'InfoFloat' }, { expanded_cmd, 'Comment' } }, true, {})
+    vim.api.nvim_echo({ { echo_label, 'InfoFloat' }, { expanded_cmd, 'Comment' } }, true, {})
   end)
 end, {
   desc = 'Run your cmd as an Overseer task',
