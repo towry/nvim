@@ -8,7 +8,7 @@ pack.plug({
     'utilyre/sentiment.nvim',
     version = '*',
     event = 'User LazyUIEnterOncePost',
-    enabled = true,
+    enabled = false,
     cmd = {
       'NoMatchParen',
       'DoMatchParen',
