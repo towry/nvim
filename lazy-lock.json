@@ -82,7 +82,6 @@
   "registers": { "branch": "main", "commit": "22bb98f93a423252fffeb3531f7bc12a3e07b63f" },
   "rgflow.nvim": { "branch": "master", "commit": "e092b984d2ec244d67bedf6fea1b6ad5f91fbaba" },
   "rustaceanvim": { "branch": "master", "commit": "bc8c4b8f7606d5b7c067cd8369e25c1a7ff77bd0" },
-  "sentiment.nvim": { "branch": "main", "commit": "54a6db15b630eccfa98c32a76baf90f21c6f1e40" },
   "smart-splits.nvim": { "branch": "master", "commit": "958d385f5f791ee4f8d63b9999b13d5f26eaff56" },
   "sqlite.lua": { "branch": "master", "commit": "40701b6151f8883980c1548647116de39b763540" },
   "ssr.nvim": { "branch": "main", "commit": "bb323ba621ac647b4ac5638b47666e3ef3c279e1" },
