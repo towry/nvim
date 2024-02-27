@@ -43,7 +43,7 @@ plug({
       },
       {
         '<leader>ga',
-        cmdstr([[OverDispatch! Git add %]]),
+        cmdstr([[OverDispatch! git add %]]),
         desc = '!Git add current',
       },
       {
@@ -53,19 +53,19 @@ plug({
       },
       {
         '<leader>gA',
-        cmdstr([[OverDispatch! Git add .]]),
+        cmdstr([[OverDispatch! git add .]]),
         desc = '!Git add all',
       },
       {
         '<leader>gp',
-        cmdstr([[exec "OverDispatch! Git push origin " .. FugitiveHead()]]),
+        cmdstr([[exec "OverDispatch! git push origin " .. FugitiveHead()]]),
         desc = 'Git push',
       },
       {
         '<leader>gu',
         function()
           vim.g.escape_cmd = 'pclose'
-          vim.cmd('Git pull origin ' .. vim.fn.FugitiveHead())
+          vim.cmd('git pull origin ' .. vim.fn.FugitiveHead())
         end,
         desc = 'Git pull',
         silent = false,
