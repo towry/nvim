@@ -374,7 +374,7 @@ local function setup_basic()
     local keys = {
       ['cr'] = vim.api.nvim_replace_termcodes('<CR>', true, true, true),
       -- close pum after completion
-      ['ctrl-y'] = vim.api.nvim_replace_termcodes('<C-y><C-e>', true, true, true),
+      ['ctrl-y'] = vim.api.nvim_replace_termcodes('<C-y>', true, true, true),
       ['ctrl-y_cr'] = vim.api.nvim_replace_termcodes('<C-y><CR>', true, true, true),
       ['space'] = vim.api.nvim_replace_termcodes('<Space>', true, true, true),
       ['ctrl-z'] = vim.api.nvim_replace_termcodes('<C-z>', true, true, true),
@@ -387,6 +387,7 @@ local function setup_basic()
       if vim.fn.pumvisible() ~= 0 then
         return '<C-n>'
       elseif has_luasnip and luasnip.expand_or_jumpable() then
+        --- must use schedule becase edit must occures in next loop.
         vim.schedule(function()
           luasnip.expand_or_jump()
         end)
@@ -430,7 +431,7 @@ local function setup_basic()
         return item_selected and keys['ctrl-y'] or keys['ctrl-y_cr']
       end
       return keys['cr']
-    end, { expr = true, silent = false })
+    end, { expr = true, silent = true, noremap = false })
 
     set({ 'i' }, [[<S-Tab>]], function()
       local has_luasnip, luasnip = pcall(require, 'luasnip')
@@ -476,6 +477,7 @@ local function setup_basic()
     end, {
       silent = false,
       expr = true,
+      noremap = true,
       desc = 'Complete AI or nvim completion',
     })
   end
