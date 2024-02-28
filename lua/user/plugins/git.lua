@@ -65,7 +65,7 @@ plug({
         '<leader>gu',
         function()
           vim.g.escape_cmd = 'pclose'
-          vim.cmd('git pull origin ' .. vim.fn.FugitiveHead())
+          vim.cmd('OverDispatch git pull origin ' .. vim.fn.FugitiveHead())
         end,
         desc = 'Git pull',
         silent = false,
