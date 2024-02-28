@@ -264,11 +264,40 @@ local DirAndFileName = {
   {
     init = function(self)
       self.total_tabs = #vim.api.nvim_list_tabpages()
-      self.tabnrstr = self.total_tabs >= 2 and 'T%{tabpagenr()} ' or ' '
+      self.tabnrstr = self.total_tabs >= 2 and '%{tabpagenr()}' or ''
     end,
-    provider = function(self)
-      return ' B%1.3nW%{tabpagewinnr(tabpagenr())}' .. self.tabnrstr
-    end,
+    {
+      provider = ' ',
+    },
+    {
+      provider = 'B',
+      hl = { fg = 'yellow' },
+    },
+    {
+      provider = '%1.3n',
+    },
+    {
+      provider = 'W',
+      hl = { fg = 'yellow' },
+    },
+    {
+      provider = '%{tabpagewinnr(tabpagenr())}',
+    },
+    {
+      provider = 'T',
+      condition = function(self)
+        return self.total_tabs >= 2
+      end,
+      hl = { fg = 'yellow' },
+    },
+    {
+      provider = function(self)
+        return self.tabnrstr
+      end,
+    },
+    {
+      provider = ' ',
+    },
   },
   FileIcon,
   lpad(FileName),
