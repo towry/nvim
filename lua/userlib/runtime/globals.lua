@@ -220,3 +220,13 @@ end
 Ty.feedkeys = function(keys)
   vim.fn.feedkeys(vim.api.nvim_replace_termcodes(keys, true, true, true))
 end
+
+Ty.source_vimscripts = function(filename)
+  local user_config_dir = vim.fn.fnamemodify(vim.env.MYVIMRC, ':p:h')
+  local vimscript = user_config_dir .. '/vimscripts/' .. filename
+  if vim.fn.filereadable(vimscript) == 0 then
+    vim.notify("Can't locate " .. vimscript, vim.log.levels.ERROR)
+    return
+  end
+  vim.cmd('source ' .. vimscript)
+end
