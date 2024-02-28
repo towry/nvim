@@ -431,7 +431,7 @@ local function setup_basic()
         return item_selected and keys['ctrl-y'] or keys['ctrl-y_cr']
       end
       return keys['cr']
-    end, { expr = true, silent = true, noremap = false })
+    end, { expr = true, silent = true, noremap = true })
 
     set({ 'i' }, [[<S-Tab>]], function()
       local has_luasnip, luasnip = pcall(require, 'luasnip')
