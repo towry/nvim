@@ -63,6 +63,7 @@ return plug({
     'TrailBlazerPeekMoveNextDown',
     'TrailBlazerLoadSession',
     'TrailBlazerSaveSession',
+    'TrailBlazerToggleTrailMarkList',
   },
   keys = {
     { '<leader><space>', '<cmd>TrailBlazerNewTrailMark<cr>', desc = 'New trail mark' },
@@ -112,6 +113,11 @@ return plug({
       silent = true,
       noremap = true,
       desc = 'Trail pre global',
+    })
+    set('n', '<leader>vq', '<cmd>TrailBlazerToggleTrailMarkList<cr>', {
+      silent = true,
+      noremap = true,
+      desc = 'Trail toggle global list',
     })
   end),
   opts = {
