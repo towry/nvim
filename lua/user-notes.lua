@@ -24,5 +24,17 @@
 ---其中，`\zs` 表示前面的都不参与匹配结果, `\ze` 表示后面都不参与匹配结果。
 ---@brief ]]
 
+---@mod user-notes.diff-current-buffer-with-fugitive Diff current buffer with
+---fugitive
+---@brief [[
+---我们想要查看当前文件和某个commit下此文件之间的变动
+---
+---Steps:
+--- 1. 获取你想要查看的 commit，通过 fugtive 导航到此文件在某 commit
+--- 下的状态。
+--- 2. 你可以获取到当前 fugtive buffer 的名字，bufnr等.
+--- 3. 在当前文件中运行命令 `:exec "diffsplit" bufname(bufnr_of_fugitive_buf)`.
+---@brief ]]
+
 local M = {}
 return M
