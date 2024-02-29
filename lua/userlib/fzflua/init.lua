@@ -165,7 +165,8 @@ function M.folders(opts)
   return fzflua.fzf_exec(cmd, opts)
 end
 
-function M.buffers_or_recent()
+---@param no_buffers? boolean
+function M.buffers_or_recent(no_buffers)
   local fzflua = require('fzf-lua')
   local bufopts = {
     sort_lastused = true,
@@ -236,7 +237,7 @@ function M.buffers_or_recent()
   }
 
   local count = #vim.fn.getbufinfo({ buflisted = 1 })
-  if count <= 1 then
+  if no_buffers or count <= 1 then
     --- open recent.
     fzflua.oldfiles(vim.tbl_extend('force', {}, oldfiles_opts, oldfiles_actions))
     return

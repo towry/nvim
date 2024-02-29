@@ -911,10 +911,7 @@ plug({
     },
     {
       '<localleader><Tab>',
-      cmd_modcall(
-        'fzf-lua',
-        [[oldfiles({ cwd_only = true, include_current_session = true, cwd = vim.cfg.runtime__starts_cwd, winopts = { fullscreen = false } })]]
-      ),
+      cmd_modcall(fzf_mod, 'buffers_or_recent(true)'),
       nowait = true,
       desc = 'Open recent files',
     },
