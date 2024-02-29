@@ -143,8 +143,8 @@ local FileType = {
 }
 
 local FileName = {
-  provider = function()
-    local filename = vim.b.relative_path or vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':.')
+  provider = function(self)
+    local filename = vim.b.relative_path or vim.fn.fnamemodify(self.bufname or vim.api.nvim_buf_get_name(0), ':.')
     if filename == '' then
       return '[No Name]'
     end
@@ -155,6 +155,29 @@ local FileName = {
     end
     --- truncate the filename from right, so the bufnr etc will be visible.
     return '%-10.(' .. filename .. '%)%<'
+  end,
+}
+local ShortFileName = {
+  provider = function(self)
+    local filename = vim.fn.fnamemodify(self.bufname or vim.api.nvim_buf_get_name(0), self.is_special and ':~' or ':t')
+    if filename == '' then
+      return '[No Name]'
+    end
+    --- truncate the filename from right, so the bufnr etc will be visible.
+    return '%-10.(' .. filename .. '%)%<'
+  end,
+}
+local FilePath = {
+  provider = function(self)
+    if vim.bo[self.bufnr].buftype ~= '' or self.is_special then
+      return ''
+    end
+    local bufname = self.bufname or vim.api.nvim_buf_get_name(self.bufnr or 0)
+    if bufname == '' then
+      return ''
+    end
+    local path = vim.fn.fnamemodify(bufname, ':.:h') .. '/'
+    return '%-10.(' .. path .. '%)'
   end,
 }
 
@@ -250,6 +273,22 @@ local FullFileName = {
 
 local DirAndFileName = {
   init = function(self)
+    local bufnr = vim.api.nvim_get_current_buf()
+    self.bufname = vim.api.nvim_buf_get_name(bufnr)
+    self.bufnr = bufnr
+
+    if
+      vim.tbl_contains({
+        'git',
+        'gitcommit',
+        'fugitiveblame',
+        'toggleterm',
+        'terminal',
+      }, vim.bo[self.bufnr].filetype)
+    then
+      self.is_special = true
+    end
+
     if not vim.diagnostic.count then
       self.error_counts = 0
     else
@@ -311,9 +350,10 @@ local DirAndFileName = {
     },
   },
   FileIcon,
-  lpad(FileName),
+  ShortFileName,
   FileFlags,
   { provider = '%=' },
+  FilePath,
 }
 
 local function OverseerTasksForStatus(status)
