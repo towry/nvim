@@ -7,7 +7,7 @@ function M.startup()
   o.autowrite = true
   o.startofline = true
   o.exrc = true
-  o.jumpoptions = 'stack'
+  o.jumpoptions = 'stack,view'
   o.breakindent = true
   o.cpoptions:append('>') -- append to register with line break
   o.inccommand = 'split' -- preview incremental substitute
