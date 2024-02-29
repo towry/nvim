@@ -16,6 +16,10 @@ local function setup_basic()
     silent = false,
     desc = 'execute normal keys',
   })
+  set('n', "';", ':lua require("userlib.runtime.buffer").edit_alt_buf()<cr>', {
+    silent = true,
+    desc = 'Edit alt buf',
+  })
   set('n', '<leader>rs', ':lua require("userlib.workflow.run-shell-cmd")({ silent = true })<cr>', {
     silent = true,
     noremap = true,

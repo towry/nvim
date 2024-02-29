@@ -267,6 +267,15 @@ function M.set_current_buffer_focus(bufnr)
   vim.api.nvim_set_current_buf(bufnr)
 end
 
+M.edit_alt_buf = function()
+  local altnr = vim.fn.bufnr('#')
+  if not altnr or altnr < 1 then
+    return
+  end
+  M.set_current_buffer_focus(altnr)
+  print('#' .. altnr)
+end
+
 M.next_unsaved_buf = function()
   local unsaved_buffers = M.unsaved_list()
   if #unsaved_buffers <= 0 then
