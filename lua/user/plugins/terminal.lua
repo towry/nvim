@@ -208,7 +208,7 @@ plug({
           end,
         },
         window = {
-          open = 'vsplit',
+          open = 'split',
         },
       }
     end,
