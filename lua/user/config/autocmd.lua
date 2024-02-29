@@ -238,6 +238,31 @@ function M.load_on_startup()
       },
     },
     {
+      { 'BufWritePost' },
+      {
+        group = 'notify_about_error_buf_save',
+        callback = function(ctx)
+          local bufnr = ctx.buf
+          if vim.b[bufnr].lsp_disable or vim.b[bufnr].diagnostic_disable then
+            return
+          end
+          if not vim.diagnostic.count then
+            return
+          end
+          local counts = vim.diagnostic.count(bufnr)
+          if counts and (counts[vim.diagnostic.severity.ERROR] or 0) > 0 then
+            vim.schedule(function()
+              vim.api.nvim_echo(
+                { { 'Err:', 'Error' }, { string.format(' buffer[%s] saved with error', bufnr), 'Comment' } },
+                true,
+                {}
+              )
+            end)
+          end
+        end,
+      },
+    },
+    {
       { 'BufWinEnter' },
       {
         group = 'clear_search_hl_on_buf_enter',

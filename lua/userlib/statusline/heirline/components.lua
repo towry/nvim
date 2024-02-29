@@ -248,16 +248,26 @@ local FullFileName = {
 }
 
 local DirAndFileName = {
-  hl = function()
+  init = function(self)
+    if not vim.diagnostic.count then
+      self.error_counts = 0
+    else
+      self.error_counts = (vim.diagnostic.count(0) or {})[vim.diagnostic.severity.ERROR] or 0
+    end
+  end,
+  hl = function(self)
     local fg
-    if vim.bo.modified then
+    if self.error_counts > 0 then
       fg = 'red'
+    elseif vim.bo.modified then
+      fg = 'yellow'
     else
       fg = conditions.is_active() and 'winbar_fg' or 'winbar_nc_fg'
     end
     return {
       fg = fg,
       bg = conditions.is_active() and 'winbar_bg' or 'winbar_nc_bg',
+      italic = self.error_counts > 0,
     }
   end,
   -- lpad(BufferCwd),
