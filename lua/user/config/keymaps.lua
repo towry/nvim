@@ -7,8 +7,8 @@ local is_profiling = false
 local function setup_basic()
   --->>
   set('n', '<CR>', 'viw', { desc = 'V in word', silent = true })
-  set('n', ']b', '<cmd>bnext<cr>', { desc = 'Next buffer', silent = false })
-  set('n', '[b', '<cmd>bpre<cr>', { desc = 'Prev buffer', silent = false })
+  set('n', '-', '<cmd>bnext<cr>', { desc = 'Next buffer', silent = false })
+  set('n', '_', '<cmd>bpre<cr>', { desc = 'Prev buffer', silent = false })
   set('n', '<leader>rn', function()
     require('userlib.workflow.run-normal-keys')()
   end, {
