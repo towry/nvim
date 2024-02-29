@@ -158,6 +158,12 @@ local FileName = {
   end,
 }
 local ShortFileName = {
+  hl = function()
+    return {
+      bold = conditions.is_active(),
+      italic = conditions.is_active(),
+    }
+  end,
   provider = function(self)
     local filename = vim.fn.fnamemodify(self.bufname or vim.api.nvim_buf_get_name(0), self.is_special and ':~' or ':t')
     if filename == '' then
