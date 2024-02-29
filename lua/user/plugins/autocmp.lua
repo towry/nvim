@@ -96,6 +96,7 @@ pack.plug({
           process_items = function(items, base)
             -- Don't show 'Text' and 'Snippet' suggestions
             items = vim.tbl_filter(function(x)
+              -- TODO: remove this when neovim cmp sideeffect is done.
               return x.kind ~= 15
               -- return x.kind ~= 1 and x.kind ~= 15
             end, items)

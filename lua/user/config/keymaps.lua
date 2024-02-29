@@ -374,10 +374,10 @@ local function setup_basic()
     --- wait: https://github.com/neovim/neovim/issues/25714
     --- wait: https://github.com/neovim/neovim/pull/27339
     local keys = {
-      ['cr'] = vim.api.nvim_replace_termcodes('<CR>', true, true, true),
+      ['cr'] = vim.api.nvim_replace_termcodes('<CR>', true, true, false),
       -- close pum after completion
-      ['ctrl-y'] = vim.api.nvim_replace_termcodes('<C-y>', true, true, true),
-      ['ctrl-y_cr'] = vim.api.nvim_replace_termcodes('<C-y><CR>', true, true, true),
+      ['ctrl-y'] = vim.api.nvim_replace_termcodes('<C-y>', true, true, false),
+      ['ctrl-y_cr'] = vim.api.nvim_replace_termcodes('<C-y><CR>', true, true, false),
       ['space'] = vim.api.nvim_replace_termcodes('<Space>', true, true, true),
       ['ctrl-z'] = vim.api.nvim_replace_termcodes('<C-z>', true, true, true),
       ['bs-ctrl-z'] = vim.api.nvim_replace_termcodes('<C-h><C-z>', true, true, true),
@@ -453,9 +453,9 @@ local function setup_basic()
       local trigger_ai = function()
         -- trigger ai
         if vim.b._copilot then
-          vim.fn.feedkeys(vim.fn['copilot#Suggest'](), 'i')
+          vim.fn['copilot#Suggest']()
         elseif vim.fn.exists('*codeium#Complete') == 1 then
-          vim.fn.feedkeys(vim.fn['codeium#Complete'](), 'i')
+          vim.fn['codeium#Complete']()
         end
       end
 
