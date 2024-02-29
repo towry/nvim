@@ -96,6 +96,10 @@ local function setup_basic()
     desc = 'Update current buffer without autocmd',
     silent = true,
   })
+  set('n', '<localleader>bW', cmd('silent! noau wall'), {
+    desc = 'Update all buffers without autocmd',
+    silent = true,
+  })
 
   -- yanks
   set({ 'n', 'v' }, 'd', function()
