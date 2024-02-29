@@ -1,7 +1,9 @@
 local settings = {
   separate_diagnostic_server = true,
   publish_diagnostic_on = 'insert_leave',
+  include_completions_with_insert_text = false,
   tsserver_file_preferences = {
+    includeCompletionsForModuleExports = true,
     includeInlayParameterNameHints = 'all',
     includeInlayParameterNameHintsWhenArgumentMatchesName = false,
     includeInlayFunctionParameterTypeHints = true,

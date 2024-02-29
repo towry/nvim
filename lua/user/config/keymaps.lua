@@ -371,6 +371,8 @@ local function setup_basic()
   })
 
   if vim.cfg.edit__use_native_cmp then
+    --- wait: https://github.com/neovim/neovim/issues/25714
+    --- wait: https://github.com/neovim/neovim/pull/27339
     local keys = {
       ['cr'] = vim.api.nvim_replace_termcodes('<CR>', true, true, true),
       -- close pum after completion
