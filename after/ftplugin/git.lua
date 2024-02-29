@@ -1,3 +1,4 @@
+Ty.source_vimscripts('gf_diff.vim')
 local bufnr = vim.api.nvim_get_current_buf()
 local set = require('userlib.runtime.keymap').map_buf_thunk(bufnr)
 

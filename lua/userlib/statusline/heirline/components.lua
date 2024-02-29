@@ -150,10 +150,11 @@ local FileName = {
     end
     -- now, if the filename would occupy more than 90% of the available
     -- space, we trim the file path to its initials
-    if not conditions.width_percent_below(#filename, 0.90) then
+    if not conditions.width_percent_below(#filename, 0.80) then
       filename = vim.fn.pathshorten(filename)
     end
-    return filename
+    --- truncate the filename from right, so the bufnr etc will be visible.
+    return '%-10.(' .. filename .. '%)%<'
   end,
 }
 
