@@ -284,7 +284,9 @@ local DirAndFileName = {
     self.bufnr = bufnr
 
     if
-      vim.tbl_contains({
+      vim.bo[self.bufnr].buftype ~= ''
+      or vim.tbl_contains({
+        'oil',
         'git',
         'gitcommit',
         'fugitiveblame',
