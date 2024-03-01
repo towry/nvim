@@ -666,21 +666,24 @@ plug({
   },
   opts = {
     position = {
-      relative_to = 'editor',
+      relative_to = 'win',
       ---@type "topleft" | "topcenter" | "topright" | "centerleft" | "center" | "bottomleft"
-      anchor = 'bottomleft',
+      anchor = 'topleft',
       max_win_height = 30,
       vertical_offset = 0,
+      horizontal_offset = 1,
     },
-    display_time = 2500,
+    display_time = 2000,
     style = {
       path = 'tail',
       border = 'none',
+      pading = 3,
     },
     behavior = {
       mode = {
         default = {
           switch = 'immediate',
+          view = 'paging',
         },
       },
       show_on_autocmd = false,
