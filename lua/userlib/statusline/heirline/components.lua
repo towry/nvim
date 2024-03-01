@@ -284,7 +284,8 @@ local DirAndFileName = {
     self.bufnr = bufnr
 
     if
-      vim.bo[self.bufnr].buftype ~= ''
+      vim.b[self.bufnr].is_special
+      or vim.bo[self.bufnr].buftype ~= ''
       or vim.tbl_contains({
         'oil',
         'git',
@@ -294,6 +295,7 @@ local DirAndFileName = {
         'terminal',
       }, vim.bo[self.bufnr].filetype)
     then
+      vim.b[self.bufnr].is_special = true
       self.is_special = true
     else
       self.is_special = false
