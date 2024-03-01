@@ -649,10 +649,10 @@ local Codeium = {
     provider = function()
       local str = vim.api.nvim_call_function('codeium#GetStatusString', {})
       str = vim.trim(str)
-      if str == '' or str == 0 then
-        str = '-'
+      if str == '' or str == '0' then
+        str = '0/0'
       end
-      return '{C:' .. str .. '}'
+      return '🧙:' .. str .. ''
     end,
   },
 }
