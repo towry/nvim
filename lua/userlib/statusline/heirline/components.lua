@@ -148,11 +148,6 @@ local FileName = {
     if filename == '' then
       return '[No Name]'
     end
-    -- now, if the filename would occupy more than 90% of the available
-    -- space, we trim the file path to its initials
-    if not conditions.width_percent_below(#filename, 0.80) then
-      filename = vim.fn.pathshorten(filename)
-    end
     --- truncate the filename from right, so the bufnr etc will be visible.
     return '%-10.(' .. filename .. '%)%<'
   end,
@@ -283,23 +278,23 @@ local DirAndFileName = {
     self.bufname = vim.b[bufnr].bufname or vim.api.nvim_buf_get_name(bufnr)
     self.bufnr = bufnr
 
-    if
-      vim.b[self.bufnr].is_special
-      or vim.bo[self.bufnr].buftype ~= ''
-      or vim.tbl_contains({
-        'oil',
-        'git',
-        'gitcommit',
-        'fugitiveblame',
-        'toggleterm',
-        'terminal',
-      }, vim.bo[self.bufnr].filetype)
-    then
-      vim.b[self.bufnr].is_special = true
-      self.is_special = true
-    else
-      self.is_special = false
-    end
+    -- if
+    --   vim.b[self.bufnr].is_special
+    --   or vim.bo[self.bufnr].buftype ~= ''
+    --   or vim.tbl_contains({
+    --     'oil',
+    --     'git',
+    --     'gitcommit',
+    --     'fugitiveblame',
+    --     'toggleterm',
+    --     'terminal',
+    --   }, vim.bo[self.bufnr].filetype)
+    -- then
+    --   vim.b[self.bufnr].is_special = true
+    --   self.is_special = true
+    -- else
+    --   self.is_special = false
+    -- end
 
     if not vim.diagnostic.count then
       self.error_counts = 0
@@ -361,11 +356,10 @@ local DirAndFileName = {
       provider = ' ',
     },
   },
-  FileIcon,
-  ShortFileName,
-  FileFlags,
   { provider = '%=' },
-  FilePath,
+  FileIcon,
+  FileName,
+  FileFlags,
 }
 
 local function OverseerTasksForStatus(status)
