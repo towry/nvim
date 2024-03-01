@@ -692,4 +692,24 @@ plug({
       unlisted = true,
     },
   },
+  init = function()
+    vim.api.nvim_create_augroup('cyu_quick_nav', { clear = true })
+    vim.api.nvim_create_autocmd('User', {
+      group = 'cyu_quick_nav',
+      pattern = 'CybuOpen',
+      callback = function()
+        vim.keymap.set('n', ']', '<plug>(CybuNext)', { noremap = true, nowait = true })
+        vim.keymap.set('n', '[', '<plug>(CybuPrev)', { noremap = true, nowait = true })
+      end,
+    })
+
+    vim.api.nvim_create_autocmd('User', {
+      group = 'cyu_quick_nav',
+      pattern = 'CybuClose',
+      callback = function()
+        vim.keymap.del('n', ']')
+        vim.keymap.del('n', '[')
+      end,
+    })
+  end,
 })
