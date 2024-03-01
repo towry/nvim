@@ -653,7 +653,7 @@ plug({
 plug({
   'ghillb/cybu.nvim',
   branch = 'main',
-  enabled = true,
+  enabled = false,
   keys = {
     {
       ']b',
