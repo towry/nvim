@@ -653,32 +653,40 @@ plug({
 plug({
   'ghillb/cybu.nvim',
   branch = 'main',
-  enabled = false,
+  enabled = true,
   keys = {
     {
-      '<Tab>',
-      '<plug>(CybuLastusedNext)',
+      '-',
+      '<plug>(CybuNext)',
     },
     {
-      '<S-Tab>',
-      '<plug>(CybuLastusedPrev)',
+      '_',
+      '<plug>(CybuPrev)',
     },
   },
   opts = {
     position = {
       relative_to = 'editor',
-      ---@type "topleft" | "topcenter" | "topright" | "centerleft" | "center" |
-      ---"bottomleft"
-      anchor = 'topleft',
+      ---@type "topleft" | "topcenter" | "topright" | "centerleft" | "center" | "bottomleft"
+      anchor = 'bottomleft',
+      max_win_height = 30,
+      vertical_offset = 0,
     },
-    display_time = 1500,
+    display_time = 2500,
+    style = {
+      path = 'tail',
+      border = 'none',
+    },
     behavior = {
       mode = {
         default = {
-          switch = 'on_close',
+          switch = 'immediate',
         },
       },
       show_on_autocmd = false,
+    },
+    filter = {
+      unlisted = false,
     },
   },
 })
