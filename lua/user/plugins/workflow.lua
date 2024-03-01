@@ -660,7 +660,7 @@ plug({
       '<plug>(CybuNext)',
     },
     {
-      '_',
+      '0',
       '<plug>(CybuPrev)',
     },
   },
@@ -676,7 +676,7 @@ plug({
     display_time = 2000,
     style = {
       path = 'tail',
-      border = 'none',
+      border = vim.cfg.ui__float_border,
       pading = 3,
     },
     behavior = {
