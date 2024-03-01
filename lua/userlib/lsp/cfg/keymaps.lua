@@ -134,6 +134,14 @@ function M.setup_keybinding(client, buffer)
       })
     )
     set(
+      'n',
+      '<leader>ci',
+      cmdstr([[lua vim.lsp.buf.code_action({ context = { only = { 'source.addMissingImports' }}, apply = true})]]),
+      opts({
+        desc = _('Add import from ...'),
+      })
+    )
+    set(
       { 'n', 'v' },
       '<leader>ca',
       -- cmdstr([[lua vim.lsp.buf.code_action()]]),
