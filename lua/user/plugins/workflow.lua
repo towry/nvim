@@ -656,19 +656,19 @@ plug({
   enabled = true,
   keys = {
     {
-      '-',
+      ']b',
       '<plug>(CybuNext)',
     },
     {
-      '0',
+      '[b',
       '<plug>(CybuPrev)',
     },
   },
   opts = {
     position = {
       relative_to = 'win',
-      ---@type "topleft" | "topcenter" | "topright" | "centerleft" | "center" | "bottomleft"
-      anchor = 'topleft',
+      ---@type "topleft" | "topcenter" | "topright" | "centerleft" | "center" | "bottomright" | "centerright"
+      anchor = 'centerleft',
       max_win_height = 30,
       vertical_offset = 0,
       horizontal_offset = 1,
@@ -689,7 +689,7 @@ plug({
       show_on_autocmd = false,
     },
     filter = {
-      unlisted = false,
+      unlisted = true,
     },
   },
 })
