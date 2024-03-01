@@ -37,6 +37,7 @@ function M.load_on_startup()
         callback = function(ctx)
           local bufnr = ctx.buf
           assert(type(bufnr) == 'number')
+          vim.b[bufnr].bufname = 'Cmdwin'
           local set = vim.keymap.set
 
           --- run command and reopen it

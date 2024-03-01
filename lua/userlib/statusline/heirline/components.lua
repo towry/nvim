@@ -165,7 +165,7 @@ local ShortFileName = {
     }
   end,
   provider = function(self)
-    local filename = vim.fn.fnamemodify(self.bufname or vim.api.nvim_buf_get_name(0), self.is_special and ':~' or ':t')
+    local filename = vim.fn.fnamemodify(self.bufname or vim.api.nvim_buf_get_name(0), self.is_special and '' or ':t')
     if filename == '' then
       return '[No Name]'
     end
@@ -280,7 +280,7 @@ local FullFileName = {
 local DirAndFileName = {
   init = function(self)
     local bufnr = vim.api.nvim_get_current_buf()
-    self.bufname = vim.api.nvim_buf_get_name(bufnr)
+    self.bufname = vim.b[bufnr].bufname or vim.api.nvim_buf_get_name(bufnr)
     self.bufnr = bufnr
 
     if
