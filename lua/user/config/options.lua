@@ -117,6 +117,7 @@ function M.init_interface()
   o.wildoptions = { 'fuzzy', 'pum', 'tagfile' }
   o.wildignore = { '*.pyc', '*node_modules/**', '.git/**', '*.DS_Store', '*.min.js', '*.obj' } --- Don't search inside Node.js modules (works for gutentag)
   o.cmdheight = 1 --- Give more space for displaying messages
+  o.cmdwinheight = 10 -- the cmd window height
   o.completeopt = 'menu,menuone,noinsert,noselect,popup' --- Better autocompletion
   o.complete:append('kspell') -- Add spellcheck options for autocomplete
   -- scan current and included files.

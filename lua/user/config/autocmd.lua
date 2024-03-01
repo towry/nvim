@@ -31,6 +31,23 @@ function M.load_on_startup()
       },
     },
     {
+      { 'CmdwinEnter' },
+      {
+        group = 'key_set_on_cmdwin',
+        callback = function(ctx)
+          local bufnr = ctx.buf
+          assert(type(bufnr) == 'number')
+          local set = vim.keymap.set
+
+          --- run command and reopen it
+          set('n', '<F1>', '<CR>q:', {
+            buffer = bufnr,
+            silent = true,
+          })
+        end,
+      },
+    },
+    {
       { 'InsertEnter' },
       {
         group = 'set_conceallevel',
