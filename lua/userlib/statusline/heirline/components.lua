@@ -295,6 +295,8 @@ local DirAndFileName = {
       }, vim.bo[self.bufnr].filetype)
     then
       self.is_special = true
+    else
+      self.is_special = false
     end
 
     if not vim.diagnostic.count then
