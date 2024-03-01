@@ -188,6 +188,7 @@ function M.buffers_or_recent(no_buffers)
   local oldfiles_opts = {
     cwd = vim.cfg.runtime__starts_cwd,
     cwd_only = true,
+    include_current_session = true,
     winopts = {
       fullscreen = false,
       preview = {

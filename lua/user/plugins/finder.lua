@@ -879,7 +879,7 @@ plug({
     {
       -- '<localleader>b',
       BufferListKey,
-      cmd_modcall(fzf_mod, 'buffers_or_recent()'),
+      cmd_modcall(fzf_mod, 'buffers_or_recent(true)'),
       nowait = true,
       desc = 'List Buffers',
     },
@@ -911,7 +911,7 @@ plug({
     },
     {
       '<localleader><Tab>',
-      cmd_modcall(fzf_mod, 'buffers_or_recent(true)'),
+      cmd_modcall(fzf_mod, 'buffers_or_recent(false)'),
       nowait = true,
       desc = 'Open recent files',
     },
