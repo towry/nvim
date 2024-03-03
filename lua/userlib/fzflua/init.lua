@@ -186,6 +186,7 @@ function M.buffers_or_recent(no_buffers)
     -- },
   }
   local oldfiles_opts = {
+    prompt = ' Recent: ',
     cwd = vim.cfg.runtime__starts_cwd,
     cwd_only = true,
     include_current_session = true,

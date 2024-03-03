@@ -126,7 +126,7 @@ function M.init_interface()
   -- o.complete:append('d')
   -- scan buffer name
   o.complete:append('f')
-  o.complete:remove('t')
+  -- o.complete:remove('t')
   o.cursorline = true --- Highlight of current line
   o.emoji = true --- Fix emoji display
   o.cursorlineopt = 'line'

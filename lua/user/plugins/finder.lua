@@ -179,7 +179,7 @@ plug({
       desc = 'Open oil(BUF) file browser',
     },
     {
-      'go',
+      '-',
       function()
         if vim.bo.buftype ~= '' then
           return
@@ -189,7 +189,7 @@ plug({
       desc = 'Open oil file browser(buf)',
     },
     {
-      'gO',
+      '_',
       function()
         if vim.bo.buftype ~= '' then
           return

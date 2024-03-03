@@ -170,16 +170,32 @@ local ShortFileName = {
 }
 local FilePath = {
   provider = function(self)
-    if vim.bo[self.bufnr].buftype ~= '' or self.is_special then
-      return ''
-    end
-    local bufname = self.bufname or vim.api.nvim_buf_get_name(self.bufnr or 0)
-    if bufname == '' then
-      return ''
-    end
-    local path = vim.fn.fnamemodify(bufname, ':.:h') .. '/'
-    return '%-10.(' .. path .. '%)'
+    return '%-10.(' .. '%f' .. '%)%<'
   end,
+}
+
+local BufVisited = {
+  condition = function(self)
+    local loaded = package.loaded['mini.visits'] ~= nil
+    if not loaded then
+      return false
+    end
+    return require('userlib.mini.visits').is_buf_harpoon(0)
+  end,
+  init = function(self)
+    local is = require('userlib.mini.visits').is_buf_harpoon(0)
+    self.is = is
+  end,
+  provider = function(self)
+    local is = self.is
+    if is then
+      return ' '
+    end
+    return ''
+  end,
+  hl = {
+    fg = 'yellow',
+  },
 }
 
 local BufferCwd = {
@@ -198,16 +214,7 @@ local BufferCwd = {
 
 local FileFlags = {
   {
-    condition = function()
-      return vim.bo.modified
-    end,
-    provider = ' [+]',
-  },
-  {
-    condition = function()
-      return not vim.bo.modifiable or vim.bo.readonly
-    end,
-    provider = ' ',
+    provider = '%r%w%m',
   },
 }
 
@@ -277,44 +284,19 @@ local DirAndFileName = {
     local bufnr = vim.api.nvim_get_current_buf()
     self.bufname = vim.b[bufnr].bufname or vim.api.nvim_buf_get_name(bufnr)
     self.bufnr = bufnr
-
-    -- if
-    --   vim.b[self.bufnr].is_special
-    --   or vim.bo[self.bufnr].buftype ~= ''
-    --   or vim.tbl_contains({
-    --     'oil',
-    --     'git',
-    --     'gitcommit',
-    --     'fugitiveblame',
-    --     'toggleterm',
-    --     'terminal',
-    --   }, vim.bo[self.bufnr].filetype)
-    -- then
-    --   vim.b[self.bufnr].is_special = true
-    --   self.is_special = true
+    -- if not vim.diagnostic.count then
+    --   self.error_counts = 0
     -- else
-    --   self.is_special = false
+    --   self.error_counts = (vim.diagnostic.count(0) or {})[vim.diagnostic.severity.ERROR] or 0
     -- end
-
-    if not vim.diagnostic.count then
-      self.error_counts = 0
-    else
-      self.error_counts = (vim.diagnostic.count(0) or {})[vim.diagnostic.severity.ERROR] or 0
-    end
+    self.is_active = conditions.is_active()
   end,
   hl = function(self)
     local fg
-    if self.error_counts > 0 then
-      fg = 'red'
-    elseif vim.bo.modified then
-      fg = 'yellow'
-    else
-      fg = conditions.is_active() and 'winbar_fg' or 'winbar_nc_fg'
-    end
+    fg = self.is_active and 'winbar_fg' or 'winbar_nc_fg'
     return {
       fg = fg,
-      bg = conditions.is_active() and 'winbar_bg' or 'winbar_nc_bg',
-      italic = self.error_counts > 0,
+      bg = self.is_active and 'winbar_bg' or 'winbar_nc_bg',
     }
   end,
   -- lpad(BufferCwd),
@@ -324,42 +306,63 @@ local DirAndFileName = {
       self.tabnrstr = self.total_tabs >= 2 and '%{tabpagenr()}' or ''
     end,
     {
+      hl = function(self)
+        local fg = self.is_active and 'white' or 'winbar_nc_fg'
+        return {
+          fg = fg,
+          bg = self.is_active and 'green' or 'winbar_bg',
+          bold = self.is_active,
+        }
+      end,
+      {
+        provider = ' %t ',
+      },
+      vim.tbl_extend('force', FileIcon, {
+        hl = {
+          fg = 'yellow',
+        },
+      }),
+      FileFlags,
+      { provider = ' ' },
+    },
+    {
       provider = ' ',
     },
     {
       provider = 'B',
-      hl = { fg = 'yellow' },
     },
     {
       provider = '%1.3n',
-    },
-    {
-      provider = 'W',
       hl = { fg = 'yellow' },
     },
     {
+      provider = 'W',
+    },
+    {
       provider = '%{tabpagewinnr(tabpagenr())}',
+      hl = { fg = 'yellow' },
     },
     {
       provider = 'T',
       condition = function(self)
         return self.total_tabs >= 2
       end,
-      hl = { fg = 'yellow' },
     },
     {
       provider = function(self)
         return self.tabnrstr
       end,
+      hl = { fg = 'yellow' },
     },
+    -- FileFlags,
+    require('userlib.statusline.heirline.component_diagnostic'),
     {
       provider = ' ',
     },
+    BufVisited,
   },
   { provider = '%=' },
-  FileIcon,
-  FileName,
-  FileFlags,
+  FilePath,
 }
 
 local function OverseerTasksForStatus(status)
@@ -582,10 +585,15 @@ local DiagnosticsDisabled = {
 
 local WorkspaceRoot = {
   condition = function()
-    return vim.cfg.runtime__starts_cwd_short ~= nil
+    return vim.cfg.runtime__starts_cwd ~= nil
   end,
-  provider = function()
-    return ' ' .. vim.cfg.runtime__starts_cwd_short
+  init = function(self)
+    if not self.cwd_name then
+      self.cwd_name = vim.fn.fnamemodify(vim.cfg.runtime__starts_cwd, ':t')
+    end
+  end,
+  provider = function(self)
+    return ' ' .. self.cwd_name
   end,
 }
 
@@ -802,30 +810,6 @@ local Gitinfo = {
   },
   {
     provider = ']',
-  },
-}
-
-local BufVisited = {
-  condition = function(self)
-    local loaded = package.loaded['mini.visits'] ~= nil
-    if not loaded then
-      return false
-    end
-    return require('userlib.mini.visits').is_buf_harpoon(0)
-  end,
-  init = function(self)
-    local is = require('userlib.mini.visits').is_buf_harpoon(0)
-    self.is = is
-  end,
-  provider = function(self)
-    local is = self.is
-    if is then
-      return ' '
-    end
-    return ''
-  end,
-  hl = {
-    fg = 'red',
   },
 }
 
