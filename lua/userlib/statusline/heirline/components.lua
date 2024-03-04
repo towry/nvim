@@ -314,6 +314,41 @@ local DirAndFileName = {
           bold = self.is_active,
         }
       end,
+
+      {
+        provider = ' ',
+      },
+      {
+        {
+          provider = 'T',
+        },
+        {
+          provider = function(self)
+            return self.tabnrstr
+          end,
+          hl = function(self)
+            return { fg = self.is_active and 'red' or 'yellow', bold = true }
+          end,
+        },
+        condition = function(self)
+          return self.total_tabs >= 2
+        end,
+      },
+      {
+        provider = 'B',
+      },
+      {
+        provider = '%1.3n',
+        hl = { fg = 'yellow' },
+      },
+      {
+        provider = 'W',
+      },
+      {
+        provider = '%{tabpagewinnr(tabpagenr())}',
+        hl = { fg = 'yellow' },
+      },
+      --- filename
       {
         provider = ' %t ',
       },
@@ -324,35 +359,6 @@ local DirAndFileName = {
       }),
       FileFlags,
       { provider = ' ' },
-    },
-    {
-      provider = ' ',
-    },
-    {
-      provider = 'B',
-    },
-    {
-      provider = '%1.3n',
-      hl = { fg = 'yellow' },
-    },
-    {
-      provider = 'W',
-    },
-    {
-      provider = '%{tabpagewinnr(tabpagenr())}',
-      hl = { fg = 'yellow' },
-    },
-    {
-      provider = 'T',
-      condition = function(self)
-        return self.total_tabs >= 2
-      end,
-    },
-    {
-      provider = function(self)
-        return self.tabnrstr
-      end,
-      hl = { fg = 'yellow' },
     },
     -- FileFlags,
     require('userlib.statusline.heirline.component_diagnostic'),
@@ -605,7 +611,7 @@ local Tabs = {
     self.total_tabs = #vim.api.nvim_list_tabpages()
   end,
   provider = function(self)
-    return ' T' .. self.total_tabs .. '·%{tabpagenr()} '
+    return ' 󰓩 ' .. self.total_tabs .. '·%{tabpagenr()} '
   end,
   hl = function()
     return { bg = 'fg', fg = 'bg', bold = true }
