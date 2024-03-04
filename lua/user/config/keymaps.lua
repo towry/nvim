@@ -15,6 +15,12 @@ local function setup_basic()
     silent = false,
     desc = 'execute normal keys',
   })
+  --- use <C-w> in insert to trigger visual select instead of delete
+  set('v', '<C-w>', 'B', {})
+  --- <left> make <c-o> starts at end of the word before cursor. avoid 'd'
+  --- motion create newline.
+  set('i', '<C-w>', '<left><C-o>vB', { remap = false })
+  set('v', '<BS>', 'd', { noremap = true })
   set('n', "';", ':lua require("userlib.runtime.buffer").edit_alt_buf()<cr>', {
     silent = true,
     desc = 'Edit alt buf',

@@ -202,34 +202,34 @@ plug({
         end,
         desc = 'Remote Flash',
       },
-      {
-        '<C-o>o',
-        mode = 'i',
-        desc = 'o after flash',
-        function()
-          require('userlib.workflow.flashs').jump_to_line({
-            action = function(match)
-              vim.api.nvim_set_current_win(match.win)
-              vim.api.nvim_win_set_cursor(match.win, match.pos)
-              vim.cmd('normal! o')
-            end,
-          })
-        end,
-      },
-      {
-        '<C-o>O',
-        mode = 'i',
-        desc = 'O after flash in insert mode',
-        function()
-          require('userlib.workflow.flashs').jump_to_line({
-            action = function(match)
-              vim.api.nvim_set_current_win(match.win)
-              vim.api.nvim_win_set_cursor(match.win, match.pos)
-              vim.cmd('normal! O')
-            end,
-          })
-        end,
-      },
+      -- {
+      --   '<C-o>o',
+      --   mode = 'i',
+      --   desc = 'o after flash',
+      --   function()
+      --     require('userlib.workflow.flashs').jump_to_line({
+      --       action = function(match)
+      --         vim.api.nvim_set_current_win(match.win)
+      --         vim.api.nvim_win_set_cursor(match.win, match.pos)
+      --         vim.cmd('normal! o')
+      --       end,
+      --     })
+      --   end,
+      -- },
+      -- {
+      --   '<C-o>O',
+      --   mode = 'i',
+      --   desc = 'O after flash in insert mode',
+      --   function()
+      --     require('userlib.workflow.flashs').jump_to_line({
+      --       action = function(match)
+      --         vim.api.nvim_set_current_win(match.win)
+      --         vim.api.nvim_win_set_cursor(match.win, match.pos)
+      --         vim.cmd('normal! O')
+      --       end,
+      --     })
+      --   end,
+      -- },
       {
         '<C-s>v',
         mode = { 'i', 'n' },
