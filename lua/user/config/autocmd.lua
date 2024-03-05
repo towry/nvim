@@ -142,12 +142,11 @@ function M.load_on_startup()
               buffer = buf,
               once = true,
               callback = vim.schedule_wrap(function()
-                local current_buf = vim.api.nvim_get_current_buf()
-                if current_buf == buf then
-                  vim.bo[buf].syntax = ''
-                end
+                vim.bo[buf].syntax = ''
               end),
             })
+          else
+            vim.b[buf].is_big_file = false
           end
         end,
       },

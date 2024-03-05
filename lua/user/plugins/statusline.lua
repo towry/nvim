@@ -78,7 +78,7 @@ plug({
         -- require('userlib.statusline.heirline.component_diagnostic'),
         { provider = '%=' },
         require('userlib.statusline.heirline').right_components,
-        { provider = '%S ', hl = { fg = 'red' } },
+        -- { provider = '%S ', hl = { fg = 'red' } },
         comp.rpad({
           provider = '%-10.(%c,%l(%p%%)/%LL%)%<',
         }),

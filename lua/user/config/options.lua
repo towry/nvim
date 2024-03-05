@@ -226,7 +226,7 @@ function M.setup()
   local ftau = vim.api.nvim_create_augroup('option_ft', { clear = true })
   vim.api.nvim_create_autocmd('FileType', {
     group = ftau,
-    callback = function(args)
+    callback = vim.schedule_wrap(function(args)
       local buf = args.buf
       local ft = vim.bo[buf].filetype
       -- NOTE: nvim-treesitter on comment have some bugs.
@@ -237,15 +237,16 @@ function M.setup()
         return
       end
 
-      if vim.b[buf].treesitter_disable == true then
+      if vim.b[buf].treesitter_disable == true or vim.bo.buftype ~= '' then
         return
       end
       if not vim.api.nvim_buf_is_valid(buf) then
         return
       end
-      if vim.b[buf].is_big_file or Buffer.is_big_file(buf, {
+      local is_big_file = vim.b[buf].is_big_file
+      if is_big_file or (is_big_file == nil and Buffer.is_big_file(buf, {
         size = 1024 * 100,
-      }) then
+      })) then
         return
       end
       -- start highlighter.
@@ -257,7 +258,7 @@ function M.setup()
           bufnr = buf,
         },
       })
-    end,
+    end),
   })
 end
 

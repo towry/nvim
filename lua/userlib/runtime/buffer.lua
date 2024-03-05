@@ -358,6 +358,11 @@ function M.is_big_file(buf, opts)
   local size = opts.size or (1024 * 1000)
   local lines = opts.lines or 20000
 
+  --- NOTE: what if user changed file content make it small?
+  if vim.b[buf].is_big_file ~= nil then
+    return vim.b[buf].is_big_file
+  end
+
   if M.getfsize(buf) > size then
     return true
   end
