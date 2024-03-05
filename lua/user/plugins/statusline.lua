@@ -36,7 +36,33 @@ plug({
         comp.ViMode,
         comp.Tabs,
         comp.lpad({
-          provider = [[B%{v:lua.Ty.stl_bufcount()}]],
+          {
+            update = { 'BufRead', 'BufUnload' },
+            provider = [[B%{v:lua.Ty.stl_bufcount()}]],
+          },
+          {
+            update = { 'BufModifiedSet' },
+            init = function(self)
+              self.unsaved_count = Ty.stl_bufChangedCount()
+            end,
+            hl = { fg = 'yellow' },
+            {
+              provider = function(self)
+                if not self.unsaved_count or self.unsaved_count < 1 then
+                  return ''
+                end
+                return '·'
+              end,
+            },
+            {
+              provider = function(self)
+                if not self.unsaved_count or self.unsaved_count < 1 then
+                  return ''
+                end
+                return self.unsaved_count
+              end,
+            },
+          },
         }),
         comp.lpad(comp.Branch),
         comp.lpad(comp.Gitinfo),
@@ -53,6 +79,9 @@ plug({
         { provider = '%=' },
         require('userlib.statusline.heirline').right_components,
         { provider = '%S ', hl = { fg = 'red' } },
+        comp.rpad({
+          provider = '%-10.(%cC,%lL-%p%%-%LL%)%<',
+        }),
         comp.rpad(comp.LastExCommand),
         comp.rpad(comp.NavigateDirection),
         comp.rpad(comp.Dap),

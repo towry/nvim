@@ -133,6 +133,9 @@ Ty.stl_bufcount = function()
     buflisted = 1,
   })
 end
+Ty.stl_bufChangedCount = function()
+  return #require('userlib.runtime.buffer').unsaved_list()
+end
 
 Ty.set_terminal_keymaps = vim.schedule_wrap(function()
   local nvim_buf_set_keymap = vim.keymap.set
