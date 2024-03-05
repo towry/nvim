@@ -37,8 +37,10 @@ plug({
       'williamboman/mason-lspconfig.nvim',
       'williamboman/mason.nvim',
       {
+        --- bad performance
         'hrsh7th/nvim-gtd',
         config = true,
+        enabled = false,
       },
       {
         'creativenull/efmls-configs-nvim',

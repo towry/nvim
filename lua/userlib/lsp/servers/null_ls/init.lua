@@ -8,19 +8,19 @@ local function inject_nls_methods(nls)
   local rpc = require('null-ls.rpc')
 
   local original_flush = rpc.flush
-  rpc.flush = function()
+  rpc.flush = function(...)
     if vim.b.lsp_disable then
       return
     end
-    original_flush()
+    original_flush(...)
   end
 
   local original_try_add = client.try_add
-  client.try_add = function()
-    if vim.b.lsp_disable then
+  client.try_add = function(...)
+    if vim.b.lsp_disable or vim.bo.buftype ~= '' then
       return
     end
-    original_try_add()
+    original_try_add(...)
   end
 end
 

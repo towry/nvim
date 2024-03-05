@@ -39,10 +39,12 @@ function M.diagnostic_goto(next, severity)
   go({ severity = sev })
 end
 
+-- gtd have bad perf.
 -- TODO: https://github.com/hrsh7th/nvim-gtd/blob/d2f34debfd8c0af3a0a81708933e33f4478fe120/lua/gtd/init.lua#L183
 -- Add support for `OpenBufferInWindow` command to choose window and edit the file.
 function M.goto_definition_in_file(command)
-  require('gtd').exec({ command = command or 'edit' })
+  vim.lsp.buf.definition()
+  -- require('gtd').exec({ command = command or 'edit' })
 end
 
 function M.goto_declaration()
