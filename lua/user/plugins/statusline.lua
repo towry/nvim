@@ -80,7 +80,7 @@ plug({
         require('userlib.statusline.heirline').right_components,
         { provider = '%S ', hl = { fg = 'red' } },
         comp.rpad({
-          provider = '%-10.(%cC,%lL-%p%%-%LL%)%<',
+          provider = '%-10.(%c,%l(%p%%)/%LL%)%<',
         }),
         comp.rpad(comp.LastExCommand),
         comp.rpad(comp.NavigateDirection),

@@ -4,6 +4,9 @@ local utils = require('heirline.utils')
 local format_utils = require('userlib.lsp.servers.null_ls.fmt')
 local auto_format_disabled = require('userlib.lsp.servers.null_ls.autoformat').disabled
 
+local SepLeft = ''
+local SepRight = ''
+
 local Spacer = { provider = ' ' }
 local function rpad(child)
   child = child or {}
@@ -99,12 +102,28 @@ local ViMode = {
       t = 'TERM',
     },
   },
-  provider = function(self)
-    return ' ' .. self.mode_names[self.mode] .. ' '
-  end,
-  hl = function(self)
-    return { bg = self:mode_color(), fg = 'white', bold = true }
-  end,
+  {
+    {
+      provider = SepLeft,
+      hl = function(self)
+        return { fg = self:mode_color() }
+      end,
+    },
+    {
+      provider = function(self)
+        return self.mode_names[self.mode]
+      end,
+      hl = function(self)
+        return { bg = self:mode_color(), fg = 'white', bold = true }
+      end,
+    },
+    {
+      provider = SepRight,
+      hl = function(self)
+        return { fg = self:mode_color() }
+      end,
+    },
+  },
   update = {
     'ModeChanged',
   },
@@ -304,19 +323,32 @@ local DirAndFileName = {
     init = function(self)
       self.total_tabs = #vim.api.nvim_list_tabpages()
       self.tabnrstr = self.total_tabs >= 2 and '%{tabpagenr()}' or ''
+
+      local fg = self.is_active and 'white' or 'winbar_nc_fg'
+      self.hl_static = {
+        fg = fg,
+        bg = self.is_active and 'green' or 'winbar_bg',
+        sep_bg = self.is_active and 'winbar_bg' or 'winbar_nc_bg',
+        bold = self.is_active,
+      }
     end,
     {
       hl = function(self)
-        local fg = self.is_active and 'white' or 'winbar_nc_fg'
         return {
-          fg = fg,
-          bg = self.is_active and 'green' or 'winbar_bg',
-          bold = self.is_active,
+          fg = self.hl_static.fg,
+          bg = self.hl_static.bg,
+          bold = self.hl_static.bold,
         }
       end,
 
       {
-        provider = ' ',
+        provider = SepLeft,
+        hl = function(self)
+          return {
+            fg = self.hl_static.bg,
+            bg = self.hl_static.sep_bg,
+          }
+        end,
       },
       {
         {
@@ -358,7 +390,15 @@ local DirAndFileName = {
         },
       }),
       FileFlags,
-      { provider = ' ' },
+      {
+        provider = SepRight,
+        hl = function(self)
+          return {
+            fg = self.hl_static.bg,
+            bg = self.hl_static.sep_bg,
+          }
+        end,
+      },
     },
     -- FileFlags,
     require('userlib.statusline.heirline.component_diagnostic'),
@@ -610,12 +650,24 @@ local Tabs = {
   init = function(self)
     self.total_tabs = #vim.api.nvim_list_tabpages()
   end,
-  provider = function(self)
-    return ' 󰓩 ' .. self.total_tabs .. '·%{tabpagenr()} '
-  end,
-  hl = function()
-    return { bg = 'fg', fg = 'bg', bold = true }
-  end,
+  {
+    {
+      provider = SepLeft,
+      hl = { fg = 'fg' },
+    },
+    {
+      provider = function(self)
+        return '󰓩 ' .. self.total_tabs .. '·%{tabpagenr()}'
+      end,
+      hl = function()
+        return { bg = 'fg', fg = 'bg', bold = true }
+      end,
+    },
+    {
+      provider = SepRight,
+      hl = { fg = 'fg' },
+    },
+  },
   update = { 'VimEnter', 'TabNew', 'TabLeave' },
 }
 

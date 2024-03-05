@@ -877,6 +877,11 @@ plug({
       desc = 'Fuzzy search in current buffer',
     },
     {
+      '<leader>fc',
+      [[:FzfLua changes<cr>]],
+      desc = 'Fzf search in changes with opened buffers',
+    },
+    {
       -- '<localleader>b',
       BufferListKey,
       cmd_modcall(fzf_mod, 'buffers_or_recent(true)'),
