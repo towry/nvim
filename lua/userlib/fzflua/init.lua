@@ -13,7 +13,11 @@ local function callgrep(opts, callfn)
   end
 
   opts.no_header = false
-  opts.fullscreen = true
+  opts.winopts = {
+    fullscreen = false,
+    height = 0.90,
+    width = 1,
+  }
   opts.rg_opts = [[--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e]]
 
   opts.actions = {
@@ -89,7 +93,11 @@ function M.files(opts)
     opts.cwd = vim.t.cwd or vim.uv.cwd()
   end
 
-  opts.fullscreen = true
+  opts.winopts = {
+    fullscreen = false,
+    height = 0.90,
+    width = 1,
+  }
   opts.ignore_current_file = true
 
   return fzflua.files(opts)
@@ -120,7 +128,9 @@ function M.folders(opts)
   opts.cwd_header = true
   opts.cwd_prompt = true
   opts.toggle_ignore_flag = '--no-ignore'
-  opts.fullscreen = true
+  opts.winopts = {
+    fullscreen = false,
+  }
   opts.fzf_opts = {
     ['--preview-window'] = 'nohidden,down,50%',
     ['--preview'] = fzflua.shell.preview_action_cmd(function(items)
@@ -298,7 +308,9 @@ function M.command_history()
   local fzflua = require('fzf-lua')
 
   fzflua.command_history({
-    fullscreen = false,
+    winopts = {
+      fullscreen = false,
+    },
   })
 end
 
