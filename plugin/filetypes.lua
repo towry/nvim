@@ -1,6 +1,7 @@
 local au = require('userlib.runtime.au')
 
 au.on_verylazy(function()
+  --- if buffer is not saved on disk, this will not work.
   vim.filetype.add({
     extension = {
       ['es6'] = 'javascript',

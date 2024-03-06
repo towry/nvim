@@ -223,8 +223,8 @@ end
 function M.schedule_lazy(fn)
   return function()
     M.define_user_autocmd({
-      -- pattern = 'VeryLazy',
-      pattern = 'LazyVimStarted',
+      pattern = 'VeryLazy',
+      -- pattern = 'LazyVimStarted',
       group = 'schedule_fn_on_VeryLazy',
       callback = fn,
     })
@@ -250,8 +250,8 @@ function M.on_verylazy(fn, opts)
     return
   end
   M.define_user_autocmd({
-    -- pattern = 'VeryLazy',
-    pattern = 'LazyVimStarted',
+    pattern = 'LazyUIEnter',
+    --pattern = 'LazyVimStarted',
     group = 'run_on_verylazy',
     callback = fn,
   })

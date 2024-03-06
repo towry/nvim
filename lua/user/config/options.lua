@@ -1,4 +1,3 @@
-local Buffer = require('userlib.runtime.buffer')
 local M = {}
 local o = vim.opt
 local g = vim.g
@@ -244,6 +243,7 @@ function M.setup()
         return
       end
       local is_big_file = vim.b[buf].is_big_file
+      local Buffer = require('userlib.runtime.buffer')
       if is_big_file or (is_big_file == nil and Buffer.is_big_file(buf, {
         size = 1024 * 100,
       })) then

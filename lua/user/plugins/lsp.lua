@@ -66,7 +66,9 @@ plug({
       })
     end,
     init = function()
-      au.on_verylazy(require('userlib.lsp').setup)
+      au.on_verylazy(function()
+        require('userlib.lsp').setup()
+      end)
       au.on_lsp_attach(function(client, bufnr)
         require('userlib.lsp.cfg.commands').setup_commands(client, bufnr)
         require('userlib.lsp.cfg.keymaps').setup_keybinding(client, bufnr)
