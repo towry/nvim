@@ -106,7 +106,6 @@ plug({
           }, buftype)
           local filetype = vim.bo[buf].filetype
           local ignore_filetype = vim.tbl_contains({
-            'fugitive',
             'qf',
             'fzf-lua',
           }, filetype) or filetype:match('^git')

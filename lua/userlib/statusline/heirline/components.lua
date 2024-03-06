@@ -382,7 +382,13 @@ local DirAndFileName = {
       },
       --- filename
       {
-        provider = ' %t ',
+        provider = function()
+          local bufname = vim.fn.expand('%:t')
+          if bufname == '' then
+            bufname = '[' .. (vim.bo.filetype == '' and 'No Name' or vim.bo.filetype) .. ']'
+          end
+          return ' ' .. bufname .. ' '
+        end,
       },
       vim.tbl_extend('force', FileIcon, {
         hl = {

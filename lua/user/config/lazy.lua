@@ -49,8 +49,8 @@ local function setup(opts)
       enabled = false,
     },
     profiling = {
-      loader = true,
-      require = true,
+      loader = false,
+      require = false,
     },
     performance = {
       cache = {

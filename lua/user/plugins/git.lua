@@ -76,7 +76,7 @@ plug({
           vim.cmd([[tab Git diff HEAD]])
           -- vim.cmd([[:lua vim.bo.syntax="diff"]])
         end,
-        desc = 'Git status',
+        desc = 'Git status with Fugitive on HEAD',
         silent = false,
       },
       {
