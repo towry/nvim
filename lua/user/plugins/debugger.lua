@@ -219,6 +219,12 @@ pack.plug({
       lg.funcs({
         {
           function()
+            require('neotest').summary.toggle()
+          end,
+          description = 'Neotest toggle summary',
+        },
+        {
+          function()
             require('neotest').run.run()
           end,
           description = 'Neotest run',

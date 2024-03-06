@@ -26,6 +26,16 @@ M.attach = function(bufnr)
   end, {
     desc = 'Neotest run',
   })
+  set('n', '<localleader>tk', function()
+    require('neotest').run.stop()
+  end, {
+    desc = 'Neotest stop',
+  })
+  set('n', '<localleader>ts', function()
+    require('neotest').summary.toggle()
+  end, {
+    desc = 'Noetest toggle summary',
+  })
   set('n', '<localleader>tf', function()
     require('neotest').run.run(vim.fn.expand('%'))
   end, {
