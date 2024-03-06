@@ -144,6 +144,29 @@ function M.open_code_action()
   })
 end
 
+function M.jump_to_diagnostic_in_line()
+  local current_line_cursor = vim.api.nvim_win_get_cursor(0)
+  local next_dia_pos = vim.diagnostic.get_next_pos({
+    float = false,
+  })
+  -- + 1 is because the data is 0-indexed
+  if next_dia_pos and (next_dia_pos[1] + 1) == current_line_cursor[1] then
+    -- move cursor to next_dia_pos
+    vim.api.nvim_win_set_cursor(0, { next_dia_pos[1] + 1, next_dia_pos[2] })
+    return true
+  end
+
+  local prev_dia_pos = vim.diagnostic.get_prev_pos({
+    float = false,
+  })
+  if prev_dia_pos and (prev_dia_pos[1] + 1) == current_line_cursor[1] then
+    -- move cursor to prev_dia_pos
+    vim.api.nvim_win_set_cursor(0, { prev_dia_pos[1] + 1, prev_dia_pos[2] })
+    return true
+  end
+  return false
+end
+
 function M.open_source_action()
   local mode = vim.api.nvim_get_mode().mode
   if mode == 'v' then
