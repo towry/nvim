@@ -89,8 +89,10 @@ if vim.env['TMUX'] ~= nil then
     end
 
     -- Construct the tmux command to split the window and run the user's command
+    -- tmux >= 3.4 require -l to specific percentage size.
     local tmux_split_command = string.format(
-      [[tmux split-window -p 15 -c '#{pane_current_path}' 'tmux select-pane -T "%s" >/dev/null; tmux last-pane>/dev/null; %s ; cat']],
+      [[tmux split-window -l %s -c '#{pane_current_path}' 'tmux select-pane -T "%s" >/dev/null; tmux last-pane>/dev/null; %s ; cat']],
+      '15%',
       user_command,
       user_command
     )
