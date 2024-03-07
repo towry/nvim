@@ -158,6 +158,7 @@ plug({
         '<C-c><C-d>',
         '<cmd>lua require("mini.bufremove").delete(0)<cr>',
         desc = 'Delete current buffer',
+        silent = false,
       },
       {
         '<leader>bq',
@@ -176,8 +177,9 @@ plug({
       },
       {
         '<C-c><C-q>',
-        ':q<cr>',
+        ':echo "close buffer " .. bufnr("%") .. " and window" | q <cr>',
         'Quit current buffer and window',
+        silent = false,
       },
       {
         '<leader>bk',
@@ -186,8 +188,9 @@ plug({
       },
       {
         '<C-c><C-k>',
-        ':hide<cr>',
+        ':hide | echo "hide current window"<cr>',
         desc = 'Hide current window',
+        silent = false,
       },
       {
         '<leader>bh',
@@ -199,9 +202,11 @@ plug({
       {
         '<C-c><C-c>',
         function()
+          vim.cmd([[echo "Unshow buffer " .. bufnr("%")]])
           require('mini.bufremove').unshow_in_window(0)
         end,
         desc = 'Unshow current buffer',
+        silent = false,
       },
     },
   },
