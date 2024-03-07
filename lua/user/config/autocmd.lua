@@ -53,7 +53,8 @@ function M.load_on_startup()
       {
         group = 'force_shutdown_clients',
         callback = function()
-          vim.lsp.stop_client(vim.lsp.get_clients(), true)
+          -- cause quit slow.
+          -- vim.lsp.stop_client(vim.lsp.get_clients(), true)
         end,
       },
     },

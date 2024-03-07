@@ -275,17 +275,3 @@ end, {
   nargs = 0,
   bar = true,
 })
-
---------------------------------------------------------------------------------
-
-create_cmd('PreviewThis', function()
-  local current_buf = vim.api.nvim_get_current_buf()
-  local alternative_window = vim.fn.win_getid(vim.fn.winnr('#'))
-  if alternative_window == 0 then
-    vim.cmd.vsplit()
-  end
-  vim.api.nvim_set_current_buf(current_buf)
-end, {
-  desc = 'Open current buffer in alternative window in preview mode',
-  nargs = 0,
-})
