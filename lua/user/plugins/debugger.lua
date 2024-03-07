@@ -314,6 +314,10 @@ pack.plug({
       run = {
         enabled = true,
       },
+      quickfix = {
+        enabled = true,
+        open = false,
+      },
       status = {
         enabled = true,
       },

@@ -1,5 +1,5 @@
+local au = require('userlib.runtime.au')
 local keymap = require('userlib.runtime.keymap')
-local pathlib = require('userlib.runtime.path')
 local create_cmd = vim.api.nvim_create_user_command
 local package_path_updated = false
 
@@ -113,6 +113,7 @@ if vim.env['TMUX'] ~= nil then
 end
 
 create_cmd('TryMake', function(opts)
+  local pathlib = require('userlib.runtime.path')
   local cwd = vim.uv.cwd()
   local target = opts.fargs[1]
   if target == nil then
@@ -273,4 +274,18 @@ create_cmd('QfCloseNextEsc', function()
 end, {
   nargs = 0,
   bar = true,
+})
+
+--------------------------------------------------------------------------------
+
+create_cmd('PreviewThis', function()
+  local current_buf = vim.api.nvim_get_current_buf()
+  local alternative_window = vim.fn.win_getid(vim.fn.winnr('#'))
+  if alternative_window == 0 then
+    vim.cmd.vsplit()
+  end
+  vim.api.nvim_set_current_buf(current_buf)
+end, {
+  desc = 'Open current buffer in alternative window in preview mode',
+  nargs = 0,
 })
