@@ -155,6 +155,11 @@ plug({
         desc = 'Close current buffer',
       },
       {
+        '<C-c><C-c>',
+        '<cmd>lua require("mini.bufremove").delete(0)<cr>',
+        desc = 'Delete current buffer',
+      },
+      {
         '<leader>bq',
         function()
           require('mini.bufremove').delete(0)
@@ -170,12 +175,29 @@ plug({
         desc = 'Close current buffer and window',
       },
       {
+        '<C-c><C-q>',
+        ':q<cr>',
+        'Quit current buffer and window',
+      },
+      {
         '<leader>bk',
         ':hide<cr>',
         desc = 'Hide current window',
       },
       {
+        '<C-c><C-k>',
+        ':hide<cr>',
+        desc = 'Hide current window',
+      },
+      {
         '<leader>bh',
+        function()
+          require('mini.bufremove').unshow_in_window(0)
+        end,
+        desc = 'Unshow current buffer',
+      },
+      {
+        '<C-c><cr>',
         function()
           require('mini.bufremove').unshow_in_window(0)
         end,

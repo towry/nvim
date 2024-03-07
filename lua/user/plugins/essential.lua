@@ -674,6 +674,10 @@ pack.plug({
         { mode = 'n', keys = '<LocalLeader>x', desc = '+Tmux' },
         { mode = 'n', keys = 'ga', desc = '+TextChanges' },
         { mode = 'n', keys = 'gao', desc = '+Current word case change' },
+        { mode = 'n', keys = '<C-c><C-k>' },
+        { mode = 'n', keys = '<C-c><C-c>' },
+        { mode = 'n', keys = '<C-c><CR>' },
+        { mode = 'n', keys = '<C-c><C-q>' },
         -- gh<key> for gitsigns.
         { mode = 'n', keys = '<Leader>g', desc = '+Git' },
         { mode = 'x', keys = '<Leader>g', desc = '+Git' },
