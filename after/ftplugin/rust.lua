@@ -11,7 +11,7 @@ set(
 set('n', '<localleader>b', function()
   local cwd = require('userlib.runtime.utils').get_root()
   require('userlib.terminal.rust-bacon-term').toggle_bacon_term(cwd)
-end, { noremap = true, desc = 'Run bacon on cwd' })
+end, { noremap = true, desc = 'Run bacon on cwd', nowait = true })
 
 set('n', '<localleader>B', function()
   local cwd = require('userlib.runtime.utils').get_root({
