@@ -320,3 +320,44 @@ plug({
     },
   },
 })
+
+plug({
+  'chrisgrieser/nvim-spider',
+  lazy = true,
+  init = au.schedule_lazy(function()
+    local set = vim.keymap.set
+    local del = vim.keymap.del
+    local motion_w_rhs = [[<cmd>lua require('spider').motion('w')<CR>]]
+    local motion_b_rhs = [[<cmd>lua require('spider').motion('b')<CR>]]
+    local motion_e_rhs = [[<cmd>lua require('spider').motion('e')<CR>]]
+    local mods = { 'n', 'o', 'x' }
+
+    local setup_keys = function()
+      set(mods, 'w', motion_w_rhs, {})
+      set(mods, 'b', motion_b_rhs, {})
+      set(mods, 'e', motion_e_rhs, {})
+    end
+    local remove_keys = function()
+      del(mods, 'w')
+      del(mods, 'b')
+      del(mods, 'e')
+    end
+
+    local spider_on = true
+    if spider_on then
+      setup_keys()
+    end
+
+    vim.api.nvim_create_user_command('ToggleSpider', function()
+      if spider_on then
+        spider_on = false
+        remove_keys()
+        vim.notify('Spider motion off')
+      else
+        spider_on = true
+        vim.notify('Spider motion on')
+        setup_keys()
+      end
+    end, {})
+  end),
+})

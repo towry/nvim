@@ -1,4 +1,8 @@
 return {
+  {
+    ':ToggleSpider',
+    description = 'Toggle spider motion',
+  },
   -- copilot
   {
     ':Copilot enable',
