@@ -9,7 +9,7 @@ function M.startup()
   o.jumpoptions = 'stack,view'
   o.breakindent = true
   o.cpoptions:append('>') -- append to register with line break
-  o.inccommand = 'split' -- preview incremental substitute
+  o.inccommand = 'nosplit' -- preview incremental substitute
   o.expandtab = true --- Use spaces instead of tabs
   o.ignorecase = true --- Needed for smartcase
   o.textwidth = 80

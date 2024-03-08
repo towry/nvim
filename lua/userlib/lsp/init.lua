@@ -255,8 +255,6 @@ function M.setup()
       setup_lspconfig_servers_once(filetypes, servers)
     end
   end
-
-  require('userlib.lsp.fswatch').setup()
 end
 
 return M

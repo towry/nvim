@@ -29,4 +29,5 @@ au.on_verylazy(function()
     local name = vim.fn.expand('%:t:r')
     return 'find ' .. name
   end)
+  setca('ass', 'let @/="')
 end)
