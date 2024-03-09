@@ -11,7 +11,6 @@ pack.plug({
   {
     'echasnovski/mini.cursorword',
     event = 'BufReadPost',
-    vscode = true,
     opts = {
       delay = 350,
     },

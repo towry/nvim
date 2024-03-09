@@ -324,6 +324,7 @@ plug({
 plug({
   'chrisgrieser/nvim-spider',
   lazy = true,
+  vscode = true,
   init = au.schedule_lazy(function()
     local set = vim.keymap.set
     local del = vim.keymap.del
