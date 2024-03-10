@@ -33,7 +33,7 @@ function M.startup()
   o.undofile = true --- Sets undo to file
   o.updatetime = 250 --- Faster completion
   -- o.viminfo        = "'1000" --- Increase the size of file history
-  o.wrap = false --- Display long lines as just one line
+  o.wrap = true --- Display long lines as just one line
   -- enable line-wrapping with left and right cursor movement
   vim.opt.whichwrap:append({ ['<'] = true, ['>'] = true, ['h'] = true, ['l'] = true, ['['] = true, [']'] = true })
   -- add @, -, and $ as keywords for full SCSS support
@@ -132,7 +132,7 @@ function M.init_interface()
   o.foldcolumn = '1' -- Folding
   o.list = true
   o.listchars:append('tab:⇢ ')
-  -- o.listchars:append('eol:↩')
+  o.listchars:append('eol:↩')
   o.listchars:append('extends:»')
   o.listchars:append('nbsp:␣')
   o.listchars:append('precedes:«')
