@@ -202,6 +202,11 @@ plug({
       {
         '<C-c><C-c>',
         function()
+          if vim.api.nvim_win_get_config(vim.api.nvim_get_current_win()).relative ~= '' then
+            --- float window
+            vim.cmd('close')
+            return
+          end
           vim.cmd([[echo "Unshow buffer " .. bufnr("%")]])
           require('mini.bufremove').unshow_in_window(0)
         end,
