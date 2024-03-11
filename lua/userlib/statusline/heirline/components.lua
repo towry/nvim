@@ -189,7 +189,7 @@ local ShortFileName = {
 }
 local FilePath = {
   provider = function(self)
-    return '%-10.(' .. '%f' .. '%)%<'
+    return '%-10.(' .. '%F' .. '%)%<'
   end,
 }
 
