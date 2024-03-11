@@ -155,10 +155,12 @@ plug({
       ['g.'] = 'actions.toggle_hidden',
     },
     use_default_keymaps = false,
-    lsp_rename_autosave = 'unmodified',
     skip_confirm_for_simple_edits = true,
     delete_to_trash = false,
     view_options = {},
+    lsp_file_methods = {
+      autosave_changes = 'unmodified',
+    },
     float = {
       padding = 4,
       border = vim.cfg.ui__float_border,

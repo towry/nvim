@@ -133,7 +133,7 @@ function M.folders(opts)
   }
   opts.fzf_opts = {
     ['--preview-window'] = 'nohidden,down,50%',
-    ['--preview'] = fzflua.shell.preview_action_cmd(function(items)
+    ['--preview'] = fzflua.shell.raw_preview_action_cmd(function(items)
       if has_exa then
         return string.format(
           'cd %s ; eza --color=always --icons=always --group-directories-first -a %s',
