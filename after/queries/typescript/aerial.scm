@@ -25,14 +25,3 @@
   (#set! "kind" "Field")
 ) @symbol
 
-;; match block of variables
-(((lexical_declaration
-  (variable_declarator
-    name: (identifier) @name
-    value: (_)
-  ) @name (#set! @name "text" "VARIABLES")
-)(
- comment
-)*)+
- (#set! "kind" "Struct")
- ) @symbol
