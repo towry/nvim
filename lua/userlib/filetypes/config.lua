@@ -33,7 +33,7 @@ return {
     treesitter = { 'lua', 'luadoc' },
   },
   ['rust'] = {
-    lspconfig = 'rust_analyzer',
+    -- lspconfig = 'rust_analyzer',
   },
   -- ['go'] = {
   --   lspconfig = 'gopls',

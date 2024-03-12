@@ -91,8 +91,9 @@ plug({
   },
   {
     'mrcjkb/rustaceanvim',
-    version = '^3',
+    version = '^4',
     ft = { 'rust' },
+    cmd = { 'RustLsp' },
     dependencies = {
       'neovim/nvim-lspconfig',
     },
@@ -106,7 +107,7 @@ plug({
           on_attach = function(client, bufnr)
             -- you can also put keymaps in here
           end,
-          settings = {
+          default_settings = {
             ['rust-analyzer'] = {
               cargo = {
                 autoreload = true,

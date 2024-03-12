@@ -259,6 +259,7 @@ pack.plug({
 
     neotest.setup({
       adapters = {
+        --- require('rustaceanvim.neotest')
         require('neotest-rust')({
           args = { '--no-capture' },
         }),
