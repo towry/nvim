@@ -257,4 +257,16 @@ function M.on_verylazy(fn, opts)
   })
 end
 
+---@param filetypes string|string[]
+---@param callback_or_cmd function|string
+function M.on_filetype(filetypes, callback_or_cmd)
+  local fts = type(filetypes) == 'string' and { filetypes } or filetypes
+  M.define_autocmd('FileType', {
+    group = 'on_filetype_' .. table.concat(fts, '_'),
+    pattern = fts,
+    command = type(callback_or_cmd) == 'string' and callback_or_cmd or nil,
+    callback = type(callback_or_cmd) == 'function' and callback_or_cmd or nil,
+  })
+end
+
 return M

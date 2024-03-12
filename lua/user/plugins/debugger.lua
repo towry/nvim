@@ -215,6 +215,8 @@ pack.plug({
     'rouge8/neotest-rust',
   },
   init = au.schedule_lazy(function()
+    au.on_filetype('neotest-output', 'setlocal wrap')
+
     require('userlib.legendary').register('neotest', function(lg)
       lg.funcs({
         {
