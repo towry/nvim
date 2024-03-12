@@ -279,7 +279,7 @@ pack.plug({
       floating = {
         border = 'single',
         max_height = 0.6,
-        max_width = 0.6,
+        max_width = 0.9,
       },
       highlights = {
         adapter_name = 'NeotestAdapterName',
