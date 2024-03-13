@@ -35,50 +35,16 @@ plug({
         },
         comp.ViMode,
         comp.Tabs,
-        comp.lpad({
-          {
-            update = { 'BufRead', 'BufUnload' },
-            provider = [[B%{v:lua.Ty.stl_bufcount()}]],
-          },
-          {
-            update = { 'BufModifiedSet' },
-            init = function(self)
-              self.unsaved_count = Ty.stl_bufChangedCount()
-            end,
-            hl = { fg = 'yellow' },
-            {
-              provider = function(self)
-                if not self.unsaved_count or self.unsaved_count < 1 then
-                  return ''
-                end
-                return '·'
-              end,
-            },
-            {
-              provider = function(self)
-                if not self.unsaved_count or self.unsaved_count < 1 then
-                  return ''
-                end
-                return self.unsaved_count
-              end,
-            },
-          },
-        }),
         comp.lpad(comp.Branch),
         comp.lpad(comp.Gitinfo),
         comp.lpad(comp.GitStatus),
-        -- comp.lpad(comp.ProfileRecording),
         comp.lpad(comp.Copilot),
         comp.lpad(comp.Codeium),
-        -- comp.lpad(comp.Harpoon),
-        -- comp.lpad(comp.BufVisited),
         comp.lpad(comp.Overseer),
         require('userlib.statusline.heirline').left_components,
         { provider = '%=' },
-        -- require('userlib.statusline.heirline.component_diagnostic'),
         { provider = '%=' },
         require('userlib.statusline.heirline').right_components,
-        -- { provider = '%S ', hl = { fg = 'red' } },
         comp.rpad({
           provider = '%-10.(%c,%l(%p%%)/%LL%)%<',
         }),
@@ -87,10 +53,8 @@ plug({
         comp.rpad(comp.Dap),
         comp.rpad(comp.LspFormatter),
         comp.rpad(comp.HelpFileName),
-        -- comp.rpad(comp.FileType),
         comp.rpad(comp.DiagnosticsDisabled),
         comp.rpad(comp.WorkspaceRoot)
-        -- comp.Ruler
       ),
 
       opts = {

@@ -1010,6 +1010,22 @@ local TabLine = {
   { provider = '%=' },
 }
 
+local UnsavedBufCount = {
+  update = { 'BufModifiedSet' },
+  init = function(self)
+    self.unsaved_count = Ty.stl_bufChangedCount()
+  end,
+  hl = { fg = 'yellow' },
+  {
+    provider = function(self)
+      if not self.unsaved_count or self.unsaved_count < 1 then
+        return ''
+      end
+      return self.unsaved_count
+    end,
+  },
+}
+
 return {
   TerminalStatusline = TerminalStatusline,
   HelpFileName = HelpFileName,
@@ -1045,4 +1061,5 @@ return {
   Gitinfo = Gitinfo,
   BufVisited = BufVisited,
   TabLine = TabLine,
+  UnsavedBufCount,
 }
