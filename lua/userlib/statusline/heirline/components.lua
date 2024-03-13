@@ -104,7 +104,8 @@ local ViMode = {
   },
   {
     {
-      provider = SepLeft,
+      -- provider = SepLeft,
+      provider = ' ',
       hl = function(self)
         return { fg = self:mode_color() }
       end,
@@ -114,15 +115,15 @@ local ViMode = {
         return self.mode_names[self.mode]
       end,
       hl = function(self)
-        return { bg = self:mode_color(), fg = 'white', bold = true }
+        return { fg = self:mode_color(), bold = true }
       end,
     },
-    {
-      provider = SepRight,
-      hl = function(self)
-        return { fg = self:mode_color() }
-      end,
-    },
+    -- {
+    --   provider = SepRight,
+    --   hl = function(self)
+    --     return { fg = self:mode_color() }
+    --   end,
+    -- },
   },
   update = {
     'ModeChanged',
@@ -324,10 +325,11 @@ local DirAndFileName = {
       self.total_tabs = #vim.api.nvim_list_tabpages()
       self.tabnrstr = self.total_tabs >= 2 and '%{tabpagenr()}' or ''
 
-      local fg = self.is_active and 'white' or 'winbar_nc_fg'
+      local fg = self.is_active and 'winbar_fg' or 'winbar_nc_fg'
       self.hl_static = {
         fg = fg,
-        bg = self.is_active and 'green' or 'winbar_bg',
+        bg = 'winbar_bg',
+        undercurl = self.is_active,
         sep_bg = self.is_active and 'winbar_bg' or 'winbar_nc_bg',
         bold = self.is_active,
       }
@@ -341,15 +343,40 @@ local DirAndFileName = {
         }
       end,
 
+      -- {
+      --   provider = SepLeft,
+      --   hl = function(self)
+      --     return {
+      --       fg = self.hl_static.bg,
+      --       bg = self.hl_static.sep_bg,
+      --     }
+      --   end,
+      -- },
+      --- filename
       {
-        provider = SepLeft,
+        provider = function()
+          local bufname = vim.fn.expand('%:t')
+          if bufname == '' then
+            bufname = '[' .. (vim.bo.filetype == '' and 'No Name' or vim.bo.filetype) .. ']'
+          end
+          return ' ' .. bufname .. ' '
+        end,
         hl = function(self)
           return {
-            fg = self.hl_static.bg,
-            bg = self.hl_static.sep_bg,
+            fg = 'fg',
+            -- underline = self.hl_static.undercurl,
           }
         end,
       },
+      vim.tbl_extend('force', FileIcon, {
+        hl = {
+          fg = 'yellow',
+        },
+      }),
+      FileFlags,
+
+      ---- win info.
+      { provider = ' ' },
       {
         {
           provider = 'T',
@@ -380,31 +407,15 @@ local DirAndFileName = {
         provider = '%{tabpagewinnr(tabpagenr())}',
         hl = { fg = 'yellow' },
       },
-      --- filename
-      {
-        provider = function()
-          local bufname = vim.fn.expand('%:t')
-          if bufname == '' then
-            bufname = '[' .. (vim.bo.filetype == '' and 'No Name' or vim.bo.filetype) .. ']'
-          end
-          return ' ' .. bufname .. ' '
-        end,
-      },
-      vim.tbl_extend('force', FileIcon, {
-        hl = {
-          fg = 'yellow',
-        },
-      }),
-      FileFlags,
-      {
-        provider = SepRight,
-        hl = function(self)
-          return {
-            fg = self.hl_static.bg,
-            bg = self.hl_static.sep_bg,
-          }
-        end,
-      },
+      -- {
+      --   provider = SepRight,
+      --   hl = function(self)
+      --     return {
+      --       fg = self.hl_static.bg,
+      --       bg = self.hl_static.sep_bg,
+      --     }
+      --   end,
+      -- },
     },
     -- FileFlags,
     require('userlib.statusline.heirline.component_diagnostic'),

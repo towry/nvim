@@ -62,11 +62,7 @@ function M.custom_theme_default()
   hi_fzflua()
 end
 
-function M.custom_theme_modus()
-  M.custom_theme_default()
-  hi('LineNr', { link = 'Normal', bg = 'NONE' })
-  -- hi('FoldColumn', { link = 'Normal' })
-end
+function M.custom_theme_modus() end
 
 function M.custom_theme_kanagawa()
   M.custom_theme_default()

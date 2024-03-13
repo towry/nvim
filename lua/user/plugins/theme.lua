@@ -67,15 +67,52 @@ plug({
     -- `deuteranopia`,
     -- variant = 'tritanopia',
     variant = 'deuteranopia',
-    on_highlights = function(highlights, colors)
+    on_highlights = function(hls, c)
       local is_dark = vim.o.background == 'dark'
-      highlights['FlashLabel'] = {
-        fg = colors.bg_main_dim,
-        bg = colors.bg_yellow_intense,
+      hls['FlashLabel'] = {
+        fg = c.bg_main_dim,
+        bg = c.bg_yellow_intense,
         bold = true,
       }
-      highlights['FlashBackdrop'] = {
-        fg = is_dark and colors.fg_dim or '#9f9f9f',
+      hls['FlashBackdrop'] = {
+        fg = is_dark and c.fg_dim or '#9f9f9f',
+      }
+      hls['LineNr'] = {
+        bg = 'NONE',
+        fg = c.fg_dim,
+      }
+      hls['CursorLineNr'] = {
+        bg = 'NONE',
+        fg = c.fg_main,
+        bold = true,
+      }
+      hls['FzfLuaNormal'] = { link = 'Normal' }
+      hls['FzfLuaBorder'] = { link = 'LineNr' }
+      hls['FzfLuaPreviewNormal'] = { link = 'Normal' }
+      hls['FoldColumn'] = { bg = c.bg_dim, fg = c.fg_dim, bold = false }
+      hls['GitSignsAdd'] = {
+        fg = c.fg_added,
+        bg = 'NONE',
+      }
+      hls['GitSignsChange'] = {
+        fg = c.fg_changed,
+        bg = 'NONE',
+      }
+      hls['GitSignsDelete'] = {
+        fg = c.fg_removed,
+        bg = 'NONE',
+      }
+      hls['MiniCursorword'] = {
+        italic = true,
+        bold = true,
+        bg = 'NONE',
+        fg = 'NONE',
+      }
+      hls['MiniCursorwordCurrent'] = {
+        underline = false,
+        bold = true,
+        bg = 'NONE',
+        fg = 'NONE',
       }
     end,
   },
