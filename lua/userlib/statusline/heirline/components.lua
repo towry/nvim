@@ -342,7 +342,7 @@ local DirAndFileName = {
           if bufname == '' then
             bufname = '[' .. (vim.bo.filetype == '' and 'No Name' or vim.bo.filetype) .. ']'
           end
-          return ' ' .. bufname .. ' '
+          return '' .. bufname .. ' '
         end,
         hl = function(self)
           return {
