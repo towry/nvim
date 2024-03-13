@@ -119,10 +119,9 @@ local ViMode = {
       end,
     },
     {
-      provider = ' ',
-      -- provider = SepRight,
+      provider = '',
       hl = function(self)
-        return { bg = self:mode_color() }
+        return { fg = self:mode_color() }
       end,
     },
   },
