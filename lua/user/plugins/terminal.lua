@@ -78,6 +78,9 @@ plug({
         on_open = function(_term)
           au.do_useraucmd(au.user_autocmds.TermIsOpen_User)
           vim.cmd('startinsert!')
+          if vim.fn.exists('&winfixbuf') == 1 then
+            vim.cmd('setlocal winfixbuf')
+          end
         end,
       })
     end,

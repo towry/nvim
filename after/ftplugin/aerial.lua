@@ -11,3 +11,6 @@ api.nvim_set_option_value('spell', false, {
 api.nvim_set_option_value('foldcolumn', '0', {
   win = winid,
 })
+if vim.fn.exists('&winfixbuf') == 1 then
+  vim.cmd('setlocal winfixbuf')
+end

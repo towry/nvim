@@ -1,5 +1,8 @@
 local map = require('userlib.runtime.keymap').map_buf_thunk(0)
 local qf = require('userlib.runtime.qf')
+if vim.fn.exists('&winfixbuf') == 1 then
+  vim.cmd('setlocal winfixbuf')
+end
 
 map('n', 'q', '<cmd>cclose | lclose<cr>', { silent = true, nowait = true, noremap = true, desc = 'Close qf' })
 
