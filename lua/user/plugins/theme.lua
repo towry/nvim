@@ -1,13 +1,26 @@
 local plug = require('userlib.runtime.pack').plug
 
 plug({
-  'neanias/everforest-nvim',
+  'Mofiqul/vscode.nvim',
   version = false,
   event = 'User LazyTheme',
   priority = 1000,
-  enabled = vim.cfg.ui__theme_name == 'everforest',
+  enabled = vim.cfg.ui__theme_name == 'vscode',
   config = function()
-    require('everforest').setup({})
+    local c = require('vscode.colors').get_colors()
+    require('vscode').setup({
+      transparent = false,
+      italic_comments = true,
+      underline_links = true,
+      group_overrides = {
+        FzfLuaNormal = { link = 'Normal' },
+        FzfLuaBorder = { link = 'LineNr' },
+        FzfLuaPreviewNormal = { link = 'Normal' },
+        MiniCursorword = { italic = true, bold = true, bg = 'NONE', fg = 'NONE' },
+        MiniCursorwordCurrent = { underline = false, bold = true, bg = 'NONE', fg = 'NONE' },
+      },
+    })
+    require('vscode').load()
   end,
 })
 
