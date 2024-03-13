@@ -304,11 +304,6 @@ local DirAndFileName = {
     local bufnr = vim.api.nvim_get_current_buf()
     self.bufname = vim.b[bufnr].bufname or vim.api.nvim_buf_get_name(bufnr)
     self.bufnr = bufnr
-    -- if not vim.diagnostic.count then
-    --   self.error_counts = 0
-    -- else
-    --   self.error_counts = (vim.diagnostic.count(0) or {})[vim.diagnostic.severity.ERROR] or 0
-    -- end
     self.is_active = conditions.is_active()
   end,
   hl = function(self)
@@ -319,7 +314,6 @@ local DirAndFileName = {
       bg = self.is_active and 'winbar_bg' or 'winbar_nc_bg',
     }
   end,
-  -- lpad(BufferCwd),
   {
     init = function(self)
       self.total_tabs = #vim.api.nvim_list_tabpages()
@@ -328,30 +322,19 @@ local DirAndFileName = {
       local fg = self.is_active and 'winbar_fg' or 'winbar_nc_fg'
       self.hl_static = {
         fg = fg,
-        bg = 'winbar_bg',
+        bg = 'NONE',
         undercurl = self.is_active,
         sep_bg = self.is_active and 'winbar_bg' or 'winbar_nc_bg',
         bold = self.is_active,
       }
     end,
+    hl = function(self)
+      return {
+        fg = self.hl_static.fg,
+        bg = 'NONE',
+      }
+    end,
     {
-      hl = function(self)
-        return {
-          fg = self.hl_static.fg,
-          bg = self.hl_static.bg,
-          bold = self.hl_static.bold,
-        }
-      end,
-
-      -- {
-      --   provider = SepLeft,
-      --   hl = function(self)
-      --     return {
-      --       fg = self.hl_static.bg,
-      --       bg = self.hl_static.sep_bg,
-      --     }
-      --   end,
-      -- },
       --- filename
       {
         provider = function()
@@ -363,8 +346,7 @@ local DirAndFileName = {
         end,
         hl = function(self)
           return {
-            fg = 'fg',
-            -- underline = self.hl_static.undercurl,
+            fg = self.is_active and 'yellow' or 'fg',
           }
         end,
       },
@@ -407,15 +389,6 @@ local DirAndFileName = {
         provider = '%{tabpagewinnr(tabpagenr())}',
         hl = { fg = 'yellow' },
       },
-      -- {
-      --   provider = SepRight,
-      --   hl = function(self)
-      --     return {
-      --       fg = self.hl_static.bg,
-      --       bg = self.hl_static.sep_bg,
-      --     }
-      --   end,
-      -- },
     },
     -- FileFlags,
     require('userlib.statusline.heirline.component_diagnostic'),
