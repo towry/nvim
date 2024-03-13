@@ -642,7 +642,7 @@ local Tabs = {
   end,
   {
     {
-      provider = SepLeft,
+      provider = ' ' .. SepLeft,
       hl = { fg = 'fg' },
     },
     {
@@ -654,7 +654,7 @@ local Tabs = {
       end,
     },
     {
-      provider = SepRight,
+      provider = SepRight .. ' ',
       hl = { fg = 'fg' },
     },
   },
