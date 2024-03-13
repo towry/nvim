@@ -110,7 +110,7 @@ plug({
       }
       hls['MiniCursorwordCurrent'] = {
         underline = false,
-        bold = true,
+        bold = false,
         bg = 'NONE',
         fg = 'NONE',
       }
