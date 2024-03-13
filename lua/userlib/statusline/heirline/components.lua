@@ -654,7 +654,7 @@ local Tabs = {
       end,
     },
     {
-      provider = SepRight .. ' ',
+      provider = SepRight,
       hl = { fg = 'fg' },
     },
   },
