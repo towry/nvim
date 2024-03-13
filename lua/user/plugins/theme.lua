@@ -66,7 +66,7 @@ plug({
   opts = {
     -- `deuteranopia`,
     -- variant = 'tritanopia',
-    variant = 'deuteranopia',
+    -- variant = 'deuteranopia',
     on_highlights = function(hls, c)
       local is_dark = vim.o.background == 'dark'
       hls['FlashLabel'] = {
@@ -89,7 +89,7 @@ plug({
       hls['FzfLuaNormal'] = { link = 'Normal' }
       hls['FzfLuaBorder'] = { link = 'LineNr' }
       hls['FzfLuaPreviewNormal'] = { link = 'Normal' }
-      hls['FoldColumn'] = { bg = c.bg_dim, fg = c.fg_dim, bold = false }
+      hls['FoldColumn'] = { bg = c.bg_main, fg = c.fg_dim, bold = false }
       hls['GitSignsAdd'] = {
         fg = c.fg_added,
         bg = 'NONE',

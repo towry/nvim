@@ -117,15 +117,15 @@ Ty.stl_foldlevel = function()
   if level > 0 then
     if level > vim.fn.foldlevel(vim.v.lnum - 1) then
       if vim.fn.foldclosed(vim.v.lnum) == -1 then
-        return _('-')
+        return _('⌄')
       else
-        return _('+')
+        return _('⌃')
       end
     else
-      return _('│')
+      return _(' ')
     end
   else
-    return _('│')
+    return _(' ')
   end
 end
 Ty.stl_bufcount = function()
