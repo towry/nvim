@@ -382,13 +382,13 @@ local DirAndFileName = {
         provider = '%1.3n',
         hl = { fg = 'yellow' },
       },
-      {
-        provider = 'W',
-      },
-      {
-        provider = '%{tabpagewinnr(tabpagenr())}',
-        hl = { fg = 'yellow' },
-      },
+      -- {
+      --   provider = 'W',
+      -- },
+      -- {
+      --   provider = '%{tabpagewinnr(tabpagenr())}',
+      --   hl = { fg = 'yellow' },
+      -- },
     },
     -- FileFlags,
     require('userlib.statusline.heirline.component_diagnostic'),
@@ -647,7 +647,7 @@ local Tabs = {
     },
     {
       provider = function(self)
-        return '󰓩 ' .. self.total_tabs .. '·%{tabpagenr()}'
+        return '󰓩 ' .. '%{tabpagenr()}·' .. self.total_tabs
       end,
       hl = function()
         return { bg = 'fg', fg = 'bg', bold = true }
