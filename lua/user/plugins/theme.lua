@@ -1,26 +1,35 @@
 local plug = require('userlib.runtime.pack').plug
 
 plug({
-  'Mofiqul/vscode.nvim',
+  'gbprod/nord.nvim',
   version = false,
   event = 'User LazyTheme',
   priority = 1000,
-  enabled = vim.cfg.ui__theme_name == 'vscode',
+  cond = vim.cfg.ui__theme_name == 'nord',
   config = function()
-    local c = require('vscode.colors').get_colors()
-    require('vscode').setup({
-      transparent = false,
-      italic_comments = true,
-      underline_links = true,
-      group_overrides = {
-        FzfLuaNormal = { link = 'Normal' },
-        FzfLuaBorder = { link = 'LineNr' },
-        FzfLuaPreviewNormal = { link = 'Normal' },
-        MiniCursorword = { italic = true, bold = true, bg = 'NONE', fg = 'NONE' },
-        MiniCursorwordCurrent = { underline = false, bold = true, bg = 'NONE', fg = 'NONE' },
-      },
+    require('nord').setup({
+      borders = true,
+      on_highlights = function(H, c)
+        H['MiniCursorword'] = {
+          italic = true,
+          bold = true,
+          bg = 'NONE',
+          fg = 'NONE',
+        }
+        H['MiniCursorwordCurrent'] = {
+          underline = false,
+          bold = false,
+          bg = 'NONE',
+          fg = 'NONE',
+        }
+        H['MiniIndentscopeSymbol'] = {
+          fg = c.polar_night.bright,
+          bg = 'NONE',
+          bold = false,
+        }
+        return H
+      end,
     })
-    require('vscode').load()
   end,
 })
 
