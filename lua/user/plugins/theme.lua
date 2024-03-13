@@ -79,7 +79,7 @@ plug({
       }
       hls['LineNr'] = {
         bg = 'NONE',
-        fg = c.fg_dim,
+        fg = c.fg_alt,
       }
       hls['CursorLineNr'] = {
         bg = 'NONE',
@@ -89,7 +89,7 @@ plug({
       hls['FzfLuaNormal'] = { link = 'Normal' }
       hls['FzfLuaBorder'] = { link = 'LineNr' }
       hls['FzfLuaPreviewNormal'] = { link = 'Normal' }
-      hls['FoldColumn'] = { bg = c.bg_dim, fg = c.fg_dim, bold = false }
+      hls['FoldColumn'] = { bg = c.bg_dim, fg = c.fg_alt, bold = false }
       hls['GitSignsAdd'] = {
         fg = c.fg_added,
         bg = 'NONE',
@@ -113,6 +113,11 @@ plug({
         bold = false,
         bg = 'NONE',
         fg = 'NONE',
+      }
+      hls['MiniIndentscopeSymbol'] = {
+        fg = c.fg_dim,
+        bg = 'NONE',
+        bold = false,
       }
     end,
   },

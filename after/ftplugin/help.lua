@@ -2,6 +2,7 @@
 local opt, fn, api = vim.opt_local, vim.fn, vim.api
 local map = vim.keymap.set
 
+opt.conceallevel = 0
 opt.list = false
 opt.wrap = false
 opt.spell = true
