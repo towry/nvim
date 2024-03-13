@@ -107,7 +107,7 @@ local ViMode = {
       -- provider = SepLeft,
       provider = ' ',
       hl = function(self)
-        return { fg = self:mode_color() }
+        return { bg = self:mode_color() }
       end,
     },
     {
@@ -115,15 +115,16 @@ local ViMode = {
         return self.mode_names[self.mode]
       end,
       hl = function(self)
-        return { fg = self:mode_color(), bold = true }
+        return { bg = self:mode_color(), fg = 'white', bold = true }
       end,
     },
-    -- {
-    --   provider = SepRight,
-    --   hl = function(self)
-    --     return { fg = self:mode_color() }
-    --   end,
-    -- },
+    {
+      provider = ' ',
+      -- provider = SepRight,
+      hl = function(self)
+        return { bg = self:mode_color() }
+      end,
+    },
   },
   update = {
     'ModeChanged',
@@ -706,7 +707,7 @@ local Codeium = {
       if str == '' or str == '0' then
         str = '0/0'
       end
-      return '🧙:' .. str .. ''
+      return 'AI:' .. str .. ''
     end,
   },
 }
