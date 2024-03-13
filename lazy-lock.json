@@ -47,6 +47,7 @@
   "mini.pick": { "branch": "main", "commit": "3276a2d9e8b28e0d3ce89ee4c547cea3745961ba" },
   "mini.sessions": { "branch": "main", "commit": "a4d7df22de33535b35358e61234c1df458978bd6" },
   "mini.visits": { "branch": "main", "commit": "d4d7d88169ff401a6e0a35d83f19f0de66ab7dab" },
+  "modus-themes.nvim": { "branch": "master", "commit": "71fd92fb7b606af51b48b0cffceba8193e2e8713" },
   "neo-tree.nvim": { "branch": "main", "commit": "d8b4687c2457465199bb36be02316e0d3066605d" },
   "neogen": { "branch": "main", "commit": "b95347a588401a755eadd17482edc1662876bd58" },
   "neotab.nvim": { "branch": "master", "commit": "6c6107dddaa051504e433608f59eca606138269b" },
@@ -108,7 +109,6 @@
   "vim-rsi": { "branch": "master", "commit": "45540637ead22f011e8215f1c90142e49d946a54" },
   "vim-startuptime": { "branch": "master", "commit": "308b0088a864c4711a96e45b6734cf9294074f65" },
   "vim-xxdcursor": { "branch": "master", "commit": "81f5bf8e5db1f34004314db956eee72f8177cf08" },
-  "vscode.nvim": { "branch": "main", "commit": "2f248dceb66b5706b98ee86370eb7673862a3903" },
   "windows.nvim": { "branch": "main", "commit": "c7492552b23d0ab30325e90b56066ec51242adc8" },
   "zen-mode.nvim": { "branch": "main", "commit": "78557d972b4bfbb7488e17b5703d25164ae64e6a" }
 }

@@ -64,8 +64,9 @@ plug({
   priority = 1000,
   enabled = vim.cfg.ui__theme_name == 'modus',
   opts = {
-    variant = 'tritanopia',
-    -- variant = 'tinted'
+    -- `deuteranopia`,
+    -- variant = 'tritanopia',
+    variant = 'deuteranopia',
     on_highlights = function(highlights, colors)
       local is_dark = vim.o.background == 'dark'
       highlights['FlashLabel'] = {
