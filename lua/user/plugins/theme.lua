@@ -10,6 +10,10 @@ plug({
     require('nord').setup({
       borders = true,
       on_highlights = function(H, c)
+        H['FloatBorder'] = {
+          fg = c.polar_night.brighter,
+          bg = c.none,
+        }
         H['MiniCursorword'] = {
           italic = true,
           bold = true,
