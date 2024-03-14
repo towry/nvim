@@ -4,8 +4,8 @@ local utils = require('heirline.utils')
 local format_utils = require('userlib.lsp.servers.null_ls.fmt')
 local auto_format_disabled = require('userlib.lsp.servers.null_ls.autoformat').disabled
 
-local SepLeft = ''
-local SepRight = ''
+-- local SepLeft = ''
+-- local SepRight = ''
 
 local Spacer = { provider = ' ' }
 local function rpad(child)
@@ -112,7 +112,7 @@ local ViMode = {
     },
     {
       provider = function(self)
-        return self.mode_names[self.mode]
+        return self.mode_names[self.mode] .. ' '
       end,
       hl = function(self)
         return { bg = self:mode_color(), fg = 'white', bold = true }
@@ -642,20 +642,20 @@ local Tabs = {
   end,
   {
     {
-      provider = ' ' .. SepLeft,
-      hl = { fg = 'fg' },
+      provider = ' ',
+      hl = { fg = 'bg', bg = 'fg' },
     },
     {
       provider = function(self)
-        return '󰓩 ' .. '%{tabpagenr()}·' .. self.total_tabs
+        return '󰓩 ' .. '%{tabpagenr()}·' .. self.total_tabs .. ' '
       end,
       hl = function()
         return { bg = 'fg', fg = 'bg', bold = true }
       end,
     },
     {
-      provider = SepRight,
-      hl = { fg = 'fg' },
+      provider = '',
+      hl = { fg = 'fg', bg = 'bg' },
     },
   },
   update = { 'VimEnter', 'TabNew', 'TabLeave' },
