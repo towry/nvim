@@ -9,6 +9,8 @@ plug({
   config = function()
     require('nord').setup({
       borders = true,
+      diff = { mode = 'fg' },
+      errors = { mode = 'fg' },
       on_highlights = function(H, c)
         H['FloatBorder'] = {
           fg = c.polar_night.brighter,
