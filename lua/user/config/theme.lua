@@ -18,6 +18,7 @@ local hi_minicursorword = function()
   extend_hl({ 'MiniCursorword', 'Normal' }, {
     italic = true,
     bold = true,
+    underline = false,
     bg = 'NONE',
     fg = 'NONE',
   })
@@ -32,6 +33,11 @@ end
 function M.custom_theme_wildcharm()
   --- custom wildcharm theme.
   vim.cmd([[hi! Visual guifg=#000000 guibg=#ffffff gui=NONE cterm=NONE]])
+end
+
+function M.custom_theme_zenburn()
+  M.custom_theme_default()
+  hi_minicursorword()
 end
 
 function M.custom_theme_gruvbox()

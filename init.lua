@@ -1,6 +1,6 @@
 if not vim.g.vscode then
   pcall(require, 'settings_env')
-  -- vim.cmd.colorscheme('vim')
+  vim.cmd.colorscheme('vim')
 else
   require('user.vscode.startup')
 end
