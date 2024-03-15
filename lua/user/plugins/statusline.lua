@@ -59,6 +59,9 @@ plug({
 
       opts = {
         disable_winbar_cb = function(args)
+          if vim.g.hide_winbar then
+            return true
+          end
           local buf = args.buf
           local buftype = vim.bo[buf].buftype
           local ignore_buftype = vim.tbl_contains({
@@ -82,8 +85,11 @@ plug({
     vim.o.showtabline = 0
     vim.api.nvim_create_user_command('HeirlineResetStatusline', function()
       vim.o.statusline = "%{%v:lua.require'heirline'.eval_statusline()%}"
+      vim.o.winbar = "%{%v:lua.require'heirline'.eval_winbar()%}"
     end, {})
-    -- Because heirline is lazy loaded, we need to manually set the winbar on startup
-    vim.opt_local.winbar = "%{%v:lua.require'heirline'.eval_winbar()%}"
+    if not vim.g.hide_winbar then
+      -- Because heirline is lazy loaded, we need to manually set the winbar on startup
+      vim.opt_local.winbar = "%{%v:lua.require'heirline'.eval_winbar()%}"
+    end
   end,
 })
