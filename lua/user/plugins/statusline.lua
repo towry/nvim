@@ -91,5 +91,8 @@ plug({
       -- Because heirline is lazy loaded, we need to manually set the winbar on startup
       vim.opt_local.winbar = "%{%v:lua.require'heirline'.eval_winbar()%}"
     end
+    if vim.o.laststatus == 0 then
+      vim.opt.statusline = "%#VertSplit#%{repeat('-',winwidth('.'))}"
+    end
   end,
 })
