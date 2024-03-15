@@ -23,6 +23,17 @@ plug({
       hls['LineNr'] = {
         fg = c.fg_dim,
       }
+      hls['WinSeparator'] = {
+        fg = c.bg_dim,
+      }
+      hls['Winbar'] = {
+        fg = c.fg_active,
+        bg = c.bg_main,
+      }
+      hls['WinbarNc'] = {
+        fg = c.fg_inactive,
+        bg = c.bg_main,
+      }
       hls['CursorLineNr'] = {
         bg = 'NONE',
         fg = c.fg_main,
