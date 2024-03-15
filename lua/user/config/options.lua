@@ -60,7 +60,7 @@ function M.startup()
     -- don't give messages while scanning for ins-completion-menu
     C = true,
     F = true,
-    I = true,
+    I = false,
     T = true,
     W = true,
     q = false,
