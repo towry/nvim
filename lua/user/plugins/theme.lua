@@ -1,53 +1,6 @@
 local plug = require('userlib.runtime.pack').plug
 
 plug({
-  -- 'gbprod/nord.nvim',
-  'pze/zenburn.nvim',
-  version = false,
-  event = 'User LazyTheme',
-  priority = 1000,
-  cond = vim.cfg.ui__theme_name == 'zenburn',
-  config = function()
-    local colors = require('nord.colors').palette
-
-    require('nord').setup({
-      borders = true,
-      diff = { mode = 'fg' },
-      errors = { mode = 'fg' },
-      styles = {
-        comments = {
-          fg = colors.snow_storm.brighter,
-        },
-      },
-      on_highlights = function(H, c)
-        H['FloatBorder'] = {
-          fg = c.polar_night.brighter,
-          bg = c.none,
-        }
-        H['MiniCursorword'] = {
-          italic = true,
-          bold = true,
-          bg = 'NONE',
-          fg = 'NONE',
-        }
-        H['MiniCursorwordCurrent'] = {
-          underline = false,
-          bold = false,
-          bg = 'NONE',
-          fg = 'NONE',
-        }
-        H['MiniIndentscopeSymbol'] = {
-          fg = c.polar_night.bright,
-          bg = 'NONE',
-          bold = false,
-        }
-        return H
-      end,
-    })
-  end,
-})
-
-plug({
   -- 'ellisonleao/gruvbox.nvim',
   'pze/gruvbox.nvim',
   dev = false,
@@ -85,7 +38,7 @@ plug({
   'miikanissi/modus-themes.nvim',
   event = 'User LazyTheme',
   priority = 1000,
-  enabled = vim.cfg.ui__theme_name == 'modus',
+  -- cond = vim.cfg.ui__theme_name == 'modus',
   opts = {
     -- `deuteranopia`,
     -- variant = 'tritanopia',

@@ -35,11 +35,6 @@ function M.custom_theme_wildcharm()
   vim.cmd([[hi! Visual guifg=#000000 guibg=#ffffff gui=NONE cterm=NONE]])
 end
 
-function M.custom_theme_zenburn()
-  M.custom_theme_default()
-  hi_minicursorword()
-end
-
 function M.custom_theme_gruvbox()
   -- hi('LineNr', { link = 'Comment', bg = 'NONE' })
 end
