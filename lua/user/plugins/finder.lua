@@ -166,6 +166,8 @@ plug({
       border = vim.cfg.ui__float_border,
       win_options = {
         winblend = 0,
+        statuscolumn = '',
+        colorcolumn = '',
       },
     },
   },

@@ -21,7 +21,6 @@ plug({
         fg = is_dark and c.fg_dim or '#9f9f9f',
       }
       hls['LineNr'] = {
-        bg = 'NONE',
         fg = c.fg_dim,
       }
       hls['CursorLineNr'] = {
