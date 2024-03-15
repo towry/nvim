@@ -8,10 +8,17 @@ plug({
   priority = 1000,
   cond = vim.cfg.ui__theme_name == 'zenburn',
   config = function()
+    local colors = require('nord.colors').palette
+
     require('nord').setup({
       borders = true,
       diff = { mode = 'fg' },
       errors = { mode = 'fg' },
+      styles = {
+        comments = {
+          fg = colors.snow_storm.brighter,
+        },
+      },
       on_highlights = function(H, c)
         H['FloatBorder'] = {
           fg = c.polar_night.brighter,
