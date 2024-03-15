@@ -4,7 +4,7 @@ local g = vim.g
 
 function M.startup()
   o.autowrite = true
-  o.startofline = true
+  o.startofline = false -- cursor start of line when scroll
   o.exrc = true
   o.jumpoptions = 'stack,view'
   o.breakindent = true

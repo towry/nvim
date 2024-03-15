@@ -58,7 +58,7 @@ plug({
         fg = 'NONE',
       }
       hls['MiniIndentscopeSymbol'] = {
-        fg = c.comment,
+        fg = c.bg_dim,
         bg = 'NONE',
         bold = false,
       }
