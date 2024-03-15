@@ -215,8 +215,8 @@ function M.setup_statusline()
     silent = false,
     expr = true,
   })
-  vim.g.hide_winbar = true
-  vim.opt.laststatus = 0 --- Have a global statusline at the bottom instead of one for each window
+  vim.g.hide_winbar = false
+  vim.opt.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
   if vim.cfg.runtime__starts_as_gittool then
     vim.opt.laststatus = 2
     vim.opt.statusline = [[%<%n#%f %q%h%m%r[%{v:lua.Ty.stl_git_three_way_name()}]%=%-14.(%l,%c%V%)%p%% %y %w]]

@@ -1,11 +1,12 @@
 local plug = require('userlib.runtime.pack').plug
 
 plug({
-  'gbprod/nord.nvim',
+  -- 'gbprod/nord.nvim',
+  'pze/zenburn.nvim',
   version = false,
   event = 'User LazyTheme',
   priority = 1000,
-  cond = vim.cfg.ui__theme_name == 'nord',
+  cond = vim.cfg.ui__theme_name == 'zenburn',
   config = function()
     require('nord').setup({
       borders = true,

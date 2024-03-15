@@ -54,7 +54,6 @@
   "neotest-jest": { "branch": "main", "commit": "959d45b133de938c79e3f064db188680eaf69055" },
   "neotest-rust": { "branch": "main", "commit": "9e9df68064bd6fa3b5e40b32fcb7c52af130cdbf" },
   "none-ls.nvim": { "branch": "main", "commit": "ff3819c52ca04232fb70fbd6c1639de9abcbe122" },
-  "nord.nvim": { "branch": "main", "commit": "4ae9eb96e9ee65493d4ade102dec7e4b4d4b8b21" },
   "nui.nvim": { "branch": "main", "commit": "3dc46d725f7b94bee5117c0a699b57b1902b5d65" },
   "numb.nvim": { "branch": "master", "commit": "3f7d4a74bd456e747a1278ea1672b26116e0824d" },
   "nvim-bqf": { "branch": "main", "commit": "803ef8954ea42acaa8de604d813549bdbd3000dd" },
@@ -110,5 +109,6 @@
   "vim-startuptime": { "branch": "master", "commit": "308b0088a864c4711a96e45b6734cf9294074f65" },
   "vim-xxdcursor": { "branch": "master", "commit": "81f5bf8e5db1f34004314db956eee72f8177cf08" },
   "windows.nvim": { "branch": "main", "commit": "c7492552b23d0ab30325e90b56066ec51242adc8" },
-  "zen-mode.nvim": { "branch": "main", "commit": "78557d972b4bfbb7488e17b5703d25164ae64e6a" }
+  "zen-mode.nvim": { "branch": "main", "commit": "78557d972b4bfbb7488e17b5703d25164ae64e6a" },
+  "zenburn.nvim": { "branch": "main", "commit": "a8c1d35d899f73082a48ba4f0dbb6c8751e7eccc" }
 }
