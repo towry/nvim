@@ -93,17 +93,15 @@ Ty.stl_num = function()
   if vim.o.number == false then
     return ''
   end
-  local is_current_line = vim.v.lnum == vim.fn.line('.')
-  local hl = is_current_line and '%#CursorLineNr#' or '%#LineNr#'
   --- if option relativenumber is on, return relative number
   if vim.o.relativenumber == true then
     if vim.v.relnum == 0 then
-      return space .. hl .. vim.v.lnum .. space
+      return vim.v.lnum .. space
     else
-      return space .. hl .. vim.v.relnum .. space
+      return vim.v.relnum .. space
     end
   end
-  return space .. '%#LineNr#' .. vim.v.lnum .. space
+  return vim.v.lnum .. space
 end
 
 --- "│"
@@ -113,7 +111,7 @@ Ty.stl_foldlevel = function()
   end
 
   local _ = function(c)
-    return ' ' .. c .. ''
+    return '' .. c .. ''
   end
   local level = vim.fn.foldlevel(vim.v.lnum)
   if level > 0 then

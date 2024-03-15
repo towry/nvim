@@ -128,7 +128,7 @@ function M.init_interface()
   -- o.complete:remove('t')
   o.cursorline = true --- Highlight of current line
   o.emoji = true --- Fix emoji display
-  o.cursorlineopt = 'line'
+  o.cursorlineopt = 'line,number'
   o.foldcolumn = '1' -- Folding
   o.list = true
   o.listchars:append('tab:⇢ ')

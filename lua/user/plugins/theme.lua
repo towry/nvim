@@ -37,11 +37,23 @@ plug({
         fg = c.fg_added,
         bg = 'NONE',
       }
+      hls['GitSignsAddNr'] = {
+        fg = c.fg_added,
+        bg = 'NONE',
+      }
       hls['GitSignsChange'] = {
         fg = c.fg_changed,
         bg = 'NONE',
       }
+      hls['GitSignsChangeNr'] = {
+        fg = c.fg_changed,
+        bg = 'NONE',
+      }
       hls['GitSignsDelete'] = {
+        fg = c.fg_removed,
+        bg = 'NONE',
+      }
+      hls['GitSignsDeleteNr'] = {
         fg = c.fg_removed,
         bg = 'NONE',
       }
