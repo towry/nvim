@@ -197,6 +197,13 @@ end
 
 --- called by statusline component on load.
 function M.setup_statusline()
+  vim.keymap.set('n', '<C-g>', function()
+    vim.opt.laststatus = vim.o.laststatus ~= 0 and 0 or 3
+    return '<C-g>'
+  end, {
+    silent = false,
+    expr = true,
+  })
   vim.opt.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
   if vim.cfg.runtime__starts_as_gittool then
     vim.opt.laststatus = 2
