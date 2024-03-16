@@ -67,6 +67,10 @@ plug({
         fg = c.fg_removed,
         bg = 'NONE',
       }
+      hls['StatusLine'] = {
+        bg = c.bg_active,
+        fg = c.bg_alt,
+      }
       hls['MiniCursorword'] = {
         italic = true,
         bold = true,
