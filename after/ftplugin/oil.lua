@@ -1,6 +1,8 @@
 vim.b.minianimate_disable = true
 vim.b.treesitter_disable = true
 vim.opt_local.indentexpr = ''
+vim.opt_local.statuscolumn = ''
+vim.opt_local.colorcolumn = ''
 
 local bufnr = vim.api.nvim_get_current_buf()
 local set = require('userlib.runtime.keymap').map_buf_thunk(bufnr)
