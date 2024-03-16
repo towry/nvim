@@ -257,7 +257,7 @@ plug({
   {
     'nvim-treesitter/nvim-treesitter-context',
     event = 'BufReadPost',
-    enabled = false,
+    enabled = true,
     opts = {
       max_lines = 3,
       mode = 'cursor',
@@ -272,7 +272,7 @@ plug({
     },
     config = function(_, opts)
       require('treesitter-context').setup(opts)
-      vim.cmd([[hi TreesitterContextBottom gui=underline guisp=Grey]])
+      -- vim.cmd([[hi TreesitterContextBottom gui=underline guisp=Grey]])
     end,
   },
 })

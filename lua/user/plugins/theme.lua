@@ -27,7 +27,12 @@ plug({
 
       --- You can override specific highlights to use other groups or a hex color
       --- function will be called with all highlights and the colorScheme table
-      on_highlights = function(highlights, colors) end,
+      on_highlights = function(HL, colors)
+        HL['TreesitterContextBottom'] = {
+          underline = true,
+          sp = colors.polar_night.brightest,
+        }
+      end,
     })
   end,
 })
