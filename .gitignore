@@ -6,4 +6,5 @@ lua/user/plugins_bundle.lua
 *.log
 ~
 doc/*
-!doc/.gitkeep
+!doc/*.txt
+!doc/*.md
