@@ -40,7 +40,7 @@ plug({
   {
     'j-hui/fidget.nvim',
     event = { 'User LazyUIEnter', 'LspAttach' },
-    enabled = false,
+    enabled = true,
     opts = {
       progress = {
         ignore = {
@@ -72,7 +72,7 @@ plug({
   {
     'echasnovski/mini.notify',
     event = { 'User LazyUIEnter', 'LspAttach' },
-    enabled = true,
+    enabled = false,
     config = function()
       local win_config = function()
         local has_statusline = vim.o.laststatus > 0
