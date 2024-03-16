@@ -8,13 +8,12 @@ jobs:
     name: pandoc to vimdoc
     steps:
       - uses: actions/checkout@v2
-      - name: panvimdoc
-        uses: ./
+      - uses: kdheepak/panvimdoc@main
         with:
           vimdoc: user-notes
           pandoc: doc/user-notes.md
           treesitter: true
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "Auto generate docs: user-notes"
+          commit_message: "ci(🤖): Auto generate docs"
           branch: ${{ github.head_ref }}
