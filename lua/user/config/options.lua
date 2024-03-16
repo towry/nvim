@@ -127,7 +127,7 @@ function M.init_interface()
   -- scan buffer name
   o.complete:append('f')
   -- o.complete:remove('t')
-  o.cursorline = false --- Highlight of current line
+  o.cursorline = true --- Highlight of current line
   o.emoji = true --- Fix emoji display
   o.cursorlineopt = 'line,number'
   o.foldcolumn = '1' -- Folding
