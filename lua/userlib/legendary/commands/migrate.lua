@@ -13,6 +13,10 @@ return {
     description = 'View user-notes',
   },
   {
+    ':helptags doc',
+    description = 'Make doc helptags',
+  },
+  {
     ':Copilot disable',
     description = 'Disable github copilot',
   },
