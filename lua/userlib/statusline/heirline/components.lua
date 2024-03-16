@@ -234,7 +234,7 @@ local BufferCwd = {
 
 local FileFlags = {
   {
-    provider = '%r%w%m',
+    provider = '%R%W%M%Y',
   },
 }
 
@@ -282,8 +282,8 @@ local GitStatus = {
 }
 
 local FullFileName = {
+  rpad(FileFlags),
   FileName,
-  FileFlags,
 }
 
 local function OverseerTasksForStatus(status)

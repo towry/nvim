@@ -42,8 +42,8 @@ plug({
         comp.lpad(comp.BufVisited),
         require('userlib.statusline.heirline').left_components,
         { provider = '%=' },
+        comp.rpad(require('userlib.statusline.heirline.component_diagnostic')),
         comp.FullFileName,
-        require('userlib.statusline.heirline.component_diagnostic'),
         { provider = '%=' },
         require('userlib.statusline.heirline').right_components,
         comp.rpad({
