@@ -267,6 +267,20 @@ function M.load_on_startup()
       },
     },
     {
+      { 'BufWinEnter', 'WinEnter' },
+      {
+        group = 'set_cursorline',
+        command = 'setlocal cursorline',
+      },
+    },
+    {
+      { 'BufWinLeave', 'WinLeave' },
+      {
+        group = 'set_cursorline',
+        command = 'setlocal nocursorline',
+      },
+    },
+    {
       { 'BufWinEnter' },
       {
         group = 'clear_search_hl_on_buf_enter',

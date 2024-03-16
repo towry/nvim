@@ -3,6 +3,7 @@ local o = vim.opt
 local g = vim.g
 
 function M.startup()
+  o.winbar = ''
   o.autowrite = true
   o.startofline = false -- cursor start of line when scroll
   o.exrc = true
@@ -126,7 +127,7 @@ function M.init_interface()
   -- scan buffer name
   o.complete:append('f')
   -- o.complete:remove('t')
-  o.cursorline = true --- Highlight of current line
+  o.cursorline = false --- Highlight of current line
   o.emoji = true --- Fix emoji display
   o.cursorlineopt = 'line,number'
   o.foldcolumn = '1' -- Folding
