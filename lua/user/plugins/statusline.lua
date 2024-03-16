@@ -41,13 +41,17 @@ plug({
         comp.lpad(comp.Overseer),
         comp.lpad(comp.BufVisited),
         require('userlib.statusline.heirline').left_components,
-        { provider = '%=' },
+        { provider = '%=%(' },
         comp.rpad(require('userlib.statusline.heirline.component_diagnostic')),
+
+        { provider = '%(' },
         comp.FullFileName,
-        { provider = '%=' },
+        { provider = '%)' },
+        { provider = '%)%=' },
         require('userlib.statusline.heirline').right_components,
+        { provider = '%<%(' },
         comp.rpad({
-          provider = '%-10.(%c,%l(%p%%)/%LL%)%<',
+          provider = '%c,%l(%p%%)/%LL',
         }),
         comp.rpad(comp.LastExCommand),
         comp.rpad(comp.NavigateDirection),
@@ -55,7 +59,8 @@ plug({
         comp.rpad(comp.LspFormatter),
         comp.rpad(comp.HelpFileName),
         comp.rpad(comp.DiagnosticsDisabled),
-        comp.rpad(comp.WorkspaceRoot)
+        comp.rpad(comp.WorkspaceRoot),
+        { provider = '%)' }
       ),
 
       opts = {
