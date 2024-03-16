@@ -267,6 +267,17 @@ function M.load_on_startup()
       },
     },
     {
+      { 'BufWinEnter' },
+      {
+        group = 'clear_search_hl_on_buf_enter',
+        callback = function()
+          vim.schedule(function()
+            vim.cmd('nohl')
+          end)
+        end,
+      },
+    },
+    {
       'UIEnter',
       {
         once = true,

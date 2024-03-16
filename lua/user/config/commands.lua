@@ -276,3 +276,9 @@ end, {
   nargs = 0,
   bar = true,
 })
+
+create_cmd('Diffbufnr', function(params)
+  vim.cmd(([[tab exec "diffsplit" bufname(%s)]]):format(params.args))
+end, {
+  nargs = 1,
+})
