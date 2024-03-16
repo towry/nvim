@@ -96,6 +96,16 @@ plug({
     cmd = { 'RustLsp' },
     dependencies = {
       'neovim/nvim-lspconfig',
+      {
+        'nvim-neotest/neotest',
+        optional = true,
+        opts = function(_, opts)
+          opts.adapters = opts.adapters or {}
+          vim.list_extend(opts.adapters, {
+            require('rustaceanvim.neotest'),
+          })
+        end,
+      },
     },
     -- https://github.com/mrcjkb/rustaceanvim
     init = function()
@@ -110,10 +120,14 @@ plug({
           default_settings = {
             ['rust-analyzer'] = {
               cargo = {
-                autoreload = true,
+                allFeatures = true,
+                loadOutDirsFromCheck = true,
+                runBuildScripts = true,
               },
               checkOnSave = {
+                allFeatures = true,
                 command = 'clippy',
+                extraArgs = { '--no-deps' },
               },
               inlayHints = {
                 bindingModeHints = { enable = true },
@@ -124,7 +138,14 @@ plug({
               diagnostics = {
                 disabled = { 'inactive-code', 'unresolved-proc-macro' },
               },
-              procMacro = { enable = true },
+              procMacro = {
+                enable = true,
+                ignored = {
+                  ['async-trait'] = { 'async_trait' },
+                  ['napi-derive'] = { 'napi' },
+                  ['async-recursion'] = { 'async_recursion' },
+                },
+              },
               files = {
                 excludeDirs = {
                   '.direnv',

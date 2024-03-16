@@ -212,7 +212,7 @@ pack.plug({
     'haydenmeade/neotest-jest',
     -- lang:rust
     -- https://nexte.st/
-    'rouge8/neotest-rust',
+    -- 'rouge8/neotest-rust',
   },
   init = au.schedule_lazy(function()
     au.on_filetype('neotest-output', 'setlocal wrap')
@@ -253,18 +253,12 @@ pack.plug({
       })
     end)
   end),
-  config = function()
-    local present, neotest = pcall(require, 'neotest')
-    if not present then
-      return
-    end
-
-    neotest.setup({
+  opts = function()
+    return {
       adapters = {
-        --- require('rustaceanvim.neotest')
-        require('neotest-rust')({
-          args = { '--no-capture' },
-        }),
+        -- require('neotest-rust')({
+        --   args = { '--no-capture' },
+        -- }),
         require('neotest-jest')({
           jestCommand = 'pnpm test --',
           env = { CI = true },
@@ -273,6 +267,7 @@ pack.plug({
           end,
         }),
       },
+
       diagnostic = {
         enabled = true,
       },
@@ -345,7 +340,41 @@ pack.plug({
           stop = 'u',
         },
       },
-    })
+    }
+  end,
+  config = function(_, opts)
+    local present, neotest = pcall(require, 'neotest')
+    if not present then
+      return
+    end
+
+    if opts.adapters then
+      local adapters = {}
+      for name, config in pairs(opts.adapters or {}) do
+        if type(name) == 'number' then
+          if type(config) == 'string' then
+            config = require(config)
+          end
+          adapters[#adapters + 1] = config
+        elseif config ~= false then
+          local adapter = require(name)
+          if type(config) == 'table' and not vim.tbl_isempty(config) then
+            local meta = getmetatable(adapter)
+            if adapter.setup then
+              adapter.setup(config)
+            elseif meta and meta.__call then
+              adapter(config)
+            else
+              error('Adapter ' .. name .. ' does not support setup')
+            end
+          end
+          adapters[#adapters + 1] = adapter
+        end
+      end
+      opts.adapters = adapters
+    end
+
+    neotest.setup(opts)
   end,
 })
 
