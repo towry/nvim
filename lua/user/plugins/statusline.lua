@@ -23,9 +23,7 @@ plug({
       end,
     })
     require('heirline').setup({
-      winbar = {
-        comp.DirAndFileName,
-      },
+      winbar = {},
       -- https://github.com/rebelot/heirline.nvim/blob/master/cookbook.md#tabline
       -- tabline = comp.TabLine,
       statusline = heirline_utils.insert(
@@ -41,8 +39,11 @@ plug({
         comp.lpad(comp.Copilot),
         comp.lpad(comp.Codeium),
         comp.lpad(comp.Overseer),
+        comp.lpad(comp.BufVisited),
         require('userlib.statusline.heirline').left_components,
         { provider = '%=' },
+        comp.FullFileName,
+        require('userlib.statusline.heirline.component_diagnostic'),
         { provider = '%=' },
         require('userlib.statusline.heirline').right_components,
         comp.rpad({
@@ -59,25 +60,7 @@ plug({
 
       opts = {
         disable_winbar_cb = function(args)
-          if vim.g.hide_winbar then
-            return true
-          end
-          local buf = args.buf
-          local buftype = vim.bo[buf].buftype
-          local ignore_buftype = vim.tbl_contains({
-            -- 'nowrite',
-            -- 'nofile',
-            'quickfix',
-            'tutor',
-            'netrw',
-          }, buftype)
-          local filetype = vim.bo[buf].filetype
-          local ignore_filetype = vim.tbl_contains({
-            'qf',
-            'fzf-lua',
-          }, filetype) or filetype:match('^git')
-          local is_float = vim.api.nvim_win_get_config(0).relative ~= ''
-          return ignore_buftype or ignore_filetype or is_float
+          return true
         end,
       },
     })
@@ -85,12 +68,12 @@ plug({
     vim.o.showtabline = 0
     vim.api.nvim_create_user_command('HeirlineResetStatusline', function()
       vim.o.statusline = "%{%v:lua.require'heirline'.eval_statusline()%}"
-      vim.o.winbar = "%{%v:lua.require'heirline'.eval_winbar()%}"
+      -- vim.o.winbar = "%{%v:lua.require'heirline'.eval_winbar()%}"
     end, {})
-    if not vim.g.hide_winbar then
-      -- Because heirline is lazy loaded, we need to manually set the winbar on startup
-      vim.opt_local.winbar = "%{%v:lua.require'heirline'.eval_winbar()%}"
-    end
+    -- if not vim.g.hide_winbar then
+    -- Because heirline is lazy loaded, we need to manually set the winbar on startup
+    -- vim.opt_local.winbar = "%{%v:lua.require'heirline'.eval_winbar()%}"
+    -- end
     if vim.o.laststatus == 0 then
       vim.opt.statusline = "%#VertSplit#%{repeat('-',winwidth('.'))}"
     end

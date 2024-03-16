@@ -190,7 +190,7 @@ local ShortFileName = {
 }
 local FilePath = {
   provider = function(self)
-    return '%-10.(' .. '%F' .. '%)%<'
+    return '%-10.(' .. '%f' .. '%)%<'
   end,
 }
 
@@ -282,124 +282,8 @@ local GitStatus = {
 }
 
 local FullFileName = {
-  hl = function()
-    local fg
-    if vim.bo.modified then
-      fg = 'yellow'
-    else
-      fg = conditions.is_active() and 'winbar_fg' or 'winbar_nc_fg'
-    end
-    return {
-      fg = fg,
-      bg = conditions.is_active() and 'winbar_bg' or 'winbar_nc_bg',
-    }
-  end,
   FileName,
   FileFlags,
-  { provider = '%=' },
-}
-
-local DirAndFileName = {
-  init = function(self)
-    local bufnr = vim.api.nvim_get_current_buf()
-    self.bufname = vim.b[bufnr].bufname or vim.api.nvim_buf_get_name(bufnr)
-    self.bufnr = bufnr
-    self.is_active = conditions.is_active()
-  end,
-  hl = function(self)
-    local fg
-    fg = self.is_active and 'winbar_fg' or 'winbar_nc_fg'
-    return {
-      fg = fg,
-      bg = self.is_active and 'winbar_bg' or 'winbar_nc_bg',
-    }
-  end,
-  {
-    init = function(self)
-      self.total_tabs = #vim.api.nvim_list_tabpages()
-      self.tabnrstr = self.total_tabs >= 2 and '%{tabpagenr()}' or ''
-
-      local fg = self.is_active and 'winbar_fg' or 'winbar_nc_fg'
-      self.hl_static = {
-        fg = fg,
-        bg = 'NONE',
-        undercurl = self.is_active,
-        sep_bg = self.is_active and 'winbar_bg' or 'winbar_nc_bg',
-        bold = self.is_active,
-      }
-    end,
-    hl = function(self)
-      return {
-        fg = self.hl_static.fg,
-        bg = 'NONE',
-      }
-    end,
-    {
-      --- filename
-      {
-        provider = function()
-          local bufname = vim.fn.expand('%:t')
-          if bufname == '' then
-            bufname = '[' .. (vim.bo.filetype == '' and 'No Name' or vim.bo.filetype) .. ']'
-          end
-          return '' .. bufname .. ' '
-        end,
-        hl = function(self)
-          return {
-            fg = self.is_active and 'yellow' or 'fg',
-          }
-        end,
-      },
-      vim.tbl_extend('force', FileIcon, {
-        hl = {
-          fg = 'yellow',
-        },
-      }),
-      FileFlags,
-
-      ---- win info.
-      { provider = ' ' },
-      {
-        {
-          provider = 'T',
-        },
-        {
-          provider = function(self)
-            return self.tabnrstr
-          end,
-          hl = function(self)
-            return { fg = self.is_active and 'red' or 'yellow', bold = true }
-          end,
-        },
-        condition = function(self)
-          return self.total_tabs >= 2
-        end,
-      },
-      {
-        provider = 'B',
-      },
-      {
-        provider = '%1.3n',
-        hl = { fg = 'yellow' },
-      },
-      {
-        provider = 'W',
-      },
-      {
-        provider = '%{tabpagewinnr(tabpagenr())}',
-        hl = { fg = 'yellow' },
-      },
-    },
-    -- FileFlags,
-    require('userlib.statusline.heirline.component_diagnostic'),
-    {
-      provider = ' ',
-    },
-    BufVisited,
-  },
-  { provider = '%=' },
-  { provider = '%-5.( %)' },
-  FilePath,
 }
 
 local function OverseerTasksForStatus(status)
@@ -1038,6 +922,7 @@ return {
   FileIcon = FileIcon,
   FileType = FileType,
   FullFileName = FullFileName,
+  FileFlags = FileFlags,
   Overseer = Overseer,
   setup_colors = setup_colors,
   -- SessionName = SessionName,
@@ -1049,7 +934,6 @@ return {
   Branch = Branch,
   GitStatus = GitStatus,
   Harpoon = Harpoon,
-  DirAndFileName = DirAndFileName,
   DiagnosticsDisabled = DiagnosticsDisabled,
   WorkspaceRoot = WorkspaceRoot,
   LspFormatter = LspFormatter,
