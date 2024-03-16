@@ -94,7 +94,7 @@ function M.format(bufnr, opts)
 
   vim.b.format_changedtick = vim.b.changedtick ---@diagnostic disable-line
 
-  local name, impl_formatter_name = M.current_formatter_name(bufnr or 0)
+  local name, _ = M.current_formatter_name(bufnr or 0)
   local fmt_opts = {
     bufnr = bufnr,
     async = opts.async or false,
@@ -104,17 +104,17 @@ function M.format(bufnr, opts)
   end
 
   vim.lsp.buf.format(fmt_opts)
-  if not opts.auto then
-    vim.notify('format with ' .. (impl_formatter_name or name or 'default'), vim.log.levels.INFO, { key = 'format' })
-  else
-    vim.defer_fn(function()
-      vim.notify(
-        'written! also format with ' .. (impl_formatter_name or name or 'default'),
-        vim.log.levels.INFO,
-        { key = 'format' }
-      )
-    end, 1)
-  end
+  -- if not opts.auto then
+  --   vim.notify('format with ' .. (impl_formatter_name or name or 'default'), vim.log.levels.INFO, { key = 'format' })
+  -- else
+  --   vim.defer_fn(function()
+  --     vim.notify(
+  --       'written! also format with ' .. (impl_formatter_name or name or 'default'),
+  --       vim.log.levels.INFO,
+  --       { key = 'format' }
+  --     )
+  --   end, 1)
+  -- end
 end
 
 ---@return string|nil, string|nil
