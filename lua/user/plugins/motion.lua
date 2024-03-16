@@ -85,17 +85,17 @@ plug({
     vscode = true,
     keys = {
       {
-        '<leader>mjt',
+        'JJ',
         '<cmd>lua require("treesj").toggle()<cr>',
         desc = 'Toggle',
       },
       {
-        '<leader>mjs',
+        'Js',
         '<cmd>lua require("treesj").split()<cr>',
         desc = 'Split',
       },
       {
-        '<leader>mjj',
+        'Jj',
         '<cmd>lua require("treesj").join()<cr>',
         desc = 'Join',
       },
