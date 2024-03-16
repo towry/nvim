@@ -256,11 +256,7 @@ function M.load_on_startup()
           local counts = vim.diagnostic.count(bufnr)
           if counts and (counts[vim.diagnostic.severity.ERROR] or 0) > 0 then
             vim.schedule(function()
-              vim.api.nvim_echo(
-                { { 'Err:', 'Error' }, { string.format(' buffer[%s] saved with error', bufnr), 'Comment' } },
-                true,
-                {}
-              )
+              vim.api.nvim_echo({ { string.format('buffer[%s] saved with error', bufnr), 'Comment' } }, true, {})
             end)
           end
         end,
