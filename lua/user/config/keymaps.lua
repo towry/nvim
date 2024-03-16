@@ -6,6 +6,28 @@ local is_profiling = false
 
 local function setup_basic()
   --->>
+  set('n', '<C-g>', function()
+    local e = vim.fn.expand
+    local modified = vim.bo.readonly and ',[RO]' or (vim.bo.modified and ',[+]' or '')
+
+    local lastcmd = (function()
+      local res = vim.fn.getreg(':')
+      if not res or res == '' then
+        return ''
+      end
+      return ' CMD: [' .. res .. '] '
+    end)()
+
+    print(
+      ([["%s:%s%s" "%s"%s]]):format(
+        vim.fn.bufnr('%'),
+        e('%'),
+        modified,
+        vim.fn.fnamemodify(vim.cfg.runtime__starts_cwd, ':~.'),
+        lastcmd
+      )
+    )
+  end, { silent = false })
   set('n', ']b', ':bnext<cr>', { desc = 'Next buffer', silent = false, nowait = true })
   set('n', '[b', ':bpre<cr>', { desc = 'Prev buffer', silent = false, nowait = true })
   set('n', '<leader>rn', function()

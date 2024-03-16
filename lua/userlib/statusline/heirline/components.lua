@@ -209,13 +209,10 @@ local BufVisited = {
   provider = function(self)
     local is = self.is
     if is then
-      return ' '
+      return ' '
     end
     return ''
   end,
-  hl = {
-    fg = 'yellow',
-  },
 }
 
 local BufferCwd = {
@@ -256,29 +253,7 @@ local GitStatus = {
       or self.status_dict.removed ~= 0
       or self.status_dict.changed ~= 0
   end,
-
-  hl = { fg = utils.get_highlight('Constant').fg },
-  {
-    provider = function(self)
-      local count = self.status_dict.added or 0
-      return count > 0 and ('+' .. count) or ''
-    end,
-    hl = { fg = utils.get_highlight('DiffAdd').fg },
-  },
-  {
-    provider = function(self)
-      local count = self.status_dict.changed or 0
-      return count > 0 and ('~' .. count) or ''
-    end,
-    hl = { fg = utils.get_highlight('DiffChange').fg },
-  },
-  {
-    provider = function(self)
-      local count = self.status_dict.removed or 0
-      return count > 0 and ('-' .. count) or ''
-    end,
-    hl = { fg = utils.get_highlight('DiffDelete').fg },
-  },
+  provider = '+-~',
 }
 
 local FullFileName = {

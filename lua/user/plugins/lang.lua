@@ -259,9 +259,9 @@ plug({
     event = 'BufReadPost',
     enabled = true,
     opts = {
-      max_lines = 3,
+      max_lines = 2,
       mode = 'cursor',
-      min_window_height = 5,
+      min_window_height = 4,
     },
     keys = {
       {

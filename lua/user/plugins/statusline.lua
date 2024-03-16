@@ -53,13 +53,9 @@ plug({
         comp.rpad({
           provider = '%c,%l(%p%%)/%LL',
         }),
-        comp.rpad(comp.LastExCommand),
-        comp.rpad(comp.NavigateDirection),
         comp.rpad(comp.Dap),
         comp.rpad(comp.LspFormatter),
-        comp.rpad(comp.HelpFileName),
         comp.rpad(comp.DiagnosticsDisabled),
-        comp.rpad(comp.WorkspaceRoot),
         { provider = '%)' }
       ),
 

@@ -344,7 +344,7 @@ plug({
       del(mods, 'e')
     end
 
-    local spider_on = true
+    local spider_on = false
     if spider_on then
       setup_keys()
     end
