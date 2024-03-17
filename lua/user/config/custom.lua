@@ -1,4 +1,4 @@
-local theme = 'nord'
+local theme = 'dracula'
 local user_cfg = {
   ui__theme_name = vim.g.vscode and 'default' or theme,
   plug__enable_codeium_nvim = false,

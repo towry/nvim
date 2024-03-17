@@ -1,6 +1,14 @@
 local plug = require('userlib.runtime.pack').plug
 
 plug({
+  'binhtran432k/dracula.nvim',
+  event = 'User LazyTheme',
+  config = function()
+    require('dracula').setup({})
+  end,
+})
+
+plug({
   'pze/nord.nvim',
   event = 'User LazyTheme',
   dev = false,
