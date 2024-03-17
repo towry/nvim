@@ -13,7 +13,7 @@ function M.jump_to_line(opts)
     or nil
 
   require('flash').jump({
-    search = { mode = 'search', max_length = 0 },
+    search = { mode = 'search', max_length = 0, multi_window = false },
     label = { after = { 0, 0 } },
     pattern = '\\(^\\s*\\)\\@<=\\S',
     action = action,
