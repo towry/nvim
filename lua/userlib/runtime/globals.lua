@@ -90,7 +90,7 @@ end
 Ty.stl_num = function()
   local space = ' '
   --- if option number is off, return empty string
-  if vim.o.number == false then
+  if vim.o.number == false or vim.v.virtnum ~= 0 then
     return ''
   end
   --- if option relativenumber is on, return relative number

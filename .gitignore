@@ -8,3 +8,4 @@ lua/user/plugins_bundle.lua
 doc/*
 !doc/*.txt
 !doc/*.md
+.netrwhist
