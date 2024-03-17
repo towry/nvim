@@ -86,9 +86,41 @@ Ty.stl_git_three_way_name = function()
   end
 end
 
+---@param sign? Sign
+---@param len? number
+local function get_icon(sign, len)
+  sign = sign or {}
+  len = len or 2
+  local text = vim.fn.strcharpart(sign.text or '', 0, len) ---@type string
+  text = text .. string.rep(' ', len - vim.fn.strchars(text))
+  return sign.texthl and ('%#' .. sign.texthl .. '#' .. text .. '%*') or text
+end
+
+---@return Sign?
+---@param buf number
+---@param lnum number
+local function get_mark(buf, lnum)
+  if not buf or not vim.api.nvim_buf_is_valid(buf) then
+    return
+  end
+  local marks = vim.fn.getmarklist(buf)
+  vim.list_extend(marks, vim.fn.getmarklist())
+  for _, mark in ipairs(marks) do
+    if mark.pos[1] == buf and mark.pos[2] == lnum and mark.mark:match('[a-zA-Z]') then
+      return { text = mark.mark:sub(2), texthl = 'DiagnosticHint' }
+    end
+  end
+end
+
 --- return string for statuscolumn's number
 --- https://github.com/LazyVim/LazyVim/blob/864c58cae6df28c602ecb4c94bc12a46206760aa/lua/lazyvim/util/ui.lua#L112
 Ty.stl_num = function()
+  local mark = get_mark(tonumber(vim.g.actual_curbuf, 10), vim.v.lnum)
+  local mark_icon = mark and get_icon(mark) or nil
+  -- local mark_icon = false
+  if mark_icon then
+    return mark_icon
+  end
   local space = ' '
   --- if option number is off, return empty string
   if vim.o.number == false or vim.v.virtnum ~= 0 then
