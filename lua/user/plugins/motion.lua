@@ -153,7 +153,7 @@ plug({
       },
       {
         '<C-s><C-s>',
-        mode = { 'n' },
+        mode = { 'n', 'x' },
         nowait = true,
         function()
           require('userlib.workflow.flashs').jump_to_line()
