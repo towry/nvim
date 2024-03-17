@@ -87,6 +87,7 @@ Ty.stl_git_three_way_name = function()
 end
 
 --- return string for statuscolumn's number
+--- https://github.com/LazyVim/LazyVim/blob/864c58cae6df28c602ecb4c94bc12a46206760aa/lua/lazyvim/util/ui.lua#L112
 Ty.stl_num = function()
   local space = ' '
   --- if option number is off, return empty string
