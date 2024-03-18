@@ -124,7 +124,9 @@ plug({
   cmd = 'Oil',
   opts = {
     default_file_explorer = true,
-    columns = {},
+    columns = {
+      'icon',
+    },
     keymaps = {
       ['g?'] = 'actions.show_help',
       ['<CR>'] = 'actions.select',
@@ -198,7 +200,7 @@ plug({
       border = vim.cfg.ui__float_border,
       win_options = {
         winblend = 0,
-        statuscolumn = '',
+        -- statuscolumn = '',
         colorcolumn = '',
       },
     },
