@@ -231,7 +231,7 @@ local BufferCwd = {
 
 local FileFlags = {
   {
-    provider = '%R%W%M%Y',
+    provider = '%r%w%m%y',
   },
 }
 
