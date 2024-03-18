@@ -173,14 +173,12 @@ local FileName = {
   end,
 }
 local ShortFileName = {
-  hl = function()
-    return {
-      bold = conditions.is_active(),
-      italic = conditions.is_active(),
-    }
-  end,
   provider = function(self)
-    local filename = vim.fn.fnamemodify(self.bufname or vim.api.nvim_buf_get_name(0), self.is_special and '' or ':t')
+    local bufname = self.bufname or vim.fn.expand('%')
+    local filename = vim.bo.buftype == '' and vim.fn.fnamemodify(bufname, ':t') or bufname
+    if filename == '' and bufname ~= '' then
+      filename = bufname
+    end
     if filename == '' then
       return '[No Name]'
     end
@@ -231,7 +229,7 @@ local BufferCwd = {
 
 local FileFlags = {
   {
-    provider = '%r%w%m%y',
+    provider = '%r%w%m%y%q',
   },
 }
 
@@ -258,7 +256,17 @@ local GitStatus = {
 
 local FullFileName = {
   rpad(FileFlags),
-  FileName,
+  { provider = '%n~' },
+  {
+    provider = function()
+      local cwd = vim.fn.fnamemodify(vim.g.project_nvim_cwd or vim.uv.cwd(), ':t')
+      if cwd ~= nil and cwd ~= '' then
+        return cwd .. '//'
+      end
+      return ''
+    end,
+  },
+  ShortFileName,
 }
 
 local function OverseerTasksForStatus(status)
