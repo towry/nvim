@@ -4,7 +4,20 @@ plug({
   'binhtran432k/dracula.nvim',
   event = 'User LazyTheme',
   config = function()
-    require('dracula').setup({})
+    require('dracula').setup({
+      style = 'default',
+      light_style = 'soft',
+      dim_inactive = false,
+      on_highlights = function(hl, c)
+        hl.WinSeparator = {
+          fg = c.selection,
+          bold = true,
+        }
+        hl.MiniIndentscopeSymbol = {
+          fg = c.selection,
+        }
+      end,
+    })
   end,
 })
 
