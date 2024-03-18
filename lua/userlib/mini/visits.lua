@@ -69,4 +69,19 @@ function M.list_projects_in_cwd(cwd)
   })
 end
 
+function M.list_oil_folders_in_cwd(cwd)
+  local extra = require('mini.extra')
+  local path = require('userlib.runtime.path')
+  extra.pickers.visit_paths({ cwd = cwd, filter = 'oil-folder-visited', recency_weight = 0 }, {
+    source = {
+      choose = function(item)
+        local full_path = path.path_join(cwd, item)
+        vim.schedule(function()
+          require('userlib.mini.clue.folder-action').open(full_path)
+        end)
+      end,
+    },
+  })
+end
+
 return M

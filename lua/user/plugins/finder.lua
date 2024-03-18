@@ -134,6 +134,22 @@ plug({
       ['<C-p>'] = 'actions.preview',
       ['<C-c>'] = 'actions.close',
       ['<C-r>'] = 'actions.refresh',
+      ['mv'] = function()
+        require('userlib.mini.visits').list_oil_folders_in_cwd(vim.cfg.runtime__starts_cwd)
+      end,
+      ['md'] = function()
+        -- remove all oil visited paths
+        local visits = require('mini.visits')
+        visits.remove_label('oil-folder-visited', nil, vim.cfg.runtime__starts_cwd)
+        visits.write_index()
+      end,
+      ['mm'] = function()
+        local oil = require('oil')
+        local lcwd = oil.get_current_dir()
+        local visits = require('mini.visits')
+        visits.add_label('oil-folder-visited', lcwd, vim.cfg.runtime__starts_cwd)
+        visits.write_index()
+      end,
       ['M'] = function()
         local oil = require('oil')
         -- type: file|directory
