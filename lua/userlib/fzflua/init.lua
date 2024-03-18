@@ -3,8 +3,8 @@ local utils = require('userlib.fzflua.utils')
 local M = {}
 
 --- @param opts table
-local function callgrep(opts, callfn)
-  opts = opts or {}
+local function callgrep(_opts, callfn)
+  local opts = vim.tbl_deep_extend('force', {}, _opts)
 
   opts.cwd_header = true
 
@@ -18,7 +18,8 @@ local function callgrep(opts, callfn)
     height = 0.90,
     width = 1,
   }
-  opts.rg_opts = [[--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e]]
+  opts.rg_opts = opts.rg_opts
+    or [[--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e]]
 
   opts.actions = {
     -- press ctrl-e in fzf picker to switch to rgflow.
@@ -67,13 +68,17 @@ function M.grep(opts, is_live)
   else
     opts.input_prompt = '󱙓  Grep❯ '
   end
-  return callgrep(opts, function(opts_local)
-    if is_live then
-      return fzflua.live_grep(opts_local)
-    else
-      return fzflua.grep(opts_local)
-    end
-  end)
+  return callgrep(
+    opts,
+    -- schedule: fix fzf picker show and dismiss issue.
+    vim.schedule_wrap(function(opts_local)
+      if is_live then
+        return fzflua.live_grep(opts_local)
+      else
+        return fzflua.grep(opts_local)
+      end
+    end)
+  )
 end
 
 function M.grep_visual(opts)
