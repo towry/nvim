@@ -24,6 +24,7 @@ plug({
 plug({
   'pze/nord.nvim',
   event = 'User LazyTheme',
+  enabled = false,
   dev = false,
   config = function()
     require('nord').setup({
@@ -63,7 +64,7 @@ plug({
   'miikanissi/modus-themes.nvim',
   event = 'User LazyTheme',
   priority = 1000,
-  -- cond = vim.cfg.ui__theme_name == 'modus',
+  cond = vim.cfg.ui__theme_name == 'modus',
   opts = {
     -- `deuteranopia`,
     -- variant = 'tritanopia',
@@ -156,7 +157,7 @@ plug({
   'rebelot/kanagawa.nvim',
   event = 'User LazyTheme',
   priority = 1000,
-  enabled = string.match(vim.cfg.ui__theme_name, 'kanagawa') ~= nil,
+  cond = string.match(vim.cfg.ui__theme_name, 'kanagawa') ~= nil,
   opts = {
     undercurl = true, -- enable undercurls
     commentStyle = { italic = true },
