@@ -62,3 +62,21 @@ line 1234 = 5
    text block. press `$` to select to the end, now you have lines that is visual
    selected.
 5. press `9<` to left shift in motion, done.
+
+## Rgflow usage
+
+### glob
+
+正确的用法是不要加引号：
+
+```
+--glob=*.{vue,ts} -M 500
+# or
+-g*.{vue,ts} -M 500
+```
+
+错误的用法:
+
+```
+--glob="*.{vue,ts}" -M 500
+```

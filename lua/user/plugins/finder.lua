@@ -12,7 +12,6 @@ plug({
   dependencies = {
     'pze/nvim-bqf',
   },
-  cmd = { 'OpenRgflow' },
   opts = {
     default_trigger_mappings = false,
     default_ui_mappings = true,
@@ -26,11 +25,15 @@ plug({
       RgFlowInputPattern = { link = 'NormalFloat' },
     },
   },
-  init = au.schedule_lazy(function()
-    vim.api.nvim_create_user_command('OpenRgflow', function()
-      require('rgflow').open(nil, vim.b.grep_flags or nil, vim.uv.cwd(), {})
-    end, { nargs = 0, desc = 'Open RgFlow UI' })
-  end),
+  init = function()
+    vim.api.nvim_create_user_command(
+      'Rgflow',
+      vim.schedule_wrap(function()
+        require('rgflow').open(nil, vim.b.grep_flags or nil, vim.uv.cwd(), {})
+      end),
+      { nargs = 0, desc = 'Open RgFlow UI' }
+    )
+  end,
   keys = {
     {
       '<localleader>fg',
@@ -87,6 +90,13 @@ plug({
       end,
       desc = 'Open rg flow with visual selection',
       mode = { 'v', 'x' },
+    },
+    {
+      '<leader>sgg',
+      function()
+        require('rgflow').open(nil, vim.b.grep_flags or nil, vim.uv.cwd(), {})
+      end,
+      desc = 'Open Rgflow',
     },
     {
       '<localleader>fx',
