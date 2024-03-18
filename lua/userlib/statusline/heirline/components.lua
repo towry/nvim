@@ -16,6 +16,15 @@ local function rpad(child)
     Spacer,
   }
 end
+local function surround(child, left, right)
+  child = child or {}
+  return {
+    condition = child.condition,
+    { provider = left },
+    child,
+    { provider = right },
+  }
+end
 local function lpad(child)
   child = child or {}
   return {
@@ -207,7 +216,7 @@ local BufVisited = {
   provider = function(self)
     local is = self.is
     if is then
-      return ' '
+      return ''
     end
     return ''
   end,
@@ -228,6 +237,7 @@ local BufferCwd = {
 }
 
 local FileFlags = {
+  surround(BufVisited, '[', ']'),
   {
     provider = '%r%w%m%y%q',
   },
@@ -251,22 +261,15 @@ local GitStatus = {
       or self.status_dict.removed ~= 0
       or self.status_dict.changed ~= 0
   end,
-  provider = '+-~',
+  provider = '*',
 }
 
 local FullFileName = {
-  rpad(FileFlags),
-  { provider = '%n~' },
-  {
-    provider = function()
-      local cwd = vim.fn.fnamemodify(vim.g.project_nvim_cwd or vim.uv.cwd(), ':t')
-      if cwd ~= nil and cwd ~= '' then
-        return cwd .. '//'
-      end
-      return ''
-    end,
-  },
-  ShortFileName,
+  lpad({
+    FileFlags,
+    { provider = '[%n]' },
+  }),
+  lpad(ShortFileName),
 }
 
 local function OverseerTasksForStatus(status)
