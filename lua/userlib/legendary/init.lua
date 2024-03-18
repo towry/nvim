@@ -11,6 +11,14 @@ function M.pre_hook(name, callback)
     return
   end
   local autocmd_id
+
+  if vim.v.vim_did_enter then
+    vim.schedule(function()
+      callback(require('legendary'))
+    end)
+    return
+  end
+
   autocmd_id = vim.api.nvim_create_autocmd('User', {
     pattern = 'LegendaryUiPre',
     callback = function()

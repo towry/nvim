@@ -151,9 +151,9 @@ pack.plug({
       },
       select = {
         -- Set to false to disable the vim.ui.select implementation
-        enabled = false,
+        enabled = true,
         -- Priority list of preferred vim.select implementations
-        backend = { 'fzf', 'telescope', 'nui', 'builtin' },
+        backend = { 'telescope', 'nui', 'builtin' },
         -- Options for nui Menu
         nui = {
           position = {
@@ -612,7 +612,7 @@ pack.plug({
     require('telescope').load_extension('yank_history')
   end,
   init = au.schedule_lazy(function()
-    require('userlib.legendary').pre_hook('setup_yanky_lg', setup_yanky_legendary)
+    require('userlib.legendary').register('setup_yanky_lg', setup_yanky_legendary)
   end),
 })
 

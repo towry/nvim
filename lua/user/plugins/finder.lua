@@ -1050,20 +1050,20 @@ plug({
       },
     })
 
-    fzflua.register_ui_select({
-      winopts = {
-        fullscreen = false,
-        height = 0.6,
-        width = 0.75,
-      },
-      fzf_opts = {
-        ['--ansi'] = '',
-        ['--info'] = 'inline',
-        ------===
-        ['--delimiter'] = '[\\.]',
-        ['--with-nth'] = '2..',
-        -------===
-      },
-    })
+    -- fzflua.register_ui_select({
+    --   winopts = {
+    --     fullscreen = false,
+    --     height = 0.6,
+    --     width = 0.75,
+    --   },
+    --   fzf_opts = {
+    --     ['--ansi'] = '',
+    --     ['--info'] = 'inline',
+    --     ------===
+    --     ['--delimiter'] = '[\\.]',
+    --     ['--with-nth'] = '2..',
+    --     -------===
+    --   },
+    -- })
   end,
 })
