@@ -368,7 +368,7 @@ function M.load_on_startup()
         local new_cwd = data.dir or nil
         ---@diagnostic disable-next-line: undefined-field
         if not new_cwd then
-          new_cwd = vim.uv.cwd()
+          new_cwd = safe_cwd()
         end
         local buf_cwd, buf_cwd_short = vim.b[ctx.buf].project_nvim_cwd, vim.b[ctx.buf].project_nvim_cwd_short
         local cwd, cwd_short = require('userlib.runtime.utils').update_cwd_env(buf_cwd, buf_cwd_short)

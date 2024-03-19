@@ -20,7 +20,7 @@ plug({
     {
       '\\',
       function()
-        local cwd = vim.cfg.runtime__starts_cwd or vim.uv.cwd()
+        local cwd = vim.cfg.runtime__starts_cwd or safe_cwd()
         vim.cmd(
           string.format([[Neotree source=buffers position=right action=focus toggle=true reveal=true dir=%s]], cwd)
         )

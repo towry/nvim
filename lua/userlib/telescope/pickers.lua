@@ -52,7 +52,7 @@ M.project_files = function(opts)
 
   opts = opts or {}
   if not opts.cwd then
-    opts.cwd = vim.t.cwd or vim.uv.cwd()
+    opts.cwd = safe_cwd(vim.t.cwd)
   end
   -- opts.hidden = true
 

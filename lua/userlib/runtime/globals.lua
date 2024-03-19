@@ -2,6 +2,21 @@ _G.unpack = _G.unpack or table.unpack
 _G.Ty = {}
 _G.R = require
 
+local local_cwd = vim.uv.cwd()
+
+---@param loose_or_path? boolean|string
+_G.safe_cwd = function(loose_or_path)
+  if loose_or_path == true then
+    return vim.uv.cwd()
+  end
+  local cwd = (type(loose_or_path) == 'string' and loose_or_path ~= '') and loose_or_path or vim.uv.cwd()
+  local pathutil = require('userlib.runtime.path')
+  if pathutil.is_home_dir(cwd) or pathutil.is_fs_root(cwd) then
+    return local_cwd
+  end
+  return cwd
+end
+
 ---see `require`
 
 Ty.P = function(v)

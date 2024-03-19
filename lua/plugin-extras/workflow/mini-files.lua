@@ -135,7 +135,7 @@ return plug({
       function()
         local path = nil
         if require('userlib.runtime.buffer').is_empty_buffer(0) then
-          path = vim.uv.cwd()
+          path = safe_cwd()
         else
           path = vim.api.nvim_buf_get_name(0)
         end

@@ -29,7 +29,7 @@ plug({
     vim.api.nvim_create_user_command(
       'Rgflow',
       vim.schedule_wrap(function()
-        require('rgflow').open(nil, vim.b.grep_flags or nil, vim.uv.cwd(), {})
+        require('rgflow').open(nil, vim.b.grep_flags or nil, safe_cwd(), {})
       end),
       { nargs = 0, desc = 'Open RgFlow UI' }
     )
