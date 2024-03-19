@@ -31,7 +31,7 @@ return plug({
         { 'start', 'stop' },
         { 'yes', 'no' },
         { 'error', 'warn', 'info', 'debug' },
-        { 'TODO', 'FIXME' },
+        { 'TODO', 'FIXME', 'NOTE' },
         { 'dark', 'light' },
         { 'production', 'development', 'test' },
         { 'soft', 'medium', 'hard' },
