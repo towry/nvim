@@ -6,7 +6,7 @@ plug({
   config = function()
     require('dracula').setup({
       style = 'default',
-      light_style = 'soft',
+      light_style = 'day',
       dim_inactive = false,
       on_highlights = function(hl, c)
         hl.WinSeparator = {
