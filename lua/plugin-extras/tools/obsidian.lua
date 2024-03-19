@@ -38,6 +38,7 @@ return plug({
     notes_subdir = 'fleets',
     log_level = vim.log.levels.WARN,
     workspaces = {},
+    open_notes_in = 'vsplit',
     attachments = {
       img_folder = 'meta/assets',
     },
