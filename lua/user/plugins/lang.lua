@@ -76,6 +76,7 @@ plug({
       ensure_installed = vim.cfg.lang__treesitter_ensure_installed,
       highlight = {
         disable = disabled,
+        enable = true,
         additional_vim_regex_highlighting = false,
       },
       incremental_selection = {
@@ -107,6 +108,7 @@ plug({
             -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
             [']S'] = { query = '@scope', query_group = 'locals', desc = 'Next scope' },
             [']z'] = { query = '@fold', query_group = 'folds', desc = 'Next fold' },
+            [',]p'] = { query = '@parameter.outer', desc = 'Next parameter start' },
           },
           goto_next_end = {
             [']F'] = { query = '@call.outer', desc = 'Next function call end' },
@@ -121,6 +123,7 @@ plug({
             ['[c'] = { query = '@class.outer', desc = 'Prev class start' },
             ['[i'] = { query = '@conditional.outer', desc = 'Prev conditional start' },
             ['[l'] = { query = '@loop.outer', desc = 'Prev loop start' },
+            [',[p'] = { query = '@parameter.outer', desc = 'Prev parameter start' },
           },
           goto_previous_end = {
             ['[F'] = { query = '@call.outer', desc = 'Prev function call end' },
@@ -138,8 +141,8 @@ plug({
 
     local ts_repeat_move = require('nvim-treesitter.textobjects.repeatable_move')
     -- vim way: ; goes to the direction you were moving.
-    vim.keymap.set({ 'n', 'x', 'o' }, ';', ts_repeat_move.repeat_last_move)
-    vim.keymap.set({ 'n', 'x', 'o' }, ':', ts_repeat_move.repeat_last_move_opposite)
+    vim.keymap.set({ 'n', 'x', 'o' }, ',;', ts_repeat_move.repeat_last_move)
+    vim.keymap.set({ 'n', 'x', 'o' }, ',.', ts_repeat_move.repeat_last_move_opposite)
   end,
 })
 
