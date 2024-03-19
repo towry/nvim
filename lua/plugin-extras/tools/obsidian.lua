@@ -32,7 +32,7 @@ return plug({
       '<leader>no',
       function()
         require('legendary').find({
-          itemgroup = 'obsidian',
+          itemgroup = 'Obsidian',
         })
       end,
       desc = 'Obsidian switch note',
@@ -68,6 +68,7 @@ return plug({
 
       lg.commands({
         itemgroup = 'obsidian',
+        description = 'Obsidian',
         commands = cmds,
       })
     end)
@@ -75,12 +76,12 @@ return plug({
   config = function(_, opts)
     local workspaces = opts.workspaces or {}
 
-    if vim.g.obsidian_personal_location then
+    if vim.g.obsidian_personal_location or vim.env['OBSIDIAN_DEFAULT_VAULT'] then
       --- private vault location
       vim.list_extend(workspaces, {
         {
           name = 'personal',
-          path = vim.g.obsidian_personal_location,
+          path = vim.g.obsidian_personal_location or vim.env['OBSIDIAN_DEFAULT_VAULT'],
         },
       })
     end
