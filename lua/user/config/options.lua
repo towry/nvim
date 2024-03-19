@@ -112,7 +112,8 @@ function M.init_interface()
   -- use <C-z> to trigger cmp and remap <Tab> to call <C-z>
   o.wildmenu = true
   o.wildchar = ('<C-z>'):byte()
-  o.wildmode = { 'full', 'full:longest', 'list:full', 'lastused' } -- Command-line completion mode
+  -- longest: CmdA, CmdB, 'Cmd' is longest match
+  o.wildmode = { 'longest', 'full:longest', 'list:full', 'lastused' } -- Command-line completion mode
   o.wildignorecase = true
   o.wildoptions = { 'fuzzy', 'pum', 'tagfile' }
   o.wildignore = { '*.pyc', '*node_modules/**', '.git/**', '*.DS_Store', '*.min.js', '*.obj' } --- Don't search inside Node.js modules (works for gutentag)
