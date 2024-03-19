@@ -30,7 +30,7 @@
   "jump-tag": { "branch": "main", "commit": "b323cf42472d774f4e3564398d9a502254776de1" },
   "lazy.nvim": { "branch": "main", "commit": "83493db50a434a4c5c648faf41e2ead80f96e478" },
   "leetcode.nvim": { "branch": "master", "commit": "df3ade5ea8026b5d42fdfdf84ca83d55e8855e20" },
-  "legendary.nvim": { "branch": "master", "commit": "c9c6ebb63d5375058f440c19ddccdcbc0ac4bb1a" },
+  "legendary.nvim": { "branch": "master", "commit": "aa0e2dff16d246dcd6f60454036218fd13a434c2" },
   "lua-gf.nvim": { "branch": "master", "commit": "acd0d043cab6a118a069979e8081651f2ecf6637" },
   "markdown-preview.nvim": { "branch": "master", "commit": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee" },
   "mason-lspconfig.nvim": { "branch": "main", "commit": "55716a879568a498fa236593c8119789054a3b8e" },

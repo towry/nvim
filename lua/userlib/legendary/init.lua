@@ -7,6 +7,9 @@ local pre_hook_records = {}
 ---@param name string
 ---@param callback function
 function M.pre_hook(name, callback)
+  if type(name) ~= 'string' then
+    error('register legendary: first argument must be an unique name')
+  end
   if pre_hook_records[name] then
     return
   end

@@ -6,7 +6,16 @@ end
 
 ---- core
 pack.plug({
-  { 'echasnovski/mini.pick' },
+  {
+    'echasnovski/mini.pick',
+    config = function()
+      require('mini.pick').setup({ window = { config = { border = 'single' } } })
+    end,
+    init = au.schedule_lazy(function()
+      -- not support expand
+      -- vim.ui.select = require('mini.pick').ui_select
+    end),
+  },
   { 'echasnovski/mini.extra' },
   {
     'echasnovski/mini.cursorword',
