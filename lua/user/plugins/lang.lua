@@ -72,8 +72,11 @@ plug({
     local disabled = function(_lang, bufnr)
       return vim.b[bufnr].is_big_file
     end
+    local install_path = vim.fn.stdpath('data') .. '/site/treesitter-master'
+    vim.opt.runtimepath:append(install_path)
     require('nvim-treesitter.install').prefer_git = true
     require('nvim-treesitter.configs').setup({
+      parser_install_dir = install_path,
       ensure_installed = vim.cfg.lang__treesitter_ensure_installed,
       highlight = {
         disable = disabled,
