@@ -34,7 +34,7 @@ plug({
     },
   },
   {
-    'pze/mini.ai',
+    vim.cfg.lang__treesitter_next and 'pze/mini.ai' or 'echasnovski/mini.ai',
     vscode = true,
     -- disabled due to not compatible with nvim-treesitter#1.0
     enabled = true,
@@ -51,13 +51,13 @@ plug({
             a = { '@block.outer', '@conditional.outer', '@loop.outer' },
             i = { '@block.inner', '@conditional.inner', '@loop.inner' },
           }, {
-            use_nvim_treesitter = false,
+            use_nvim_treesitter = not vim.cfg.lang__treesitter_next,
           }),
-          f = ai.gen_spec.treesitter({ a = '@function.outer', i = '@function.inner' }, {
-            use_nvim_treesitter = false,
+          m = ai.gen_spec.treesitter({ a = '@function.outer', i = '@function.inner' }, {
+            use_nvim_treesitter = not vim.cfg.lang__treesitter_next,
           }),
           c = ai.gen_spec.treesitter({ a = '@class.outer', i = '@class.inner' }, {
-            use_nvim_treesitter = false,
+            use_nvim_treesitter = not vim.cfg.lang__treesitter_next,
           }),
         },
       }

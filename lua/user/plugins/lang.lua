@@ -6,6 +6,7 @@ plug({
   branch = 'main',
   build = ':TSUpdate',
   event = 'VeryLazy',
+  enabled = vim.cfg.lang__treesitter_next,
   cond = not vim.cfg.runtime__starts_as_gittool,
   config = function()
     require('nvim-treesitter').setup({
@@ -25,6 +26,113 @@ plug({
         local buf = ctx.data.bufnr
         vim.bo[buf].indentexpr = [[v:lua.require('nvim-treesitter').indentexpr()]]
       end,
+    })
+  end,
+})
+
+plug({
+  'nvim-treesitter/nvim-treesitter',
+  branch = 'master',
+  version = '0.9.2',
+  build = function()
+    if #vim.api.nvim_list_uis() == 0 then
+      -- update sync if running headless
+      vim.cmd.TSUpdateSync()
+    else
+      -- otherwise update async
+      vim.cmd.TSUpdate()
+    end
+  end,
+  event = 'VeryLazy',
+  enabled = not vim.cfg.lang__treesitter_next,
+  cond = not vim.cfg.runtime__starts_as_gittool,
+  dependencies = {
+    {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+      init = function()
+        -- PERF: no need to load the plugin, if we only need its queries for mini.ai
+        local plugin = require('lazy.core.config').spec.plugins['nvim-treesitter']
+        local opts = require('lazy.core.plugin').values(plugin, 'opts', false)
+        local enabled = false
+        if opts.textobjects then
+          for _, mod in ipairs({ 'move', 'select', 'swap', 'lsp_interop' }) do
+            if opts.textobjects[mod] and opts.textobjects[mod].enable then
+              enabled = true
+              break
+            end
+          end
+        end
+        if not enabled then
+          require('lazy.core.loader').disable_rtp_plugin('nvim-treesitter-textobjects')
+        end
+      end,
+    },
+  },
+  config = function()
+    local disabled = function(_lang, bufnr)
+      return vim.b[bufnr].is_big_file
+    end
+    require('nvim-treesitter.install').prefer_git = true
+    require('nvim-treesitter.configs').setup({
+      ensure_installed = vim.cfg.lang__treesitter_ensure_installed,
+      highlight = {
+        disable = disabled,
+        additional_vim_regex_highlighting = false,
+      },
+      incremental_selection = {
+        enable = true,
+        disable = disabled,
+        keymaps = {
+          init_selection = '<S-Enter>',
+          node_incremental = '<Enter>',
+          scope_incremental = '<S-Enter>',
+          node_decremental = '<BS>',
+        },
+      },
+      indent = {
+        enable = true,
+      },
+      textobjects = {
+        move = {
+          disable = disabled,
+          enable = true,
+          set_jumps = true, -- whether to set jumps in the jumplist
+          goto_next_start = {
+            [']m'] = '@function.outer',
+            [']]'] = { query = '@class.outer', desc = 'Next class start' },
+            --
+            -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queires.
+            [']o'] = '@loop.*',
+            -- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
+            --
+            -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
+            -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
+            [']s'] = { query = '@scope', query_group = 'locals', desc = 'Next scope' },
+            [']z'] = { query = '@fold', query_group = 'folds', desc = 'Next fold' },
+          },
+          goto_next_end = {
+            [']M'] = '@function.outer',
+            [']['] = '@class.outer',
+          },
+          goto_previous_start = {
+            ['[m'] = '@function.outer',
+            ['[['] = '@class.outer',
+          },
+          goto_previous_end = {
+            ['[M'] = '@function.outer',
+            ['[]'] = '@class.outer',
+          },
+          goto_next = {
+            [']t'] = '@conditional.outer',
+          },
+          goto_previous = {
+            ['[t'] = '@conditional.outer',
+          },
+        },
+        swap = {
+          enable = false,
+        },
+      }, -- end textobjects
     })
   end,
 })

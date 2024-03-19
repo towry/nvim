@@ -580,9 +580,6 @@ pack.plug({
   event = { 'InsertEnter' },
   config = function()
     local npairs = require('nvim-autopairs')
-    local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-    local cmpcore = require('cmp')
-
     local args = {
       disable_filetype = {
         'TelescopePrompt',
@@ -600,39 +597,45 @@ pack.plug({
     }
     npairs.setup(args)
 
-    local Kind = cmpcore.lsp.CompletionItemKind
-    local handlers = require('nvim-autopairs.completion.handlers')
-    local default_handler = function(char, item, bufnr, commit_character)
-      -- do not add pairs if commit characters exists, like `.`, or `,`.
-      if commit_character ~= nil then
-        return
-      end
-      -- do not add pairs if in jsx.
-      local ts_current_line_node_type = Ty.TS_GET_NODE_TYPE()
-      if
-        vim.tbl_contains({ 'jsx_self_closing_element', 'jsx_opening_element' }, ts_current_line_node_type)
-        and (item.kind == Kind.Function or item.kind == Kind.Method)
-      then
-        return
+    if not vim.cfg.edit__use_native_cmp then
+      local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+      local cmpcore = require('cmp')
+
+      local Kind = cmpcore.lsp.CompletionItemKind
+      local handlers = require('nvim-autopairs.completion.handlers')
+      local default_handler = function(char, item, bufnr, commit_character)
+        -- do not add pairs if commit characters exists, like `.`, or `,`.
+        if commit_character ~= nil then
+          return
+        end
+        -- do not add pairs if in jsx.
+        local ts_current_line_node_type = Ty.TS_GET_NODE_TYPE()
+        if
+          vim.tbl_contains({ 'jsx_self_closing_element', 'jsx_opening_element' }, ts_current_line_node_type)
+          and (item.kind == Kind.Function or item.kind == Kind.Method)
+        then
+          return
+        end
+
+        handlers['*'](char, item, bufnr, commit_character)
       end
 
-      handlers['*'](char, item, bufnr, commit_character)
-    end
-
-    cmpcore.event:on(
-      'confirm_done',
-      cmp_autopairs.on_confirm_done({
-        filetypes = {
-          ['*'] = {
-            ['('] = {
-              handler = default_handler,
+      cmpcore.event:on(
+        'confirm_done',
+        cmp_autopairs.on_confirm_done({
+          filetypes = {
+            ['*'] = {
+              ['('] = {
+                handler = default_handler,
+              },
             },
+            -- disable for tex
+            tex = false,
           },
-          -- disable for tex
-          tex = false,
-        },
-      })
-    )
+        })
+      )
+    end --- end cmp setup
+
     --- setup rules.
     -- TODO: move to config.
     local allowed_rules = {

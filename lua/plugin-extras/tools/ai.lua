@@ -2,6 +2,46 @@ local plug = require('userlib.runtime.pack').plug
 
 return plug({
   {
+    'olimorris/codecompanion.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      {
+        'stevearc/dressing.nvim', -- Optional: Improves the default Neovim UI
+      },
+    },
+    cmd = {
+      'CodeCompanion',
+      'CodeCompanionChat',
+      'CodeCompanionToggle',
+      'CodeCompanionActions',
+    },
+    keys = {
+      {
+        '<C-a>',
+        '<cmd>CodeCompanionActions<cr>',
+        silent = true,
+        noremap = true,
+        desc = 'CodeCompanion: Run action on code',
+        mode = { 'n', 'v' },
+      },
+      {
+        '<leader>t?',
+        '<cmd>CodeCompanionToggle<cr>',
+        silent = true,
+        noremap = true,
+        desc = 'CodeCompanion: Toggle chat buffer',
+      },
+    },
+    config = function(_, opts)
+      require('codecompanion').setup({
+        adapters = {
+          chat = 'ollama',
+          inline = 'ollama',
+        },
+      })
+    end,
+  },
+  {
     'pze/ChatGPT.nvim',
     cmd = { 'ChatGPT', 'ChatGPTActAs' },
     dependencies = {

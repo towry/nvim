@@ -34,5 +34,6 @@ require('plugin-extras.ui.trail_blazer')
 require('plugin-extras.tools.carbon')
 require('plugin-extras.tools.gist')
 require('plugin-extras.tools.obsidian')
+require('plugin-extras.tools.ai')
 
 return require('userlib.runtime.pack').repos()
