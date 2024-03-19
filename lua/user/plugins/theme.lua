@@ -4,6 +4,7 @@ plug({
   'projekt0n/github-nvim-theme',
   event = 'User LazyTheme',
   opts = {},
+  cond = vim.cfg.ui__theme_name == 'github',
   config = function(_, opts)
     require('github-theme').setup(opts)
   end,
