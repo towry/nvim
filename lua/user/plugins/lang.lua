@@ -365,7 +365,7 @@ plug({
   {
     'nvim-treesitter/nvim-treesitter-context',
     event = 'BufReadPost',
-    enabled = true,
+    enabled = vim.cfg.lang__treesitter_next,
     opts = {
       max_lines = 2,
       mode = 'cursor',
