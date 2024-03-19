@@ -1,6 +1,20 @@
 local plug = require('userlib.runtime.pack').plug
 
 plug({
+  'projekt0n/github-nvim-theme',
+  event = 'User LazyTheme',
+  opts = {},
+  config = function(_, opts)
+    require('github-theme').setup(opts)
+  end,
+  init = function()
+    --- https://github.com/projekt0n/github-nvim-theme/tree/main?tab=readme-ov-file#supported-colorschemes--comparisons
+    --- @type 'tritanopia'|'colorblind'|'default'|'high_contrast'|'dimmed'
+    vim.g.github_variant = 'dimmed'
+  end,
+})
+
+plug({
   'binhtran432k/dracula.nvim',
   event = 'User LazyTheme',
   config = function()

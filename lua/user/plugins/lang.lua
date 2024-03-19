@@ -109,14 +109,16 @@ plug({
             -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
             [']S'] = { query = '@scope', query_group = 'locals', desc = 'Next scope' },
             [']z'] = { query = '@fold', query_group = 'folds', desc = 'Next fold' },
-            [',]p'] = { query = '@parameter.outer', desc = 'Next parameter start' },
+            [']p'] = { query = '@parameter.inner', desc = 'Next parameter start' },
           },
           goto_next_end = {
+            [']O'] = { query = '@block.outer', desc = 'Next block start' },
             [']F'] = { query = '@call.outer', desc = 'Next function call end' },
             [']M'] = { query = '@function.outer', desc = 'Next method/function def end' },
             [']C'] = { query = '@class.outer', desc = 'Next class end' },
             [']I'] = { query = '@conditional.outer', desc = 'Next conditional end' },
             [']L'] = { query = '@loop.outer', desc = 'Next loop end' },
+            [']P'] = { query = '@parameter.inner', desc = 'Next parameter start' },
           },
           goto_previous_start = {
             ['[o'] = { query = '@block.outer', desc = 'Prev block start' },
@@ -125,14 +127,16 @@ plug({
             ['[c'] = { query = '@class.outer', desc = 'Prev class start' },
             ['[i'] = { query = '@conditional.outer', desc = 'Prev conditional start' },
             ['[l'] = { query = '@loop.outer', desc = 'Prev loop start' },
-            [',[p'] = { query = '@parameter.outer', desc = 'Prev parameter start' },
+            ['[p'] = { query = '@parameter.inner', desc = 'Prev parameter start' },
           },
           goto_previous_end = {
+            ['[O'] = { query = '@block.outer', desc = 'Prev block start' },
             ['[F'] = { query = '@call.outer', desc = 'Prev function call end' },
             ['[M'] = { query = '@function.outer', desc = 'Prev method/function def end' },
             ['[C'] = { query = '@class.outer', desc = 'Prev class end' },
             ['[I'] = { query = '@conditional.outer', desc = 'Prev conditional end' },
             ['[L'] = { query = '@loop.outer', desc = 'Prev loop end' },
+            ['[P'] = { query = '@parameter.inner', desc = 'Prev parameter start' },
           },
         },
         swap = {
