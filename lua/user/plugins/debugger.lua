@@ -206,8 +206,9 @@ pack.plug({
   cmd = 'Neotest',
   'rcarriga/neotest',
   dependencies = {
+    'nvim-neotest/nvim-nio',
     'nvim-lua/plenary.nvim',
-    'nvim-treesitter/nvim-treesitter',
+    'antoinemadec/FixCursorHold.nvim',
     -- lang:js
     'haydenmeade/neotest-jest',
     -- lang:rust

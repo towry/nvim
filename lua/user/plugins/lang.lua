@@ -98,6 +98,7 @@ plug({
           enable = true,
           set_jumps = true, -- whether to set jumps in the jumplist
           goto_next_start = {
+            [']o'] = { query = '@block.outer', desc = 'Next block start' },
             [']f'] = { query = '@call.outer', desc = 'Next function call start' },
             [']m'] = { query = '@function.outer', desc = 'Next method/function def start' },
             [']c'] = { query = '@class.outer', desc = 'Next class start' },
@@ -118,6 +119,7 @@ plug({
             [']L'] = { query = '@loop.outer', desc = 'Next loop end' },
           },
           goto_previous_start = {
+            ['[o'] = { query = '@block.outer', desc = 'Prev block start' },
             ['[f'] = { query = '@call.outer', desc = 'Prev function call start' },
             ['[m'] = { query = '@function.outer', desc = 'Prev method/function def start' },
             ['[c'] = { query = '@class.outer', desc = 'Prev class start' },
