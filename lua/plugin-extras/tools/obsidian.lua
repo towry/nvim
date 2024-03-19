@@ -32,7 +32,7 @@ return plug({
       '<leader>no',
       function()
         require('legendary').find({
-          itemgroup = 'Obsidian',
+          itemgroup = 'obsidian',
         })
       end,
       desc = 'Obsidian switch note',
