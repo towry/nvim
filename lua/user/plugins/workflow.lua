@@ -140,6 +140,7 @@ plug({
   {
     'kwkarlwang/bufresize.nvim',
     event = 'WinResized',
+    enabled = false,
     lazy = true,
     config = true,
   },
@@ -422,7 +423,7 @@ plug({
       },
     },
     dependencies = {
-      'kwkarlwang/bufresize.nvim',
+      -- 'kwkarlwang/bufresize.nvim',
     },
     build = './kitty/install-kittens.bash',
     config = function()
@@ -446,7 +447,7 @@ plug({
           },
           hooks = {
             on_leave = function()
-              require('bufresize').register()
+              -- require('bufresize').register()
             end,
           },
         },
