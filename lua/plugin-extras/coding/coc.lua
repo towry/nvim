@@ -2,13 +2,14 @@ local plug = require('userlib.runtime.pack').plug
 
 local function setup_coc_lsp_keys()
   local keymap = require('userlib.runtime.keymap')
-  local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
-  local opts = { silent = true, nowait = true, expr = false, noremap = true }
+  local set = keymap.set
   local _ = function(desc) return { silent = true, nowait = true, expr = false, noremap = true, desc = '[Coc] ' .. desc } end
 
   --- diagnostic nav
-  set('n', ']dd', '<Plug>(coc-diagnostic-next)', _("diagnostic next"))
-  set('n', '[dd', '<Plug>(coc-diagnostic-prev)', _("diagnostic prev"))
+  set('n', ']dd', "m'<Plug>(coc-diagnostic-next)", _("diagnostic next"))
+  set('n', '[dd', "m'<Plug>(coc-diagnostic-prev)", _("diagnostic prev"))
+  set('n', ']de', "m'<Plug>(coc-diagnostic-next-error)", _("diagnostic error next"))
+  set('n', '[de', "m'<Plug>(coc-diagnostic-prev-error)", _("diagnostic error prev"))
 
   --- code navigation
   set('n', 'gd', '<Plug>(coc-definition)', _("Go to definition"))
@@ -76,6 +77,12 @@ local function setup_coc_autocmd()
     group = 'CocGroup',
     command = "silent call CocActionAsync('highlight')",
     desc = 'Highlight symbol under cursor on CursorHold',
+  })
+
+  vim.api.nvim_create_autocmd("User", {
+    group = 'CocGroup',
+    pattern = { 'CocDiagnosticChange', 'CocStatusChange' },
+    command = "redrawstatus",
   })
   -- Update signature help on jump placeholder
   vim.api.nvim_create_autocmd('User', {
@@ -186,6 +193,7 @@ return plug({
       'coc-eslint',
       'coc-prettier',
       --- rust
+      --- `rustup component add rust-analyzer`
       'coc-rust-analyzer',
       'coc-toml',
       --- for vue

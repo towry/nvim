@@ -15,5 +15,6 @@
   },
   "hover.floatConfig": {
     "border": true
-  }
+  },
+  "workspace.ignoredFolders": ["$HOME", "$HOME/.cargo/**", "$HOME/.rustup/**"]
 }
