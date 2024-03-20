@@ -7,6 +7,7 @@ plug({
     -- jump html tags.
     'harrisoncramer/jump-tag',
     vscode = true,
+    enabled = false,
     keys = {
       {
         '[tp',

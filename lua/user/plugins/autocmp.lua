@@ -125,6 +125,7 @@ pack.plug({
     event = 'User LazyInsertEnter',
     build = 'make install_jsregexp',
     version = 'v2.*',
+    enabled = not vim.cfg.edit__use_coc,
     dependencies = {
       'rafamadriz/friendly-snippets',
       --'saadparwaiz1/cmp_luasnip'
