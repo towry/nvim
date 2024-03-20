@@ -184,7 +184,6 @@ return plug({
       -- 'coc-lua',
       'coc-sumneko-lua',
       'coc-eslint',
-      'coc-tslint',
       'coc-prettier',
       --- rust
       'coc-rust-analyzer',
