@@ -206,6 +206,9 @@ return plug({
       --- tabnine
       'coc-tabnine',
       'coc-tailwindcss',
+      --- sources
+      "coc-word", -- google 100000 english repo.
+      "coc-omni", --- &omnifunc of current buffer.
     }
     vim.g.coc_disable_mappings_check     = 1
     vim.g.coc_disable_uncaught_error     = 1
