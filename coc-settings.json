@@ -5,6 +5,7 @@
   "coc.preferences.formatOnSave": false,
   "coc.preferences.useQuickfixForLocations": true,
   "suggest.noselect": true,
+  "suggest.insertMode": "replace",
   "suggest.enablePreselect": false,
   "suggest.virtualText": true,
   "suggest.floatConfig": {
@@ -23,6 +24,8 @@
   },
   "workspace.ignoredFolders": ["$HOME", "$HOME/.cargo/**", "$HOME/.rustup/**"],
   "rust-analyzer.lens.enable": false,
+  "rust-analyzer.inlayHints.expressionAdjustmentHints.enable": "reborrow",
+  "rust-analyzer.inlayHints.typeHints.enable": false,
   "rust-analyzer.inlayHints.maxLength": 2,
   "rust-analyzer.inlayHints.renderColons": true
 }

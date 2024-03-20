@@ -9,6 +9,10 @@ plug({
       light_style = 'day',
       dim_inactive = false,
       on_highlights = function(hl, c)
+        local util = require("dracula.util")
+        local function make_alpha(color, alpha)
+          return util.blend(color, c.bg, alpha)
+        end
         hl.WinSeparator = {
           fg = c.selection,
           bold = true,
@@ -32,7 +36,7 @@ plug({
         hl.CocSelectedText = { fg = c.visual }
         hl.CocMenuSel = { link = "PmenuSel" }
         hl.CocCodeLens = { fg = c.visual }
-        hl.CocInlayHint = { fg = c.visual }
+        hl.CocInlayHint = { fg = make_alpha(c.teal, 0.2) }
         hl.CocInlayHintType = { link = 'CocInlayHint' }
         hl.CocInlayHintParameter = { link = 'CocInlayHint' }
         hl.CocErrorHighlight = { undercurl = true, sp = c.error }
