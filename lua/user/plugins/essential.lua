@@ -20,6 +20,7 @@ pack.plug({
   {
     'echasnovski/mini.cursorword',
     event = 'BufReadPost',
+    enabled = not vim.cfg.edit__use_coc,
     opts = {
       delay = 350,
     },
@@ -305,22 +306,22 @@ pack.plug({
     local wk = require('which-key')
     wk.setup({
       plugins = {
-        marks = true, -- shows a list of your marks on ' and `
+        marks = true,     -- shows a list of your marks on ' and `
         registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
         -- the presets plugin, adds help for a bunch of default keybindings in Neovim
         -- No actual key bindings are created
         spelling = {
-          enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
+          enabled = true,   -- enabling this will show WhichKey when pressing z= to select spelling suggestions
           suggestions = 20, -- how many suggestions should be shown in the list?
         },
         presets = {
-          operators = true, -- adds help for operators like d, y, ...
-          motions = true, -- adds help for motions
+          operators = true,    -- adds help for operators like d, y, ...
+          motions = true,      -- adds help for motions
           text_objects = true, -- help for text objects triggered after entering an operator
-          windows = false, -- default bindings on <c-w>, already taken care by hydra.
-          nav = false, -- misc bindings to work with windows
-          z = true, -- bindings for folds, spelling and others prefixed with z
-          g = true, -- bindings for prefixed with g
+          windows = false,     -- default bindings on <c-w>, already taken care by hydra.
+          nav = false,         -- misc bindings to work with windows
+          z = true,            -- bindings for folds, spelling and others prefixed with z
+          g = true,            -- bindings for prefixed with g
         },
       },
       operators = { gc = 'Comments' },
@@ -337,26 +338,26 @@ pack.plug({
       },
       popup_mappings = {
         scroll_down = '<c-d>', -- binding to scroll down inside the popup
-        scroll_up = '<c-u>', -- binding to scroll up inside the popup
+        scroll_up = '<c-u>',   -- binding to scroll up inside the popup
       },
       window = {
-        border = 'none', -- none, single, double, shadow
-        position = 'bottom', -- bottom, top
-        margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
+        border = 'none',          -- none, single, double, shadow
+        position = 'bottom',      -- bottom, top
+        margin = { 1, 0, 1, 0 },  -- extra window margin [top, right, bottom, left]
         padding = { 1, 2, 1, 2 }, -- extra window padding [top, right, bottom, left]
-        winblend = 0, -- value between 0-100 0 for fully opaque and 100 for fully transparent
+        winblend = 0,             -- value between 0-100 0 for fully opaque and 100 for fully transparent
       },
       layout = {
         height = { min = 4, max = 25 }, -- min and max height of the columns
         width = { min = 20, max = 50 }, -- min and max width of the columns
-        spacing = 3, -- spacing between columns
-        align = 'left', -- align columns left, center or right
+        spacing = 3,                    -- spacing between columns
+        align = 'left',                 -- align columns left, center or right
       },
       ignore_missing = false,
       hidden = { '<CR>', '^:', '^ ', '^call ', '^lua ' }, -- hide mapping boilerplate
-      show_help = false, -- show a help message in the command line for using WhichKey
-      show_keys = true, -- show the currently pressed key and its label as a message in the command line
-      triggers = 'auto', -- automatically setup triggers
+      show_help = false,                                  -- show a help message in the command line for using WhichKey
+      show_keys = true,                                   -- show the currently pressed key and its label as a message in the command line
+      triggers = 'auto',                                  -- automatically setup triggers
       triggers_nowait = {
         ',',
         -- marks
@@ -674,42 +675,42 @@ pack.plug({
         miniclue.gen_clues.marks(),
         -- miniclue.gen_clues.registers(),
         miniclue.gen_clues.z(),
-        { mode = 'n', keys = '<Leader>a', desc = '+AI Assistant' },
-        { mode = 'v', keys = '<Leader>a', desc = '+AI Assistant' },
-        { mode = 'x', keys = '<Leader>a', desc = '+AI Assistant' },
-        { mode = 'n', keys = '<Leader>n', desc = '+Normal mode utils' },
+        { mode = 'n', keys = '<Leader>a',      desc = '+AI Assistant' },
+        { mode = 'v', keys = '<Leader>a',      desc = '+AI Assistant' },
+        { mode = 'x', keys = '<Leader>a',      desc = '+AI Assistant' },
+        { mode = 'n', keys = '<Leader>n',      desc = '+Normal mode utils' },
         { mode = 'n', keys = '<LocalLeader>a', desc = '+AI Assistant' },
         { mode = 'n', keys = '<LocalLeader>x', desc = '+Tmux' },
-        { mode = 'n', keys = 'ga', desc = '+TextChanges' },
-        { mode = 'n', keys = 'gao', desc = '+Current word case change' },
+        { mode = 'n', keys = 'ga',             desc = '+TextChanges' },
+        { mode = 'n', keys = 'gao',            desc = '+Current word case change' },
         -- gh<key> for gitsigns.
-        { mode = 'n', keys = '<Leader>g', desc = '+Git' },
-        { mode = 'x', keys = '<Leader>g', desc = '+Git' },
-        { mode = 'n', keys = '<Leader>f', desc = '+Finder' },
-        { mode = 'x', keys = '<Leader>f', desc = '+Finder' },
-        { mode = 'v', keys = '<Leader>f', desc = '+Finder' },
-        { mode = 'n', keys = '<Leader>c', desc = '+Code' },
-        { mode = 'x', keys = '<Leader>c', desc = '+Code' },
-        { mode = 'v', keys = '<Leader>c', desc = '+Code' },
-        { mode = 'n', keys = '<Leader>/', desc = '+Outline|Terms' },
-        { mode = 'n', keys = '<Leader>v', desc = '+Trails' },
-        { mode = 'n', keys = '<Leader>z', desc = '+Extended' },
-        { mode = 'n', keys = '<Leader>m', desc = '+Motion' },
-        { mode = 'n', keys = '<Leader>mj', desc = '+Join' },
-        { mode = 'n', keys = '<Leader>b', desc = '+Buffer' },
-        { mode = 'n', keys = '<Leader>p', desc = '+Projects' },
-        { mode = 'n', keys = '<Leader>t', desc = '+Tools|Toggle' },
-        { mode = 'x', keys = '<Leader>t', desc = '+Tools|Toggle' },
-        { mode = 'n', keys = '<Leader>to', desc = 'Toggle options' },
-        { mode = 'n', keys = '<Leader>w', desc = '+Workspace' },
-        { mode = 'n', keys = '<Leader>s', desc = '+Search|Replace' },
-        { mode = 'x', keys = '<Leader>s', desc = '+Search|Replace' },
-        { mode = 'n', keys = '<Leader>sg', desc = '+Grep' },
-        { mode = 'n', keys = '<Leader>r', desc = '+Runner|Debugger' },
-        { mode = 'n', keys = '<Leader>ro', desc = '+Overseer' },
+        { mode = 'n', keys = '<Leader>g',      desc = '+Git' },
+        { mode = 'x', keys = '<Leader>g',      desc = '+Git' },
+        { mode = 'n', keys = '<Leader>f',      desc = '+Finder' },
+        { mode = 'x', keys = '<Leader>f',      desc = '+Finder' },
+        { mode = 'v', keys = '<Leader>f',      desc = '+Finder' },
+        { mode = 'n', keys = '<Leader>c',      desc = '+Code' },
+        { mode = 'x', keys = '<Leader>c',      desc = '+Code' },
+        { mode = 'v', keys = '<Leader>c',      desc = '+Code' },
+        { mode = 'n', keys = '<Leader>/',      desc = '+Outline|Terms' },
+        { mode = 'n', keys = '<Leader>v',      desc = '+Trails' },
+        { mode = 'n', keys = '<Leader>z',      desc = '+Extended' },
+        { mode = 'n', keys = '<Leader>m',      desc = '+Motion' },
+        { mode = 'n', keys = '<Leader>mj',     desc = '+Join' },
+        { mode = 'n', keys = '<Leader>b',      desc = '+Buffer' },
+        { mode = 'n', keys = '<Leader>p',      desc = '+Projects' },
+        { mode = 'n', keys = '<Leader>t',      desc = '+Tools|Toggle' },
+        { mode = 'x', keys = '<Leader>t',      desc = '+Tools|Toggle' },
+        { mode = 'n', keys = '<Leader>to',     desc = 'Toggle options' },
+        { mode = 'n', keys = '<Leader>w',      desc = '+Workspace' },
+        { mode = 'n', keys = '<Leader>s',      desc = '+Search|Replace' },
+        { mode = 'x', keys = '<Leader>s',      desc = '+Search|Replace' },
+        { mode = 'n', keys = '<Leader>sg',     desc = '+Grep' },
+        { mode = 'n', keys = '<Leader>r',      desc = '+Runner|Debugger' },
+        { mode = 'n', keys = '<Leader>ro',     desc = '+Overseer' },
         ---
-        { mode = 'n', keys = 'gh', desc = '+Gitsigns' },
-        { mode = 'x', keys = 'gh', desc = '+Gitsigns' },
+        { mode = 'n', keys = 'gh',             desc = '+Gitsigns' },
+        { mode = 'x', keys = 'gh',             desc = '+Gitsigns' },
         --- windows
         miniclue.gen_clues.windows(),
         { mode = 'n', keys = '<C-w>a' },
@@ -746,7 +747,7 @@ pack.plug({
   name = 'registers',
   cmd = 'Registers',
   keys = {
-    { '"', mode = { 'n', 'v' } },
+    { '"',     mode = { 'n', 'v' } },
     { '<C-R>', mode = 'i' },
   },
   opts = {

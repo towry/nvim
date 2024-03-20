@@ -4,43 +4,47 @@ local function setup_coc_lsp_keys()
   local keymap = require('userlib.runtime.keymap')
   local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
   local opts = { silent = true, nowait = true, expr = false, noremap = true }
+  local _ = function(desc) return { silent = true, nowait = true, expr = false, noremap = true, desc = '[Coc] ' .. desc } end
 
   --- diagnostic nav
-  set('n', ']dd', '<Plug>(coc-diagnostic-next)', opts)
-  set('n', '[dd', '<Plug>(coc-diagnostic-prev)', opts)
+  set('n', ']dd', '<Plug>(coc-diagnostic-next)', _("diagnostic next"))
+  set('n', '[dd', '<Plug>(coc-diagnostic-prev)', _("diagnostic prev"))
 
-  --- code nav
-  set('n', 'gd', '<Plug>(coc-definition)', opts)
-  set('n', 'gy', '<Plug>(coc-type-definition)', opts)
-  set('n', '<localleader>gi', '<Plug>(coc-implementation)', opts)
-  set('n', '<localleader>gr', '<Plug>(coc-references)', opts)
+  --- code navigation
+  set('n', 'gd', '<Plug>(coc-definition)', _("Go to definition"))
+  set('n', 'gy', '<Plug>(coc-type-definition)', _(""))
+  set('n', '<localleader>gi', '<Plug>(coc-implementation)', _("Go to implementation"))
+  set('n', '<localleader>gr', '<Plug>(coc-references)', _("Show references"))
   -- Symbol renaming
-  set('n', '<leader>crn', '<Plug>(coc-rename)', opts)
+  set('n', '<leader>crn', '<Plug>(coc-rename)', _("Rename symbol"))
   -- Formatting selected code
-  set('x', '<leader>cf', '<Plug>(coc-format-selected)', opts)
-  set('n', '<leader>cf', [[:<C-u>call CocActionAsync('format')<cr>]], opts)
-  set('x', '<leader>ca', '<Plug>(coc-codeaction-selected)', opts)
-  set('n', '<leader>ca', '<Plug>(coc-codeaction-line)', opts)
-  -- organize imports
-  set('n', '<leader>ci', [[:<C-u>call CocActionAsync('runCommand', 'editor.action.organizeImport')<cr>]], opts)
-  set('n', '<leader>cld', [[:<C-u>CocList diagnostics<cr>]], opts)
-  --- manage extensions
-  set('n', '<leader>clE', ':<C-u>CocList extensions<cr>', opts)
+  set('x', '<leader>cf', '<Plug>(coc-format-selected)', _("Format selected code"))
+  set('n', '<leader>cf', [[:<C-u>call CocActionAsync('format')<cr>]], _("Format entire file"))
+  set('x', '<leader>ca', '<Plug>(coc-codeaction-selected)', _("Code action on selected"))
+  set('n', '<leader>ca', '<Plug>(coc-codeaction-line)', _("Code action for line"))
+  -- Organize imports
+  set('n', '<leader>ci', [[:<C-u>call CocActionAsync('runCommand', 'editor.action.organizeImport')<cr>]],
+    _("Organize imports"))
+  set('n', '<leader>cld', [[:<C-u>CocList diagnostics<cr>]], _("List diagnostics"))
+  --- Manage extensions
+  set('n', '<leader>clE', ':<C-u>CocList extensions<cr>', _("List extensions"))
   -- Show commands
-  set('n', '<space>clc', ':<C-u>CocList commands<cr>', opts)
+  set('n', '<space>clc', ':<C-u>CocList commands<cr>', _("List commands"))
 
-  -- Remap keys for apply code actions at the cursor position.
-  set('n', '<leader>cc', '<Plug>(coc-codeaction-cursor)', opts)
-  -- Remap keys for apply source code actions for current file.
-  set('n', '<leader>cA', '<Plug>(coc-codeaction-source)', opts)
-  set('x', '<leader>cA', '<Plug>(coc-codeaction-source)', opts)
-  -- Apply the most preferred quickfix action on the current line.
-  set('n', '<leader>cqf', '<Plug>(coc-fix-current)', opts)
-  set('n', '<leader>crf', '<Plug>(coc-codeaction-refactor)', { silent = true })
-  set('x', '<leader>crF', '<Plug>(coc-codeaction-refactor-selected)', { silent = true })
-  set('n', '<leader>crF', '<Plug>(coc-codeaction-refactor-selected)', { silent = true })
+  -- Remap keys for apply code actions at the cursor position
+  set('n', '<leader>cc', '<Plug>(coc-codeaction-cursor)', _("Apply code action at cursor"))
+  -- Remap keys for apply source code actions for current file
+  set('n', '<leader>cA', '<Plug>(coc-codeaction-source)', _("Apply source code actions"))
+  set('x', '<leader>cA', '<Plug>(coc-codeaction-source)', _("Apply source code actions (visual)"))
+  -- Apply the most preferred quickfix action on the current line
+  set('n', '<leader>cqf', '<Plug>(coc-fix-current)', _("Apply quickfix action on current line"))
+  set('n', '<leader>crf', '<Plug>(coc-codeaction-refactor)', { silent = true, desc = '[Coc] Refactor code' })
+  set('x', '<leader>crF', '<Plug>(coc-codeaction-refactor-selected)',
+    { silent = true, desc = '[Coc] Refactor selected code' })
+  set('n', '<leader>crF', '<Plug>(coc-codeaction-refactor-selected)',
+    { silent = true, desc = '[Coc] Refactor selected code' })
   -- Run the Code Lens actions on the current line
-  set('n', '<leader>cC', '<Plug>(coc-codelens-action)', opts)
+  set('n', '<leader>cC', '<Plug>(coc-codelens-action)', _("Codelens action"))
 
   -- Remap <C-f> and <C-b> to scroll float windows/popups
   ---@diagnostic disable-next-line: redefined-local
@@ -80,6 +84,24 @@ local function setup_coc_autocmd()
     command = "call CocActionAsync('showSignatureHelp')",
     desc = 'Update signature help on jump placeholder',
   })
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    group = "CocGroup",
+    callback = function(ctx)
+      local bufnr = ctx.buf
+      if vim.b[bufnr].coc_enabled == 0 or vim.bo[bufnr].buftype ~= '' then return end
+      if vim.cfg.runtime__starts_as_gittool or vim.wo.diff then
+        return true
+      end
+      if (bufnr or bufnr == 0) and vim.b[bufnr].autoformat_disable then
+        return true
+      end
+
+      --- prevent cursor jump and window scroll
+      local view = vim.fn.winsaveview()
+      vim.api.nvim_command([[silent call CocAction('format')]])
+      vim.fn.winrestview(view)
+    end,
+  })
   vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
     group = "CocGroup",
     callback = function()
@@ -115,10 +137,6 @@ return plug({
       replace_keycodes = true,
     }
     local fn = vim.fn
-    local check_backspace = function()
-      local col = vim.fn.col('.') - 1
-      return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
-    end
 
     set('i', '<C-e>', function()
       if fn['coc#pum#visible']() == 1 then
@@ -130,10 +148,8 @@ return plug({
     set('i', '<Tab>', function()
       if fn['coc#pum#visible']() == 1 then
         return fn['coc#pum#next'](1)
-      elseif check_backspace() then
-        return '<Plug>(neotab-out)'
       else
-        return fn['coc#refresh']()
+        return '<Plug>(neotab-out)'
       end
     end, opts)
     set('i', '<S-Tab>', function()

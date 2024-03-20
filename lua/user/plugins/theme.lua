@@ -32,10 +32,10 @@ plug({
         hl.CocSelectedText = { fg = c.visual }
         hl.CocMenuSel = { link = "PmenuSel" }
         hl.CocCodeLens = { fg = c.comment }
-        hl.CocErrorHighlight = { fg = c.error, undercurl = true, }
-        hl.CocWarningHighlight = { fg = c.warn, undercurl = true, }
-        hl.CocInfoHighlight = { fg = c.info, undercurl = true, }
-        hl.CocHintHighlight = { fg = c.hint, undercurl = true, }
+        hl.CocErrorHighlight = { undercurl = true, sp = c.error }
+        hl.CocWarningHighlight = { sp = c.warn, undercurl = true, }
+        hl.CocInfoHighlight = { sp = c.info, undercurl = true, }
+        hl.CocHintHighlight = { sp = c.hint, undercurl = true, }
       end,
     })
   end,
