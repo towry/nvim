@@ -17,10 +17,10 @@ local function setup_coc_lsp_keys()
   -- Symbol renaming
   set('n', '<leader>crn', '<Plug>(coc-rename)', opts)
   -- Formatting selected code
-  set('x', '<leader>cf', '<Plug>(coc-format-selected)<cr>', opts)
-  set('n', '<leader>cf', '<Plug>(coc-format-selected)<cr>', opts)
-  set('x', '<leader>ca', '<Plug>(coc-codeaction-selected)<cr>', opts)
-  set('n', '<leader>ca', '<Plug>(coc-codeaction-selected)<cr>', opts)
+  set('x', '<leader>cf', '<Plug>(coc-format-selected)', opts)
+  set('n', '<leader>cf', [[:<C-u>call CocActionAsync('format')<cr>]], opts)
+  set('x', '<leader>ca', '<Plug>(coc-codeaction-selected)', opts)
+  set('n', '<leader>ca', '<Plug>(coc-codeaction-line)', opts)
   -- organize imports
   set('n', '<leader>ci', [[:<C-u>call CocActionAsync('runCommand', 'editor.action.organizeImport')<cr>]], opts)
   set('n', '<leader>cld', [[:<C-u>CocList diagnostics<cr>]], opts)
@@ -120,6 +120,13 @@ return plug({
       return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
     end
 
+    set('i', '<C-e>', function()
+      if fn['coc#pum#visible']() == 1 then
+        return fn['coc#pum#cancel']()
+      else
+        return '<C-e>'
+      end
+    end, opts)
     set('i', '<Tab>', function()
       if fn['coc#pum#visible']() == 1 then
         return fn['coc#pum#next'](1)

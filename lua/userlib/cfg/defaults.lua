@@ -41,9 +41,9 @@ return {
   },
   runtime__disable_builtin_provider = {
     'perl',
-    'node',
+    -- 'node',
     'ruby',
-    'python',
+    -- 'python',
     'python3',
   },
   runtime__python3_host_prog = '/usr/local/bin/python3',
