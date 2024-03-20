@@ -36,7 +36,7 @@ plug({
         hl.CocSelectedText = { fg = c.visual }
         hl.CocMenuSel = { link = "PmenuSel" }
         hl.CocCodeLens = { fg = c.visual }
-        hl.CocInlayHint = { fg = make_alpha(c.teal, 0.2) }
+        hl.CocInlayHint = { fg = make_alpha(c.comment, 0.3) }
         hl.CocInlayHintType = { link = 'CocInlayHint' }
         hl.CocInlayHintParameter = { link = 'CocInlayHint' }
         hl.CocErrorHighlight = { undercurl = true, sp = c.error }
