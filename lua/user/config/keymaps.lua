@@ -405,19 +405,37 @@ local function setup_basic()
     desc = 'Visual select pasted content',
   })
 
+  --- wait: https://github.com/neovim/neovim/issues/25714
+  --- wait: https://github.com/neovim/neovim/pull/27339
+  local keys = {
+    ['cr'] = vim.api.nvim_replace_termcodes('<CR>', true, true, false),
+    -- close pum after completion
+    ['ctrl-y'] = vim.api.nvim_replace_termcodes('<C-y>', true, true, false),
+    ['ctrl-y_cr'] = vim.api.nvim_replace_termcodes('<C-y><CR>', true, true, false),
+    ['space'] = vim.api.nvim_replace_termcodes('<Space>', true, true, true),
+    ['ctrl-z'] = vim.api.nvim_replace_termcodes('<C-z>', true, true, true),
+    ['bs-ctrl-z'] = vim.api.nvim_replace_termcodes('<C-h><C-z>', true, true, true),
+  }
+  ---- wildmode
+  if vim.cfg.edit__use_coq_cmp or vim.cfg.edit__use_coc then
+    set({ 'c' }, '<', '<', { noremap = true, silent = false })
+    set({ 'c' }, [[<Tab>]], function()
+      if vim.fn.pumvisible() ~= 0 then
+        return '<C-n>'
+      else
+        return '<C-z>'
+      end
+    end, { expr = true, silent = false, noremap = true })
+    --- back a whitespace and then trigger completion.
+    set('c', [[<C-h>]], function()
+      if vim.fn.pumvisible() ~= 0 then
+        return '<C-n>'
+      end
+      return keys['bs-ctrl-z']
+    end, { expr = true, silent = false, noremap = true })
+  end
+  ---- native cmp keys
   if vim.cfg.edit__use_native_cmp then
-    --- wait: https://github.com/neovim/neovim/issues/25714
-    --- wait: https://github.com/neovim/neovim/pull/27339
-    local keys = {
-      ['cr'] = vim.api.nvim_replace_termcodes('<CR>', true, true, false),
-      -- close pum after completion
-      ['ctrl-y'] = vim.api.nvim_replace_termcodes('<C-y>', true, true, false),
-      ['ctrl-y_cr'] = vim.api.nvim_replace_termcodes('<C-y><CR>', true, true, false),
-      ['space'] = vim.api.nvim_replace_termcodes('<Space>', true, true, true),
-      ['ctrl-z'] = vim.api.nvim_replace_termcodes('<C-z>', true, true, true),
-      ['bs-ctrl-z'] = vim.api.nvim_replace_termcodes('<C-h><C-z>', true, true, true),
-    }
-
     -- Move inside completion list with <TAB>
     set({ 'i' }, [[<Tab>]], function()
       local has_luasnip, luasnip = pcall(require, 'luasnip')
@@ -434,35 +452,6 @@ local function setup_basic()
       end
     end, { expr = true, silent = false })
 
-    set({ 'c' }, '<', '<', { noremap = true, silent = false })
-    set({ 'c' }, [[<Tab>]], function()
-      if vim.fn.pumvisible() ~= 0 then
-        return '<C-n>'
-      else
-        return '<C-z>'
-      end
-    end, { expr = true, silent = false, noremap = true })
-    --- back a whitespace and then trigger completion.
-    set('c', [[<C-h>]], function()
-      if vim.fn.pumvisible() ~= 0 then
-        return '<C-n>'
-      end
-      return keys['bs-ctrl-z']
-    end, { expr = true, silent = false, noremap = true })
-
-    -- when item selected, complete it.
-    -- set({ 'i' }, [[<Space>]], function()
-    --   -- in coq, when press space, it will complete the selected but also add
-    --   -- extra space.
-    --   if vim.fn.pumvisible() ~= 0 then
-    --     local item_selected = vim.fn.complete_info()['selected'] ~= -1
-    --     return item_selected and keys['ctrl-y'] or keys['space']
-    --   end
-    --   return keys['space']
-    -- end, {
-    --   expr = true,
-    --   silent = true,
-    -- })
     set({ 'i' }, [[<CR>]], function()
       if vim.fn.pumvisible() ~= 0 then
         local item_selected = vim.fn.complete_info()['selected'] ~= -1

@@ -43,6 +43,7 @@ plug({
         { provider = '%=' },
         require('userlib.statusline.heirline').right_components,
         { provider = '%<%(' },
+        comp.rpad(comp.CocStl),
         comp.rpad({
           provider = '%c,%l/%p%%',
         }),

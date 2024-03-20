@@ -143,7 +143,7 @@ local FileIcon = {
   init = function(self)
     -- not working
     self.icon, self.icon_color =
-      require('nvim-web-devicons').get_icon_color_by_filetype(vim.bo[self.bufnr or 0].filetype, { default = true })
+        require('nvim-web-devicons').get_icon_color_by_filetype(vim.bo[self.bufnr or 0].filetype, { default = true })
   end,
   provider = function(self)
     return self.icon and (self.icon .. ' ')
@@ -258,8 +258,8 @@ local GitStatus = {
       return
     end
     self.has_changes = self.status_dict ~= nil and self.status_dict.added ~= 0
-      or self.status_dict.removed ~= 0
-      or self.status_dict.changed ~= 0
+        or self.status_dict.removed ~= 0
+        or self.status_dict.changed ~= 0
   end,
   provider = '*',
 }
@@ -690,7 +690,7 @@ local gitinfo = require('userlib.git.gitinfo')
 local Gitinfo = {
   condition = function()
     return vim.fn.exists('*FugitiveHead') == 1
-      and (gitinfo.gitinfo.dirty > 0 or gitinfo.gitinfo.aheads > 0 or gitinfo.gitinfo.behinds > 0)
+        and (gitinfo.gitinfo.dirty > 0 or gitinfo.gitinfo.aheads > 0 or gitinfo.gitinfo.behinds > 0)
   end,
   {
     provider = '[',
@@ -785,12 +785,12 @@ local TablineFileFlags = {
   {
     condition = function(self)
       return not vim.api.nvim_get_option_value('modifiable', { buf = self.bufnr })
-        or vim.api.nvim_get_option_value('readonly', { buf = self.bufnr })
+          or vim.api.nvim_get_option_value('readonly', { buf = self.bufnr })
     end,
     provider = function(self)
       if vim.api.nvim_get_option_value('buftype', {
-        buf = self.bufnr,
-      }) == 'terminal' then
+            buf = self.bufnr,
+          }) == 'terminal' then
         return '  '
       else
         return ''
@@ -897,6 +897,14 @@ local UnsavedBufCount = {
   },
 }
 
+local CocStl = {
+  condition = function()
+    return vim.fn.exists('*coc#status')
+  end,
+  hl = { fg = 'yellow' },
+  provider = '%{coc#status()}',
+}
+
 return {
   TerminalStatusline = TerminalStatusline,
   HelpFileName = HelpFileName,
@@ -932,5 +940,6 @@ return {
   Gitinfo = Gitinfo,
   BufVisited = BufVisited,
   TabLine = TabLine,
-  UnsavedBufCount,
+  UnsavedBufCount = UnsavedBufCount,
+  CocStl = CocStl,
 }

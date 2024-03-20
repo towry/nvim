@@ -41,15 +41,17 @@ return {
   },
   runtime__disable_builtin_provider = {
     'perl',
-    'node',
+    -- 'node',
     'ruby',
-    'python',
+    -- 'python',
     'python3',
   },
   runtime__python3_host_prog = '/usr/local/bin/python3',
   ---editing
-  edit__use_native_cmp = true,
+  edit__use_native_cmp = false,
+  edit__use_plugin_cmp = false,
   edit__use_coq_cmp = false,
+  edit__use_coc = true,
   ---editor stuff
   --enable relative number or not.
   editor__relative_number = true,

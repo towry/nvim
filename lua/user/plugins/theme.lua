@@ -16,6 +16,26 @@ plug({
         hl.MiniIndentscopeSymbol = {
           fg = c.selection,
         }
+        hl.CocErrorSign = { link = "DiagnosticError" }
+        hl.CocWarningSign = { link = "DiagnosticWarn" }
+        hl.CocInfoSign = { link = "DiagnosticInfo" }
+        hl.CocHintSign = { link = "DiagnosticHint" }
+        hl.CocErrorFloat = { link = "DiagnosticError" }
+        hl.CocWarningFloat = { link = "DiagnosticWarn" }
+        hl.CocFloating = { link = "NormalFloat" }
+        hl.CocInfoFloat = { link = "DiagnosticInfo" }
+        hl.CocHintFloat = { link = "DiagnosticHint" }
+        hl.CocDiagnosticsError = { link = "DiagnosticError" }
+        hl.CocDiagnosticsWarning = { link = "DiagnosticWarn" }
+        hl.CocDiagnosticsInfo = { link = "DiagnosticInfo" }
+        hl.CocDiagnosticsHint = { link = "DiagnosticHint" }
+        hl.CocSelectedText = { fg = c.visual }
+        hl.CocMenuSel = { link = "PmenuSel" }
+        hl.CocCodeLens = { fg = c.comment }
+        hl.CocErrorHighlight = { undercurl = true, sp = c.error }
+        hl.CocWarningHighlight = { sp = c.warn, undercurl = true, }
+        hl.CocInfoHighlight = { sp = c.info, undercurl = true, }
+        hl.CocHintHighlight = { sp = c.hint, undercurl = true, }
       end,
     })
   end,
@@ -30,11 +50,11 @@ plug({
     require('nord').setup({
       -- your configuration comes here
       -- or leave it empty to use the default settings
-      transparent = false, -- Enable this to disable setting the background color
-      terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
-      diff = { mode = 'fg' }, -- enables/disables colorful backgrounds when used in diff mode. values : [bg|fg]
-      borders = true, -- Enable the border between verticaly split windows visible
-      errors = { mode = 'fg' }, -- Display mode for errors and diagnostics
+      transparent = false,           -- Enable this to disable setting the background color
+      terminal_colors = true,        -- Configure the colors used when opening a `:terminal` in Neovim
+      diff = { mode = 'fg' },        -- enables/disables colorful backgrounds when used in diff mode. values : [bg|fg]
+      borders = true,                -- Enable the border between verticaly split windows visible
+      errors = { mode = 'fg' },      -- Display mode for errors and diagnostics
       -- values : [bg|fg|none]
       search = { theme = 'vscode' }, -- theme for highlighting search results
       -- values : [vim|vscode]
