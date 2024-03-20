@@ -1,0 +1,8 @@
+{
+  "snippets.ultisnips.pythonPrompt": false,
+  "semanticTokens.enable": true,
+  "volar.useWorkspaceTsdk": true,
+  "coc.preferences.formatOnSave": true,
+  "suggest.noselect": true,
+  "suggest.enablePreselect": false
+}

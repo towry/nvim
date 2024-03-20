@@ -3,7 +3,7 @@ local plug = require('userlib.runtime.pack').plug
 local function setup_coc_lsp_keys()
   local keymap = require('userlib.runtime.keymap')
   local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
-  local opts = { silent = true, nowait = true }
+  local opts = { silent = true, nowait = true, expr = false, noremap = true }
 
   --- diagnostic nav
   set('n', ']dd', '<Plug>(coc-diagnostic-next)', opts)
@@ -17,10 +17,10 @@ local function setup_coc_lsp_keys()
   -- Symbol renaming
   set('n', '<leader>crn', '<Plug>(coc-rename)', opts)
   -- Formatting selected code
-  set('x', '<leader>cf', '<Plug>(coc-format-selected)', opts)
-  set('n', '<leader>cf', '<Plug>(coc-format-selected)', opts)
-  set('x', '<leader>ca', '<Plug>(coc-codeaction-selected)', opts)
-  set('n', '<leader>ca', '<Plug>(coc-codeaction-selected)', opts)
+  set('x', '<leader>cf', '<Plug>(coc-format-selected)<cr>', opts)
+  set('n', '<leader>cf', '<Plug>(coc-format-selected)<cr>', opts)
+  set('x', '<leader>ca', '<Plug>(coc-codeaction-selected)<cr>', opts)
+  set('n', '<leader>ca', '<Plug>(coc-codeaction-selected)<cr>', opts)
   -- organize imports
   set('n', '<leader>ci', [[:<C-u>call CocActionAsync('runCommand', 'editor.action.organizeImport')<cr>]], opts)
   set('n', '<leader>cld', [[:<C-u>CocList diagnostics<cr>]], opts)
@@ -40,7 +40,7 @@ local function setup_coc_lsp_keys()
   set('x', '<leader>crF', '<Plug>(coc-codeaction-refactor-selected)', { silent = true })
   set('n', '<leader>crF', '<Plug>(coc-codeaction-refactor-selected)', { silent = true })
   -- Run the Code Lens actions on the current line
-  set('n', '<leader>ccl', '<Plug>(coc-codelens-action)', opts)
+  set('n', '<leader>cC', '<Plug>(coc-codelens-action)', opts)
 
   -- Remap <C-f> and <C-b> to scroll float windows/popups
   ---@diagnostic disable-next-line: redefined-local
@@ -62,7 +62,7 @@ local function setup_coc_lsp_keys()
       vim.api.nvim_command('!' .. vim.o.keywordprg .. ' ' .. cw)
     end
   end
-  set('n', 'KK', show_docs, opts)
+  set('n', 'KK', show_docs, { silent = true, expr = false, nowait = true })
 end
 
 local function setup_coc_autocmd()
@@ -80,6 +80,21 @@ local function setup_coc_autocmd()
     command = "call CocActionAsync('showSignatureHelp')",
     desc = 'Update signature help on jump placeholder',
   })
+  vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
+    group = "CocGroup",
+    callback = function()
+      --- https://github.com/neoclide/coc.nvim/issues/3012
+      if vim.cfg.ui__window_equalalways == true then
+        return
+      end
+
+      if vim.bo.buftype == "nofile" then
+        vim.cmd("set equalalways")
+      else
+        vim.cmd("set noequalalways")
+      end
+    end,
+  })
 end
 
 return plug({
@@ -88,15 +103,16 @@ return plug({
   cmd = {
     'CocInstall',
   },
+  event = 'VeryLazy',
   config = false,
   init = function()
     local keymap = require('userlib.runtime.keymap')
-    local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
+    local set = keymap.set
     local opts = {
       silent = true,
       noremap = true,
       expr = true,
-      replace_keycodes = false,
+      replace_keycodes = true,
     }
     local fn = vim.fn
     local check_backspace = function()
@@ -120,16 +136,47 @@ return plug({
       return '<C-h>'
     end, opts)
     set('i', '<CR>', function()
-      if vim.fn['coc#pum#visible']() == 1 then
+      if vim.fn['coc#pum#visible']() == 1 and vim.fn['coc#pum#info']()['index'] ~= -1 then
         return vim.fn['coc#pum#confirm']()
       end
       return '<CR>'
     end, opts)
+
     --- trigger coc autocmp
     set('i', '<C-y>', 'coc#refresh()', opts)
     set('i', '<C-j>', '<Plug>(coc-snippets-expand-jump)', opts)
 
     setup_coc_lsp_keys()
     setup_coc_autocmd()
+
+    ----------------------------------------------------------------------------
+    -- some config
+    -- https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions#implemented-coc-extensions
+    vim.g.coc_global_extensions = {
+      'coc-json',
+      'coc-css',
+      'coc-tsserver',
+      'coc-html',
+      'coc-html-css-support',
+      -- 'coc-lua',
+      'coc-sumneko-lua',
+      'coc-eslint',
+      'coc-tslint',
+      'coc-prettier',
+      --- rust
+      'coc-rust-analyzer',
+      'coc-toml',
+      --- for vue
+      '@yaegassy/coc-volar',
+      'coc-yaml',
+      -- snippets
+      'coc-snippets',
+      -- 'coc-stylua',
+      'coc-sumneko-lua',
+      --- Symbols outline
+      --- tabnine
+      'coc-tabnine',
+      'coc-tailwindcss',
+    }
   end,
 })
