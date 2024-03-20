@@ -230,7 +230,7 @@ function M.setup_keybinding(client, buffer)
   -- }))
   set(
     'n',
-    'gt',
+    'gy',
     func_call('goto_type_definition()'),
     opts({
       desc = _('Go to type definition'),

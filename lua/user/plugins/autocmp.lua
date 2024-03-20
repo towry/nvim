@@ -170,7 +170,7 @@ pack.plug({
   {
     'petertriho/cmp-git',
     ft = 'gitcommit',
-    enabled = not vim.cfg.edit__use_native_cmp,
+    enabled = vim.cfg.edit__use_plugin_cmp,
     dependencies = {
       'hrsh7th/nvim-cmp',
       'hrsh7th/cmp-buffer',
@@ -189,7 +189,7 @@ pack.plug({
   {
     'lukas-reineke/cmp-rg',
     cond = function()
-      return vim.fn.executable('rg') == 1 and not vim.cfg.edit__use_native_cmp
+      return vim.fn.executable('rg') == 1 and vim.cfg.edit__use_plugin_cmp
     end,
     ft = 'rgflow',
     dependencies = {
@@ -208,7 +208,7 @@ pack.plug({
   },
   {
     'hrsh7th/nvim-cmp',
-    enabled = not vim.cfg.edit__use_native_cmp,
+    enabled = vim.cfg.edit__use_plugin_cmp,
     event = { 'User LazyInsertEnter', 'CmdlineEnter' },
     dependencies = {
       'noearc/cmp-registers',
@@ -597,7 +597,7 @@ pack.plug({
     }
     npairs.setup(args)
 
-    if not vim.cfg.edit__use_native_cmp then
+    if vim.cfg.edit__use_plugin_cmp then
       local cmp_autopairs = require('nvim-autopairs.completion.cmp')
       local cmpcore = require('cmp')
 
