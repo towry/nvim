@@ -52,7 +52,7 @@ return {
   edit__use_native_cmp = false,
   edit__use_plugin_cmp = false,
   edit__use_coq_cmp = false,
-  edit__use_coc = true,
+  edit__use_coc = not vim.g.vscode and true,
   ---editor stuff
   --enable relative number or not.
   editor__relative_number = true,

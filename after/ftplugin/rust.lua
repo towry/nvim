@@ -31,3 +31,8 @@ if not (vim.b.is_big_file and vim.g.vscode) then
   require('userlib.keymaps.neotest').attach()
   require('userlib.keymaps.dap').attach()
 end
+
+if vim.cfg.edit__use_coc then
+  set('n', '<localleader>r', ':<C-u>CocCommand rust-analyzer.run<cr>', {
+    noremap = true, desc = 'Run run', })
+end

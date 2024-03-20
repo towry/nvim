@@ -23,9 +23,12 @@
     "border": true
   },
   "workspace.ignoredFolders": ["$HOME", "$HOME/.cargo/**", "$HOME/.rustup/**"],
-  "rust-analyzer.lens.enable": false,
+  "rust-analyzer.lens.enable": true,
   "rust-analyzer.inlayHints.expressionAdjustmentHints.enable": "reborrow",
   "rust-analyzer.inlayHints.typeHints.enable": false,
+  "rust-analyzer.lens.run.enable": true,
+  "rust-analyzer.lens.debug.enable": true,
+  "rust-analyzer.inlayHints.lifetimeElisionHints.enable": "skip_trivial",
   "rust-analyzer.inlayHints.maxLength": 2,
   "rust-analyzer.inlayHints.renderColons": true
 }
