@@ -103,9 +103,13 @@ local function setup_coc_autocmd()
         return true
       end
 
+      if not vim.fn.CocHasProvider('format') then
+        return
+      end
+
       --- prevent cursor jump and window scroll
       local view = vim.fn.winsaveview()
-      vim.api.nvim_command([[silent call CocAction('format')]])
+      vim.fn.CocAction('format')
       vim.fn.winrestview(view)
     end,
   })
@@ -177,7 +181,7 @@ return plug({
     ----------------------------------------------------------------------------
     -- some config
     -- https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions#implemented-coc-extensions
-    vim.g.coc_global_extensions = {
+    vim.g.coc_global_extensions          = {
       'coc-json',
       'coc-css',
       'coc-tsserver',
@@ -203,5 +207,8 @@ return plug({
       'coc-tabnine',
       'coc-tailwindcss',
     }
+    vim.g.coc_disable_mappings_check     = 1
+    vim.g.coc_disable_uncaught_error     = 1
+    vim.g.coc_disable_transparent_cursor = 1
   end,
 })

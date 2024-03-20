@@ -44,8 +44,8 @@ plug({
     end
   end,
   keys = {
-    -- { '<S-Enter>', desc = 'Increment selection' },
-    -- { '<bs>',      desc = 'Decrement selection', mode = 'x' },
+    { '<M-Enter>', desc = 'Increment selection' },
+    { '<bs>',      desc = 'Decrement selection', mode = 'x' },
   },
   event = { 'VeryLazy' },
   enabled = not vim.cfg.lang__treesitter_next,
@@ -80,10 +80,10 @@ plug({
         additional_vim_regex_highlighting = false,
       },
       incremental_selection = {
-        enable = false,
+        enable = true,
         disable = disabled,
         keymaps = {
-          init_selection = '<S-Enter>',
+          init_selection = '<M-Enter>',
           node_incremental = '<Enter>',
           scope_incremental = '<S-Enter>',
           node_decremental = '<BS>',

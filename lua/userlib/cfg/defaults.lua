@@ -39,12 +39,13 @@ return {
     'netrwSettings',
     'netrwFileHandlers',
   },
+  --- px3: pyenv exec pip3 install pynvim neovim
   runtime__disable_builtin_provider = {
     'perl',
     -- 'node',
     'ruby',
     -- 'python',
-    'python3',
+    -- 'python3',
   },
   runtime__python3_host_prog = '/usr/local/bin/python3',
   ---editing
