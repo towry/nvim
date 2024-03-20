@@ -132,7 +132,7 @@ return plug({
   cmd = {
     'CocInstall',
   },
-  event = {'BufEnter', 'BufNew' },
+  event = { 'BufEnter', 'BufNew' },
   config = false,
   init = function()
     local keymap = require('userlib.runtime.keymap')
@@ -145,16 +145,11 @@ return plug({
     }
     local fn = vim.fn
 
-    set('i', '<C-e>', function()
-      if fn['coc#pum#visible']() == 1 then
-        return fn['coc#pum#cancel']()
-      else
-        return '<C-e>'
-      end
-    end, opts)
     set('i', '<Tab>', function()
       if fn['coc#pum#visible']() == 1 then
         return fn['coc#pum#next'](1)
+      elseif fn['coc#expandableOrJumpable']() then
+        return [[<Plug>(coc-snippets-expand-jump)]]
       else
         return '<Plug>(neotab-out)'
       end

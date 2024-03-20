@@ -13,6 +13,10 @@
   "diagnostic.floatConfig": {
     "border": true
   },
+  "diagnostic.errorSign": "~",
+  "diagnostic.warningSign": "~",
+  "diagnostic.hintSign": "~",
+  "diagnostic.infoSign": "~",
   "pullDiagnostic.onSave": false,
   "hover.floatConfig": {
     "border": true
