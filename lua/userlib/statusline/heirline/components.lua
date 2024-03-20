@@ -36,7 +36,7 @@ end
 
 local stl_static = {
   mode_color_map = {
-    n = 'function',
+    n = 'constant',
     i = 'green',
     v = 'statement',
     V = 'statement',
@@ -48,11 +48,27 @@ local stl_static = {
     R = 'red',
     r = 'red',
     ['!'] = 'constant',
-    t = 'constant',
+    t = 'function',
   },
   mode_color = function(self)
     local mode = vim.fn.mode():sub(1, 1) -- get only the first mode character
     return self.mode_color_map[mode]
+  end,
+}
+
+
+local ShortFileName = {
+  provider = function(self)
+    local bufname = self.bufname or vim.fn.expand('%')
+    local filename = vim.bo.buftype == '' and vim.fn.fnamemodify(bufname, ':t') or bufname
+    if filename == '' and bufname ~= '' then
+      filename = bufname
+    end
+    if filename == '' then
+      return '[No Name]'
+    end
+    --- truncate the filename from right, so the bufnr etc will be visible.
+    return '%-10.20(' .. filename .. '%)'
   end,
 }
 
@@ -120,9 +136,16 @@ local ViMode = {
       end,
     },
     {
-      provider = function(self)
-        return self.mode_names[self.mode] .. ' '
-      end,
+      {
+        provider = '[%n] ',
+      },
+      ShortFileName,
+      {
+        provider = '%m%r',
+      },
+      -- provider = function(self)
+      --   return self.mode_names[self.mode] .. ' '
+      -- end,
       hl = function(self)
         return { bg = self:mode_color(), fg = 'white', bold = true }
       end,
@@ -136,6 +159,7 @@ local ViMode = {
   },
   update = {
     'ModeChanged',
+    'BufEnter',
   },
 }
 
@@ -174,20 +198,6 @@ local FileType = {
 local FileName = {
   provider = function(self)
     local filename = vim.b.relative_path or vim.fn.fnamemodify(self.bufname or vim.api.nvim_buf_get_name(0), ':.')
-    if filename == '' then
-      return '[No Name]'
-    end
-    --- truncate the filename from right, so the bufnr etc will be visible.
-    return '%-10.(' .. filename .. '%)%<'
-  end,
-}
-local ShortFileName = {
-  provider = function(self)
-    local bufname = self.bufname or vim.fn.expand('%')
-    local filename = vim.bo.buftype == '' and vim.fn.fnamemodify(bufname, ':t') or bufname
-    if filename == '' and bufname ~= '' then
-      filename = bufname
-    end
     if filename == '' then
       return '[No Name]'
     end
@@ -575,9 +585,13 @@ local Codeium = {
       local str = vim.api.nvim_call_function('codeium#GetStatusString', {})
       str = vim.trim(str)
       if str == '' or str == '0' then
-        str = '0/0'
+        str = '*'
+      elseif str == 'OFF' then
+        str = '-'
+      elseif str == 'ON' then
+        str = '+'
       end
-      return 'AI:' .. str .. ''
+      return 'AI' .. str .. ''
     end,
   },
 }
