@@ -22,8 +22,9 @@
   "hover.floatConfig": {
     "border": true
   },
+  "inlayHint.display": false,
   "workspace.ignoredFolders": ["$HOME", "$HOME/.cargo/**", "$HOME/.rustup/**"],
-  "rust-analyzer.lens.enable": true,
+  "rust-analyzer.lens.enable": false,
   "rust-analyzer.inlayHints.expressionAdjustmentHints.enable": "reborrow",
   "rust-analyzer.inlayHints.typeHints.enable": false,
   "rust-analyzer.lens.run.enable": true,
