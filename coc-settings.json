@@ -13,8 +13,12 @@
   "diagnostic.floatConfig": {
     "border": true
   },
+  "pullDiagnostic.onSave": false,
   "hover.floatConfig": {
     "border": true
   },
-  "workspace.ignoredFolders": ["$HOME", "$HOME/.cargo/**", "$HOME/.rustup/**"]
+  "workspace.ignoredFolders": ["$HOME", "$HOME/.cargo/**", "$HOME/.rustup/**"],
+  "rust-analyzer.lens.enable": false,
+  "rust-analyzer.inlayHints.maxLength": 2,
+  "rust-analyzer.inlayHints.renderColons": true
 }

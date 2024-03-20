@@ -132,7 +132,7 @@ return plug({
   cmd = {
     'CocInstall',
   },
-  event = 'VeryLazy',
+  event = {'BufEnter', 'BufNew' },
   config = false,
   init = function()
     local keymap = require('userlib.runtime.keymap')
