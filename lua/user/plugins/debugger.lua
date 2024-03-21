@@ -201,6 +201,29 @@ pack.plug({
   end,
 })
 
+pack.plug({
+  {
+    'nvim-neotest/neotest',
+    enabled = vim.cfg.edit__use_coc,
+    optional = true,
+    opts = function(_, opts)
+      opts.adapters = opts.adapters or {}
+      vim.list_extend(opts.adapters, {
+        require('neotest-vim-test')({
+          allow_file_types = {
+            'rust',
+            'typescript',
+            'javascript',
+            'typescriptreact',
+            'javascriptreact',
+          },
+        }),
+      })
+      return opts
+    end,
+  },
+})
+
 ---neotest
 pack.plug({
   cmd = 'Neotest',
@@ -257,9 +280,6 @@ pack.plug({
   opts = function()
     return {
       adapters = {
-        -- require('neotest-rust')({
-        --   args = { '--no-capture' },
-        -- }),
         require('neotest-jest')({
           jestCommand = 'pnpm test --',
           env = { CI = true },
@@ -377,6 +397,47 @@ pack.plug({
 
     neotest.setup(opts)
   end,
+})
+
+pack.plug({
+  'nvim-neotest/neotest-vim-test',
+  event = { 'BufRead' },
+  dependencies = {
+    'nvim-neotest/neotest',
+    {
+      'vim-test/vim-test',
+      cmd = {
+        'TestNearest',
+        'TestClass',
+        'TestFile',
+        'TestSuite',
+        'TestLast',
+        'TestVisit',
+      },
+      init = au.schedule_lazy(function()
+        vim.g['test#strategy'] = 'neovim_sticky'
+        vim.g['test#neovim_sticky#reopen_window'] = 1
+
+        require('userlib.legendary').register(function(lg)
+          lg.commands({
+            {
+              ':TestNearest',
+              description = 'vim test: test nearest',
+            },
+            {
+              ':TestFile',
+              description = 'vim test: test file',
+            },
+            {
+              ':TestLast',
+              description = 'vim test: test last',
+            },
+          })
+        end)
+      end),
+    },
+  },
+  enabled = vim.cfg.edit__use_coc,
 })
 
 ---overseer|task runner
