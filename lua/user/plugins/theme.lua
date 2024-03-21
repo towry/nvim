@@ -205,6 +205,30 @@ plug({
         bold = false,
       }
 
+      hls.CocErrorSign = { link = 'DiagnosticError' }
+      hls.CocWarningSign = { link = 'DiagnosticWarn' }
+      hls.CocInfoSign = { link = 'DiagnosticInfo' }
+      hls.CocHintSign = { link = 'DiagnosticHint' }
+      hls.CocErrorFloat = { link = 'DiagnosticError' }
+      hls.CocWarningFloat = { link = 'DiagnosticWarn' }
+      hls.CocFloating = { link = 'NormalFloat' }
+      hls.CocInfoFloat = { link = 'DiagnosticInfo' }
+      hls.CocHintFloat = { link = 'DiagnosticHint' }
+      hls.CocDiagnosticsError = { link = 'DiagnosticError' }
+      hls.CocDiagnosticsWarning = { link = 'DiagnosticWarn' }
+      hls.CocDiagnosticsInfo = { link = 'DiagnosticInfo' }
+      hls.CocDiagnosticsHint = { link = 'DiagnosticHint' }
+      hls.CocSelectedText = { fg = c.blue }
+      hls.CocMenuSel = { link = 'PmenuSel' }
+      hls.CocCodeLens = { fg = c.visual }
+      hls.CocInlayHint = { fg = c.visual }
+      hls.CocInlayHintType = { link = 'CocInlayHint' }
+      hls.CocInlayHintParameter = { link = 'CocInlayHint' }
+      hls.CocErrorHighlight = { undercurl = true, sp = c.red }
+      hls.CocWarningHighlight = { sp = c.yellow, undercurl = true }
+      hls.CocInfoHighlight = { sp = c.green, undercurl = true }
+      hls.CocHintHighlight = { sp = c.orange, undercurl = true }
+
       return hls
     end,
   },

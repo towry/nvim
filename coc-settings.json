@@ -4,6 +4,7 @@
   "volar.useWorkspaceTsdk": true,
   "coc.preferences.formatOnSave": false,
   "coc.preferences.useQuickfixForLocations": true,
+  "suggest.labelMaxLength": 60,
   "suggest.noselect": true,
   "suggest.insertMode": "replace",
   "suggest.enablePreselect": false,
