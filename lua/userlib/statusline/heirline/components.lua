@@ -36,8 +36,8 @@ end
 
 local stl_static = {
   mode_color_map = {
-    n = 'black',
-    i = 'green',
+    n = 'winbar_bg',
+    i = 'blue',
     v = 'statement',
     V = 'statement',
     ['\22'] = 'statement',
@@ -339,6 +339,7 @@ local function setup_colors()
     red = utils.get_highlight('DiagnosticError').fg or 'none',
     yellow = utils.get_highlight('DiagnosticWarn').fg or 'none',
     green = utils.get_highlight('DiagnosticOk').fg or 'none',
+    blue = utils.get_highlight('StatusLineNC').bg or 'none',
     gray = utils.get_highlight('NonText').fg or 'none',
     ['function'] = utils.get_highlight('Function').fg or 'none',
     constant = utils.get_highlight('Constant').fg or 'none',
@@ -915,7 +916,7 @@ local CocStl = {
   condition = function()
     return vim.fn.exists('*coc#status')
   end,
-  hl = { fg = 'yellow' },
+  hl = { fg = 'green' },
   provider = '%{coc#status()}',
 }
 
