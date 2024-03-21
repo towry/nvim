@@ -69,11 +69,11 @@ endfunction
 
 "- autocmds --------------------------------------------------------------------
 
-let s:cursorline = &g:cursorline
+let s:cursorline = 1
 augroup CursorLine
     autocmd!
-    autocmd VimEnter,WinEnter,BufWinEnter * call <SID>CursorLineOnEnter()
-    autocmd WinLeave                      * call <SID>CursorLineOnLeave()
+    autocmd VimEnter,WinEnter,BufWinEnter,SessionLoadPost * call <SID>CursorLineOnEnter()
+    autocmd WinLeave					  * call <SID>CursorLineOnLeave()
 augroup END
 
 " vim: set ts=8 sts=4 sw=4 noexpandtab ff=unix fdm=syntax :
