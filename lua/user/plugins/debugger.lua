@@ -415,10 +415,11 @@ pack.plug({
         'TestVisit',
       },
       init = au.schedule_lazy(function()
+        vim.g['test#strategy'] = 'toggleterm'
+        -------
         vim.g['test#neovim#start_normal'] = 1
         vim.g['test#toggleterm#start_normal'] = 1
         vim.g['test#neovim_sticky#start_normal'] = 0
-        vim.g['test#strategy'] = 'toggleterm'
         vim.g['test#neovim_sticky#kill_previous'] = 1
         vim.g['test#preserve_screen'] = 0
         vim.g['test#neovim_sticky#reopen_window'] = 1
