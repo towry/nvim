@@ -98,7 +98,7 @@ function M.init_interface()
   o.numberwidth = 1
   o.number = true --- Shows current line number
   o.pumheight = 8 --- Max num of items in completion menu
-  o.pumblend = 2 -- popup blend
+  o.pumblend = 0 -- popup blend
   o.infercase = true -- Infer letter cases for a richer built-in keyword completion
   o.scrolloff = 2 --- Always keep space when scrolling to bottom/top edge
   -- o.smoothscroll = true
