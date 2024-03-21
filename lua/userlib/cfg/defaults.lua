@@ -79,7 +79,7 @@ return {
   editorExtend__colorizer_enable_tailwind_color = true,
   ---languages
   ---- must installed, otherwise slowness.
-  lang__treesitter_next = false,
+  lang__treesitter_next = true,
   lang__treesitter_auto_install = false,
   lang__treesitter_ensure_installed = {
     -- see https://github.com/neovim/neovim/issues/25113#issuecomment-1715470173
