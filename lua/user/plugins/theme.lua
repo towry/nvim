@@ -121,67 +121,67 @@ plug({
     -- variant = 'tritanopia',
     variant = 'tritanopia',
     on_highlights = function(hls, c)
-      local is_dark = vim.o.background == 'dark'
-      hls['FlashLabel'] = {
+      local is_dark                = vim.o.background == 'dark'
+      hls['FlashLabel']            = {
         fg = c.bg_main_dim,
         bg = c.bg_yellow_intense,
         bold = true,
       }
-      hls['FlashBackdrop'] = {
+      hls['FlashBackdrop']         = {
         fg = is_dark and c.fg_dim or '#9f9f9f',
       }
-      hls['LineNr'] = {
-        fg = c.fg_dim,
+      hls['LineNr']                = {
+        fg = c.bg_active,
       }
-      hls['WinSeparator'] = {
-        fg = c.bg_dim,
+      hls['WinSeparator']          = {
+        fg = c.bg_active,
       }
-      hls['Winbar'] = {
+      hls['Winbar']                = {
         fg = c.fg_active,
         bg = c.bg_main,
       }
-      hls['WinbarNc'] = {
+      hls['WinbarNc']              = {
         fg = c.fg_inactive,
         bg = c.bg_main,
       }
-      hls['CursorLineNr'] = {
+      hls['CursorLineNr']          = {
         bg = 'NONE',
         fg = c.fg_main,
         bold = true,
       }
-      hls['FzfLuaNormal'] = { link = 'Normal' }
-      hls['FzfLuaBorder'] = { link = 'LineNr' }
-      hls['FzfLuaPreviewNormal'] = { link = 'Normal' }
-      hls['FoldColumn'] = { bg = c.bg_main, fg = c.fg_dim, bold = false }
-      hls['GitSignsAdd'] = {
+      hls['FzfLuaNormal']          = { link = 'Normal' }
+      hls['FzfLuaBorder']          = { link = 'LineNr' }
+      hls['FzfLuaPreviewNormal']   = { link = 'Normal' }
+      hls['FoldColumn']            = { bg = c.bg_main, fg = c.fg_dim, bold = false }
+      hls['GitSignsAdd']           = {
         fg = c.fg_added,
         bg = 'NONE',
       }
-      hls['GitSignsAddNr'] = {
+      hls['GitSignsAddNr']         = {
         fg = c.fg_added,
         bg = 'NONE',
       }
-      hls['GitSignsChange'] = {
+      hls['GitSignsChange']        = {
         fg = c.fg_changed,
         bg = 'NONE',
       }
-      hls['GitSignsChangeNr'] = {
+      hls['GitSignsChangeNr']      = {
         fg = c.fg_changed,
         bg = 'NONE',
       }
-      hls['GitSignsDelete'] = {
+      hls['GitSignsDelete']        = {
         fg = c.fg_removed,
         bg = 'NONE',
       }
-      hls['GitSignsDeleteNr'] = {
+      hls['GitSignsDeleteNr']      = {
         fg = c.fg_removed,
         bg = 'NONE',
       }
-      hls['StatusLine'] = {
+      hls['StatusLine']            = {
         bg = c.bg_active,
         fg = c.bg_alt,
       }
-      hls['MiniCursorword'] = {
+      hls['MiniCursorword']        = {
         italic = true,
         bold = true,
         bg = 'NONE',
