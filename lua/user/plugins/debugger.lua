@@ -415,10 +415,28 @@ pack.plug({
         'TestVisit',
       },
       init = au.schedule_lazy(function()
-        vim.g['test#strategy'] = 'neovim_sticky'
+        vim.g['test#neovim#start_normal'] = 0
+        vim.g['test#strategy'] = 'toggleterm'
+        vim.g['test#neovim_sticky#kill_previous'] = 1
+        vim.g['test#preserve_screen'] = 0
         vim.g['test#neovim_sticky#reopen_window'] = 1
 
         require('userlib.legendary').register('vim-test', function(lg)
+          lg.funcs({
+            {
+              vim.schedule_wrap(function()
+                local mark = 't'
+                local _, error = pcall(vim.api.nvim_command, ([['%s]]):format(mark))
+                if error then
+                  return
+                end
+                vim.schedule(function()
+                  vim.cmd('TestNearest')
+                end)
+              end),
+              description = 'vim test: test mark t position',
+            },
+          })
           lg.commands({
             {
               ':TestNearest',
@@ -431,6 +449,10 @@ pack.plug({
             {
               ':TestLast',
               description = 'vim test: test last',
+            },
+            {
+              ':TestVisit',
+              description = 'vim test: test last visit',
             },
           })
         end)

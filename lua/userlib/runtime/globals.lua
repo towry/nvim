@@ -185,9 +185,9 @@ Ty.stl_bufChangedCount = function()
   return #require('userlib.runtime.buffer').unsaved_list()
 end
 
-Ty.set_terminal_keymaps = vim.schedule_wrap(function()
+Ty.set_terminal_keymaps = vim.schedule_wrap(function(bufnr)
   local nvim_buf_set_keymap = vim.keymap.set
-  local buffer = vim.api.nvim_get_current_buf()
+  local buffer = bufnr or vim.api.nvim_get_current_buf()
   local opts = { noremap = true, buffer = buffer, nowait = true }
 
   --- prevent <C-z> behavior in all terminals in neovim

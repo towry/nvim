@@ -63,8 +63,8 @@ function M.load_on_startup()
       {
         group = 'bind_key_on_term_open',
         pattern = 'term://*',
-        callback = function()
-          Ty.set_terminal_keymaps()
+        callback = function(ctx)
+          Ty.set_terminal_keymaps(ctx.buf)
         end,
       },
     },

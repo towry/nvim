@@ -275,7 +275,7 @@ pack.plug({
       funcs = require('userlib.legendary.funcs.migrate'),
       commands = require('userlib.legendary.commands.migrate'),
       -- autocmds =
-      -- default_item_formatter = my_formatter,
+      default_item_formatter = my_formatter,
       include_builtin = true,
       include_legendary_cmds = false,
       default_opts = {
