@@ -151,29 +151,30 @@ local function setup_basic()
     expr = true,
     noremap = true,
   })
-  --- do not cut on normal mode.
-  set({ 'n', 'v' }, 'x', function()
-    if vim.v.register == 'x' or vim.v.register == 'X' then
-      return '"' .. vim.v.register .. 'x'
-    end
-    return '"xx'
-  end, {
-    expr = true,
-    silent = true,
-    noremap = true,
-    desc = 'Cut chars and do not yank to register',
-  })
-  set({ 'n', 'v' }, 'X', function()
-    if vim.v.register == 'x' or vim.v.register == 'X' then
-      return '"' .. vim.v.register .. 'X'
-    end
-    return '"xX'
-  end, {
-    expr = true,
-    silent = true,
-    noremap = true,
-    desc = 'Cut chars and do not yank to register',
-  })
+  -- set({ 'n', 'v' }, 'x', function()
+  --   if vim.v.register == 'x' or vim.v.register == 'X' then
+  --     return '"' .. vim.v.register .. 'x'
+  --   end
+  --   return 'x'
+  -- end, {
+  --   expr = true,
+  --   silent = true,
+  --   noremap = true,
+  --   desc = 'Cut chars and do not yank to register',
+  -- })
+  -- set({ 'n', 'v' }, 'X', function()
+  --   if vim.v.register == 'x' or vim.v.register == 'X' then
+  --     return '"' .. vim.v.register .. 'X'
+  --   end
+  --   return 'X'
+  -- end, {
+  --   expr = true,
+  --   silent = true,
+  --   noremap = true,
+  --   desc = 'Cut chars and do not yank to register',
+  -- })
+  --
+  --
 
   ---gx
   if vim.fn.has('macunix') == 1 then
@@ -304,19 +305,19 @@ local function setup_basic()
     local job = require('plenary.job')
     vim.notify('loading tip...')
     job
-      :new({
-        command = 'curl',
-        args = { 'https://vtip.43z.one' },
-        on_exit = function(j, exit_code)
-          tip_is_loading = false
-          local res = table.concat(j:result())
-          if exit_code ~= 0 then
-            res = 'Error fetching tip: ' .. res
-          end
-          print(res)
-        end,
-      })
-      :start()
+        :new({
+          command = 'curl',
+          args = { 'https://vtip.43z.one' },
+          on_exit = function(j, exit_code)
+            tip_is_loading = false
+            local res = table.concat(j:result())
+            if exit_code ~= 0 then
+              res = 'Error fetching tip: ' .. res
+            end
+            print(res)
+          end,
+        })
+        :start()
   end, {
     desc = 'Get a random tip from vtip.43z.one',
   })

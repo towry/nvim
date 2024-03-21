@@ -119,7 +119,7 @@ plug({
   opts = {
     -- `deuteranopia`,
     -- variant = 'tritanopia',
-    variant = 'tinted',
+    variant = 'tritanopia',
     on_highlights = function(hls, c)
       local is_dark = vim.o.background == 'dark'
       hls['FlashLabel'] = {
