@@ -418,7 +418,7 @@ pack.plug({
         vim.g['test#strategy'] = 'neovim_sticky'
         vim.g['test#neovim_sticky#reopen_window'] = 1
 
-        require('userlib.legendary').register(function(lg)
+        require('userlib.legendary').register('vim-test', function(lg)
           lg.commands({
             {
               ':TestNearest',
