@@ -1,7 +1,41 @@
 local plug = require('userlib.runtime.pack').plug
 
 plug({
+  -- 'kepano/flexoki-neovim',
+  'towry/flexoki-neovim',
+  dev = false,
+  branch = 'next',
+  cond = vim.cfg.ui__theme_name == 'flexoki',
+  name = 'flexoki',
+  event = 'User LazyTheme',
+  config = function()
+    -- local palette = require('flexoki.palette')
+    -- local c = palette.palette()
+
+    local hl = {}
+    hl.CocMenuSel = { link = 'PmenuSel' }
+
+    require('flexoki').setup({
+      ---Set the desired variant: 'auto' will follow the vim background,
+      ---defaulting to 'main' for dark and 'dawn' for light. To change the dark
+      ---variant, use `options.dark_variant = 'moon'`.
+      variant = 'auto',
+      dark_variant = 'dark',
+      ---Set the desired light variant: applies when `options.variant` is set to
+      ---'auto' to match `vim.o.background`
+      light_variant = 'light',
+      styles = {
+        undercurl = true,
+      },
+
+      highlight_groups = hl,
+    })
+  end,
+})
+
+plug({
   'binhtran432k/dracula.nvim',
+  cond = vim.cfg.ui__theme_name == 'dracula',
   event = 'User LazyTheme',
   config = function()
     require('dracula').setup({
