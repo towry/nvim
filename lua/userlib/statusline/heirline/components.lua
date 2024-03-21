@@ -36,7 +36,7 @@ end
 
 local stl_static = {
   mode_color_map = {
-    n = 'constant',
+    n = 'black',
     i = 'green',
     v = 'statement',
     V = 'statement',

@@ -49,37 +49,61 @@ plug({
 })
 
 plug({
-  'pze/nord.nvim',
+  -- 'pze/nord.nvim',
+  'gbprod/nord.nvim',
   event = 'User LazyTheme',
-  enabled = false,
+  cond = vim.cfg.ui__theme_name:match('nord'),
   dev = false,
   config = function()
     require('nord').setup({
       -- your configuration comes here
       -- or leave it empty to use the default settings
-      transparent = false,           -- Enable this to disable setting the background color
-      terminal_colors = true,        -- Configure the colors used when opening a `:terminal` in Neovim
-      diff = { mode = 'fg' },        -- enables/disables colorful backgrounds when used in diff mode. values : [bg|fg]
-      borders = true,                -- Enable the border between verticaly split windows visible
-      errors = { mode = 'fg' },      -- Display mode for errors and diagnostics
+      transparent = false,        -- Enable this to disable setting the background color
+      terminal_colors = true,     -- Configure the colors used when opening a `:terminal` in Neovim
+      diff = { mode = 'fg' },     -- enables/disables colorful backgrounds when used in diff mode. values : [bg|fg]
+      borders = true,             -- Enable the border between verticaly split windows visible
+      errors = { mode = 'fg' },   -- Display mode for errors and diagnostics
       -- values : [bg|fg|none]
-      search = { theme = 'vscode' }, -- theme for highlighting search results
+      search = { theme = 'vim' }, -- theme for highlighting search results
       -- values : [vim|vscode]
       styles = {
         -- Style to be applied to different syntax groups
         -- Value is any valid attr-list value for `:help nvim_set_hl`
-        comments = { italic = true },
-        keywords = {},
-        functions = {},
+        comments = { italic = false, bold = false },
+        keywords = { italic = true },
+        functions = { bold = true, italic = true },
         variables = {},
       },
 
       --- You can override specific highlights to use other groups or a hex color
       --- function will be called with all highlights and the colorScheme table
-      on_highlights = function(HL, colors)
-        HL['TreesitterContextBottom'] = {
+      on_highlights = function(hl, c)
+        hl.CocErrorSign = { link = "DiagnosticError" }
+        hl.CocWarningSign = { link = "DiagnosticWarn" }
+        hl.CocInfoSign = { link = "DiagnosticInfo" }
+        hl.CocHintSign = { link = "DiagnosticHint" }
+        hl.CocErrorFloat = { link = "DiagnosticError" }
+        hl.CocWarningFloat = { link = "DiagnosticWarn" }
+        hl.CocFloating = { link = "NormalFloat" }
+        hl.CocInfoFloat = { link = "DiagnosticInfo" }
+        hl.CocHintFloat = { link = "DiagnosticHint" }
+        hl.CocDiagnosticsError = { link = "DiagnosticError" }
+        hl.CocDiagnosticsWarning = { link = "DiagnosticWarn" }
+        hl.CocDiagnosticsInfo = { link = "DiagnosticInfo" }
+        hl.CocDiagnosticsHint = { link = "DiagnosticHint" }
+        hl.CocSelectedText = { fg = c.snow_storm.origin }
+        hl.CocMenuSel = { link = "PmenuSel" }
+        hl.CocCodeLens = { fg = c.polar_night.bright }
+        hl.CocInlayHint = { fg = c.polar_night.bright }
+        hl.CocInlayHintType = { link = 'CocInlayHint' }
+        hl.CocInlayHintParameter = { link = 'CocInlayHint' }
+        hl.CocErrorHighlight = { undercurl = true, sp = c.aurora.red }
+        hl.CocWarningHighlight = { sp = c.aurora.yellow, undercurl = true, }
+        hl.CocInfoHighlight = { sp = c.aurora.green, undercurl = true, }
+        hl.CocHintHighlight = { sp = c.aurora.orange, undercurl = true, }
+        hl.TreesitterContextBottom = {
           underline = true,
-          sp = colors.polar_night.brightest,
+          sp = c.polar_night.brightest,
         }
       end,
     })
