@@ -580,18 +580,16 @@ local Dap = {
 
 local Codeium = {
   condition = function()
-    return vim.fn.exists('*codeium#GetStatusString') == 1
+    return vim.fn.exists('*codeium#GetStatusString') == 1 and vim.fn['codeium#GetStatusString']() ~= 'OFF'
   end,
   {
     provider = function()
       local str = vim.api.nvim_call_function('codeium#GetStatusString', {})
       str = vim.trim(str)
       if str == '' or str == '0' then
-        str = '*'
-      elseif str == 'OFF' then
-        str = '-'
-      elseif str == 'ON' then
-        str = '+'
+        str = ''
+      elseif str == 'ON' or str == 'OFF' then
+        str = ''
       end
       return 'AI' .. str .. ''
     end,
