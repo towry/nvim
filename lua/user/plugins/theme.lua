@@ -9,7 +9,7 @@ plug({
       light_style = 'day',
       dim_inactive = false,
       on_highlights = function(hl, c)
-        local util = require("dracula.util")
+        local util = require('dracula.util')
         local function make_alpha(color, alpha)
           return util.blend(color, c.bg, alpha)
         end
@@ -20,29 +20,29 @@ plug({
         hl.MiniIndentscopeSymbol = {
           fg = c.selection,
         }
-        hl.CocErrorSign = { link = "DiagnosticError" }
-        hl.CocWarningSign = { link = "DiagnosticWarn" }
-        hl.CocInfoSign = { link = "DiagnosticInfo" }
-        hl.CocHintSign = { link = "DiagnosticHint" }
-        hl.CocErrorFloat = { link = "DiagnosticError" }
-        hl.CocWarningFloat = { link = "DiagnosticWarn" }
-        hl.CocFloating = { link = "NormalFloat" }
-        hl.CocInfoFloat = { link = "DiagnosticInfo" }
-        hl.CocHintFloat = { link = "DiagnosticHint" }
-        hl.CocDiagnosticsError = { link = "DiagnosticError" }
-        hl.CocDiagnosticsWarning = { link = "DiagnosticWarn" }
-        hl.CocDiagnosticsInfo = { link = "DiagnosticInfo" }
-        hl.CocDiagnosticsHint = { link = "DiagnosticHint" }
+        hl.CocErrorSign = { link = 'DiagnosticError' }
+        hl.CocWarningSign = { link = 'DiagnosticWarn' }
+        hl.CocInfoSign = { link = 'DiagnosticInfo' }
+        hl.CocHintSign = { link = 'DiagnosticHint' }
+        hl.CocErrorFloat = { link = 'DiagnosticError' }
+        hl.CocWarningFloat = { link = 'DiagnosticWarn' }
+        hl.CocFloating = { link = 'NormalFloat' }
+        hl.CocInfoFloat = { link = 'DiagnosticInfo' }
+        hl.CocHintFloat = { link = 'DiagnosticHint' }
+        hl.CocDiagnosticsError = { link = 'DiagnosticError' }
+        hl.CocDiagnosticsWarning = { link = 'DiagnosticWarn' }
+        hl.CocDiagnosticsInfo = { link = 'DiagnosticInfo' }
+        hl.CocDiagnosticsHint = { link = 'DiagnosticHint' }
         hl.CocSelectedText = { fg = c.visual }
-        hl.CocMenuSel = { link = "PmenuSel" }
+        hl.CocMenuSel = { link = 'PmenuSel' }
         hl.CocCodeLens = { fg = c.visual }
         hl.CocInlayHint = { fg = make_alpha(c.comment, 0.3) }
         hl.CocInlayHintType = { link = 'CocInlayHint' }
         hl.CocInlayHintParameter = { link = 'CocInlayHint' }
         hl.CocErrorHighlight = { undercurl = true, sp = c.error }
-        hl.CocWarningHighlight = { sp = c.warn, undercurl = true, }
-        hl.CocInfoHighlight = { sp = c.info, undercurl = true, }
-        hl.CocHintHighlight = { sp = c.hint, undercurl = true, }
+        hl.CocWarningHighlight = { sp = c.warn, undercurl = true }
+        hl.CocInfoHighlight = { sp = c.info, undercurl = true }
+        hl.CocHintHighlight = { sp = c.hint, undercurl = true }
       end,
     })
   end,
@@ -58,11 +58,11 @@ plug({
     require('nord').setup({
       -- your configuration comes here
       -- or leave it empty to use the default settings
-      transparent = false,        -- Enable this to disable setting the background color
-      terminal_colors = true,     -- Configure the colors used when opening a `:terminal` in Neovim
-      diff = { mode = 'fg' },     -- enables/disables colorful backgrounds when used in diff mode. values : [bg|fg]
-      borders = true,             -- Enable the border between verticaly split windows visible
-      errors = { mode = 'fg' },   -- Display mode for errors and diagnostics
+      transparent = false, -- Enable this to disable setting the background color
+      terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
+      diff = { mode = 'fg' }, -- enables/disables colorful backgrounds when used in diff mode. values : [bg|fg]
+      borders = true, -- Enable the border between verticaly split windows visible
+      errors = { mode = 'fg' }, -- Display mode for errors and diagnostics
       -- values : [bg|fg|none]
       search = { theme = 'vim' }, -- theme for highlighting search results
       -- values : [vim|vscode]
@@ -78,29 +78,29 @@ plug({
       --- You can override specific highlights to use other groups or a hex color
       --- function will be called with all highlights and the colorScheme table
       on_highlights = function(hl, c)
-        hl.CocErrorSign = { link = "DiagnosticError" }
-        hl.CocWarningSign = { link = "DiagnosticWarn" }
-        hl.CocInfoSign = { link = "DiagnosticInfo" }
-        hl.CocHintSign = { link = "DiagnosticHint" }
-        hl.CocErrorFloat = { link = "DiagnosticError" }
-        hl.CocWarningFloat = { link = "DiagnosticWarn" }
-        hl.CocFloating = { link = "NormalFloat" }
-        hl.CocInfoFloat = { link = "DiagnosticInfo" }
-        hl.CocHintFloat = { link = "DiagnosticHint" }
-        hl.CocDiagnosticsError = { link = "DiagnosticError" }
-        hl.CocDiagnosticsWarning = { link = "DiagnosticWarn" }
-        hl.CocDiagnosticsInfo = { link = "DiagnosticInfo" }
-        hl.CocDiagnosticsHint = { link = "DiagnosticHint" }
+        hl.CocErrorSign = { link = 'DiagnosticError' }
+        hl.CocWarningSign = { link = 'DiagnosticWarn' }
+        hl.CocInfoSign = { link = 'DiagnosticInfo' }
+        hl.CocHintSign = { link = 'DiagnosticHint' }
+        hl.CocErrorFloat = { link = 'DiagnosticError' }
+        hl.CocWarningFloat = { link = 'DiagnosticWarn' }
+        hl.CocFloating = { link = 'NormalFloat' }
+        hl.CocInfoFloat = { link = 'DiagnosticInfo' }
+        hl.CocHintFloat = { link = 'DiagnosticHint' }
+        hl.CocDiagnosticsError = { link = 'DiagnosticError' }
+        hl.CocDiagnosticsWarning = { link = 'DiagnosticWarn' }
+        hl.CocDiagnosticsInfo = { link = 'DiagnosticInfo' }
+        hl.CocDiagnosticsHint = { link = 'DiagnosticHint' }
         hl.CocSelectedText = { fg = c.snow_storm.origin }
-        hl.CocMenuSel = { link = "PmenuSel" }
+        hl.CocMenuSel = { link = 'PmenuSel' }
         hl.CocCodeLens = { fg = c.polar_night.bright }
         hl.CocInlayHint = { fg = c.polar_night.bright }
         hl.CocInlayHintType = { link = 'CocInlayHint' }
         hl.CocInlayHintParameter = { link = 'CocInlayHint' }
         hl.CocErrorHighlight = { undercurl = true, sp = c.aurora.red }
-        hl.CocWarningHighlight = { sp = c.aurora.yellow, undercurl = true, }
-        hl.CocInfoHighlight = { sp = c.aurora.green, undercurl = true, }
-        hl.CocHintHighlight = { sp = c.aurora.orange, undercurl = true, }
+        hl.CocWarningHighlight = { sp = c.aurora.yellow, undercurl = true }
+        hl.CocInfoHighlight = { sp = c.aurora.green, undercurl = true }
+        hl.CocHintHighlight = { sp = c.aurora.orange, undercurl = true }
         hl.TreesitterContextBottom = {
           underline = true,
           sp = c.polar_night.brightest,
@@ -120,68 +120,74 @@ plug({
     -- `deuteranopia`,
     -- variant = 'tritanopia',
     variant = 'tritanopia',
+    dim_inactive = false,
+    styles = {
+      comments = { italic = false, bold = false },
+      keywords = { italic = true },
+      functions = { bold = true, italic = true },
+    },
     on_highlights = function(hls, c)
-      local is_dark                = vim.o.background == 'dark'
-      hls['FlashLabel']            = {
+      local is_dark = vim.o.background == 'dark'
+      hls['FlashLabel'] = {
         fg = c.bg_main_dim,
         bg = c.bg_yellow_intense,
         bold = true,
       }
-      hls['FlashBackdrop']         = {
+      hls['FlashBackdrop'] = {
         fg = is_dark and c.fg_dim or '#9f9f9f',
       }
-      hls['LineNr']                = {
+      hls['LineNr'] = {
         fg = c.bg_active,
       }
-      hls['WinSeparator']          = {
+      hls['WinSeparator'] = {
         fg = c.bg_active,
       }
-      hls['Winbar']                = {
+      hls['Winbar'] = {
         fg = c.fg_active,
         bg = c.bg_main,
       }
-      hls['WinbarNc']              = {
+      hls['WinbarNc'] = {
         fg = c.fg_inactive,
         bg = c.bg_main,
       }
-      hls['CursorLineNr']          = {
+      hls['CursorLineNr'] = {
         bg = 'NONE',
         fg = c.fg_main,
         bold = true,
       }
-      hls['FzfLuaNormal']          = { link = 'Normal' }
-      hls['FzfLuaBorder']          = { link = 'LineNr' }
-      hls['FzfLuaPreviewNormal']   = { link = 'Normal' }
-      hls['FoldColumn']            = { bg = c.bg_main, fg = c.fg_dim, bold = false }
-      hls['GitSignsAdd']           = {
+      hls['FzfLuaNormal'] = { link = 'Normal' }
+      hls['FzfLuaBorder'] = { link = 'LineNr' }
+      hls['FzfLuaPreviewNormal'] = { link = 'Normal' }
+      hls['FoldColumn'] = { bg = c.bg_main, fg = c.fg_dim, bold = false }
+      hls['GitSignsAdd'] = {
         fg = c.fg_added,
         bg = 'NONE',
       }
-      hls['GitSignsAddNr']         = {
+      hls['GitSignsAddNr'] = {
         fg = c.fg_added,
         bg = 'NONE',
       }
-      hls['GitSignsChange']        = {
+      hls['GitSignsChange'] = {
         fg = c.fg_changed,
         bg = 'NONE',
       }
-      hls['GitSignsChangeNr']      = {
+      hls['GitSignsChangeNr'] = {
         fg = c.fg_changed,
         bg = 'NONE',
       }
-      hls['GitSignsDelete']        = {
+      hls['GitSignsDelete'] = {
         fg = c.fg_removed,
         bg = 'NONE',
       }
-      hls['GitSignsDeleteNr']      = {
+      hls['GitSignsDeleteNr'] = {
         fg = c.fg_removed,
         bg = 'NONE',
       }
-      hls['StatusLine']            = {
+      hls['StatusLine'] = {
         bg = c.bg_active,
         fg = c.bg_alt,
       }
-      hls['MiniCursorword']        = {
+      hls['MiniCursorword'] = {
         italic = true,
         bold = true,
         bg = 'NONE',
