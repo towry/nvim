@@ -281,18 +281,21 @@ plug({
       -- Determines where the aerial window will be opened
       --   edge   - open aerial at the far right/left of the editor
       --   window - open aerial to the right/left of the current window
-      placement = 'window',
+      placement = 'edge',
       -- When the symbols change, resize the aerial window (within min/max constraints) to fit
       resize_to_content = true,
       -- Preserve window size equality with (:help CTRL-W_=)
       preserve_equality = true,
     },
     -- global, window
-    attach_mode = 'global',
+    attach_mode = 'window',
     --- unfocus
     --- switch_buffer
     --- unsupported
-    close_automatic_events = {},
+    close_automatic_events = {
+      'unsupported',
+      'switch_buffer',
+    },
     -- see :help SymbolKind
     filter_kind = {
       'Module',
@@ -313,10 +316,11 @@ plug({
       'Method',
       'Struct',
     },
-    autojump = true,
+    autojump = false,
     close_on_select = true,
     highlight_on_hover = true,
     show_guides = true,
+    update_events = 'InsertLeave',
     ignore = {
       -- Ignore unlisted buffers. See :help buflisted
       unlisted_buffers = false,
@@ -1084,7 +1088,7 @@ plug({
       },
     })
 
-    local enable_fzf_select = true
+    local enable_fzf_select = vim.cfg.ui__input_select_provider == 'fzf-lua'
 
     if not enable_fzf_select then
       return
@@ -1097,12 +1101,9 @@ plug({
         width = 0.75,
       },
       fzf_opts = {
-        -- ['--ansi'] = '',
-        -- ['--info'] = 'inline',
-        ------===
         ['--delimiter'] = '[BEGIN{FS="."}]',
+        -- ['--delimiter'] = '[\\.]',
         ['--with-nth'] = '2..',
-        -------===
       },
     })
   end,

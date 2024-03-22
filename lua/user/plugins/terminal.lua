@@ -47,7 +47,7 @@ plug({
         shade_filetypes = { 'none' },
         shade_terminals = true,
         shading_factor = 1, -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
-        start_in_insert = true,
+        start_in_insert = false,
         insert_mappings = true, -- whether or not the open mapping applies in insert mode
         persist_size = false,
         persist_mode = false,
@@ -75,9 +75,11 @@ plug({
             end
           end)
         end,
-        on_open = function(_term)
+        on_open = function(term)
           au.do_useraucmd(au.user_autocmds.TermIsOpen_User)
-          vim.cmd('startinsert!')
+          if term.start_in_insert then
+            vim.cmd('startinsert!')
+          end
           if vim.fn.exists('&winfixbuf') == 1 then
             vim.cmd('setlocal winfixbuf')
           end

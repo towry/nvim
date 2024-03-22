@@ -3,7 +3,7 @@ local plug = require('userlib.runtime.pack').plug
 plug({
   -- 'kepano/flexoki-neovim',
   'towry/flexoki-neovim',
-  dev = false,
+  dev = true,
   branch = 'next',
   cond = vim.cfg.ui__theme_name == 'flexoki',
   name = 'flexoki',

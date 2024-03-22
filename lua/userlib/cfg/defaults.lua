@@ -163,6 +163,8 @@ return {
   ui__theme_name = 'default',
   ui__float_border = 'single',
   ui__window_equalalways = false,
+  ---@type "mini"|"fzf-lua"|"telescope"
+  ui__input_select_provider = 'fzf-lua',
   workbench__lualine_theme = 'default',
   ---misc stuff.
   misc__buf_exclude = {

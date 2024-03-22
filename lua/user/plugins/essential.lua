@@ -12,8 +12,10 @@ pack.plug({
       require('mini.pick').setup({ window = { config = { border = 'single' } } })
     end,
     init = au.schedule_lazy(function()
-      -- not support expand
-      -- vim.ui.select = require('mini.pick').ui_select
+      if vim.cfg.ui__input_select_provider ~= 'mini' then
+        return
+      end
+      vim.ui.select = require('mini.pick').ui_select
     end),
   },
   { 'echasnovski/mini.extra' },
@@ -241,6 +243,7 @@ pack.plug({
 --- legendary
 pack.plug({
   'mrjones2014/legendary.nvim',
+  branch = 'mrj/437/mini-pick-compatibility',
   dependencies = {
     'dressing.nvim',
     -- used for frecency sort
