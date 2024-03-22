@@ -8,6 +8,7 @@
   "notification.border": true,
   "notification.highlightGroup": "CocNotificationNormal",
   "notification.winblend": 0,
+  "notification.timeout": 10000,
   "notification.focusable": false,
   "notification.statusLineProgress": true,
   "coc.preferences.useQuickfixForLocations": true,
