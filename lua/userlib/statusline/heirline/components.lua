@@ -56,7 +56,6 @@ local stl_static = {
   end,
 }
 
-
 local ShortFileName = {
   provider = function(self)
     local bufname = self.bufname or vim.fn.expand('%')
@@ -167,7 +166,7 @@ local FileIcon = {
   init = function(self)
     -- not working
     self.icon, self.icon_color =
-        require('nvim-web-devicons').get_icon_color_by_filetype(vim.bo[self.bufnr or 0].filetype, { default = true })
+      require('nvim-web-devicons').get_icon_color_by_filetype(vim.bo[self.bufnr or 0].filetype, { default = true })
   end,
   provider = function(self)
     return self.icon and (self.icon .. ' ')
@@ -268,8 +267,8 @@ local GitStatus = {
       return
     end
     self.has_changes = self.status_dict ~= nil and self.status_dict.added ~= 0
-        or self.status_dict.removed ~= 0
-        or self.status_dict.changed ~= 0
+      or self.status_dict.removed ~= 0
+      or self.status_dict.changed ~= 0
   end,
   provider = '*',
 }
@@ -344,7 +343,8 @@ local function setup_colors()
     gray = utils.get_highlight('NonText').fg or 'none',
     ['function'] = utils.get_highlight('Function').fg or 'none',
     constant = utils.get_highlight('Constant').fg or 'none',
-    statement = utils.get_highlight('Statement').fg or 'none',
+    -- statement = utils.get_highlight('Statement').fg or 'none',
+    statement = utils.get_highlight('Comment').fg or 'none',
     visual = utils.get_highlight('Visual').bg or 'none',
     diag_warn = utils.get_highlight('DiagnosticWarn').fg or 'none',
     diag_error = utils.get_highlight('DiagnosticError').fg or 'none',
@@ -704,7 +704,7 @@ local gitinfo = require('userlib.git.gitinfo')
 local Gitinfo = {
   condition = function()
     return vim.fn.exists('*FugitiveHead') == 1
-        and (gitinfo.gitinfo.dirty > 0 or gitinfo.gitinfo.aheads > 0 or gitinfo.gitinfo.behinds > 0)
+      and (gitinfo.gitinfo.dirty > 0 or gitinfo.gitinfo.aheads > 0 or gitinfo.gitinfo.behinds > 0)
   end,
   {
     provider = '[',
@@ -799,12 +799,12 @@ local TablineFileFlags = {
   {
     condition = function(self)
       return not vim.api.nvim_get_option_value('modifiable', { buf = self.bufnr })
-          or vim.api.nvim_get_option_value('readonly', { buf = self.bufnr })
+        or vim.api.nvim_get_option_value('readonly', { buf = self.bufnr })
     end,
     provider = function(self)
       if vim.api.nvim_get_option_value('buftype', {
-            buf = self.bufnr,
-          }) == 'terminal' then
+        buf = self.bufnr,
+      }) == 'terminal' then
         return '  '
       else
         return ''
