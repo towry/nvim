@@ -229,5 +229,10 @@ return plug({
     vim.g.coc_disable_mappings_check = 1
     vim.g.coc_disable_uncaught_error = 1
     vim.g.coc_disable_transparent_cursor = 1
+    vim.g.coc_notify_error_icon = ' '
+    vim.g.coc_notify_warning_icon = ' '
+    vim.g.coc_notify_info_icon = ' '
+    vim.g.coc_status_error_sign = 'E'
+    vim.g.coc_status_warning_sign = 'W'
   end,
 })
