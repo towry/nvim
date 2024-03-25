@@ -243,7 +243,6 @@ pack.plug({
 --- legendary
 pack.plug({
   'mrjones2014/legendary.nvim',
-  branch = 'mrj/437/mini-pick-compatibility',
   dependencies = {
     'dressing.nvim',
     -- used for frecency sort
