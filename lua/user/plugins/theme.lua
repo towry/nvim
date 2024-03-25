@@ -39,7 +39,7 @@ plug({
   event = 'User LazyTheme',
   config = function()
     require('dracula').setup({
-      style = 'default',
+      style = 'soft',
       light_style = 'day',
       dim_inactive = false,
       on_highlights = function(hl, c)
@@ -83,13 +83,12 @@ plug({
 })
 
 plug({
-  -- 'pze/nord.nvim',
-  'gbprod/nord.nvim',
+  'towry/dracula-mini.nvim',
   event = 'User LazyTheme',
-  cond = vim.cfg.ui__theme_name:match('nord'),
+  cond = vim.cfg.ui__theme_name:match('dracula-mini'),
   dev = false,
   config = function()
-    require('nord').setup({
+    require('dracula-mini').setup({
       -- your configuration comes here
       -- or leave it empty to use the default settings
       transparent = false, -- Enable this to disable setting the background color
