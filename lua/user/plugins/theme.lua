@@ -110,35 +110,7 @@ plug({
 
       --- You can override specific highlights to use other groups or a hex color
       --- function will be called with all highlights and the colorScheme table
-      on_highlights = function(hl, c)
-        hl.CocErrorSign = { link = 'DiagnosticError' }
-        hl.CocWarningSign = { link = 'DiagnosticWarn' }
-        hl.CocInfoSign = { link = 'DiagnosticInfo' }
-        hl.CocHintSign = { link = 'DiagnosticHint' }
-        hl.CocErrorFloat = { link = 'DiagnosticError' }
-        hl.CocWarningFloat = { link = 'DiagnosticWarn' }
-        hl.CocFloating = { link = 'NormalFloat' }
-        hl.CocInfoFloat = { link = 'DiagnosticInfo' }
-        hl.CocHintFloat = { link = 'DiagnosticHint' }
-        hl.CocDiagnosticsError = { link = 'DiagnosticError' }
-        hl.CocDiagnosticsWarning = { link = 'DiagnosticWarn' }
-        hl.CocDiagnosticsInfo = { link = 'DiagnosticInfo' }
-        hl.CocDiagnosticsHint = { link = 'DiagnosticHint' }
-        hl.CocSelectedText = { fg = c.snow_storm.origin }
-        hl.CocMenuSel = { link = 'PmenuSel' }
-        hl.CocCodeLens = { fg = c.polar_night.bright }
-        hl.CocInlayHint = { fg = c.polar_night.bright }
-        hl.CocInlayHintType = { link = 'CocInlayHint' }
-        hl.CocInlayHintParameter = { link = 'CocInlayHint' }
-        hl.CocErrorHighlight = { undercurl = true, sp = c.aurora.red }
-        hl.CocWarningHighlight = { sp = c.aurora.yellow, undercurl = true }
-        hl.CocInfoHighlight = { sp = c.aurora.green, undercurl = true }
-        hl.CocHintHighlight = { sp = c.aurora.orange, undercurl = true }
-        hl.TreesitterContextBottom = {
-          underline = true,
-          sp = c.polar_night.brightest,
-        }
-      end,
+      on_highlights = function(hl, c) end,
     })
   end,
 })
