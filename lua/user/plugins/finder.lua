@@ -125,7 +125,7 @@ plug({
   opts = {
     default_file_explorer = true,
     columns = {
-      'icon',
+      -- 'icon',
     },
     keymaps = {
       ['g?'] = 'actions.show_help',
