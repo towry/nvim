@@ -4,9 +4,6 @@ local utils = require('heirline.utils')
 local format_utils = require('userlib.lsp.servers.null_ls.fmt')
 local auto_format_disabled = require('userlib.lsp.servers.null_ls.autoformat').disabled
 
--- local SepLeft = ''
--- local SepRight = ''
-
 local Spacer = { provider = ' ' }
 local function rpad(child)
   child = child or {}
@@ -58,8 +55,8 @@ local stl_static = {
 
 local ShortFileName = {
   provider = function(self)
-    local bufname = self.bufname or vim.fn.expand('%')
-    local filename = vim.bo.buftype == '' and vim.fn.fnamemodify(bufname, ':t') or bufname
+    local bufname = self.bufname or vim.fn.expand('%:p')
+    local filename = vim.bo.buftype == '' and vim.fn.fnamemodify(bufname, ':~') or bufname
     if filename == '' and bufname ~= '' then
       filename = bufname
     end
@@ -67,7 +64,7 @@ local ShortFileName = {
       return '[No Name]'
     end
     --- truncate the filename from right, so the bufnr etc will be visible.
-    return '%-10.20(' .. filename .. '%)'
+    return '%-10.50(' .. filename .. '%)'
   end,
 }
 

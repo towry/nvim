@@ -34,59 +34,10 @@ plug({
 })
 
 plug({
-  'binhtran432k/dracula.nvim',
-  cond = vim.cfg.ui__theme_name == 'dracula',
-  event = 'User LazyTheme',
-  config = function()
-    require('dracula').setup({
-      style = 'soft',
-      light_style = 'day',
-      dim_inactive = false,
-      on_highlights = function(hl, c)
-        local util = require('dracula.util')
-        local function make_alpha(color, alpha)
-          return util.blend(color, c.bg, alpha)
-        end
-        hl.WinSeparator = {
-          fg = c.selection,
-          bold = true,
-        }
-        hl.MiniIndentscopeSymbol = {
-          fg = c.selection,
-        }
-        hl.CocErrorSign = { link = 'DiagnosticError' }
-        hl.CocWarningSign = { link = 'DiagnosticWarn' }
-        hl.CocInfoSign = { link = 'DiagnosticInfo' }
-        hl.CocHintSign = { link = 'DiagnosticHint' }
-        hl.CocErrorFloat = { link = 'DiagnosticError' }
-        hl.CocWarningFloat = { link = 'DiagnosticWarn' }
-        hl.CocFloating = { link = 'NormalFloat' }
-        hl.CocInfoFloat = { link = 'DiagnosticInfo' }
-        hl.CocHintFloat = { link = 'DiagnosticHint' }
-        hl.CocDiagnosticsError = { link = 'DiagnosticError' }
-        hl.CocDiagnosticsWarning = { link = 'DiagnosticWarn' }
-        hl.CocDiagnosticsInfo = { link = 'DiagnosticInfo' }
-        hl.CocDiagnosticsHint = { link = 'DiagnosticHint' }
-        hl.CocSelectedText = { fg = c.visual }
-        hl.CocMenuSel = { link = 'PmenuSel' }
-        hl.CocCodeLens = { fg = c.visual }
-        hl.CocInlayHint = { fg = make_alpha(c.comment, 0.3) }
-        hl.CocInlayHintType = { link = 'CocInlayHint' }
-        hl.CocInlayHintParameter = { link = 'CocInlayHint' }
-        hl.CocErrorHighlight = { undercurl = true, sp = c.error }
-        hl.CocWarningHighlight = { sp = c.warn, undercurl = true }
-        hl.CocInfoHighlight = { sp = c.info, undercurl = true }
-        hl.CocHintHighlight = { sp = c.hint, undercurl = true }
-      end,
-    })
-  end,
-})
-
-plug({
   'towry/dracula-mini.nvim',
   event = 'User LazyTheme',
   cond = vim.cfg.ui__theme_name:match('dracula-mini'),
-  dev = false,
+  dev = true,
   config = function()
     require('dracula-mini').setup({
       -- your configuration comes here
