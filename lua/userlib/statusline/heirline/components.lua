@@ -64,7 +64,7 @@ local ShortFileName = {
       return '[No Name]'
     end
     --- truncate the filename from right, so the bufnr etc will be visible.
-    return '%-10.50(' .. filename .. '%)'
+    return '%-10.80(' .. filename .. '%)'
   end,
 }
 
