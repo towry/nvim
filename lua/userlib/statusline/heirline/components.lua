@@ -124,11 +124,11 @@ local ViMode = {
     },
   },
   {
+    hl = {
+      bg = 'none',
+    },
     {
       provider = ' ',
-      hl = function(self)
-        return { fg = self:mode_color() }
-      end,
     },
     {
       provider = function(self)
@@ -140,9 +140,6 @@ local ViMode = {
     },
     {
       provider = ' ',
-      hl = function(self)
-        return { fg = self:mode_color() }
-      end,
     },
   },
   update = {
