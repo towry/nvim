@@ -125,7 +125,7 @@ local ViMode = {
   },
   {
     {
-      provider = ' [',
+      provider = ' ⛰ ',
       hl = function(self)
         return { fg = self:mode_color() }
       end,
@@ -139,7 +139,7 @@ local ViMode = {
       end,
     },
     {
-      provider = ']',
+      provider = ' ',
       hl = function(self)
         return { fg = self:mode_color() }
       end,
@@ -579,7 +579,7 @@ local Codeium = {
       elseif str == 'ON' or str == 'OFF' then
         str = ''
       end
-      return 'AI' .. str .. ''
+      return '󰑣 ' .. str .. ''
     end,
   },
 }

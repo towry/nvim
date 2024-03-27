@@ -53,7 +53,7 @@ plug({
         comp.rpad(comp.Codeium),
         comp.rpad({ comp.Branch, comp.GitStatus }),
         comp.rpad({
-          provider = '[%c,%l]',
+          provider = '%c:%l',
         }),
         comp.rpad(comp.Dap),
         -- comp.rpad(comp.LspFormatter),
