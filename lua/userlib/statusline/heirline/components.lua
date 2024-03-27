@@ -311,7 +311,7 @@ local Overseer = {
 
 local function setup_colors()
   return {
-    fg = utils.get_highlight('Normal').fg or 'none',
+    fg = utils.get_highlight('StatusLine').fg or 'none',
     bg = utils.get_highlight('StatusLine').bg or 'none',
     winbar_fg = utils.get_highlight('Winbar').fg or 'none',
     winbar_bg = utils.get_highlight('Winbar').bg or 'none',
