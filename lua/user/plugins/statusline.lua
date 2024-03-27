@@ -33,7 +33,7 @@ plug({
         },
         comp.ViMode,
         comp.Tabs,
-        comp.lpad({
+        {
           {
             provider = '[%n]',
           },
@@ -41,7 +41,7 @@ plug({
           {
             provider = '%m%w%q%r',
           },
-        }),
+        },
         comp.lpad(comp.Overseer),
         comp.lpad(require('userlib.statusline.heirline.component_diagnostic')),
         require('userlib.statusline.heirline').left_components,
@@ -53,7 +53,7 @@ plug({
         comp.rpad(comp.Codeium),
         comp.rpad({ comp.Branch, comp.GitStatus }),
         comp.rpad({
-          provider = '/%c,%l',
+          provider = '[%c,%l]',
         }),
         comp.rpad(comp.Dap),
         -- comp.rpad(comp.LspFormatter),
