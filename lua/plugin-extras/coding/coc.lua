@@ -187,8 +187,35 @@ return plug({
       return '<CR>'
     end, opts)
 
-    --- trigger coc autocmp
-    set('i', '<C-y>', 'coc#refresh()', opts)
+    --- trigger coc autocmp and ai
+    set('i', '<C-y>', function()
+      local trigger_ai = function()
+        -- trigger ai
+        if vim.b._copilot then
+          vim.fn['copilot#Suggest']()
+          return true
+        elseif vim.fn.exists('*codeium#Complete') == 1 then
+          vim.fn['codeium#Complete']()
+          return true
+        end
+        return false
+      end
+
+      if Ty.has_ai_suggestions() and Ty.has_ai_suggestion_text() then
+        if vim.fn['coc#pum#visible']() == 1 then
+          vim.fn['coc#pum#cancel']()
+        end
+        if vim.b._copilot then
+          vim.fn.feedkeys(vim.fn['copilot#Accept'](), 'i')
+        elseif vim.b._codeium_completions then
+          vim.fn.feedkeys(vim.fn['codeium#Accept'](), 'i')
+        end
+      else
+        if not trigger_ai() then
+          vim.fn['coc#refresh']()
+        end
+      end
+    end, opts)
     set('i', '<C-j>', '<Plug>(coc-snippets-expand-jump)', opts)
 
     setup_coc_lsp_keys()
