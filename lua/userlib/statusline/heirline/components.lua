@@ -34,11 +34,11 @@ end
 local stl_static = {
   mode_color_map = {
     n = 'label',
-    i = 'keyword',
+    i = 'green',
     v = 'statement',
     V = 'statement',
     ['\22'] = 'statement',
-    c = 'black',
+    c = 'cyan',
     s = 'statement',
     S = 'statement',
     ['\19'] = 'statement',
@@ -125,29 +125,21 @@ local ViMode = {
   },
   {
     {
-      -- provider = SepLeft,
-      provider = ' ',
+      provider = ' [',
       hl = function(self)
-        return { bg = self:mode_color() }
+        return { fg = self:mode_color() }
       end,
     },
     {
-      {
-        provider = '[%n] ',
-      },
-      ShortFileName,
-      {
-        provider = '%m%r',
-      },
-      -- provider = function(self)
-      --   return self.mode_names[self.mode] .. ' '
-      -- end,
+      provider = function(self)
+        return self.mode_names[self.mode] or self.mode_names['n']
+      end,
       hl = function(self)
-        return { bg = self:mode_color(), fg = 'white', bold = true }
+        return { fg = self:mode_color(), bold = true }
       end,
     },
     {
-      provider = '',
+      provider = ']',
       hl = function(self)
         return { fg = self:mode_color() }
       end,
@@ -340,8 +332,7 @@ local function setup_colors()
     gray = utils.get_highlight('NonText').fg or 'none',
     ['function'] = utils.get_highlight('Function').fg or 'none',
     constant = utils.get_highlight('Constant').fg or 'none',
-    -- statement = utils.get_highlight('Statement').fg or 'none',
-    statement = utils.get_highlight('Comment').fg or 'none',
+    statement = utils.get_highlight('Statement').fg or 'none',
     visual = utils.get_highlight('Visual').bg or 'none',
     diag_warn = utils.get_highlight('DiagnosticWarn').fg or 'none',
     diag_error = utils.get_highlight('DiagnosticError').fg or 'none',
@@ -953,4 +944,5 @@ return {
   TabLine = TabLine,
   UnsavedBufCount = UnsavedBufCount,
   CocStl = CocStl,
+  ShortFileName = ShortFileName,
 }

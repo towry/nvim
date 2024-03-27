@@ -6,28 +6,6 @@ local is_profiling = false
 
 local function setup_basic()
   --->>
-  set('n', '<C-g>', function()
-    local e = vim.fn.expand
-    local modified = vim.bo.readonly and ',[RO]' or (vim.bo.modified and ',[+]' or '')
-
-    local lastcmd = (function()
-      local res = vim.fn.getreg(':')
-      if not res or res == '' then
-        return ''
-      end
-      return ' CMD: [' .. res .. '] '
-    end)()
-
-    print(
-      ([["%s:%s%s" "%s"%s]]):format(
-        vim.fn.bufnr('%'),
-        e('%'),
-        modified,
-        vim.fn.fnamemodify(vim.cfg.runtime__starts_cwd, ':~.'),
-        lastcmd
-      )
-    )
-  end, { silent = false })
   set('n', ']b', ':bnext<cr>', { desc = 'Next buffer', silent = false, nowait = true })
   set('n', '[b', ':bpre<cr>', { desc = 'Prev buffer', silent = false, nowait = true })
   set('n', '<leader>rn', function()
@@ -305,19 +283,19 @@ local function setup_basic()
     local job = require('plenary.job')
     vim.notify('loading tip...')
     job
-        :new({
-          command = 'curl',
-          args = { 'https://vtip.43z.one' },
-          on_exit = function(j, exit_code)
-            tip_is_loading = false
-            local res = table.concat(j:result())
-            if exit_code ~= 0 then
-              res = 'Error fetching tip: ' .. res
-            end
-            print(res)
-          end,
-        })
-        :start()
+      :new({
+        command = 'curl',
+        args = { 'https://vtip.43z.one' },
+        on_exit = function(j, exit_code)
+          tip_is_loading = false
+          local res = table.concat(j:result())
+          if exit_code ~= 0 then
+            res = 'Error fetching tip: ' .. res
+          end
+          print(res)
+        end,
+      })
+      :start()
   end, {
     desc = 'Get a random tip from vtip.43z.one',
   })
