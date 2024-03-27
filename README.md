@@ -12,6 +12,19 @@
 
 ## Screenshots
 
+<table>
+  <tr>
+    <td>Dark</td>
+    <td>Light</td>
+  </tr>
+  <tr>
+    <td><img width="1382" alt="截屏2024-03-27 22 46 54" src="https://github.com/towry/nvim/assets/8279858/32bd1c16-8f43-4c3e-9aa5-719b89f6624e">
+</td>
+    <td><img width="1384" alt="截屏2024-03-27 22 48 44" src="https://github.com/towry/nvim/assets/8279858/09e051eb-0822-4c35-acae-95377009caed">
+</td>
+  </tr>
+</table>
+
 <a href="https://github.com/towry/nvim/issues/26">checkout this issue for
 screenshots</a>
 
