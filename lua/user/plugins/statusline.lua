@@ -31,11 +31,10 @@ plug({
           static = comp.stl_static,
           hl = { fg = 'fg', bg = 'bg' },
         },
-        comp.ViMode,
-        comp.Tabs,
+        comp.lpad(comp.Tabs),
         {
           {
-            provider = '[%n]',
+            provider = ' [%n]',
           },
           comp.ShortFileName,
           {

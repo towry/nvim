@@ -125,7 +125,7 @@ local ViMode = {
   },
   {
     {
-      provider = ' ⛰ ',
+      provider = ' ',
       hl = function(self)
         return { fg = self:mode_color() }
       end,
@@ -903,7 +903,6 @@ local CocStl = {
   condition = function()
     return vim.fn.exists('*coc#status')
   end,
-  hl = { fg = 'green' },
   provider = '%{coc#status()}',
 }
 
