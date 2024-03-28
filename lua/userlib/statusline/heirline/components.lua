@@ -67,7 +67,7 @@ local ShortFileName = {
       self.filetail = ''
       return
     end
-    self.filepath = vim.fn.fnamemodify(bufname, ':~:r')
+    self.filepath = vim.fn.fnamemodify(bufname, ':~:h') .. '/'
     self.filetail = vim.fn.fnamemodify(bufname, ':t')
   end,
   {
@@ -84,7 +84,7 @@ local ShortFileName = {
         return self.filetail ~= ''
       end,
       provider = function(self)
-        return '/' .. self.filetail
+        return self.filetail
       end,
       hl = function()
         return {
