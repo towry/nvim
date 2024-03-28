@@ -27,6 +27,7 @@ return plug({
   version = '*',
   lazy = true,
   ft = 'markdown',
+  enabled = false,
   keys = {
     {
       '<leader>no',
