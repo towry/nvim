@@ -666,34 +666,6 @@ plug({
 })
 
 plug({
-  -- https://github.com/j-morano/buffer_manager.nvim
-  -- 'j-morano/buffer_manager.nvim',
-  'razak17/buffer_manager.nvim',
-  enabled = false,
-})
-
-plug({
-  'stevearc/stickybuf.nvim',
-  cmd = { 'PinBuffer', 'PinBuftype', 'PinFiletype', 'Unpin' },
-  opts = {},
-  config = function()
-    require('stickybuf').setup({
-      get_auto_pin = function(bufnr)
-        local buf_ft = vim.api.nvim_get_option_value('filetype', { buf = bufnr })
-        if buf_ft == 'DiffviewFiles' then
-          -- this is a diffview tab, disable creating new windows
-          -- (which would be the default behavior of handle_foreign_buffer)
-          return {
-            handle_foreign_buffer = function(buf) end,
-          }
-        end
-        return require('stickybuf').should_auto_pin(bufnr)
-      end,
-    })
-  end,
-})
-
-plug({
   'ghillb/cybu.nvim',
   branch = 'main',
   enabled = false,
