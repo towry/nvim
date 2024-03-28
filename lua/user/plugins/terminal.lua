@@ -22,6 +22,23 @@ plug({
         '<cmd>lua require("userlib.terminal.term-git").toggle_tig_file_history()<cr>',
         desc = 'Tig current file history',
       },
+      {
+        '<leader>rt',
+        function()
+          local input = vim.fn.input({
+            prompt = 'TermExec: ',
+          })
+          input = vim.trim(input or '')
+          if input == '' then
+            return
+          end
+          local cwd = vim.uv.cwd()
+
+          local cmd = ([[TermExec cmd='%s' cwd=%s]]):format(input, cwd)
+          vim.api.nvim_command(cmd)
+        end,
+        desc = 'TermExec command',
+      },
     },
     cmd = { 'ToggleTerm', 'TermExec' },
     branch = 'main',
