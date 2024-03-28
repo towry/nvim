@@ -7,6 +7,13 @@ M.open = function(new_cwd)
 
   require('userlib.mini.clue').shortly_open(function(set, unset)
     set('n', '1', '<cmd>echo expand("%")<cr>', { desc = ' :' .. nicely_cwd })
+
+    set('n', 'l', function()
+      require('userlib.runtime.utils').lock_tcd(new_cwd)
+    end, {
+      desc = 'Lock cwd to current tab',
+    })
+
     set('n', 'f', function()
       require('userlib.fzflua').files({
         cwd = new_cwd,

@@ -314,16 +314,37 @@ function M.change_cwd(cwd, cmd, silent)
     return
   end
   cwd = require('userlib.runtime.path').remove_path_last_separator(cwd)
-  vim.cmd((cmd or 'cd') .. ' ' .. cwd)
+  if cmd ~= 'tcd' or vim.t.cwd_locked ~= true then
+    vim.cmd((cmd or 'cd') .. ' ' .. cwd)
+  end
   M.update_cwd_env(cwd)
   if not silent then
     vim.notify(('New cwd: %s'):format(vim.t.cwd_short), vim.log.levels.INFO)
   end
 end
 
+--- make tab stick to a cwd
+-- @param cwd? string
+function M.lock_tcd(cwd)
+  vim.t.cwd_locked = false
+  M.change_cwd(cwd or safe_cwd(), 'tcd', false)
+  --- must put at last
+  vim.t.cwd_locked = true
+end
+
+function M.unlock_tcd()
+  vim.t.cwd_locked = false
+end
+
 ---@param cwd string
 ---@param cwd_short? string
 function M.update_cwd_env(cwd, cwd_short)
+  -- if current tab have locked cwd
+  if vim.t.cwd_locked and vim.t.cwd then
+    cwd = vim.t.cwd
+    cwd_short = vim.t.cwd_short
+  end
+
   cwd = require('userlib.runtime.path').remove_path_last_separator(cwd)
   vim.t.cwd = cwd
   -- only show last part of path.

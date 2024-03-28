@@ -243,7 +243,7 @@ plug({
       pattern = 'oil:///*',
       callback = function(ctx)
         local cwd = require('oil').get_current_dir()
-        require('userlib.runtime.utils').change_cwd(cwd, 'tcd', true)
+        require('userlib.runtime.utils').change_cwd(cwd, 'lcd', true)
       end,
     })
   end,

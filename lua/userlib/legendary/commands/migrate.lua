@@ -1,5 +1,13 @@
 return {
   {
+    ':LockTcd',
+    description = "Lock current tab's cwd | Pin tab cwd",
+  },
+  {
+    ':UnlockTcd',
+    description = "Unlock current tab's cwd | Unpin tab cwd",
+  },
+  {
     ':ToggleSpider',
     description = 'Toggle spider motion',
   },

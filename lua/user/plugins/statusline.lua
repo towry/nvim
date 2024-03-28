@@ -44,7 +44,8 @@ plug({
         comp.Tabs,
         comp.lpad({ comp.Branch, comp.GitStatus }),
         comp.lpad(comp.Overseer),
-        -- comp.lpad(require('userlib.statusline.heirline.component_diagnostic')),
+        { provider = '%=' },
+        comp.TabCwdLock,
         { provider = '%=' },
         comp.rpad({
           provider = '%c,%l',

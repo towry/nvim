@@ -291,3 +291,14 @@ end, {
   nargs = 0,
   desc = 'Write all and save session and exit',
 })
+
+create_cmd('LockTcd', function()
+  require('userlib.runtime.utils').lock_tcd()
+end, {
+  desc = 'Lock tcd',
+})
+create_cmd('UnlockTcd', function()
+  require('userlib.runtime.utils').unlock_tcd()
+end, {
+  desc = 'Unlock tcd',
+})

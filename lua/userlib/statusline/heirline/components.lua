@@ -100,6 +100,28 @@ local ShortFileName = {
   },
 }
 
+local TabCwdLock = {
+  condition = function()
+    return vim.t.cwd_locked and vim.t.cwd_short ~= ''
+  end,
+  {
+    {
+      provider = 'TCD:%-2.30(',
+    },
+    {
+      init = function(self)
+        self.tabnr = vim.api.nvim_get_current_tabpage()
+      end,
+      provider = function(self)
+        return vim.t[self.tabnr].cwd_short
+      end,
+    },
+    {
+      provider = '%) ',
+    },
+  },
+}
+
 local ViMode = {
   init = function(self)
     self.mode = vim.fn.mode() -- :h mode()
@@ -645,7 +667,7 @@ local Copilot = {
     if not self.is_running() then
       return '󰚩 '
     end
-    return '󰆄 '
+    return '������������� '
   end,
   hl = function(self)
     local fg = vim.g.copilot_auto_mode == true and 'orange' or ''
@@ -974,4 +996,5 @@ return {
   UnsavedBufCount = UnsavedBufCount,
   CocStl = CocStl,
   ShortFileName = ShortFileName,
+  TabCwdLock = TabCwdLock,
 }

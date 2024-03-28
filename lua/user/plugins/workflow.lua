@@ -369,7 +369,7 @@ plug({
       -- * global (default)
       -- * tab
       -- * win
-      scope_chdir = 'tab',
+      scope_chdir = 'custom',
     },
   },
   {
