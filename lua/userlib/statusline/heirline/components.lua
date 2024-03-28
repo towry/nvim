@@ -54,18 +54,48 @@ local stl_static = {
 }
 
 local ShortFileName = {
-  provider = function(self)
+  init = function(self)
+    local no_name = '[No Name]'
     local bufname = self.bufname or vim.fn.expand('%:p')
-    local filename = vim.bo.buftype == '' and vim.fn.fnamemodify(bufname, ':~') or bufname
-    if filename == '' and bufname ~= '' then
-      filename = bufname
+    if vim.bo.buftype ~= '' then
+      self.filepath = bufname == '' and no_name or bufname
+      self.filetail = ''
+      return
     end
-    if filename == '' then
-      return '[No Name]'
+    if bufname == '' then
+      self.filepath = no_name
+      self.filetail = ''
+      return
     end
-    --- truncate the filename from right, so the bufnr etc will be visible.
-    return '%-10.80(' .. filename .. '%)'
+    self.filepath = vim.fn.fnamemodify(bufname, ':r:~')
+    self.filetail = vim.fn.fnamemodify(bufname, ':t')
   end,
+  {
+    {
+      provider = '%-10.80(',
+    },
+    {
+      provider = function(self)
+        return self.filepath
+      end,
+    },
+    {
+      condition = function(self)
+        return self.filetail ~= ''
+      end,
+      provider = function(self)
+        return '/' .. self.filetail
+      end,
+      hl = function()
+        return {
+          link = conditions.is_active() and 'WinbarPathTail' or 'WinbarNcPathTail',
+        }
+      end,
+    },
+    {
+      provider = '%)',
+    },
+  },
 }
 
 local ViMode = {

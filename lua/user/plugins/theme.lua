@@ -61,7 +61,11 @@ plug({
 
       --- You can override specific highlights to use other groups or a hex color
       --- function will be called with all highlights and the colorScheme table
-      on_highlights = function(hl, c) end,
+      on_highlights = function(hl, c)
+        hl.WinbarPathTail = {
+          fg = c.aurora.green,
+        }
+      end,
     })
   end,
 })
