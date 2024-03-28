@@ -31,7 +31,7 @@ plug({
           static = comp.stl_static,
           hl = { fg = 'fg', bg = 'bg' },
         },
-        comp.lpad(comp.Tabs),
+        comp.Tabs,
         {
           comp.ShortFileName,
           {

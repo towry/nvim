@@ -110,61 +110,6 @@ local function setup_basic()
     silent = true,
   })
 
-  -- yanks
-  set({ 'n', 'v' }, 'd', function()
-    -- NOTE: add different char for different buffer, for example, in oil, use o|O
-    if vim.v.register == 'd' or vim.v.register == 'D' then
-      return '"' .. vim.v.register .. 'd'
-    end
-    return '"dd'
-  end, {
-    silent = true,
-    desc = 'Delete char and yank to register d',
-    noremap = true,
-    expr = true,
-  })
-  set({ 'n', 'v' }, 'D', '"dD', {
-    desc = 'Delete to end of line and yank to register d',
-    silent = true,
-    expr = true,
-    noremap = true,
-  })
-  -- set({ 'n', 'v' }, 'x', function()
-  --   if vim.v.register == 'x' or vim.v.register == 'X' then
-  --     return '"' .. vim.v.register .. 'x'
-  --   end
-  --   return 'x'
-  -- end, {
-  --   expr = true,
-  --   silent = true,
-  --   noremap = true,
-  --   desc = 'Cut chars and do not yank to register',
-  -- })
-  -- set({ 'n', 'v' }, 'X', function()
-  --   if vim.v.register == 'x' or vim.v.register == 'X' then
-  --     return '"' .. vim.v.register .. 'X'
-  --   end
-  --   return 'X'
-  -- end, {
-  --   expr = true,
-  --   silent = true,
-  --   noremap = true,
-  --   desc = 'Cut chars and do not yank to register',
-  -- })
-  --
-  --
-
-  ---gx
-  if vim.fn.has('macunix') == 1 then
-    set('n', 'gx', cmd('silent execute "!open " . shellescape("<cWORD>")'), {
-      desc = 'Open file under cursor',
-    })
-  else
-    set('n', 'gx', cmd('silent execute "!xdg-open " . shellescape("<cWORD>")'), {
-      desc = 'Open file under cursor',
-    })
-  end
-
   set('n', 'H', '^', {
     desc = 'Move to first non-blank character of the line',
   })

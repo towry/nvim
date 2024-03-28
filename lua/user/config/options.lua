@@ -30,8 +30,8 @@ function M.startup()
   o.winminwidth = 10
   o.winwidth = 10
   o.equalalways = vim.cfg.ui__window_equalalways
-  o.winfixwidth = true
-  o.winfixheight = true
+  o.winfixwidth = false
+  o.winfixheight = false
   o.showmatch = false -- show {} match and jump
   o.undofile = true --- Sets undo to file
   o.updatetime = 250 --- Faster completion
@@ -135,7 +135,8 @@ function M.init_interface()
   o.cursorlineopt = 'line,number'
   o.foldcolumn = '1' -- Folding
   o.list = true
-  o.listchars:append('tab:⇢ ')
+  -- o.listchars:append('tab:··')
+  o.listchars:append('tab:▏\\ ')
   -- o.listchars:append('eol:↩')
   o.listchars:append('extends:»')
   o.listchars:append('nbsp:␣')

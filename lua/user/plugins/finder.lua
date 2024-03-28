@@ -366,16 +366,32 @@ plug({
   end,
 })
 
+local enable_oxi = false
 plug({
   'nvim-pack/nvim-spectre',
   opts = {
     color_devicons = true,
-    open_cmd = 'noswapfile vnew',
-    live_update = true,
+    open_cmd = 'noswapfile tabnew',
+    live_update = false,
     is_insert_mode = false,
-    is_open_target_win = false,
+    is_open_target_win = true,
   },
+  build = function(plugin)
+    if vim.fn.executable('cargo') == 1 and enable_oxi then
+      local cwd = plugin.dir
+      vim.cmd(string.format('tabe term://%s//%s', cwd, './build.sh;'))
+    end
+  end,
   cmd = { 'Spectre' },
+  config = function(_, opts)
+    require('spectre').setup(vim.tbl_extend('force', opts, {
+      default = {
+        replace = {
+          cmd = enable_oxi and vim.fn.executable('cargo') == 1 and 'oxi' or 'sed',
+        },
+      },
+    }))
+  end,
   keys = {
     {
       '<leader>sp',

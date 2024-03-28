@@ -510,20 +510,20 @@ local Tabs = {
   end,
   {
     {
-      provider = '[',
-      hl = { fg = 'fg' },
+      provider = ' ',
+      hl = { fg = 'fg', bg = 'NONE' },
     },
     {
       provider = function(self)
         return 'TABS:' .. '%{tabpagenr()}·' .. self.total_tabs
       end,
       hl = function()
-        return { fg = 'fg', bold = false, italic = true }
+        return { fg = 'fg', bg = 'NONE', bold = false, italic = true }
       end,
     },
     {
-      provider = ']',
-      hl = { fg = 'fg' },
+      provider = ' ',
+      hl = { fg = 'fg', bg = 'NONE' },
     },
   },
   update = { 'VimEnter', 'TabNew', 'TabLeave' },
