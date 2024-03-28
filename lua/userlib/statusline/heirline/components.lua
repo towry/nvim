@@ -87,9 +87,11 @@ local ShortFileName = {
         return self.filetail
       end,
       hl = function()
-        return {
-          link = conditions.is_active() and 'WinbarPathTail' or 'WinbarNcPathTail',
-        }
+        if conditions.is_active() then
+          return {
+            link = 'WinbarPathTail',
+          }
+        end
       end,
     },
     {
