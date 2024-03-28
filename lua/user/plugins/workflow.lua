@@ -152,7 +152,7 @@ plug({
     keys = {
       {
         '<leader>bd',
-        '<cmd>lua require("mini.bufremove").delete(0)<cr>',
+        '<cmd>lua require("mini.bufremove").wipeout(0)<cr>',
         desc = 'Close current buffer',
       },
       {
@@ -162,7 +162,7 @@ plug({
             vim.cmd('bd')
             return
           end
-          require('mini.bufremove').delete(0)
+          require('mini.bufremove').wipeout(0)
         end,
         desc = 'Delete current buffer',
         silent = false,
@@ -170,7 +170,7 @@ plug({
       {
         '<leader>bq',
         function()
-          require('mini.bufremove').delete(0)
+          require('mini.bufremove').wipeout(0)
           vim.schedule(function()
             local _, error = pcall(vim.cmd, 'hide')
             if error then
