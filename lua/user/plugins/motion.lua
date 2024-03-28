@@ -4,37 +4,6 @@ local au = require('userlib.runtime.au')
 
 plug({
   {
-    -- jump html tags.
-    'harrisoncramer/jump-tag',
-    vscode = true,
-    enabled = false,
-    keys = {
-      {
-        '[tp',
-        cmd([[lua require('jump-tag').jumpParent()]]),
-        desc = 'Jump to parent tag',
-      },
-      {
-        '[tc',
-        cmd([[lua require('jump-tag').jumpChild()]]),
-        desc = 'Jump to child tag',
-      },
-      {
-        '[t]',
-        cmd([[lua require('jump-tag').jumpNextSibling()]]),
-        desc = 'Jump to next tag',
-      },
-      {
-        '[t[',
-        cmd([[lua require('jump-tag').jumpPrevSibling()]]),
-        desc = 'Jump to prev tag',
-      },
-    },
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter',
-    },
-  },
-  {
     vim.cfg.lang__treesitter_next and 'pze/mini.ai' or 'echasnovski/mini.ai',
     vscode = true,
     -- disabled due to not compatible with nvim-treesitter#1.0
