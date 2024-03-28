@@ -46,14 +46,6 @@ return {
     ':MarkdownPreviewStop',
     description = 'Stop markdown preview',
   },
-  {
-    ':Cheat',
-    description = 'Open cheat.sh',
-  },
-  {
-    ':Cheatsheet',
-    description = 'Open cheatsheet',
-  },
   ----------------------------------
   ---https://github.com/mrjones2014/dotfiles/blob/master/nvim/lua/my/legendary/commands.lua
   {
