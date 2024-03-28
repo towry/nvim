@@ -749,6 +749,9 @@ plug({
       noremap = true,
     },
   },
+  init = function()
+    vim.g.BufSurfIgnore = ',Fidget'
+  end,
 })
 
 plug({
