@@ -818,9 +818,11 @@ plug({
 
 plug({
   'chrisgrieser/nvim-early-retirement',
-  event = "VeryLazy",
+  event = 'VeryLazy',
   opts = {
     notificationOnAutoClose = true,
-    retirementAgeMins = 15
-  }
+    retirementAgeMins = 15,
+    minimumBufferNum = 6,
+    deleteBufferWhenFileDeleted = false,
+  },
 })
