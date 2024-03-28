@@ -23,7 +23,7 @@ create_cmd('ToggleDark', function()
   local mode = old_mode == 'dark' and 'light' or 'dark'
 
   local cmds =
-      string.format([[:silent !python3 %s %s]], vim.fn.expand('$HOME/.dotfiles/conf/commands/color_mode.py'), mode)
+    string.format([[:silent !python3 %s %s]], vim.fn.expand('$HOME/.dotfiles/conf/commands/color_mode.py'), mode)
   vim.cmd(cmds)
   vim.cmd(':silent OnDarkMode')
 end, {})
@@ -35,7 +35,7 @@ if vim.env['TMUX'] ~= nil then
   create_cmd('TmuxRerun', function(opts)
     -- Split the input arguments on '--' to separate the pane index and optional shell commands
     local args = vim.split(opts.args, '%s*%-%-%s*')
-    local index = args[1]                                            -- The pane index should be the first argument
+    local index = args[1] -- The pane index should be the first argument
     local shell_command = table.concat(vim.list_slice(args, 2), ' ') -- The rest is the optional shell command
 
     -- Get the current tmux pane ID
@@ -68,7 +68,7 @@ if vim.env['TMUX'] ~= nil then
       print('Cannot respawn the active pane where Neovim resides.')
     end
   end, {
-    nargs = '+',           -- This command allows one or more arguments
+    nargs = '+', -- This command allows one or more arguments
     desc = 'Respawn a tmux pane with the given index, optionally running the specified shell command',
     complete = 'shellcmd', -- Use shell command completion
   })
@@ -102,7 +102,7 @@ if vim.env['TMUX'] ~= nil then
       print('Failed to execute tmux split-window command.')
     end
   end, {
-    nargs = '+',           -- This command requires at least one argument (the command to run)
+    nargs = '+', -- This command requires at least one argument (the command to run)
     desc = 'Run a command in a new tmux split-window',
     complete = 'shellcmd', -- Use shell command completion
   })
@@ -177,11 +177,11 @@ end, {
 
 create_cmd('Comtag', function(opts)
   if not vim.tbl_contains({
-        'NOTE',
-        'TODO',
-        'FIXME',
-        'DEBUG',
-      }, opts.args) then
+    'NOTE',
+    'TODO',
+    'FIXME',
+    'DEBUG',
+  }, opts.args) then
     return
   end
   require('fzf-lua').grep({
@@ -281,4 +281,13 @@ create_cmd('Diffbufnr', function(params)
   vim.cmd(([[tab exec "diffsplit" bufname(%s)]]):format(params.args))
 end, {
   nargs = 1,
+})
+
+create_cmd('Qwrite', function()
+  vim.cmd('noau wa')
+  vim.cmd('MakeSession')
+  vim.cmd('qa')
+end, {
+  nargs = 0,
+  desc = 'Write all and save session and exit',
 })
