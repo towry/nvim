@@ -23,10 +23,27 @@ plug({
         desc = 'Tig current file history',
       },
       {
+        '<leader>rT',
+        function()
+          local input = vim.fn.input({
+            prompt = 'TermExec(G):',
+          })
+          input = vim.trim(input or '')
+          if input == '' then
+            return
+          end
+          local cwd = vim.cfg.runtime__starts_cwd
+
+          local cmd = ([[TermExec cmd='%s' dir='%s']]):format(input, cwd)
+          vim.api.nvim_command(cmd)
+        end,
+        desc = 'TermExec command in starts cwd',
+      },
+      {
         '<leader>rt',
         function()
           local input = vim.fn.input({
-            prompt = 'TermExec: ',
+            prompt = 'TermExec:',
           })
           input = vim.trim(input or '')
           if input == '' then
@@ -34,7 +51,7 @@ plug({
           end
           local cwd = vim.uv.cwd()
 
-          local cmd = ([[TermExec cmd='%s' cwd=%s]]):format(input, cwd)
+          local cmd = ([[TermExec cmd='%s' dir='%s']]):format(input, cwd)
           vim.api.nvim_command(cmd)
         end,
         desc = 'TermExec command',

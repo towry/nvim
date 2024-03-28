@@ -23,7 +23,17 @@ plug({
       end,
     })
     require('heirline').setup({
-      winbar = {},
+      winbar = {
+        {
+          comp.ShortFileName,
+          {
+            provider = ' [%n]',
+          },
+          {
+            provider = '%m%w%r',
+          },
+        },
+      },
       -- https://github.com/rebelot/heirline.nvim/blob/master/cookbook.md#tabline
       -- tabline = comp.TabLine,
       statusline = heirline_utils.insert(
@@ -32,17 +42,9 @@ plug({
           hl = { fg = 'fg', bg = 'bg' },
         },
         comp.Tabs,
-        {
-          comp.ShortFileName,
-          {
-            provider = ' [%n]',
-          },
-          {
-            provider = '%m%w%q%r',
-          },
-        },
+        comp.lpad({ comp.Branch, comp.GitStatus }),
         comp.lpad(comp.Overseer),
-        comp.lpad(require('userlib.statusline.heirline.component_diagnostic')),
+        -- comp.lpad(require('userlib.statusline.heirline.component_diagnostic')),
         { provider = '%=' },
         comp.rpad({
           provider = '%c,%l',
@@ -51,13 +53,34 @@ plug({
         comp.rpad(comp.Copilot),
         comp.rpad(comp.Codeium),
         comp.rpad(comp.Dap),
-        comp.rpad({ comp.Branch, comp.GitStatus }),
-        { provider = '%y' }
+        { provider = '%y%q' }
       ),
 
       opts = {
         disable_winbar_cb = function(args)
-          return true
+          local buf = args.buf
+          local buftype = vim.bo[buf].buftype
+          local ignore_buftype = vim.tbl_contains({
+            -- 'nowrite',
+            -- 'nofile',
+            'quickfix',
+            'tutor',
+            'netrw',
+          }, buftype)
+          if ignore_buftype then
+            return true
+          end
+          local filetype = vim.bo[buf].filetype
+          local ignore_filetype = vim.tbl_contains({
+            'fugitive',
+            'qf',
+            'fzf-lua',
+          }, filetype) or filetype:match('^git')
+          if ignore_filetype then
+            return true
+          end
+          local is_float = vim.api.nvim_win_get_config(0).relative ~= ''
+          return is_float
         end,
       },
     })
@@ -69,5 +92,6 @@ plug({
     if vim.o.laststatus == 0 then
       vim.opt.statusline = "%#VertSplit#%{repeat('-',winwidth('.'))}"
     end
+    vim.opt_local.winbar = "%{%v:lua.require'heirline'.eval_winbar()%}"
   end,
 })
