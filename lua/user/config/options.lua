@@ -231,6 +231,7 @@ function M.setup()
     group = ftau,
     callback = vim.schedule_wrap(function(args)
       local buf = args.buf
+      --- is invalid when rename folders etc
       if not vim.api.nvim_buf_is_valid(buf) then
         return
       end
