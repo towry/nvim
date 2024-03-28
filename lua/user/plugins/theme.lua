@@ -9,11 +9,22 @@ plug({
   name = 'flexoki',
   event = 'User LazyTheme',
   config = function()
-    -- local palette = require('flexoki.palette')
-    -- local c = palette.palette()
+    local palette = require('flexoki.palette')
+    local c = palette.palette()
 
     local hl = {}
     hl.CocMenuSel = { link = 'PmenuSel' }
+    hl.WinbarPathTail = {
+      fg = c['ora'],
+    }
+    hl.WinBar = {
+      fg = c['ui_3'],
+      bg = 'none',
+    }
+    hl.WinBarNC = {
+      fg = c['ui_3'],
+      bg = 'none',
+    }
 
     require('flexoki').setup({
       ---Set the desired variant: 'auto' will follow the vim background,

@@ -759,7 +759,7 @@ plug({
   keys = {
     {
       '<localleader>bb',
-      ':BufstopMode<cr>',
+      ':BufstopModeFast<cr>',
       desc = 'Open bufstop',
     },
   },
