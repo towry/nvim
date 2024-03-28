@@ -157,7 +157,13 @@ plug({
       },
       {
         '<C-c><C-d>',
-        '<cmd>lua require("mini.bufremove").delete(0)<cr>',
+        function()
+          if vim.fn.exists('&winfixbuf') == 1 and vim.api.nvim_get_option_value('winfixbuf', { win = 0 }) then
+            vim.cmd('bd')
+            return
+          end
+          require('mini.bufremove').delete(0)
+        end,
         desc = 'Delete current buffer',
         silent = false,
       },
@@ -203,6 +209,10 @@ plug({
       {
         '<C-c><C-c>',
         function()
+          if vim.fn.exists('&winfixbuf') == 1 and vim.api.nvim_get_option_value('winfixbuf', { win = 0 }) then
+            vim.cmd('hide')
+            return
+          end
           if vim.api.nvim_win_get_config(vim.api.nvim_get_current_win()).relative ~= '' then
             --- float window
             vim.cmd('close')
