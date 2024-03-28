@@ -758,8 +758,8 @@ plug({
   'mihaifm/bufstop',
   keys = {
     {
-      '<localleader>bs',
-      ':BufstopStatusline<cr>',
+      '<localleader>bb',
+      ':BufstopMode<cr>',
       desc = 'Open bufstop',
     },
   },
