@@ -14,6 +14,12 @@ M.open = function(new_cwd)
       desc = 'Lock cwd to current tab',
     })
 
+    set('n', 'L', function()
+      require('userlib.runtime.utils').lock_tcd_newtab(new_cwd)
+    end, {
+      desc = 'Lock cwd to new tab',
+    })
+
     set('n', 'f', function()
       require('userlib.fzflua').files({
         cwd = new_cwd,

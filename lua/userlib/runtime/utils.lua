@@ -336,6 +336,29 @@ function M.unlock_tcd()
   vim.t.cwd_locked = false
 end
 
+function M.lock_tcd_newtab(cwd)
+  cwd = cwd or safe_cwd()
+  cwd = require('userlib.runtime.path').remove_path_last_separator(cwd)
+  --- loop tabs check the tab's vim.t[tabnr].cwd
+  for _, tabnr in ipairs(vim.api.nvim_list_tabpages()) do
+    if vim.t[tabnr] and vim.t[tabnr].cwd == cwd then
+      --- focus this tab
+      vim.api.nvim_set_current_tabpage(tabnr)
+      vim.t.cwd_locked = false
+      M.change_cwd(cwd, 'tcd', false)
+      vim.t.cwd_locked = true
+      return
+    end
+  end
+  --- no tabs found
+  vim.cmd('$tabnew')
+  vim.schedule(function()
+    vim.t.cwd_locked = false
+    M.change_cwd(cwd, 'tcd', false)
+    vim.t.cwd_locked = true
+  end)
+end
+
 ---@param cwd string
 ---@param cwd_short? string
 function M.update_cwd_env(cwd, cwd_short)

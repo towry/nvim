@@ -8,6 +8,10 @@ return {
     description = "Unlock current tab's cwd | Unpin tab cwd",
   },
   {
+    [[:lua require('userlib.runtime.utils').lock_tcd_newtab()]],
+    description = 'Lock cwd to new tab',
+  },
+  {
     ':ToggleSpider',
     description = 'Toggle spider motion',
   },
