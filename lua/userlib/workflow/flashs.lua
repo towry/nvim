@@ -13,17 +13,29 @@ function M.jump_to_line(opts)
     or nil
 
   require('flash').jump({
-    search = { mode = 'search', max_length = 0, multi_window = false },
+    search = { mode = 'search', max_length = 0, multi_window = opts.multi_window or false, exclude = opts.exclude },
     label = { after = { 0, 0 } },
     pattern = '\\(^\\s*\\)\\@<=\\S',
     action = action,
   })
 end
 
+--- You can use <v:count> to specific which target win.
 --- copy remote line in current cursor position and insert it at current cursor
 --- position.
 function M.copy_remote_line()
+  local winindex = vim.v.count
   M.jump_to_line({
+    multi_window = true,
+    exclude = {
+      function(win)
+        local lastwinidx = vim.fn.winnr('$')
+        if winindex >= 1 and winindex <= lastwinidx then
+          return win ~= vim.fn.win_getid(winindex)
+        end
+        return false
+      end,
+    },
     action = function(match)
       local win = match.win
       local match_pos = match.pos
