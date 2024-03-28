@@ -299,6 +299,10 @@ end, {
 })
 create_cmd('UnlockTcd', function()
   require('userlib.runtime.utils').unlock_tcd()
+  --- update new cwd after unlock
+  vim.schedule(function()
+    vim.cmd('ProjectRoot')
+  end)
 end, {
   desc = 'Unlock tcd',
 })
