@@ -231,6 +231,9 @@ function M.setup()
     group = ftau,
     callback = vim.schedule_wrap(function(args)
       local buf = args.buf
+      if not vim.api.nvim_buf_is_valid(buf) then
+        return
+      end
       local ft = vim.bo[buf].filetype
       -- NOTE: nvim-treesitter on comment have some bugs.
       if ft == 'comment' or vim.g.vscode then
