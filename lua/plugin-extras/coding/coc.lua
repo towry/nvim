@@ -1,5 +1,16 @@
 local plug = require('userlib.runtime.pack').plug
 
+local function setup_coc_commands()
+  require('userlib.legendary').register('coc', function(lg)
+    lg.commands({
+      {
+        ':CocCommand workspace.inspectEdit',
+        description = 'Coc workspace inspect edit',
+      },
+    })
+  end)
+end
+
 local function setup_coc_lsp_keys()
   local keymap = require('userlib.runtime.keymap')
   local set = keymap.set
@@ -220,6 +231,7 @@ return plug({
 
     setup_coc_lsp_keys()
     setup_coc_autocmd()
+    setup_coc_commands()
 
     ----------------------------------------------------------------------------
     -- some config
