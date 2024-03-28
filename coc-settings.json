@@ -40,5 +40,7 @@
   "rust-analyzer.lens.debug.enable": true,
   "rust-analyzer.inlayHints.lifetimeElisionHints.enable": "skip_trivial",
   "rust-analyzer.inlayHints.maxLength": 2,
-  "rust-analyzer.inlayHints.renderColons": true
+  "rust-analyzer.inlayHints.renderColons": true,
+  "typescript.preferences.importModuleSpecifierEnding": "index",
+  "javascript.preferences.importModuleSpecifierEnding": "index"
 }

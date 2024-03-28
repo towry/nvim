@@ -7,6 +7,10 @@ local function setup_coc_commands()
         ':CocCommand workspace.inspectEdit',
         description = 'Coc workspace inspect edit',
       },
+      {
+        ':CocConfig',
+        description = 'Open coc config',
+      },
     })
   end)
 end
