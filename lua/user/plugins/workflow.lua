@@ -756,3 +756,71 @@ plug({
     })
   end,
 })
+
+plug({
+  --- better bn & bp
+  'ton/vim-bufsurf',
+  event = 'VeryLazy',
+  keys = {
+    {
+      ']b',
+      '<Plug>(buf-surf-forward)',
+      desc = 'Next buf',
+      silent = false,
+      noremap = true,
+    },
+    {
+      '[b',
+      '<Plug>(buf-surf-back)',
+      desc = 'Prev buf',
+      silent = false,
+      noremap = true,
+    },
+  },
+})
+
+plug({
+  'mihaifm/bufstop',
+  keys = {
+    {
+      '<localleader>bs',
+      ':BufstopStatusline<cr>',
+      desc = 'Open bufstop',
+    },
+  },
+  cmd = {
+    --- opoen at top or bottom
+    'Bufstop',
+    'BufstopFast',
+    --- j,k provided
+    'BufstopPreview',
+    --- cmd line mode
+    'BufstopMode',
+    'BufstopModeFast',
+    --- statusline
+    'BufstopStatusline',
+    'BufstopStatuslineFast',
+  },
+})
+
+plug({
+  'jlanzarotta/bufexplorer',
+  cmd = {
+    'ToggleBufExplorer',
+    'BufExplorerVerticalSplit',
+    'BufExplorerHorizontalSplit',
+    'BufExplorer',
+  },
+  init = function()
+    vim.g.bufExplorerDisableDefaultKeyMapping = 1
+  end,
+})
+
+plug({
+  'chrisgrieser/nvim-early-retirement',
+  event = "VeryLazy",
+  opts = {
+    notificationOnAutoClose = true,
+    retirementAgeMins = 15
+  }
+})
