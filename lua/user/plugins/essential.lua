@@ -759,7 +759,7 @@ pack.plug({
   'gbprod/cutlass.nvim',
   event = 'User LazyUIEnter',
   opts = {
-    cut_key = 'x',
+    cut_key = nil,
     override_del = true,
     exclude = {
       'ns',
