@@ -41,7 +41,6 @@
   "mini.pick": { "branch": "main", "commit": "9f0f9d71dbe97277c67e75e9cfbd4a5224e81c3d" },
   "mini.sessions": { "branch": "main", "commit": "a4d7df22de33535b35358e61234c1df458978bd6" },
   "mini.visits": { "branch": "main", "commit": "d4d7d88169ff401a6e0a35d83f19f0de66ab7dab" },
-  "modus-themes.nvim": { "branch": "master", "commit": "71fd92fb7b606af51b48b0cffceba8193e2e8713" },
   "neo-tree.nvim": { "branch": "main", "commit": "16d1b194376bf1fc2acd89ccb3c29ba8315bfcea" },
   "neogen": { "branch": "main", "commit": "0daffcec249bf42275e322361fe55b89a05ff278" },
   "neotab.nvim": { "branch": "master", "commit": "6c6107dddaa051504e433608f59eca606138269b" },

@@ -28,6 +28,16 @@ Ty.RELOAD = function(...)
   return require('plenary.reload').reload_module(...)
 end
 
+---@param mod string
+---@param fn_call string
+Ty.ModFnCall = function(mod, fn_call, ...)
+  local ok, mode = pcall(require, mod)
+  if not ok then
+    return
+  end
+  return mode[fn_call](...)
+end
+
 Ty.R = function(name)
   Ty.RELOAD(name)
   return require(name)

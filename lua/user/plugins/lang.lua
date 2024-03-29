@@ -273,8 +273,68 @@ plug({
   {
     'danymat/neogen',
     cmd = 'Neogen',
+    keys = {
+      {
+        '<localleader>cd',
+        ':Neogen<cr>',
+        noremap = true,
+        desc = 'Neogen',
+      },
+    },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    config = true,
+    config = function(_, opts)
+      require('neogen').setup(vim.tbl_deep_extend('force', {
+        enabled = true,
+      }, opts or {}))
+    end,
+  },
+
+  {
+    'kkoomen/vim-doge',
+    enabled = false,
+    build = ':call doge#install()',
+    cmd = { 'DogeGenerate' },
+    event = 'VeryLazy',
+    keys = {
+      {
+        '<localleader>cd',
+        '<Plug>(doge-generate)',
+        noremap = true,
+        desc = 'Doge doc gen',
+      },
+    },
+    config = function()
+      vim.g.doge_buffer_mappings = 0
+      vim.g.doge_enable_mappings = 0
+      vim.g.doge_doc_standard_python = 'google'
+    end,
+    init = au.schedule_lazy(function()
+      _G.Ty.dogedoc_standards = function()
+        return {
+          'google',
+        }
+      end
+
+      require('userlib.legendary').register('doge', function(lg)
+        lg.funcs({
+          {
+            function()
+              vim.ui.input({
+                prompt = 'Doc standard: ',
+                completion = 'custom,v:lua.Ty.dogedoc_standards',
+              }, function(input)
+                if vim.trim(input or '') == '' then
+                  return
+                end
+                vim.api.nvim_command('DogeGenerate ' .. input)
+                vim.notify('DogeGenerate ' .. input, vim.log.levels.INFO)
+              end)
+            end,
+            description = 'DogeGenerate generate doc with standards',
+          },
+        })
+      end)
+    end),
   },
 
   {

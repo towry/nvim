@@ -185,6 +185,8 @@ return plug({
         return fn['coc#pum#next'](1)
       elseif fn['coc#expandableOrJumpable']() then
         return [[<Plug>(coc-snippets-expand-jump)]]
+      elseif Ty.ModFnCall('neogen', 'jumpable') then
+        Ty.ModFnCall('neogen', 'jump_next')
       else
         return '<Plug>(neotab-out)'
       end
@@ -192,6 +194,8 @@ return plug({
     set('i', '<S-Tab>', function()
       if vim.fn['coc#pum#visible']() == 1 then
         return vim.fn['coc#pum#prev'](1)
+      elseif Ty.ModFnCall('neogen', 'jumpable', true) then
+        Ty.ModFnCall('neogen', 'jump_prev')
       end
       return '<C-h>'
     end, opts)
