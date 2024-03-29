@@ -604,7 +604,7 @@ pack.plug({
     local utils = require('yanky.utils')
     require('yanky').setup({
       highlight = {
-        timer = 300,
+        timer = 50,
       },
       picker = {
         telescope = {
