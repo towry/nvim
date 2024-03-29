@@ -208,6 +208,7 @@ Ty.set_terminal_keymaps = vim.schedule_wrap(function(bufnr)
     return
   end
 
+  nvim_buf_set_keymap('n', 'q', [[:startinsert<cr>]], opts)
   nvim_buf_set_keymap('t', '<ESC>', [[<C-\><C-n>]], opts)
   --- switch windows
   nvim_buf_set_keymap('t', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
