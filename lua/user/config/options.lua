@@ -115,7 +115,7 @@ function M.init_interface()
   o.wildmenu = true
   o.wildchar = ('<C-z>'):byte()
   -- longest: CmdA, CmdB, 'Cmd' is longest match
-  o.wildmode = { 'longest', 'full:longest', 'list:full', 'lastused' } -- Command-line completion mode
+  o.wildmode = { 'full', 'full:longest', 'list:full', 'lastused' } -- Command-line completion mode
   o.wildignorecase = true
   o.wildoptions = { 'fuzzy', 'pum', 'tagfile' }
   o.wildignore = { '*.pyc', '*node_modules/**', '.git/**', '*.DS_Store', '*.min.js', '*.obj' } --- Don't search inside Node.js modules (works for gutentag)
