@@ -1,7 +1,6 @@
 local M = {}
 
 local function on_very_lazy()
-  require('user.config.options').setup()
   require('user.config.commands')
 end
 
@@ -12,6 +11,7 @@ function M.setup()
   require('userlib.runtime.globals')
   require('user.config.custom').setup()
   require('user.config.options').startup()
+  require('user.config.options').setup()
   require('user.config.keymaps').setup()
 
   require('user.config.autocmd').setup({
