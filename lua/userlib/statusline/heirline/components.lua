@@ -632,7 +632,7 @@ local Codeium = {
       elseif str == 'ON' or str == 'OFF' then
         str = ''
       end
-      return '󰑣 ' .. str .. ''
+      return '[AI' .. str .. ']'
     end,
   },
 }

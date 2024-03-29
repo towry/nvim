@@ -45,17 +45,18 @@ plug({
         comp.lpad({ comp.Branch, comp.GitStatus }),
         comp.lpad({ provider = '%y%q' }),
         comp.lpad(comp.Overseer),
+        comp.lpad(comp.CocStl),
         { provider = '%=' },
         comp.TabCwdLock,
         { provider = '%=' },
-        comp.rpad({
+        {
           provider = '%c,%l',
-        }),
-        comp.rpad(comp.CocStl),
+        },
+        { provider = '%=' },
         comp.rpad(comp.Copilot),
         comp.rpad(comp.Codeium),
         comp.rpad(comp.Dap),
-        { provider = '%=' }
+        { provider = '%P ' }
       ),
 
       opts = {
