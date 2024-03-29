@@ -40,12 +40,13 @@ plug({
       {
         '<leader>rt',
         function()
-          local input = vim.fn.input('TermExec: ', '', 'shellcmd')
+          local cwd = vim.uv.cwd()
+          local cwd_short = vim.fn.fnamemodify(cwd or '', ':t')
+          local input = vim.fn.input(string.format('TermExec(%s): ', cwd_short), '', 'shellcmd')
           input = vim.trim(input or '')
           if input == '' then
             return
           end
-          local cwd = vim.uv.cwd()
 
           local cmd = ([[TermExec cmd='%s' dir='%s']]):format(input, cwd)
           vim.api.nvim_command(cmd)
