@@ -758,7 +758,7 @@ plug({
   'mihaifm/bufstop',
   keys = {
     {
-      '<localleader>bb',
+      '<localleader><space>',
       ':BufstopFast<cr>',
       desc = 'Open bufstop',
     },
