@@ -363,7 +363,7 @@ end
 ---@param cwd_short? string
 function M.update_cwd_env(cwd, cwd_short)
   -- if current tab have locked cwd
-  if vim.t.CwdLocked and vim.t.cwd then
+  if vim.t.CwdLocked and vim.t.Cwd then
     cwd = vim.t.Cwd
     cwd_short = vim.t.CwdShort
   end
