@@ -99,9 +99,12 @@ plug({
     },
     on_highlights = function(hls, c)
       local is_dark = vim.o.background == 'dark'
+      hls.WinbarPathTail = {
+        fg = c.bg_green_intense,
+      }
       hls['FlashLabel'] = {
         fg = c.bg_main_dim,
-        bg = c.bg_yellow_intense,
+        bg = c.bg_yellow,
         bold = true,
       }
       hls['FlashBackdrop'] = {
