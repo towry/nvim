@@ -102,7 +102,7 @@ local ShortFileName = {
 
 local TabCwdLock = {
   condition = function()
-    return vim.t.cwd_locked and vim.t.cwd_short ~= ''
+    return vim.t.CwdLocked and vim.t.CwdShort ~= ''
   end,
   {
     {
@@ -113,7 +113,7 @@ local TabCwdLock = {
         self.tabnr = vim.api.nvim_get_current_tabpage()
       end,
       provider = function(self)
-        return vim.t[self.tabnr].cwd_short
+        return vim.t[self.tabnr].CwdShort
       end,
     },
     {

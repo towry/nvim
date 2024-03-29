@@ -314,26 +314,26 @@ function M.change_cwd(cwd, cmd, silent)
     return
   end
   cwd = require('userlib.runtime.path').remove_path_last_separator(cwd)
-  if cmd ~= 'tcd' or vim.t.cwd_locked ~= true then
+  if cmd ~= 'tcd' or vim.t.CwdLocked ~= true then
     vim.cmd((cmd or 'cd') .. ' ' .. cwd)
   end
   M.update_cwd_env(cwd)
   if not silent then
-    vim.notify(('New cwd: %s'):format(vim.t.cwd_short), vim.log.levels.INFO)
+    vim.notify(('New cwd: %s'):format(vim.t.CwdShort), vim.log.levels.INFO)
   end
 end
 
 --- make tab stick to a cwd
 -- @param cwd? string
 function M.lock_tcd(cwd)
-  vim.t.cwd_locked = false
+  vim.t.CwdLocked = false
   M.change_cwd(cwd or safe_cwd(), 'tcd', false)
   --- must put at last
-  vim.t.cwd_locked = true
+  vim.t.CwdLocked = true
 end
 
 function M.unlock_tcd()
-  vim.t.cwd_locked = false
+  vim.t.CwdLocked = false
 end
 
 function M.lock_tcd_newtab(cwd)
@@ -344,18 +344,18 @@ function M.lock_tcd_newtab(cwd)
     if vim.t[tabnr] and vim.t[tabnr].cwd == cwd then
       --- focus this tab
       vim.api.nvim_set_current_tabpage(tabnr)
-      vim.t.cwd_locked = false
+      vim.t.CwdLocked = false
       M.change_cwd(cwd, 'tcd', false)
-      vim.t.cwd_locked = true
+      vim.t.CwdLocked = true
       return
     end
   end
   --- no tabs found
   vim.cmd('$tabnew')
   vim.schedule(function()
-    vim.t.cwd_locked = false
+    vim.t.CwdLocked = false
     M.change_cwd(cwd, 'tcd', false)
-    vim.t.cwd_locked = true
+    vim.t.CwdLocked = true
   end)
 end
 
@@ -363,16 +363,16 @@ end
 ---@param cwd_short? string
 function M.update_cwd_env(cwd, cwd_short)
   -- if current tab have locked cwd
-  if vim.t.cwd_locked and vim.t.cwd then
-    cwd = vim.t.cwd
-    cwd_short = vim.t.cwd_short
+  if vim.t.CwdLocked and vim.t.cwd then
+    cwd = vim.t.Cwd
+    cwd_short = vim.t.CwdShort
   end
 
   cwd = require('userlib.runtime.path').remove_path_last_separator(cwd)
-  vim.t.cwd = cwd
+  vim.t.Cwd = cwd
   -- only show last part of path.
-  vim.t.cwd_short = cwd_short or require('userlib.runtime.path').home_to_tilde(cwd, { shorten = true })
-  return cwd, vim.t.cwd_short
+  vim.t.CwdShort = cwd_short or require('userlib.runtime.path').home_to_tilde(cwd, { shorten = true })
+  return cwd, vim.t.CwdShort
 end
 
 M.is_start_as_git_tool = function()

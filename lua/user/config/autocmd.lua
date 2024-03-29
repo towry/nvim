@@ -370,7 +370,7 @@ function M.load_on_startup()
         if not new_cwd then
           new_cwd = safe_cwd()
         end
-        if not vim.t.cwd_locked then
+        if not vim.t.CwdLocked then
           vim.cmd.tcd(new_cwd)
         end
         local buf_cwd, buf_cwd_short = vim.b[ctx.buf].project_nvim_cwd, vim.b[ctx.buf].project_nvim_cwd_short

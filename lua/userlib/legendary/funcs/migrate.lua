@@ -3,6 +3,16 @@ local utils = require('userlib.runtime.utils')
 return {
   {
     function()
+      vim.ui.input({
+        prompt = 'Tab label:',
+      }, function(input)
+        vim.t.TabLabel = input or ''
+      end)
+    end,
+    description = 'Name tab label',
+  },
+  {
+    function()
       local user_config_dir = vim.fn.fnamemodify(vim.env.MYVIMRC, ':p:h')
       local notes = user_config_dir .. '/doc/user-notes.md'
       vim.cmd.tabe(notes) -- edit user-notes

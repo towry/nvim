@@ -46,6 +46,14 @@ plug({
         comp.lpad({ provider = '%y%q' }),
         comp.lpad(comp.Overseer),
         { provider = '%=' },
+        {
+          condition = function()
+            return vim.t.TabLabel and vim.t.TabLabel ~= ''
+          end,
+          provider = function()
+            return '%-.20([' .. vim.t.TabLabel .. ']%) '
+          end,
+        },
         comp.TabCwdLock,
         { provider = '%=' },
         {

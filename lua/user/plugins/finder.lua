@@ -66,7 +66,7 @@ plug({
     {
       '<localleader>fw',
       function()
-        require('rgflow').open(vim.fn.expand('<cword>'), vim.b.grep_flags or nil, vim.t.cwd or vim.uv.cwd(), {
+        require('rgflow').open(vim.fn.expand('<cword>'), vim.b.grep_flags or nil, vim.t.Cwd or vim.uv.cwd(), {
           custom_start = function(pattern, flags, path)
             require('userlib.fzflua').grep({ cwd = path, query = pattern, rg_opts = flags })
           end,
@@ -82,7 +82,7 @@ plug({
         local first_line = utils.get_first_line(content)
         -- Exit visual mode
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, true, true), 'x', true)
-        require('rgflow').open(first_line, vim.b.grep_flags or nil, vim.t.cwd or vim.uv.cwd(), {
+        require('rgflow').open(first_line, vim.b.grep_flags or nil, vim.t.Cwd or vim.uv.cwd(), {
           custom_start = function(pattern, flags, path)
             require('userlib.fzflua').grep({ cwd = path, query = pattern, rg_opts = flags })
           end,
@@ -1010,18 +1010,18 @@ plug({
     },
     {
       '<leader>fs',
-      cmd_modcall(fzf_mod, [[ grep({ cwd = vim.t.cwd or vim.uv.cwd(), cwd_header = true }, true) ]]),
+      cmd_modcall(fzf_mod, [[ grep({ cwd = vim.t.Cwd or vim.uv.cwd(), cwd_header = true }, true) ]]),
       desc = 'Grep search in project',
     },
     {
       '<leader>fs',
-      cmd_modcall(fzf_mod, [[ grep_visual({ cwd = vim.t.cwd or vim.uv.cwd() }) ]]),
+      cmd_modcall(fzf_mod, [[ grep_visual({ cwd = vim.t.Cwd or vim.uv.cwd() }) ]]),
       desc = 'Grep search on selection in project',
       mode = { 'v', 'x' },
     },
     {
       '<leader>fw',
-      cmd_modcall(fzf_mod, [[grep({ cwd = vim.t.cwd or vim.uv.cwd(), query = vim.fn.expand("<cword>") }, true)]]),
+      cmd_modcall(fzf_mod, [[grep({ cwd = vim.t.Cwd or vim.uv.cwd(), query = vim.fn.expand("<cword>") }, true)]]),
       desc = 'Grep search word in current project',
     },
     {

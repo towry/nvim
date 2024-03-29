@@ -9,7 +9,7 @@ local function callgrep(_opts, callfn)
   opts.cwd_header = true
 
   if not opts.cwd then
-    opts.cwd = vim.t.cwd or safe_cwd()
+    opts.cwd = vim.t.Cwd or safe_cwd()
   end
 
   opts.no_header = false
@@ -95,7 +95,7 @@ function M.files(opts)
   local fzflua = require('fzf-lua')
 
   if not opts.cwd then
-    opts.cwd = safe_cwd(vim.t.cwd)
+    opts.cwd = safe_cwd(vim.t.Cwd)
   end
 
   opts.winopts = {
@@ -118,7 +118,7 @@ function M.folders(opts)
   local path = require('fzf-lua.path')
 
   if not opts.cwd then
-    opts.cwd = safe_cwd(vim.t.cwd)
+    opts.cwd = safe_cwd(vim.t.Cwd)
   end
   local preview_cwd = opts.cwd
 
@@ -284,21 +284,21 @@ function M.git_branches()
         if selected[1] == 'Local branches' then
           fzflua.git_branches({
             winopts = winopts,
-            cwd = vim.t.cwd or safe_cwd(),
+            cwd = vim.t.Cwd or safe_cwd(),
             cmd = 'git branch --color',
             prompt = 'Local branches❯ ',
           })
         elseif selected[1] == 'Remote branches' then
           fzflua.git_branches({
             winopts = winopts,
-            cwd = safe_cwd(vim.t.cwd),
+            cwd = safe_cwd(vim.t.Cwd),
             cmd = 'git branch --remotes --color',
             prompt = 'Remote branches❯ ',
           })
         elseif selected[1] == 'All branches' then
           fzflua.git_branches({
             winopts = winopts,
-            cwd = safe_cwd(vim.t.cwd),
+            cwd = safe_cwd(vim.t.Cwd),
             cmd = 'git branch --all --color',
             prompt = 'All branches❯ ',
           })
