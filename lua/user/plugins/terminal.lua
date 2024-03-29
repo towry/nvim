@@ -174,6 +174,27 @@ plug({
         desc = 'toggle term',
         silent = true,
       })
+
+      vim.api.nvim_create_user_command('LocalTermExec', function(opts)
+        local args = opts.args
+
+        local cmd = ([[TermExec cmd='%s' dir='%s']]):format(args, vim.uv.cwd())
+        vim.api.nvim_command(cmd)
+      end, {
+        nargs = '+',
+        desc = 'Run TermExec in local cwd',
+        complete = 'shellcmd',
+      })
+      vim.api.nvim_create_user_command('RootTermExec', function(opts)
+        local args = opts.args
+
+        local cmd = ([[TermExec cmd='%s' dir='%s']]):format(args, vim.cfg.runtime__starts_cwd)
+        vim.api.nvim_command(cmd)
+      end, {
+        nargs = '+',
+        desc = 'Run TermExec in root cwd',
+        complete = 'shellcmd',
+      })
     end,
   },
 
