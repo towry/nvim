@@ -366,6 +366,7 @@ local Overseer = {
 local function setup_colors()
   return {
     bg_none = utils.get_highlight('Normal').bg or 'none',
+    fg_none = utils.get_highlight('Normal').fg or 'none',
     fg = utils.get_highlight('StatusLine').fg or 'none',
     bg = utils.get_highlight('StatusLine').bg or 'none',
     winbar_fg = utils.get_highlight('Winbar').fg or 'none',
@@ -566,19 +567,19 @@ local Tabs = {
   {
     {
       provider = ' ',
-      hl = { fg = 'fg', bg = 'bg_none' },
+      hl = { fg = 'bg_none', bg = 'fg_none' },
     },
     {
       provider = function(self)
         return '' .. '%{tabpagenr()}|' .. self.total_tabs
       end,
       hl = function()
-        return { fg = 'fg', bg = 'bg_none', bold = true, italic = false }
+        return { fg = 'bg_none', bg = 'fg_none', bold = true, italic = false }
       end,
     },
     {
       provider = ' ',
-      hl = { fg = 'fg', bg = 'bg_none' },
+      hl = { fg = 'bg_none', bg = 'fg_none' },
     },
   },
   update = { 'VimEnter', 'TabNew', 'TabLeave' },
