@@ -25,9 +25,7 @@ plug({
       {
         '<leader>rT',
         function()
-          local input = vim.fn.input({
-            prompt = 'TermExec(G):',
-          })
+          local input = vim.fn.input('TermExec(G): ', '', 'shellcmd')
           input = vim.trim(input or '')
           if input == '' then
             return
@@ -42,9 +40,7 @@ plug({
       {
         '<leader>rt',
         function()
-          local input = vim.fn.input({
-            prompt = 'TermExec:',
-          })
+          local input = vim.fn.input('TermExec: ', '', 'shellcmd')
           input = vim.trim(input or '')
           if input == '' then
             return
