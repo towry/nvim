@@ -762,6 +762,11 @@ plug({
       ':BufstopFast<cr>',
       desc = 'Open bufstop',
     },
+    {
+      '<leader>,',
+      ':BufstopFast<cr>',
+      desc = 'Open bufstop',
+    },
   },
   cmd = {
     --- opoen at top or bottom
