@@ -49,9 +49,8 @@ plug({
         comp.TabCwdLock,
         { provider = '%=' },
         {
-          provider = '%c,%l',
+          provider = '%=%v:%l ',
         },
-        { provider = '%=' },
         comp.rpad(comp.CocStl),
         comp.rpad(comp.Copilot),
         comp.rpad(comp.Codeium),
