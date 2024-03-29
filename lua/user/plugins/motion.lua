@@ -14,7 +14,7 @@ plug({
     opts = function()
       local ai = require('mini.ai')
       return {
-        search_method = 'cover_or_nearest',
+        search_method = 'cover_or_next',
         n_lines = 500,
         custom_textobjects = {
           o = ai.gen_spec.treesitter({
