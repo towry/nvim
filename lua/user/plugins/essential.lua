@@ -548,6 +548,20 @@ pack.plug({
       desc = 'Yanky put after',
     },
     {
+      'cp',
+      '<Plug>(YankyPutAfterCharwise)',
+      mode = { 'n', 'x' },
+      noremap = true,
+      desc = 'Yanky put after charwise',
+    },
+    {
+      'cP',
+      '<Plug>(YankyPutBeforeCharwise)',
+      mode = { 'n', 'x' },
+      noremap = true,
+      desc = 'Yanky put before charwise',
+    },
+    {
       'P',
       '<Plug>(YankyPutBefore)',
       mode = { 'n', 'x' },
