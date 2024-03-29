@@ -14,6 +14,7 @@
   "coc.nvim": { "branch": "release", "commit": "a0f3e2c1b13157a25063b32b49debf46cc96a873" },
   "codecompanion.nvim": { "branch": "main", "commit": "061af5aa72340ec8f8fbb0abe6594c709abac138" },
   "codeium.vim": { "branch": "main", "commit": "82f2ba0f4bee19368102e59ecbf4ea585b3e89f7" },
+  "cutlass.nvim": { "branch": "main", "commit": "1ac7e4b53d79410be52a9e464d44c60556282b3e" },
   "diffconflicts": { "branch": "master", "commit": "4972d1401e008c5e9afeb703eddd1b2c2a1d1199" },
   "diffview.nvim": { "branch": "main", "commit": "3dc498c9777fe79156f3d32dddd483b8b3dbd95f" },
   "dressing.nvim": { "branch": "master", "commit": "18e5beb3845f085b6a33c24112b37988f3f93c06" },
@@ -101,5 +102,6 @@
   "vim-test": { "branch": "master", "commit": "a49c9cade75e97cace5e3ba545ce82d02f689feb" },
   "vim-xxdcursor": { "branch": "master", "commit": "81f5bf8e5db1f34004314db956eee72f8177cf08" },
   "windows.nvim": { "branch": "main", "commit": "c7492552b23d0ab30325e90b56066ec51242adc8" },
+  "yanky.nvim": { "branch": "main", "commit": "7c5cbf0122ff2dfbb6a92f14885894f65949cc8b" },
   "zen-mode.nvim": { "branch": "main", "commit": "78557d972b4bfbb7488e17b5703d25164ae64e6a" }
 }

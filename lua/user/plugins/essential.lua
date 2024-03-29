@@ -504,8 +504,27 @@ end
 pack.plug({
   -- better yank
   'gbprod/yanky.nvim',
-  enabled = false,
+  enabled = true,
   keys = {
+    {
+      '<localleader>lp',
+      ':Telescope yank_history<cr>',
+      silent = true,
+      noremap = true,
+      desc = 'List yanky pastes',
+    },
+    {
+      '<Leader>mpn',
+      '<Plug>(YankyPreviousEntry)',
+      noremap = true,
+      nowait = true,
+    },
+    {
+      '<Leader>mpp',
+      '<Plug>(YankyNextEntry)',
+      noremap = true,
+      nowait = true,
+    },
     {
       'y',
       '<Plug>(YankyYank)',
@@ -523,76 +542,47 @@ pack.plug({
     },
     {
       'p',
-      function()
-        local ynk_mtd = vim.api.nvim_get_mode().mode == 'n' and 'YankyPutAfter' or 'YankyPutAfterCharwise'
-        local reg = vim.v.register
-        local keys = t(('%s<Plug>(%s)'):format((not reg) and '' or '"' .. reg, ynk_mtd))
-        vim.fn.feedkeys(keys)
-        vim.schedule(function()
-          require('userlib.hydra.yanky').open_yanky_ring_hydra(reg)
-        end)
-      end,
-      mode = { 'n', 'v' },
+      '<Plug>(YankyPutAfter)',
+      mode = { 'n', 'x' },
       noremap = true,
       desc = 'Yanky put after',
     },
     {
       'P',
-      function()
-        local ynk_mtd = vim.api.nvim_get_mode().mode == 'n' and 'YankyPutBefore' or 'YankyPutAfterCharwise'
-        local reg = vim.v.register
-        local keys = t(('%s<Plug>(%s)'):format((not reg) and '' or '"' .. reg, ynk_mtd))
-        vim.fn.feedkeys(keys)
-        vim.schedule(function()
-          require('userlib.hydra.yanky').open_yanky_ring_hydra(reg)
-        end)
-      end,
-      mode = { 'n', 'v' },
+      '<Plug>(YankyPutBefore)',
+      mode = { 'n', 'x' },
       desc = 'Yanky put before',
     },
     {
       'gp',
-      function()
-        vim.fn.feedkeys(t(('"%s<Plug>(YankyGPutAfter)'):format(vim.v.register)))
-        vim.schedule(function()
-          require('userlib.hydra.yanky').open_yanky_ring_hydra()
-        end)
-      end,
+      '<Plug>(YankyGPutAfter)',
       mode = { 'n', 'x' },
       desc = 'Yanky gput after',
     },
     {
       'gP',
-      function()
-        vim.fn.feedkeys(t(('"%s<Plug>(YankyGPutBefore)'):format(vim.v.register)))
-        vim.schedule(function()
-          require('userlib.hydra.yanky').open_yanky_ring_hydra()
-        end)
-      end,
+      '<Plug>(YankyGPutBefore)',
       mode = { 'n', 'x' },
       desc = 'Yanky gput before',
     },
     {
       ']p',
-      function()
-        vim.fn.feedkeys(t(('"%s<Plug>(YankyPutIndentAfter)'):format(vim.v.register)))
-        vim.schedule(function()
-          require('userlib.hydra.yanky').open_yanky_ring_hydra()
-        end)
-      end,
-      mode = { 'n', 'x' },
-      desc = 'Yanky put after with indent',
+      '<Plug>(YankyPutIndentAfterLinewise)',
+      desc = 'Yanky put after with indent linewise',
     },
     {
       '[p',
+      '<Plug>(YankyPutIndentBeforeLinewise)',
+      desc = 'Yanky put before with indent linewise',
+    },
+    --- text objects
+    {
+      'lp',
       function()
-        vim.fn.feedkeys(t(('"%s<Plug>(YankyPutIndentAfter)'):format(vim.v.register)))
-        vim.schedule(function()
-          require('userlib.hydra.yanky').open_yanky_ring_hydra()
-        end)
+        require('yanky.textobj').last_put()
       end,
-      mode = { 'n', 'x' },
-      desc = 'Yanky put before with indent',
+      desc = 'Yanky Last put',
+      mode = { 'x', 'o' },
     },
   },
   config = function()
@@ -608,6 +598,8 @@ pack.plug({
           mappings = {
             default = mappings.put('p'),
             i = {
+              ['<c-g>'] = mappings.put('p'),
+              ['<c-k>'] = mappings.put('P'),
               ['<c-x>'] = mappings.delete(),
               ['<c-r>'] = mappings.set_register(utils.get_default_register()),
             },
@@ -617,7 +609,7 @@ pack.plug({
       --- cycle history when paste with shortcuts.
       ring = {
         --- number of items used for ring.
-        history_length = 50,
+        history_length = 80,
         storage = 'shada',
       },
     })
@@ -652,7 +644,6 @@ pack.plug({
         -- Built-in completion
         { mode = 'i', keys = '<C-x>' },
         { mode = 'i', keys = '<C-o>' },
-        { mode = 'i', keys = '<C-s>s' },
 
         -- `g` key
         { mode = 'n', keys = 'g' },
@@ -697,8 +688,13 @@ pack.plug({
         { mode = 'n', keys = '<Leader>/', desc = '+Outline|Terms' },
         { mode = 'n', keys = '<Leader>v', desc = '+Trails' },
         { mode = 'n', keys = '<Leader>z', desc = '+Extended' },
+
         { mode = 'n', keys = '<Leader>m', desc = '+Motion' },
         { mode = 'n', keys = '<Leader>mj', desc = '+Join' },
+        { mode = 'n', keys = '<Leader>mp', desc = '+Cycle Yanky paste' },
+        { mode = 'n', keys = '<Leader>mpn', postkeys = '<Leader>mp', desc = 'Cycle paste yanky next' },
+        { mode = 'n', keys = '<Leader>mpp', postkeys = '<Leader>mp', desc = 'Cycle paste yanky previous' },
+
         { mode = 'n', keys = '<Leader>b', desc = '+Buffer' },
         { mode = 'n', keys = '<Leader>p', desc = '+Projects' },
         { mode = 'n', keys = '<Leader>t', desc = '+Tools|Toggle' },
@@ -755,6 +751,23 @@ pack.plug({
   opts = {
     window = {
       transparency = 10,
+    },
+  },
+})
+
+pack.plug({
+  'gbprod/cutlass.nvim',
+  event = 'User LazyUIEnter',
+  opts = {
+    cut_key = 'x',
+    override_del = true,
+    exclude = {
+      'ns',
+    },
+    registers = {
+      select = 's',
+      delete = 'd',
+      change = 'c',
     },
   },
 })
