@@ -94,3 +94,12 @@ pack.plug({
     end,
   },
 })
+
+pack.plug({
+  'vim-scripts/Align',
+  cmd = { 'Align', 'AlignCtrl', 'AlignMaps' },
+  init = function()
+    --- disable default maps
+    vim.g.loaded_AlignMapsPlugin = 1
+  end,
+})
