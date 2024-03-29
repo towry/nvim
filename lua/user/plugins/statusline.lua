@@ -43,6 +43,7 @@ plug({
         },
         comp.Tabs,
         comp.lpad({ comp.Branch, comp.GitStatus }),
+        comp.lpad({ provider = '%y%q' }),
         comp.lpad(comp.Overseer),
         { provider = '%=' },
         comp.TabCwdLock,
@@ -54,7 +55,7 @@ plug({
         comp.rpad(comp.Copilot),
         comp.rpad(comp.Codeium),
         comp.rpad(comp.Dap),
-        { provider = '%y%q' }
+        { provider = '%=' }
       ),
 
       opts = {
