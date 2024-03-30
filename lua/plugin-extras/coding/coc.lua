@@ -30,6 +30,7 @@ local function setup_coc_lsp_keys()
 
   --- code navigation
   set('n', 'gd', '<Plug>(coc-definition)', _('Go to definition'))
+  set('n', '<C-w>d', ':<C-u>call CocActionAsync("jumpDefinition", "vsplit")<cr>', _('Go to definition in vsplit'))
   set('n', 'gy', '<Plug>(coc-type-definition)', _(''))
   set('n', '<localleader>gi', '<Plug>(coc-implementation)', _('Go to implementation'))
   set('n', '<localleader>gr', '<Plug>(coc-references)', _('Show references'))
