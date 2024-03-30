@@ -92,7 +92,6 @@ pack.plug({
   },
   {
     'nvim-tree/nvim-web-devicons',
-    vscode = true,
   },
   { 'nvim-lua/popup.nvim' },
   {
@@ -771,6 +770,7 @@ pack.plug({
 
 pack.plug({
   'gbprod/cutlass.nvim',
+  vscode = true,
   event = 'User LazyUIEnter',
   opts = {
     cut_key = nil,
