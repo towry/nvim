@@ -1,3 +1,7 @@
+if not vim.cfg then
+  return
+end
+
 local au = require('userlib.runtime.au')
 
 au.on_verylazy(function()
@@ -30,7 +34,7 @@ au.on_verylazy(function()
     return 'find ' .. name
   end)
   setca('ass', 'let @/=')
-  if vim.cfg.edit__use_coc then
+  if vim.cfg and vim.cfg.edit__use_coc then
     setca('acc', 'CocCommand')
   end
 end)
