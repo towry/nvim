@@ -89,7 +89,7 @@ plug({
   opts = {
     -- `deuteranopia`,
     -- variant = 'tritanopia',
-    variant = 'tritanopia',
+    variant = 'tinted',
     dim_inactive = false,
     styles = {
       comments = { italic = false, bold = false },
@@ -116,12 +116,14 @@ plug({
         fg = c.bg_active,
       }
       hls['Winbar'] = {
-        fg = c.fg_active,
+        fg = c.fg_alt,
         bg = c.bg_main,
+        italic = true,
       }
       hls['WinbarNc'] = {
         fg = c.fg_inactive,
         bg = c.bg_main,
+        italic = true,
       }
       hls['CursorLineNr'] = {
         bg = 'NONE',
