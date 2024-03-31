@@ -5,6 +5,7 @@ local M = {}
 local is_profiling = false
 
 local function setup_basic()
+  set('i', 'jj', '<ESC>', { silent = true, nowait = true, noremap = true })
   --->>
   set('n', ']b', ':bnext<cr>', { desc = 'Next buffer', silent = false, nowait = true })
   set('n', '[b', ':bpre<cr>', { desc = 'Prev buffer', silent = false, nowait = true })
