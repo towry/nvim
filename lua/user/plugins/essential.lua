@@ -718,7 +718,7 @@ pack.plug({
         { mode = 'x', keys = '<Leader>s', desc = '+Search|Replace' },
         { mode = 'n', keys = '<Leader>sg', desc = '+Grep' },
         { mode = 'n', keys = '<Leader>r', desc = '+Runner|Debugger' },
-        { mode = 'n', keys = '<Leader>ro', desc = '+Overseer' },
+        { mode = 'n', keys = '<LocalLeader>o', desc = '+Overseer' },
         ---
         { mode = 'n', keys = 'gh', desc = '+Gitsigns' },
         { mode = 'x', keys = 'gh', desc = '+Gitsigns' },
