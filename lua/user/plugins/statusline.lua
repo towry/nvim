@@ -41,7 +41,7 @@ plug({
           static = comp.stl_static,
           hl = { fg = 'fg', bg = 'bg' },
         },
-        comp.Tabs,
+        comp.TabLine,
         comp.lpad({ comp.Branch, comp.GitStatus }),
         comp.lpad({ provider = '%y%q' }),
         comp.lpad(comp.Overseer),
@@ -54,7 +54,6 @@ plug({
             return '%-.20([' .. vim.t.TabLabel .. ']%) '
           end,
         },
-        comp.TabCwdLock,
         { provider = '%=' },
         {
           provider = '%=%v:%l ',

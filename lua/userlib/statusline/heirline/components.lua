@@ -789,9 +789,6 @@ local Gitinfo = {
 
 ----- tabline
 local Tabpage = {
-  provider = function(self)
-    return '%' .. self.tabnr .. 'T ' .. self.tabpage .. ' %T'
-  end,
   hl = function(self)
     if not self.is_active then
       return 'TabLine'
@@ -799,6 +796,31 @@ local Tabpage = {
       return 'TabLineSel'
     end
   end,
+  {
+    provider = function(self)
+      return '%' .. self.tabnr .. 'T ' .. self.tabpage
+    end,
+  },
+  {
+    condition = function(self)
+      return vim.t[self.tabnr].CwdLocked and vim.t[self.tabnr].Cwd
+    end,
+    provider = ':',
+  },
+  {
+    condition = function(self)
+      return vim.t[self.tabnr].CwdLocked and vim.t[self.tabnr].Cwd
+    end,
+    init = function(self)
+      self.tab_cwd = vim.fn.fnamemodify(vim.t[self.tabnr].Cwd, ':t')
+    end,
+    provider = function(self)
+      return '%-2.18(' .. self.tab_cwd .. '%)'
+    end,
+  },
+  {
+    provider = '%T ',
+  },
 }
 
 local TablineBufnr = {
@@ -913,27 +935,14 @@ local TablineBufferLine = utils.make_buflist(
 
 local TabPages = {
   -- only show this component if there's 2 or more tabpages
-  condition = function()
-    return #vim.api.nvim_list_tabpages() >= 2
-  end,
+  -- condition = function()
+  --   return #vim.api.nvim_list_tabpages() > 1
+  -- end,
   utils.make_tablist(Tabpage),
-  {
-    provider = '┃',
-    hl = {
-      bg = utils.get_highlight('TabLine').bg,
-      fg = utils.get_highlight('TabLineSel').fg,
-    },
-  },
 }
 
 local TabLine = {
   TabPages,
-  {
-    rpad(lpad(BufferCwd)),
-    hl = 'TabLine',
-  },
-  -- TablineBufferLine,
-  { provider = '%=' },
 }
 
 local UnsavedBufCount = {
