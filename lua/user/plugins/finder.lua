@@ -212,9 +212,9 @@ plug({
         if vim.bo.buftype ~= '' then
           return
         end
-        require('oil').open(require('userlib.runtime.utils').get_root())
+        require('oil').open(vim.uv.cwd())
       end,
-      desc = 'Open oil(BUF) file browser',
+      desc = 'Open oil(BUF) file browser in cwd',
     },
     {
       '-',
@@ -224,7 +224,7 @@ plug({
         end
         require('oil').open()
       end,
-      desc = 'Open oil file browser(buf)',
+      desc = 'Open oil file browser(buf) relative to current buffer',
     },
     {
       '_',
@@ -234,7 +234,7 @@ plug({
         end
         require('oil').open_float()
       end,
-      desc = 'Open oil file browser(buf|float)',
+      desc = 'Open oil file browser(buf|float) relative to current buffer',
     },
   },
   init = function()
