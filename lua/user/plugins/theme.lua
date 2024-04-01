@@ -116,7 +116,7 @@ plug({
         fg = c.bg_active,
       }
       hls['Winbar'] = {
-        fg = c.fg_alt,
+        fg = c.fg_inactive,
         bg = c.bg_main,
         italic = true,
       }
