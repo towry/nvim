@@ -798,21 +798,21 @@ local Tabpage = {
   end,
   {
     provider = function(self)
-      return '%' .. self.tabnr .. 'T ' .. self.tabpage
+      return '%' .. self.tabnr .. 'T ' .. self.tabnr
     end,
   },
   {
     condition = function(self)
-      return vim.t[self.tabnr].CwdLocked and vim.t[self.tabnr].Cwd
+      return vim.t[self.tabpage].CwdLocked and vim.t[self.tabpage].Cwd
     end,
     provider = ':',
   },
   {
     condition = function(self)
-      return vim.t[self.tabnr].CwdLocked and vim.t[self.tabnr].Cwd
+      return vim.t[self.tabpage].CwdLocked and vim.t[self.tabpage].Cwd
     end,
     init = function(self)
-      self.tab_cwd = vim.fn.fnamemodify(vim.t[self.tabnr].Cwd, ':t')
+      self.tab_cwd = vim.fn.fnamemodify(vim.t[self.tabpage].Cwd, ':t')
     end,
     provider = function(self)
       return '%-2.18(' .. self.tab_cwd .. '%)'
