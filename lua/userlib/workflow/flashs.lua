@@ -14,7 +14,7 @@ function M.jump_to_line(opts)
 
   require('flash').jump({
     search = { mode = 'search', max_length = 0, multi_window = opts.multi_window or false, exclude = opts.exclude },
-    label = { after = { 0, 0 } },
+    label = { after = { 0, 0 }, style = 'inline' },
     pattern = '\\(^\\s*\\)\\@<=\\S',
     action = action,
   })

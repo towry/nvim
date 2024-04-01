@@ -91,7 +91,7 @@ set('n', 's', function()
         end,
       },
     },
-    label = { after = { 0, 0 } },
+    label = { after = { 0, 0 }, style = 'inline' },
     pattern = '^',
   })
 end, {
