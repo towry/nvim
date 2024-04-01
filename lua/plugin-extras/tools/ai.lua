@@ -3,6 +3,7 @@ local plug = require('userlib.runtime.pack').plug
 return plug({
   {
     'olimorris/codecompanion.nvim',
+    enabled = false,
     dependencies = {
       'nvim-lua/plenary.nvim',
       {
@@ -17,7 +18,7 @@ return plug({
     },
     keys = {
       {
-        '<C-a>',
+        '<C-a>c',
         '<cmd>CodeCompanionActions<cr>',
         silent = true,
         noremap = true,
