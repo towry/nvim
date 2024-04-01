@@ -10,6 +10,8 @@ local function setup_basic()
   set('n', '<C-a>x', '<C-x>', { remap = false, nowait = true, silent = true })
   --- <C-a> and <C-x> is free to use
   set('i', 'jj', '<ESC>', { silent = true, nowait = true, noremap = true })
+  set('n', 'k', [[(v:count > 1 ? "m'" . v:count : '') . 'k']], { expr = true, silent = true, noremap = true })
+  set('n', 'j', [[(v:count > 1 ? "m'" . v:count : '') . 'j']], { expr = true, silent = true, noremap = true })
   --->>
   set('n', ']b', ':bnext<cr>', { desc = 'Next buffer', silent = false, nowait = true })
   set('n', '[b', ':bpre<cr>', { desc = 'Prev buffer', silent = false, nowait = true })

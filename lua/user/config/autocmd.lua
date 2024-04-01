@@ -1,6 +1,7 @@
 local au = require('userlib.runtime.au')
 
 local M = {}
+local group_name = 'user_config_group'
 
 function M.load_on_startup()
   -- taken from AstroNvim
@@ -28,6 +29,14 @@ function M.load_on_startup()
             10
           )
         end,
+      },
+    },
+    {
+      --- create jump point, in case of line number/search jump etc
+      'CmdlineEnter',
+      {
+        group = group_name,
+        command = "normal! m'",
       },
     },
     {
