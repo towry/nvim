@@ -48,7 +48,7 @@ plug({
       { '<leader>gm', ':Git merge', desc = 'Fugitive start git merge' },
       {
         '<leader>gg',
-        ':Git | resize<cr>',
+        ':Git | resize +10<cr>',
         desc = 'Fugitive Git',
       },
       {
