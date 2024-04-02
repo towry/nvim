@@ -21,10 +21,10 @@ function M.startup()
   o.smarttab = true --- Makes tabbing smarter will realize you have 2 vs 4
   o.softtabstop = 2 --- Insert 2 spaces for a tab
   o.splitright = true --- Vertical splits will automatically be to the right
-  o.splitbelow = false
+  o.splitbelow = true
   o.swapfile = false --- Swap not needed
   o.tabstop = 2 --- Insert 2 spaces for a tab
-  o.timeoutlen = 480 --- Key sequence wait time | Faster completion (cannot be lower than 200 because then commenting doesn't work)
+  o.timeoutlen = 450 --- Key sequence wait time | Faster completion (cannot be lower than 200 because then commenting doesn't work)
   o.showcmd = true
   o.showcmdloc = 'statusline'
   o.winminwidth = 10
