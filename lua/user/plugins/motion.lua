@@ -3,40 +3,15 @@ local cmd = require('userlib.runtime.keymap').cmdstr
 local au = require('userlib.runtime.au')
 
 plug({
-  {
-    vim.cfg.lang__treesitter_next and 'pze/mini.ai' or 'echasnovski/mini.ai',
-    vscode = true,
-    -- disabled due to not compatible with nvim-treesitter#1.0
-    enabled = true,
-    dev = false,
-    -- event = au.user_autocmds.FileOpenedAfter_User,
-    event = { 'CursorHold' },
-    opts = function()
-      local ai = require('mini.ai')
-      return {
-        search_method = 'cover_or_next',
-        n_lines = 500,
-        custom_textobjects = {
-          o = ai.gen_spec.treesitter({
-            a = { '@block.outer', '@conditional.outer', '@loop.outer' },
-            i = { '@block.inner', '@conditional.inner', '@loop.inner' },
-          }, {
-            use_nvim_treesitter = not vim.cfg.lang__treesitter_next,
-          }),
-          m = ai.gen_spec.treesitter({ a = '@function.outer', i = '@function.inner' }, {
-            use_nvim_treesitter = not vim.cfg.lang__treesitter_next,
-          }),
-          c = ai.gen_spec.treesitter({ a = '@class.outer', i = '@class.inner' }, {
-            use_nvim_treesitter = not vim.cfg.lang__treesitter_next,
-          }),
-        },
-      }
-    end,
-    config = function(_, opts)
-      require('mini.ai').setup(opts)
-    end,
+  'chrisgrieser/nvim-various-textobjs',
+  event = 'BufReadPost',
+  opts = {
+    useDefaultKeymaps = true,
+    disabledKeymaps = {},
   },
+})
 
+plug({
   {
     'kylechui/nvim-surround',
     vscode = true,
