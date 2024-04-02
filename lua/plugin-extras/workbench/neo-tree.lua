@@ -1,6 +1,17 @@
 local plug = require('userlib.runtime.pack').plug
 local icons = require('userlib.icons')
 
+local function neo_tree_is_open()
+  -- loop each window in current tab
+  for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+    local buf = vim.api.nvim_win_get_buf(win)
+    if vim.bo[buf].filetype == 'neo-tree' then
+      return win
+    end
+  end
+  return nil
+end
+
 plug({
   'nvim-neo-tree/neo-tree.nvim',
   branch = 'main', -- HACK: force neo-tree to checkout `main` for initial v3 migration since default branch has changed
@@ -23,10 +34,20 @@ plug({
         if vim.bo.filetype == 'neo-tree' then
           vim.cmd('wincmd p')
         else
-          vim.cmd([[Neotree position=right action=focus reveal=false]])
+          local win = neo_tree_is_open()
+          if win then
+            vim.api.nvim_set_current_win(win)
+          else
+            vim.cmd([[Neotree position=right action=focus reveal=false]])
+          end
         end
       end,
       desc = 'Toggle explore tree',
+    },
+    {
+      'g\\',
+      '<cmd>Neotree position=right action=focus reveal=true<cr>',
+      desc = 'Open explore tree and reveal current file',
     },
     {
       '|',
@@ -87,8 +108,10 @@ plug({
           end
 
           require('neo-tree.command').execute({
+            dir = vim.uv.cwd(),
             source = 'filesystem', -- OPTIONAL, this is the default value
             reveal_file = reveal_file, -- path to file or folder to reveal
+            reveal_force_cwd = true, -- change cwd without asking if needed
           })
         end,
         parent_or_close = function(state)
