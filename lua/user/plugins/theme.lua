@@ -280,7 +280,7 @@ plug({
     })
   end,
   init = function()
-    vim.g.nightfox_day = 'dayfox'
+    vim.g.nightfox_day = 'dawnfox'
     vim.g.nightfox_night = 'nordfox'
   end,
 })
