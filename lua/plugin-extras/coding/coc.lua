@@ -66,13 +66,13 @@ local function setup_coc_lsp_keys()
     'x',
     '<leader>crF',
     '<Plug>(coc-codeaction-refactor-selected)',
-    { silent = true, desc = '[Coc] Refactor selected code' }
+    { silent = true, desc = '[Coc] Refactor selected code', expr = false }
   )
   set(
     'n',
     '<leader>crF',
     '<Plug>(coc-codeaction-refactor-selected)',
-    { silent = true, desc = '[Coc] Refactor selected code' }
+    { silent = true, desc = '[Coc] Refactor selected code', expr = false }
   )
   -- Run the Code Lens actions on the current line
   set('n', '<leader>cC', '<Plug>(coc-codelens-action)', _('Codelens action'))
@@ -236,7 +236,7 @@ return plug({
         end
       end
     end, opts)
-    set('i', '<C-j>', '<Plug>(coc-snippets-expand-jump)', opts)
+    set('i', '<C-j>', '<Plug>(coc-snippets-expand-jump)', { expr = false, })
 
     setup_coc_lsp_keys()
     setup_coc_autocmd()
