@@ -13,12 +13,23 @@ plug({
       desc = 'Toggle explore tree',
     },
     {
-      '|',
-      '<cmd>Neotree position=right toggle=true action=focus reveal=true<cr>',
+      '\\',
+      function()
+        if vim.bo.buftype == '' then
+          vim.t.neotree_last_buf = vim.api.nvim_get_current_buf()
+        else
+          vim.t.neotree_last_buf = nil
+        end
+        if vim.bo.filetype == 'neo-tree' then
+          vim.cmd('wincmd p')
+        else
+          vim.cmd([[Neotree position=right action=focus reveal=false]])
+        end
+      end,
       desc = 'Toggle explore tree',
     },
     {
-      '\\',
+      '|',
       function()
         local cwd = vim.cfg.runtime__starts_cwd or safe_cwd()
         vim.cmd(
@@ -43,12 +54,12 @@ plug({
       sources = { 'filesystem', 'buffers', 'git_status' },
       source_selector = {
         winbar = true,
-        content_layout = 'center',
+        content_layout = 'start',
         sources = {
           { source = 'filesystem', display_name = icons.folder .. 'File' },
           { source = 'buffers', display_name = icons.buffer .. 'Bufs' },
-          { source = 'git_status', display_name = icons.git .. 'Git' },
-          { source = 'diagnostics', display_name = icons.wrench .. 'Diagnostic' },
+          -- { source = 'git_status', display_name = icons.git .. 'Git' },
+          -- { source = 'diagnostics', display_name = icons.wrench .. 'Diagnostic' },
         },
       },
       default_component_configs = {
@@ -57,6 +68,28 @@ plug({
       commands = {
         system_open = function(state)
           (vim.ui.open)(state.tree:get_node():get_id())
+        end,
+        reveal_last_buf = function()
+          if not vim.t.neotree_last_buf or not vim.api.nvim_buf_is_valid(vim.t.neotree_last_buf) then
+            vim.notify('no active buffer to reveal', vim.log.levels.INFO)
+            return
+          end
+          local reveal_file = vim.api.nvim_buf_get_name(vim.t.neotree_last_buf)
+          if reveal_file == '' then
+            return
+          else
+            local f = io.open(reveal_file, 'r')
+            if f then
+              f.close(f)
+            else
+              return
+            end
+          end
+
+          require('neo-tree.command').execute({
+            source = 'filesystem', -- OPTIONAL, this is the default value
+            reveal_file = reveal_file, -- path to file or folder to reveal
+          })
         end,
         parent_or_close = function(state)
           local node = state.tree:get_node()
@@ -75,7 +108,7 @@ plug({
               require('neo-tree.ui.renderer').focus_node(state, node:get_child_ids()[1])
             end
           else -- if not a directory just open it
-            state.commands.open(state)
+            -- state.commands.open(state)
           end
         end,
         copy_selector = function(state)
@@ -124,29 +157,31 @@ plug({
 
           require('userlib.mini.clue.folder-action').open(cwd)
         end,
-        open_buffers = function()
-          vim.cmd('Neotree source=buffers position=right reveal=true')
-        end,
-        open_filesystem = function()
-          vim.cmd('Neotree source=filesystem position=right reveal=true')
+        unfocus = function()
+          vim.cmd('wincmd p')
         end,
       },
       window = {
-        width = 30,
+        width = 40,
+        auto_expand_width = true,
+        mapping_options = {
+          noremap = true,
+          nowait = false,
+        },
         mappings = {
-          ['<space>'] = false, -- disable space until we figure out which-key disabling
           ['[b'] = 'prev_source',
           [']b'] = 'next_source',
-          ['-'] = 'action_in_dir',
-          ['1'] = 'open_filesystem',
-          ['2'] = 'open_buffers',
+          ['m'] = 'action_in_dir',
+          ['w'] = 'open_with_window_picker',
           O = 'system_open',
           Y = 'copy_selector',
           h = 'parent_or_close',
-          L = 'child_or_open',
+          l = 'child_or_open',
           o = 'open',
           e = false,
           E = 'toggle_auto_expand_width',
+          q = 'unfocus',
+          Q = 'close_window',
         },
         fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
           ['<C-j>'] = 'move_cursor_down',
@@ -157,6 +192,22 @@ plug({
         follow_current_file = { enabled = false },
         hijack_netrw_behavior = 'open_current',
         use_libuv_file_watcher = true,
+        bind_to_cwd = false,
+        group_empty_dirs = true,
+        window = {
+          mappings = {
+            ['-'] = 'navigate_up',
+            ['.'] = 'reveal_last_buf',
+          },
+        },
+      },
+      buffers = {
+        bind_to_cwd = false,
+        follow_current_file = {
+          enabled = true, -- This will find and focus the file in the active buffer every time
+          --              -- the current file is changed while the tree is open.
+          leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
+        },
       },
       event_handlers = {
         {
