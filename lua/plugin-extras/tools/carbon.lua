@@ -9,8 +9,9 @@ return plug({
     open_cmd = 'open',
     base_url = 'https://carbon.now.sh/',
     options = {
-      theme = 'zenburn',
-      font_family = 'JetBrains Mono',
+      theme = 'night-owl',
+      font_family = 'Fira Code',
+      font_size = '16px',
     },
   },
   keys = {
