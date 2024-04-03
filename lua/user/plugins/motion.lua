@@ -7,7 +7,9 @@ plug({
   event = 'BufReadPost',
   opts = {
     useDefaultKeymaps = true,
-    disabledKeymaps = {},
+    disabledKeymaps = {
+      'gc',
+    },
   },
 })
 
