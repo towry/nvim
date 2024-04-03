@@ -219,7 +219,7 @@ return plug({
       group = 'CocGroupLazy',
       once = true,
       callback = vim.schedule_wrap(function()
-        set('i', '<C-f>', function()
+        set('i', '<C-j>', function()
           local trigger_ai = function()
             -- trigger ai
             if vim.b._copilot then
@@ -242,16 +242,15 @@ return plug({
               vim.fn.feedkeys(vim.fn['codeium#Accept'](), 'i')
             end
           else
-            return vim.api.nvim_replace_termcodes('<Right>', true, true, false)
+            return vim.api.nvim_replace_termcodes('<Plug>(coc-snippets-expand-jump', true, true, false)
           end
         end, {
           noremap = false,
           remap = true,
-          expr = true,
+          expr = false,
         })
       end),
     })
-    set('i', '<C-j>', '<Plug>(coc-snippets-expand-jump)', { expr = false })
 
     setup_coc_lsp_keys()
     setup_coc_autocmd()
