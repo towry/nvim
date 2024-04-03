@@ -9,15 +9,4 @@ local setup_minifox = function()
   require('nightfox').load()
 end
 
-vim.api.nvim_create_augroup('nightfox_color', { clear = true })
-vim.api.nvim_create_autocmd({ 'OptionSet' }, {
-  group = 'nightfox_color',
-  callback = function(ctx)
-    local match = ctx.match
-    if match == 'background' then
-      setup_minifox()
-    end
-  end,
-})
-
 setup_minifox()
