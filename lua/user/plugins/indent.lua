@@ -5,6 +5,34 @@ local au = require('userlib.runtime.au')
 ---Identation.
 pack.plug({
   {
+    'yioneko/vim-tmindent',
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = function()
+      require('tmindent').setup({
+        enabled = function()
+          return vim.bo.buftype == ''
+          -- return vim.tbl_contains({ 'lua', 'scss', 'vue', 'typescriptreact' }, vim.bo.filetype)
+        end,
+        use_treesitter = function()
+          return false
+        end, -- used to detect different langauge region and comments
+        default_rule = {},
+        rules = {
+          lua = {
+            comment = { '--' },
+            -- inherit pair rules
+            inherit = { '&{}', '&()' },
+            -- these patterns are the same as TextMate's
+            increase = { '\v<%(else|function|then|do|repeat)>((<%(end|until)>)@!.)*$' },
+            decrease = { '^\v<%(elseif|else|end|until)>' },
+            unindented = {},
+            indentnext = {},
+          },
+        },
+      })
+    end,
+  },
+  {
     'utilyre/sentiment.nvim',
     version = '*',
     event = 'User LazyUIEnterOncePost',

@@ -23,8 +23,8 @@ plug({
       group = 'treesitter_start',
       pattern = 'TreeSitterStart',
       callback = function(ctx)
-        local buf = ctx.data.bufnr
-        vim.bo[buf].indentexpr = [[v:lua.require('nvim-treesitter').indentexpr()]]
+        -- local buf = ctx.data.bufnr
+        -- vim.bo[buf].indentexpr = [[v:lua.require('nvim-treesitter').indentexpr()]]
       end,
     })
   end,
