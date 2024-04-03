@@ -3,6 +3,33 @@ local utils = require('userlib.runtime.utils')
 return {
   {
     function()
+      local _ = require('userlib.runtime.utils')
+      _.use_plugin('window-picker', function(winpick)
+        local picked = winpick.pick_window({
+          autoselect_one = false,
+          include_current_win = false,
+          hint = 'floating-big-letter',
+        })
+        if not picked then
+          return
+        end
+        local current_buf = vim.api.nvim_get_current_buf()
+        local current_win = vim.api.nvim_get_current_win()
+        vim.api.nvim_win_call(picked, function()
+          local bufnr = vim.fn.bufnr('#')
+          if bufnr == current_buf or bufnr < 0 then
+            vim.notify('No alternative buffer in window:' .. picked, vim.log.levels.INFO)
+            return
+          end
+          -- set bufnr to current_win
+          vim.api.nvim_win_set_buf(current_win, bufnr)
+        end)
+      end)
+    end,
+    description = 'Edit other window alternate buffer',
+  },
+  {
+    function()
       vim.ui.input({
         prompt = 'Tab label:',
       }, function(input)
