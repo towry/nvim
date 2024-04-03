@@ -343,9 +343,9 @@ local function setup_basic()
     -- close pum after completion
     ['ctrl-y'] = vim.api.nvim_replace_termcodes('<C-y>', true, true, false),
     ['ctrl-y_cr'] = vim.api.nvim_replace_termcodes('<C-y><CR>', true, true, false),
-    ['space'] = vim.api.nvim_replace_termcodes('<Space>', true, true, true),
-    ['ctrl-z'] = vim.api.nvim_replace_termcodes('<C-z>', true, true, true),
-    ['bs-ctrl-z'] = vim.api.nvim_replace_termcodes('<C-h><C-z>', true, true, true),
+    ['space'] = vim.api.nvim_replace_termcodes('<Space>', true, true, false),
+    ['ctrl-z'] = vim.api.nvim_replace_termcodes('<C-z>', true, true, false),
+    ['bs-ctrl-z'] = vim.api.nvim_replace_termcodes('<C-h><C-z>', true, true, false),
   }
   ---- wildmode
   if vim.cfg.edit__use_coq_cmp or vim.cfg.edit__use_coc then

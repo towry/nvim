@@ -1,3 +1,4 @@
+local au = require('userlib.runtime.au')
 local plug = require('userlib.runtime.pack').plug
 
 local function setup_coc_commands()
@@ -209,34 +210,48 @@ return plug({
 
     --- trigger coc autocmp and ai
     set('i', '<C-y>', function()
-      local trigger_ai = function()
-        -- trigger ai
-        if vim.b._copilot then
-          vim.fn['copilot#Suggest']()
-          return true
-        elseif vim.fn.exists('*codeium#Complete') == 1 then
-          vim.fn['codeium#Complete']()
-          return true
-        end
-        return false
-      end
-
-      if Ty.has_ai_suggestions() and Ty.has_ai_suggestion_text() then
-        if vim.fn['coc#pum#visible']() == 1 then
-          vim.fn['coc#pum#cancel']()
-        end
-        if vim.b._copilot then
-          vim.fn.feedkeys(vim.fn['copilot#Accept'](), 'i')
-        elseif vim.b._codeium_completions then
-          vim.fn.feedkeys(vim.fn['codeium#Accept'](), 'i')
-        end
-      else
-        if not trigger_ai() then
-          vim.fn['coc#refresh']()
-        end
-      end
+      vim.fn['coc#refresh']()
     end, opts)
-    set('i', '<C-j>', '<Plug>(coc-snippets-expand-jump)', { expr = false, })
+
+    --- prevent some other plugin like rsi.vim override this mapping.
+    au.define_autocmd({ 'InsertEnter' }, {
+      --- must different group
+      group = 'CocGroupLazy',
+      once = true,
+      callback = vim.schedule_wrap(function()
+        set('i', '<C-f>', function()
+          local trigger_ai = function()
+            -- trigger ai
+            if vim.b._copilot then
+              vim.fn['copilot#Suggest']()
+              return true
+            elseif vim.fn.exists('*codeium#Complete') == 1 then
+              vim.fn['codeium#Complete']()
+              return true
+            end
+            return false
+          end
+
+          if Ty.has_ai_suggestions() and Ty.has_ai_suggestion_text() then
+            if vim.fn['coc#pum#visible']() == 1 then
+              vim.fn['coc#pum#cancel']()
+            end
+            if vim.b._copilot then
+              vim.fn.feedkeys(vim.fn['copilot#Accept'](), 'i')
+            elseif vim.b._codeium_completions then
+              vim.fn.feedkeys(vim.fn['codeium#Accept'](), 'i')
+            end
+          else
+            return vim.api.nvim_replace_termcodes('<Right>', true, true, false)
+          end
+        end, {
+          noremap = false,
+          remap = true,
+          expr = true,
+        })
+      end),
+    })
+    set('i', '<C-j>', '<Plug>(coc-snippets-expand-jump)', { expr = false })
 
     setup_coc_lsp_keys()
     setup_coc_autocmd()
