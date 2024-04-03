@@ -28,6 +28,7 @@ au.on_verylazy(function()
   setca('apath', function()
     return vim.fn.expand('%')
   end)
+  setca('ats', 'TermSelect')
   -- find alt file and edit
   setca('altfind', function()
     local name = vim.fn.expand('%:t:r')
