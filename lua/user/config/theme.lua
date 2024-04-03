@@ -29,14 +29,19 @@ local hi_minicursorword = function()
     fg = 'NONE',
   })
 end
+local hi_coc = function()
+  local extend_hl = require('userlib.runtime.utils').extend_hl
+  hi('CocPumMenu', { link = 'PmenuSel' })
+end
 
 function M.custom_theme_wildcharm()
   --- custom wildcharm theme.
   vim.cmd([[hi! Visual guifg=#000000 guibg=#ffffff gui=NONE cterm=NONE]])
 end
 
-function M.custom_theme_gruvbox()
-  -- hi('LineNr', { link = 'Comment', bg = 'NONE' })
+function M.custom_theme_slate()
+  M.custom_theme_default()
+  hi_coc()
 end
 
 function M.custom_theme_default()
