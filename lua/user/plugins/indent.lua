@@ -7,6 +7,7 @@ pack.plug({
   {
     'yioneko/vim-tmindent',
     event = { 'BufReadPre', 'BufNewFile' },
+    enabled = false,
     config = function()
       require('tmindent').setup({
         enabled = function()
