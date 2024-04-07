@@ -2,7 +2,7 @@ local plug = require('userlib.runtime.pack').plug
 
 plug({
   'towry/flexoki-neovim',
-  dev = true,
+  dev = false,
   branch = 'next',
   cond = vim.cfg.ui__theme_name == 'flexoki',
   name = 'flexoki',
@@ -47,7 +47,7 @@ plug({
   'towry/dracula-mini.nvim',
   event = 'User LazyTheme',
   cond = vim.cfg.ui__theme_name:match('dracula-mini'),
-  dev = true,
+  dev = false,
   config = function()
     require('dracula-mini').setup({
       -- your configuration comes here
