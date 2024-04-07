@@ -263,7 +263,7 @@ pack.plug({
 
       -- ╭──────────────────────────────────────────────────────────╮
       -- │ Utils                                                    │
-      -- ╰──────────────────────────────────────────────────────────╯
+      -- ╰───�������──────────────────────────────────────────────────────╯
       local types = require('cmp.types')
 
       local check_backspace = function()
@@ -359,7 +359,7 @@ pack.plug({
             else
               fallback()
             end
-          end),                           -- invoke complete
+          end), -- invoke complete
           ['<C-s>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
           ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
           ['<C-e>'] = cmp.mapping({
@@ -440,13 +440,13 @@ pack.plug({
         },
         -- You should specify your *installed* sources.
         sources = {
-          { name = 'nvim_lsp',                priority = 10, max_item_count = 5 },
+          { name = 'nvim_lsp', priority = 10, max_item_count = 5 },
           -- { name = "copilot",                 priority = 30, max_item_count = 4 },
           -- { name = 'codeium', priority = 7, max_item_count = 4 },
           { name = 'nvim_lsp_signature_help', priority = 10, max_item_count = 3 },
-          { name = 'npm',                     priority = 3 },
+          { name = 'npm', priority = 3 },
           -- { name = 'cmp_tabnine',             priority = 6,  max_item_count = 3 },
-          { name = 'luasnip',                 priority = 6,  max_item_count = 2 },
+          { name = 'luasnip', priority = 6, max_item_count = 2 },
           {
             name = 'buffer',
             priority = 8,
@@ -612,8 +612,8 @@ pack.plug({
         -- do not add pairs if in jsx.
         local ts_current_line_node_type = Ty.TS_GET_NODE_TYPE()
         if
-            vim.tbl_contains({ 'jsx_self_closing_element', 'jsx_opening_element' }, ts_current_line_node_type)
-            and (item.kind == Kind.Function or item.kind == Kind.Method)
+          vim.tbl_contains({ 'jsx_self_closing_element', 'jsx_opening_element' }, ts_current_line_node_type)
+          and (item.kind == Kind.Function or item.kind == Kind.Method)
         then
           return
         end
@@ -691,7 +691,6 @@ pack.plug({
     end,
   },
   {
-    --- have bug when behind proxy.
     'Exafunction/codeium.vim',
     event = { 'InsertEnter' },
     cmd = { 'Codeium' },
@@ -717,16 +716,6 @@ pack.plug({
         '<cmd>Codeium Toggle<cr>',
         desc = 'Toggle AI',
       },
-
-      {
-        '<M-y>',
-        function()
-          return vim.fn['codeium#Complete']()
-        end,
-        mode = 'i',
-        desc = 'Manually trigger codeium suggestion',
-        expr = true,
-      },
     },
     enabled = vim.cfg.plug__enable_codeium_vim,
     config = function() end,
@@ -740,6 +729,8 @@ pack.plug({
         ['fzf'] = false,
         ['TelescopePrompt'] = false,
         ['TelescopeResults'] = false,
+        ['DressingInput'] = false,
+        ['DressingSelect'] = false,
       }
     end,
   },
@@ -866,7 +857,7 @@ pack.plug({
       function()
         local doc = require('sg.cody.experimental.documentation')
         local start_line = vim.fn.line("'<") -- Get the start line of the visual selection
-        local end_line = vim.fn.line("'>")   -- Get the end line of the visual selection
+        local end_line = vim.fn.line("'>") -- Get the end line of the visual selection
         if not start_line or not end_line then
           return
         end
