@@ -321,7 +321,7 @@ end
 pack.plug({
   -- better yank
   'gbprod/yanky.nvim',
-  enabled = true,
+  enabled = false,
   keys = {
     {
       '<localleader>lp',
@@ -449,6 +449,17 @@ pack.plug({
   init = au.schedule_lazy(function()
     require('userlib.legendary').register('setup_yanky_lg', setup_yanky_legendary)
   end),
+})
+
+pack.plug({
+  'ibhagwan/smartyank.nvim',
+  opts = {
+    tmux = { enabled = false },
+    highlight = {
+      enabled = false,
+    },
+  },
+  event = { 'BufReadPost', 'BufNewFile' },
 })
 
 pack.plug({
