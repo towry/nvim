@@ -54,6 +54,9 @@ end
 
 function M.super(c)
   if not is_in_tmux or not is_mimic_super then
+    if c == ';' then
+      return [[<C-;>]]
+    end
     return string.format('<D-%s>', c)
   end
   return string.format('<Char-0xAE>%s', c)
