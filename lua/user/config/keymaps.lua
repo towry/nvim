@@ -165,11 +165,6 @@ local function setup_basic()
     desc = 'which_key_ignore',
   })
 
-  set('n', 'qq', cmd([[:qa]]), {
-    desc = 'Quit all',
-    noremap = true,
-    nowait = true,
-  })
   set('c', '<C-q>', '<C-u>qa<CR>', {
     desc = 'Make sure <C-q> do not insert weird chars',
     nowait = true,

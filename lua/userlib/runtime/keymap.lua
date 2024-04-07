@@ -52,6 +52,7 @@ function M.map_buf_thunk(bufnr)
   end
 end
 
+---WezTerm support super key
 function M.super(c)
   if not is_in_tmux or not is_mimic_super then
     if c == ';' then
