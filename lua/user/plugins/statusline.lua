@@ -42,7 +42,11 @@ plug({
           hl = { fg = 'fg', bg = 'bg' },
         },
         comp.TabLine,
-        comp.lpad({ comp.Branch, comp.GitStatus }),
+        comp.lpad({
+          { provider = ' ' },
+          comp.Branch,
+          comp.GitStatus,
+        }),
         comp.lpad({ provider = '%y%q' }),
         comp.lpad(comp.Overseer),
         { provider = '%=' },
