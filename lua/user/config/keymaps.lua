@@ -149,9 +149,18 @@ local function setup_basic()
     set('n', '<space>' .. i, cmd(i .. 'tabnext'), {
       desc = 'Go to tab ' .. i,
     })
+    --- use option key to navigate tab quickly.
+    --- cmd key is used by the mux program.
+    if vim.cfg.runtime__is_wezterm then
+      set('n', '<M-' .. i .. '>', cmd(i .. 'tabnext'), {
+        desc = 'Go to tab ' .. i,
+      })
+    end
   end
-  set('n', '<space>0', cmd('tabnext'), { desc = 'Tab next' })
-  set('n', '<space><Tab>', cmd('tabp'), { desc = 'Tab previous' })
+  if vim.cfg.runtime__is_wezterm then
+    set('n', '<D-[>', cmd('tabp'), { desc = 'Tab pre' })
+    set('n', '<D-]>', cmd('tabn'), { desc = 'Tab next' })
+  end
   set('n', '<leader>tn', cmd('tabnew'), {
     desc = 'New tab',
   })
