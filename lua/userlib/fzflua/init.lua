@@ -132,7 +132,7 @@ function M.folders(opts)
   opts.cmd = cmd
   opts.cwd_header = true
   opts.cwd_prompt = true
-  opts.toggle_ignore_flag = '--no-ignore'
+  opts.toggle_ignore_flag = '--no-ignore-vcs'
   opts.winopts = {
     fullscreen = false,
   }
@@ -163,16 +163,13 @@ function M.folders(opts)
       end
       require('userlib.mini.clue.folder-action').open(entry_path)
     end,
-    ['ctrl-g'] = function()
-      opts.__ACT_TO = function(o)
-        opts = vim.tbl_extend('force', opts, o)
-        return fzflua.fzf_exec(opts.cmd, opts)
-      end
-      actions.toggle_ignore(nil, opts)
+    ['ctrl-g'] = function(_, o)
+      opts.cmd = libutils.toggle_cmd_option(o.cmd, '--no-ignore-vcs')
+      return fzflua.fzf_exec(opts.cmd, opts)
     end,
-    ['ctrl-h'] = function()
+    ['ctrl-h'] = function(_, o)
       --- toggle hidden
-      opts.cmd = libutils.toggle_cmd_option(opts.cmd, '--hidden')
+      opts.cmd = libutils.toggle_cmd_option(o.cmd, '--hidden')
       return fzflua.fzf_exec(opts.cmd, opts)
     end,
   }
