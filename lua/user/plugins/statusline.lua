@@ -27,6 +27,11 @@ plug({
       -- https://github.com/rebelot/heirline.nvim/blob/master/cookbook.md#tabline
       tabline = {
         comp.TabLine,
+        comp.lpad({
+          hl = { fg = 'fg', bg = 'bg' },
+          comp.FileIcon,
+          { provider = ' %t' },
+        }),
         {
           provider = '%=',
         },
@@ -50,11 +55,9 @@ plug({
         condition = function()
           return conditions.is_active()
         end,
-        -- comp.TabLine,
         comp.lpad({
-          comp.ShortFileName,
           {
-            provider = ' [%n]',
+            provider = '%f [%n]',
           },
           {
             provider = '%m%w%r',
@@ -80,9 +83,8 @@ plug({
         end,
         --- file info
         comp.lpad({
-          comp.ShortFileName,
           {
-            provider = ' [%n]',
+            provider = '%f [%n]',
           },
           {
             provider = '%m%w%r',
