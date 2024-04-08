@@ -94,7 +94,7 @@ function M.init_interface()
   o.ruler = false -- Always show cursor position
   o.termguicolors = true --- Correct terminal colors
   o.confirm = true
-  o.showtabline = vim.cfg.runtime__starts_as_gittool and 2 or 0 --- Always show tabs
+  o.showtabline = vim.cfg.runtime__starts_as_gittool and 2 or 2 --- Always show tabs
   o.signcolumn = 'yes:1' --- Add extra sign column next to line number
   o.relativenumber = vim.cfg.editor__relative_number and not vim.cfg.runtime__starts_as_gittool --- Enables relative number
   o.numberwidth = 1
