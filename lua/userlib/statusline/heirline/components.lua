@@ -55,7 +55,7 @@ local stl_static = {
 
 local ShortFileName = {
   init = function(self)
-    local no_name = '[No Name]'
+    local no_name = '%f'
     local bufname = self.bufname or vim.fn.expand('%:p')
     if vim.bo.buftype ~= '' then
       self.filepath = bufname == '' and no_name or bufname
