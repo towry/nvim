@@ -158,8 +158,8 @@ local function setup_basic()
     end
   end
   if vim.cfg.runtime__is_wezterm then
-    set('n', '<D-[>', cmd('tabp'), { desc = 'Tab pre' })
-    set('n', '<D-]>', cmd('tabn'), { desc = 'Tab next' })
+    set('n', '<M-[>', cmd('tabp'), { desc = 'Tab pre' })
+    set('n', '<M-]>', cmd('tabn'), { desc = 'Tab next' })
   end
   set('n', '<leader>tn', cmd('tabnew'), {
     desc = 'New tab',
