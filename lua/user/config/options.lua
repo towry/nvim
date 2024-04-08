@@ -201,7 +201,7 @@ end
 
 --- called by statusline component on load.
 function M.setup_statusline()
-  vim.opt.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
+  vim.opt.laststatus = 2 --- Have a global statusline at the bottom instead of one for each window
   if vim.cfg.runtime__starts_as_gittool then
     vim.opt.laststatus = 2
     vim.opt.statusline = [[%<%n#%f %q%h%m%r[%{v:lua.Ty.stl_git_three_way_name()}]%=%-14.(%l,%c%V%)%p%% %y %w]]
