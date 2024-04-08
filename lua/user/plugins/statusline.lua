@@ -29,6 +29,7 @@ plug({
         comp.TabLine,
         comp.lpad({
           hl = { fg = 'fg', bg = 'bg' },
+          { provider = ' -:- ' },
           comp.FileIcon,
           { provider = ' %t' },
         }),
