@@ -798,7 +798,7 @@ local Tabpage = {
   end,
   {
     provider = function(self)
-      return '%' .. self.tabnr .. 'T ' .. self.tabnr
+      return '%' .. self.tabnr .. 'T ' .. self.tabnr .. (vim.t[self.tabpage].CwdLocked and '*' or '')
     end,
   },
   {
