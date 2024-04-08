@@ -30,13 +30,18 @@ plug({
         {
           provider = '%=',
         },
-        comp.rpad({ provider = '%q' }),
-        comp.rpad(comp.Copilot),
-        comp.rpad(comp.Codeium),
-        comp.rpad({
-          comp.Branch,
-          comp.GitStatus,
-        }),
+        {
+          hl = { fg = 'fg', bg = 'bg' },
+          comp.rpad(comp.Overseer),
+          comp.rpad(comp.Dap),
+          { provider = '%=' },
+          comp.rpad(comp.Copilot),
+          comp.rpad(comp.Codeium),
+          comp.rpad({
+            comp.Branch,
+            comp.GitStatus,
+          }),
+        },
       },
       statusline = heirline_utils.insert({
         static = comp.stl_static,
@@ -55,8 +60,6 @@ plug({
             provider = '%m%w%r',
           },
         }),
-        comp.lpad(comp.Overseer),
-        comp.lpad(comp.Dap),
         comp.lpad(comp.CocStl),
         { provider = '%=' },
         -- {
