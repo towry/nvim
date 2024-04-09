@@ -42,6 +42,7 @@ hi StatusLineNC guifg=#7f7f8c guibg=#c2bfa5 gui=NONE cterm=NONE
 hi StatusLineTerm guifg=#333333 guibg=#c2bfa5 gui=NONE cterm=NONE
 hi StatusLineTermNC guifg=#ffffff guibg=#c2bfa5 gui=NONE cterm=NONE
 hi VertSplit guifg=#7f7f8c guibg=NONE gui=NONE cterm=NONE
+hi FloatBorder guifg=#7f7f8c guibg=#666666 gui=NONE cterm=NONE
 hi Pmenu guifg=#ffffff guibg=#666666 gui=NONE cterm=NONE
 hi PmenuSel guifg=#333333 guibg=#f0e68c gui=NONE cterm=NONE
 hi PmenuSbar guifg=NONE guibg=#333333 gui=NONE cterm=NONE
@@ -51,7 +52,7 @@ hi TabLineFill guifg=#bbbbbb guibg=#4d4d4d gui=NONE cterm=NONE
 hi TabLineSel guifg=#eeeeee guibg=#1a1a1a gui=NONE cterm=NONE
 hi ToolbarLine guifg=NONE guibg=#666666 gui=NONE cterm=NONE
 hi ToolbarButton guifg=#333333 guibg=#ffde9b gui=bold cterm=bold
-hi NonText guifg=#6dceeb guibg=#4d4d4d gui=NONE cterm=NONE
+hi NonText guifg=#555555 guibg=NONE gui=NONE cterm=NONE
 hi SpecialKey guifg=#9acd32 guibg=NONE gui=NONE cterm=NONE
 hi Folded guifg=#eeee00 guibg=#4d4d4d gui=NONE cterm=NONE
 hi Visual guifg=#f0e68c guibg=#6b8e24 gui=NONE cterm=NONE
@@ -84,7 +85,7 @@ hi SpellBad guifg=#cd5c5c guibg=NONE guisp=#cd5c5c gui=undercurl cterm=underline
 hi SpellCap guifg=#75a0ff guibg=NONE guisp=#75a0ff gui=undercurl cterm=underline
 hi SpellLocal guifg=#ffde9b guibg=NONE guisp=#ffde9b gui=undercurl cterm=underline
 hi SpellRare guifg=#9acd32 guibg=NONE guisp=#9acd32 gui=undercurl cterm=underline
-hi Comment guifg=#6dceeb guibg=NONE gui=NONE cterm=NONE
+hi Comment guifg=#7a7a7a guibg=NONE gui=NONE cterm=NONE
 hi Identifier guifg=#89fb98 guibg=NONE gui=NONE cterm=NONE
 hi Statement guifg=#f0e68c guibg=NONE gui=bold cterm=bold
 hi Constant guifg=#ffa0a0 guibg=NONE gui=NONE cterm=NONE
@@ -95,10 +96,10 @@ hi Directory guifg=#6dceeb guibg=NONE gui=NONE cterm=NONE
 hi Conceal guifg=#666666 guibg=NONE gui=NONE cterm=NONE
 hi Ignore guifg=NONE guibg=NONE gui=NONE ctermfg=NONE ctermbg=NONE cterm=NONE
 hi Title guifg=#cd5c5c guibg=NONE gui=bold cterm=bold
-hi DiffAdd guifg=#5f875f guibg=#464646 gui=NONE cterm=NONE
-hi DiffChange guifg=#5f87af guibg=#464646 gui=NONE cterm=NONE
+hi DiffAdd guifg=#9acd32 guibg=#464646 gui=NONE cterm=NONE
+hi DiffChange guifg=#6dceeb guibg=#464646 gui=NONE cterm=NONE
 hi DiffText  guifg=#c6c6c6 guibg=#464646 gui=NONE cterm=NONE
-hi DiffDelete guifg=#af5faf guibg=#464646 gui=NONE cterm=NONE
+hi DiffDelete guifg=#fd5c5c guibg=#464646 gui=NONE cterm=NONE
 " +--- LSP
 hi DiagnosticUnderlineError guifg=#ff0000 guibg=NONE gui=undercurl cterm=underline
 hi DiagnosticUnderlineWarn guifg=#ffde9b guibg=NONE gui=undercurl cterm=underline
