@@ -401,8 +401,8 @@ plug({
     },
   },
   {
-    -- 'mrjones2014/smart-splits.nvim',
-    'pze/smart-splits.nvim',
+    'mrjones2014/smart-splits.nvim',
+    -- 'pze/smart-splits.nvim',
     dev = false,
     keys = {
       {
@@ -449,7 +449,8 @@ plug({
     dependencies = {
       -- 'kwkarlwang/bufresize.nvim',
     },
-    build = './kitty/install-kittens.bash',
+    -- only if you use kitty term
+    -- build = './kitty/install-kittens.bash',
     config = function()
       local splits = require('smart-splits')
 
