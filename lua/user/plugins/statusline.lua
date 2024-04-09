@@ -26,9 +26,9 @@ plug({
     require('heirline').setup({
       -- https://github.com/rebelot/heirline.nvim/blob/master/cookbook.md#tabline
       tabline = {
+        hl = { fg = 'tabline_fg', bg = 'tabline_bg' },
         comp.TabLine,
         comp.lpad({
-          hl = { fg = 'fg', bg = 'bg' },
           { provider = '-:- ' },
           comp.FileIcon,
           { provider = ' %t' },
@@ -37,7 +37,6 @@ plug({
           provider = '%=',
         },
         {
-          hl = { fg = 'fg', bg = 'bg' },
           comp.rpad(comp.Overseer),
           comp.rpad(comp.Dap),
           { provider = '%=' },

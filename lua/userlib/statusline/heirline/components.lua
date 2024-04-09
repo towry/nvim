@@ -375,8 +375,8 @@ local function setup_colors()
     winbar_nc_bg = utils.get_highlight('WinbarNC').bg or 'none',
     tablinesel_fg = utils.get_highlight('TabLineSel').fg or 'none',
     tablinesel_bg = utils.get_highlight('TabLineSel').bg or 'none',
-    tabline_fg = utils.get_highlight('TabLine').fg or 'none',
-    tabline_bg = utils.get_highlight('TabLine').bg or 'none',
+    tabline_fg = utils.get_highlight('TabLineFill').fg or 'none',
+    tabline_bg = utils.get_highlight('TabLineFill').bg or 'none',
     red = utils.get_highlight('DiagnosticError').fg or 'none',
     yellow = utils.get_highlight('DiagnosticWarn').fg or 'none',
     green = utils.get_highlight('DiagnosticOk').fg or 'none',
@@ -567,7 +567,6 @@ local Tabs = {
   {
     {
       provider = ' ',
-      hl = { fg = 'bg_none', bg = 'fg_none' },
     },
     {
       provider = function(self)
@@ -579,7 +578,6 @@ local Tabs = {
     },
     {
       provider = ' ',
-      hl = { fg = 'bg_none', bg = 'fg_none' },
     },
   },
   update = { 'VimEnter', 'TabNew', 'TabLeave' },

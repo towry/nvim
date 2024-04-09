@@ -32,19 +32,23 @@ hi! link CursorLineSign CursorLine
 hi! link EndOfBuffer NonText
 hi! link MessageWindow Pmenu
 hi! link PopupNotification Todo
+hi! link diffAdded DiffAdd
+hi! link diffRemoved DiffDelete
+hi! link diffChanged DiffChange
+
 hi Normal guifg=#ffffff guibg=#333333 gui=NONE cterm=NONE
 hi StatusLine guifg=#333333 guibg=#c2bfa5 gui=NONE cterm=NONE
 hi StatusLineNC guifg=#7f7f8c guibg=#c2bfa5 gui=NONE cterm=NONE
 hi StatusLineTerm guifg=#333333 guibg=#c2bfa5 gui=NONE cterm=NONE
 hi StatusLineTermNC guifg=#ffffff guibg=#c2bfa5 gui=NONE cterm=NONE
-hi VertSplit guifg=#7f7f8c guibg=#c2bfa5 gui=NONE cterm=NONE
+hi VertSplit guifg=#7f7f8c guibg=NONE gui=NONE cterm=NONE
 hi Pmenu guifg=#ffffff guibg=#666666 gui=NONE cterm=NONE
 hi PmenuSel guifg=#333333 guibg=#f0e68c gui=NONE cterm=NONE
 hi PmenuSbar guifg=NONE guibg=#333333 gui=NONE cterm=NONE
 hi PmenuThumb guifg=NONE guibg=#c2bfa5 gui=NONE cterm=NONE
-hi TabLine guifg=#333333 guibg=#c2bfa5 gui=NONE cterm=NONE
-hi TabLineFill guifg=NONE guibg=#c2bfa5 gui=NONE cterm=NONE
-hi TabLineSel guifg=#333333 guibg=#f0e68c gui=NONE cterm=NONE
+hi TabLine guifg=#aaaaaa guibg=#4d4d4d gui=NONE cterm=NONE
+hi TabLineFill guifg=#bbbbbb guibg=#4d4d4d gui=NONE cterm=NONE
+hi TabLineSel guifg=#eeeeee guibg=#1a1a1a gui=NONE cterm=NONE
 hi ToolbarLine guifg=NONE guibg=#666666 gui=NONE cterm=NONE
 hi ToolbarButton guifg=#333333 guibg=#ffde9b gui=bold cterm=bold
 hi NonText guifg=#6dceeb guibg=#4d4d4d gui=NONE cterm=NONE
@@ -52,12 +56,12 @@ hi SpecialKey guifg=#9acd32 guibg=NONE gui=NONE cterm=NONE
 hi Folded guifg=#eeee00 guibg=#4d4d4d gui=NONE cterm=NONE
 hi Visual guifg=#f0e68c guibg=#6b8e24 gui=NONE cterm=NONE
 hi VisualNOS guifg=#f0e68c guibg=#6dceeb gui=NONE cterm=NONE
-hi LineNr guifg=#eeee00 guibg=NONE gui=NONE cterm=NONE
+hi LineNr guifg=#c2bfa5 guibg=NONE gui=NONE cterm=NONE
 hi FoldColumn guifg=#eeee00 guibg=#4d4d4d gui=NONE cterm=NONE
-hi CursorLine guifg=NONE guibg=#666666 gui=NONE cterm=NONE
-hi CursorColumn guifg=NONE guibg=#666666 gui=NONE cterm=NONE
-hi CursorLineNr guifg=#eeee00 guibg=NONE gui=bold cterm=bold
-hi QuickFixLine guifg=#333333 guibg=#f0e68c gui=NONE cterm=NONE
+hi CursorLine guifg=NONE guibg=#000000 gui=NONE cterm=NONE
+hi CursorColumn guifg=NONE guibg=#000000 gui=NONE cterm=NONE
+hi CursorLineNr guifg=#eeee00 guibg=#000000 gui=bold cterm=bold
+hi QuickFixLine guifg=#eeee00 guibg=NONE gui=NONE cterm=NONE
 hi SignColumn guifg=NONE guibg=NONE gui=NONE ctermfg=NONE ctermbg=NONE cterm=NONE
 hi Underlined guifg=#75a0ff guibg=NONE gui=underline cterm=underline
 hi Error guifg=#ff0000 guibg=#ffffff gui=reverse cterm=reverse
@@ -91,10 +95,38 @@ hi Directory guifg=#6dceeb guibg=NONE gui=NONE cterm=NONE
 hi Conceal guifg=#666666 guibg=NONE gui=NONE cterm=NONE
 hi Ignore guifg=NONE guibg=NONE gui=NONE ctermfg=NONE ctermbg=NONE cterm=NONE
 hi Title guifg=#cd5c5c guibg=NONE gui=bold cterm=bold
-hi DiffAdd guifg=#ffffff guibg=#5f875f gui=NONE cterm=NONE
-hi DiffChange guifg=#ffffff guibg=#5f87af gui=NONE cterm=NONE
-hi DiffText guifg=#000000 guibg=#c6c6c6 gui=NONE cterm=NONE
-hi DiffDelete guifg=#ffffff guibg=#af5faf gui=NONE cterm=NONE
+hi DiffAdd guifg=#5f875f guibg=#464646 gui=NONE cterm=NONE
+hi DiffChange guifg=#5f87af guibg=#464646 gui=NONE cterm=NONE
+hi DiffText  guifg=#c6c6c6 guibg=#464646 gui=NONE cterm=NONE
+hi DiffDelete guifg=#af5faf guibg=#464646 gui=NONE cterm=NONE
+" +--- LSP
+hi DiagnosticUnderlineError guifg=#ff0000 guibg=NONE gui=undercurl cterm=underline
+hi DiagnosticUnderlineWarn guifg=#ffde9b guibg=NONE gui=undercurl cterm=underline
+hi DiagnosticUnderlineInfo guifg=#6dceeb guibg=NONE gui=undercurl cterm=underline
+hi DiagnosticUnderlineHint guifg=#5f875f guibg=NONE gui=undercurl cterm=underline
+" -+++
+
+" +--- Plugins
+" --- coc
+hi CocUnusedHighlight guifg=#888888 guibg=NONE gui=undercurl cterm=underline
+hi! link CocErrorSign DiagnosticError
+hi! link CocWarningSign DiagnosticWarn
+hi! link CocInfoSign DiagnosticInfo
+hi! link CocHintSign DiagnosticHint
+hi! link CocErrorFloat DiagnosticError
+hi! link CocWarningFloat DiagnosticWarn
+hi! link CocInfoFloat DiagnosticInfo
+hi! link CocHintFloat DiagnosticHint
+hi! link CocDiagnosticsError DiagnosticError
+hi! link CocDiagnosticsWarning DiagnosticWarn
+hi! link CocDiagnosticsInfo DiagnosticInfo
+hi! link CocDiagnosticsHint DiagnosticHint
+hi! link CocSelectedText Search
+hi! link CocCodeLens Comment
+hi! link CocMenuSel PmenuSel
+" --- mini
+hi MiniIndentscopeSymbol guifg=#666666 guibg=NONE gui=NONE cterm=NONE
+" -+++
 
 if s:t_Co >= 256
   hi! link Terminal Normal
@@ -103,7 +135,7 @@ if s:t_Co >= 256
   hi! link CurSearch Search
   hi! link CursorLineFold CursorLine
   hi! link CursorLineSign CursorLine
-  hi! link EndOfBuffer NonText
+  hi! link EndOfBuffer Normal
   hi! link MessageWindow Pmenu
   hi! link PopupNotification Todo
   hi Normal ctermfg=231 ctermbg=236 cterm=NONE

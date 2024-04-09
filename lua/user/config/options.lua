@@ -142,7 +142,7 @@ function M.init_interface()
   o.listchars:append('nbsp:␣')
   o.listchars:append('precedes:«')
   -- o.listchars:append('trail:-')
-  vim.o.statuscolumn = '%#SignColumn#%s%{v:lua.Ty.stl_foldlevel()}%=%{%v:lua.Ty.stl_num()%}%#Normal# '
+  vim.o.statuscolumn = '%#SignColumn#%s%{v:lua.Ty.stl_foldlevel()}%=%{%v:lua.Ty.stl_num()%} '
   -- o.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
   -- o.formatoptions:append {
   --   r = true, -- Automatically insert comment leader after <Enter> in Insert mode.
