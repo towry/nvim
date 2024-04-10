@@ -28,6 +28,8 @@ au.on_verylazy(function()
   setca('apath', function()
     return vim.fn.expand('%')
   end)
+  --- expand to current file's dir
+  vim.cmd.cabbr({ args = { '<expr>', '%%', "&filetype == 'oil' ? bufname('%')[6:] : expand('%:h')" } })
   setca('ats', 'TermSelect')
   -- find alt file and edit
   setca('altfind', function()
