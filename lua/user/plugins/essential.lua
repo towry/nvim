@@ -459,7 +459,7 @@ pack.plug({
       enabled = false,
     },
   },
-  event = { 'BufReadPost', 'BufNewFile' },
+  event = 'User FileOpenedAfter',
 })
 
 pack.plug({

@@ -964,7 +964,7 @@ local UnsavedBufCount = {
 
 local CocStl = {
   condition = function()
-    return vim.fn.exists('*coc#status') and vim.bo.buftype == ''
+    return vim.fn.exists('*coc#status') and vim.bo.buftype == '' and package.loaded['coc']
   end,
   provider = '%{coc#status()}',
 }

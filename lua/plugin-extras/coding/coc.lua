@@ -169,9 +169,8 @@ return plug({
   cmd = {
     'CocInstall',
   },
-  event = { 'BufEnter', 'BufNew' },
-  config = false,
-  init = function()
+  event = 'User FileOpenedAfter',
+  config = function()
     local keymap = require('userlib.runtime.keymap')
     local set = keymap.set
     local opts = {
