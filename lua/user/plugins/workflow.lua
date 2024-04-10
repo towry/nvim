@@ -635,6 +635,7 @@ plug({
           if utils.has_plugin('trailblazer.nvim') then
             vim.cmd('TrailBlazerSaveSession')
           end
+          require('userlib.runtime.session').encode_session_vars()
         end,
       },
       post = {
@@ -645,6 +646,11 @@ plug({
           end
           if utils.has_plugin('trailblazer.nvim') then
             vim.cmd('TrailBlazerLoadSession')
+          end
+          local libsession = require('userlib.runtime.session')
+          local session_json = libsession.decode_session_vars()
+          if session_json then
+            libsession.restore_tabs_vars(session_json.tabs)
           end
         end,
       },
