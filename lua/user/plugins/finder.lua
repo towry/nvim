@@ -1,7 +1,7 @@
 local plug = require('userlib.runtime.pack').plug
 local keymap = require('userlib.runtime.keymap')
 local cmd_modcall = keymap.cmd_modcall
--- local pickers_mod = 'userlib.telescope.pickers'
+local pickers_mod = 'userlib.telescope.pickers'
 local fzf_mod = 'userlib.fzflua'
 local au = require('userlib.runtime.au')
 
@@ -467,11 +467,11 @@ plug({
     --   cmd_modcall(pickers_mod, 'curbuf()'),
     --   desc = 'Fuzzy search in current buffer',
     -- },
-    -- {
-    --   '<C-e>',
-    --   cmd_modcall(pickers_mod, 'buffers_or_recent()'),
-    --   desc = 'List Buffers',
-    -- },
+    {
+      BufferListKey,
+      cmd_modcall(pickers_mod, 'buffers_or_recent()'),
+      desc = 'List Buffers',
+    },
     -- {
     --   '<leader>g/',
     --   function()
@@ -947,13 +947,12 @@ plug({
       [[:FzfLua changes<cr>]],
       desc = 'Fzf search in changes with opened buffers',
     },
-    {
-      -- '<localleader>b',
-      BufferListKey,
-      cmd_modcall(fzf_mod, 'buffers_or_recent(false)'),
-      nowait = true,
-      desc = 'List Buffers',
-    },
+    -- {
+    --   BufferListKey,
+    --   cmd_modcall(fzf_mod, 'buffers_or_recent(false)'),
+    --   nowait = true,
+    --   desc = 'List Buffers',
+    -- },
     {
       '<leader>ff',
       cmd_modcall(fzf_mod, [[files({ cwd_header = true })]]),
