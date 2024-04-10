@@ -814,6 +814,8 @@ plug({
 plug({
   'chrisgrieser/nvim-early-retirement',
   event = 'VeryLazy',
+  --- disabled because it affect the jumplist.
+  enabled = false,
   opts = {
     notificationOnAutoClose = true,
     retirementAgeMins = 15,

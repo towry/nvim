@@ -369,6 +369,8 @@ local function setup_colors()
     fg_none = utils.get_highlight('Normal').fg or 'none',
     fg = utils.get_highlight('StatusLine').fg or 'none',
     bg = utils.get_highlight('StatusLine').bg or 'none',
+    fg_nc = utils.get_highlight('StatusLineNC').fg or 'none',
+    bg_nc = utils.get_highlight('StatusLineNC').bg or 'none',
     winbar_fg = utils.get_highlight('Winbar').fg or 'none',
     winbar_bg = utils.get_highlight('Winbar').bg or 'none',
     winbar_nc_fg = utils.get_highlight('WinbarNC').fg or 'none',

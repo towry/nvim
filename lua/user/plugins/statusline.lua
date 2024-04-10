@@ -50,7 +50,15 @@ plug({
       },
       statusline = heirline_utils.insert({
         static = comp.stl_static,
-        hl = { fg = 'fg', bg = 'bg' },
+        hl = function()
+          if conditions.is_active() then
+            return { fg = 'fg', bg = 'bg' }
+          end
+          return {
+            fg = 'fg_nc',
+            bg = 'bg_nc',
+          }
+        end,
       }, {
         condition = function()
           return conditions.is_active()

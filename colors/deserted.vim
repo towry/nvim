@@ -38,7 +38,7 @@ hi! link diffChanged DiffChange
 
 hi Normal guifg=#ffffff guibg=#333333 gui=NONE cterm=NONE
 hi StatusLine guifg=#333333 guibg=#c2bfa5 gui=NONE cterm=NONE
-hi StatusLineNC guifg=#7f7f8c guibg=#c2bfa5 gui=NONE cterm=NONE
+hi StatusLineNC guifg=#61675A guibg=#9a9885 gui=NONE cterm=NONE
 hi StatusLineTerm guifg=#333333 guibg=#c2bfa5 gui=NONE cterm=NONE
 hi StatusLineTermNC guifg=#ffffff guibg=#c2bfa5 gui=NONE cterm=NONE
 hi VertSplit guifg=#7f7f8c guibg=NONE gui=NONE cterm=NONE
