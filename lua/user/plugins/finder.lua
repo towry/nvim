@@ -99,6 +99,13 @@ plug({
       desc = 'Open Rgflow',
     },
     {
+      '<leader>ss',
+      function()
+        require('rgflow').open(nil, vim.b.grep_flags or nil, vim.uv.cwd(), {})
+      end,
+      desc = 'Open Rgflow',
+    },
+    {
       '<localleader>fx',
       '<cmd>lua require("rgflow").abort()<cr>',
       desc = 'Abort rg flow',

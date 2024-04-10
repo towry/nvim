@@ -2,6 +2,8 @@ _G.unpack = _G.unpack or table.unpack
 _G.Ty = {}
 _G.R = require
 
+vim.g.miniclues = {}
+
 local local_cwd = vim.uv.cwd()
 
 ---@param loose_or_path? boolean|string

@@ -33,48 +33,7 @@ pack.plug({
   },
   {
     'tpope/vim-dispatch',
-    keys = {
-      {
-        '<leader>rd',
-        ':Dispatch',
-        desc = 'Start Dispatch',
-      },
-      {
-        '<localleader>xo1',
-        ':lua Ty.capture_tmux_pane(1)<cr>',
-        desc = 'Capture tmux pane 1',
-      },
-      {
-        '<localleader>xo2',
-        ':lua Ty.capture_tmux_pane(2)<cr>',
-        desc = 'Capture tmux pane 2',
-      },
-      {
-        '<localleader>xo3',
-        ':lua Ty.capture_tmux_pane(3)<cr>',
-        desc = 'Capture tmux pane 3',
-      },
-      {
-        '<localleader>xo4',
-        ':lua Ty.capture_tmux_pane(4)<cr>',
-        desc = 'Capture tmux pane 4',
-      },
-      {
-        '<localleader>xo5',
-        ':lua Ty.capture_tmux_pane(5)<cr>',
-        desc = 'Capture tmux pane 5',
-      },
-      {
-        '<localleader>xo6',
-        ':lua Ty.capture_tmux_pane(6)<cr>',
-        desc = 'Capture tmux pane 6',
-      },
-      {
-        '<localleader>xo7',
-        ':lua Ty.capture_tmux_pane(7)<cr>',
-        desc = 'Capture tmux pane 7',
-      },
-    },
+    keys = {},
     cmd = {
       'Dispatch',
       'Make',
@@ -514,8 +473,8 @@ pack.plug({
         { mode = 'v', keys = '<Leader>a', desc = '+AI Assistant' },
         { mode = 'x', keys = '<Leader>a', desc = '+AI Assistant' },
         { mode = 'n', keys = '<Leader>n', desc = '+Normal mode utils' },
-        { mode = 'n', keys = '<LocalLeader>a', desc = '+AI Assistant' },
-        { mode = 'n', keys = '<LocalLeader>x', desc = '+Tmux' },
+        { mode = 'n', keys = '<LocalLeader>b', desc = '+Buffer' },
+        { mode = 'n', keys = '<LocalLeader>c', desc = '+Code' },
         { mode = 'n', keys = 'ga', desc = '+TextChanges' },
         { mode = 'n', keys = 'gao', desc = '+Current word case change' },
         -- gh<key> for gitsigns.
@@ -557,9 +516,9 @@ pack.plug({
         { mode = 'n', keys = '<C-w>m' },
         { mode = 'n', keys = '<C-w>x' },
         { mode = 'n', keys = '<C-w>=' },
-
         --- localleader
         { mode = 'n', keys = '<LocalLeader>f', desc = '+Grep' },
+        vim.g.miniclues,
       },
     }
     miniclue.setup(opts)
