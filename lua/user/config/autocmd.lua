@@ -7,6 +7,53 @@ function M.load_on_startup()
   -- taken from AstroNvim
   local definitions = {
     {
+      { 'VimEnter', 'WinEnter', 'BufWinEnter' },
+      {
+        group = group_name,
+        pattern = '*',
+        command = 'setlocal cursorline',
+        desc = 'Hi active window cursorline',
+      },
+    },
+    {
+      { 'WInLeave' },
+      {
+        group = group_name,
+        pattern = '*',
+        command = 'setlocal nocursorline',
+        desc = 'DeHi non-active window cursorline',
+      },
+    },
+    {
+      { 'CursorMovedI', 'InsertLeave' },
+      {
+        group = group_name,
+        pattern = '*',
+        command = "if pumvisible() == 0 && !&pvw && getcmdwintype() == ''|pclose|endif",
+        desc = 'Close the popup-menu automatically',
+      },
+    },
+    {
+      { 'BufNew' },
+      {
+        group = group_name,
+        pattern = '*',
+        callback = function(args)
+          local bufname = vim.api.nvim_buf_get_name(args.buf)
+          local root, line = bufname:match('^(.*):(%d+)$')
+          if vim.fn.filereadable(bufname) == 0 and root and line and vim.fn.filereadable(root) == 1 then
+            vim.schedule(function()
+              vim.cmd.edit({ args = { root } })
+              pcall(vim.api.nvim_win_set_cursor, 0, { tonumber(line), 0 })
+              vim.api.nvim_buf_delete(args.buf, { force = true })
+            end)
+          end
+        end,
+        desc = 'Edit files with :line at the end',
+      },
+    },
+    -- +---
+    {
       { 'TextYankPost' },
       {
         group = 'hl_on_yank',

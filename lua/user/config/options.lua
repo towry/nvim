@@ -7,7 +7,8 @@ function M.startup()
   o.autowrite = true
   o.startofline = false -- cursor start of line when scroll
   o.exrc = true
-  o.jumpoptions = 'stack,view'
+  o.jumpoptions = 'stack'
+  o.path = '**' -- use a recursive path for :find
   o.breakindent = true
   o.cpoptions:append('>') -- append to register with line break
   o.inccommand = 'nosplit' -- preview incremental substitute
@@ -37,6 +38,8 @@ function M.startup()
   o.updatetime = 250 --- Faster completion
   -- o.viminfo        = "'1000" --- Increase the size of file history
   o.wrap = false --- Display long lines as just one line
+  o.linebreak = true
+  o.showbreak = '↳ '
   -- enable line-wrapping with left and right cursor movement
   vim.opt.whichwrap:append({ ['<'] = true, ['>'] = true, ['h'] = true, ['l'] = true, ['['] = true, [']'] = true })
   -- add @, -, and $ as keywords for full SCSS support
@@ -51,7 +54,9 @@ function M.startup()
   o.errorbells = false --- Disables sound effect for errors
   o.fileencoding = 'utf-8' --- The encoding written to file
   o.incsearch = true --- Start searching before pressing enter
-  o.switchbuf = 'usetab' -- Use already opened buffers when switching
+  o.gdefault = true
+  o.switchbuf = 'useopen,uselast' -- Use already opened buffers when switching
+  o.synmaxcol = 300
   o.diffopt:append({ 'algorithm:histogram', 'foldcolumn:0', 'vertical', 'linematch:50' })
   -- o.shellcmdflag = '-ic' --- Make shell alias works, has bugs.
   o.virtualedit = 'onemore'
