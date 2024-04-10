@@ -820,6 +820,16 @@ local Tabpage = {
     end,
   },
   {
+    condition = function(self)
+      return vim.t[self.tabpage].TabLabel ~= nil and vim.t[self.tabpage].TabLabel ~= ''
+    end,
+    {
+      provider = function(self)
+        return '[' .. vim.t[self.tabpage].TabLabel .. ']'
+      end,
+    },
+  },
+  {
     provider = '%T ',
   },
 }
