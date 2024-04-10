@@ -93,7 +93,7 @@ hi PreProc guifg=#cd5c5c guibg=NONE gui=NONE cterm=NONE
 hi Type guifg=#bdb76b guibg=NONE gui=bold cterm=bold
 hi Special guifg=#ffde9b guibg=NONE gui=NONE cterm=NONE
 hi Directory guifg=#6dceeb guibg=NONE gui=NONE cterm=NONE
-hi Conceal guifg=#666666 guibg=NONE gui=NONE cterm=NONE
+hi Conceal guifg=#513939 guibg=NONE gui=NONE cterm=NONE
 hi Ignore guifg=NONE guibg=NONE gui=NONE ctermfg=NONE ctermbg=NONE cterm=NONE
 hi Title guifg=#cd5c5c guibg=NONE gui=bold cterm=bold
 hi DiffAdd guifg=#9acd32 guibg=#464646 gui=NONE cterm=NONE
