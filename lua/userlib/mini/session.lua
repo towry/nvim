@@ -1,6 +1,7 @@
 local M = {}
 
-function M.make_session()
+--- @param verbose? boolean
+function M.make_session(verbose)
   local MS = require('mini.sessions')
   local branch_name = vim.fn['FugitiveHead']() or 'temp'
   local cwd = vim.fn.fnameescape(vim.cfg.runtime__starts_cwd)
@@ -9,6 +10,7 @@ function M.make_session()
   session_name = string.gsub(session_name, '[/\\ .]', '_')
   MS.write(session_name, {
     force = true,
+    verbose = verbose,
   })
 end
 

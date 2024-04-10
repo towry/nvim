@@ -657,6 +657,13 @@ plug({
     },
   },
   init = au.schedule_lazy(function()
+    au.define_autocmd('VimLeavePre', {
+      group = 'make_session_before_exit',
+      once = true,
+      callback = function()
+        require('userlib.mini.session').make_session(false)
+      end,
+    })
     vim.api.nvim_create_user_command('MakeSession', function()
       require('userlib.mini.session').make_session()
     end, {})
@@ -665,7 +672,7 @@ plug({
     end, {})
     -- keymaps
     local set = require('userlib.runtime.keymap').set
-    set('n', '<leader>/l', '<cmd>LoadSession<cr>', { desc = 'Load session' })
+    set('n', '<leader>//', '<cmd>LoadSession<cr>', { desc = 'Load session' })
     set('n', '<leader>/m', '<cmd>MakeSession<cr>', { desc = 'Make session' })
     -- legendary
     require('userlib.legendary').register('mini_session', function(lg)
