@@ -36,6 +36,11 @@ hi! link diffAdded DiffAdd
 hi! link diffRemoved DiffDelete
 hi! link diffChanged DiffChange
 
+" bright:br|br2|br3, medium:md|md2|md3, darken: dk|dk2|dk3
+
+hi ui_txt_br guifg=#B8B279 guibg=NONE gui=NONE cterm=NONE
+hi ui_undercurl gui=undercurl cterm=NONE
+
 hi Normal guifg=#ffffff guibg=#333333 gui=NONE cterm=NONE
 hi StatusLine guifg=#333333 guibg=#c2bfa5 gui=NONE cterm=NONE
 hi StatusLineNC guifg=#61675A guibg=#9a9885 gui=NONE cterm=NONE
@@ -106,6 +111,9 @@ hi DiagnosticUnderlineWarn guifg=#ffde9b guibg=NONE gui=undercurl cterm=underlin
 hi DiagnosticUnderlineInfo guifg=#6dceeb guibg=NONE gui=undercurl cterm=underline
 hi DiagnosticUnderlineHint guifg=#5f875f guibg=NONE gui=undercurl cterm=underline
 " -+++
+" +--- Treesitter
+hi! link @string ui_txt_br
+" -+++
 
 " +--- Plugins
 " --- coc
@@ -131,6 +139,8 @@ hi MiniIndentscopeSymbol guifg=#666666 guibg=NONE gui=NONE cterm=NONE
 hi! link TelescopeSelection CursorLine
 hi! link TelescopeSelectionCaret CursorLineNr
 hi TelescopeTitle guifg=#ffa0a0 guibg=#000000 gui=NONE cterm=NONE
+" --- fzf-lua
+hi! link FzfLuaBorder FloatBorder
 " -+++
 
 if s:t_Co >= 256
