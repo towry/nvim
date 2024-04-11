@@ -140,7 +140,7 @@ hi! link TelescopeSelection CursorLine
 hi! link TelescopeSelectionCaret CursorLineNr
 hi TelescopeTitle guifg=#ffa0a0 guibg=#000000 gui=NONE cterm=NONE
 " --- fzf-lua
-hi! link FzfLuaBorder FloatBorder
+hi FzfLuaBorder guibg=#333333 guifg=#7f7f8c gui=NONE cterm=NONE
 " -+++
 
 if s:t_Co >= 256

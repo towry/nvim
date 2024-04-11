@@ -1054,7 +1054,7 @@ plug({
           require('userlib.fzflua.on_attach')
         end,
         border = 'single',
-        fullscreen = true,
+        fullscreen = false,
         preview = {
           delay = 150,
           scrollbar = false,

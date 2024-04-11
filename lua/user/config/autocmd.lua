@@ -227,7 +227,7 @@ function M.load_on_startup()
             vim.wo.foldmethod = 'manual'
             vim.wo.foldexpr = ''
           end
-          vim.cmd('normal! zx zR')
+          -- vim.cmd('normal! zx zR')
         end,
       },
     },
