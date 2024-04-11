@@ -112,7 +112,7 @@ function M.files(opts)
       ['--delimiter'] = '\\s',
     }
     opts._fmt = opts._fmt or {}
-    opts._fmt.from = function(entry, o)
+    opts._fmt.from = function(entry, _opts)
       local s = fzfutils.strsplit(entry, ' ')
       return s[3]
     end
