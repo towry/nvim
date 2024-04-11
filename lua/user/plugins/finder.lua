@@ -1096,6 +1096,7 @@ plug({
       -- for raw args use `fzf_args` instead
       fzf_opts = {
         ['--ansi'] = '',
+        ['--keep-right'] = true,
         ['--info'] = 'inline',
         ['--height'] = '100%',
         ['--layout'] = 'reverse',
@@ -1124,6 +1125,7 @@ plug({
         width = 0.75,
       },
       fzf_opts = {
+        ['--keep-right'] = true,
         ['--delimiter'] = '[BEGIN{FS="."}]',
         -- ['--delimiter'] = '[\\.]',
         ['--with-nth'] = '2..',
