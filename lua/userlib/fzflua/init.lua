@@ -97,6 +97,28 @@ function M.files(opts)
   if not opts.cwd then
     opts.cwd = safe_cwd(vim.t.Cwd)
   end
+  local cmd = nil
+  if vim.fn.executable('fd') == 1 then
+    local fzfutils = require('fzf-lua.utils')
+    -- fzf-lua.defaults#defaults.files.fd_opts
+    cmd = string.format([[fd --color=never --type f --hidden --follow --exclude .git -x echo {/} %s {}]], '{//}')
+    opts.fzf_opts = {
+      ['--ansi'] = true,
+      ['--with-nth'] = '1..-2',
+      ['--delimiter'] = '\\s',
+    }
+    -- not working
+    opts.__mt_transform = function(x)
+      print(x)
+      return '123' .. x
+    end
+    opts._fmt = opts._fmt or {}
+    opts._fmt.from = function(entry, o)
+      local s = fzfutils.strsplit(entry, ' ')
+      return s[3]
+    end
+  end
+  opts.cmd = cmd
 
   opts.winopts = {
     fullscreen = false,
