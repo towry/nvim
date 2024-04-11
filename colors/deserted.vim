@@ -38,7 +38,7 @@ hi! link diffChanged DiffChange
 
 " bright:br|br2|br3, medium:md|md2|md3, darken: dk|dk2|dk3
 
-hi ui_txt_br guifg=#B8B279 guibg=NONE gui=NONE cterm=NONE
+hi ui_txt_br guifg=#bf9c30 guibg=NONE gui=NONE cterm=NONE
 hi ui_undercurl gui=undercurl cterm=NONE
 
 hi Normal guifg=#ffffff guibg=#333333 gui=NONE cterm=NONE
