@@ -111,11 +111,6 @@ function M.files(opts)
       ['--with-nth'] = '1..-2',
       ['--delimiter'] = '\\s',
     }
-    -- not working
-    opts.__mt_transform = function(x)
-      print(x)
-      return '123' .. x
-    end
     opts._fmt = opts._fmt or {}
     opts._fmt.from = function(entry, o)
       local s = fzfutils.strsplit(entry, ' ')
