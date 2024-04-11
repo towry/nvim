@@ -210,21 +210,24 @@ function M.load_on_startup()
     },
     -- enable foldexpr
     {
-      { 'BufReadPost' },
+      { 'BufWinEnter' },
       {
         group = 'enable_foldexpr_for_buf',
         callback = function(ctx)
+          --- https://github.com/nvim-telescope/telescope.nvim/issues/699
+          --- https://github.com/nvim-treesitter/nvim-treesitter/issues/1337
           local buf = ctx.buf
           local lines = vim.api.nvim_buf_line_count(buf)
           if not vim.b[buf].is_big_file and lines < 10000 then
             vim.wo.foldmethod = 'expr'
             vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
             -- foldtext with ts hi
-            vim.wo.foldtext = ''
+            vim.wo.foldtext = 'v:lua.Ty.fold_text()'
           else
             vim.wo.foldmethod = 'manual'
             vim.wo.foldexpr = ''
           end
+          vim.cmd('normal! zx zR')
         end,
       },
     },

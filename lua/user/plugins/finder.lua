@@ -461,143 +461,142 @@ plug({
   'nvim-telescope/telescope.nvim',
   cond = not vim.cfg.runtime__starts_as_gittool,
   cmd = { 'Telescope' },
-  keys = {
-    -- {
-    --   '<leader>fb',
-    --   cmd_modcall(pickers_mod, 'curbuf()'),
-    --   desc = 'Fuzzy search in current buffer',
-    -- },
+  keys_disable = {
+    {
+      '<leader>fb',
+      cmd_modcall(pickers_mod, 'curbuf()'),
+      desc = 'Fuzzy search in current buffer',
+    },
     {
       BufferListKey,
       cmd_modcall(pickers_mod, 'buffers_or_recent()'),
       desc = 'List Buffers',
     },
-    -- {
-    --   '<leader>g/',
-    --   function()
-    --     require('userlib.ui.dropdown').select({
-    --       items = {
-    --         {
-    --           label = 'Git branches',
-    --           hint = 'local',
-    --           'Telescope git_branches show_remote_tracking_branches=false',
-    --         },
-    --         {
-    --           label = 'Git branches',
-    --           hint = 'remotes',
-    --           'Telescope git_branches',
-    --         },
-    --       },
-    --     }, {
-    --       prompt_title = 'Select action',
-    --     })
-    --   end,
-    --   desc = 'Git branches',
-    -- },
-    -- {
-    --   '<leader>ff',
-    --   cmd_modcall(pickers_mod, 'project_files()'),
-    --   desc = 'Open Project files',
-    -- },
-    -- {
-    --   '<leader>fF',
-    --   cmd_modcall(pickers_mod, 'project_files({default_text = vim.fn.expand("<cword>")})'),
-    --   desc = 'Open Project files with current word',
-    -- },
-    -- {
-    --   '<leader>fe',
-    --   cmd_modcall(pickers_mod, 'project_files({use_all_files=false, cwd=vim.cfg.runtime__starts_cwd})'),
-    --   desc = 'Open find all files',
-    -- },
-    -- {
-    --   '<leader>fr',
-    --   cmd_modcall('telescope.builtin', 'resume()'),
-    --   desc = 'Resume telescope pickers',
-    -- },
-    -- {
-    --   '<leader><Tab>',
-    --   cmd_modcall(
-    --     pickers_mod,
-    --     [[project_files(require('telescope.themes').get_dropdown({ previewer = false, cwd_only = false, oldfiles = true, cwd = vim.cfg.runtime__starts_cwd }))]]
-    --   ),
-    --   desc = 'Open recent files',
-    -- },
-    -- {
-    --   '<leader>fo',
-    --   function()
-    --     --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
-    --     require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
-    --       files = false,
-    --       use_fd = true,
-    --       display_stat = false,
-    --       hide_parent_dir = true,
-    --       respect_gitignore = true,
-    --       hidden = false,
-    --       previewer = false,
-    --       depth = 3,
-    --       git_status = false,
-    --       cwd = vim.cfg.runtime__starts_cwd,
-    --       -- borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
-    --     }))
-    --   end,
-    --   desc = 'Find all folders',
-    -- },
-    -- {
-    --   '<leader>fl',
-    --   function()
-    --     --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
-    --     require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
-    --       results_title = vim.t.cwd_short,
-    --       files = false,
-    --       use_fd = true,
-    --       previewer = false,
-    --       respect_gitignore = true,
-    --       hidden = false,
-    --       depth = 5,
-    --       git_status = false,
-    --       collapse_dirs = true,
-    --       hide_parent_dir = true,
-    --       display_stat = false,
-    --       cwd = require('userlib.runtime.utils').get_root(),
-    --     }))
-    --   end,
-    --   desc = 'Find project folders',
-    -- },
-    -- {
-    --   '<leader>fg',
-    --   function()
-    --     require('userlib.telescope.live_grep_call')({
-    --       cwd = vim.cfg.runtime__starts_cwd,
-    --     })
-    --   end,
-    --   desc = 'Grep search in all projects',
-    -- },
-    -- {
-    --   '<leader>fs',
-    --   cmd_modcall('userlib.telescope.live_grep_call', '()'),
-    --   desc = 'Grep search in project',
-    -- },
-    -- {
-    --   '<leader>fs',
-    --   cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_visual_selection()'),
-    --   desc = 'Grep search on selection in project',
-    --   mode = { 'v', 'x' },
-    -- },
-    -- {
-    --   '<leader>fS',
-    --   cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_word_under_cursor()'),
-    --   desc = 'Grep search on selection in project',
-    -- },
-    -- {
-    --   '<leader>g.',
-    --   '<cmd>Telescope git_bcommits<cr>',
-    --   desc = 'Show commits for current buffer with diff preview',
-    -- },
-    -- {
-    --   '<leader>fj',
-    --   '<cmd>Telescope jumplist fname_width=60 show_line=false<cr>',
-    --   desc = 'Show jumplist',
-    -- },
+    {
+      '<leader>g/',
+      function()
+        require('userlib.ui.dropdown').select({
+          items = {
+            {
+              label = 'Git branches',
+              hint = 'local',
+              'Telescope git_branches show_remote_tracking_branches=false',
+            },
+            {
+              label = 'Git branches',
+              hint = 'remotes',
+              'Telescope git_branches',
+            },
+          },
+        }, {
+          prompt_title = 'Select action',
+        })
+      end,
+      desc = 'Git branches',
+    },
+    {
+      '<leader>ff',
+      cmd_modcall(pickers_mod, 'project_files()'),
+      desc = 'Open Project files',
+    },
+    {
+      '<leader>fF',
+      cmd_modcall(pickers_mod, 'project_files({default_text = vim.fn.expand("<cword>")})'),
+      desc = 'Open Project files with current word',
+    },
+    {
+      '<leader>fe',
+      cmd_modcall(pickers_mod, 'project_files({use_all_files=false, cwd=vim.cfg.runtime__starts_cwd})'),
+      desc = 'Open find all files',
+    },
+    {
+      '<leader>fr',
+      cmd_modcall('telescope.builtin', 'resume()'),
+      desc = 'Resume telescope pickers',
+    },
+    {
+      '<localleader><Tab>',
+      cmd_modcall(
+        pickers_mod,
+        [[project_files(require('telescope.themes').get_dropdown({ previewer = false, cwd_only = false, oldfiles = true, cwd = vim.cfg.runtime__starts_cwd }))]]
+      ),
+      desc = 'Open recent files',
+    },
+    {
+      '<leader>fo',
+      function()
+        --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
+        require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
+          files = false,
+          use_fd = true,
+          display_stat = false,
+          hide_parent_dir = true,
+          respect_gitignore = true,
+          hidden = false,
+          previewer = false,
+          depth = 3,
+          git_status = false,
+          cwd = vim.cfg.runtime__starts_cwd,
+        }))
+      end,
+      desc = 'Find all folders',
+    },
+    {
+      '<leader>fl',
+      function()
+        --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
+        require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
+          results_title = vim.t.cwd_short,
+          files = false,
+          use_fd = true,
+          previewer = false,
+          respect_gitignore = true,
+          hidden = false,
+          depth = 5,
+          git_status = false,
+          collapse_dirs = true,
+          hide_parent_dir = true,
+          display_stat = false,
+          cwd = require('userlib.runtime.utils').get_root(),
+        }))
+      end,
+      desc = 'Find project folders',
+    },
+    {
+      '<leader>fg',
+      function()
+        require('userlib.telescope.live_grep_call')({
+          cwd = vim.cfg.runtime__starts_cwd,
+        })
+      end,
+      desc = 'Grep search in all projects',
+    },
+    {
+      '<leader>fs',
+      cmd_modcall('userlib.telescope.live_grep_call', '()'),
+      desc = 'Grep search in project',
+    },
+    {
+      '<leader>fs',
+      cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_visual_selection()'),
+      desc = 'Grep search on selection in project',
+      mode = { 'v', 'x' },
+    },
+    {
+      '<leader>fw',
+      cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_word_under_cursor()'),
+      desc = 'Grep search on selection in project',
+    },
+    {
+      '<leader>g.',
+      '<cmd>Telescope git_bcommits<cr>',
+      desc = 'Show commits for current buffer with diff preview',
+    },
+    {
+      '<leader>fj',
+      '<cmd>Telescope jumplist fname_width=60 show_line=false<cr>',
+      desc = 'Show jumplist',
+    },
   },
   dependencies = {
     { 'nvim-lua/popup.nvim' },
@@ -653,10 +652,10 @@ plug({
     return {
       defaults = {
         border = true,
-        -- borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
+        borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default[1],
         wrap_results = false,
         --- give some opacity so we can see the window picker marks.
-        winblend = 0,
+        winblend = 10,
         cache_picker = {
           num_pickers = 5,
         },
@@ -670,7 +669,7 @@ plug({
           '--smart-case',
         },
         layout_config = {
-          width = 0.98,
+          width = 0.90,
           -- prompt_position = 'top',
           horizontal = {
             preview_cutoff = 20,
@@ -692,8 +691,8 @@ plug({
         path_display = { 'truncate' },
         layout_strategy = 'flex',
         -- layout_strategy = "vertical",
-        file_sorter = require('telescope.sorters').get_fzy_sorter,
-        prompt_prefix = '',
+        file_sorter = require('telescope.sorters').get_fuzzy_file,
+        -- prompt_prefix = '',
         color_devicons = true,
         initial_mode = 'insert',
         git_icons = git_icons,
@@ -750,6 +749,7 @@ plug({
           },
         },
       },
+      pickers = {},
       extensions = {
         file_browser = {
           use_fd = true,
@@ -923,12 +923,12 @@ plug({
       desc = 'Command panel',
       silent = true,
     },
-    -- {
-    --   '<localleader>,',
-    --   ':FzfLua<cr>',
-    --   desc = 'Fzf',
-    --   silent = true,
-    -- },
+    {
+      '<localleader>,',
+      ':FzfLua<cr>',
+      desc = 'Fzf',
+      silent = true,
+    },
     {
       '<C-x><C-e>',
       function()
@@ -947,12 +947,12 @@ plug({
       [[:FzfLua changes<cr>]],
       desc = 'Fzf search in changes with opened buffers',
     },
-    -- {
-    --   BufferListKey,
-    --   cmd_modcall(fzf_mod, 'buffers_or_recent(false)'),
-    --   nowait = true,
-    --   desc = 'List Buffers',
-    -- },
+    {
+      BufferListKey,
+      cmd_modcall(fzf_mod, 'buffers_or_recent(false)'),
+      nowait = true,
+      desc = 'List Buffers',
+    },
     {
       '<leader>ff',
       cmd_modcall(fzf_mod, [[files({ cwd_header = true })]]),

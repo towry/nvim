@@ -1,3 +1,5 @@
+local Buffer = require('userlib.runtime.buffer')
+
 _G.unpack = _G.unpack or table.unpack
 _G.Ty = {}
 _G.R = require
@@ -162,6 +164,48 @@ Ty.stl_num = function()
     end
   end
   return vim.v.lnum .. space
+end
+
+---@type table<number,boolean>
+local skip_foldexpr = {}
+local skip_check = assert(vim.uv.new_check())
+Ty.fold_expr = function()
+  local buf = vim.api.nvim_get_current_buf()
+  if vim.bo[buf].buftype ~= '' or vim.bo[buf].filetype == '' then
+    return '0'
+  end
+  if skip_foldexpr[buf] then
+    return '0'
+  end
+  local ok = pcall(vim.treesitter.get_parser, buf)
+  if ok then
+    return vim.treesitter.foldexpr()
+  end
+  skip_foldexpr[buf] = true
+  skip_check:start(function()
+    skip_foldexpr = {}
+    skip_check:stop()
+  end)
+end
+
+Ty.fold_text = function()
+  local ok, _ = pcall(vim.treesitter.get_parser, vim.api.nvim_get_current_buf())
+  local ret = (ok and vim.treesitter.foldtext) and vim.treesitter.foldtext() or nil
+  if not ret or type(ret) == 'string' then
+    ---@diagnostic disable-next-line: cast-local-type
+    ret = { { vim.api.nvim_buf_get_lines(0, vim.v.lnum - 1, vim.v.lnum, false)[1], {} } }
+  end
+  table.insert(ret, { ' ' .. '...' })
+
+  if not vim.treesitter.foldtext then
+    return table.concat(
+      vim.tbl_map(function(line)
+        return line[1]
+      end, ret),
+      ' '
+    )
+  end
+  return ret
 end
 
 --- "│"

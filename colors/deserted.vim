@@ -127,6 +127,10 @@ hi! link CocCodeLens Comment
 hi! link CocMenuSel PmenuSel
 " --- mini
 hi MiniIndentscopeSymbol guifg=#666666 guibg=NONE gui=NONE cterm=NONE
+" --- Telescope
+hi! link TelescopeSelection CursorLine
+hi! link TelescopeSelectionCaret CursorLineNr
+hi TelescopeTitle guifg=#ffa0a0 guibg=#000000 gui=NONE cterm=NONE
 " -+++
 
 if s:t_Co >= 256
