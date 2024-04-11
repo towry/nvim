@@ -110,6 +110,7 @@ function M.files(opts)
       ['--ansi'] = '',
       ['--with-nth'] = '2..',
       ['--delimiter'] = '\\s',
+      ['--tiebreak'] = 'begin,index',
     }
     -- opts._fmt = opts._fmt or {}
     -- opts._fmt.from = function(entry, _opts)
