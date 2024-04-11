@@ -7,7 +7,8 @@ function M.startup()
   o.autowrite = true
   o.startofline = false -- cursor start of line when scroll
   o.exrc = true
-  o.jumpoptions = 'stack,view'
+  o.jumpoptions = 'stack'
+  o.path = '**' -- use a recursive path for :find
   o.breakindent = true
   o.cpoptions:append('>') -- append to register with line break
   o.inccommand = 'nosplit' -- preview incremental substitute
@@ -37,6 +38,8 @@ function M.startup()
   o.updatetime = 250 --- Faster completion
   -- o.viminfo        = "'1000" --- Increase the size of file history
   o.wrap = false --- Display long lines as just one line
+  o.linebreak = true
+  o.showbreak = '↳ '
   -- enable line-wrapping with left and right cursor movement
   vim.opt.whichwrap:append({ ['<'] = true, ['>'] = true, ['h'] = true, ['l'] = true, ['['] = true, [']'] = true })
   -- add @, -, and $ as keywords for full SCSS support
@@ -51,7 +54,9 @@ function M.startup()
   o.errorbells = false --- Disables sound effect for errors
   o.fileencoding = 'utf-8' --- The encoding written to file
   o.incsearch = true --- Start searching before pressing enter
-  o.switchbuf = 'usetab' -- Use already opened buffers when switching
+  o.gdefault = true
+  o.switchbuf = 'useopen,uselast' -- Use already opened buffers when switching
+  o.synmaxcol = 300
   o.diffopt:append({ 'algorithm:histogram', 'foldcolumn:0', 'vertical', 'linematch:50' })
   -- o.shellcmdflag = '-ic' --- Make shell alias works, has bugs.
   o.virtualedit = 'onemore'
@@ -94,7 +99,7 @@ function M.init_interface()
   o.ruler = false -- Always show cursor position
   o.termguicolors = true --- Correct terminal colors
   o.confirm = true
-  o.showtabline = vim.cfg.runtime__starts_as_gittool and 2 or 0 --- Always show tabs
+  o.showtabline = vim.cfg.runtime__starts_as_gittool and 2 or 2 --- Always show tabs
   o.signcolumn = 'yes:1' --- Add extra sign column next to line number
   o.relativenumber = vim.cfg.editor__relative_number and not vim.cfg.runtime__starts_as_gittool --- Enables relative number
   o.numberwidth = 1
@@ -142,7 +147,7 @@ function M.init_interface()
   o.listchars:append('nbsp:␣')
   o.listchars:append('precedes:«')
   -- o.listchars:append('trail:-')
-  vim.o.statuscolumn = '%#SignColumn#%s%{v:lua.Ty.stl_foldlevel()}%=%{%v:lua.Ty.stl_num()%}%#Normal# '
+  vim.o.statuscolumn = '%#SignColumn#%s%{v:lua.Ty.stl_foldlevel()}%{%v:lua.Ty.stl_num()%} '
   -- o.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
   -- o.formatoptions:append {
   --   r = true, -- Automatically insert comment leader after <Enter> in Insert mode.
@@ -201,7 +206,7 @@ end
 
 --- called by statusline component on load.
 function M.setup_statusline()
-  vim.opt.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
+  vim.opt.laststatus = 2 --- Have a global statusline at the bottom instead of one for each window
   if vim.cfg.runtime__starts_as_gittool then
     vim.opt.laststatus = 2
     vim.opt.statusline = [[%<%n#%f %q%h%m%r[%{v:lua.Ty.stl_git_three_way_name()}]%=%-14.(%l,%c%V%)%p%% %y %w]]

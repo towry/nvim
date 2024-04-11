@@ -7,6 +7,53 @@ function M.load_on_startup()
   -- taken from AstroNvim
   local definitions = {
     {
+      { 'VimEnter', 'WinEnter', 'BufWinEnter' },
+      {
+        group = group_name,
+        pattern = '*',
+        command = 'setlocal cursorline',
+        desc = 'Hi active window cursorline',
+      },
+    },
+    {
+      { 'WInLeave' },
+      {
+        group = group_name,
+        pattern = '*',
+        command = 'setlocal nocursorline',
+        desc = 'DeHi non-active window cursorline',
+      },
+    },
+    {
+      { 'CursorMovedI', 'InsertLeave' },
+      {
+        group = group_name,
+        pattern = '*',
+        command = "if pumvisible() == 0 && !&pvw && getcmdwintype() == ''|pclose|endif",
+        desc = 'Close the popup-menu automatically',
+      },
+    },
+    {
+      { 'BufNew' },
+      {
+        group = group_name,
+        pattern = '*',
+        callback = function(args)
+          local bufname = vim.api.nvim_buf_get_name(args.buf)
+          local root, line = bufname:match('^(.*):(%d+)$')
+          if vim.fn.filereadable(bufname) == 0 and root and line and vim.fn.filereadable(root) == 1 then
+            vim.schedule(function()
+              vim.cmd.edit({ args = { root } })
+              pcall(vim.api.nvim_win_set_cursor, 0, { tonumber(line), 0 })
+              vim.api.nvim_buf_delete(args.buf, { force = true })
+            end)
+          end
+        end,
+        desc = 'Edit files with :line at the end',
+      },
+    },
+    -- +---
+    {
       { 'TextYankPost' },
       {
         group = 'hl_on_yank',
@@ -163,21 +210,24 @@ function M.load_on_startup()
     },
     -- enable foldexpr
     {
-      { 'BufReadPost' },
+      { 'BufWinEnter' },
       {
         group = 'enable_foldexpr_for_buf',
         callback = function(ctx)
+          --- https://github.com/nvim-telescope/telescope.nvim/issues/699
+          --- https://github.com/nvim-treesitter/nvim-treesitter/issues/1337
           local buf = ctx.buf
           local lines = vim.api.nvim_buf_line_count(buf)
           if not vim.b[buf].is_big_file and lines < 10000 then
             vim.wo.foldmethod = 'expr'
             vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
             -- foldtext with ts hi
-            vim.wo.foldtext = ''
+            vim.wo.foldtext = 'v:lua.Ty.fold_text()'
           else
             vim.wo.foldmethod = 'manual'
             vim.wo.foldexpr = ''
           end
+          -- vim.cmd('normal! zx zR')
         end,
       },
     },

@@ -10,6 +10,7 @@ plug({
   config = function()
     local comp = require('userlib.statusline.heirline.components')
     local heirline_utils = require('heirline.utils')
+    local conditions = require('heirline.conditions')
 
     require('heirline').load_colors(comp.setup_colors())
     local aug = vim.api.nvim_create_augroup('Heirline', { clear = true })
@@ -23,51 +24,86 @@ plug({
       end,
     })
     require('heirline').setup({
-      winbar = {
+      -- https://github.com/rebelot/heirline.nvim/blob/master/cookbook.md#tabline
+      tabline = {
+        hl = { fg = 'tabline_fg', bg = 'tabline_bg' },
+        comp.TabLine,
+        comp.lpad({
+          { provider = '-:- ' },
+          comp.FileIcon,
+          { provider = ' %t' },
+        }),
         {
-          comp.ShortFileName,
+          provider = '%=',
+        },
+        {
+          comp.rpad(comp.Overseer),
+          comp.rpad(comp.Dap),
+          { provider = '%=' },
+          comp.rpad(comp.Copilot),
+          comp.rpad(comp.Codeium),
+          comp.rpad({
+            comp.Branch,
+            comp.GitStatus,
+          }),
+        },
+      },
+      statusline = heirline_utils.insert({
+        static = comp.stl_static,
+        hl = function()
+          if conditions.is_active() then
+            return { fg = 'fg', bg = 'bg' }
+          end
+          return {
+            fg = 'fg_nc',
+            bg = 'bg_nc',
+          }
+        end,
+      }, {
+        condition = function()
+          return conditions.is_active()
+        end,
+        comp.lpad({
           {
-            provider = ' [%n]',
+            provider = '%f [%n]',
           },
           {
             provider = '%m%w%r',
           },
-        },
-      },
-      -- https://github.com/rebelot/heirline.nvim/blob/master/cookbook.md#tabline
-      -- tabline = comp.TabLine,
-      statusline = heirline_utils.insert(
-        {
-          static = comp.stl_static,
-          hl = { fg = 'fg', bg = 'bg' },
-        },
-        comp.TabLine,
-        comp.lpad({
-          { provider = ' ' },
-          comp.Branch,
-          comp.GitStatus,
         }),
-        comp.lpad({ provider = '%y%q' }),
-        comp.lpad(comp.Overseer),
+        comp.lpad(comp.CocStl),
+        { provider = '%=' },
+        -- {
+        --   condition = function()
+        --     return vim.t.TabLabel and vim.t.TabLabel ~= ''
+        --   end,
+        --   provider = function()
+        --     return '%-.20([' .. vim.t.TabLabel .. ']%) '
+        --   end,
+        -- },
         { provider = '%=' },
         {
-          condition = function()
-            return vim.t.TabLabel and vim.t.TabLabel ~= ''
-          end,
-          provider = function()
-            return '%-.20([' .. vim.t.TabLabel .. ']%) '
-          end,
+          provider = '%v:%l %P ',
         },
+      }, {
+        condition = function()
+          return not conditions.is_active()
+        end,
+        --- file info
+        comp.lpad({
+          {
+            provider = '%f [%n]',
+          },
+          {
+            provider = '%m%w%r',
+          },
+        }),
+        comp.lpad(comp.CocStl),
         { provider = '%=' },
         {
-          provider = '%=%v:%l ',
+          provider = '%v:%l %P ',
         },
-        comp.rpad(comp.CocStl),
-        comp.rpad(comp.Copilot),
-        comp.rpad(comp.Codeium),
-        comp.rpad(comp.Dap),
-        { provider = '%P ' }
-      ),
+      }),
 
       opts = {
         disable_winbar_cb = function(args)
@@ -98,13 +134,13 @@ plug({
       },
     })
 
-    vim.o.showtabline = 0
+    vim.o.showtabline = 2
     vim.api.nvim_create_user_command('HeirlineResetStatusline', function()
       vim.o.statusline = "%{%v:lua.require'heirline'.eval_statusline()%}"
     end, {})
     if vim.o.laststatus == 0 then
       vim.opt.statusline = "%#VertSplit#%{repeat('-',winwidth('.'))}"
     end
-    vim.opt_local.winbar = "%{%v:lua.require'heirline'.eval_winbar()%}"
+    vim.o.laststatus = 2
   end,
 })

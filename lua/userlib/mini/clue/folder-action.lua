@@ -25,11 +25,26 @@ M.open = function(new_cwd)
         cwd = new_cwd,
         cwd_header = true,
       })
+      -- require('userlib.telescope.pickers').project_files({
+      --   cwd = new_cwd,
+      -- })
       unset()
     end, {
       desc = 'Open files',
     })
     set('n', 'p', function()
+      -- require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
+      --   files = false,
+      --   use_fd = true,
+      --   display_stat = false,
+      --   hide_parent_dir = true,
+      --   respect_gitignore = true,
+      --   hidden = false,
+      --   previewer = false,
+      --   depth = 3,
+      --   git_status = false,
+      --   cwd = new_cwd,
+      -- }))
       require('userlib.fzflua').folders({
         cwd = new_cwd,
         cwd_header = true,
@@ -43,6 +58,9 @@ M.open = function(new_cwd)
         cwd = new_cwd,
         cwd_header = true,
       })
+      -- require('userlib.telescope.live_grep_call')({
+      --   cwd = new_cwd,
+      -- })
       unset()
     end, {
       desc = 'Search content',

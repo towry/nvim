@@ -31,6 +31,9 @@ end, {})
 create_cmd('OnDarkMode', update_background_from_script, {})
 
 if vim.env['TMUX'] ~= nil then
+  table.insert(vim.g.miniclues, {
+    { mode = 'n', keys = '<LocalLeader>x', desc = '+Tmux' },
+  })
   -- Define the TmuxRerun command
   create_cmd('TmuxRerun', function(opts)
     -- Split the input arguments on '--' to separate the pane index and optional shell commands

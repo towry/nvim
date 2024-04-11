@@ -48,6 +48,18 @@ M.project_files = function(opts)
     end, {
       desc = 'Go to home dir',
     })
+    map('i', '<C-t>', function(prompt_bufnr)
+      local current_picker = action_state.get_current_picker(prompt_bufnr)
+      local finder = current_picker.finder
+      vim.print(finder.opts)
+
+      finder.hidden = not finder.hidden
+      current_picker:refresh(finder, { reset_prompt = false, hidden = true, multi = current_picker._multi })
+    end, {
+      desc = 'Toggle hidden',
+      remap = false,
+      noremap = true,
+    })
   end
 
   opts = opts or {}
@@ -187,8 +199,6 @@ function M.curbuf()
     winblend = 10,
     previewer = true,
     shorten_path = false,
-    -- borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
-    border = true,
     layout_config = {
       width = 0.8,
     },
@@ -227,7 +237,7 @@ function M.buffers_or_recent()
       cwd = vim.cfg.runtime__starts_cwd,
       oldfiles = true,
       previewer = false,
-      -- borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
+      -- borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default[0],
     }))
     return
   end
@@ -241,9 +251,10 @@ function M.buffers()
   local Buffer = require('userlib.runtime.buffer')
 
   builtin.buffers(require('telescope.themes').get_dropdown({
-    -- borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default,
-    ignore_current_buffer = true,
+    -- borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default[0],
+    ignore_current_buffer = false,
     sort_mru = true,
+    previewer = false,
     -- layout_strategy = 'vertical',
     -- layout_strategy = "bottom_pane",
     entry_maker = M.gen_from_buffer({
@@ -252,7 +263,6 @@ function M.buffers()
     }),
     attach_mappings = function(prompt_bufnr, map)
       local close_buf = function()
-        -- local picker = actionstate.get_current_picker(prompt_bufnr)
         local selection = actionstate.get_selected_entry()
         actions.close(prompt_bufnr)
         if not vim.api.nvim_buf_is_valid(selection.bufnr) then

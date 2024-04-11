@@ -97,6 +97,27 @@ function M.files(opts)
   if not opts.cwd then
     opts.cwd = safe_cwd(vim.t.Cwd)
   end
+  local cmd = nil
+  if vim.fn.executable('fd') == 1 then
+    local fzfutils = require('fzf-lua.utils')
+    -- fzf-lua.defaults#defaults.files.fd_opts
+    cmd = string.format(
+      [[fd --color=never --type f --hidden --follow --exclude .git -x printf "{/} %s {}\n"]],
+      fzfutils.ansi_codes.grey('{//}')
+    )
+    opts.fzf_opts = {
+      -- process ansi colors
+      ['--ansi'] = '',
+      ['--with-nth'] = '1..-2',
+      ['--delimiter'] = '\\s',
+    }
+    opts._fmt = opts._fmt or {}
+    opts._fmt.from = function(entry, _opts)
+      local s = fzfutils.strsplit(entry, ' ')
+      return s[3]
+    end
+  end
+  opts.cmd = cmd
 
   opts.winopts = {
     fullscreen = false,
@@ -132,7 +153,7 @@ function M.folders(opts)
   opts.cmd = cmd
   opts.cwd_header = true
   opts.cwd_prompt = true
-  opts.toggle_ignore_flag = '--no-ignore'
+  opts.toggle_ignore_flag = '--no-ignore-vcs'
   opts.winopts = {
     fullscreen = false,
   }
@@ -163,16 +184,13 @@ function M.folders(opts)
       end
       require('userlib.mini.clue.folder-action').open(entry_path)
     end,
-    ['ctrl-g'] = function()
-      opts.__ACT_TO = function(o)
-        opts = vim.tbl_extend('force', opts, o)
-        return fzflua.fzf_exec(opts.cmd, opts)
-      end
-      actions.toggle_ignore(nil, opts)
+    ['ctrl-g'] = function(_, o)
+      opts.cmd = libutils.toggle_cmd_option(o.cmd, '--no-ignore-vcs')
+      return fzflua.fzf_exec(opts.cmd, opts)
     end,
-    ['ctrl-h'] = function()
+    ['ctrl-h'] = function(_, o)
       --- toggle hidden
-      opts.cmd = libutils.toggle_cmd_option(opts.cmd, '--hidden')
+      opts.cmd = libutils.toggle_cmd_option(o.cmd, '--hidden')
       return fzflua.fzf_exec(opts.cmd, opts)
     end,
   }

@@ -10,8 +10,11 @@ local function setup_basic()
   set('n', '<C-a>x', '<C-x>', { remap = false, nowait = true, silent = true })
   --- <C-a> and <C-x> is free to use
   set('i', 'jj', '<ESC>', { silent = true, nowait = true, noremap = true })
-  set('n', 'k', [[(v:count > 1 ? "m'" . v:count : '') . 'k']], { expr = true, silent = true, noremap = true })
-  set('n', 'j', [[(v:count > 1 ? "m'" . v:count : '') . 'j']], { expr = true, silent = true, noremap = true })
+
+  -- Save jumps > 5 lines to the jumplist
+  -- Jumps <= 5 respect line wraps
+  set('n', 'j', [[(v:count > 5 ? "m'" . v:count . 'j' : 'gj')]], { expr = true })
+  set('n', 'k', [[(v:count > 5 ? "m'" . v:count . 'k' : 'gk')]], { expr = true })
   --->>
   set('n', ']b', ':bnext<cr>', { desc = 'Next buffer', silent = false, nowait = true })
   set('n', '[b', ':bpre<cr>', { desc = 'Prev buffer', silent = false, nowait = true })
@@ -149,9 +152,18 @@ local function setup_basic()
     set('n', '<space>' .. i, cmd(i .. 'tabnext'), {
       desc = 'Go to tab ' .. i,
     })
+    --- use option key to navigate tab quickly.
+    --- cmd key is used by the mux program.
+    if vim.cfg.runtime__is_wezterm then
+      set('n', '<M-' .. i .. '>', cmd(i .. 'tabnext'), {
+        desc = 'Go to tab ' .. i,
+      })
+    end
   end
-  set('n', '<space>0', cmd('tabnext'), { desc = 'Tab next' })
-  set('n', '<space><Tab>', cmd('tabp'), { desc = 'Tab previous' })
+  if vim.cfg.runtime__is_wezterm then
+    set('n', '<M-[>', cmd('tabp'), { desc = 'Tab pre' })
+    set('n', '<M-]>', cmd('tabn'), { desc = 'Tab next' })
+  end
   set('n', '<leader>tn', cmd('tabnew'), {
     desc = 'New tab',
   })

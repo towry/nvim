@@ -451,7 +451,7 @@ M.toggle_cmd_option = function(cmd_string_or_table, option_to_toggle)
   end
   if not is_in_table then
     -- insert at start
-    table.insert(cmd_string_or_table, 1, option_to_toggle)
+    table.insert(cmd_string_or_table, 2, option_to_toggle)
   end
 
   if cmd_is_table then

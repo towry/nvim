@@ -1,6 +1,10 @@
+local Buffer = require('userlib.runtime.buffer')
+
 _G.unpack = _G.unpack or table.unpack
 _G.Ty = {}
 _G.R = require
+
+vim.g.miniclues = {}
 
 local local_cwd = vim.uv.cwd()
 
@@ -132,7 +136,7 @@ local function get_mark(buf, lnum)
   vim.list_extend(marks, vim.fn.getmarklist())
   for _, mark in ipairs(marks) do
     if mark.pos[1] == buf and mark.pos[2] == lnum and mark.mark:match('[a-zA-Z]') then
-      return { text = mark.mark:sub(2), texthl = 'DiagnosticHint' }
+      return { text = mark.mark:sub(2), texthl = 'DiffDelete' }
     end
   end
 end
@@ -140,6 +144,7 @@ end
 --- return string for statuscolumn's number
 --- https://github.com/LazyVim/LazyVim/blob/864c58cae6df28c602ecb4c94bc12a46206760aa/lua/lazyvim/util/ui.lua#L112
 Ty.stl_num = function()
+  local el = '%='
   local mark = get_mark(tonumber(vim.g.actual_curbuf, 10), vim.v.lnum)
   local mark_icon = mark and get_icon(mark) or nil
   -- local mark_icon = false
@@ -156,10 +161,52 @@ Ty.stl_num = function()
     if vim.v.relnum == 0 then
       return vim.v.lnum .. space
     else
-      return vim.v.relnum .. space
+      return el .. vim.v.relnum .. space
     end
   end
-  return vim.v.lnum .. space
+  return el .. vim.v.lnum .. space
+end
+
+---@type table<number,boolean>
+local skip_foldexpr = {}
+local skip_check = assert(vim.uv.new_check())
+Ty.fold_expr = function()
+  local buf = vim.api.nvim_get_current_buf()
+  if vim.bo[buf].buftype ~= '' or vim.bo[buf].filetype == '' then
+    return '0'
+  end
+  if skip_foldexpr[buf] then
+    return '0'
+  end
+  local ok = pcall(vim.treesitter.get_parser, buf)
+  if ok then
+    return vim.treesitter.foldexpr()
+  end
+  skip_foldexpr[buf] = true
+  skip_check:start(function()
+    skip_foldexpr = {}
+    skip_check:stop()
+  end)
+end
+
+Ty.fold_text = function()
+  local ok, _ = pcall(vim.treesitter.get_parser, vim.api.nvim_get_current_buf())
+  local ret = (ok and vim.treesitter.foldtext) and vim.treesitter.foldtext() or nil
+  if not ret or type(ret) == 'string' then
+    ---@diagnostic disable-next-line: cast-local-type
+    ret = { { vim.api.nvim_buf_get_lines(0, vim.v.lnum - 1, vim.v.lnum, false)[1], {} } }
+  end
+  table.insert(ret, { ' ' .. '...' })
+
+  if not vim.treesitter.foldtext then
+    return table.concat(
+      vim.tbl_map(function(line)
+        return line[1]
+      end, ret),
+      ' '
+    )
+  end
+  return ret
 end
 
 --- "│"

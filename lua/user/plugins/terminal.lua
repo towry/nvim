@@ -8,7 +8,7 @@ plug({
     dev = false,
     keys = {
       {
-        '<leader>//',
+        '<leader>/f',
         '<cmd>Telescope termfinder find<cr>',
         desc = 'Find terminals with telescope',
       },

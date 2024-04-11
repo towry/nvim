@@ -1,6 +1,7 @@
 local M = {}
 
 M.dropdown_borderchars_default = {
+  --- sharp corner borders
   { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
   prompt = { '─', '│', ' ', '│', '┌', '┐', '│', '│' },
   results = { '─', '│', '─', '│', '├', '┤', '┘', '└' },

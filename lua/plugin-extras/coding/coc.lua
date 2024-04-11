@@ -33,8 +33,8 @@ local function setup_coc_lsp_keys()
   set('n', 'gd', '<Plug>(coc-definition)', _('Go to definition'))
   set('n', '<C-w>d', ':<C-u>call CocActionAsync("jumpDefinition", "vsplit")<cr>', _('Go to definition in vsplit'))
   set('n', 'gy', '<Plug>(coc-type-definition)', _(''))
-  set('n', '<localleader>gi', '<Plug>(coc-implementation)', _('Go to implementation'))
-  set('n', '<localleader>gr', '<Plug>(coc-references)', _('Show references'))
+  set('n', '<leader>cd', '<Plug>(coc-implementation)', _('Go to implementation'))
+  set('n', '<leader>ch', '<Plug>(coc-references)', _('Show references'))
   -- Symbol renaming
   set('n', '<leader>crn', '<Plug>(coc-rename)', _('Rename symbol'))
   -- Formatting selected code
@@ -169,9 +169,8 @@ return plug({
   cmd = {
     'CocInstall',
   },
-  event = { 'BufEnter', 'BufNew' },
-  config = false,
-  init = function()
+  event = 'User FileOpenedAfter',
+  config = function()
     local keymap = require('userlib.runtime.keymap')
     local set = keymap.set
     local opts = {
@@ -296,5 +295,12 @@ return plug({
     vim.g.coc_notify_info_icon = ' '
     vim.g.coc_status_error_sign = 'E'
     vim.g.coc_status_warning_sign = 'W'
+  end,
+  init = function()
+    vim.g.miniclues = vim.tbl_extend('error', vim.g.miniclues, {
+      { mode = 'n', keys = '<leader>cl', desc = '+Coc lists' },
+      { mode = 'n', keys = '<leader>cr', desc = '+Coc refactor' },
+      { mode = 'n', keys = '<leader>cq', desc = '+Coc quickfix?' },
+    })
   end,
 })

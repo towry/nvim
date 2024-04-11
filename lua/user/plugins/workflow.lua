@@ -401,9 +401,10 @@ plug({
     },
   },
   {
-    -- 'mrjones2014/smart-splits.nvim',
-    'pze/smart-splits.nvim',
+    'mrjones2014/smart-splits.nvim',
+    -- 'pze/smart-splits.nvim',
     dev = false,
+    lazy = vim.cfg.runtime__starts_as_gittool and false or true,
     keys = {
       {
         '<A-h>',
@@ -449,7 +450,8 @@ plug({
     dependencies = {
       -- 'kwkarlwang/bufresize.nvim',
     },
-    build = './kitty/install-kittens.bash',
+    -- only if you use kitty term
+    -- build = './kitty/install-kittens.bash',
     config = function()
       local splits = require('smart-splits')
 
@@ -633,6 +635,7 @@ plug({
           if utils.has_plugin('trailblazer.nvim') then
             vim.cmd('TrailBlazerSaveSession')
           end
+          require('userlib.runtime.session').encode_session_vars()
         end,
       },
       post = {
@@ -644,11 +647,23 @@ plug({
           if utils.has_plugin('trailblazer.nvim') then
             vim.cmd('TrailBlazerLoadSession')
           end
+          local libsession = require('userlib.runtime.session')
+          local session_json = libsession.decode_session_vars()
+          if session_json then
+            libsession.restore_tabs_vars(session_json.tabs)
+          end
         end,
       },
     },
   },
   init = au.schedule_lazy(function()
+    au.define_autocmd('VimLeavePre', {
+      group = 'make_session_before_exit',
+      once = true,
+      callback = function()
+        require('userlib.mini.session').make_session(false)
+      end,
+    })
     vim.api.nvim_create_user_command('MakeSession', function()
       require('userlib.mini.session').make_session()
     end, {})
@@ -657,7 +672,7 @@ plug({
     end, {})
     -- keymaps
     local set = require('userlib.runtime.keymap').set
-    set('n', '<leader>/l', '<cmd>LoadSession<cr>', { desc = 'Load session' })
+    set('n', '<leader>//', '<cmd>LoadSession<cr>', { desc = 'Load session' })
     set('n', '<leader>/m', '<cmd>MakeSession<cr>', { desc = 'Make session' })
     -- legendary
     require('userlib.legendary').register('mini_session', function(lg)
@@ -813,6 +828,8 @@ plug({
 plug({
   'chrisgrieser/nvim-early-retirement',
   event = 'VeryLazy',
+  --- disabled because it affect the jumplist.
+  enabled = false,
   opts = {
     notificationOnAutoClose = true,
     retirementAgeMins = 15,

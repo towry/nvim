@@ -55,7 +55,7 @@ local stl_static = {
 
 local ShortFileName = {
   init = function(self)
-    local no_name = '[No Name]'
+    local no_name = '%f'
     local bufname = self.bufname or vim.fn.expand('%:p')
     if vim.bo.buftype ~= '' then
       self.filepath = bufname == '' and no_name or bufname
@@ -369,14 +369,16 @@ local function setup_colors()
     fg_none = utils.get_highlight('Normal').fg or 'none',
     fg = utils.get_highlight('StatusLine').fg or 'none',
     bg = utils.get_highlight('StatusLine').bg or 'none',
+    fg_nc = utils.get_highlight('StatusLineNC').fg or 'none',
+    bg_nc = utils.get_highlight('StatusLineNC').bg or 'none',
     winbar_fg = utils.get_highlight('Winbar').fg or 'none',
     winbar_bg = utils.get_highlight('Winbar').bg or 'none',
     winbar_nc_fg = utils.get_highlight('WinbarNC').fg or 'none',
     winbar_nc_bg = utils.get_highlight('WinbarNC').bg or 'none',
     tablinesel_fg = utils.get_highlight('TabLineSel').fg or 'none',
     tablinesel_bg = utils.get_highlight('TabLineSel').bg or 'none',
-    tabline_fg = utils.get_highlight('TabLine').fg or 'none',
-    tabline_bg = utils.get_highlight('TabLine').bg or 'none',
+    tabline_fg = utils.get_highlight('TabLineFill').fg or 'none',
+    tabline_bg = utils.get_highlight('TabLineFill').bg or 'none',
     red = utils.get_highlight('DiagnosticError').fg or 'none',
     yellow = utils.get_highlight('DiagnosticWarn').fg or 'none',
     green = utils.get_highlight('DiagnosticOk').fg or 'none',
@@ -484,7 +486,7 @@ local Branch = {
     end
   end,
   provider = function(self)
-    return self.head ~= '' and ' ' .. (self.head or '')
+    return self.head ~= '' and ' :' .. (self.head or '')
   end,
   update = {
     'User',
@@ -567,7 +569,6 @@ local Tabs = {
   {
     {
       provider = ' ',
-      hl = { fg = 'bg_none', bg = 'fg_none' },
     },
     {
       provider = function(self)
@@ -579,7 +580,6 @@ local Tabs = {
     },
     {
       provider = ' ',
-      hl = { fg = 'bg_none', bg = 'fg_none' },
     },
   },
   update = { 'VimEnter', 'TabNew', 'TabLeave' },
@@ -798,26 +798,36 @@ local Tabpage = {
   end,
   {
     provider = function(self)
-      return '%' .. self.tabnr .. 'T ' .. self.tabnr
+      return '%' .. self.tabnr .. 'T ' .. self.tabnr .. (vim.t[self.tabpage].CwdLocked and '*' or '')
     end,
   },
   {
-    -- condition = function(self)
-    --   return vim.t[self.tabpage].CwdLocked and vim.t[self.tabpage].Cwd
-    -- end,
+    condition = function(self)
+      return vim.t[self.tabpage].Cwd ~= nil
+    end,
     provider = ':',
   },
   {
-    -- condition = function(self)
-    --   return vim.t[self.tabpage].CwdLocked and vim.t[self.tabpage].Cwd
-    -- end,
+    condition = function(self)
+      return vim.t[self.tabpage].Cwd ~= nil
+    end,
     init = function(self)
       local cwd = vim.t[self.tabpage].Cwd or vim.uv.cwd()
-      self.tab_cwd = vim.fn.fnamemodify(cwd, ':t')
+      self.tab_cwd = vim.fn.fnamemodify(cwd or '', ':t')
     end,
     provider = function(self)
       return '%-2.18(' .. self.tab_cwd .. '%)'
     end,
+  },
+  {
+    condition = function(self)
+      return vim.t[self.tabpage].TabLabel ~= nil and vim.t[self.tabpage].TabLabel ~= ''
+    end,
+    {
+      provider = function(self)
+        return '[' .. vim.t[self.tabpage].TabLabel .. ']'
+      end,
+    },
   },
   {
     provider = '%T ',
@@ -964,7 +974,7 @@ local UnsavedBufCount = {
 
 local CocStl = {
   condition = function()
-    return vim.fn.exists('*coc#status')
+    return vim.fn.exists('*coc#status') and vim.bo.buftype == '' and package.loaded['coc']
   end,
   provider = '%{coc#status()}',
 }
