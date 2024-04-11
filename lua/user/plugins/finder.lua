@@ -245,14 +245,14 @@ plug({
     },
   },
   init = function()
-    -- au.define_autocmd('BufWinEnter', {
-    --   group = '_oil_change_cwd',
-    --   pattern = 'oil:///*',
-    --   callback = function(ctx)
-    --     local cwd = require('oil').get_current_dir()
-    --     require('userlib.runtime.utils').change_cwd(cwd, 'lcd', true)
-    --   end,
-    -- })
+    au.define_autocmd('BufWinEnter', {
+      group = '_oil_change_cwd',
+      pattern = 'oil:///*',
+      callback = function()
+        local cwd = require('oil').get_current_dir()
+        require('userlib.runtime.utils').change_cwd(cwd, 'lcd', true)
+      end,
+    })
   end,
 })
 
