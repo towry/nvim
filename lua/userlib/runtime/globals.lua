@@ -136,7 +136,7 @@ local function get_mark(buf, lnum)
   vim.list_extend(marks, vim.fn.getmarklist())
   for _, mark in ipairs(marks) do
     if mark.pos[1] == buf and mark.pos[2] == lnum and mark.mark:match('[a-zA-Z]') then
-      return { text = mark.mark:sub(2), texthl = 'DiagnosticHint' }
+      return { text = mark.mark:sub(2), texthl = 'DiffDelete' }
     end
   end
 end
@@ -144,6 +144,7 @@ end
 --- return string for statuscolumn's number
 --- https://github.com/LazyVim/LazyVim/blob/864c58cae6df28c602ecb4c94bc12a46206760aa/lua/lazyvim/util/ui.lua#L112
 Ty.stl_num = function()
+  local el = '%='
   local mark = get_mark(tonumber(vim.g.actual_curbuf, 10), vim.v.lnum)
   local mark_icon = mark and get_icon(mark) or nil
   -- local mark_icon = false
@@ -160,10 +161,10 @@ Ty.stl_num = function()
     if vim.v.relnum == 0 then
       return vim.v.lnum .. space
     else
-      return vim.v.relnum .. space
+      return el .. vim.v.relnum .. space
     end
   end
-  return vim.v.lnum .. space
+  return el .. vim.v.lnum .. space
 end
 
 ---@type table<number,boolean>
