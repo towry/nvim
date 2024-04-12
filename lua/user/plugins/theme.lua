@@ -232,6 +232,8 @@ plug({
         FzfLuaPreviewNormal = { link = 'Normal' },
         --- coc
         CocUnusedHighlight = { link = 'DiagnosticUnderlineHint' },
+        -- flash
+        FlashCursor = { fg = colors.theme.ui.fg, bg = colors.palette.waveBlue1 },
       }
     end,
     colors = {
