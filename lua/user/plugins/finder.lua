@@ -835,7 +835,11 @@ plug({
       function()
         local visits = require('mini.visits')
         vim.b[0].is_harpoon = true
+        local cwd = vim.uv.cwd()
         visits.add_label('harpoon', nil, vim.cfg.runtime__starts_cwd)
+        if not require('userlib.runtime.path').is_path_equal(cwd, vim.cfg.runtime__starts_cwd) then
+          visits.add_label('harpoon', nil, cwd)
+        end
         visits.write_index()
       end,
       silent = false,
@@ -846,7 +850,13 @@ plug({
       function()
         vim.b[0].is_harpoon = false
         local visits = require('mini.visits')
+        local cwd = vim.uv.cwd()
         visits.remove_label('harpoon', nil, vim.cfg.runtime__starts_cwd)
+
+        if not require('userlib.runtime.path').is_path_equal(cwd, vim.cfg.runtime__starts_cwd) then
+          visits.remove_label('harpoon', nil, cwd)
+        end
+
         visits.write_index()
       end,
       silent = false,
@@ -855,11 +865,11 @@ plug({
     {
       '<localleader>h',
       function()
-        require('userlib.mini.visits').select_by_cwd(vim.cfg.runtime__starts_cwd, {
+        require('userlib.mini.visits').select_by_cwd(vim.uv.cwd(), {
           filter = 'harpoon',
         })
       end,
-      desc = 'List harpoon visits',
+      desc = 'List harpoon visits (CWD)',
     },
     {
       '<leader>ph',

@@ -19,6 +19,10 @@ local function remove_path_last_separator(path)
   return path
 end
 
+local function is_path_equal(path1, path2)
+  return remove_path_last_separator(path1) == remove_path_last_separator(path2)
+end
+
 ---@param path string
 ---@param segments_left? number
 ---@return string
@@ -266,4 +270,5 @@ return {
   is_home_dir = is_home_dir,
   is_fs_root = is_fs_root,
   serialize_path_by_sep = serialize_path_by_sep,
+  is_path_equal = is_path_equal,
 }
