@@ -102,21 +102,17 @@ function M.files(opts)
     local fzfutils = require('fzf-lua.utils')
     -- fzf-lua.defaults#defaults.files.fd_opts
     cmd = string.format(
-      [[fd --color=never --type f --hidden --follow --exclude .git -x printf "{}: {/} %s\n"]],
-      fzfutils.ansi_codes.grey('{//}')
+      [[fd --color=never --type f --hidden --follow --exclude .git -x echo {} | awk -F/ '{printf "%%s: ", $0; printf "%%s ", $NF; gsub(/^\.\//,"",$0); gsub($NF,"",$0); printf "%s ", $0; print ""}']],
+      fzfutils.ansi_codes.grey('%s')
     )
     opts.fzf_opts = {
       -- process ansi colors
       ['--ansi'] = '',
+      ['--no-hscroll'] = '',
       ['--with-nth'] = '2..',
       ['--delimiter'] = '\\s',
       ['--tiebreak'] = 'begin,index',
     }
-    -- opts._fmt = opts._fmt or {}
-    -- opts._fmt.from = function(entry, _opts)
-    --   local s = fzfutils.strsplit(entry, ' ')
-    --   return s[3]
-    -- end
   end
   opts.cmd = cmd
 
@@ -125,7 +121,7 @@ function M.files(opts)
     height = 0.90,
     width = 1,
   }
-  opts.ignore_current_file = true
+  opts.ignore_current_file = false
 
   return fzflua.files(opts)
 end
