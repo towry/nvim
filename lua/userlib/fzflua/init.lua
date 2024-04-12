@@ -207,6 +207,7 @@ end
 function M.buffers_or_recent(no_buffers)
   local fzflua = require('fzf-lua')
   local bufopts = {
+    filename_first = true,
     sort_lastused = true,
     winopts = {
       fullscreen = false,
@@ -214,14 +215,6 @@ function M.buffers_or_recent(no_buffers)
         hidden = 'hidden',
       },
     },
-    -- keymap = {
-    --   fzf = {
-    --     ['tab'] = 'down',
-    --     ['btab'] = 'up',
-    --     ['ctrl-j'] = 'toggle+down',
-    --     ['ctrl-i'] = 'down',
-    --   },
-    -- },
   }
   local oldfiles_opts = {
     prompt = ' Recent: ',
@@ -283,7 +276,7 @@ function M.buffers_or_recent(no_buffers)
     return
   end
   local _bo = vim.tbl_extend('force', {}, bufopts, buffers_actions)
-  return fzflua.buffers(_bo)
+  return require('userlib.fzflua.buffers').buffers(_bo)
 end
 
 function M.git_branches()
