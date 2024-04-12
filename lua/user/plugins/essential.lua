@@ -534,6 +534,9 @@ pack.plug({
         vim.schedule(function()
           local data = ctx.data
           local buf = data.buffer
+          if not vim.api.nvim_buf_is_valid(buf) then
+            return
+          end
           miniclue.ensure_buf_triggers(buf)
         end)
       end,

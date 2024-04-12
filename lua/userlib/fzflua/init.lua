@@ -102,20 +102,21 @@ function M.files(opts)
     local fzfutils = require('fzf-lua.utils')
     -- fzf-lua.defaults#defaults.files.fd_opts
     cmd = string.format(
-      [[fd --color=never --type f --hidden --follow --exclude .git -x printf "{/} %s {}\n"]],
+      [[fd --color=never --type f --hidden --follow --exclude .git -x printf "{}: {/} %s\n"]],
       fzfutils.ansi_codes.grey('{//}')
     )
     opts.fzf_opts = {
       -- process ansi colors
       ['--ansi'] = '',
-      ['--with-nth'] = '1..-2',
+      ['--with-nth'] = '2..',
       ['--delimiter'] = '\\s',
+      ['--tiebreak'] = 'begin,index',
     }
-    opts._fmt = opts._fmt or {}
-    opts._fmt.from = function(entry, _opts)
-      local s = fzfutils.strsplit(entry, ' ')
-      return s[3]
-    end
+    -- opts._fmt = opts._fmt or {}
+    -- opts._fmt.from = function(entry, _opts)
+    --   local s = fzfutils.strsplit(entry, ' ')
+    --   return s[3]
+    -- end
   end
   opts.cmd = cmd
 
