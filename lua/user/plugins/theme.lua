@@ -225,8 +225,14 @@ plug({
     variablebuiltinStyle = { italic = true },
     globalStatus = true,
     overrides = function(colors) -- add/modify highlights
-      local unused = 123
-      return {}
+      -- do not foget to run ':KanagawaCompile'
+      return {
+        FzfLuaNormal = { link = 'Normal' },
+        FzfLuaBorder = { link = 'LineNr' },
+        FzfLuaPreviewNormal = { link = 'Normal' },
+        --- coc
+        CocUnusedHighlight = { link = 'DiagnosticUnderlineHint' },
+      }
     end,
     colors = {
       palette = {

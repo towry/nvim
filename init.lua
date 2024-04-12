@@ -1,5 +1,5 @@
 pcall(require, 'settings_env')
-vim.cmd.colorscheme('deserted')
+vim.cmd.colorscheme('vim')
 if vim.g.vscode then
   require('user.vscode.startup')
 end
