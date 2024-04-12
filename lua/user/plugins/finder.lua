@@ -919,8 +919,9 @@ plug({
 })
 
 plug({
-  url = 'https://gitlab.com/ibhagwan/fzf-lua',
-  -- 'ibhagwan/fzf-lua',
+  -- url = 'https://gitlab.com/ibhagwan/fzf-lua',
+  'ibhagwan/fzf-lua',
+  commit = '36df11e3bbb6453014ff4736f6805b5a91dda56d',
   -- 'pze/fzf-lua',
   dev = false,
   dependencies = { 'nvim-tree/nvim-web-devicons' },
