@@ -1126,7 +1126,6 @@ plug({
       fzf_opts = {
         ['--no-hscroll'] = '',
         ['--delimiter'] = '[\\.\\s]',
-        -- ['--delimiter'] = '[\\.]',
         ['--with-nth'] = '3..',
       },
     })
