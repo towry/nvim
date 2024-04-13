@@ -220,18 +220,20 @@ plug({
     require('rose-pine').setup({
       dark_variant = 'moon',
       highlight_groups = {
-        Pmenu = {
-          fg = 'subtle',
-          bg = 'overlay',
-        },
-        PmenuExtra = {
-          link = 'Pmenu',
-        },
-        PmenuSel = {
-          bg = 'gold',
-        },
-        StatusLine = { fg = 'love', bg = 'love', blend = 10 },
-        StatusLineNC = { fg = 'subtle', bg = 'surface' },
+        CocErrorSign = { link = 'DiagnosticError' },
+        CocWarningSign = { link = 'DiagnosticWarn' },
+        CocInfoSign = { link = 'DiagnosticInfo' },
+        CocHintSign = { link = 'DiagnosticHint' },
+        CocErrorFloat = { link = 'DiagnosticError' },
+        CocWarningFloat = { link = 'DiagnosticWarn' },
+        CocFloating = { link = 'NormalFloat' },
+        CocInfoFloat = { link = 'DiagnosticInfo' },
+        CocHintFloat = { link = 'DiagnosticHint' },
+        CocDiagnosticsError = { link = 'DiagnosticError' },
+        CocDiagnosticsWarning = { link = 'DiagnosticWarn' },
+        CocDiagnosticsInfo = { link = 'DiagnosticInfo' },
+        CocDiagnosticsHint = { link = 'DiagnosticHint' },
+        CocUnusedHighlight = { link = 'DiagnosticUnderlineWarn' },
         MiniCursorword = {
           italic = true,
           bold = true,
