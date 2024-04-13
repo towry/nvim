@@ -120,7 +120,8 @@ function M.files(opts)
     ['ctrl-h'] = function(_, o)
       --- toggle hidden
       opts.cmd = libutils.toggle_cmd_option(o.cmd, '--hidden')
-      return fzflua.fzf_exec(opts.cmd, opts)
+      opts.query = utils.get_last_query()
+      return fzflua.files(opts)
     end,
   }
 
