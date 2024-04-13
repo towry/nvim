@@ -103,9 +103,7 @@ function M.setup_theme()
 end
 
 M.setup = function()
-  if vim.cfg.runtime__starts_in_buffer then
-    M.setup_theme()
-  end
+  M.setup_theme()
 end
 
 M.toggleterm = function()

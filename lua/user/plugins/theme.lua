@@ -210,85 +210,44 @@ plug({
 })
 
 plug({
-  'rebelot/kanagawa.nvim',
-  event = 'User LazyTheme',
+  'rose-pine/neovim',
+  name = 'rose-pine',
   priority = 1000,
-  cond = string.match(vim.cfg.ui__theme_name, 'kanagawa') ~= nil,
-  opts = {
-    compile = true,
-    undercurl = true, -- enable undercurls
-    commentStyle = { italic = true },
-    functionStyle = { bold = true },
-    keywordStyle = { italic = true },
-    statementStyle = { bold = true },
-    typeStyle = { bold = true },
-    variablebuiltinStyle = { italic = true },
-    globalStatus = true,
-    overrides = function(colors) -- add/modify highlights
-      -- do not foget to run ':KanagawaCompile'
-      return {
+  lazy = false,
+  enabled = vim.cfg.ui__theme_name == 'rose-pine',
+  --- https://github.com/rose-pine/neovim?tab=readme-ov-file#options
+  config = function()
+    require('rose-pine').setup({
+      dark_variant = 'moon',
+      highlight_groups = {
+        Pmenu = {
+          fg = 'subtle',
+          bg = 'overlay',
+        },
+        PmenuExtra = {
+          link = 'Pmenu',
+        },
+        PmenuSel = {
+          bg = 'gold',
+        },
+        StatusLine = { fg = 'love', bg = 'love', blend = 10 },
+        StatusLineNC = { fg = 'subtle', bg = 'surface' },
+        MiniCursorword = {
+          italic = true,
+          bold = true,
+          bg = 'NONE',
+          fg = 'text',
+        },
+        MiniCursorwordCurrent = {
+          underline = false,
+          bold = true,
+          bg = 'NONE',
+          fg = 'NONE',
+        },
         FzfLuaNormal = { link = 'Normal' },
         FzfLuaBorder = { link = 'LineNr' },
         FzfLuaPreviewNormal = { link = 'Normal' },
-        --- coc
-        CocUnusedHighlight = { link = 'DiagnosticUnderlineHint' },
-        -- flash
-        FlashCursor = { fg = colors.theme.ui.fg, bg = colors.palette.waveBlue1 },
-      }
-    end,
-    colors = {
-      palette = {
-        -- dragonBlack0 = '#191f24',
-        -- dragonBlack1 = '#1c2228',
-        -- dragonBlack2 = '#192024',
-        -- dragonBlack3 = '#1c2428',
-        -- dragonBlack4 = '#232c30',
-        -- dragonBlack5 = '#2b353b',
-        -- dragonBlack6 = '#3b464f',
-        -- dragonBlue2 = '#7b96a3',
-        -- winterBlue = '#223140',
-        --- +--
       },
-      theme = {
-        all = {
-          ui = {
-            bg_gutter = 'none',
-          },
-        },
-      },
-    },
-    background = {
-      dark = 'wave',
-      -- dark = 'dragon',
-      light = 'lotus',
-    },
-  },
-})
-
-plug({
-  'EdenEast/nightfox.nvim',
-  event = 'User LazyTheme',
-  priority = 1000,
-  enabled = string.match(vim.cfg.ui__theme_name, 'fox') ~= nil,
-  config = function()
-    -- https://github.com/EdenEast/nightfox.nvim?tab=readme-ov-file#configuration
-    require('nightfox').setup({
-      options = {
-        styles = {
-          comments = 'italic',
-          keywords = 'bold',
-          types = 'italic,bold',
-        },
-      },
-      palettes = {
-        all = {},
-      },
-      specs = {},
-      groups = {},
     })
-  end,
-  init = function()
-    vim.g.nightfox_day = 'dawnfox'
-    vim.g.nightfox_night = 'nordfox'
   end,
 })
