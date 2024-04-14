@@ -459,9 +459,9 @@ plug({
 
 plug({
   'nvim-telescope/telescope.nvim',
-  cond = not vim.cfg.runtime__starts_as_gittool,
+  cond = not vim.cfg.runtime__starts_as_gittool and vim.cfg.plugin_fzf_or_telescope == 'telescope',
   cmd = { 'Telescope' },
-  keys_disable = {
+  keys = {
     {
       '<leader>fb',
       cmd_modcall(pickers_mod, 'curbuf()'),
@@ -925,6 +925,7 @@ plug({
   -- 'pze/fzf-lua',
   dev = false,
   dependencies = { 'nvim-tree/nvim-web-devicons' },
+  cond = vim.cfg.plugin_fzf_or_telescope == 'fzf',
   cmd = 'FzfLua',
   event = 'User LazyUIEnterOncePost',
   keys = {
