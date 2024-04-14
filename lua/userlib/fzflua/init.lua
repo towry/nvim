@@ -140,7 +140,6 @@ end
 function M.folders(opts)
   opts = opts or {}
 
-  local actions = require('fzf-lua.actions')
   local fzflua = require('fzf-lua')
   local path = require('fzf-lua.path')
 
@@ -197,6 +196,7 @@ function M.folders(opts)
     ['ctrl-h'] = function(_, o)
       --- toggle hidden
       opts.cmd = libutils.toggle_cmd_option(o.cmd, '--hidden')
+      opts.query = utils.get_last_query()
       return fzflua.fzf_exec(opts.cmd, opts)
     end,
   }
