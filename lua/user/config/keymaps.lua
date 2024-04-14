@@ -188,6 +188,9 @@ local function setup_basic()
   })
 
   -- works with quickfix
+  set('n', '<leader>qq', '<cmd>lua require("userlib.runtime.qf").toggle_qf()<cr>', { desc = 'Toggle quickfix' })
+  set('n', '<leader>ql', '<cmd>lua require("userlib.runtime.qf").toggle_loc()<cr>', { desc = 'Toggle loclist' })
+  set('n', '<leader>qs', '<cmd>FzfLua quickfix_stack<cr>', { desc = 'Quickfix stack' })
   set('n', '[q', ':cprev<cr>', {
     desc = 'Jump to previous quickfix item',
   })

@@ -116,16 +116,6 @@ plug({
         end,
         desc = 'Switch between quickfix window and previous window',
       },
-      {
-        '<leader>tq',
-        '<cmd>lua require("userlib.runtime.qf").toggle_qf()<cr>',
-        desc = 'Toggle quickfix',
-      },
-      {
-        '<leader>tl',
-        '<cmd>lua require("userlib.runtime.qf").toggle_loc()<cr>',
-        desc = 'Toggle loclist',
-      },
     },
     opts = {
       preview = {
