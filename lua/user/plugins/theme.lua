@@ -217,6 +217,7 @@ plug({
   enabled = vim.cfg.ui__theme_name == 'rose-pine',
   --- https://github.com/rose-pine/neovim?tab=readme-ov-file#options
   config = function()
+    local utils = require('rose-pine.utilities')
     require('rose-pine').setup({
       dark_variant = 'moon',
       highlight_groups = {
@@ -251,6 +252,8 @@ plug({
         FzfLuaPreviewNormal = { link = 'Normal' },
         FzfLuaColorsBgSel = { fg = 'rose' },
         FzfLuaTitle = { bg = 'foam', fg = 'base', bold = false },
+        StatusLine = { bg = 'foam', fg = 'base' },
+        StatusLineNC = { bg = utils.blend(utils.parse_color('base'), utils.parse_color('foam'), 0.1), fg = 'base' },
       },
     })
   end,
