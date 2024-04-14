@@ -249,6 +249,8 @@ plug({
         FzfLuaNormal = { link = 'Normal' },
         FzfLuaBorder = { link = 'LineNr' },
         FzfLuaPreviewNormal = { link = 'Normal' },
+        FzfLuaColorsBgSel = { fg = 'rose' },
+        FzfLuaTitle = { bg = 'foam', fg = 'base', bold = false },
       },
     })
   end,
