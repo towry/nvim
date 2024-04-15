@@ -130,20 +130,17 @@ local function setup_coc_autocmd()
         return
       end
       if vim.cfg.runtime__starts_as_gittool or vim.wo.diff then
-        return true
+        return
       end
       if (bufnr or bufnr == 0) and vim.b[bufnr].autoformat_disable then
-        return true
+        return
       end
 
       if not vim.fn.CocHasProvider('format') then
         return
       end
 
-      --- prevent cursor jump and window scroll
-      local view = vim.fn.winsaveview()
-      vim.fn.CocAction('format')
-      vim.fn.winrestview(view)
+      vim.cmd([[call CocAction('format')]])
     end,
   })
   vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
@@ -219,18 +216,6 @@ return plug({
       once = true,
       callback = vim.schedule_wrap(function()
         set('i', '<C-j>', function()
-          local trigger_ai = function()
-            -- trigger ai
-            if vim.b._copilot then
-              vim.fn['copilot#Suggest']()
-              return true
-            elseif vim.fn.exists('*codeium#Complete') == 1 then
-              vim.fn['codeium#Complete']()
-              return true
-            end
-            return false
-          end
-
           if Ty.has_ai_suggestions() and Ty.has_ai_suggestion_text() then
             if vim.fn['coc#pum#visible']() == 1 then
               vim.fn['coc#pum#cancel']()
@@ -263,6 +248,7 @@ return plug({
       'coc-css',
       'coc-tsserver',
       'coc-html',
+      'coc-highlight',
       'coc-html-css-support',
       -- 'coc-lua',
       'coc-sumneko-lua',

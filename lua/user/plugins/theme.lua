@@ -235,6 +235,7 @@ plug({
         CocDiagnosticsInfo = { link = 'DiagnosticInfo' },
         CocDiagnosticsHint = { link = 'DiagnosticHint' },
         CocUnusedHighlight = { link = 'DiagnosticUnderlineWarn' },
+        -- +--
         MiniCursorword = {
           italic = true,
           bold = true,

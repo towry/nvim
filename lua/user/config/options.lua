@@ -35,6 +35,7 @@ function M.startup()
   o.winfixheight = false
   o.showmatch = false -- show {} match and jump
   o.undofile = true --- Sets undo to file
+  o.undolevels = 10000
   o.updatetime = 250 --- Faster completion
   -- o.viminfo        = "'1000" --- Increase the size of file history
   o.wrap = false --- Display long lines as just one line
