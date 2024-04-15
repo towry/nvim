@@ -6,9 +6,10 @@ M.get_path_and_tail = function(filename)
   local bufname_tail = utils.path_tail(filename)
   local path_without_tail = require('plenary.strings').truncate(filename, #filename - #bufname_tail, '')
   local path_to_display = utils.transform_path({
-    path_display = function(_, path_to_transform)
-      return path_to_transform
-    end,
+    path_display = { 'truncate' },
+    -- path_display = function(_, path_to_transform)
+    --   return path_to_transform
+    -- end,
   }, path_without_tail)
 
   return bufname_tail, path_to_display
