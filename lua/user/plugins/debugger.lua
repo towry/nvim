@@ -6,6 +6,7 @@ local libutils = require('userlib.runtime.utils')
 
 ---- dap
 pack.plug({
+  cond = not vim.cfg.runtime__starts_as_gittool,
   'mfussenegger/nvim-dap',
   dependencies = {
     { 'theHamsta/nvim-dap-virtual-text' },
@@ -204,6 +205,7 @@ pack.plug({
 pack.plug({
   {
     'nvim-neotest/neotest',
+    cond = not vim.cfg.runtime__starts_as_gittool,
     enabled = vim.cfg.edit__use_coc,
     optional = true,
     opts = function(_, opts)
@@ -228,6 +230,7 @@ pack.plug({
 pack.plug({
   cmd = 'Neotest',
   'nvim-neotest/neotest',
+  cond = not vim.cfg.runtime__starts_as_gittool,
   dependencies = {
     'nvim-neotest/nvim-nio',
     'nvim-lua/plenary.nvim',
@@ -402,6 +405,7 @@ pack.plug({
 pack.plug({
   'nvim-neotest/neotest-vim-test',
   event = { 'BufRead' },
+  cond = not vim.cfg.runtime__starts_as_gittool,
   dependencies = {
     'nvim-neotest/neotest',
     {

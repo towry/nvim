@@ -123,7 +123,7 @@ pack.plug({
         -- Set to false to disable the vim.ui.select implementation
         enabled = vim.cfg.ui__input_select_provider == 'mini' and false or true,
         -- Priority list of preferred vim.select implementations
-        backend = { 'telescope', 'fzf_lua', 'nui', 'builtin' },
+        backend = vim.cfg.runtime__starts_as_gittool and { 'builtin' } or { 'telescope', 'fzf_lua', 'nui', 'builtin' },
         -- Options for nui Menu
         nui = {
           position = {
@@ -145,7 +145,12 @@ pack.plug({
           max_width = 80,
           max_height = 40,
         },
-        telescope = require('userlib.telescope.themes').get_dropdown(),
+        telescope = (function()
+          if vim.cfg.runtime__starts_as_gittool then
+            return nil
+          end
+          return require('userlib.telescope.themes').get_dropdown()
+        end)(),
         -- Options for built-in selector
         builtin = {
           -- These are passed to nvim_open_win

@@ -40,7 +40,7 @@ plug({
   {
     'j-hui/fidget.nvim',
     event = { 'User LazyUIEnter', 'LspAttach' },
-    enabled = true,
+    enabled = not vim.cfg.runtime__starts_as_gittool,
     opts = {
       progress = {
         ignore = {
