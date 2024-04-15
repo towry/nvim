@@ -227,7 +227,7 @@ pack.plug({
 ---neotest
 pack.plug({
   cmd = 'Neotest',
-  'rcarriga/neotest',
+  'nvim-neotest/neotest',
   dependencies = {
     'nvim-neotest/nvim-nio',
     'nvim-lua/plenary.nvim',
