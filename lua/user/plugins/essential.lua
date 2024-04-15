@@ -474,6 +474,7 @@ pack.plug({
         { mode = 'v', keys = '<Leader>a', desc = '+AI Assistant' },
         { mode = 'x', keys = '<Leader>a', desc = '+AI Assistant' },
         { mode = 'n', keys = '<Leader>n', desc = '+Normal mode utils' },
+        { mode = 'n', keys = '<Leader>q', desc = '+Quickfix|Loclist' },
         { mode = 'n', keys = '<LocalLeader>b', desc = '+Buffer' },
         { mode = 'n', keys = '<LocalLeader>c', desc = '+Code' },
         { mode = 'n', keys = 'ga', desc = '+TextChanges' },
