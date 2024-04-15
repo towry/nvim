@@ -459,145 +459,147 @@ plug({
 
 plug({
   'nvim-telescope/telescope.nvim',
-  cond = not vim.cfg.runtime__starts_as_gittool and vim.cfg.plugin_fzf_or_telescope == 'telescope',
+  cond = not vim.cfg.runtime__starts_as_gittool,
   cmd = { 'Telescope' },
-  keys = {
-    {
-      '<leader>fb',
-      cmd_modcall(pickers_mod, 'curbuf()'),
-      desc = 'Fuzzy search in current buffer',
-    },
-    {
-      BufferListKey,
-      cmd_modcall(pickers_mod, 'buffers_or_recent()'),
-      desc = 'List Buffers',
-    },
-    {
-      '<leader>g/',
-      function()
-        require('userlib.ui.dropdown').select({
-          items = {
-            {
-              label = 'Git branches',
-              hint = 'local',
-              'Telescope git_branches show_remote_tracking_branches=false',
-            },
-            {
-              label = 'Git branches',
-              hint = 'remotes',
-              'Telescope git_branches',
-            },
-          },
-        }, {
-          prompt_title = 'Select action',
-        })
-      end,
-      desc = 'Git branches',
-    },
-    {
-      '<leader>ff',
-      cmd_modcall(pickers_mod, 'project_files()'),
-      desc = 'Open Project files',
-    },
-    {
-      '<leader>fF',
-      cmd_modcall(pickers_mod, 'project_files({default_text = vim.fn.expand("<cword>")})'),
-      desc = 'Open Project files with current word',
-    },
-    {
-      '<leader>fe',
-      cmd_modcall(pickers_mod, 'project_files({use_all_files=false, cwd=vim.cfg.runtime__starts_cwd})'),
-      desc = 'Open find all files',
-    },
-    {
-      '<leader>fr',
-      cmd_modcall('telescope.builtin', 'resume()'),
-      desc = 'Resume telescope pickers',
-    },
-    {
-      '<localleader><Tab>',
-      cmd_modcall(
-        pickers_mod,
-        [[project_files(require('telescope.themes').get_dropdown({ previewer = false, cwd_only = false, oldfiles = true, cwd = vim.cfg.runtime__starts_cwd }))]]
-      ),
-      desc = 'Open recent files',
-    },
-    {
-      '<leader>fo',
-      function()
-        --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
-        require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
-          files = false,
-          use_fd = true,
-          display_stat = false,
-          hide_parent_dir = true,
-          respect_gitignore = true,
-          hidden = false,
-          previewer = false,
-          depth = 3,
-          git_status = false,
-          cwd = vim.cfg.runtime__starts_cwd,
-        }))
-      end,
-      desc = 'Find all folders',
-    },
-    {
-      '<leader>fl',
-      function()
-        --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
-        require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
-          results_title = vim.t.cwd_short,
-          files = false,
-          use_fd = true,
-          previewer = false,
-          respect_gitignore = true,
-          hidden = false,
-          depth = 5,
-          git_status = false,
-          collapse_dirs = true,
-          hide_parent_dir = true,
-          display_stat = false,
-          cwd = require('userlib.runtime.utils').get_root(),
-        }))
-      end,
-      desc = 'Find project folders',
-    },
-    {
-      '<leader>fg',
-      function()
-        require('userlib.telescope.live_grep_call')({
-          cwd = vim.cfg.runtime__starts_cwd,
-        })
-      end,
-      desc = 'Grep search in all projects',
-    },
-    {
-      '<leader>fs',
-      cmd_modcall('userlib.telescope.live_grep_call', '()'),
-      desc = 'Grep search in project',
-    },
-    {
-      '<leader>fs',
-      cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_visual_selection()'),
-      desc = 'Grep search on selection in project',
-      mode = { 'v', 'x' },
-    },
-    {
-      '<leader>fw',
-      cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_word_under_cursor()'),
-      desc = 'Grep search on selection in project',
-    },
-    {
-      '<leader>g.',
-      '<cmd>Telescope git_bcommits<cr>',
-      desc = 'Show commits for current buffer with diff preview',
-    },
-    {
-      '<leader>fj',
-      '<cmd>Telescope jumplist fname_width=60 show_line=false<cr>',
-      desc = 'Show jumplist',
-    },
-  },
+  keys = vim.cfg.plugin_fzf_or_telescope == 'telescope'
+      and {
+        {
+          '<leader>fb',
+          cmd_modcall(pickers_mod, 'curbuf()'),
+          desc = 'Fuzzy search in current buffer',
+        },
+        {
+          BufferListKey,
+          cmd_modcall(pickers_mod, 'buffers_or_recent()'),
+          desc = 'List Buffers',
+        },
+        {
+          '<leader>g/',
+          function()
+            require('userlib.ui.dropdown').select({
+              items = {
+                {
+                  label = 'Git branches',
+                  hint = 'local',
+                  'Telescope git_branches show_remote_tracking_branches=false',
+                },
+                {
+                  label = 'Git branches',
+                  hint = 'remotes',
+                  'Telescope git_branches',
+                },
+              },
+            }, {
+              prompt_title = 'Select action',
+            })
+          end,
+          desc = 'Git branches',
+        },
+        {
+          '<leader>ff',
+          cmd_modcall(pickers_mod, 'project_files()'),
+          desc = 'Open Project files',
+        },
+        {
+          '<leader>fF',
+          cmd_modcall(pickers_mod, 'project_files({default_text = vim.fn.expand("<cword>")})'),
+          desc = 'Open Project files with current word',
+        },
+        {
+          '<leader>fe',
+          cmd_modcall(pickers_mod, 'project_files({use_all_files=false, cwd=vim.cfg.runtime__starts_cwd})'),
+          desc = 'Open find all files',
+        },
+        {
+          '<leader>fr',
+          cmd_modcall('telescope.builtin', 'resume()'),
+          desc = 'Resume telescope pickers',
+        },
+        {
+          '<localleader><Tab>',
+          cmd_modcall(
+            pickers_mod,
+            [[project_files(require('userlib.telescope.themes').get_dropdown({ previewer = false, cwd_only = false, oldfiles = true, cwd = vim.cfg.runtime__starts_cwd }))]]
+          ),
+          desc = 'Open recent files',
+        },
+        {
+          '<leader>fo',
+          function()
+            --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
+            require('telescope').extensions.file_browser.file_browser(require('userlib.telescope.themes').get_dropdown({
+              files = false,
+              use_fd = true,
+              display_stat = false,
+              hide_parent_dir = true,
+              respect_gitignore = true,
+              hidden = true,
+              previewer = false,
+              depth = 3,
+              git_status = false,
+              cwd = vim.cfg.runtime__starts_cwd,
+            }))
+          end,
+          desc = 'Find all folders',
+        },
+        {
+          '<leader>fl',
+          function()
+            --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
+            require('telescope').extensions.file_browser.file_browser(require('userlib.telescope.themes').get_dropdown({
+              results_title = vim.t.cwd_short,
+              files = false,
+              use_fd = true,
+              previewer = false,
+              respect_gitignore = true,
+              hidden = true,
+              depth = 5,
+              git_status = false,
+              collapse_dirs = true,
+              hide_parent_dir = true,
+              display_stat = false,
+              cwd = require('userlib.runtime.utils').get_root(),
+            }))
+          end,
+          desc = 'Find project folders',
+        },
+        {
+          '<leader>fg',
+          function()
+            require('userlib.telescope.live_grep_call')({
+              cwd = vim.cfg.runtime__starts_cwd,
+            })
+          end,
+          desc = 'Grep search in all projects',
+        },
+        {
+          '<leader>fs',
+          cmd_modcall('userlib.telescope.live_grep_call', '()'),
+          desc = 'Grep search in project',
+        },
+        {
+          '<leader>fs',
+          cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_visual_selection()'),
+          desc = 'Grep search on selection in project',
+          mode = { 'v', 'x' },
+        },
+        {
+          '<leader>fw',
+          cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_word_under_cursor()'),
+          desc = 'Grep search on selection in project',
+        },
+        {
+          '<leader>g.',
+          '<cmd>Telescope git_bcommits<cr>',
+          desc = 'Show commits for current buffer with diff preview',
+        },
+        {
+          '<leader>fj',
+          '<cmd>Telescope jumplist fname_width=60 show_line=false<cr>',
+          desc = 'Show jumplist',
+        },
+      }
+    or {},
   dependencies = {
     { 'nvim-lua/popup.nvim' },
     { 'nvim-lua/plenary.nvim' },
@@ -622,200 +624,10 @@ plug({
     },
   },
   config = function(_, opts)
-    require('telescope').setup(opts)
-    require('telescope').load_extension('fzf')
-    require('telescope').load_extension('live_grep_args')
-    require('telescope').load_extension('termfinder')
-    require('telescope').load_extension('zoxide')
-    --- https://github.com/nvim-telescope/telescope-file-browser.nvim
-    --- Telescope file_browser files=false
-    require('telescope').load_extension('file_browser')
-    au.do_useraucmd(au.user_autocmds.TelescopeConfigDone_User)
+    require('userlib.telescope.spec').config(_, opts)
   end,
   opts = function()
-    -- local au = require('userlib.runtime.au')
-    local actions = require('telescope.actions')
-    local action_state = require('telescope.actions.state')
-    local lga_actions = require('telescope-live-grep-args.actions')
-    local icons = require('userlib.icons')
-
-    local git_icons = {
-      added = icons.gitAdd,
-      changed = icons.gitChange,
-      copied = '>',
-      deleted = icons.gitRemove,
-      renamed = '➡',
-      unmerged = '‡',
-      untracked = '?',
-    }
-
-    return {
-      defaults = {
-        border = true,
-        borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default[1],
-        wrap_results = false,
-        --- give some opacity so we can see the window picker marks.
-        winblend = 10,
-        cache_picker = {
-          num_pickers = 5,
-        },
-        vimgrep_arguments = {
-          'rg',
-          '--color=never',
-          '--no-heading',
-          '--with-filename',
-          '--line-number',
-          '--column',
-          '--smart-case',
-        },
-        layout_config = {
-          width = 0.90,
-          -- prompt_position = 'top',
-          horizontal = {
-            preview_cutoff = 20,
-          },
-          vertical = {
-            preview_cutoff = 0,
-            width = 0.98,
-          },
-          flex = {},
-          bottom_pane = {
-            preview_width = 0.4,
-            -- When columns are less than this value, the preview will be disabled
-            preview_cutoff = 10,
-          },
-        },
-        -- generic_sorter = require('mini.fuzzy').get_telescope_sorter,
-        ---@see https://github.com/nvim-telescope/telescope.nvim/issues/522#issuecomment-1107441677
-        file_ignore_patterns = { 'node_modules/', '.turbo/', 'dist', '.git/' },
-        path_display = { 'truncate' },
-        layout_strategy = 'flex',
-        -- layout_strategy = "vertical",
-        file_sorter = require('telescope.sorters').get_fuzzy_file,
-        -- prompt_prefix = '',
-        color_devicons = true,
-        initial_mode = 'insert',
-        git_icons = git_icons,
-        sorting_strategy = 'ascending',
-        file_previewer = require('telescope.previewers').vim_buffer_cat.new,
-        grep_previewer = require('telescope.previewers').vim_buffer_vimgrep.new,
-        qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
-        mappings = {
-          i = {
-            --- used to move cursor forward.
-            ['<C-f>'] = false,
-            ['<S-BS>'] = function()
-              --- delete previous W
-              if vim.fn.mode() == 'n' then
-                return
-              end
-              vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>gEldEa', true, true, true), 'n', false)
-            end,
-            ['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
-            ['<C-s>'] = actions.cycle_previewers_next,
-            ['<C-a>'] = actions.cycle_previewers_prev,
-            ['<C-h>'] = function()
-              if vim.fn.mode() == 'n' then
-                return
-              end
-              -- jump between WORD
-              vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>gEa', true, true, true), 'n', false)
-            end,
-            ['<C-l>'] = function()
-              if vim.fn.mode() == 'n' then
-                return
-              end
-              vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>Ea', true, true, true), 'n', false)
-            end,
-            ['<ESC>'] = function(prompt_bufnr)
-              local picker = action_state.get_current_picker(prompt_bufnr)
-              local prompt = picker:_get_prompt()
-              if not prompt or #prompt <= 0 then
-                actions.close(prompt_bufnr)
-                return
-              end
-              vim.cmd('stopinsert')
-            end,
-            ['<C-ESC>'] = actions.close,
-            ['<C-c>'] = function(prompt_bufnr)
-              local picker = action_state.get_current_picker(prompt_bufnr)
-              picker:set_prompt('')
-            end,
-          },
-          n = {
-            ['<C-s>'] = actions.cycle_previewers_next,
-            ['<C-a>'] = actions.cycle_previewers_prev,
-            ['<C-h>'] = 'which_key',
-          },
-        },
-      },
-      pickers = {},
-      extensions = {
-        file_browser = {
-          use_fd = true,
-          mappings = {
-            i = {
-              ['<CR>'] = function(prompt_buf)
-                local entry_path = action_state.get_selected_entry().Path
-                local new_cwd = entry_path:is_dir() and entry_path:absolute() or entry_path:parent():absolute()
-
-                actions.close(prompt_buf)
-                require('userlib.mini.clue.folder-action').open(new_cwd)
-              end,
-            },
-          },
-        },
-        fzf = {
-          fuzzy = true,
-          override_generic_sorter = true,
-          override_file_sorter = true,
-          case_mode = 'smart_case',
-        },
-        live_grep_args = {
-          disable_coordinates = true,
-          auto_quoting = true, -- enable/disable auto-quoting
-          layout_strategy = 'vertical',
-          layout_config = {
-            width = 0.95,
-            mirror = false,
-          },
-          mappings = {
-            -- extend mappings
-            i = {
-              ['<C-k>'] = lga_actions.quote_prompt(),
-              ['<C-o>'] = function(prompt_bufnr)
-                return require('userlib.telescope.picker_keymaps').open_selected_in_window(prompt_bufnr)
-              end,
-            },
-            ['n'] = {
-              -- your custom normal mode mappings
-              ['/'] = function()
-                vim.cmd('startinsert')
-              end,
-            },
-          },
-        },
-        zoxide = {
-          --- https://github.com/jvgrootveld/telescope-zoxide
-          prompt_title = 'Zz...',
-          mappings = {
-            default = {
-              after_action = function(selection)
-                print('Update to (' .. selection.z_score .. ') ' .. selection.path)
-              end,
-            },
-            -- ["<C-s>"] = {
-            --   before_action = function(selection) print("before C-s") end,
-            --   action = function(selection)
-            --     vim.cmd.edit(selection.path)
-            --   end
-            -- },
-            -- -- Opens the selected entry in a new split
-            -- ["<C-v>"] = { action = z_utils.create_basic_command("split") },
-          },
-        },
-      },
-    }
+    return require('userlib.telescope.spec').opts()
   end,
 })
 

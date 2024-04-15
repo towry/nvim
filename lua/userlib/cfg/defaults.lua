@@ -165,7 +165,7 @@ return {
   ui__float_border = 'single',
   ui__window_equalalways = false,
   ---@type "mini"|"fzf-lua"|"telescope"
-  ui__input_select_provider = 'fzf-lua',
+  ui__input_select_provider = 'mini',
   workbench__lualine_theme = 'default',
   ---misc stuff.
   misc__buf_exclude = {
@@ -209,5 +209,5 @@ return {
   ---plugins specific.
   plugin__whichkey_or_clue = 'clue',
   ---@type 'fzf'|'telescope'
-  plugin_fzf_or_telescope = 'fzf',
+  plugin_fzf_or_telescope = 'telescope',
 }

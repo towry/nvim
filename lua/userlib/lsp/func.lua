@@ -132,6 +132,23 @@ function M.open_code_action()
   local mode = vim.api.nvim_get_mode().mode
   if mode == 'v' then
     vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-U>', true, false, true))
+  else
+    require('userlib.lsp.func').jump_to_diagnostic_in_line()
+  end
+  if vim.cfg.plugin_fzf_or_telescope == 'fzf' then
+    require('fzf-lua').lsp_code_actions({
+      winopts = {
+        fullscreen = false,
+        height = 0.8,
+        width = 0.5,
+        preview = {
+          hidden = 'hidden',
+          layout = 'vertical',
+          vertical = 'down:30%',
+        },
+      },
+    })
+    return
   end
   -- https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_codeAction
   vim.lsp.buf.code_action({

@@ -254,6 +254,10 @@ plug({
         FzfLuaTitle = { bg = 'foam', fg = 'base', bold = false },
         StatusLine = { bg = 'foam', fg = 'base' },
         StatusLineNC = { bg = utils.blend(utils.parse_color('base'), utils.parse_color('foam'), 0.1), fg = 'base' },
+        TelescopePrompt = { bg = 'base', fg = 'text' },
+        TelescopePromptTitle = { bg = 'pine', fg = 'surface' },
+        TelescopePreviewTitle = { bg = 'rose', fg = 'surface' },
+        TelescopeMatching = { fg = 'gold' },
       },
     })
   end,

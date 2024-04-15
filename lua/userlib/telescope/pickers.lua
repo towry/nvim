@@ -6,8 +6,8 @@ M.get_path_and_tail = function(filename)
   local bufname_tail = utils.path_tail(filename)
   local path_without_tail = require('plenary.strings').truncate(filename, #filename - #bufname_tail, '')
   local path_to_display = utils.transform_path({
-    path_display = function(_opts, path_to_transform)
-      return require('userlib.runtime.path').shorten(path_to_transform, 4)
+    path_display = function(_, path_to_transform)
+      return path_to_transform
     end,
   }, path_without_tail)
 
@@ -140,7 +140,7 @@ end
 M.command_history = function()
   local builtin = require('telescope.builtin')
 
-  builtin.command_history(require('telescope.themes').get_dropdown({
+  builtin.command_history(require('userlib.telescope.themes').get_dropdown({
     color_devicons = true,
     winblend = 4,
     layout_config = {
@@ -192,9 +192,8 @@ end
 
 function M.curbuf()
   local builtin = require('telescope.builtin')
-  local themes = require('telescope.themes')
 
-  local opts = themes.get_dropdown({
+  local opts = require('userlib.telescope.themes').get_dropdown({
     skip_empty_lines = true,
     winblend = 10,
     previewer = true,
@@ -209,7 +208,7 @@ end
 M.edit_neovim = function()
   local builtin = require('telescope.builtin')
 
-  builtin.git_files(require('telescope.themes').get_dropdown({
+  builtin.git_files(require('userlib.telescope.themes').get_dropdown({
     color_devicons = true,
     cwd = '~/.config/nvim',
     previewer = false,
@@ -232,7 +231,7 @@ function M.buffers_or_recent()
   local count = #vim.fn.getbufinfo({ buflisted = 1 })
   if count <= 1 then
     --- open recent.
-    M.project_files(require('telescope.themes').get_dropdown({
+    M.project_files(require('userlib.telescope.themes').get_dropdown({
       cwd_only = false,
       cwd = vim.cfg.runtime__starts_cwd,
       oldfiles = true,
@@ -250,7 +249,7 @@ function M.buffers()
   local actionstate = require('telescope.actions.state')
   local Buffer = require('userlib.runtime.buffer')
 
-  builtin.buffers(require('telescope.themes').get_dropdown({
+  builtin.buffers(require('userlib.telescope.themes').get_dropdown({
     -- borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default[0],
     ignore_current_buffer = false,
     sort_mru = true,

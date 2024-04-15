@@ -173,7 +173,7 @@ end, {
 })
 
 create_cmd('Fixmes', function()
-  require('fzf-lua').grep({ search = [[FIXME:|fixme!\(.*\)]], no_esc = true })
+  require('userlib.finder').grep_keywords({ 'FIXME:', 'fixme!' })
 end, {
   desc = 'List fixmes',
 })
@@ -187,10 +187,7 @@ create_cmd('Comtag', function(opts)
   }, opts.args) then
     return
   end
-  require('fzf-lua').grep({
-    search = string.format([[%s:|%s!\(.*\)]], opts.args, string.lower(opts.args)),
-    no_esc = true,
-  })
+  require('userlib.finder').grep_keywords({ opts.args })
 end, {
   desc = 'List fixmes',
   nargs = '?',
