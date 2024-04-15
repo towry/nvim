@@ -224,6 +224,11 @@ plug({
       desc = 'Open oil(BUF) file browser in cwd',
     },
     {
+      '<leader>f|',
+      ':vert Oil<cr>',
+      desc = 'Open oil vertical',
+    },
+    {
       '-',
       function()
         if vim.bo.buftype ~= '' then
