@@ -73,14 +73,6 @@ plug({
         }),
         comp.lpad(comp.CocStl),
         { provider = '%=' },
-        -- {
-        --   condition = function()
-        --     return vim.t.TabLabel and vim.t.TabLabel ~= ''
-        --   end,
-        --   provider = function()
-        --     return '%-.20([' .. vim.t.TabLabel .. ']%) '
-        --   end,
-        -- },
         { provider = '%=' },
         {
           provider = '%v:%l %P ',
