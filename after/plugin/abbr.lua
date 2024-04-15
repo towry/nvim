@@ -12,6 +12,7 @@ au.on_verylazy(function()
     vim.keymap.set('ca', abbr, expand, { expr = type(expand) == 'function' and true or false })
   end
 
+  setca('aw', 'wall')
   setca('avo', 'vertical Oil')
   setca('alp', 'Lazy profile')
   setca('ad', 'OverDispatch')
