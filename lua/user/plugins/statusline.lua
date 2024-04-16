@@ -30,13 +30,15 @@ plug({
         comp.TabLine,
         comp.lpad({
           { provider = '-:- ' },
-          comp.FileIcon,
-          { provider = ' %t' },
         }),
         {
           provider = '%=',
         },
         {
+          comp.rpad({
+            comp.FileIcon,
+            { provider = ' %t' },
+          }),
           comp.rpad(comp.Overseer),
           comp.rpad(comp.Dap),
           { provider = '%=' },
