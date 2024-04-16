@@ -317,7 +317,9 @@ function M.change_cwd(cwd, cmd, silent)
   if cmd ~= 'tcd' or vim.t.CwdLocked ~= true then
     vim.cmd((cmd or 'cd') .. ' ' .. cwd)
   end
-  M.update_cwd_env(cwd)
+  if cmd ~= 'lcd' then
+    M.update_cwd_env(cwd)
+  end
   if not silent then
     vim.notify(('New cwd: %s'):format(vim.t.CwdShort), vim.log.levels.INFO)
   end

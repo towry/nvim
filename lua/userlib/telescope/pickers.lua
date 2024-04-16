@@ -292,6 +292,15 @@ function M.buffers()
         Buffer.set_current_buffer_focus(bufnr)
       end
 
+      local open_findfiles = function()
+        local current_query = actionstate.get_current_line()
+        actions.close(prompt_bufnr)
+        M.project_files({
+          default_text = current_query,
+        })
+      end
+
+      map('i', '<C-f>', open_findfiles)
       map('i', '<C-h>', close_buf)
       map('i', '<CR>', open_selected)
       -- pick window to open.

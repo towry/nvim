@@ -719,6 +719,13 @@ plug({
       desc = 'List projects in cwd',
     },
     {
+      '<leader>pl',
+      function()
+        require('userlib.mini.visits').list_projects_in_cwd(vim.cfg.runtime__starts_cwd, 'visit_projects')
+      end,
+      desc = 'List visited projects',
+    },
+    {
       '<leader>pa',
       function()
         require('userlib.mini.visits').add_project(vim.uv.cwd(), vim.cfg.runtime__starts_cwd)

@@ -53,17 +53,6 @@ M.opts = function()
   local actions = require('telescope.actions')
   local action_state = require('telescope.actions.state')
   local lga_actions = require('telescope-live-grep-args.actions')
-  local icons = require('userlib.icons')
-
-  local git_icons = {
-    added = icons.gitAdd,
-    changed = icons.gitChange,
-    copied = '>',
-    deleted = icons.gitRemove,
-    renamed = '➡',
-    unmerged = '‡',
-    untracked = '?',
-  }
 
   return {
     defaults = {
@@ -119,10 +108,8 @@ M.opts = function()
       ---@see https://github.com/nvim-telescope/telescope.nvim/issues/522#issuecomment-1107441677
       file_ignore_patterns = { 'node_modules/', '.turbo/', 'dist', '.git/' },
       layout_strategy = 'flex',
-      -- file_sorter = require('telescope.sorters').get_fuzzy_file,
       color_devicons = true,
       initial_mode = 'insert',
-      git_icons = git_icons,
       sorting_strategy = 'ascending',
       file_previewer = require('telescope.previewers').vim_buffer_cat.new,
       grep_previewer = require('telescope.previewers').vim_buffer_vimgrep.new,
@@ -178,6 +165,7 @@ M.opts = function()
     },
     pickers = {
       find_files = {
+        disable_devicons = true,
         mappings = {
           i = {
             ['<C-h>'] = { toggleHiddenAndIgnore, type = 'action' },
