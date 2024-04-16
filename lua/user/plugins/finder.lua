@@ -258,6 +258,16 @@ plug({
         require('userlib.runtime.utils').change_cwd(cwd, 'lcd', true)
       end,
     })
+    au.define_autocmd('BufHidden', {
+      group = '_oil_change_cwd',
+      pattern = 'oil:///*',
+      callback = function()
+        -- restore locked cwd
+        if vim.t.CwdLocked and vim.t.Cwd then
+          vim.cmd.lcd(vim.t.Cwd)
+        end
+      end,
+    })
   end,
 })
 
