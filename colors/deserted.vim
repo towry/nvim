@@ -106,10 +106,14 @@ hi DiffChange guifg=#6dceeb guibg=#464646 gui=NONE cterm=NONE
 hi DiffText  guifg=#c6c6c6 guibg=#464646 gui=NONE cterm=NONE
 hi DiffDelete guifg=#fd5c5c guibg=#464646 gui=NONE cterm=NONE
 " +--- LSP
-hi DiagnosticUnderlineError guifg=#ff0000 guibg=NONE gui=undercurl cterm=underline
-hi DiagnosticUnderlineWarn guifg=#ffde9b guibg=NONE gui=undercurl cterm=underline
-hi DiagnosticUnderlineInfo guifg=#6dceeb guibg=NONE gui=undercurl cterm=underline
-hi DiagnosticUnderlineHint guifg=#5f875f guibg=NONE gui=undercurl cterm=underline
+" hi DiagnosticUnderlineError guifg=#ff0000 guibg=NONE gui=undercurl cterm=underline
+" hi DiagnosticUnderlineWarn guifg=#ffde9b guibg=NONE gui=undercurl cterm=underline
+" hi DiagnosticUnderlineInfo guifg=#6dceeb guibg=NONE gui=undercurl cterm=underline
+" hi DiagnosticUnderlineHint guifg=#5f875f guibg=NONE gui=undercurl cterm=underline
+hi DiagnosticUnderlineError guifg=NONE guisp=#ff0000 guibg=NONE gui=undercurl cterm=underline
+hi DiagnosticUnderlineWarn guifg=NONE guisp=#ffde9b guibg=NONE gui=undercurl cterm=underline
+hi DiagnosticUnderlineInfo guifg=NONE guisp=#6dceeb guibg=NONE gui=undercurl cterm=underline
+hi DiagnosticUnderlineHint guifg=NONE guisp=#5f875f guibg=NONE gui=undercurl cterm=underline
 " -+++
 " +--- Treesitter
 hi! link @string ui_txt_br

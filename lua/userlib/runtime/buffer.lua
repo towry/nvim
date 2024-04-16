@@ -267,6 +267,18 @@ function M.set_current_buffer_focus(bufnr)
   vim.api.nvim_set_current_buf(bufnr)
 end
 
+--- Focus buffer in current tab's visible window
+function M.focus_buf_in_visible_windows(bufnr)
+  local wins = vim.api.nvim_tabpage_list_wins(0)
+  for _, win in ipairs(wins) do
+    if vim.api.nvim_win_get_buf(win) == bufnr then
+      vim.api.nvim_set_current_win(win)
+      return win
+    end
+  end
+  return
+end
+
 M.edit_alt_buf = function()
   local altnr = vim.fn.bufnr('#')
   if not altnr or altnr < 1 then

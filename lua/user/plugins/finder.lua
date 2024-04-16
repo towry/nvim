@@ -265,8 +265,22 @@ plug({
   'stevearc/aerial.nvim',
   keys = {
     { '<leader>/o', '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
-    -- <CMD-l> open the outline.
-    { keymap.super('l'), '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
+    {
+      '<C-g>l',
+      function()
+        local api = require('aerial')
+        local util = require('aerial.util')
+        local current_is_aerial = vim.bo.filetype == 'aerial'
+        if current_is_aerial then
+          local source_bufnr = util.get_source_buffer(vim.api.nvim_get_current_buf())
+          require('userlib.runtime.buffer').focus_buf_in_visible_windows(source_bufnr)
+          return
+        elseif vim.bo.buftype == '' then
+          api.open({ focus = true, direction = 'left' })
+        end
+      end,
+      desc = 'Symbols outline',
+    },
   },
   cmd = { 'AerialToggle', 'AerialOpen', 'AerialClose' },
   opts = {
@@ -329,7 +343,7 @@ plug({
       'Struct',
     },
     autojump = false,
-    close_on_select = true,
+    close_on_select = false,
     highlight_on_hover = true,
     show_guides = true,
     update_events = 'InsertLeave',
