@@ -61,7 +61,7 @@ M.opts = function()
       borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default[1],
       wrap_results = false,
       --- give some opacity so we can see the window picker marks.
-      winblend = 10,
+      winblend = 0,
       dynamic_preview_title = true,
       results_title = false,
       preview = { timeout = 400, filesize_limit = 1 }, -- ms & Mb

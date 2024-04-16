@@ -52,7 +52,7 @@ hi Pmenu guifg=#ffffff guibg=#666666 gui=NONE cterm=NONE
 hi PmenuSel guifg=#333333 guibg=#f0e68c gui=NONE cterm=NONE
 hi PmenuSbar guifg=NONE guibg=#333333 gui=NONE cterm=NONE
 hi PmenuThumb guifg=NONE guibg=#c2bfa5 gui=NONE cterm=NONE
-hi TabLine guifg=#aaaaaa guibg=#4d4d4d gui=NONE cterm=NONE
+hi TabLine guifg=#aaaaaa guibg=#6C6464 gui=NONE cterm=NONE
 hi TabLineFill guifg=#bbbbbb guibg=#4d4d4d gui=NONE cterm=NONE
 hi TabLineSel guifg=#eeeeee guibg=#1a1a1a gui=NONE cterm=NONE
 hi ToolbarLine guifg=NONE guibg=#666666 gui=NONE cterm=NONE
