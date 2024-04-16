@@ -13,7 +13,7 @@ function M.startup()
   o.cpoptions:append('>') -- append to register with line break
   o.inccommand = 'nosplit' -- preview incremental substitute
   o.expandtab = true --- Use spaces instead of tabs
-  o.ignorecase = true --- Needed for smartcase
+  o.ignorecase = false --- Needed for smartcase
   o.textwidth = 80
   o.shiftwidth = 2 --- Change a number of space characeters inseted for indentation
   o.shiftround = true -- round indent.
