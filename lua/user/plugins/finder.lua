@@ -436,7 +436,6 @@ plug({
 
 plug({
   'nvim-telescope/telescope.nvim',
-  cond = not vim.cfg.runtime__starts_as_gittool,
   cmd = { 'Telescope' },
   keys = vim.cfg.plugin_fzf_or_telescope == 'telescope'
       and {
