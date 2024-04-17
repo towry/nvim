@@ -155,11 +155,13 @@ local function setup_coc_autocmd()
       local isredrawlazy = vim.o.lazyredraw
       vim.o.lazyredraw = true
       local ok = vim.fn.CocAction('format')
-      vim.o.lazyredraw = isredrawlazy
-      if not ok then
-        return
-      end
-      vim.cmd('redraw')
+      vim.schedule(function()
+        vim.o.lazyredraw = isredrawlazy
+        if not ok then
+          return
+        end
+        vim.cmd('redraw')
+      end)
     end,
   })
   vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
