@@ -10,8 +10,13 @@
 
 set background=dark
 
-" hi clear
-source $VIMRUNTIME/colors/default.vim " Nvim: revert to Vim default color scheme
+" Remove all existing highlighting and set the defaults.
+hi clear
+
+" Load the syntax highlighting defaults, if it's enabled.
+if exists("syntax_on")
+  syntax reset
+endif
 let g:colors_name = 'term'
 
 let s:t_Co = &t_Co
