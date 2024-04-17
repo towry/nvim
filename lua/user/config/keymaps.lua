@@ -103,7 +103,16 @@ local function setup_basic()
     desc = 'Case change in visual mode',
   })
 
-  set({ 'n', 'i' }, keymap.super('s'), '<cmd>write<cr>', {
+  set({ 'n' }, keymap.super('s'), '<cmd>write<cr>', {
+    desc = 'Save current buffer',
+    silent = true,
+  })
+  set({ 'i' }, keymap.super('s'), function()
+    vim.cmd.stopinsert()
+    vim.schedule(function()
+      vim.cmd('write')
+    end)
+  end, {
     desc = 'Save current buffer',
     silent = true,
   })
