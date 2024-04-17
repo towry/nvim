@@ -14,9 +14,9 @@ end
 
 function M.quickfix_stack()
   if vim.cfg.plugin_fzf_or_telescope == 'fzf' then
-    vim.cmd('FzfLua quickfix_stack<cr>')
+    vim.cmd('FzfLua quickfix_stack')
   else
-    vim.cmd('Telescope quickfixhistory<cr>')
+    vim.cmd('Telescope quickfixhistory')
   end
 end
 
