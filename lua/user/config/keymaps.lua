@@ -346,6 +346,17 @@ local function setup_basic()
     desc = 'Visual select pasted content',
   })
 
+  if vim.cfg.runtime__starts_as_gittool then
+    set('v', 'dp', [[:<C-u>'<,'>diffput<cr>]], {
+      desc = 'Diffput in visual',
+      silent = true,
+    })
+    set('v', 'do', [[:<C-u>'<,'>diffget<cr>]], {
+      desc = 'Diffget in visual',
+      silent = true,
+    })
+  end
+
   --- wait: https://github.com/neovim/neovim/issues/25714
   --- wait: https://github.com/neovim/neovim/pull/27339
   local keys = {
