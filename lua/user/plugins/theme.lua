@@ -219,6 +219,9 @@ plug({
   config = function()
     local utils = require('rose-pine.utilities')
     require('rose-pine').setup({
+      styles = {
+        transparency = true,
+      },
       -- dark_variant = 'moon',
       highlight_groups = {
         CocErrorSign = { link = 'DiagnosticError' },
@@ -261,35 +264,12 @@ plug({
         TelescopePromptTitle = { bg = 'pine', fg = 'surface' },
         TelescopePreviewTitle = { bg = 'rose', fg = 'surface' },
         TelescopeMatching = { fg = 'gold' },
+        TelescopeSelection = { fg = 'text', bg = 'muted' },
+        NormalFloat = { bg = 'highlight_low' },
+        FloatBorder = { bg = 'highlight_low' },
+        TelescopeNormal = { link = 'NormalFloat' },
+        TelescopeBorder = { link = 'FloatBorder' },
       },
     })
-  end,
-})
-
-plug({
-  'EdenEast/nightfox.nvim',
-  event = 'User LazyTheme',
-  priority = 1000,
-  enabled = string.match(vim.cfg.ui__theme_name, 'fox') ~= nil,
-  config = function()
-    -- https://github.com/EdenEast/nightfox.nvim?tab=readme-ov-file#configuration
-    require('nightfox').setup({
-      options = {
-        styles = {
-          comments = 'italic',
-          keywords = 'bold',
-          types = 'italic,bold',
-        },
-      },
-      palettes = {
-        all = {},
-      },
-      specs = {},
-      groups = {},
-    })
-  end,
-  init = function()
-    vim.g.nightfox_day = 'dayfox'
-    vim.g.nightfox_night = 'nordfox'
   end,
 })
