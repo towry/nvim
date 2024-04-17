@@ -29,19 +29,17 @@ plug({
         hl = { fg = 'tabline_fg', bg = 'tabline_bg' },
         comp.TabLine,
         comp.lpad({
-          { provider = '-:- ' },
+          { provider = ' -:- ' },
+          comp.FileIcon,
+          { provider = ' %t', hl = { bold = true } },
+          { provider = ' %y%m' },
         }),
+        comp.lpad(comp.Overseer),
+        comp.lpad(comp.Dap),
         {
           provider = '%=',
         },
         {
-          comp.rpad({
-            comp.FileIcon,
-            { provider = ' %t' },
-          }),
-          comp.rpad(comp.Overseer),
-          comp.rpad(comp.Dap),
-          { provider = '%=' },
           comp.rpad(comp.Copilot),
           comp.rpad(comp.Codeium),
           comp.rpad({
