@@ -20,7 +20,7 @@ local function setup(opts)
     spec = {},
     defaults = { lazy = true },
     dev = { patterns = is_window and {} or {}, path = is_window and '' or '~/workspace/git-repos' },
-    install = { missing = true, colorscheme = { 'default' } },
+    install = { missing = true, colorscheme = { 'deserted' } },
     ui = {
       icons = {
         lazy = ' ',

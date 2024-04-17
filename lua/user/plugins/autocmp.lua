@@ -384,8 +384,8 @@ pack.plug({
             elseif check_backspace() then
               fallback()
             else
-              require('neotab').tabout()
-              -- fallback()
+              -- require('neotab').tabout()
+              fallback()
             end
           end, {
             'i',

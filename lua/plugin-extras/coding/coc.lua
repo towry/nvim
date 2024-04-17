@@ -38,8 +38,20 @@ local function setup_coc_lsp_keys()
   -- Symbol renaming
   set('n', '<leader>crn', '<Plug>(coc-rename)', _('Rename symbol'))
   -- Formatting selected code
-  set('x', '<leader>cf', '<Plug>(coc-format-selected)', _('Format selected code'))
-  set('n', '<leader>cf', [[:<C-u>call CocActionAsync('format')<cr>]], _('Format entire file'))
+  set(
+    { 'x', 'v' },
+    '<leader>cf',
+    [[:<C-u>'<,'>call CocActionAsync('formatSelected', visualmode())<cr>]],
+    _('Format selected code')
+  )
+  set('n', '<leader>cf', function()
+    if vim.wo.diff then
+      vim.notify('Format entire file in diff mode is danger, please format selected region only')
+      return
+    end
+
+    return [[:<C-u>call CocActionAsync('format')<cr>]]
+  end, { desc = 'Format entire file', expr = true, silent = true, nowait = true, noremap = true })
   set('x', '<leader>ca', '<Plug>(coc-codeaction-selected)', _('Code action on selected'))
   set('n', '<leader>ca', '<Plug>(coc-codeaction-line)', _('Code action for line'))
   -- Organize imports
@@ -140,7 +152,7 @@ local function setup_coc_autocmd()
         return
       end
 
-      vim.cmd([[call CocAction('format')]])
+      vim.cmd([[noau call CocAction('format')]])
     end,
   })
   vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
