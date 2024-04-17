@@ -219,7 +219,7 @@ plug({
   config = function()
     local utils = require('rose-pine.utilities')
     require('rose-pine').setup({
-      dark_variant = 'moon',
+      -- dark_variant = 'moon',
       highlight_groups = {
         CocErrorSign = { link = 'DiagnosticError' },
         CocWarningSign = { link = 'DiagnosticWarn' },
@@ -255,6 +255,8 @@ plug({
         FzfLuaTitle = { bg = 'foam', fg = 'base', bold = false },
         StatusLine = { bg = 'iris', fg = 'base' },
         StatusLineNC = { bg = utils.blend(utils.parse_color('base'), utils.parse_color('iris'), 0.07), fg = 'base' },
+        TabLineSel = { bg = utils.blend(utils.parse_color('overlay'), utils.parse_color('iris'), 0.1), fg = 'text' },
+        TabLine = { bg = 'overlay', fg = 'text' },
         TelescopePrompt = { bg = 'base', fg = 'text' },
         TelescopePromptTitle = { bg = 'pine', fg = 'surface' },
         TelescopePreviewTitle = { bg = 'rose', fg = 'surface' },
