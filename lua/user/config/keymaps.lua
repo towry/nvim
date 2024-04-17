@@ -103,11 +103,11 @@ local function setup_basic()
     desc = 'Case change in visual mode',
   })
 
-  set({ 'n', 'i' }, keymap.super('s'), '<ESC>:<C-u>silent! update<cr>', {
+  set({ 'n', 'i' }, keymap.super('s'), '<cmd>write<cr>', {
     desc = 'Save current buffer',
     silent = true,
   })
-  set('n', '<leader>bw', cmd('silent! update'), {
+  set('n', '<leader>bw', cmd('write'), {
     desc = 'Save current buffer',
     silent = true,
   })
