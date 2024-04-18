@@ -153,15 +153,20 @@ local function setup_coc_autocmd()
       end
 
       local isredrawlazy = vim.o.lazyredraw
+      local bufnr = vim.api.nvim_get_current_buf()
       vim.o.lazyredraw = true
-      local ok = vim.fn.CocAction('format')
-      vim.schedule(function()
-        vim.o.lazyredraw = isredrawlazy
-        if not ok then
-          return
-        end
-        vim.cmd('redraw')
-      end)
+      vim.fn.CocAction('format')
+      vim.api.nvim_create_autocmd('BufWritePost', {
+        group = vim.api.nvim_create_augroup('coc_format_' .. bufnr, { clear = true }),
+        buffer = bufnr,
+        once = true,
+        callback = vim.schedule_wrap(function()
+          if vim.bo[bufnr].modified then
+            vim.cmd('noau write')
+          end
+          vim.o.lazyredraw = isredrawlazy
+        end),
+      })
     end,
   })
   vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
@@ -172,11 +177,11 @@ local function setup_coc_autocmd()
         return
       end
 
-      if vim.bo.buftype == 'nofile' then
-        vim.cmd('set equalalways')
-      else
-        vim.cmd('set noequalalways')
-      end
+      -- if vim.bo.buftype == 'nofile' then
+      --   vim.cmd('set equalalways')
+      -- else
+      --   vim.cmd('set noequalalways')
+      -- end
     end,
   })
 end
