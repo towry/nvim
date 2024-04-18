@@ -587,7 +587,7 @@ plug({
     },
 
     {
-      'altermo/telescope-nucleo-sorter.nvim',
+      'pze/telescope-nucleo-sorter.nvim',
       enabled = vim.cfg.plugin_telescope_sorter == 'nucleo',
       build = 'cargo rustc --release -- -C link-arg=-undefined -C link-arg=dynamic_lookup',
     },
