@@ -582,7 +582,7 @@ plug({
     { 'nvim-telescope/telescope-live-grep-args.nvim' },
     {
       'nvim-telescope/telescope-fzf-native.nvim',
-      enabled = vim.cfg.plugin_telescope_sorter == '' or not vim.cfg.plugin_telescope_sorter,
+      enabled = vim.cfg.plugin_telescope_sorter == 'fzf' or not vim.cfg.plugin_telescope_sorter,
       build = 'make',
     },
 
