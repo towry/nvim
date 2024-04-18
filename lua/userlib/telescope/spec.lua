@@ -39,10 +39,13 @@ end
 M.config = function(_, opts)
   local au = require('userlib.runtime.au')
   require('telescope').setup(opts)
-  require('telescope').load_extension('fzf')
+  if not vim.cfg.plugin_telescope_sorter or vim.cfg.plugin_telescope_sorter == 'fzf' then
+    require('telescope').load_extension('fzf')
+  elseif vim.cfg.plugin_telescope_sorter == 'nucleo' then
+    require('telescope').load_extension('nucleo')
+  end
   require('telescope').load_extension('live_grep_args')
   require('telescope').load_extension('termfinder')
-  require('telescope').load_extension('zoxide')
   --- https://github.com/nvim-telescope/telescope-file-browser.nvim
   --- Telescope file_browser files=false
   require('telescope').load_extension('file_browser')

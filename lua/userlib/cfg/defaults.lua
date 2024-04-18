@@ -210,4 +210,5 @@ return {
   plugin__whichkey_or_clue = 'clue',
   ---@type 'fzf'|'telescope'
   plugin_fzf_or_telescope = 'telescope',
+  plugin_telescope_sorter = vim.fn.executable('cargo') == 1 and 'nucleo' or nil,
 }

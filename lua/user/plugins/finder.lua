@@ -582,7 +582,14 @@ plug({
     { 'nvim-telescope/telescope-live-grep-args.nvim' },
     {
       'nvim-telescope/telescope-fzf-native.nvim',
+      enabled = vim.cfg.plugin_telescope_sorter == '' or not vim.cfg.plugin_telescope_sorter,
       build = 'make',
+    },
+
+    {
+      'altermo/telescope-nucleo-sorter.nvim',
+      enabled = vim.cfg.plugin_telescope_sorter == 'nucleo',
+      build = 'cargo rustc --release -- -C link-arg=-undefined -C link-arg=dynamic_lookup',
     },
     {
       'tknightz/telescope-termfinder.nvim',
@@ -591,12 +598,6 @@ plug({
       'pze/telescope-file-browser.nvim',
       -- branch = 'feat/max-results',
       dev = false,
-    },
-    {
-      'jvgrootveld/telescope-zoxide',
-      keys = {
-        { '<leader>fz', ':lua require("telescope").extensions.zoxide.list()<cr>', desc = 'zoxide', silent = true },
-      },
     },
   },
   config = function(_, opts)
