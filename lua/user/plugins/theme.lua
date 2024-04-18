@@ -168,6 +168,7 @@ plug({
         hl.CocInlayHintParameter = { link = 'CocInlayHint' }
         hl.CocErrorHighlight = { undercurl = true, sp = c.aurora.red }
         hl.CocWarningHighlight = { sp = c.aurora.yellow, undercurl = true }
+        hl.CocUnusedHighlight = { link = 'DiagnosticUnderlineWarn' }
         hl.CocInfoHighlight = { sp = c.aurora.green, undercurl = true }
         hl.CocHintHighlight = { sp = c.aurora.orange, undercurl = true }
         hl.TreesitterContextBottom = {
