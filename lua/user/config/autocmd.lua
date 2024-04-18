@@ -16,7 +16,7 @@ function M.load_on_startup()
       },
     },
     {
-      { 'WInLeave' },
+      { 'WinLeave' },
       {
         group = group_name,
         pattern = '*',
