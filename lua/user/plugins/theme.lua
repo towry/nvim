@@ -59,7 +59,7 @@ plug({
       styles = {
         transparency = false,
       },
-      dark_variant = vim.o.background == 'light' and 'moon' or nil,
+      dark_variant = 'moon',
       highlight_groups = {
         CocErrorSign = { link = 'DiagnosticError' },
         CocWarningSign = { link = 'DiagnosticWarn' },
