@@ -703,6 +703,7 @@ plug({
       store = {
         autowrite = true,
       },
+      silent = true,
       track = {
         event = 'BufEnter',
         delay = 1000,
