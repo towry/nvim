@@ -479,7 +479,6 @@ pack.plug({
   },
   cmd = {
     'OverseerRestartLast',
-    'Grep',
     'OverseerRun',
     'OverseerOpen',
     'OverseerToggle',
