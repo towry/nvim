@@ -784,35 +784,6 @@ plug({
 })
 
 plug({
-  'mihaifm/bufstop',
-  keys = {
-    {
-      '<localleader><space>',
-      ':BufstopFast<cr>',
-      desc = 'Open bufstop',
-    },
-    {
-      '<leader>,',
-      ':BufstopFast<cr>',
-      desc = 'Open bufstop',
-    },
-  },
-  cmd = {
-    --- opoen at top or bottom
-    'Bufstop',
-    'BufstopFast',
-    --- j,k provided
-    'BufstopPreview',
-    --- cmd line mode
-    'BufstopMode',
-    'BufstopModeFast',
-    --- statusline
-    'BufstopStatusline',
-    'BufstopStatuslineFast',
-  },
-})
-
-plug({
   'jlanzarotta/bufexplorer',
   cmd = {
     'ToggleBufExplorer',
