@@ -65,10 +65,10 @@ local function setup_coc_lsp_keys()
   --- Manage extensions
   set('n', '<leader>clE', ':<C-u>CocList extensions<cr>', _('List extensions'))
   -- Show commands
-  set('n', '<space>clc', ':<C-u>CocList commands<cr>', _('List commands'))
+  set('n', '<space>cc', ':<C-u>CocList commands<cr>', _('List commands'))
 
   -- Remap keys for apply code actions at the cursor position
-  set('n', '<leader>cc', '<Plug>(coc-codeaction-cursor)', _('Apply code action at cursor'))
+  set('n', '<leader>c_', '<Plug>(coc-codeaction-cursor)', _('Apply code action at cursor'))
   -- Remap keys for apply source code actions for current file
   set('n', '<leader>cA', '<Plug>(coc-codeaction-source)', _('Apply source code actions'))
   set('x', '<leader>cA', '<Plug>(coc-codeaction-source)', _('Apply source code actions (visual)'))
