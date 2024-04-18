@@ -52,6 +52,9 @@ plug({
   --- https://github.com/rose-pine/neovim?tab=readme-ov-file#options
   config = function()
     local utils = require('rose-pine.utilities')
+    local blend = function(fg, bg, precise)
+      return utils.blend(utils.parse_color(fg), utils.parse_color(bg), precise)
+    end
     require('rose-pine').setup({
       styles = {
         transparency = false,
@@ -98,11 +101,11 @@ plug({
         TelescopePromptTitle = { bg = 'pine', fg = 'surface' },
         TelescopePreviewTitle = { bg = 'rose', fg = 'surface' },
         TelescopeMatching = { fg = 'gold' },
-        TelescopeSelection = { fg = 'text', bg = 'muted' },
-        NormalFloat = { bg = 'highlight_low' },
-        FloatBorder = { bg = 'highlight_low' },
+        TelescopeSelection = { fg = 'text', bg = blend('text', 'surface', 0.2) },
         TelescopeNormal = { link = 'NormalFloat' },
         TelescopeBorder = { link = 'FloatBorder' },
+        NormalFloat = { bg = 'highlight_low' },
+        FloatBorder = { bg = 'highlight_low' },
       },
     })
   end,
