@@ -119,6 +119,7 @@ plug({
   event = 'User LazyTheme',
   cond = vim.cfg.ui__theme_name:match('nord'),
   config = function()
+    local utils = require('nord.utils')
     require('nord').setup({
       -- your configuration comes here
       -- or leave it empty to use the default settings
@@ -142,10 +143,11 @@ plug({
       --- You can override specific highlights to use other groups or a hex color
       --- function will be called with all highlights and the colorScheme table
       on_highlights = function(hl, c)
-        -- hl.NormalFloat = { link = 'Pmenu' }
+        local float_bg = utils.blend(c.polar_night.bright, c.polar_night.origin, 0.5)
+        hl.NormalFloat = { bg = float_bg }
+        hl.FloatBorder = { bg = float_bg, fg = c.polar_night.light }
         -- hl.TelescopeNormal = { link = 'NormalFloat' }
         -- hl.TelescopeBorder = { link = 'FloatBorder' }
-        -- hl.FloatBorder = { link = 'NormalFloat' }
 
         hl.CocErrorSign = { link = 'DiagnosticError' }
         hl.CocWarningSign = { link = 'DiagnosticWarn' }
@@ -175,6 +177,9 @@ plug({
           underline = true,
           sp = c.polar_night.brightest,
         }
+        hl.FzfLuaNormal = { link = 'NormalFloat' }
+        hl.FzfLuaBorder = { link = 'FloatBorder' }
+        hl.FzfLuaPreviewNormal = { link = 'Normal' }
       end,
     })
   end,
