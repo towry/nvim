@@ -101,7 +101,7 @@ plug({
         TelescopePromptTitle = { bg = 'pine', fg = 'surface' },
         TelescopePreviewTitle = { bg = 'rose', fg = 'surface' },
         TelescopeMatching = { fg = 'gold' },
-        TelescopeSelection = { fg = 'text', bg = blend('text', 'surface', 0.2) },
+        TelescopeSelection = { fg = 'text', bg = 'highlight_high' },
         TelescopeNormal = { link = 'NormalFloat' },
         TelescopeBorder = { link = 'FloatBorder' },
         NormalFloat = { bg = 'highlight_low' },
