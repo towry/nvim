@@ -105,7 +105,8 @@ local function setup_basic()
 
   set({ 'n' }, keymap.super('s'), '<cmd>write<cr>', {
     desc = 'Save current buffer',
-    silent = true,
+    silent = false,
+    remap = false,
   })
   set({ 'i' }, keymap.super('s'), function()
     vim.cmd.stopinsert()

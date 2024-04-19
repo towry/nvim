@@ -11,6 +11,9 @@ au.on_verylazy(function()
   local setca = function(abbr, expand)
     vim.keymap.set('ca', abbr, expand, { expr = type(expand) == 'function' and true or false })
   end
+  local setia = function(abbr, expand)
+    vim.keymap.set('ia', abbr, expand, { expr = type(expand) == 'function' and true or false })
+  end
 
   setca('aw', 'wall')
   setca('avo', 'vertical Oil')
@@ -41,4 +44,9 @@ au.on_verylazy(function()
   if vim.cfg and vim.cfg.edit__use_coc then
     setca('acc', 'CocCommand')
   end
+
+  -- +----
+  -- Insert
+  setia('funciton', 'function')
+  -- -++++
 end)

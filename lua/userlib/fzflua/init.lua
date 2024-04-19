@@ -277,7 +277,7 @@ function M.buffers_or_recent(no_buffers)
     return
   end
   local _bo = vim.tbl_extend('force', {}, bufopts, buffers_actions)
-  return require('userlib.fzflua.buffers').buffers(_bo)
+  return require('fzf-lua').buffers(_bo)
 end
 
 function M.git_branches()

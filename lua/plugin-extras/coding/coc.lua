@@ -136,6 +136,7 @@ local function setup_coc_autocmd()
   })
   vim.api.nvim_create_autocmd('BufWritePre', {
     group = 'CocGroup',
+    pattern = '*',
     callback = function(ctx)
       local bufnr = ctx.buf
       if vim.b[bufnr].coc_enabled == 0 or vim.bo[bufnr].buftype ~= '' then
@@ -152,21 +153,9 @@ local function setup_coc_autocmd()
         return
       end
 
-      local isredrawlazy = vim.o.lazyredraw
-      local bufnr = vim.api.nvim_get_current_buf()
-      vim.o.lazyredraw = true
+      --- weird bug, prevent next undo move cursor to second line
+      vim.cmd('exec "normal! a \\<BS>\\<ESC>"')
       vim.fn.CocAction('format')
-      vim.api.nvim_create_autocmd('BufWritePost', {
-        group = vim.api.nvim_create_augroup('coc_format_' .. bufnr, { clear = true }),
-        buffer = bufnr,
-        once = true,
-        callback = vim.schedule_wrap(function()
-          if vim.bo[bufnr].modified then
-            vim.cmd('noau write')
-          end
-          vim.o.lazyredraw = isredrawlazy
-        end),
-      })
     end,
   })
   vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
