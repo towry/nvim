@@ -282,7 +282,7 @@ return plug({
       'coc-sumneko-lua',
       --- Symbols outline
       --- tabnine
-      'coc-tabnine',
+      -- 'coc-tabnine',
       'coc-tailwindcss',
       --- sources
       'coc-word', -- google 100000 english repo.
