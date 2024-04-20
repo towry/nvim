@@ -5,8 +5,8 @@ end
 
 local hi_fzflua = function()
   --- fzf lua
-  hi('FzfLuaNormal', { link = 'Normal' })
-  hi('FzfLuaBorder', { link = 'LineNr' })
+  hi('FzfLuaNormal', { link = 'NormalFloat' })
+  hi('FzfLuaBorder', { link = 'FloatBorder' })
   --- builtin preview main
   hi('FzfLuaPreviewNormal', { link = 'Normal' })
 end
@@ -34,11 +34,6 @@ local hi_coc = function()
   hi('CocPumMenu', { link = 'PmenuSel' })
 end
 
-function M.custom_theme_wildcharm()
-  --- custom wildcharm theme.
-  vim.cmd([[hi! Visual guifg=#000000 guibg=#ffffff gui=NONE cterm=NONE]])
-end
-
 function M.custom_theme_slate()
   M.custom_theme_default()
   hi_coc()
@@ -63,12 +58,17 @@ function M.custom_theme_default()
   })
   --- telescope
   -- hi('TelescopeMatching', { link = 'Visual' })
+  hi('TelescopeNormal', { link = 'NormalFloat' })
+  hi('TelescopeBorder', { link = 'FloatBorder' })
+  hi('TelescopeSelection', { link = 'PmenuSel' })
   -- aerial
   hi('AerialPrivate', { italic = true })
   hi_fzflua()
 end
 
-function M.custom_theme_modus() end
+function M.custom_theme_gruvbox()
+  M.custom_theme_default()
+end
 
 local function update_custom_theme()
   if type(M['custom_theme_' .. vim.cfg.ui__theme_name]) == 'function' then
