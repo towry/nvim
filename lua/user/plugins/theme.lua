@@ -59,7 +59,7 @@ plug({
       styles = {
         transparency = false,
       },
-      dark_variant = 'moon',
+      -- dark_variant = 'moon',
       highlight_groups = {
         CocErrorSign = { link = 'DiagnosticError' },
         CocWarningSign = { link = 'DiagnosticWarn' },
