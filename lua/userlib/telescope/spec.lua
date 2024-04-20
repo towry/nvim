@@ -59,7 +59,7 @@ M.opts = function()
 
   return {
     defaults = {
-      path_display = { 'tail' },
+      path_display = { 'filename_first' },
       border = true,
       borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default[1],
       wrap_results = false,
