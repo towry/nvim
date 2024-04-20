@@ -212,6 +212,7 @@ plug({
     palette_overrides = {},
     overrides = {
       CocUnusedHighlight = { link = 'DiagnosticUnderlineWarn' },
+      TelescopeSelection = { underline = true },
     },
     dim_inactive = false,
     transparent_mode = false,

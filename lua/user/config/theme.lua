@@ -60,7 +60,6 @@ function M.custom_theme_default()
   -- hi('TelescopeMatching', { link = 'Visual' })
   hi('TelescopeNormal', { link = 'NormalFloat' })
   hi('TelescopeBorder', { link = 'FloatBorder' })
-  hi('TelescopeSelection', { link = 'PmenuSel' })
   -- aerial
   hi('AerialPrivate', { italic = true })
   hi_fzflua()
