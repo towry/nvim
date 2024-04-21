@@ -57,10 +57,9 @@ local function setup_basic()
   })
   --- command line history.
   set('c', keymap.super(';'), function()
-    return [[lua require('userlib.fzflua').command_history()<CR>]]
-    --   return vim.api.nvim_replace_termcodes('<C-u><C-p>', true, false, true)
+    require('userlib.finder').command_history()
   end, {
-    expr = true,
+    expr = false,
     noremap = false,
     desc = 'Previous command in cmdline',
   })
@@ -373,6 +372,7 @@ local function setup_basic()
     ['cr'] = vim.api.nvim_replace_termcodes('<CR>', true, true, false),
     -- close pum after completion
     ['ctrl-y'] = vim.api.nvim_replace_termcodes('<C-y>', true, true, false),
+    ['ctrl-j'] = vim.api.nvim_replace_termcodes('<C-j>', true, true, false),
     ['ctrl-y_cr'] = vim.api.nvim_replace_termcodes('<C-y><CR>', true, true, false),
     ['space'] = vim.api.nvim_replace_termcodes('<Space>', true, true, false),
     ['ctrl-z'] = vim.api.nvim_replace_termcodes('<C-z>', true, true, false),
@@ -436,7 +436,7 @@ local function setup_basic()
       end
     end, { expr = true, silent = false })
 
-    set({ 'i' }, '<C-y>', function()
+    set({ 'i' }, '<C-j>', function()
       local trigger_ai = function()
         -- trigger ai
         if vim.b._copilot then
@@ -450,7 +450,7 @@ local function setup_basic()
       if vim.fn.pumvisible() ~= 0 then
         local item_selected = vim.fn.complete_info()['selected'] ~= -1
         if item_selected then
-          return keys['ctrl-y']
+          return keys['ctrl-j']
         end
       end
 

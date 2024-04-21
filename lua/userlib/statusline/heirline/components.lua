@@ -974,7 +974,7 @@ local UnsavedBufCount = {
 
 local CocStl = {
   condition = function()
-    return vim.g.coc_status ~= nil
+    return vim.g.coc_status ~= nil and vim.cfg.edit__use_coc
   end,
   provider = '%{coc#status()}',
 }

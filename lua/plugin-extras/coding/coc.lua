@@ -181,6 +181,7 @@ return plug({
   cmd = {
     'CocInstall',
   },
+  enabled = vim.cfg.edit__use_coc and not vim.g.vscode,
   event = 'User FileOpenedAfter',
   config = function()
     local keymap = require('userlib.runtime.keymap')

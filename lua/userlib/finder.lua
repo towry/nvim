@@ -20,4 +20,12 @@ function M.quickfix_stack()
   end
 end
 
+function M.command_history()
+  if vim.cfg.plugin_fzf_or_telescope == 'fzf' then
+    vim.cmd('FzfLua command_history')
+  else
+    vim.cmd('Telescope command_history')
+  end
+end
+
 return M

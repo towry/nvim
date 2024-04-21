@@ -206,9 +206,11 @@ pack.plug({
   {
     'nvim-neotest/neotest',
     cond = not vim.cfg.runtime__starts_as_gittool,
-    enabled = vim.cfg.edit__use_coc,
     optional = true,
     opts = function(_, opts)
+      if not vim.cfg.edit__use_coc then
+        return opts
+      end
       opts.adapters = opts.adapters or {}
       vim.list_extend(opts.adapters, {
         require('neotest-vim-test')({
