@@ -571,7 +571,7 @@ plug({
         },
         {
           '<leader>fj',
-          '<cmd>Telescope jumplist fname_width=60 show_line=false<cr>',
+          '<cmd>Telescope jumplist trim_text=true<cr>',
           desc = 'Show jumplist',
         },
       }
