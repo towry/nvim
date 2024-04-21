@@ -39,6 +39,7 @@ M.open = function(new_cwd)
       if vim.cfg.plugin_fzf_or_telescope == 'telescope' then
         require('telescope').extensions.file_browser.file_browser(require('userlib.telescope.themes').get_dropdown({
           files = false,
+          disable_devicons = true,
           use_fd = true,
           display_stat = false,
           hide_parent_dir = true,

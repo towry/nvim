@@ -506,6 +506,7 @@ plug({
             require('telescope').extensions.file_browser.file_browser(require('userlib.telescope.themes').get_dropdown({
               files = false,
               use_fd = true,
+              disable_devicons = true,
               display_stat = false,
               hide_parent_dir = true,
               respect_gitignore = true,
@@ -525,6 +526,7 @@ plug({
             require('telescope').extensions.file_browser.file_browser(require('userlib.telescope.themes').get_dropdown({
               results_title = vim.t.cwd_short,
               files = false,
+              disable_devicons = true,
               use_fd = true,
               previewer = false,
               respect_gitignore = true,
