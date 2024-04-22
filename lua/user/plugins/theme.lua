@@ -44,77 +44,6 @@ plug({
 })
 
 plug({
-  'rose-pine/neovim',
-  name = 'rose-pine',
-  priority = 1000,
-  lazy = false,
-  enabled = vim.cfg.ui__theme_name == 'rose-pine',
-  --- https://github.com/rose-pine/neovim?tab=readme-ov-file#options
-  config = function()
-    local utils = require('rose-pine.utilities')
-    local blend = function(fg, bg, precise)
-      return utils.blend(utils.parse_color(fg), utils.parse_color(bg), precise)
-    end
-    require('rose-pine').setup({
-      styles = {
-        transparency = false,
-      },
-      -- dark_variant = 'moon',
-      highlight_groups = {
-        CocErrorSign = { link = 'DiagnosticError' },
-        CocWarningSign = { link = 'DiagnosticWarn' },
-        CocInfoSign = { link = 'DiagnosticInfo' },
-        CocHintSign = { link = 'DiagnosticHint' },
-        CocErrorFloat = { link = 'DiagnosticError' },
-        CocWarningFloat = { link = 'DiagnosticWarn' },
-        CocFloating = { link = 'NormalFloat' },
-        CocInfoFloat = { link = 'DiagnosticInfo' },
-        CocHintFloat = { link = 'DiagnosticHint' },
-        CocDiagnosticsError = { link = 'DiagnosticError' },
-        CocDiagnosticsWarning = { link = 'DiagnosticWarn' },
-        CocDiagnosticsInfo = { link = 'DiagnosticInfo' },
-        CocDiagnosticsHint = { link = 'DiagnosticHint' },
-        CocUnusedHighlight = { link = 'DiagnosticUnderlineWarn' },
-        -- +--
-        MiniCursorword = {
-          italic = true,
-          bold = true,
-          bg = 'NONE',
-          fg = 'text',
-        },
-        MiniCursorwordCurrent = {
-          underline = false,
-          bold = true,
-          bg = 'NONE',
-          fg = 'NONE',
-        },
-        FzfLuaNormal = { link = 'Normal' },
-        FzfLuaBorder = { link = 'LineNr' },
-        FzfLuaPreviewNormal = { link = 'Normal' },
-        FzfLuaColorsBgSel = { fg = 'rose' },
-        FzfLuaTitle = { bg = 'foam', fg = 'base', bold = false },
-        StatusLine = { bg = 'foam', fg = 'base' },
-        StatusLineNC = {
-          bg = utils.blend(utils.parse_color('base'), utils.parse_color('foam'), 0.07),
-          fg = 'base',
-        },
-        TabLineSel = { bg = utils.blend(utils.parse_color('overlay'), utils.parse_color('foam'), 0.1), fg = 'text' },
-        TabLine = { bg = 'overlay', fg = 'text' },
-        TelescopePrompt = { bg = 'base', fg = 'text' },
-        TelescopePromptTitle = { bg = 'pine', fg = 'surface' },
-        TelescopePreviewTitle = { bg = 'rose', fg = 'surface' },
-        TelescopeMatching = { fg = 'gold' },
-        TelescopeSelection = { fg = 'text', bg = 'highlight_high' },
-        TelescopeNormal = { link = 'NormalFloat' },
-        TelescopeBorder = { link = 'FloatBorder' },
-        NormalFloat = { bg = 'highlight_low' },
-        FloatBorder = { bg = 'highlight_low' },
-      },
-    })
-  end,
-})
-
-plug({
   'gbprod/nord.nvim',
   event = 'User LazyTheme',
   cond = vim.cfg.ui__theme_name:match('nord'),
@@ -223,4 +152,75 @@ plug({
   'cocopon/iceberg.vim',
   event = vim.cfg.ui__theme_name == 'nordic' and 'User LazyTheme' or nil,
   config = false,
+})
+
+plug({
+  'rebelot/kanagawa.nvim',
+  event = 'User LazyTheme',
+  priority = 1000,
+  cond = string.match(vim.cfg.ui__theme_name, 'kanagawa') ~= nil,
+  opts = {
+    compile = true,
+    undercurl = true, -- enable undercurls
+    commentStyle = { italic = true },
+    functionStyle = { bold = true },
+    keywordStyle = { italic = true },
+    statementStyle = { bold = true },
+    typeStyle = { bold = true },
+    variablebuiltinStyle = { italic = true },
+    globalStatus = true,
+    overrides = function(colors) -- add/modify highlights
+      -- do not foget to run ':KanagawaCompile'
+      return {
+        FzfLuaNormal = { link = 'NormalFloat' },
+        FzfLuaBorder = { link = 'FloatBorder' },
+        FzfLuaPreviewNormal = { link = 'Normal' },
+        --- coc
+        CocUnusedHighlight = { link = 'DiagnosticUnderlineHint' },
+        -- flash
+        FlashCursor = { fg = colors.theme.ui.fg, bg = colors.palette.waveBlue1 },
+      }
+    end,
+    colors = {
+      palette = {
+        -- + green
+        -- lotusWhite0 = '#B9C8B7',
+        -- lotusWhite1 = '#C2CDBE',
+        -- lotusWhite2 = '#CAD2C5',
+        -- lotusWhite3 = '#E9EDE6',
+        -- lotusWhite4 = '#F3F5F1',
+        -- lotusWhite5 = '#ffffff',
+
+        --- + solarized
+        lotusWhite0 = '#ECE8D8',
+        lotusWhite1 = '#E9E5D6',
+        lotusWhite2 = '#F3EEDD',
+        lotusWhite3 = '#FDF6E3',
+        lotusWhite4 = '#DFDDCF',
+        lotusWhite5 = '#eee8d5',
+      },
+      theme = {
+        all = {
+          ui = {
+            bg_gutter = 'none',
+          },
+        },
+        lotus = {
+          ui = {
+            -- bg_m3 = '#586e75',
+          },
+        },
+      },
+    },
+    background = {
+      -- dark = 'wave',
+      dark = 'dragon',
+      light = 'lotus',
+    },
+  },
+})
+
+plug({
+  'maxmx03/solarized.nvim',
+  lazy = false,
 })
