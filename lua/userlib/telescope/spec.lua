@@ -99,7 +99,7 @@ M.opts = function()
           anchor = 'S',
         },
         flex = {
-          preview_width = { 0.3, min = 20 },
+          preview_width = { 0.5, min = 20 },
         },
         bottom_pane = {
           preview_width = 0.4,
@@ -110,7 +110,7 @@ M.opts = function()
       -- generic_sorter = require('mini.fuzzy').get_telescope_sorter,
       ---@see https://github.com/nvim-telescope/telescope.nvim/issues/522#issuecomment-1107441677
       file_ignore_patterns = { 'node_modules/', '.turbo/', 'dist', '.git/' },
-      layout_strategy = 'flex',
+      layout_strategy = 'vertical',
       color_devicons = true,
       initial_mode = 'insert',
       sorting_strategy = 'ascending',

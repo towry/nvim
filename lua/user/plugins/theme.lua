@@ -221,6 +221,6 @@ plug({
 
 plug({
   'cocopon/iceberg.vim',
-  event = vim.cfg.ui__theme_name == 'iceberge' and 'User LazyTheme' or nil,
+  event = vim.cfg.ui__theme_name == 'nordic' and 'User LazyTheme' or nil,
   config = false,
 })
