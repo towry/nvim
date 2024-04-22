@@ -57,7 +57,7 @@ local function setup_coc_lsp_keys()
   -- Organize imports
   set(
     'n',
-    '<leader>ci',
+    '<leader>co',
     [[:<C-u>call CocActionAsync('runCommand', 'editor.action.organizeImport')<cr>]],
     _('Organize imports')
   )
