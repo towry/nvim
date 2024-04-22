@@ -196,13 +196,13 @@ plug({
         lotusWhite1 = '#E9E5D6',
         lotusWhite2 = '#F3EEDD',
         lotusWhite3 = '#FDF6E3',
-        lotusWhite4 = '#DFDDCF',
+        lotusWhite4 = '#f3eedd',
         lotusWhite5 = '#eee8d5',
       },
       theme = {
         all = {
           ui = {
-            bg_gutter = 'none',
+            -- bg_gutter = 'none',
           },
         },
         lotus = {
