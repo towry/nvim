@@ -632,6 +632,7 @@ plug({
           visits.add_label('harpoon', nil, cwd)
         end
         visits.write_index()
+        vim.notify('Added to harpoon', vim.log.levels.INFO)
       end,
       silent = false,
       desc = 'Add to visits',
@@ -649,6 +650,7 @@ plug({
         end
 
         visits.write_index()
+        vim.notify('Removed from harpoon', vim.log.levels.INFO)
       end,
       silent = false,
       desc = 'Remove from visits',
@@ -689,6 +691,7 @@ plug({
       '<leader>pa',
       function()
         require('userlib.mini.visits').add_project(vim.uv.cwd(), vim.cfg.runtime__starts_cwd)
+        vim.notify('Added to project list', vim.log.levels.INFO)
       end,
       desc = 'Add project',
     },
