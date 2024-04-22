@@ -123,8 +123,7 @@ pack.plug({
         -- Set to false to disable the vim.ui.select implementation
         enabled = vim.cfg.ui__input_select_provider == 'dressing' and true or false,
         -- Priority list of preferred vim.select implementations
-        -- backend = vim.cfg.runtime__starts_as_gittool and { 'builtin' } or { 'telescope', 'fzf_lua', 'nui', 'builtin' },
-        backend = { 'builtin' },
+        backend = vim.cfg.runtime__starts_as_gittool and { 'builtin' } or { 'telescope', 'nui', 'builtin' },
         -- Options for nui Menu
         nui = {
           position = {
