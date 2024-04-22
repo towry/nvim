@@ -934,8 +934,8 @@ plug({
     fzflua.register_ui_select({
       winopts = {
         fullscreen = false,
-        height = 0.6,
-        width = 0.75,
+        height = 0.30,
+        width = 0.70,
       },
       fzf_opts = {
         ['--no-hscroll'] = '',
