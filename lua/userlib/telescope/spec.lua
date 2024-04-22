@@ -129,8 +129,7 @@ M.opts = function()
             vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>gEldEa', true, true, true), 'n', false)
           end,
           ['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
-          ['<C-s>'] = actions.cycle_previewers_next,
-          ['<C-a>'] = actions.cycle_previewers_prev,
+          ['<C-s>'] = actions.select_horizontal,
           ['<C-h>'] = function()
             if vim.fn.mode() == 'n' then
               return
