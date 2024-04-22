@@ -513,6 +513,7 @@ plug({
               hidden = true,
               previewer = false,
               depth = 3,
+              path_display = { 'smart' },
               git_status = false,
               cwd = vim.cfg.runtime__starts_cwd,
             }))
@@ -533,9 +534,10 @@ plug({
               hidden = true,
               depth = 5,
               git_status = false,
-              collapse_dirs = true,
+              collapse_dirs = false,
               hide_parent_dir = true,
               display_stat = false,
+              path_display = { 'smart' },
               cwd = require('userlib.runtime.utils').get_root(),
             }))
           end,
