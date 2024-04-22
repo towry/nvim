@@ -39,7 +39,7 @@ local Defaults = {
     bg = bg,
     fg = c.polar_night.bright,
   },
-  CursorLine = { bg = c.snow_storm.origin, fg = c.polar_night.brightest },
+  CursorLine = { bg = c.snow_storm.origin, fg = none },
   StatusLine = { bg = c.frost.ice, fg = c.polar_night.brighter }, -- status line of current window
   StatusLineNC = { bg = c.snow_storm.origin, fg = c.polar_night.brightest }, -- status lines of not-current windows Note: if this is equal to "StatusLine" Vim will use "^^^" in the status line of the current window.
   TabLine = { bg = c.snow_storm.origin, fg = c.fg_gutter }, -- tab pages line, not active tab page label
