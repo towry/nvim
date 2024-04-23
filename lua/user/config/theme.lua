@@ -56,6 +56,9 @@ function M.custom_theme_default()
   extend_hl({ 'diffNewFile', 'DiffDelete' }, {
     bg = 'NONE',
   })
+  extend_hl({ 'DiagnosticUnnecessary', 'Comment' }, {
+    undercurl = true,
+  })
   --- telescope
   -- hi('TelescopeMatching', { link = 'Visual' })
   hi('TelescopeNormal', { link = 'NormalFloat' })
