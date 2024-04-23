@@ -26,6 +26,7 @@ pack.plug({
         'ms-jpq/coq.thirdparty',
         branch = '3p',
       },
+      { 'mendes-davi/coq_luasnip' },
     },
     enabled = vim.cfg.edit__use_coq_cmp and vim.cfg.edit__use_native_cmp,
     event = { 'LspAttach', 'User LazyInsertEnter', 'CmdlineEnter' },
@@ -66,6 +67,10 @@ pack.plug({
           },
           -- high cpu
           tabnine = {
+            enabled = false,
+          },
+          snippets = {
+            -- use coq luasnip
             enabled = false,
           },
         },
@@ -153,15 +158,20 @@ pack.plug({
       local luasnip_ns = vim.api.nvim_create_namespace('luasnip')
 
       Ty.luasnip_notify_clear = function()
+        if not vim.b.snippet_ghost_set then
+          return
+        end
         vim.api.nvim_buf_clear_namespace(0, luasnip_ns, 0, -1)
       end
 
       Ty.luasnip_notify = function()
         Ty.luasnip_notify_clear()
+        vim.b.snippet_ghost_set = nil
         if not luasnip.expandable() then
           return
         end
 
+        vim.b.snippet_ghost_set = 1
         local line = vim.api.nvim_win_get_cursor(0)[1] - 1
         vim.api.nvim_buf_set_extmark(0, luasnip_ns, line, 0, {
           virt_text = { { '!', 'Special' } },
@@ -169,8 +179,8 @@ pack.plug({
         })
       end
 
-      -- vim.cmd([[au InsertEnter,CursorMovedI,TextChangedI,TextChangedP * lua pcall(Ty.luasnip_notify)]])
-      -- vim.cmd([[au InsertLeave * lua pcall(Ty.luasnip_notify_clear)]])
+      vim.cmd([[au InsertEnter,TextChangedP,CursorHoldI * lua pcall(Ty.luasnip_notify)]])
+      vim.cmd([[au InsertLeave * lua pcall(Ty.luasnip_notify_clear)]])
     end,
   },
   {
