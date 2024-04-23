@@ -28,12 +28,6 @@ plug({
       tabline = {
         hl = { fg = 'tabline_fg', bg = 'tabline_bg' },
         comp.TabLine,
-        comp.lpad({
-          { provider = ' -:- ' },
-          comp.FileIcon,
-          { provider = ' %t', hl = { bold = true } },
-          { provider = ' %y%m' },
-        }),
         comp.lpad(comp.Overseer),
         comp.lpad(comp.Dap),
         {
@@ -70,6 +64,7 @@ plug({
           {
             provider = '%m%w%r',
           },
+          comp.BufVisited,
         }),
         comp.lpad(comp.CocStl),
         { provider = '%=' },

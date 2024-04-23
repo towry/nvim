@@ -265,7 +265,7 @@ local BufVisited = {
   provider = function(self)
     local is = self.is
     if is then
-      return ''
+      return '[#H]'
     end
     return ''
   end,
@@ -827,6 +827,26 @@ local Tabpage = {
       provider = function(self)
         return '[' .. vim.t[self.tabpage].TabLabel .. ']'
       end,
+    },
+  },
+  {
+    init = function(self)
+      self.bufnr = vim.api.nvim_win_get_buf(vim.api.nvim_tabpage_get_win(self.tabpage))
+      self.filename = vim.api.nvim_buf_get_name(self.bufnr) or ''
+      self.tail = ''
+      if vim.bo[self.bufnr].buftype == '' and #self.filename > 0 then
+        self.tail = vim.fn.fnamemodify(self.filename, ':t')
+      elseif #self.filename <= 0 then
+        self.tail = '[No Name]'
+      else
+        self.tail = '[' .. vim.bo[self.bufnr].filetype .. ']'
+      end
+    end,
+    provider = function(self)
+      return '~' .. self.tail
+    end,
+    hl = {
+      fg = 'gray',
     },
   },
   {
