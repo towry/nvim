@@ -247,6 +247,18 @@ pack.plug({
       default_opts = {
         keymaps = { silent = true, noremap = true },
       },
+      sort = {
+        most_recent_first = true,
+        -- sort user-defined items before built-in items
+        user_items_first = true,
+        frecency = {
+          -- the directory to store the database in
+          db_root = string.format('%s/legendary/', vim.fn.stdpath('data')),
+          -- the maximum number of timestamps for a single item
+          -- to store in the database
+          max_timestamps = 10,
+        },
+      },
       -- col_separator_char = '#',
       select_prompt = 'Legendary: ',
       icons = {
@@ -257,7 +269,7 @@ pack.plug({
       extensions = {
         diffview = true,
       },
-      log_level = 'info',
+      log_level = 'error',
     })
   end,
 })
