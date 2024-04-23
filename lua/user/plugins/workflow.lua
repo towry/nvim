@@ -404,7 +404,8 @@ plug({
     'mrjones2014/smart-splits.nvim',
     -- 'pze/smart-splits.nvim',
     dev = false,
-    lazy = vim.cfg.runtime__starts_as_gittool and false or true,
+    -- lazy = vim.cfg.runtime__starts_as_gittool and false or true,
+    event = 'VeryLazy',
     keys = {
       {
         '<A-h>',
@@ -781,35 +782,6 @@ plug({
   init = function()
     vim.g.BufSurfIgnore = ',Fidget'
   end,
-})
-
-plug({
-  'mihaifm/bufstop',
-  keys = {
-    {
-      '<localleader><space>',
-      ':BufstopFast<cr>',
-      desc = 'Open bufstop',
-    },
-    {
-      '<leader>,',
-      ':BufstopFast<cr>',
-      desc = 'Open bufstop',
-    },
-  },
-  cmd = {
-    --- opoen at top or bottom
-    'Bufstop',
-    'BufstopFast',
-    --- j,k provided
-    'BufstopPreview',
-    --- cmd line mode
-    'BufstopMode',
-    'BufstopModeFast',
-    --- statusline
-    'BufstopStatusline',
-    'BufstopStatuslineFast',
-  },
 })
 
 plug({

@@ -138,7 +138,13 @@ plug({
       ['g?'] = 'actions.show_help',
       ['<CR>'] = 'actions.select',
       ['<C-v>'] = 'actions.select_vsplit',
-      ['<C-x>'] = 'actions.select_split',
+      ['<C-s>'] = {
+        callback = function()
+          require('oil').select({ horizontal = true })
+        end,
+        desc = 'Open the entry under the cursor in a horizontal split',
+        nowait = true,
+      },
       ['<C-t>'] = 'actions.select_tab',
       ['<C-p>'] = 'actions.preview',
       ['<C-c>'] = 'actions.close',
@@ -224,6 +230,11 @@ plug({
       desc = 'Open oil(BUF) file browser in cwd',
     },
     {
+      '<leader>f|',
+      ':vert Oil<cr>',
+      desc = 'Open oil vertical',
+    },
+    {
       '-',
       function()
         if vim.bo.buftype ~= '' then
@@ -253,6 +264,16 @@ plug({
         require('userlib.runtime.utils').change_cwd(cwd, 'lcd', true)
       end,
     })
+    au.define_autocmd('BufHidden', {
+      group = '_oil_change_cwd',
+      pattern = 'oil:///*',
+      callback = function()
+        -- restore locked cwd
+        if vim.t.CwdLocked and vim.t.Cwd then
+          vim.cmd.lcd(vim.t.Cwd)
+        end
+      end,
+    })
   end,
 })
 
@@ -260,8 +281,22 @@ plug({
   'stevearc/aerial.nvim',
   keys = {
     { '<leader>/o', '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
-    -- <CMD-l> open the outline.
-    { keymap.super('l'), '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
+    {
+      '<C-g>l',
+      function()
+        local api = require('aerial')
+        local util = require('aerial.util')
+        local current_is_aerial = vim.bo.filetype == 'aerial'
+        if current_is_aerial then
+          local source_bufnr = util.get_source_buffer(vim.api.nvim_get_current_buf())
+          require('userlib.runtime.buffer').focus_buf_in_visible_windows(source_bufnr)
+          return
+        elseif vim.bo.buftype == '' then
+          api.open({ focus = true, direction = 'left' })
+        end
+      end,
+      desc = 'Symbols outline',
+    },
   },
   cmd = { 'AerialToggle', 'AerialOpen', 'AerialClose' },
   opts = {
@@ -324,7 +359,7 @@ plug({
       'Struct',
     },
     autojump = false,
-    close_on_select = true,
+    close_on_select = false,
     highlight_on_hover = true,
     show_guides = true,
     update_events = 'InsertLeave',
@@ -373,58 +408,6 @@ plug({
   end,
 })
 
-local enable_oxi = false
-plug({
-  'nvim-pack/nvim-spectre',
-  opts = {
-    color_devicons = true,
-    open_cmd = 'noswapfile tabnew',
-    live_update = false,
-    is_insert_mode = false,
-    is_open_target_win = true,
-  },
-  build = function(plugin)
-    if vim.fn.executable('cargo') == 1 and enable_oxi then
-      local cwd = plugin.dir
-      vim.cmd(string.format('tabe term://%s//%s', cwd, './build.sh;'))
-    end
-  end,
-  cmd = { 'Spectre' },
-  config = function(_, opts)
-    require('spectre').setup(vim.tbl_extend('force', opts, {
-      default = {
-        replace = {
-          cmd = enable_oxi and vim.fn.executable('cargo') == 1 and 'oxi' or 'sed',
-        },
-      },
-    }))
-  end,
-  keys = {
-    {
-      '<leader>sp',
-      function()
-        require('spectre').open_visual()
-      end,
-      desc = 'Open Search and replace panel',
-    },
-    {
-      '<leader>sP',
-      function()
-        local path = vim.fn.fnameescape(vim.fn.expand('%:p:.'))
-        if vim.uv.os_uname().sysname == 'Windows_NT' then
-          path = vim.fn.substitute(path, '\\', '/', 'g')
-        end
-        require('spectre').open({
-          path = path,
-          is_close = true,
-          search_text = vim.fn.expand('<cword>'),
-        })
-      end,
-      desc = 'Search and replace cword in current file',
-    },
-  },
-})
-
 plug({
   --- In the SSR float window you can see the placeholder
   --- search code, you can replace part of it with wildcards.
@@ -459,152 +442,169 @@ plug({
 
 plug({
   'nvim-telescope/telescope.nvim',
-  cond = not vim.cfg.runtime__starts_as_gittool,
   cmd = { 'Telescope' },
-  keys_disable = {
-    {
-      '<leader>fb',
-      cmd_modcall(pickers_mod, 'curbuf()'),
-      desc = 'Fuzzy search in current buffer',
-    },
-    {
-      BufferListKey,
-      cmd_modcall(pickers_mod, 'buffers_or_recent()'),
-      desc = 'List Buffers',
-    },
-    {
-      '<leader>g/',
-      function()
-        require('userlib.ui.dropdown').select({
-          items = {
-            {
-              label = 'Git branches',
-              hint = 'local',
-              'Telescope git_branches show_remote_tracking_branches=false',
-            },
-            {
-              label = 'Git branches',
-              hint = 'remotes',
-              'Telescope git_branches',
-            },
-          },
-        }, {
-          prompt_title = 'Select action',
-        })
-      end,
-      desc = 'Git branches',
-    },
-    {
-      '<leader>ff',
-      cmd_modcall(pickers_mod, 'project_files()'),
-      desc = 'Open Project files',
-    },
-    {
-      '<leader>fF',
-      cmd_modcall(pickers_mod, 'project_files({default_text = vim.fn.expand("<cword>")})'),
-      desc = 'Open Project files with current word',
-    },
-    {
-      '<leader>fe',
-      cmd_modcall(pickers_mod, 'project_files({use_all_files=false, cwd=vim.cfg.runtime__starts_cwd})'),
-      desc = 'Open find all files',
-    },
-    {
-      '<leader>fr',
-      cmd_modcall('telescope.builtin', 'resume()'),
-      desc = 'Resume telescope pickers',
-    },
-    {
-      '<localleader><Tab>',
-      cmd_modcall(
-        pickers_mod,
-        [[project_files(require('telescope.themes').get_dropdown({ previewer = false, cwd_only = false, oldfiles = true, cwd = vim.cfg.runtime__starts_cwd }))]]
-      ),
-      desc = 'Open recent files',
-    },
-    {
-      '<leader>fo',
-      function()
-        --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
-        require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
-          files = false,
-          use_fd = true,
-          display_stat = false,
-          hide_parent_dir = true,
-          respect_gitignore = true,
-          hidden = false,
-          previewer = false,
-          depth = 3,
-          git_status = false,
-          cwd = vim.cfg.runtime__starts_cwd,
-        }))
-      end,
-      desc = 'Find all folders',
-    },
-    {
-      '<leader>fl',
-      function()
-        --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
-        require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
-          results_title = vim.t.cwd_short,
-          files = false,
-          use_fd = true,
-          previewer = false,
-          respect_gitignore = true,
-          hidden = false,
-          depth = 5,
-          git_status = false,
-          collapse_dirs = true,
-          hide_parent_dir = true,
-          display_stat = false,
-          cwd = require('userlib.runtime.utils').get_root(),
-        }))
-      end,
-      desc = 'Find project folders',
-    },
-    {
-      '<leader>fg',
-      function()
-        require('userlib.telescope.live_grep_call')({
-          cwd = vim.cfg.runtime__starts_cwd,
-        })
-      end,
-      desc = 'Grep search in all projects',
-    },
-    {
-      '<leader>fs',
-      cmd_modcall('userlib.telescope.live_grep_call', '()'),
-      desc = 'Grep search in project',
-    },
-    {
-      '<leader>fs',
-      cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_visual_selection()'),
-      desc = 'Grep search on selection in project',
-      mode = { 'v', 'x' },
-    },
-    {
-      '<leader>fw',
-      cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_word_under_cursor()'),
-      desc = 'Grep search on selection in project',
-    },
-    {
-      '<leader>g.',
-      '<cmd>Telescope git_bcommits<cr>',
-      desc = 'Show commits for current buffer with diff preview',
-    },
-    {
-      '<leader>fj',
-      '<cmd>Telescope jumplist fname_width=60 show_line=false<cr>',
-      desc = 'Show jumplist',
-    },
-  },
+  keys = vim.cfg.plugin_fzf_or_telescope == 'telescope'
+      and {
+        {
+          '<leader>fb',
+          cmd_modcall(pickers_mod, 'curbuf()'),
+          desc = 'Fuzzy search in current buffer',
+        },
+        {
+          BufferListKey,
+          cmd_modcall(pickers_mod, 'buffers_or_recent()'),
+          desc = 'List Buffers',
+        },
+        {
+          '<leader>fc',
+          cmd_modcall(pickers_mod, 'buffers_or_recent(true)'),
+          desc = 'List Buffers in cwd',
+        },
+        {
+          '<leader>g/',
+          function()
+            require('userlib.ui.dropdown').select({
+              items = {
+                {
+                  label = 'Git branches',
+                  hint = 'local',
+                  'Telescope git_branches show_remote_tracking_branches=false',
+                },
+                {
+                  label = 'Git branches',
+                  hint = 'remotes',
+                  'Telescope git_branches',
+                },
+              },
+            }, {
+              prompt_title = 'Select action',
+            })
+          end,
+          desc = 'Git branches',
+        },
+        {
+          '<leader>ff',
+          cmd_modcall(pickers_mod, 'project_files()'),
+          desc = 'Open Project files',
+        },
+        {
+          '<leader>fF',
+          cmd_modcall(pickers_mod, 'project_files({default_text = vim.fn.expand("<cword>")})'),
+          desc = 'Open Project files with current word',
+        },
+        {
+          '<leader>fe',
+          cmd_modcall(pickers_mod, 'project_files({use_all_files=false, cwd=vim.cfg.runtime__starts_cwd})'),
+          desc = 'Open find all files',
+        },
+        {
+          '<leader>fr',
+          cmd_modcall('telescope.builtin', 'resume()'),
+          desc = 'Resume telescope pickers',
+        },
+        {
+          '<localleader><Tab>',
+          cmd_modcall(
+            pickers_mod,
+            [[project_files(require('userlib.telescope.themes').get_dropdown({ previewer = false, cwd_only = false, oldfiles = true, cwd = vim.cfg.runtime__starts_cwd }))]]
+          ),
+          desc = 'Open recent files',
+        },
+        {
+          '<leader>fo',
+          function()
+            --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
+            require('telescope').extensions.file_browser.file_browser(require('userlib.telescope.themes').get_dropdown({
+              files = false,
+              use_fd = true,
+              disable_devicons = true,
+              display_stat = false,
+              hide_parent_dir = true,
+              respect_gitignore = true,
+              hidden = true,
+              previewer = false,
+              depth = 3,
+              path_display = { 'smart' },
+              git_status = false,
+              cwd = vim.cfg.runtime__starts_cwd,
+            }))
+          end,
+          desc = 'Find all folders',
+        },
+        {
+          '<leader>fl',
+          function()
+            --- https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e03ff55962417b69c85ef41424079bb0580546ba/lua/telescope/_extensions/file_browser/actions.lua#L598
+            require('telescope').extensions.file_browser.file_browser(require('userlib.telescope.themes').get_dropdown({
+              results_title = vim.t.cwd_short,
+              files = false,
+              disable_devicons = true,
+              use_fd = true,
+              previewer = false,
+              respect_gitignore = true,
+              hidden = true,
+              depth = 5,
+              git_status = false,
+              collapse_dirs = false,
+              hide_parent_dir = true,
+              display_stat = false,
+              path_display = { 'smart' },
+              cwd = require('userlib.runtime.utils').get_root(),
+            }))
+          end,
+          desc = 'Find project folders',
+        },
+        {
+          '<leader>fg',
+          function()
+            require('userlib.telescope.live_grep_call')({
+              cwd = vim.cfg.runtime__starts_cwd,
+            })
+          end,
+          desc = 'Grep search in all projects',
+        },
+        {
+          '<leader>fs',
+          cmd_modcall('userlib.telescope.live_grep_call', '()'),
+          desc = 'Grep search in project',
+        },
+        {
+          '<leader>fs',
+          cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_visual_selection()'),
+          desc = 'Grep search on selection in project',
+          mode = { 'v', 'x' },
+        },
+        {
+          '<leader>fw',
+          cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_word_under_cursor()'),
+          desc = 'Grep search on selection in project',
+        },
+        {
+          '<leader>g.',
+          '<cmd>Telescope git_bcommits<cr>',
+          desc = 'Show commits for current buffer with diff preview',
+        },
+        {
+          '<leader>fj',
+          '<cmd>Telescope jumplist trim_text=true<cr>',
+          desc = 'Show jumplist',
+        },
+      }
+    or {},
   dependencies = {
     { 'nvim-lua/popup.nvim' },
     { 'nvim-lua/plenary.nvim' },
     { 'nvim-telescope/telescope-live-grep-args.nvim' },
     {
       'nvim-telescope/telescope-fzf-native.nvim',
+      enabled = vim.cfg.plugin_telescope_sorter == 'fzf' or not vim.cfg.plugin_telescope_sorter,
       build = 'make',
+    },
+
+    {
+      'pze/telescope-nucleo-sorter.nvim',
+      enabled = vim.cfg.plugin_telescope_sorter == 'nucleo',
+      build = 'cargo rustc --release -- -C link-arg=-undefined -C link-arg=dynamic_lookup',
     },
     {
       'tknightz/telescope-termfinder.nvim',
@@ -614,208 +614,12 @@ plug({
       -- branch = 'feat/max-results',
       dev = false,
     },
-    {
-      'jvgrootveld/telescope-zoxide',
-      keys = {
-        { '<leader>fz', ':lua require("telescope").extensions.zoxide.list()<cr>', desc = 'zoxide', silent = true },
-      },
-    },
   },
   config = function(_, opts)
-    require('telescope').setup(opts)
-    require('telescope').load_extension('fzf')
-    require('telescope').load_extension('live_grep_args')
-    require('telescope').load_extension('termfinder')
-    require('telescope').load_extension('zoxide')
-    --- https://github.com/nvim-telescope/telescope-file-browser.nvim
-    --- Telescope file_browser files=false
-    require('telescope').load_extension('file_browser')
-    au.do_useraucmd(au.user_autocmds.TelescopeConfigDone_User)
+    require('userlib.telescope.spec').config(_, opts)
   end,
   opts = function()
-    -- local au = require('userlib.runtime.au')
-    local actions = require('telescope.actions')
-    local action_state = require('telescope.actions.state')
-    local lga_actions = require('telescope-live-grep-args.actions')
-    local icons = require('userlib.icons')
-
-    local git_icons = {
-      added = icons.gitAdd,
-      changed = icons.gitChange,
-      copied = '>',
-      deleted = icons.gitRemove,
-      renamed = '➡',
-      unmerged = '‡',
-      untracked = '?',
-    }
-
-    return {
-      defaults = {
-        border = true,
-        borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default[1],
-        wrap_results = false,
-        --- give some opacity so we can see the window picker marks.
-        winblend = 10,
-        cache_picker = {
-          num_pickers = 5,
-        },
-        vimgrep_arguments = {
-          'rg',
-          '--color=never',
-          '--no-heading',
-          '--with-filename',
-          '--line-number',
-          '--column',
-          '--smart-case',
-        },
-        layout_config = {
-          width = 0.90,
-          -- prompt_position = 'top',
-          horizontal = {
-            preview_cutoff = 20,
-          },
-          vertical = {
-            preview_cutoff = 0,
-            width = 0.98,
-          },
-          flex = {},
-          bottom_pane = {
-            preview_width = 0.4,
-            -- When columns are less than this value, the preview will be disabled
-            preview_cutoff = 10,
-          },
-        },
-        -- generic_sorter = require('mini.fuzzy').get_telescope_sorter,
-        ---@see https://github.com/nvim-telescope/telescope.nvim/issues/522#issuecomment-1107441677
-        file_ignore_patterns = { 'node_modules/', '.turbo/', 'dist', '.git/' },
-        path_display = { 'truncate' },
-        layout_strategy = 'flex',
-        -- layout_strategy = "vertical",
-        file_sorter = require('telescope.sorters').get_fuzzy_file,
-        -- prompt_prefix = '',
-        color_devicons = true,
-        initial_mode = 'insert',
-        git_icons = git_icons,
-        sorting_strategy = 'ascending',
-        file_previewer = require('telescope.previewers').vim_buffer_cat.new,
-        grep_previewer = require('telescope.previewers').vim_buffer_vimgrep.new,
-        qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
-        mappings = {
-          i = {
-            --- used to move cursor forward.
-            ['<C-f>'] = false,
-            ['<S-BS>'] = function()
-              --- delete previous W
-              if vim.fn.mode() == 'n' then
-                return
-              end
-              vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>gEldEa', true, true, true), 'n', false)
-            end,
-            ['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
-            ['<C-s>'] = actions.cycle_previewers_next,
-            ['<C-a>'] = actions.cycle_previewers_prev,
-            ['<C-h>'] = function()
-              if vim.fn.mode() == 'n' then
-                return
-              end
-              -- jump between WORD
-              vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>gEa', true, true, true), 'n', false)
-            end,
-            ['<C-l>'] = function()
-              if vim.fn.mode() == 'n' then
-                return
-              end
-              vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>Ea', true, true, true), 'n', false)
-            end,
-            ['<ESC>'] = function(prompt_bufnr)
-              local picker = action_state.get_current_picker(prompt_bufnr)
-              local prompt = picker:_get_prompt()
-              if not prompt or #prompt <= 0 then
-                actions.close(prompt_bufnr)
-                return
-              end
-              vim.cmd('stopinsert')
-            end,
-            ['<C-ESC>'] = actions.close,
-            ['<C-c>'] = function(prompt_bufnr)
-              local picker = action_state.get_current_picker(prompt_bufnr)
-              picker:set_prompt('')
-            end,
-          },
-          n = {
-            ['<C-s>'] = actions.cycle_previewers_next,
-            ['<C-a>'] = actions.cycle_previewers_prev,
-            ['<C-h>'] = 'which_key',
-          },
-        },
-      },
-      pickers = {},
-      extensions = {
-        file_browser = {
-          use_fd = true,
-          mappings = {
-            i = {
-              ['<CR>'] = function(prompt_buf)
-                local entry_path = action_state.get_selected_entry().Path
-                local new_cwd = entry_path:is_dir() and entry_path:absolute() or entry_path:parent():absolute()
-
-                actions.close(prompt_buf)
-                require('userlib.mini.clue.folder-action').open(new_cwd)
-              end,
-            },
-          },
-        },
-        fzf = {
-          fuzzy = true,
-          override_generic_sorter = true,
-          override_file_sorter = true,
-          case_mode = 'smart_case',
-        },
-        live_grep_args = {
-          disable_coordinates = true,
-          auto_quoting = true, -- enable/disable auto-quoting
-          layout_strategy = 'vertical',
-          layout_config = {
-            width = 0.95,
-            mirror = false,
-          },
-          mappings = {
-            -- extend mappings
-            i = {
-              ['<C-k>'] = lga_actions.quote_prompt(),
-              ['<C-o>'] = function(prompt_bufnr)
-                return require('userlib.telescope.picker_keymaps').open_selected_in_window(prompt_bufnr)
-              end,
-            },
-            ['n'] = {
-              -- your custom normal mode mappings
-              ['/'] = function()
-                vim.cmd('startinsert')
-              end,
-            },
-          },
-        },
-        zoxide = {
-          --- https://github.com/jvgrootveld/telescope-zoxide
-          prompt_title = 'Zz...',
-          mappings = {
-            default = {
-              after_action = function(selection)
-                print('Update to (' .. selection.z_score .. ') ' .. selection.path)
-              end,
-            },
-            -- ["<C-s>"] = {
-            --   before_action = function(selection) print("before C-s") end,
-            --   action = function(selection)
-            --     vim.cmd.edit(selection.path)
-            --   end
-            -- },
-            -- -- Opens the selected entry in a new split
-            -- ["<C-v>"] = { action = z_utils.create_basic_command("split") },
-          },
-        },
-      },
-    }
+    return require('userlib.telescope.spec').opts()
   end,
 })
 
@@ -835,8 +639,13 @@ plug({
       function()
         local visits = require('mini.visits')
         vim.b[0].is_harpoon = true
+        local cwd = vim.uv.cwd()
         visits.add_label('harpoon', nil, vim.cfg.runtime__starts_cwd)
+        if not require('userlib.runtime.path').is_path_equal(cwd, vim.cfg.runtime__starts_cwd) then
+          visits.add_label('harpoon', nil, cwd)
+        end
         visits.write_index()
+        vim.notify('Added to harpoon', vim.log.levels.INFO)
       end,
       silent = false,
       desc = 'Add to visits',
@@ -846,8 +655,15 @@ plug({
       function()
         vim.b[0].is_harpoon = false
         local visits = require('mini.visits')
+        local cwd = vim.uv.cwd()
         visits.remove_label('harpoon', nil, vim.cfg.runtime__starts_cwd)
+
+        if not require('userlib.runtime.path').is_path_equal(cwd, vim.cfg.runtime__starts_cwd) then
+          visits.remove_label('harpoon', nil, cwd)
+        end
+
         visits.write_index()
+        vim.notify('Removed from harpoon', vim.log.levels.INFO)
       end,
       silent = false,
       desc = 'Remove from visits',
@@ -855,11 +671,11 @@ plug({
     {
       '<localleader>h',
       function()
-        require('userlib.mini.visits').select_by_cwd(vim.cfg.runtime__starts_cwd, {
+        require('userlib.mini.visits').select_by_cwd(vim.uv.cwd(), {
           filter = 'harpoon',
         })
       end,
-      desc = 'List harpoon visits',
+      desc = 'List harpoon visits (CWD)',
     },
     {
       '<leader>ph',
@@ -878,9 +694,17 @@ plug({
       desc = 'List projects in cwd',
     },
     {
+      '<leader>pl',
+      function()
+        require('userlib.mini.visits').list_projects_in_cwd(vim.cfg.runtime__starts_cwd, 'visit_projects')
+      end,
+      desc = 'List visited projects',
+    },
+    {
       '<leader>pa',
       function()
         require('userlib.mini.visits').add_project(vim.uv.cwd(), vim.cfg.runtime__starts_cwd)
+        vim.notify('Added to project list', vim.log.levels.INFO)
       end,
       desc = 'Add project',
     },
@@ -897,6 +721,7 @@ plug({
       store = {
         autowrite = true,
       },
+      silent = true,
       track = {
         event = 'BufEnter',
         delay = 1000,
@@ -909,11 +734,13 @@ plug({
 })
 
 plug({
-  url = 'https://gitlab.com/ibhagwan/fzf-lua',
-  -- 'ibhagwan/fzf-lua',
+  -- url = 'https://gitlab.com/ibhagwan/fzf-lua',
+  'ibhagwan/fzf-lua',
+  commit = '36df11e3bbb6453014ff4736f6805b5a91dda56d',
   -- 'pze/fzf-lua',
   dev = false,
   dependencies = { 'nvim-tree/nvim-web-devicons' },
+  cond = vim.cfg.plugin_fzf_or_telescope == 'fzf',
   cmd = 'FzfLua',
   event = 'User LazyUIEnterOncePost',
   keys = {
@@ -1111,7 +938,8 @@ plug({
       },
     })
 
-    local enable_fzf_select = vim.cfg.ui__input_select_provider == 'fzf-lua'
+    -- local enable_fzf_select = vim.cfg.ui__input_select_provider == 'fzf-lua'
+    local enable_fzf_select = false
 
     if not enable_fzf_select then
       return
@@ -1120,8 +948,8 @@ plug({
     fzflua.register_ui_select({
       winopts = {
         fullscreen = false,
-        height = 0.6,
-        width = 0.75,
+        height = 0.30,
+        width = 0.70,
       },
       fzf_opts = {
         ['--no-hscroll'] = '',

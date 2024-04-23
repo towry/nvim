@@ -16,7 +16,7 @@ function M.load_on_startup()
       },
     },
     {
-      { 'WInLeave' },
+      { 'WinLeave' },
       {
         group = group_name,
         pattern = '*',
@@ -420,20 +420,28 @@ function M.load_on_startup()
       pattern = 'ProjectNvimSetPwd',
       group = '_set_dir_on_change_',
       callback = function(ctx)
+        local runtimeutils = require('userlib.runtime.utils')
         if vim.bo.buftype ~= '' then
           return
         end
+        local curbuf = vim.api.nvim_get_current_buf()
         local data = ctx.data or {}
         local new_cwd = data.dir or nil
         ---@diagnostic disable-next-line: undefined-field
         if not new_cwd then
           new_cwd = safe_cwd()
         end
+        if vim.t.Cwd ~= new_cwd and ctx.buf == curbuf then
+          -- project visits
+          runtimeutils.use_plugin('mini.visits', function(visits)
+            visits.add_label('visit_projects', new_cwd, vim.cfg.runtime__starts_cwd)
+          end)
+        end
         if not vim.t.CwdLocked then
           vim.cmd.tcd(new_cwd)
         end
         local buf_cwd, buf_cwd_short = vim.b[ctx.buf].project_nvim_cwd, vim.b[ctx.buf].project_nvim_cwd_short
-        local cwd, cwd_short = require('userlib.runtime.utils').update_cwd_env(buf_cwd, buf_cwd_short)
+        local cwd, cwd_short = runtimeutils.update_cwd_env(buf_cwd, buf_cwd_short)
         if vim.b[ctx.buf].did_set_cwd_short == cwd then
           return
         end
@@ -454,15 +462,6 @@ function M.load_on_startup()
       pattern = 'FugitiveChanged',
       callback = function()
         vim.defer_fn(require('userlib.git.gitinfo').update, 500)
-      end,
-    },
-    {
-      pattern = 'VeryLazy',
-      once = true,
-      callback = function()
-        require('user.config.theme').setup_theme()
-        --- TODO: fix me
-        require('userlib.git.gitinfo').start()
       end,
     },
     {

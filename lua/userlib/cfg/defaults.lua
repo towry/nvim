@@ -1,5 +1,7 @@
 local cwd = vim.uv.cwd()
 
+local use_coc = false
+
 return {
   ---runtime
   runtime__is_zellij = os.getenv('ZELLIJ_SESSION_NAME') ~= nil,
@@ -50,10 +52,10 @@ return {
   },
   runtime__python3_host_prog = '/usr/local/bin/python3',
   ---editing
-  edit__use_native_cmp = false,
+  edit__use_native_cmp = not use_coc,
   edit__use_plugin_cmp = false,
-  edit__use_coq_cmp = false,
-  edit__use_coc = not vim.g.vscode and true,
+  edit__use_coq_cmp = not use_coc,
+  edit__use_coc = not vim.g.vscode and use_coc,
   ---editor stuff
   --enable relative number or not.
   editor__relative_number = true,
@@ -164,8 +166,8 @@ return {
   ui__theme_name = 'default',
   ui__float_border = 'single',
   ui__window_equalalways = false,
-  ---@type "mini"|"fzf-lua"|"telescope"
-  ui__input_select_provider = 'fzf-lua',
+  ---@type "mini"|"dressing"
+  ui__input_select_provider = 'dressing',
   workbench__lualine_theme = 'default',
   ---misc stuff.
   misc__buf_exclude = {
@@ -208,5 +210,7 @@ return {
   },
   ---plugins specific.
   plugin__whichkey_or_clue = 'clue',
-  plugin_fzf_or_telescope = 'fzf',
+  ---@type 'fzf'|'telescope'
+  plugin_fzf_or_telescope = 'telescope',
+  plugin_telescope_sorter = vim.fn.executable('cargo') == 1 and 'nucleo' or nil,
 }

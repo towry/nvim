@@ -60,7 +60,7 @@ end
 ---     - on_select function ((item) -> ())
 local function commands(ouropts, opts)
   ouropts = ouropts or {}
-  opts = themes.get_dropdown(vim.tbl_extend('force', {
+  opts = require('userlib.telescope.themes').get_dropdown(vim.tbl_extend('force', {
     previewer = false,
   }, opts or {}))
 

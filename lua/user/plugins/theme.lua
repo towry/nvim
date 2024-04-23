@@ -44,12 +44,12 @@ plug({
 })
 
 plug({
-  'towry/dracula-mini.nvim',
+  'gbprod/nord.nvim',
   event = 'User LazyTheme',
-  cond = vim.cfg.ui__theme_name:match('dracula-mini'),
-  dev = false,
+  cond = vim.cfg.ui__theme_name:match('nord'),
   config = function()
-    require('dracula-mini').setup({
+    local utils = require('nord.utils')
+    require('nord').setup({
       -- your configuration comes here
       -- or leave it empty to use the default settings
       transparent = false, -- Enable this to disable setting the background color
@@ -64,149 +64,94 @@ plug({
         -- Style to be applied to different syntax groups
         -- Value is any valid attr-list value for `:help nvim_set_hl`
         comments = { italic = false, bold = false },
-        keywords = { italic = true },
-        functions = { bold = true, italic = true },
+        keywords = { italic = false },
+        functions = { bold = true, italic = false },
         variables = {},
       },
 
       --- You can override specific highlights to use other groups or a hex color
       --- function will be called with all highlights and the colorScheme table
       on_highlights = function(hl, c)
-        hl.WinbarPathTail = {
-          fg = c.aurora.green,
+        local float_bg = utils.blend(c.polar_night.bright, c.polar_night.origin, 0.5)
+        hl.NormalFloat = { bg = float_bg }
+        hl.FloatBorder = { bg = float_bg, fg = c.polar_night.light }
+        -- hl.TelescopeNormal = { link = 'NormalFloat' }
+        -- hl.TelescopeBorder = { link = 'FloatBorder' }
+
+        hl.CocErrorSign = { link = 'DiagnosticError' }
+        hl.CocWarningSign = { link = 'DiagnosticWarn' }
+        hl.CocInfoSign = { link = 'DiagnosticInfo' }
+        hl.CocHintSign = { link = 'DiagnosticHint' }
+        hl.CocErrorFloat = { link = 'DiagnosticError' }
+        hl.CocWarningFloat = { link = 'DiagnosticWarn' }
+        hl.CocFloating = { link = 'NormalFloat' }
+        hl.CocInfoFloat = { link = 'DiagnosticInfo' }
+        hl.CocHintFloat = { link = 'DiagnosticHint' }
+        hl.CocDiagnosticsError = { link = 'DiagnosticError' }
+        hl.CocDiagnosticsWarning = { link = 'DiagnosticWarn' }
+        hl.CocDiagnosticsInfo = { link = 'DiagnosticInfo' }
+        hl.CocDiagnosticsHint = { link = 'DiagnosticHint' }
+        hl.CocSelectedText = { fg = c.snow_storm.origin }
+        hl.CocMenuSel = { link = 'PmenuSel' }
+        hl.CocCodeLens = { fg = c.polar_night.bright }
+        hl.CocInlayHint = { fg = c.polar_night.bright }
+        hl.CocInlayHintType = { link = 'CocInlayHint' }
+        hl.CocInlayHintParameter = { link = 'CocInlayHint' }
+        hl.CocErrorHighlight = { undercurl = true, sp = c.aurora.red }
+        hl.CocWarningHighlight = { sp = c.aurora.yellow, undercurl = true }
+        hl.CocUnusedHighlight = { link = 'DiagnosticUnderlineWarn' }
+        hl.CocInfoHighlight = { sp = c.aurora.green, undercurl = true }
+        hl.CocHintHighlight = { sp = c.aurora.orange, undercurl = true }
+        hl.TreesitterContextBottom = {
+          underline = true,
+          sp = c.polar_night.brightest,
         }
+        hl.FzfLuaNormal = { link = 'NormalFloat' }
+        hl.FzfLuaBorder = { link = 'FloatBorder' }
+        hl.FzfLuaPreviewNormal = { link = 'Normal' }
       end,
     })
   end,
 })
 
 plug({
-  -- https://protesilaos.com/emacs/modus-themes-pictures
-  'miikanissi/modus-themes.nvim',
+  'ellisonleao/gruvbox.nvim',
   event = 'User LazyTheme',
   priority = 1000,
-  cond = vim.cfg.ui__theme_name == 'modus',
+  enabled = vim.cfg.ui__theme_name == 'gruvbox',
   opts = {
-    -- `deuteranopia`,
-    -- variant = 'tritanopia',
-    variant = 'tinted',
-    dim_inactive = false,
-    styles = {
-      comments = { italic = false, bold = false },
-      keywords = { italic = true },
-      functions = { bold = true, italic = true },
+    terminal_colors = true, -- add neovim terminal colors
+    undercurl = true,
+    underline = true,
+    bold = true,
+    italic = {
+      strings = true,
+      emphasis = true,
+      comments = true,
+      operators = false,
+      folds = true,
     },
-    on_highlights = function(hls, c)
-      local is_dark = vim.o.background == 'dark'
-      hls.WinbarPathTail = {
-        fg = c.bg_green_intense,
-      }
-      hls['FlashLabel'] = {
-        fg = c.bg_main_dim,
-        bg = c.bg_yellow,
-        bold = true,
-      }
-      hls['FlashBackdrop'] = {
-        fg = is_dark and c.fg_dim or '#9f9f9f',
-      }
-      hls['LineNr'] = {
-        fg = c.bg_active,
-      }
-      hls['WinSeparator'] = {
-        fg = c.bg_active,
-      }
-      hls['Winbar'] = {
-        fg = c.fg_inactive,
-        bg = c.bg_main,
-        italic = true,
-      }
-      hls['WinbarNc'] = {
-        fg = c.fg_inactive,
-        bg = c.bg_main,
-        italic = true,
-      }
-      hls['CursorLineNr'] = {
-        bg = 'NONE',
-        fg = c.fg_main,
-        bold = true,
-      }
-      hls['FzfLuaNormal'] = { link = 'Normal' }
-      hls['FzfLuaBorder'] = { link = 'LineNr' }
-      hls['FzfLuaPreviewNormal'] = { link = 'Normal' }
-      hls['FoldColumn'] = { bg = c.bg_main, fg = c.fg_dim, bold = false }
-      hls['GitSignsAdd'] = {
-        fg = c.fg_added,
-        bg = 'NONE',
-      }
-      hls['GitSignsAddNr'] = {
-        fg = c.fg_added,
-        bg = 'NONE',
-      }
-      hls['GitSignsChange'] = {
-        fg = c.fg_changed,
-        bg = 'NONE',
-      }
-      hls['GitSignsChangeNr'] = {
-        fg = c.fg_changed,
-        bg = 'NONE',
-      }
-      hls['GitSignsDelete'] = {
-        fg = c.fg_removed,
-        bg = 'NONE',
-      }
-      hls['GitSignsDeleteNr'] = {
-        fg = c.fg_removed,
-        bg = 'NONE',
-      }
-      hls['StatusLine'] = {
-        bg = c.bg_active,
-        fg = c.bg_alt,
-      }
-      hls['MiniCursorword'] = {
-        italic = true,
-        bold = true,
-        bg = 'NONE',
-        fg = 'NONE',
-      }
-      hls['MiniCursorwordCurrent'] = {
-        underline = false,
-        bold = false,
-        bg = 'NONE',
-        fg = 'NONE',
-      }
-      hls['MiniIndentscopeSymbol'] = {
-        fg = c.bg_dim,
-        bg = 'NONE',
-        bold = false,
-      }
-
-      hls.CocErrorSign = { link = 'DiagnosticError' }
-      hls.CocWarningSign = { link = 'DiagnosticWarn' }
-      hls.CocInfoSign = { link = 'DiagnosticInfo' }
-      hls.CocHintSign = { link = 'DiagnosticHint' }
-      hls.CocErrorFloat = { link = 'DiagnosticError' }
-      hls.CocWarningFloat = { link = 'DiagnosticWarn' }
-      hls.CocFloating = { link = 'NormalFloat' }
-      hls.CocInfoFloat = { link = 'DiagnosticInfo' }
-      hls.CocHintFloat = { link = 'DiagnosticHint' }
-      hls.CocDiagnosticsError = { link = 'DiagnosticError' }
-      hls.CocDiagnosticsWarning = { link = 'DiagnosticWarn' }
-      hls.CocDiagnosticsInfo = { link = 'DiagnosticInfo' }
-      hls.CocDiagnosticsHint = { link = 'DiagnosticHint' }
-      hls.CocSelectedText = { fg = c.blue }
-      hls.CocMenuSel = { link = 'PmenuSel' }
-      hls.CocCodeLens = { fg = c.visual }
-      hls.CocInlayHint = { fg = c.visual }
-      hls.CocInlayHintType = { link = 'CocInlayHint' }
-      hls.CocInlayHintParameter = { link = 'CocInlayHint' }
-      hls.CocErrorHighlight = { undercurl = true, sp = c.red }
-      hls.CocWarningHighlight = { sp = c.yellow, undercurl = true }
-      hls.CocInfoHighlight = { sp = c.green, undercurl = true }
-      hls.CocHintHighlight = { sp = c.orange, undercurl = true }
-
-      return hls
-    end,
+    strikethrough = true,
+    invert_selection = false,
+    invert_signs = false,
+    invert_tabline = false,
+    invert_intend_guides = false,
+    inverse = true, -- invert background for search, diffs, statuslines and errors
+    contrast = 'soft', -- can be "hard", "soft" or empty string
+    palette_overrides = {},
+    overrides = {
+      CocUnusedHighlight = { link = 'DiagnosticUnderlineWarn' },
+      TelescopeSelection = { underline = true },
+    },
+    dim_inactive = false,
+    transparent_mode = false,
   },
+})
+
+plug({
+  'cocopon/iceberg.vim',
+  event = vim.cfg.ui__theme_name == 'nordic' and 'User LazyTheme' or nil,
+  config = false,
 })
 
 plug({
@@ -227,25 +172,37 @@ plug({
     overrides = function(colors) -- add/modify highlights
       -- do not foget to run ':KanagawaCompile'
       return {
-        FzfLuaNormal = { link = 'Normal' },
-        FzfLuaBorder = { link = 'LineNr' },
+        TelescopeNormal = { link = 'NormalFloat' },
+        TelescopeBorder = { link = 'FloatBorder' },
+        TelescopeSelection = { link = 'QuickFixLine' },
+        FzfLuaNormal = { link = 'NormalFloat' },
+        FzfLuaBorder = { link = 'FloatBorder' },
         FzfLuaPreviewNormal = { link = 'Normal' },
         --- coc
         CocUnusedHighlight = { link = 'DiagnosticUnderlineHint' },
+        -- flash
+        FlashCursor = { fg = colors.theme.ui.fg, bg = colors.palette.waveBlue1 },
       }
     end,
     colors = {
       palette = {
-        -- dragonBlack0 = '#191f24',
-        -- dragonBlack1 = '#1c2228',
-        -- dragonBlack2 = '#192024',
-        -- dragonBlack3 = '#1c2428',
-        -- dragonBlack4 = '#232c30',
-        -- dragonBlack5 = '#2b353b',
-        -- dragonBlack6 = '#3b464f',
-        -- dragonBlue2 = '#7b96a3',
-        -- winterBlue = '#223140',
-        --- +--
+        -- + green
+        -- lotusWhite0 = '#B9C8B7',
+        -- lotusWhite1 = '#C2CDBE',
+        -- lotusWhite2 = '#CAD2C5',
+        -- lotusWhite3 = '#E9EDE6',
+        -- lotusWhite4 = '#F3F5F1',
+        -- lotusWhite5 = '#ffffff',
+
+        --- + solarized
+        lotusWhite0 = '#ECE8D8',
+        lotusWhite1 = '#E9E5D6',
+        lotusWhite2 = '#F3EEDD',
+        --- main bg
+        lotusWhite3 = '#FDF6E3',
+        --- tabline etc
+        lotusWhite4 = '#f3eedd',
+        lotusWhite5 = '#eee8d5',
       },
       theme = {
         all = {
@@ -253,40 +210,26 @@ plug({
             bg_gutter = 'none',
           },
         },
+        lotus = {
+          ui = {
+            bg_p1 = '#DCD7BA',
+            -- bg_m3 = '#586e75',
+          },
+        },
+        dragon = {
+          ui = {},
+        },
       },
     },
     background = {
-      dark = 'wave',
-      -- dark = 'dragon',
+      -- dark = 'wave',
+      dark = 'dragon',
       light = 'lotus',
     },
   },
 })
 
 plug({
-  'EdenEast/nightfox.nvim',
-  event = 'User LazyTheme',
-  priority = 1000,
-  enabled = string.match(vim.cfg.ui__theme_name, 'fox') ~= nil,
-  config = function()
-    -- https://github.com/EdenEast/nightfox.nvim?tab=readme-ov-file#configuration
-    require('nightfox').setup({
-      options = {
-        styles = {
-          comments = 'italic',
-          keywords = 'bold',
-          types = 'italic,bold',
-        },
-      },
-      palettes = {
-        all = {},
-      },
-      specs = {},
-      groups = {},
-    })
-  end,
-  init = function()
-    vim.g.nightfox_day = 'dawnfox'
-    vim.g.nightfox_night = 'nordfox'
-  end,
+  'maxmx03/solarized.nvim',
+  lazy = false,
 })

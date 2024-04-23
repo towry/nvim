@@ -4,6 +4,7 @@ pack.plug({
   -- hightlights ranges you have entered in commandline.
   {
     'winston0410/range-highlight.nvim',
+    cond = not vim.cfg.runtime__starts_as_gittool,
     dependencies = { 'winston0410/cmd-parser.nvim' },
     event = 'CmdLineEnter',
     config = true,

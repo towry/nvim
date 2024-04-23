@@ -6,6 +6,7 @@ local libutils = require('userlib.runtime.utils')
 
 ---- dap
 pack.plug({
+  cond = not vim.cfg.runtime__starts_as_gittool,
   'mfussenegger/nvim-dap',
   dependencies = {
     { 'theHamsta/nvim-dap-virtual-text' },
@@ -204,9 +205,12 @@ pack.plug({
 pack.plug({
   {
     'nvim-neotest/neotest',
-    enabled = vim.cfg.edit__use_coc,
+    cond = not vim.cfg.runtime__starts_as_gittool,
     optional = true,
     opts = function(_, opts)
+      if not vim.cfg.edit__use_coc then
+        return opts
+      end
       opts.adapters = opts.adapters or {}
       vim.list_extend(opts.adapters, {
         require('neotest-vim-test')({
@@ -227,7 +231,8 @@ pack.plug({
 ---neotest
 pack.plug({
   cmd = 'Neotest',
-  'rcarriga/neotest',
+  'nvim-neotest/neotest',
+  cond = not vim.cfg.runtime__starts_as_gittool,
   dependencies = {
     'nvim-neotest/nvim-nio',
     'nvim-lua/plenary.nvim',
@@ -402,6 +407,7 @@ pack.plug({
 pack.plug({
   'nvim-neotest/neotest-vim-test',
   event = { 'BufRead' },
+  cond = not vim.cfg.runtime__starts_as_gittool,
   dependencies = {
     'nvim-neotest/neotest',
     {
@@ -475,7 +481,6 @@ pack.plug({
   },
   cmd = {
     'OverseerRestartLast',
-    'Grep',
     'OverseerRun',
     'OverseerOpen',
     'OverseerToggle',

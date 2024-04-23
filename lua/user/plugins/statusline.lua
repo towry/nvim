@@ -4,7 +4,7 @@ plug({
   --- Copied from stevearc's dotfiles
   ---@see https://github.com/stevearc/dotfiles/blob/860e18ee85d30a72cea5a51acd9983830259075e/.config/nvim/lua/plugins/heirline.lua#L4
   'rebelot/heirline.nvim',
-  event = 'VeryLazy',
+  event = 'User LazyUIEnterOncePost',
   cond = not vim.cfg.runtime__starts_as_gittool,
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
@@ -28,18 +28,12 @@ plug({
       tabline = {
         hl = { fg = 'tabline_fg', bg = 'tabline_bg' },
         comp.TabLine,
-        comp.lpad({
-          { provider = '-:- ' },
-          comp.FileIcon,
-          { provider = ' %t' },
-        }),
+        comp.lpad(comp.Overseer),
+        comp.lpad(comp.Dap),
         {
           provider = '%=',
         },
         {
-          comp.rpad(comp.Overseer),
-          comp.rpad(comp.Dap),
-          { provider = '%=' },
           comp.rpad(comp.Copilot),
           comp.rpad(comp.Codeium),
           comp.rpad({
@@ -70,17 +64,10 @@ plug({
           {
             provider = '%m%w%r',
           },
+          comp.BufVisited,
         }),
         comp.lpad(comp.CocStl),
         { provider = '%=' },
-        -- {
-        --   condition = function()
-        --     return vim.t.TabLabel and vim.t.TabLabel ~= ''
-        --   end,
-        --   provider = function()
-        --     return '%-.20([' .. vim.t.TabLabel .. ']%) '
-        --   end,
-        -- },
         { provider = '%=' },
         {
           provider = '%v:%l %P ',
@@ -97,6 +84,7 @@ plug({
           {
             provider = '%m%w%r',
           },
+          comp.BufVisited,
         }),
         comp.lpad(comp.CocStl),
         { provider = '%=' },

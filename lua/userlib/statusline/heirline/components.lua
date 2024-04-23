@@ -265,7 +265,7 @@ local BufVisited = {
   provider = function(self)
     local is = self.is
     if is then
-      return ''
+      return '[#H]'
     end
     return ''
   end,
@@ -668,7 +668,7 @@ local Copilot = {
     if not self.is_running() then
       return '󰚩 '
     end
-    return '������������� '
+    return '? '
   end,
   hl = function(self)
     local fg = vim.g.copilot_auto_mode == true and 'orange' or ''
@@ -830,6 +830,26 @@ local Tabpage = {
     },
   },
   {
+    init = function(self)
+      self.bufnr = vim.api.nvim_win_get_buf(vim.api.nvim_tabpage_get_win(self.tabpage))
+      self.filename = vim.api.nvim_buf_get_name(self.bufnr) or ''
+      self.tail = ''
+      if vim.bo[self.bufnr].buftype == '' and #self.filename > 0 then
+        self.tail = vim.fn.fnamemodify(self.filename, ':t:r')
+      elseif #self.filename <= 0 then
+        self.tail = '[No Name]'
+      else
+        self.tail = '[' .. vim.bo[self.bufnr].filetype .. ']'
+      end
+    end,
+    provider = function(self)
+      return '%</%.20(' .. self.tail .. '%)'
+    end,
+    hl = {
+      fg = 'gray',
+    },
+  },
+  {
     provider = '%T ',
   },
 }
@@ -974,7 +994,7 @@ local UnsavedBufCount = {
 
 local CocStl = {
   condition = function()
-    return vim.fn.exists('*coc#status') and vim.bo.buftype == '' and package.loaded['coc']
+    return vim.g.coc_status ~= nil and vim.cfg.edit__use_coc
   end,
   provider = '%{coc#status()}',
 }

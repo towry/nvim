@@ -102,30 +102,35 @@ function M.files(opts)
     local fzfutils = require('fzf-lua.utils')
     -- fzf-lua.defaults#defaults.files.fd_opts
     cmd = string.format(
-      [[fd --color=never --type f --hidden --follow --exclude .git -x printf "{}: {/} %s\n"]],
-      fzfutils.ansi_codes.grey('{//}')
+      [[fd --color=never --type f --follow --exclude .git -x echo {} | awk -F/ '{printf "%%s: ", $0; printf "%%s ", $NF; gsub(/^\.\//,"",$0); gsub($NF,"",$0); printf "%s ", $0; print ""}']],
+      fzfutils.ansi_codes.grey('%s')
     )
     opts.fzf_opts = {
       -- process ansi colors
       ['--ansi'] = '',
+      ['--no-hscroll'] = '',
       ['--with-nth'] = '2..',
       ['--delimiter'] = '\\s',
       ['--tiebreak'] = 'begin,index',
     }
-    -- opts._fmt = opts._fmt or {}
-    -- opts._fmt.from = function(entry, _opts)
-    --   local s = fzfutils.strsplit(entry, ' ')
-    --   return s[3]
-    -- end
   end
   opts.cmd = cmd
+
+  opts.actions = {
+    ['ctrl-h'] = function(_, o)
+      --- toggle hidden
+      opts.cmd = libutils.toggle_cmd_option(o.cmd, '--hidden')
+      opts.query = utils.get_last_query()
+      return fzflua.files(opts)
+    end,
+  }
 
   opts.winopts = {
     fullscreen = false,
     height = 0.90,
     width = 1,
   }
-  opts.ignore_current_file = true
+  opts.ignore_current_file = false
 
   return fzflua.files(opts)
 end
@@ -135,7 +140,6 @@ end
 function M.folders(opts)
   opts = opts or {}
 
-  local actions = require('fzf-lua.actions')
   local fzflua = require('fzf-lua')
   local path = require('fzf-lua.path')
 
@@ -192,6 +196,7 @@ function M.folders(opts)
     ['ctrl-h'] = function(_, o)
       --- toggle hidden
       opts.cmd = libutils.toggle_cmd_option(o.cmd, '--hidden')
+      opts.query = utils.get_last_query()
       return fzflua.fzf_exec(opts.cmd, opts)
     end,
   }
@@ -203,6 +208,7 @@ end
 function M.buffers_or_recent(no_buffers)
   local fzflua = require('fzf-lua')
   local bufopts = {
+    filename_first = true,
     sort_lastused = true,
     winopts = {
       fullscreen = false,
@@ -210,14 +216,6 @@ function M.buffers_or_recent(no_buffers)
         hidden = 'hidden',
       },
     },
-    -- keymap = {
-    --   fzf = {
-    --     ['tab'] = 'down',
-    --     ['btab'] = 'up',
-    --     ['ctrl-j'] = 'toggle+down',
-    --     ['ctrl-i'] = 'down',
-    --   },
-    -- },
   }
   local oldfiles_opts = {
     prompt = ' Recent: ',
@@ -279,7 +277,7 @@ function M.buffers_or_recent(no_buffers)
     return
   end
   local _bo = vim.tbl_extend('force', {}, bufopts, buffers_actions)
-  return fzflua.buffers(_bo)
+  return require('fzf-lua').buffers(_bo)
 end
 
 function M.git_branches()

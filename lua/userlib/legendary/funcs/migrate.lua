@@ -3,6 +3,28 @@ local utils = require('userlib.runtime.utils')
 return {
   {
     function()
+      local cwd = require('userlib.runtime.utils').get_root({
+        root_patterns = { 'package.json' },
+        pattern_start_path = vim.fn.expand('%:p:h'),
+        only_pattern = true,
+      })
+      local pkg = require('userlib.runtime.path').join(cwd, 'package.json')
+      if not vim.uv.fs_stat(pkg) then
+        vim.notify('package.json not found', vim.log.levels.ERROR)
+        return
+      end
+      if not vim.json then
+        print('vim.json not found')
+        return
+      end
+      local json = vim.json.decode(table.concat(vim.fn.readfile(pkg, ''), '\n'))
+      vim.fn.setreg('+', json.name)
+      vim.print(json.name)
+    end,
+    description = 'Copy current npm package.json name',
+  },
+  {
+    function()
       local _ = require('userlib.runtime.utils')
       _.use_plugin('window-picker', function(winpick)
         local picked = winpick.pick_window({

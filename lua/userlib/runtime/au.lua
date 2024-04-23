@@ -31,7 +31,7 @@ M.user_autocmds = setmetatable({
   -- dashboard is closed
   OnLeaveDashboard = 'OnLeaveDashboard',
   ------ layered events
-  --- after ui enter.
+  --- after ui enter. before VeryLazy
   LazyUIEnter = 'LazyUIEnter',
   --- after LazyUIEnter
   LazyUIEnterPost = 'LazyUIEnterPost',

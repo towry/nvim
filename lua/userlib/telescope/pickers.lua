@@ -1,19 +1,6 @@
 --- https://github.dev/tjdevries/config_manager/blob/master/xdg_config/nvim/plugin/options.lua
 local M = {}
 
-M.get_path_and_tail = function(filename)
-  local utils = require('telescope.utils')
-  local bufname_tail = utils.path_tail(filename)
-  local path_without_tail = require('plenary.strings').truncate(filename, #filename - #bufname_tail, '')
-  local path_to_display = utils.transform_path({
-    path_display = function(_opts, path_to_transform)
-      return require('userlib.runtime.path').shorten(path_to_transform, 4)
-    end,
-  }, path_without_tail)
-
-  return bufname_tail, path_to_display
-end
-
 local use_find_files_instead_of_git = true
 
 M.project_files_toggle_between_git_and_fd = function()
@@ -22,13 +9,6 @@ end
 
 M.project_files = function(opts)
   local action_state = require('telescope.actions.state')
-  local make_entry = require('telescope.make_entry')
-  local strings = require('plenary.strings')
-  local utils = require('telescope.utils')
-  local entry_display = require('telescope.pickers.entry_display')
-  local devicons = require('nvim-web-devicons')
-  local def_icon = devicons.get_icon('fname', { default = true })
-  local iconwidth = strings.strdisplaywidth(def_icon)
 
   local map_i_actions = function(_, map)
     map('i', '<C-o>', function(prompt_bufnr)
@@ -76,34 +56,6 @@ M.project_files = function(opts)
     return true
   end
 
-  --- //////// item stylish.
-  local entry_make = make_entry.gen_from_file(opts)
-  opts.entry_maker = function(line)
-    local entry = entry_make(line)
-    local displayer = entry_display.create({
-      separator = ' ',
-      items = {
-        { width = iconwidth },
-        { width = nil },
-        { remaining = true },
-      },
-    })
-    entry.display = function(et)
-      -- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/make_entry.lua
-      local tail_raw, path_to_display = M.get_path_and_tail(et.value)
-      local tail = tail_raw .. ' '
-      local icon, iconhl = utils.get_devicons(tail_raw)
-
-      return displayer({
-        { icon, iconhl },
-        tail,
-        { path_to_display, 'TelescopeResultsComment' },
-      })
-    end
-    return entry
-  end
-  ---/// end item stylish
-
   if opts and opts.oldfiles then
     opts.results_title = ' Recent files:'
     opts.include_current_session = true
@@ -140,7 +92,7 @@ end
 M.command_history = function()
   local builtin = require('telescope.builtin')
 
-  builtin.command_history(require('telescope.themes').get_dropdown({
+  builtin.command_history(require('userlib.telescope.themes').get_dropdown({
     color_devicons = true,
     winblend = 4,
     layout_config = {
@@ -192,9 +144,8 @@ end
 
 function M.curbuf()
   local builtin = require('telescope.builtin')
-  local themes = require('telescope.themes')
 
-  local opts = themes.get_dropdown({
+  local opts = require('userlib.telescope.themes').get_dropdown({
     skip_empty_lines = true,
     winblend = 10,
     previewer = true,
@@ -209,7 +160,7 @@ end
 M.edit_neovim = function()
   local builtin = require('telescope.builtin')
 
-  builtin.git_files(require('telescope.themes').get_dropdown({
+  builtin.git_files(require('userlib.telescope.themes').get_dropdown({
     color_devicons = true,
     cwd = '~/.config/nvim',
     previewer = false,
@@ -228,39 +179,32 @@ M.edit_neovim = function()
   }))
 end
 
-function M.buffers_or_recent()
+function M.buffers_or_recent(cwd_only)
   local count = #vim.fn.getbufinfo({ buflisted = 1 })
   if count <= 1 then
     --- open recent.
-    M.project_files(require('telescope.themes').get_dropdown({
-      cwd_only = false,
+    M.project_files(require('userlib.telescope.themes').get_dropdown({
+      cwd_only = cwd_only or false,
       cwd = vim.cfg.runtime__starts_cwd,
       oldfiles = true,
       previewer = false,
-      -- borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default[0],
     }))
     return
   end
-  return M.buffers()
+  return M.buffers(cwd_only)
 end
 
-function M.buffers()
+function M.buffers(cwd_only)
   local builtin = require('telescope.builtin')
   local actions = require('telescope.actions')
   local actionstate = require('telescope.actions.state')
   local Buffer = require('userlib.runtime.buffer')
 
-  builtin.buffers(require('telescope.themes').get_dropdown({
-    -- borderchars = require('userlib.telescope.borderchars').dropdown_borderchars_default[0],
-    ignore_current_buffer = false,
+  builtin.buffers(require('userlib.telescope.themes').get_dropdown({
+    ignore_current_buffer = true,
     sort_mru = true,
+    cwd_only = cwd_only,
     previewer = false,
-    -- layout_strategy = 'vertical',
-    -- layout_strategy = "bottom_pane",
-    entry_maker = M.gen_from_buffer({
-      bufnr_width = 2,
-      sort_mru = true,
-    }),
     attach_mappings = function(prompt_bufnr, map)
       local close_buf = function()
         local selection = actionstate.get_selected_entry()
@@ -292,6 +236,15 @@ function M.buffers()
         Buffer.set_current_buffer_focus(bufnr)
       end
 
+      local open_findfiles = function()
+        local current_query = actionstate.get_current_line()
+        actions.close(prompt_bufnr)
+        M.project_files({
+          default_text = current_query,
+        })
+      end
+
+      map('i', '<C-f>', open_findfiles)
       map('i', '<C-h>', close_buf)
       map('i', '<CR>', open_selected)
       -- pick window to open.
@@ -302,94 +255,6 @@ function M.buffers()
       return true
     end,
   }))
-end
-
-function M.gen_from_buffer(opts)
-  local runtimeUtils = require('userlib.runtime.utils')
-  local utils = require('telescope.utils')
-  local strings = require('plenary.strings')
-  local entry_display = require('telescope.pickers.entry_display')
-  local Path = require('plenary.path')
-  local make_entry = require('telescope.make_entry')
-
-  opts = opts or {}
-
-  local disable_devicons = opts.disable_devicons
-
-  local icon_width = 0
-  if not disable_devicons then
-    local icon, _ = utils.get_devicons('fname', disable_devicons)
-    icon_width = strings.strdisplaywidth(icon)
-  end
-
-  local cwd = vim.fn.expand(opts.cwd or runtimeUtils.get_root() or '.')
-
-  local make_display = function(entry)
-    -- bufnr_width + modes + icon + 3 spaces + : + lnum
-    opts.__prefix = opts.bufnr_width + 4 + icon_width + 3 + 1 + #tostring(entry.lnum)
-    local bufname_tail = utils.path_tail(entry.filename)
-    local path_without_tail = require('plenary.strings').truncate(entry.filename, #entry.filename - #bufname_tail, '')
-    local path_to_display = utils.transform_path({
-      path_display = { 'truncate' },
-    }, path_without_tail)
-    local bufname_width = strings.strdisplaywidth(bufname_tail)
-    local icon, hl_group = utils.get_devicons(entry.filename, disable_devicons)
-
-    local displayer = entry_display.create({
-      separator = ' ',
-      items = {
-        { width = opts.bufnr_width },
-        { width = 4 },
-        { width = icon_width },
-        { width = bufname_width },
-        { remaining = true },
-      },
-    })
-
-    return displayer({
-      { entry.bufnr, 'TelescopeResultsNumber' },
-      { entry.indicator, 'TelescopeResultsComment' },
-      { icon, hl_group },
-      bufname_tail,
-      { path_to_display .. ':' .. entry.lnum, 'TelescopeResultsComment' },
-    })
-  end
-
-  return function(entry)
-    local bufname = entry.info.name ~= '' and entry.info.name or '[No Name]'
-    -- if bufname is inside the cwd, trim that part of the string
-    bufname = Path:new(bufname):normalize(cwd)
-
-    local hidden = entry.info.hidden == 1 and 'h' or 'a'
-    -- local readonly = vim.api.nvim_buf_get_option(entry.bufnr, 'readonly') and '=' or ' '
-    local readonly = vim.api.nvim_get_option_value('readonly', {
-      buf = entry.bufnr,
-    }) and '=' or ' '
-    local changed = entry.info.changed == 1 and '+' or ' '
-    local indicator = entry.flag .. hidden .. readonly .. changed
-    local lnum = 1
-
-    -- account for potentially stale lnum as getbufinfo might not be updated or from resuming buffers picker
-    if entry.info.lnum ~= 0 then
-      -- but make sure the buffer is loaded, otherwise line_count is 0
-      if vim.api.nvim_buf_is_loaded(entry.bufnr) then
-        local line_count = vim.api.nvim_buf_line_count(entry.bufnr)
-        lnum = math.max(math.min(entry.info.lnum, line_count), 1)
-      else
-        lnum = entry.info.lnum
-      end
-    end
-
-    return make_entry.set_default_entry_mt({
-      value = bufname,
-      ordinal = entry.bufnr .. ' : ' .. bufname,
-      display = make_display,
-      bufnr = entry.bufnr,
-      filename = bufname,
-      lnum = lnum,
-      indicator = indicator,
-    }, opts)
-  end
 end
 
 return M

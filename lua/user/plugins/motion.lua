@@ -73,11 +73,13 @@ plug({
         desc = 'Flash',
       },
       {
-        's',
+        --- cs not working because surround use it.
+        --- cm, dm
+        'm',
         mode = { 'o', 'x' },
         function()
           require('flash').jump({
-            search = { forward = true, wrap = false, multi_window = false },
+            search = { wrap = false, multi_window = false },
             label = {
               uppercase = false,
             },

@@ -144,22 +144,7 @@ function M.setup_keybinding(client, buffer)
     set(
       { 'n', 'v' },
       '<leader>ca',
-      -- cmdstr([[lua vim.lsp.buf.code_action()]]),
-      function()
-        require('userlib.lsp.func').jump_to_diagnostic_in_line()
-        require('fzf-lua').lsp_code_actions({
-          winopts = {
-            fullscreen = false,
-            height = 0.8,
-            width = 0.5,
-            preview = {
-              hidden = 'hidden',
-              layout = 'vertical',
-              vertical = 'down:30%',
-            },
-          },
-        })
-      end,
+      cmdstr([[lua require('userlib.lsp.func').open_code_action()]]),
       opts({
         desc = _('Code Action'),
       })

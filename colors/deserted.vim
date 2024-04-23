@@ -52,7 +52,7 @@ hi Pmenu guifg=#ffffff guibg=#666666 gui=NONE cterm=NONE
 hi PmenuSel guifg=#333333 guibg=#f0e68c gui=NONE cterm=NONE
 hi PmenuSbar guifg=NONE guibg=#333333 gui=NONE cterm=NONE
 hi PmenuThumb guifg=NONE guibg=#c2bfa5 gui=NONE cterm=NONE
-hi TabLine guifg=#aaaaaa guibg=#4d4d4d gui=NONE cterm=NONE
+hi TabLine guifg=#aaaaaa guibg=#6C6464 gui=NONE cterm=NONE
 hi TabLineFill guifg=#bbbbbb guibg=#4d4d4d gui=NONE cterm=NONE
 hi TabLineSel guifg=#eeeeee guibg=#1a1a1a gui=NONE cterm=NONE
 hi ToolbarLine guifg=NONE guibg=#666666 gui=NONE cterm=NONE
@@ -106,10 +106,14 @@ hi DiffChange guifg=#6dceeb guibg=#464646 gui=NONE cterm=NONE
 hi DiffText  guifg=#c6c6c6 guibg=#464646 gui=NONE cterm=NONE
 hi DiffDelete guifg=#fd5c5c guibg=#464646 gui=NONE cterm=NONE
 " +--- LSP
-hi DiagnosticUnderlineError guifg=#ff0000 guibg=NONE gui=undercurl cterm=underline
-hi DiagnosticUnderlineWarn guifg=#ffde9b guibg=NONE gui=undercurl cterm=underline
-hi DiagnosticUnderlineInfo guifg=#6dceeb guibg=NONE gui=undercurl cterm=underline
-hi DiagnosticUnderlineHint guifg=#5f875f guibg=NONE gui=undercurl cterm=underline
+" hi DiagnosticUnderlineError guifg=#ff0000 guibg=NONE gui=undercurl cterm=underline
+" hi DiagnosticUnderlineWarn guifg=#ffde9b guibg=NONE gui=undercurl cterm=underline
+" hi DiagnosticUnderlineInfo guifg=#6dceeb guibg=NONE gui=undercurl cterm=underline
+" hi DiagnosticUnderlineHint guifg=#5f875f guibg=NONE gui=undercurl cterm=underline
+hi DiagnosticUnderlineError guifg=NONE guisp=#ff0000 guibg=NONE gui=undercurl cterm=underline
+hi DiagnosticUnderlineWarn guifg=NONE guisp=#ffde9b guibg=NONE gui=undercurl cterm=underline
+hi DiagnosticUnderlineInfo guifg=NONE guisp=#6dceeb guibg=NONE gui=undercurl cterm=underline
+hi DiagnosticUnderlineHint guifg=NONE guisp=#5f875f guibg=NONE gui=undercurl cterm=underline
 " -+++
 " +--- Treesitter
 hi! link @string ui_txt_br

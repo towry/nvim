@@ -121,9 +121,9 @@ pack.plug({
       },
       select = {
         -- Set to false to disable the vim.ui.select implementation
-        enabled = true,
+        enabled = vim.cfg.ui__input_select_provider == 'dressing' and true or false,
         -- Priority list of preferred vim.select implementations
-        backend = { 'telescope', 'nui', 'builtin' },
+        backend = vim.cfg.runtime__starts_as_gittool and { 'builtin' } or { 'telescope', 'nui', 'builtin' },
         -- Options for nui Menu
         nui = {
           position = {
@@ -145,6 +145,12 @@ pack.plug({
           max_width = 80,
           max_height = 40,
         },
+        telescope = (function()
+          if vim.cfg.runtime__starts_as_gittool then
+            return nil
+          end
+          return require('userlib.telescope.themes').get_dropdown()
+        end)(),
         -- Options for built-in selector
         builtin = {
           -- These are passed to nvim_open_win
@@ -241,6 +247,18 @@ pack.plug({
       default_opts = {
         keymaps = { silent = true, noremap = true },
       },
+      sort = {
+        most_recent_first = true,
+        -- sort user-defined items before built-in items
+        user_items_first = true,
+        frecency = {
+          -- the directory to store the database in
+          db_root = string.format('%s/legendary/', vim.fn.stdpath('data')),
+          -- the maximum number of timestamps for a single item
+          -- to store in the database
+          max_timestamps = 10,
+        },
+      },
       -- col_separator_char = '#',
       select_prompt = 'Legendary: ',
       icons = {
@@ -251,7 +269,7 @@ pack.plug({
       extensions = {
         diffview = true,
       },
-      log_level = 'info',
+      log_level = 'error',
     })
   end,
 })
@@ -473,6 +491,7 @@ pack.plug({
         { mode = 'v', keys = '<Leader>a', desc = '+AI Assistant' },
         { mode = 'x', keys = '<Leader>a', desc = '+AI Assistant' },
         { mode = 'n', keys = '<Leader>n', desc = '+Normal mode utils' },
+        { mode = 'n', keys = '<Leader>q', desc = '+Quickfix|Loclist' },
         { mode = 'n', keys = '<LocalLeader>b', desc = '+Buffer' },
         { mode = 'n', keys = '<LocalLeader>c', desc = '+Code' },
         { mode = 'n', keys = 'ga', desc = '+TextChanges' },

@@ -7,7 +7,7 @@ function M.startup()
   o.autowrite = true
   o.startofline = false -- cursor start of line when scroll
   o.exrc = true
-  o.jumpoptions = 'stack'
+  o.jumpoptions = 'stack,view'
   o.path = '**' -- use a recursive path for :find
   o.breakindent = true
   o.cpoptions:append('>') -- append to register with line break
@@ -35,6 +35,7 @@ function M.startup()
   o.winfixheight = false
   o.showmatch = false -- show {} match and jump
   o.undofile = true --- Sets undo to file
+  o.undolevels = 10000
   o.updatetime = 250 --- Faster completion
   -- o.viminfo        = "'1000" --- Increase the size of file history
   o.wrap = false --- Display long lines as just one line
@@ -147,7 +148,7 @@ function M.init_interface()
   o.listchars:append('nbsp:␣')
   o.listchars:append('precedes:«')
   -- o.listchars:append('trail:-')
-  vim.o.statuscolumn = '%#SignColumn#%s%{v:lua.Ty.stl_foldlevel()}%{%v:lua.Ty.stl_num()%} '
+  vim.o.statuscolumn = '%#SignColumn#%s%{v:lua.Ty.stl_foldlevel()}%{%v:lua.Ty.stl_num()%}'
   -- o.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
   -- o.formatoptions:append {
   --   r = true, -- Automatically insert comment leader after <Enter> in Insert mode.

@@ -452,7 +452,7 @@ plug({
     },
     keys = {
       {
-        '<leader>fc',
+        '<localleader>gc',
         '<cmd>lua require("treesitter-context").go_to_context()<cr>',
         desc = 'Treesitter Context: Go to context',
       },

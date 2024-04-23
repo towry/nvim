@@ -21,46 +21,56 @@ M.open = function(new_cwd)
     })
 
     set('n', 'f', function()
-      require('userlib.fzflua').files({
-        cwd = new_cwd,
-        cwd_header = true,
-      })
-      -- require('userlib.telescope.pickers').project_files({
-      --   cwd = new_cwd,
-      -- })
+      if vim.cfg.plugin_fzf_or_telescope == 'fzf' then
+        require('userlib.fzflua').files({
+          cwd = new_cwd,
+          cwd_header = true,
+        })
+      else
+        require('userlib.telescope.pickers').project_files({
+          cwd = new_cwd,
+        })
+      end
       unset()
     end, {
       desc = 'Open files',
     })
     set('n', 'p', function()
-      -- require('telescope').extensions.file_browser.file_browser(require('telescope.themes').get_dropdown({
-      --   files = false,
-      --   use_fd = true,
-      --   display_stat = false,
-      --   hide_parent_dir = true,
-      --   respect_gitignore = true,
-      --   hidden = false,
-      --   previewer = false,
-      --   depth = 3,
-      --   git_status = false,
-      --   cwd = new_cwd,
-      -- }))
-      require('userlib.fzflua').folders({
-        cwd = new_cwd,
-        cwd_header = true,
-      })
+      if vim.cfg.plugin_fzf_or_telescope == 'telescope' then
+        require('telescope').extensions.file_browser.file_browser(require('userlib.telescope.themes').get_dropdown({
+          files = false,
+          disable_devicons = true,
+          use_fd = true,
+          display_stat = false,
+          hide_parent_dir = true,
+          respect_gitignore = true,
+          hidden = true,
+          previewer = false,
+          depth = 3,
+          git_status = false,
+          cwd = new_cwd,
+        }))
+      else
+        require('userlib.fzflua').folders({
+          cwd = new_cwd,
+          cwd_header = true,
+        })
+      end
       unset()
     end, {
       desc = 'Open folders',
     })
     set('n', 's', function()
-      require('fzf-lua').live_grep({
-        cwd = new_cwd,
-        cwd_header = true,
-      })
-      -- require('userlib.telescope.live_grep_call')({
-      --   cwd = new_cwd,
-      -- })
+      if vim.cfg.plugin_fzf_or_telescope == 'fzf' then
+        require('fzf-lua').live_grep({
+          cwd = new_cwd,
+          cwd_header = true,
+        })
+      else
+        require('userlib.telescope.live_grep_call')({
+          cwd = new_cwd,
+        })
+      end
       unset()
     end, {
       desc = 'Search content',
@@ -74,6 +84,17 @@ M.open = function(new_cwd)
       })
     end, {
       desc = 'Open in tree',
+    })
+
+    set('n', '\\', function()
+      require('neo-tree.command').execute({
+        position = 'left',
+        reveal_file = new_cwd,
+        reveal_force_cwd = true,
+        source = 'buffers',
+      })
+    end, {
+      desc = 'Open in tree and reveal buffers',
     })
 
     set('n', 'g', function()

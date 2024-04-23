@@ -57,10 +57,9 @@ local function setup_basic()
   })
   --- command line history.
   set('c', keymap.super(';'), function()
-    return [[lua require('userlib.fzflua').command_history()<CR>]]
-    --   return vim.api.nvim_replace_termcodes('<C-u><C-p>', true, false, true)
+    require('userlib.finder').command_history()
   end, {
-    expr = true,
+    expr = false,
     noremap = false,
     desc = 'Previous command in cmdline',
   })
@@ -103,11 +102,21 @@ local function setup_basic()
     desc = 'Case change in visual mode',
   })
 
-  set({ 'n', 'i' }, keymap.super('s'), '<ESC>:<C-u>silent! update<cr>', {
+  set({ 'n' }, keymap.super('s'), '<cmd>write<cr>', {
+    desc = 'Save current buffer',
+    silent = false,
+    remap = false,
+  })
+  set({ 'i' }, keymap.super('s'), function()
+    vim.cmd.stopinsert()
+    vim.schedule(function()
+      vim.cmd('write')
+    end)
+  end, {
     desc = 'Save current buffer',
     silent = true,
   })
-  set('n', '<leader>bw', cmd('silent! update'), {
+  set('n', '<leader>bw', cmd('write'), {
     desc = 'Save current buffer',
     silent = true,
   })
@@ -188,6 +197,9 @@ local function setup_basic()
   })
 
   -- works with quickfix
+  set('n', '<leader>qq', '<cmd>lua require("userlib.runtime.qf").toggle_qf()<cr>', { desc = 'Toggle quickfix' })
+  set('n', '<leader>ql', '<cmd>lua require("userlib.runtime.qf").toggle_loc()<cr>', { desc = 'Toggle loclist' })
+  set('n', '<leader>qs', '<cmd>lua require("userlib.finder").quickfix_stack()<cr>', { desc = 'Quickfix stack' })
   set('n', '[q', ':cprev<cr>', {
     desc = 'Jump to previous quickfix item',
   })
@@ -343,12 +355,24 @@ local function setup_basic()
     desc = 'Visual select pasted content',
   })
 
+  if vim.cfg.runtime__starts_as_gittool then
+    set('v', 'dp', [[:<C-u>'<,'>diffput<cr>]], {
+      desc = 'Diffput in visual',
+      silent = true,
+    })
+    set('v', 'do', [[:<C-u>'<,'>diffget<cr>]], {
+      desc = 'Diffget in visual',
+      silent = true,
+    })
+  end
+
   --- wait: https://github.com/neovim/neovim/issues/25714
   --- wait: https://github.com/neovim/neovim/pull/27339
   local keys = {
     ['cr'] = vim.api.nvim_replace_termcodes('<CR>', true, true, false),
     -- close pum after completion
     ['ctrl-y'] = vim.api.nvim_replace_termcodes('<C-y>', true, true, false),
+    ['ctrl-j'] = vim.api.nvim_replace_termcodes('<C-j>', true, true, false),
     ['ctrl-y_cr'] = vim.api.nvim_replace_termcodes('<C-y><CR>', true, true, false),
     ['space'] = vim.api.nvim_replace_termcodes('<Space>', true, true, false),
     ['ctrl-z'] = vim.api.nvim_replace_termcodes('<C-z>', true, true, false),
@@ -412,7 +436,7 @@ local function setup_basic()
       end
     end, { expr = true, silent = false })
 
-    set({ 'i' }, '<C-y>', function()
+    set({ 'i' }, '<C-j>', function()
       local trigger_ai = function()
         -- trigger ai
         if vim.b._copilot then
@@ -426,7 +450,7 @@ local function setup_basic()
       if vim.fn.pumvisible() ~= 0 then
         local item_selected = vim.fn.complete_info()['selected'] ~= -1
         if item_selected then
-          return keys['ctrl-y']
+          return keys['ctrl-j']
         end
       end
 

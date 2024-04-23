@@ -54,10 +54,11 @@ function M.is_buf_harpoon(bufnr, cwd)
   return is
 end
 
-function M.list_projects_in_cwd(cwd)
+function M.list_projects_in_cwd(cwd, label)
+  label = label or 'project'
   local extra = require('mini.extra')
   local path = require('userlib.runtime.path')
-  extra.pickers.visit_paths({ cwd = cwd, filter = 'project', recency_weight = 0 }, {
+  extra.pickers.visit_paths({ cwd = cwd, filter = label, recency_weight = 0 }, {
     source = {
       choose = function(item)
         local full_path = path.path_join(cwd, item)

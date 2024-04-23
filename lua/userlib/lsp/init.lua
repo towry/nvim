@@ -258,3 +258,5 @@ function M.setup()
 end
 
 return M
+
+-- FIXME: LspRestart not work

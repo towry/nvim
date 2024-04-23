@@ -38,14 +38,26 @@ local function setup_coc_lsp_keys()
   -- Symbol renaming
   set('n', '<leader>crn', '<Plug>(coc-rename)', _('Rename symbol'))
   -- Formatting selected code
-  set('x', '<leader>cf', '<Plug>(coc-format-selected)', _('Format selected code'))
-  set('n', '<leader>cf', [[:<C-u>call CocActionAsync('format')<cr>]], _('Format entire file'))
+  set(
+    { 'x', 'v' },
+    '<leader>cf',
+    [[:<C-u>'<,'>call CocActionAsync('formatSelected', visualmode())<cr>]],
+    _('Format selected code')
+  )
+  set('n', '<leader>cf', function()
+    if vim.wo.diff then
+      vim.notify('Format entire file in diff mode is danger, please format selected region only')
+      return
+    end
+
+    return [[:<C-u>call CocActionAsync('format')<cr>]]
+  end, { desc = 'Format entire file', expr = true, silent = true, nowait = true, noremap = true })
   set('x', '<leader>ca', '<Plug>(coc-codeaction-selected)', _('Code action on selected'))
   set('n', '<leader>ca', '<Plug>(coc-codeaction-line)', _('Code action for line'))
   -- Organize imports
   set(
     'n',
-    '<leader>ci',
+    '<leader>co',
     [[:<C-u>call CocActionAsync('runCommand', 'editor.action.organizeImport')<cr>]],
     _('Organize imports')
   )
@@ -53,10 +65,10 @@ local function setup_coc_lsp_keys()
   --- Manage extensions
   set('n', '<leader>clE', ':<C-u>CocList extensions<cr>', _('List extensions'))
   -- Show commands
-  set('n', '<space>clc', ':<C-u>CocList commands<cr>', _('List commands'))
+  set('n', '<space>cc', ':<C-u>CocList commands<cr>', _('List commands'))
 
   -- Remap keys for apply code actions at the cursor position
-  set('n', '<leader>cc', '<Plug>(coc-codeaction-cursor)', _('Apply code action at cursor'))
+  set('n', '<leader>c_', '<Plug>(coc-codeaction-cursor)', _('Apply code action at cursor'))
   -- Remap keys for apply source code actions for current file
   set('n', '<leader>cA', '<Plug>(coc-codeaction-source)', _('Apply source code actions'))
   set('x', '<leader>cA', '<Plug>(coc-codeaction-source)', _('Apply source code actions (visual)'))
@@ -124,26 +136,26 @@ local function setup_coc_autocmd()
   })
   vim.api.nvim_create_autocmd('BufWritePre', {
     group = 'CocGroup',
+    pattern = '*',
     callback = function(ctx)
       local bufnr = ctx.buf
       if vim.b[bufnr].coc_enabled == 0 or vim.bo[bufnr].buftype ~= '' then
         return
       end
       if vim.cfg.runtime__starts_as_gittool or vim.wo.diff then
-        return true
+        return
       end
       if (bufnr or bufnr == 0) and vim.b[bufnr].autoformat_disable then
-        return true
+        return
       end
 
       if not vim.fn.CocHasProvider('format') then
         return
       end
 
-      --- prevent cursor jump and window scroll
-      local view = vim.fn.winsaveview()
+      --- weird bug, prevent next undo move cursor to second line
+      vim.cmd('exec "normal! a \\<BS>\\<ESC>"')
       vim.fn.CocAction('format')
-      vim.fn.winrestview(view)
     end,
   })
   vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
@@ -154,11 +166,11 @@ local function setup_coc_autocmd()
         return
       end
 
-      if vim.bo.buftype == 'nofile' then
-        vim.cmd('set equalalways')
-      else
-        vim.cmd('set noequalalways')
-      end
+      -- if vim.bo.buftype == 'nofile' then
+      --   vim.cmd('set equalalways')
+      -- else
+      --   vim.cmd('set noequalalways')
+      -- end
     end,
   })
 end
@@ -169,6 +181,7 @@ return plug({
   cmd = {
     'CocInstall',
   },
+  enabled = vim.cfg.edit__use_coc and not vim.g.vscode,
   event = 'User FileOpenedAfter',
   config = function()
     local keymap = require('userlib.runtime.keymap')
@@ -219,18 +232,6 @@ return plug({
       once = true,
       callback = vim.schedule_wrap(function()
         set('i', '<C-j>', function()
-          local trigger_ai = function()
-            -- trigger ai
-            if vim.b._copilot then
-              vim.fn['copilot#Suggest']()
-              return true
-            elseif vim.fn.exists('*codeium#Complete') == 1 then
-              vim.fn['codeium#Complete']()
-              return true
-            end
-            return false
-          end
-
           if Ty.has_ai_suggestions() and Ty.has_ai_suggestion_text() then
             if vim.fn['coc#pum#visible']() == 1 then
               vim.fn['coc#pum#cancel']()
@@ -263,6 +264,7 @@ return plug({
       'coc-css',
       'coc-tsserver',
       'coc-html',
+      'coc-highlight',
       'coc-html-css-support',
       -- 'coc-lua',
       'coc-sumneko-lua',
@@ -281,7 +283,7 @@ return plug({
       'coc-sumneko-lua',
       --- Symbols outline
       --- tabnine
-      'coc-tabnine',
+      -- 'coc-tabnine',
       'coc-tailwindcss',
       --- sources
       'coc-word', -- google 100000 english repo.
