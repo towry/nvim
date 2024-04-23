@@ -18,10 +18,12 @@
     <td>Light</td>
   </tr>
   <tr>
-    <td><img width="1382" src="https://github.com/towry/nvim/assets/8279858/904350b0-6a15-454d-9031-8f703ee1d976" />
+    <td>![截屏2024-04-23 14 10 57](https://github.com/towry/nvim/assets/8279858/2a48a6ae-ed5a-4547-a01a-8f0f9f25a274)
+
 
 </td>
-    <td> <img width="1382" src="https://github.com/towry/nvim/assets/8279858/a2cb1ba5-8091-483f-b248-f46776fd69e4" />
+    <td> ![截屏2024-04-23 14 10 39](https://github.com/towry/nvim/assets/8279858/2d40cebc-735f-4b29-bd6b-5be12054eaab)
+
 
 </td>
   </tr>
