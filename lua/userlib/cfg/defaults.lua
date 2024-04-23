@@ -167,7 +167,7 @@ return {
   ui__float_border = 'single',
   ui__window_equalalways = false,
   ---@type "mini"|"fzf-lua"|"dressing"
-  ui__input_select_provider = 'dressing',
+  ui__input_select_provider = 'mini',
   workbench__lualine_theme = 'default',
   ---misc stuff.
   misc__buf_exclude = {

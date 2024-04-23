@@ -172,6 +172,9 @@ plug({
     overrides = function(colors) -- add/modify highlights
       -- do not foget to run ':KanagawaCompile'
       return {
+        TelescopeNormal = { link = 'NormalFloat' },
+        TelescopeBorder = { link = 'FloatBorder' },
+        TelescopeSelection = { link = 'QuickFixLine' },
         FzfLuaNormal = { link = 'NormalFloat' },
         FzfLuaBorder = { link = 'FloatBorder' },
         FzfLuaPreviewNormal = { link = 'Normal' },
@@ -202,13 +205,16 @@ plug({
       theme = {
         all = {
           ui = {
-            -- bg_gutter = 'none',
+            bg_gutter = 'none',
           },
         },
         lotus = {
           ui = {
             -- bg_m3 = '#586e75',
           },
+        },
+        dragon = {
+          ui = {},
         },
       },
     },
