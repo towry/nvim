@@ -456,6 +456,11 @@ plug({
           desc = 'List Buffers',
         },
         {
+          '<leader>fc',
+          cmd_modcall(pickers_mod, 'buffers_or_recent(true)'),
+          desc = 'List Buffers in cwd',
+        },
+        {
           '<leader>g/',
           function()
             require('userlib.ui.dropdown').select({

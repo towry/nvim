@@ -179,30 +179,31 @@ M.edit_neovim = function()
   }))
 end
 
-function M.buffers_or_recent()
+function M.buffers_or_recent(cwd_only)
   local count = #vim.fn.getbufinfo({ buflisted = 1 })
   if count <= 1 then
     --- open recent.
     M.project_files(require('userlib.telescope.themes').get_dropdown({
-      cwd_only = false,
+      cwd_only = cwd_only or false,
       cwd = vim.cfg.runtime__starts_cwd,
       oldfiles = true,
       previewer = false,
     }))
     return
   end
-  return M.buffers()
+  return M.buffers(cwd_only)
 end
 
-function M.buffers()
+function M.buffers(cwd_only)
   local builtin = require('telescope.builtin')
   local actions = require('telescope.actions')
   local actionstate = require('telescope.actions.state')
   local Buffer = require('userlib.runtime.buffer')
 
   builtin.buffers(require('userlib.telescope.themes').get_dropdown({
-    ignore_current_buffer = false,
+    ignore_current_buffer = true,
     sort_mru = true,
+    cwd_only = cwd_only,
     previewer = false,
     attach_mappings = function(prompt_bufnr, map)
       local close_buf = function()
