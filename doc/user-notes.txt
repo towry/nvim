@@ -1,4 +1,4 @@
-*user-notes.txt*           For NVIM v0.8.0          Last change: 2024 April 12
+*user-notes.txt*           For NVIM v0.8.0          Last change: 2024 April 23
 
 ==============================================================================
 Table of Contents                               *user-notes-table-of-contents*
