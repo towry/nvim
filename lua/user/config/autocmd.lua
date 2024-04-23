@@ -222,7 +222,7 @@ function M.load_on_startup()
             vim.wo.foldmethod = 'expr'
             vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
             -- foldtext with ts hi
-            vim.wo.foldtext = 'v:lua.Ty.fold_text()'
+            -- vim.wo.foldtext = 'v:lua.Ty.fold_text()'
           else
             vim.wo.foldmethod = 'manual'
             vim.wo.foldexpr = ''

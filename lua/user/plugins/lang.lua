@@ -31,127 +31,46 @@ plug({
 })
 
 plug({
-  'nvim-treesitter/nvim-treesitter',
-  branch = 'master',
-  version = '0.9.2',
-  build = function()
-    if #vim.api.nvim_list_uis() == 0 then
-      -- update sync if running headless
-      vim.cmd.TSUpdateSync()
-    else
-      -- otherwise update async
-      vim.cmd.TSUpdate()
-    end
-  end,
-  keys = {
-    { '<M-Enter>', desc = 'Increment selection' },
-    { '<bs>', desc = 'Decrement selection', mode = 'x' },
-  },
-  event = { 'VeryLazy' },
-  enabled = not vim.cfg.lang__treesitter_next,
-  cond = not vim.cfg.runtime__starts_as_gittool,
-  init = function(plugin)
-    -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
-    -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
-    -- no longer trigger the **nvim-treesitter** module to be loaded in time.
-    -- Luckily, the only things that those plugins need are the custom queries, which we make available
-    -- during startup.
-    require('lazy.core.loader').add_to_rtp(plugin)
-    require('nvim-treesitter.query_predicates')
-  end,
+  'nvim-treesitter/nvim-treesitter-textobjects',
+  branch = 'main',
   dependencies = {
-    {
-      'nvim-treesitter/nvim-treesitter-textobjects',
-    },
+    { 'nvim-treesitter/nvim-treesitter', branch = 'main' },
   },
+  init = function()
+    --- press v af
+    vim.keymap.set({ 'x', 'o' }, 'af', function()
+      require('nvim-treesitter-textobjects.select').select_textobject('@function.outer', 'textobjects')
+    end)
+  end,
   config = function()
-    local disabled = function(_lang, bufnr)
-      return vim.b[bufnr].is_big_file
-    end
-    local install_path = vim.fn.stdpath('data') .. '/site/treesitter-master'
-    vim.opt.runtimepath:append(install_path)
-    require('nvim-treesitter.install').prefer_git = true
-    require('nvim-treesitter.configs').setup({
-      parser_install_dir = install_path,
-      ensure_installed = vim.cfg.lang__treesitter_ensure_installed,
-      highlight = {
-        disable = disabled,
-        enable = true,
-        additional_vim_regex_highlighting = false,
-      },
-      incremental_selection = {
-        enable = true,
-        disable = disabled,
-        keymaps = {
-          init_selection = '<M-Enter>',
-          node_incremental = '<Enter>',
-          scope_incremental = '<S-Enter>',
-          node_decremental = '<BS>',
+    require('nvim-treesitter-textobjects').setup({
+      select = {
+        -- Automatically jump forward to textobj, similar to targets.vim
+        lookahead = true,
+        -- You can choose the select mode (default is charwise 'v')
+        --
+        -- Can also be a function which gets passed a table with the keys
+        -- * query_string: eg '@function.inner'
+        -- * method: eg 'v' or 'o'
+        -- and should return the mode ('v', 'V', or '<c-v>') or a table
+        -- mapping query_strings to modes.
+        selection_modes = {
+          ['@parameter.outer'] = 'v', -- charwise
+          ['@function.outer'] = 'V', -- linewise
+          ['@class.outer'] = '<c-v>', -- blockwise
         },
       },
-      indent = {
-        enable = true,
-      },
-      textobjects = {
-        move = {
-          disable = disabled,
-          enable = true,
-          set_jumps = true, -- whether to set jumps in the jumplist
-          goto_next_start = {
-            [']o'] = { query = '@block.outer', desc = 'Next block start' },
-            [']f'] = { query = '@call.outer', desc = 'Next function call start' },
-            [']m'] = { query = '@function.outer', desc = 'Next method/function def start' },
-            [']c'] = { query = '@class.outer', desc = 'Next class start' },
-            [']i'] = { query = '@conditional.outer', desc = 'Next conditional start' },
-            [']l'] = { query = '@loop.outer', desc = 'Next loop start' },
-
-            -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
-            -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
-            [']S'] = { query = '@scope', query_group = 'locals', desc = 'Next scope' },
-            [']z'] = { query = '@fold', query_group = 'folds', desc = 'Next fold' },
-            [']p'] = { query = '@parameter.inner', desc = 'Next parameter start' },
-          },
-          goto_next_end = {
-            [']O'] = { query = '@block.outer', desc = 'Next block start' },
-            [']F'] = { query = '@call.outer', desc = 'Next function call end' },
-            [']M'] = { query = '@function.outer', desc = 'Next method/function def end' },
-            [']C'] = { query = '@class.outer', desc = 'Next class end' },
-            [']I'] = { query = '@conditional.outer', desc = 'Next conditional end' },
-            [']L'] = { query = '@loop.outer', desc = 'Next loop end' },
-            [']P'] = { query = '@parameter.inner', desc = 'Next parameter start' },
-          },
-          goto_previous_start = {
-            ['[o'] = { query = '@block.outer', desc = 'Prev block start' },
-            ['[f'] = { query = '@call.outer', desc = 'Prev function call start' },
-            ['[m'] = { query = '@function.outer', desc = 'Prev method/function def start' },
-            ['[c'] = { query = '@class.outer', desc = 'Prev class start' },
-            ['[i'] = { query = '@conditional.outer', desc = 'Prev conditional start' },
-            ['[l'] = { query = '@loop.outer', desc = 'Prev loop start' },
-            ['[p'] = { query = '@parameter.inner', desc = 'Prev parameter start' },
-          },
-          goto_previous_end = {
-            ['[O'] = { query = '@block.outer', desc = 'Prev block start' },
-            ['[F'] = { query = '@call.outer', desc = 'Prev function call end' },
-            ['[M'] = { query = '@function.outer', desc = 'Prev method/function def end' },
-            ['[C'] = { query = '@class.outer', desc = 'Prev class end' },
-            ['[I'] = { query = '@conditional.outer', desc = 'Prev conditional end' },
-            ['[L'] = { query = '@loop.outer', desc = 'Prev loop end' },
-            ['[P'] = { query = '@parameter.inner', desc = 'Prev parameter start' },
-          },
-        },
-        swap = {
-          enable = false,
-        },
-      }, -- end textobjects
+      -- If you set this to `true` (default is `false`) then any textobject is
+      -- extended to include preceding or succeeding whitespace. Succeeding
+      -- whitespace has priority in order to act similarly to eg the built-in
+      -- `ap`.
+      --
+      -- Can also be a function which gets passed a table with the keys
+      -- * query_string: eg '@function.inner'
+      -- * selection_mode: eg 'v'
+      -- and should return true of false
+      include_surrounding_whitespace = false,
     })
-
-    vim.treesitter.language.register('tsx', 'typescriptreact')
-    vim.treesitter.language.register('markdown', 'mdx')
-
-    local ts_repeat_move = require('nvim-treesitter.textobjects.repeatable_move')
-    -- vim way: ; goes to the direction you were moving.
-    vim.keymap.set({ 'n', 'x', 'o' }, ',;', ts_repeat_move.repeat_last_move)
-    vim.keymap.set({ 'n', 'x', 'o' }, ',.', ts_repeat_move.repeat_last_move_opposite)
   end,
 })
 
