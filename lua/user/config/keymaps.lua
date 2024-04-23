@@ -5,6 +5,7 @@ local M = {}
 local is_profiling = false
 
 local function setup_basic()
+  set('n', '<Leader>er', 'gR', { nowait = true, desc = 'Enter visual replace mode' })
   --- a=1
   set('n', '<C-a>a', '<C-a>', { remap = false, nowait = true, silent = true })
   set('n', '<C-a>x', '<C-x>', { remap = false, nowait = true, silent = true })
