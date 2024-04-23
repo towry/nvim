@@ -257,11 +257,24 @@ end
 
 -- set the current buffer, if already showed in visible windows,
 -- switch focus to it's window.
-function M.set_current_buffer_focus(bufnr)
-  local buf_win_id = unpack(vim.fn.win_findbuf(bufnr))
-  if buf_win_id ~= nil then
-    vim.api.nvim_set_current_win(buf_win_id)
-    return
+function M.set_current_buffer_focus(bufnr, tabonly)
+  if tabonly == nil then
+    tabonly = true
+  end
+
+  if not tabonly then
+    local buf_win_id = unpack(vim.fn.win_findbuf(bufnr))
+    if buf_win_id ~= nil then
+      vim.api.nvim_set_current_win(buf_win_id)
+      return
+    end
+  else
+    for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+      if vim.api.nvim_win_get_buf(win) == bufnr then
+        vim.api.nvim_set_current_win(win)
+        return
+      end
+    end
   end
 
   vim.api.nvim_set_current_buf(bufnr)
