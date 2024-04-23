@@ -49,6 +49,11 @@ pack.plug({
           pum = {
             fast_close = false,
           },
+          preview = {
+            enabled = true,
+            border = 'single',
+            positions = { north = 2, south = 3, west = 4, east = 1 },
+          },
         },
         -- https://github.com/ms-jpq/coq_nvim/blob/coq/docs/FUZZY.md
         weights = {
