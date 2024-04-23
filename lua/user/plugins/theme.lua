@@ -198,7 +198,9 @@ plug({
         lotusWhite0 = '#ECE8D8',
         lotusWhite1 = '#E9E5D6',
         lotusWhite2 = '#F3EEDD',
+        --- main bg
         lotusWhite3 = '#FDF6E3',
+        --- tabline etc
         lotusWhite4 = '#f3eedd',
         lotusWhite5 = '#eee8d5',
       },
@@ -210,6 +212,7 @@ plug({
         },
         lotus = {
           ui = {
+            bg_p1 = '#DCD7BA',
             -- bg_m3 = '#586e75',
           },
         },

@@ -668,7 +668,7 @@ local Copilot = {
     if not self.is_running() then
       return '󰚩 '
     end
-    return '������������� '
+    return '? '
   end,
   hl = function(self)
     local fg = vim.g.copilot_auto_mode == true and 'orange' or ''
@@ -843,7 +843,7 @@ local Tabpage = {
       end
     end,
     provider = function(self)
-      return '~' .. self.tail
+      return '/' .. self.tail
     end,
     hl = {
       fg = 'gray',
