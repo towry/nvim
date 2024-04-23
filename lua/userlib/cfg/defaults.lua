@@ -1,5 +1,7 @@
 local cwd = vim.uv.cwd()
 
+local use_coc = false
+
 return {
   ---runtime
   runtime__is_zellij = os.getenv('ZELLIJ_SESSION_NAME') ~= nil,
@@ -50,10 +52,10 @@ return {
   },
   runtime__python3_host_prog = '/usr/local/bin/python3',
   ---editing
-  edit__use_native_cmp = false,
+  edit__use_native_cmp = not use_coc,
   edit__use_plugin_cmp = false,
-  edit__use_coq_cmp = false,
-  edit__use_coc = not vim.g.vscode and true,
+  edit__use_coq_cmp = not use_coc,
+  edit__use_coc = not vim.g.vscode and use_coc,
   ---editor stuff
   --enable relative number or not.
   editor__relative_number = true,
