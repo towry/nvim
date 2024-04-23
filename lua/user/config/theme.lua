@@ -69,6 +69,10 @@ function M.custom_theme_gruvbox()
   M.custom_theme_default()
 end
 
+function M.custom_theme_kanagawa()
+  M.custom_theme_default()
+end
+
 local function update_custom_theme()
   if type(M['custom_theme_' .. vim.cfg.ui__theme_name]) == 'function' then
     vim.schedule(M['custom_theme_' .. vim.cfg.ui__theme_name])

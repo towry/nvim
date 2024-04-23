@@ -843,7 +843,7 @@ local Tabpage = {
       end
     end,
     provider = function(self)
-      return '/' .. self.tail
+      return '/%-.20(' .. self.tail .. '%)'
     end,
     hl = {
       fg = 'gray',
