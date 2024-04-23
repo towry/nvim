@@ -18,12 +18,12 @@
     <td>Light</td>
   </tr>
   <tr>
-    <td><img src="https://github.com/towry/nvim/assets/8279858/2a48a6ae-ed5a-4547-a01a-8f0f9f25a274" alt="dark" />
+    <td><img src="https://github.com/towry/nvim/assets/8279858/d9539b35-e5fb-4c2b-b723-d7e94e08d6cd" alt="dark" />
 
 
 </td>
-    <td><img src="https://github.com/towry/nvim/assets/8279858/2d40cebc-735f-4b29-bd6b-5be12054eaab" alt="light" />
 
+<td><img src="https://github.com/towry/nvim/assets/8279858/2d19bd7e-86ae-48a2-99f4-2dcb904a6bc8" alt="light" />
 
 </td>
   </tr>
