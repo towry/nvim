@@ -835,7 +835,7 @@ local Tabpage = {
       self.filename = vim.api.nvim_buf_get_name(self.bufnr) or ''
       self.tail = ''
       if vim.bo[self.bufnr].buftype == '' and #self.filename > 0 then
-        self.tail = vim.fn.fnamemodify(self.filename, ':t')
+        self.tail = vim.fn.fnamemodify(self.filename, ':t:r')
       elseif #self.filename <= 0 then
         self.tail = '[No Name]'
       else
@@ -843,7 +843,7 @@ local Tabpage = {
       end
     end,
     provider = function(self)
-      return '/%-.20(' .. self.tail .. '%)'
+      return '%</%.20(' .. self.tail .. '%)'
     end,
     hl = {
       fg = 'gray',
