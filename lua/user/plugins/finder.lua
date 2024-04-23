@@ -138,7 +138,13 @@ plug({
       ['g?'] = 'actions.show_help',
       ['<CR>'] = 'actions.select',
       ['<C-v>'] = 'actions.select_vsplit',
-      ['<C-x>'] = 'actions.select_split',
+      ['<C-s>'] = {
+        callback = function()
+          require('oil').select({ horizontal = true })
+        end,
+        desc = 'Open the entry under the cursor in a horizontal split',
+        nowait = true,
+      },
       ['<C-t>'] = 'actions.select_tab',
       ['<C-p>'] = 'actions.preview',
       ['<C-c>'] = 'actions.close',
