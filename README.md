@@ -18,11 +18,11 @@
     <td>Light</td>
   </tr>
   <tr>
-    <td>![截屏2024-04-23 14 10 57](https://github.com/towry/nvim/assets/8279858/2a48a6ae-ed5a-4547-a01a-8f0f9f25a274)
+    <td><img src="https://github.com/towry/nvim/assets/8279858/2a48a6ae-ed5a-4547-a01a-8f0f9f25a274" alt="dark" />
 
 
 </td>
-    <td> ![截屏2024-04-23 14 10 39](https://github.com/towry/nvim/assets/8279858/2d40cebc-735f-4b29-bd6b-5be12054eaab)
+    <td><img src="https://github.com/towry/nvim/assets/8279858/2d40cebc-735f-4b29-bd6b-5be12054eaab" alt="light" />
 
 
 </td>
