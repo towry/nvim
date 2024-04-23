@@ -84,6 +84,7 @@ plug({
           {
             provider = '%m%w%r',
           },
+          comp.BufVisited,
         }),
         comp.lpad(comp.CocStl),
         { provider = '%=' },
