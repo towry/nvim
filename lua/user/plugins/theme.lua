@@ -4,7 +4,7 @@ plug({
   'towry/dracula-mini.nvim',
   event = 'User LazyTheme',
   cond = vim.cfg.ui__theme_name:match('dracula-mini'),
-  dev = false,
+  dev = true,
   config = function()
     require('dracula-mini').setup({
       -- your configuration comes here
