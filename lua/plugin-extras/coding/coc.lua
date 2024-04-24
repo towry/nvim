@@ -34,7 +34,7 @@ local function setup_coc_lsp_keys()
   set('n', '<C-w>d', ':<C-u>call CocActionAsync("jumpDefinition", "vsplit")<cr>', _('Go to definition in vsplit'))
   set('n', 'gy', '<Plug>(coc-type-definition)', _(''))
   set('n', '<leader>cd', '<Plug>(coc-implementation)', _('Go to implementation'))
-  set('n', '<leader>ch', '<Plug>(coc-references)', _('Show references'))
+  set('n', 'gr', '<Plug>(coc-references)', _('Show references'))
   -- Symbol renaming
   set('n', '<leader>crn', '<Plug>(coc-rename)', _('Rename symbol'))
   -- Formatting selected code
