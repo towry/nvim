@@ -4,6 +4,7 @@ local au = require('userlib.runtime.au')
 
 plug({
   'chrisgrieser/nvim-various-textobjs',
+  enabled = false,
   event = 'BufReadPost',
   opts = {
     useDefaultKeymaps = true,
