@@ -26,6 +26,33 @@ local function setup_basic()
     silent = false,
     desc = 'execute normal keys',
   })
+  set('n', '<localleader>tt', function()
+    if vim.t.CwdLocked then
+      vim.cmd('UnlockTcd')
+    else
+      vim.cmd('LockTcd')
+    end
+  end, { desc = 'Toggle Tcd lock', nowait = true })
+  set('n', '<leader>bt', function()
+    if not vim.t.CwdLocked then
+      vim.notify('No need to move')
+      return
+    end
+    local bufnr = vim.api.nvim_get_current_buf()
+    --- loop tabs from 1, exclude current tab,
+    --- if all tabs is locked then open this buffer in new tab.
+    for i = 1, vim.fn.tabpagenr('$') do
+      if not vim.t[i].CwdLocked then
+        vim.cmd(i .. 'tabnext')
+        -- open buf in current tab
+        vim.api.nvim_win_set_buf(0, bufnr)
+        return
+      end
+    end
+    -- open buf in new tab
+    vim.cmd.tabnew()
+    vim.api.nvim_win_set_buf(0, bufnr)
+  end, { desc = 'Temporary open current buffer in a non locked tab' })
   --- use <C-w> in insert to trigger visual select instead of delete
   set('v', '<C-w>', 'B', {})
   --- <left> make <c-o> starts at end of the word before cursor. avoid 'd'
