@@ -36,7 +36,7 @@ local function setup_basic()
     silent = false,
     desc = 'execute normal keys',
   })
-  set('n', '<localleader>tt', function()
+  set('n', '<leader>tt', function()
     if vim.t.CwdLocked then
       vim.cmd('UnlockTcd')
     else
