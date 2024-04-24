@@ -19,6 +19,16 @@ local function setup_basic()
   --->>
   set('n', ']b', ':bnext<cr>', { desc = 'Next buffer', silent = false, nowait = true })
   set('n', '[b', ':bpre<cr>', { desc = 'Prev buffer', silent = false, nowait = true })
+  set('n', '<c-w>B', function()
+    vim.cmd('wincmd b')
+    -- check if window is quickfix or terminal
+    if vim.fn.win_gettype() == 'quickfix' or vim.bo.buftype == 'terminal' then
+      vim.cmd('close')
+    end
+    vim.cmd('wincmd p')
+  end, {
+    desc = 'Close bottom window if it is terminal or quickfix',
+  })
   set('n', '<leader>rn', function()
     require('userlib.workflow.run-normal-keys')()
   end, {
