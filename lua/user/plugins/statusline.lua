@@ -59,7 +59,12 @@ plug({
         end,
         comp.lpad({
           {
-            provider = '%f [%n]',
+            provider = function()
+              return Ty.stl_relative_bufname(vim.api.nvim_get_current_buf())
+            end,
+          },
+          {
+            provider = ' [%n]',
           },
           {
             provider = '%m%w%r',
@@ -79,7 +84,12 @@ plug({
         --- file info
         comp.lpad({
           {
-            provider = '%f [%n]',
+            provider = function()
+              return Ty.stl_relative_bufname(vim.api.nvim_get_current_buf())
+            end,
+          },
+          {
+            provider = ' [%n]',
           },
           {
             provider = '%m%w%r',
