@@ -84,6 +84,7 @@ plug({
     for method, maps in pairs(move_maps) do
       for input, cap in pairs(maps) do
         set({ 'o', 'x', 'n' }, input, function()
+          vim.notify(method .. ' -> ' .. cap)
           require('nvim-treesitter-textobjects.move')[method](cap, 'textobjects')
         end)
       end
@@ -98,6 +99,10 @@ plug({
 
   config = function()
     require('nvim-treesitter-textobjects').setup({
+      move = {
+        -- whether to set jumps in the jumplist
+        set_jumps = true,
+      },
       select = {
         -- Automatically jump forward to textobj, similar to targets.vim
         lookahead = true,
