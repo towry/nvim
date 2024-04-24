@@ -31,17 +31,71 @@ plug({
 })
 
 plug({
-  'nvim-treesitter/nvim-treesitter-textobjects',
-  branch = 'main',
+  'TheLeoP/nvim-treesitter-textobjects',
+  branch = 'fix_main',
+  -- 'nvim-treesitter/nvim-treesitter-textobjects',
+  -- branch = 'main',
   dependencies = {
     { 'nvim-treesitter/nvim-treesitter', branch = 'main' },
   },
   init = function()
-    --- press v af
-    vim.keymap.set({ 'x', 'o' }, 'af', function()
-      require('nvim-treesitter-textobjects.select').select_textobject('@function.outer', 'textobjects')
-    end)
+    local set = require('userlib.runtime.keymap').set
+
+    local select_maps = {
+      ['oam'] = '@function.outer',
+      ['oim'] = '@function.inner',
+      ['oap'] = '@parameter.outer',
+      ['oip'] = '@parameter.inner',
+      -- class
+      ['oac'] = '@class.outer',
+      ['oic'] = '@class.inner',
+    }
+    local move_maps = {
+      goto_next_start = {
+        [']om'] = '@function.outer',
+        --- next start of class
+        [']oc'] = '@class.outer',
+        --- next start of loop
+        [']oo'] = '@loop.outer',
+      },
+      goto_next_end = {
+        [']oM'] = '@function.outer',
+        [']oC'] = '@class.outer',
+        [']oO'] = '@loop.outer',
+      },
+      goto_previous_start = {
+        ['[om'] = '@function.outer',
+        ['[oc'] = '@class.outer',
+        ['[oo'] = '@loop.outer',
+      },
+      goto_previous_end = {
+        ['[oM'] = '@function.outer',
+        ['[oC'] = '@class.outer',
+        ['[oO'] = '@loop.outer',
+      },
+      goto_next = {
+        --- goto next either start or end of select.
+        [']od'] = '@conditional.outer',
+        --- goto previous either start or end of select.
+        ['[od'] = '@conditional.outer',
+      },
+    }
+
+    for method, maps in pairs(move_maps) do
+      for input, cap in pairs(maps) do
+        set({ 'o', 'x', 'n' }, input, function()
+          require('nvim-treesitter-textobjects.move')[method](cap, 'textobjects')
+        end)
+      end
+    end
+
+    for input, cap in pairs(select_maps) do
+      set({ 'x', 'o' }, input, function()
+        require('nvim-treesitter-textobjects.select').select_textobject(cap, 'textobjects')
+      end)
+    end
   end,
+
   config = function()
     require('nvim-treesitter-textobjects').setup({
       select = {
