@@ -1,6 +1,43 @@
 local plug = require('userlib.runtime.pack').plug
 
 plug({
+  'towry/dracula-mini.nvim',
+  event = 'User LazyTheme',
+  cond = vim.cfg.ui__theme_name:match('dracula-mini'),
+  dev = false,
+  config = function()
+    require('dracula-mini').setup({
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      transparent = false, -- Enable this to disable setting the background color
+      terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
+      diff = { mode = 'fg' }, -- enables/disables colorful backgrounds when used in diff mode. values : [bg|fg]
+      borders = true, -- Enable the border between verticaly split windows visible
+      errors = { mode = 'fg' }, -- Display mode for errors and diagnostics
+      -- values : [bg|fg|none]
+      search = { theme = 'vim' }, -- theme for highlighting search results
+      -- values : [vim|vscode]
+      styles = {
+        -- Style to be applied to different syntax groups
+        -- Value is any valid attr-list value for `:help nvim_set_hl`
+        comments = { italic = false, bold = false },
+        keywords = { italic = true },
+        functions = { bold = true, italic = true },
+        variables = {},
+      },
+
+      --- You can override specific highlights to use other groups or a hex color
+      --- function will be called with all highlights and the colorScheme table
+      on_highlights = function(hl, c)
+        hl.WinbarPathTail = {
+          fg = c.aurora.green,
+        }
+      end,
+    })
+  end,
+})
+
+plug({
   'towry/flexoki-neovim',
   dev = false,
   branch = 'next',

@@ -77,6 +77,7 @@ function M.custom_theme_kanagawa()
 end
 
 local function update_custom_theme()
+  M.custom_theme_default()
   if type(M['custom_theme_' .. vim.cfg.ui__theme_name]) == 'function' then
     vim.schedule(M['custom_theme_' .. vim.cfg.ui__theme_name])
   end
