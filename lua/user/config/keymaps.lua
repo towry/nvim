@@ -402,6 +402,8 @@ local function setup_basic()
       desc = 'Diffget in visual',
       silent = true,
     })
+    set('n', '<localleader>w', ':w|cq', { desc = '[Git mergetool] Prepare write and exit safe' })
+    set('n', '<localleader>c', ':cq 1', { desc = '[Git mergetool] Prepare to abort' })
   end
 
   --- wait: https://github.com/neovim/neovim/issues/25714
