@@ -456,7 +456,7 @@ plug({
           desc = 'List Buffers',
         },
         {
-          '<leader>fc',
+          '<localleader>.',
           cmd_modcall(pickers_mod, 'buffers_or_recent(true)'),
           desc = 'List Buffers in cwd',
         },
