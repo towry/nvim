@@ -559,6 +559,7 @@ plug({
           function()
             require('telescope.builtin').live_grep({
               cwd = vim.cfg.runtime__starts_cwd,
+              prompt_title = 'Live Grep (root)',
             })
           end,
           desc = 'Grep search in all projects',
@@ -566,7 +567,9 @@ plug({
         {
           '<leader>fs',
           function()
-            require('telescope.builtin').live_grep()
+            require('telescope.builtin').live_grep({
+              prompt_title = 'Live Grep in ' .. vim.fn.fnamemodify(vim.uv.cwd() or '', ':t'),
+            })
           end,
           desc = 'Grep search in project',
         },
@@ -575,6 +578,7 @@ plug({
           function()
             local text = Ty.buf_vtext()
             require('telescope.builtin').grep_string({
+              prompt_title = 'Grep String in ' .. vim.fn.fnamemodify(vim.uv.cwd() or '', ':t'),
               search = text,
               default_text = text,
             })
@@ -587,6 +591,7 @@ plug({
           function()
             require('telescope.builtin').grep_string({
               search = vim.fn.expand('<cword>'),
+              prompt_title = 'Grep String in ' .. vim.fn.fnamemodify(vim.uv.cwd() or '', ':t'),
               default_text = vim.fn.expand('<cword>'),
             })
           end,
