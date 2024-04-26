@@ -141,8 +141,7 @@ function M.init_interface()
   o.cursorlineopt = 'line,number'
   o.foldcolumn = '1' -- Folding
   o.list = true
-  o.listchars:append('tab:··')
-  -- o.listchars:append('tab:▏\\ ')
+  o.listchars:append('tab:⇥ ')
   -- o.listchars:append('eol:↩')
   o.listchars:append('extends:»')
   o.listchars:append('nbsp:␣')

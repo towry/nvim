@@ -42,5 +42,6 @@
   "rust-analyzer.inlayHints.maxLength": 2,
   "rust-analyzer.inlayHints.renderColons": true,
   "typescript.preferences.importModuleSpecifierEnding": "index",
-  "javascript.preferences.importModuleSpecifierEnding": "index"
+  "javascript.preferences.importModuleSpecifierEnding": "index",
+  "sumneko-lua.enable": false,
 }

@@ -209,6 +209,19 @@ Ty.fold_text = function()
   return ret
 end
 
+Ty.stl_relative_bufname = function(buf)
+  local bufnr = buf or tonumber(vim.g.actual_curbuf)
+  if not bufnr or vim.bo[bufnr].buftype ~= '' then
+    return '%f'
+  end
+  local fullname = vim.api.nvim_buf_get_name(bufnr)
+  local relative = vim.fn.fnamemodify(fullname, ':.')
+  if relative == fullname then
+    relative = vim.fn.fnamemodify(fullname, ([[:s?%s?%s?]]):format(vim.cfg.runtime__starts_cwd, ''))
+  end
+  return relative
+end
+
 --- "│"
 Ty.stl_foldlevel = function()
   if vim.b.stl_foldlevel == false or not vim.wo[0].foldenable then
@@ -338,4 +351,12 @@ Ty.source_vimscripts = function(filename)
     return
   end
   vim.cmd('source ' .. vimscript)
+end
+
+Ty.buf_vtext = function()
+  if vim.fn.exists('*getregion()') == 1 then
+    local list = vim.fn.getregion(vim.fn.getpos('.'), vim.fn.getpos('v'))
+    return #list > 0 and list[1] or ''
+  end
+  return ''
 end

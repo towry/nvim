@@ -67,8 +67,9 @@ M.open = function(new_cwd)
           cwd_header = true,
         })
       else
-        require('userlib.telescope.live_grep_call')({
+        require('telescope.builtin').live_grep({
           cwd = new_cwd,
+          prompt_title = 'Live Grep in ' .. vim.fn.fnamemodify(vim.uv.cwd() or '', ':t'),
         })
       end
       unset()

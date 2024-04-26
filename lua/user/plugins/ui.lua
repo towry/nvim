@@ -57,6 +57,7 @@ plug({
           normal_hl = 'NormalFloat',
           max_width = 200,
           border = 'solid',
+          align = 'top',
         },
       },
     },

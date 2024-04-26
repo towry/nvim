@@ -5,6 +5,7 @@ local M = {}
 local is_profiling = false
 
 local function setup_basic()
+  set('n', '<Leader>er', 'gR', { nowait = true, desc = 'Enter visual replace mode' })
   --- a=1
   set('n', '<C-a>a', '<C-a>', { remap = false, nowait = true, silent = true })
   set('n', '<C-a>x', '<C-x>', { remap = false, nowait = true, silent = true })
@@ -18,6 +19,16 @@ local function setup_basic()
   --->>
   set('n', ']b', ':bnext<cr>', { desc = 'Next buffer', silent = false, nowait = true })
   set('n', '[b', ':bpre<cr>', { desc = 'Prev buffer', silent = false, nowait = true })
+  set('n', '<c-w>B', function()
+    vim.cmd('wincmd b')
+    -- check if window is quickfix or terminal
+    if vim.fn.win_gettype() == 'quickfix' or vim.bo.buftype == 'terminal' then
+      vim.cmd('close')
+    end
+    vim.cmd('wincmd p')
+  end, {
+    desc = 'Close bottom window if it is terminal or quickfix',
+  })
   set('n', '<leader>rn', function()
     require('userlib.workflow.run-normal-keys')()
   end, {
@@ -25,6 +36,33 @@ local function setup_basic()
     silent = false,
     desc = 'execute normal keys',
   })
+  set('n', '<leader>tt', function()
+    if vim.t.CwdLocked then
+      vim.cmd('UnlockTcd')
+    else
+      vim.cmd('LockTcd')
+    end
+  end, { desc = 'Toggle Tcd lock', nowait = true })
+  set('n', '<leader>bt', function()
+    if not vim.t.CwdLocked then
+      vim.notify('No need to move')
+      return
+    end
+    local bufnr = vim.api.nvim_get_current_buf()
+    --- loop tabs from 1, exclude current tab,
+    --- if all tabs is locked then open this buffer in new tab.
+    for i = 1, vim.fn.tabpagenr('$') do
+      if not vim.t[i].CwdLocked then
+        vim.cmd(i .. 'tabnext')
+        -- open buf in current tab
+        vim.api.nvim_win_set_buf(0, bufnr)
+        return
+      end
+    end
+    -- open buf in new tab
+    vim.cmd.tabnew()
+    vim.api.nvim_win_set_buf(0, bufnr)
+  end, { desc = 'Temporary open current buffer in a non locked tab' })
   --- use <C-w> in insert to trigger visual select instead of delete
   set('v', '<C-w>', 'B', {})
   --- <left> make <c-o> starts at end of the word before cursor. avoid 'd'
@@ -364,6 +402,8 @@ local function setup_basic()
       desc = 'Diffget in visual',
       silent = true,
     })
+    set('n', '<localleader>w', ':w|cq', { desc = '[Git mergetool] Prepare write and exit safe' })
+    set('n', '<localleader>c', ':cq 1', { desc = '[Git mergetool] Prepare to abort' })
   end
 
   --- wait: https://github.com/neovim/neovim/issues/25714

@@ -231,6 +231,14 @@ function M.setup_keybinding(client, buffer)
   )
   set(
     'n',
+    'gr',
+    func_call('goto_code_references()'),
+    opts({
+      desc = _('Go find references'),
+    })
+  )
+  set(
+    'n',
     '<localleader>gds',
     func_call("goto_definition_in_file('split')"),
     opts({

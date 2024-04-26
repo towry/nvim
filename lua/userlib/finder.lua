@@ -7,7 +7,7 @@ function M.grep_keywords(keywords)
     return require('fzf-lua').grep({ search = query, no_esc = true })
   end
 
-  return require('userlib.telescope.live_grep_call')({
+  return require('telescope.builtin').live_grep({
     default_text = query,
   })
 end

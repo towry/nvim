@@ -222,7 +222,7 @@ function M.load_on_startup()
             vim.wo.foldmethod = 'expr'
             vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
             -- foldtext with ts hi
-            vim.wo.foldtext = 'v:lua.Ty.fold_text()'
+            -- vim.wo.foldtext = 'v:lua.Ty.fold_text()'
           else
             vim.wo.foldmethod = 'manual'
             vim.wo.foldexpr = ''
@@ -442,14 +442,14 @@ function M.load_on_startup()
         end
         local buf_cwd, buf_cwd_short = vim.b[ctx.buf].project_nvim_cwd, vim.b[ctx.buf].project_nvim_cwd_short
         local cwd, cwd_short = runtimeutils.update_cwd_env(buf_cwd, buf_cwd_short)
-        if vim.b[ctx.buf].did_set_cwd_short == cwd then
+        if vim.b[ctx.buf].did_set_cwd_short == cwd and cwd ~= nil then
           return
         end
         vim.b[ctx.buf].did_set_cwd_short = cwd
         -- set cwd on this buffer.
         vim.b[ctx.buf].project_nvim_cwd_short = cwd_short
-        vim.b[ctx.buf].relative_path =
-          require('userlib.runtime.path').make_relative(vim.api.nvim_buf_get_name(ctx.buf), cwd)
+        -- vim.b[ctx.buf].relative_path =
+        --   require('userlib.runtime.path').make_relative(vim.api.nvim_buf_get_name(ctx.buf), cwd)
       end,
     },
     {
