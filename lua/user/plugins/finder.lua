@@ -557,7 +557,7 @@ plug({
         {
           '<leader>fg',
           function()
-            require('userlib.telescope.live_grep_call')({
+            require('telescope.builtin').live_grep({
               cwd = vim.cfg.runtime__starts_cwd,
             })
           end,
@@ -565,18 +565,31 @@ plug({
         },
         {
           '<leader>fs',
-          cmd_modcall('userlib.telescope.live_grep_call', '()'),
+          function()
+            require('telescope.builtin').live_grep()
+          end,
           desc = 'Grep search in project',
         },
         {
           '<leader>fs',
-          cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_visual_selection()'),
+          function()
+            local text = Ty.buf_vtext()
+            require('telescope.builtin').grep_string({
+              search = text,
+              default_text = text,
+            })
+          end,
           desc = 'Grep search on selection in project',
           mode = { 'v', 'x' },
         },
         {
           '<leader>fw',
-          cmd_modcall('telescope-live-grep-args.shortcuts', 'grep_word_under_cursor()'),
+          function()
+            require('telescope.builtin').grep_string({
+              search = vim.fn.expand('<cword>'),
+              default_text = vim.fn.expand('<cword>'),
+            })
+          end,
           desc = 'Grep search on selection in project',
         },
         {
@@ -594,13 +607,11 @@ plug({
   dependencies = {
     { 'nvim-lua/popup.nvim' },
     { 'nvim-lua/plenary.nvim' },
-    { 'nvim-telescope/telescope-live-grep-args.nvim' },
     {
       'nvim-telescope/telescope-fzf-native.nvim',
       enabled = vim.cfg.plugin_telescope_sorter == 'fzf' or not vim.cfg.plugin_telescope_sorter,
       build = 'make',
     },
-
     {
       'pze/telescope-nucleo-sorter.nvim',
       enabled = vim.cfg.plugin_telescope_sorter == 'nucleo',

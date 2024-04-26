@@ -44,7 +44,7 @@ M.config = function(_, opts)
   elseif vim.cfg.plugin_telescope_sorter == 'nucleo' then
     require('telescope').load_extension('nucleo')
   end
-  require('telescope').load_extension('live_grep_args')
+  -- require('telescope').load_extension('live_grep_args')
   require('telescope').load_extension('termfinder')
   --- https://github.com/nvim-telescope/telescope-file-browser.nvim
   --- Telescope file_browser files=false
@@ -55,7 +55,6 @@ end
 M.opts = function()
   local actions = require('telescope.actions')
   local action_state = require('telescope.actions.state')
-  local lga_actions = require('telescope-live-grep-args.actions')
 
   return {
     defaults = {
@@ -176,6 +175,24 @@ M.opts = function()
       oldfiles = {
         previewer = false,
       },
+      live_grep = {
+        mappings = {
+          i = {
+            ['<C-o>'] = function(prompt_bufnr)
+              return require('userlib.telescope.picker_keymaps').open_selected_in_window(prompt_bufnr)
+            end,
+          },
+        },
+      },
+      grep_string = {
+        mappings = {
+          i = {
+            ['<C-o>'] = function(prompt_bufnr)
+              return require('userlib.telescope.picker_keymaps').open_selected_in_window(prompt_bufnr)
+            end,
+          },
+        },
+      },
     },
     extensions = {
       file_browser = {
@@ -190,44 +207,6 @@ M.opts = function()
               require('userlib.mini.clue.folder-action').open(new_cwd)
             end,
           },
-        },
-      },
-      live_grep_args = {
-        disable_coordinates = true,
-        auto_quoting = true, -- enable/disable auto-quoting
-        mappings = {
-          -- extend mappings
-          i = {
-            ['<C-k>'] = lga_actions.quote_prompt(),
-            ['<C-o>'] = function(prompt_bufnr)
-              return require('userlib.telescope.picker_keymaps').open_selected_in_window(prompt_bufnr)
-            end,
-          },
-          ['n'] = {
-            -- your custom normal mode mappings
-            ['/'] = function()
-              vim.cmd('startinsert')
-            end,
-          },
-        },
-      },
-      zoxide = {
-        --- https://github.com/jvgrootveld/telescope-zoxide
-        prompt_title = 'Zz...',
-        mappings = {
-          default = {
-            after_action = function(selection)
-              print('Update to (' .. selection.z_score .. ') ' .. selection.path)
-            end,
-          },
-          -- ["<C-s>"] = {
-          --   before_action = function(selection) print("before C-s") end,
-          --   action = function(selection)
-          --     vim.cmd.edit(selection.path)
-          --   end
-          -- },
-          -- -- Opens the selected entry in a new split
-          -- ["<C-v>"] = { action = z_utils.create_basic_command("split") },
         },
       },
     },

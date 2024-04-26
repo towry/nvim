@@ -352,3 +352,11 @@ Ty.source_vimscripts = function(filename)
   end
   vim.cmd('source ' .. vimscript)
 end
+
+Ty.buf_vtext = function()
+  if vim.fn.exists('*getregion()') == 1 then
+    local list = vim.fn.getregion(vim.fn.getpos('.'), vim.fn.getpos('v'))
+    return #list > 0 and list[1] or ''
+  end
+  return ''
+end
