@@ -153,8 +153,6 @@ local function setup_coc_autocmd()
         return
       end
 
-      --- weird bug, prevent next undo move cursor to second line
-      vim.cmd('exec "normal! a \\<BS>\\<ESC>"')
       vim.fn.CocAction('format')
     end,
   })

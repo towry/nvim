@@ -82,8 +82,7 @@ plug({
 
 plug({
   'gbprod/nord.nvim',
-  event = 'User LazyTheme',
-  cond = vim.cfg.ui__theme_name:match('nord'),
+  event = vim.cfg.ui__theme_name:match('nord') and 'User LazyTheme' or nil,
   config = function()
     local utils = require('nord.utils')
     require('nord').setup({
@@ -209,6 +208,8 @@ plug({
     overrides = function(colors) -- add/modify highlights
       -- do not foget to run ':KanagawaCompile'
       return {
+        StatusLine = { bg = colors.theme.syn.fun, fg = colors.theme.ui.bg_m3 },
+        -- StatusLineNC = { bg = colors.theme.ui.bg_m3, fg = colors.theme.ui.fg_dim },
         TelescopeNormal = { link = 'NormalFloat' },
         TelescopeBorder = { link = 'FloatBorder' },
         TelescopeSelection = { link = 'QuickFixLine' },
