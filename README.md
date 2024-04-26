@@ -20,11 +20,20 @@
   <tr>
     <td>
       <img width="961"  src="https://github.com/towry/nvim/assets/8279858/b19f9430-e537-4b37-93a0-9751ff024253" alt="dark">
-</td>
-
+    </td>
 <td>
-  <img width="961" alt="light" src="https://github.com/towry/nvim/assets/8279858/6395ef3d-38cf-4b3b-849f-9b988c424234">
-</td>
+  <img width="961" alt="light" src="https://github.com/towry/nvim/assets/8279858/6395ef3d-38cf-4b3b-849f-9b988c424234"></td>
+  </tr>
+</table>
+<table>
+  <tr><td>Git</td></tr>
+    <tr>
+    <td>
+      <img width="100%" alt="diff" src="https://github.com/towry/nvim/assets/8279858/ff35a13c-bbbb-4ae9-b524-7c4b06fc4aaf"></td>
+  </tr>
+  <tr>
+    <td>
+      <img width="1376" alt="Neovim as git merge tool" src="https://github.com/towry/nvim/assets/8279858/aecf849d-9f82-4c9a-acf5-c2eff61fa43e">
   </tr>
 </table>
 
