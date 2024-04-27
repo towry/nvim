@@ -219,7 +219,7 @@ return plug({
     end, opts)
 
     --- trigger coc autocmp and ai
-    set('i', '<C-y>', function()
+    set('i', '<C-x><C-x>', function()
       vim.fn['coc#refresh']()
     end, opts)
 
