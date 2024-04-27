@@ -153,7 +153,7 @@ local function setup_coc_autocmd()
         return
       end
 
-      vim.cmd([[call CocAction("format")]])
+      vim.cmd([[call CocAction("format") | sleep 1m]])
     end,
   })
   vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
