@@ -177,7 +177,7 @@ return plug({
   -- 'neoclide/coc.nvim',
   -- branch = 'release',
   'pze/coc.nvim',
-  dev = true,
+  dev = false,
   branch = 'master',
   build = 'npm ci',
   cmd = {
