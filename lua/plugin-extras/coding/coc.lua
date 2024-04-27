@@ -153,7 +153,7 @@ local function setup_coc_autocmd()
         return
       end
 
-      vim.cmd([[keepjumps call CocAction("format") | sleep 1m]])
+      vim.cmd([[call CocAction("format")]])
     end,
   })
   vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
@@ -174,8 +174,12 @@ local function setup_coc_autocmd()
 end
 
 return plug({
-  'neoclide/coc.nvim',
-  branch = 'release',
+  -- 'neoclide/coc.nvim',
+  -- branch = 'release',
+  'pze/coc.nvim',
+  dev = true,
+  branch = 'master',
+  build = 'npm ci',
   cmd = {
     'CocInstall',
   },
