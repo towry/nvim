@@ -31,9 +31,14 @@ local function setup_coc_lsp_keys()
   set('n', '[de', "m'<Plug>(coc-diagnostic-prev-error)", _('diagnostic error prev'))
 
   --- code navigation
-  set('n', 'gd', '<Plug>(coc-definition)', _('Go to definition'))
-  set('n', '<C-w>d', ':<C-u>call CocActionAsync("jumpDefinition", "vsplit")<cr>', _('Go to definition in vsplit'))
-  set('n', 'gy', '<Plug>(coc-type-definition)', _(''))
+  set('n', 'gd', ':<C-u>keepjumps call CocActionAsync("jumpDefinition")<cr>', _('Go to definition'))
+  set(
+    'n',
+    '<C-w>d',
+    ':<C-u>keepjumps call CocActionAsync("jumpDefinition", "vsplit")<cr>',
+    _('Go to definition in vsplit')
+  )
+  set('n', 'gy', ':<C-u>keepjumps call CocActionAsync("jumpTypeDefinition")<cr>', _(''))
   set('n', '<leader>cd', '<Plug>(coc-implementation)', _('Go to implementation'))
   set('n', 'gr', '<Plug>(coc-references)', _('Show references'))
   -- Symbol renaming
