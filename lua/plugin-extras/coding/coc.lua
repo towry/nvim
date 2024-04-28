@@ -301,6 +301,7 @@ return plug({
     vim.g.coc_status_warning_sign = 'W'
   end,
   init = function()
+    vim.env['NVIM_COC_LOG_LEVEL'] = 'error'
     vim.g.miniclues = vim.tbl_extend('error', vim.g.miniclues, {
       { mode = 'n', keys = '<leader>cl', desc = '+Coc lists' },
       { mode = 'n', keys = '<leader>cr', desc = '+Coc refactor' },
