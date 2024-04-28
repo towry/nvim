@@ -557,13 +557,29 @@ plug({
         {
           '<leader>fg',
           function()
-            local text = vim.fn.mode() == 'n' and '' or Ty.buf_vtext()
-            require('telescope.builtin').live_grep({
-              cwd = vim.cfg.runtime__starts_cwd,
-              prompt_title = 'Live Grep (root)',
-              search = text,
-              default_text = text,
-            })
+            local isNormal = vim.fn.mode() == 'n'
+            local text = isNormal and '' or Ty.buf_vtext()
+
+            local run = function(search)
+              require('telescope.builtin').live_grep({
+                cwd = vim.cfg.runtime__starts_cwd,
+                prompt_title = 'Live Grep (root)',
+                search = text == '' and search or text,
+                default_text = text == '' and search or text,
+              })
+            end
+
+            if not isNormal then
+              run()
+            else
+              local search = vim.fn.input({
+                prompt = 'Search: ',
+              })
+              if search == '' then
+                return
+              end
+              run(search)
+            end
           end,
           desc = 'Grep search in all projects',
           mode = { 'v', 'x', 'n' },
