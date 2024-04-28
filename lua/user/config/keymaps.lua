@@ -1,4 +1,5 @@
 local keymap = require('userlib.runtime.keymap')
+local libutil = require('userlib.runtime.utils')
 local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 
 local M = {}
@@ -449,8 +450,12 @@ local function setup_basic()
           luasnip.expand_or_jump()
         end)
       else
-        -- final fallback
-        return [[<Plug>(neotab-out)]]
+        if package.loaded['neotab'] then
+          -- final fallback
+          return [[<Plug>(neotab-out)]]
+        else
+          return '<Tab>'
+        end
       end
     end, { expr = true, silent = false })
 

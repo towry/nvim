@@ -207,7 +207,7 @@ return plug({
       elseif Ty.ModFnCall('neogen', 'jumpable') then
         Ty.ModFnCall('neogen', 'jump_next')
       else
-        return '<Plug>(neotab-out)'
+        return package.loaded['neotab'] and '<Plug>(neotab-out)' or '<Tab>'
       end
     end, opts)
     set('i', '<S-Tab>', function()
