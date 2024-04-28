@@ -6,6 +6,8 @@ local M = {}
 local is_profiling = false
 
 local function setup_basic()
+  set('n', 'q', '<NOP>', {})
+  set('n', '<C-q>', 'q', { noremap = true, desc = 'Start record macro' })
   set('n', '<Leader>er', 'gR', { nowait = true, desc = 'Enter visual replace mode' })
   --- a=1
   set('n', '<C-a>a', '<C-a>', { remap = false, nowait = true, silent = true })
