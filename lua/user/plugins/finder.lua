@@ -557,34 +557,46 @@ plug({
         {
           '<leader>fg',
           function()
+            local text = vim.fn.mode() == 'n' and '' or Ty.buf_vtext()
             require('telescope.builtin').live_grep({
               cwd = vim.cfg.runtime__starts_cwd,
               prompt_title = 'Live Grep (root)',
-            })
-          end,
-          desc = 'Grep search in all projects',
-        },
-        {
-          '<leader>fs',
-          function()
-            require('telescope.builtin').live_grep({
-              prompt_title = 'Live Grep in ' .. vim.fn.fnamemodify(vim.uv.cwd() or '', ':t'),
-            })
-          end,
-          desc = 'Grep search in project',
-        },
-        {
-          '<leader>fs',
-          function()
-            local text = Ty.buf_vtext()
-            require('telescope.builtin').grep_string({
-              prompt_title = 'Grep String in ' .. vim.fn.fnamemodify(vim.uv.cwd() or '', ':t'),
               search = text,
               default_text = text,
             })
           end,
-          desc = 'Grep search on selection in project',
-          mode = { 'v', 'x' },
+          desc = 'Grep search in all projects',
+          mode = { 'v', 'x', 'n' },
+        },
+        {
+          '<leader>fs',
+          function()
+            local text = vim.fn.mode() == 'n' and '' or Ty.buf_vtext()
+            require('telescope.builtin').live_grep({
+              prompt_title = 'Live Grep in ' .. vim.fn.fnamemodify(vim.uv.cwd() or '', ':t'),
+              search = text,
+              default_text = text,
+            })
+          end,
+          mode = { 'v', 'x', 'n' },
+          desc = 'Grep search in project',
+        },
+        {
+          '<leader>fS',
+          function()
+            local ext = vim.fn.expand('%:e')
+            local text = vim.fn.mode() == 'n' and '' or Ty.buf_vtext()
+            require('telescope.builtin').live_grep({
+              prompt_title = ('Live Grep%s in ' .. vim.fn.fnamemodify(vim.uv.cwd() or '', ':t')):format(
+                ext and '(' .. ext .. ')' or ''
+              ),
+              glob_pattern = ext and '*.' .. ext or nil,
+              search = text,
+              default_text = text,
+            })
+          end,
+          mode = { 'v', 'x', 'n' },
+          desc = 'Grep search in project in same filetype',
         },
         {
           '<leader>fw',
