@@ -284,3 +284,15 @@ plug({
     end, {})
   end),
 })
+
+plug({
+  'rainbowhxch/accelerated-jk.nvim',
+  event = 'VeryLazy',
+  opts = {
+    acceleration_limit = 90,
+  },
+  init = function()
+    vim.api.nvim_set_keymap('n', 'j', '<Plug>(accelerated_jk_gj)', { noremap = true, nowait = true })
+    vim.api.nvim_set_keymap('n', 'k', '<Plug>(accelerated_jk_gk)', { noremap = true, nowait = true })
+  end,
+})
