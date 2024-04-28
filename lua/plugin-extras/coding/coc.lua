@@ -1,6 +1,7 @@
 local au = require('userlib.runtime.au')
 local plug = require('userlib.runtime.pack').plug
 
+---{{{ functions
 local function setup_coc_commands()
   require('userlib.legendary').register('coc', function(lg)
     lg.commands({
@@ -153,7 +154,7 @@ local function setup_coc_autocmd()
         return
       end
 
-      vim.fn.CocAction('format')
+      vim.cmd([[call CocAction("format") | sleep 1m]])
     end,
   })
   vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
@@ -172,15 +173,21 @@ local function setup_coc_autocmd()
     end,
   })
 end
+---}}}
 
 return plug({
-  'neoclide/coc.nvim',
-  branch = 'release',
+  -- 'neoclide/coc.nvim',
+  -- branch = 'release',
+  'pze/coc.nvim',
+  dev = false,
+  branch = 'master',
+  build = 'npm ci',
   cmd = {
     'CocInstall',
   },
   enabled = vim.cfg.edit__use_coc and not vim.g.vscode,
   event = 'User FileOpenedAfter',
+  ---{{{config
   config = function()
     local keymap = require('userlib.runtime.keymap')
     local set = keymap.set
@@ -219,7 +226,7 @@ return plug({
     end, opts)
 
     --- trigger coc autocmp and ai
-    set('i', '<C-y>', function()
+    set('i', '<C-x><C-x>', function()
       vim.fn['coc#refresh']()
     end, opts)
 
@@ -255,7 +262,7 @@ return plug({
     setup_coc_commands()
 
     ----------------------------------------------------------------------------
-    -- some config
+    -- {{{some config
     -- https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions#implemented-coc-extensions
     vim.g.coc_global_extensions = {
       'coc-json',
@@ -295,12 +302,18 @@ return plug({
     vim.g.coc_notify_info_icon = ' '
     vim.g.coc_status_error_sign = 'E'
     vim.g.coc_status_warning_sign = 'W'
-  end,
+    ---}}} end some config
+  end, ---}}}
+  ---{{{ init
   init = function()
+    vim.env['NVIM_COC_LOG_LEVEL'] = 'error'
     vim.g.miniclues = vim.tbl_extend('error', vim.g.miniclues, {
       { mode = 'n', keys = '<leader>cl', desc = '+Coc lists' },
       { mode = 'n', keys = '<leader>cr', desc = '+Coc refactor' },
       { mode = 'n', keys = '<leader>cq', desc = '+Coc quickfix?' },
     })
   end,
+  ---}}}
 })
+
+--- vim: fdl=0 fdm=marker fmr={{{,}}}

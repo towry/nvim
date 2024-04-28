@@ -1,5 +1,5 @@
 do
-  if vim.g.updatecwd_loaded == 1 then
+  if vim.g.updatecwd_loaded == 1 or not vim.cfg then
     return
   end
   vim.g.updatecwd_loaded = 1
