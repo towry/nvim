@@ -74,9 +74,37 @@ plug({
         desc = 'Flash',
       },
       {
+        'sk',
+        mode = { 'n' },
+        function()
+          require('flash').jump({
+            search = {
+              wrap = false,
+              forward = false,
+              multi_window = false,
+            },
+          })
+        end,
+        desc = 'Flash up',
+      },
+      {
+        'sj',
+        mode = { 'n' },
+        function()
+          require('flash').jump({
+            search = {
+              wrap = false,
+              multi_window = false,
+            },
+          })
+        end,
+        desc = 'Flash down',
+      },
+      {
+        -- dont use s, cause it used in another motion plugin
         --- cs not working because surround use it.
         --- cm, dm
-        'm',
+        'v',
         mode = { 'o', 'x' },
         function()
           require('flash').jump({
@@ -89,7 +117,7 @@ plug({
         desc = 'Flash in motion',
       },
       {
-        'v',
+        'V',
         mode = { 'o', 'x' },
         function()
           require('flash').jump({
@@ -109,32 +137,6 @@ plug({
           require('userlib.workflow.flashs').jump_to_line()
         end,
         desc = 'Flash jump to line',
-      },
-      {
-        '<C-s><C-p>',
-        mode = { 'n', 'o' },
-        function()
-          require('flash').jump({
-            search = { forward = false, wrap = false, multi_window = false },
-            label = {
-              uppercase = false,
-            },
-          })
-        end,
-        desc = 'Flash backward search',
-      },
-      {
-        '<C-s><C-n>',
-        mode = { 'n', 'o' },
-        function()
-          require('flash').jump({
-            search = { forward = true, wrap = false, multi_window = false },
-            label = {
-              uppercase = false,
-            },
-          })
-        end,
-        desc = 'Flash forward search',
       },
       {
         '.s',
