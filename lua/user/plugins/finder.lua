@@ -77,9 +77,7 @@ plug({
     {
       '<localleader>fs',
       function()
-        local utils = require('rgflow.utils')
-        local content = utils.get_visual_selection(vim.fn.mode())
-        local first_line = utils.get_first_line(content)
+        local first_line = Ty.buf_vtext()
         -- Exit visual mode
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, true, true), 'x', true)
         require('rgflow').open(first_line, vim.b.grep_flags or nil, vim.t.Cwd or vim.uv.cwd(), {
