@@ -434,7 +434,8 @@ M.buf_command_thunk = function(bufnr)
 end
 
 --- @param option_to_toggle string hidden=true or --no-hidden
-M.toggle_cmd_option = function(cmd_string_or_table, option_to_toggle)
+--- @param insert_at_end? boolean
+M.toggle_cmd_option = function(cmd_string_or_table, option_to_toggle, insert_at_end)
   local cmd_is_table = true
   if type(cmd_string_or_table) == 'string' then
     cmd_is_table = false
@@ -452,8 +453,12 @@ M.toggle_cmd_option = function(cmd_string_or_table, option_to_toggle)
     end
   end
   if not is_in_table then
-    -- insert at start
-    table.insert(cmd_string_or_table, 2, option_to_toggle)
+    if insert_at_end then
+      table.insert(cmd_string_or_table, option_to_toggle)
+    else
+      -- insert at start
+      table.insert(cmd_string_or_table, 2, option_to_toggle)
+    end
   end
 
   if cmd_is_table then
