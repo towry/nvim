@@ -70,7 +70,13 @@ local function setup_basic()
   set('v', '<C-w>', 'B', {})
   --- <left> make <c-o> starts at end of the word before cursor. avoid 'd'
   --- motion create newline.
-  set('i', '<C-w>', '<left><C-o>v', { remap = false })
+  set('i', '<C-w>', function()
+    -- check current is float
+    if vim.api.nvim_win_get_config(0).relative ~= '' then
+      return '<C-w>'
+    end
+    return '<left><C-o>v'
+  end, { remap = false, expr = true })
   set('v', '<BS>', 'd', { noremap = true })
   set('n', "';", ':lua require("userlib.runtime.buffer").edit_alt_buf()<cr>', {
     silent = true,

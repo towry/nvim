@@ -787,13 +787,29 @@ plug({
   event = 'User LazyUIEnterOncePost',
   keys = {
     {
-      '<localleader>:',
-      ':FzfLua commands<cr>',
-      desc = 'Command panel',
-      silent = true,
+      '<localleader>k',
+      function()
+        local default_text = vim.fn.mode() ~= 'n' and Ty.buf_vtext() or nil
+        if not default_text and vim.v.count >= 1 then
+          default_text = vim.g.pre_k_text
+        end
+        vim.ui.input({
+          prompt = 'Query >:',
+          default = default_text,
+          completion = 'tag',
+        }, function(input)
+          if input == nil then
+            return
+          end
+          vim.g.pre_k_text = vim.trim(input)
+          require('userlib.mini.clue.prequery-action').open(vim.g.pre_k_text)
+        end)
+      end,
+      mode = { 'n', 'v' },
+      desc = 'Pre query on text',
     },
     {
-      '<localleader>,',
+      '<localleader>:',
       ':FzfLua<cr>',
       desc = 'Fzf',
       silent = true,
