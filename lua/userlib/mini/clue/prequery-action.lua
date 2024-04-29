@@ -13,6 +13,7 @@ M.open = function(text)
     set('n', 'f', function()
       if vim.cfg.plugin_fzf_or_telescope == 'fzf' then
         require('userlib.fzflua').files({
+          cwd = vim.cfg.runtime__starts_cwd,
           cwd_header = true,
           query = text,
         })
@@ -44,7 +45,7 @@ M.open = function(text)
         }))
       else
         require('userlib.fzflua').folders({
-          -- cwd = new_cwd,
+          cwd = vim.cfg.runtime__starts_cwd,
           cwd_header = true,
           query = text,
         })
@@ -56,7 +57,7 @@ M.open = function(text)
     set('n', 's', function()
       if vim.cfg.plugin_fzf_or_telescope == 'fzf' then
         require('fzf-lua').live_grep({
-          -- cwd = new_cwd,
+          cwd = vim.cfg.runtime__starts_cwd,
           cwd_header = true,
           query = text,
         })
@@ -82,7 +83,7 @@ M.open = function(text)
       require('fzf-lua').oldfiles({
         query = text,
         cwd_header = true,
-        -- cwd = new_cwd,
+        cwd = vim.cfg.runtime__starts_cwd,
         cwd_only = true,
         winopts = {
           fullscreen = false,
