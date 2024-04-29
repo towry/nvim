@@ -780,7 +780,7 @@ plug({
 plug({
   -- url = 'https://gitlab.com/ibhagwan/fzf-lua',
   'ibhagwan/fzf-lua',
-  commit = '36df11e3bbb6453014ff4736f6805b5a91dda56d',
+  -- commit = '36df11e3bbb6453014ff4736f6805b5a91dda56d',
   -- 'pze/fzf-lua',
   dev = false,
   dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -823,6 +823,12 @@ plug({
       cmd_modcall(fzf_mod, 'buffers_or_recent(false)'),
       nowait = true,
       desc = 'List Buffers',
+    },
+    {
+      '<localleader>.',
+      cmd_modcall(fzf_mod, 'buffers_or_recent(true)'),
+      nowait = true,
+      desc = 'List local Buffers',
     },
     {
       '<leader>ff',
@@ -877,25 +883,31 @@ plug({
     },
     {
       '<leader>fg',
-      cmd_modcall(fzf_mod, [[ grep({ cwd = vim.cfg.runtime__starts_cwd }, true) ]]),
-      desc = 'Grep search in all projects',
-    },
-    {
-      '<leader>fg',
-      cmd_modcall(fzf_mod, [[grep_visual({ cwd = vim.cfg.runtime__starts_cwd })]]),
+      function()
+        local isNormal = vim.fn.mode() == 'n'
+        local text = isNormal and '' or Ty.buf_vtext()
+
+        require('userlib.fzflua').grep({
+          cwd = vim.cfg.runtime__starts_cwd,
+          query = text,
+        })
+      end,
       desc = 'Grep search on selection in all projects',
-      mode = { 'v', 'x' },
+      mode = { 'v', 'x', 'n' },
     },
     {
       '<leader>fs',
-      cmd_modcall(fzf_mod, [[ grep({ cwd = vim.t.Cwd or vim.uv.cwd(), cwd_header = true }, true) ]]),
-      desc = 'Grep search in project',
-    },
-    {
-      '<leader>fs',
-      cmd_modcall(fzf_mod, [[ grep_visual({ cwd = vim.t.Cwd or vim.uv.cwd() }) ]]),
+      function()
+        local isNormal = vim.fn.mode() == 'n'
+        local text = isNormal and '' or Ty.buf_vtext()
+
+        require('userlib.fzflua').grep({
+          cwd = vim.t.Cwd or vim.uv.cwd(),
+          query = text,
+        })
+      end,
       desc = 'Grep search on selection in project',
-      mode = { 'v', 'x' },
+      mode = { 'v', 'x', 'n' },
     },
     {
       '<leader>fw',
@@ -926,6 +938,8 @@ plug({
         end,
         border = 'single',
         fullscreen = false,
+        width = 0.8,
+        height = 0.75,
         preview = {
           delay = 150,
           scrollbar = false,
@@ -982,6 +996,7 @@ plug({
       },
     })
 
+    -- registered with dressing.
     -- local enable_fzf_select = vim.cfg.ui__input_select_provider == 'fzf-lua'
     local enable_fzf_select = false
 

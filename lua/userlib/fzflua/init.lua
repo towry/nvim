@@ -127,8 +127,6 @@ function M.files(opts)
 
   opts.winopts = {
     fullscreen = false,
-    height = 0.90,
-    width = 1,
   }
   opts.ignore_current_file = false
 
@@ -161,6 +159,8 @@ function M.folders(opts)
   opts.toggle_ignore_flag = '--no-ignore-vcs'
   opts.winopts = {
     fullscreen = false,
+    width = 0.7,
+    height = 0.5,
   }
   opts.fzf_opts = {
     ['--preview-window'] = 'nohidden,down,50%',
@@ -211,6 +211,8 @@ function M.buffers_or_recent(no_buffers)
     filename_first = true,
     sort_lastused = true,
     winopts = {
+      height = 0.3,
+      width = 0.5,
       fullscreen = false,
       preview = {
         hidden = 'hidden',
@@ -223,6 +225,8 @@ function M.buffers_or_recent(no_buffers)
     cwd_only = true,
     include_current_session = true,
     winopts = {
+      height = 0.3,
+      width = 0.5,
       fullscreen = false,
       preview = {
         hidden = 'hidden',

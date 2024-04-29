@@ -126,7 +126,7 @@ pack.plug({
         -- Set to false to disable the vim.ui.select implementation
         enabled = vim.cfg.ui__input_select_provider == 'dressing' and true or false,
         -- Priority list of preferred vim.select implementations
-        backend = vim.cfg.runtime__starts_as_gittool and { 'builtin' } or { 'telescope', 'nui', 'builtin' },
+        backend = vim.cfg.runtime__starts_as_gittool and { 'builtin' } or { 'fzf_lua', 'telescope', 'nui', 'builtin' },
         -- Options for nui Menu
         nui = {
           position = {
@@ -147,6 +147,18 @@ pack.plug({
           },
           max_width = 80,
           max_height = 40,
+        },
+        fzf_lua = {
+          winopts = {
+            fullscreen = false,
+            height = 0.30,
+            width = 0.80,
+          },
+          fzf_opts = {
+            ['--no-hscroll'] = '',
+            ['--delimiter'] = '[\\.\\s]',
+            ['--with-nth'] = '3..',
+          },
         },
         telescope = (function()
           if vim.cfg.runtime__starts_as_gittool then
