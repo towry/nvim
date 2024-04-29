@@ -130,7 +130,7 @@ plug({
         desc = 'Flash in motion',
       },
       {
-        '<C-s><C-s>',
+        'sl',
         mode = { 'n', 'x' },
         nowait = true,
         function()
