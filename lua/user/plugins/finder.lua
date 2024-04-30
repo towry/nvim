@@ -1008,6 +1008,9 @@ plug({
           limit_b = 1024 * 50,
         },
       },
+      fzf_colors = {
+        ['fg+'] = { 'fg', { 'Comment', 'NormalFloat' }, 'underline' },
+      },
     })
 
     -- registered with dressing.

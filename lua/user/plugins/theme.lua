@@ -215,7 +215,7 @@ plug({
         TelescopeSelection = { link = 'QuickFixLine' },
         FzfLuaNormal = { link = 'NormalFloat' },
         FzfLuaBorder = { link = 'FloatBorder' },
-        FzfLuaPreviewNormal = { link = 'Normal' },
+        FzfLuaPreviewNormal = { link = 'NormalFloat' },
         --- coc
         CocUnusedHighlight = { link = 'DiagnosticUnderlineHint' },
         -- flash

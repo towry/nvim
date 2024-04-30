@@ -8,7 +8,7 @@ local hi_fzflua = function()
   hi('FzfLuaNormal', { link = 'NormalFloat' })
   hi('FzfLuaBorder', { link = 'FloatBorder' })
   --- builtin preview main
-  hi('FzfLuaPreviewNormal', { link = 'Normal' })
+  hi('FzfLuaPreviewNormal', { link = 'NormalFloat' })
 end
 local hi_minicursorword = function()
   local extend_hl = require('userlib.runtime.utils').extend_hl
@@ -73,7 +73,7 @@ function M.custom_theme_gruvbox()
 end
 
 function M.custom_theme_kanagawa()
-  M.custom_theme_default()
+  -- M.custom_theme_default()
 end
 
 local function update_custom_theme()
