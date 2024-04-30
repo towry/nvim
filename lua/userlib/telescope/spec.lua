@@ -45,7 +45,6 @@ M.config = function(_, opts)
     require('telescope').load_extension('nucleo')
   end
   -- require('telescope').load_extension('live_grep_args')
-  require('telescope').load_extension('termfinder')
   --- https://github.com/nvim-telescope/telescope-file-browser.nvim
   --- Telescope file_browser files=false
   require('telescope').load_extension('file_browser')

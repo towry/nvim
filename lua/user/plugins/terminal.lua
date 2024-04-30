@@ -8,11 +8,6 @@ plug({
     dev = false,
     keys = {
       {
-        '<leader>/f',
-        '<cmd>Telescope termfinder find<cr>',
-        desc = 'Find terminals with telescope',
-      },
-      {
         '<leader>gv',
         '<cmd>lua require("userlib.terminal.term-git").toggle_tig()<cr>',
         desc = 'Tig commits',

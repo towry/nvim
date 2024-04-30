@@ -649,9 +649,6 @@ plug({
       build = 'cargo rustc --release -- -C link-arg=-undefined -C link-arg=dynamic_lookup',
     },
     {
-      'tknightz/telescope-termfinder.nvim',
-    },
-    {
       'pze/telescope-file-browser.nvim',
       -- branch = 'feat/max-results',
       dev = false,
