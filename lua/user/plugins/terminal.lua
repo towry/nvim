@@ -70,6 +70,7 @@ plug({
         hide_numbers = true, -- hide the number column in toggleterm buffers
         -- this can affect fzf-lua terminal.
         highlights = highlights,
+        --- this option cause fzf-lua hi not working properly
         -- shade_filetypes = { 'none', 'fzf' },
         shade_terminals = true,
         shading_factor = 1, -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
