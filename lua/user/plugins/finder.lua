@@ -975,6 +975,9 @@ plug({
           ['ctrl-q'] = 'select-all+accept',
         },
       },
+      files = {
+        -- formatter = 'path.filename_first',
+      },
       actions = {
         files = {
           ['default'] = actions.file_edit_or_qf,
