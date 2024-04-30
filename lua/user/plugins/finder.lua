@@ -1020,9 +1020,10 @@ plug({
         },
       },
       fzf_colors = {
-        ['bg'] = { 'bg', { 'NormalFloat' } },
-        ['border'] = { 'fg', { 'FloatBorder' } },
-        ['gutter'] = { 'bg', { 'NormalFloat' } },
+        -- ['bg'] = { 'bg', { 'NormalFloat' } },
+        -- ['border'] = { 'fg', { 'FloatBorder' } },
+        -- ['gutter'] = { 'bg', { 'NormalFloat' } },
+        ['bg+'] = { 'bg', { 'CursorLine' } }
       },
     })
 
