@@ -965,7 +965,15 @@ plug({
         },
       },
       keymap = {
-        fzf = {},
+        fzf = {
+          ['ctrl-z'] = 'abort',
+          ['ctrl-f'] = 'half-page-down',
+          ['ctrl-b'] = 'half-page-up',
+          ['ctrl-a'] = 'beginning-of-line',
+          ['ctrl-e'] = 'end-of-line',
+          ['alt-a'] = 'toggle-all',
+          ['ctrl-q'] = 'select-all+accept',
+        },
       },
       actions = {
         files = {
