@@ -226,7 +226,6 @@ function M.buffers_or_recent(no_buffers)
     sort_lastused = true,
     winopts = {
       height = 0.3,
-      width = 0.5,
       fullscreen = false,
       preview = {
         hidden = 'hidden',
@@ -240,7 +239,6 @@ function M.buffers_or_recent(no_buffers)
     include_current_session = true,
     winopts = {
       height = 0.3,
-      width = 0.5,
       fullscreen = false,
       preview = {
         hidden = 'hidden',
