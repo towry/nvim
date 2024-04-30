@@ -537,7 +537,10 @@ plug({
 })
 
 plug({
+  -- TODO: how to start inside nvim automatically
   'whiteinge/diffconflicts',
+  cmd = { 'DiffConflicts' },
+  event = 'VeryLazy',
   lazy = not vim.cfg.runtime__starts_as_gittool,
   config = function() end,
 })
