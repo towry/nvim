@@ -998,8 +998,11 @@ plug({
         ['--info'] = 'inline',
         ['--height'] = '100%',
         ['--layout'] = 'reverse',
+        ['--margin'] = '0%',
+        ['--padding'] = '0%',
         ['--border'] = 'none',
         ['--cycle'] = '',
+        ['--no-separator'] = '',
       },
       previewers = {
         builtin = {
@@ -1009,7 +1012,8 @@ plug({
         },
       },
       fzf_colors = {
-        ['fg+'] = { 'fg', { 'Comment', 'NormalFloat' }, 'underline' },
+        ['bg'] = { 'bg', { 'NormalFloat' } },
+        ['border'] = { 'fg', { 'FloatBorder' } },
       },
     })
 
