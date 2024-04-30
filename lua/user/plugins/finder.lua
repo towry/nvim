@@ -1014,6 +1014,7 @@ plug({
       fzf_colors = {
         ['bg'] = { 'bg', { 'NormalFloat' } },
         ['border'] = { 'fg', { 'FloatBorder' } },
+        ['gutter'] = { 'bg', { 'NormalFloat' } },
       },
     })
 
