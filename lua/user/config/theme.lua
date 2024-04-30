@@ -65,7 +65,7 @@ function M.custom_theme_default()
   hi('TelescopeBorder', { link = 'FloatBorder' })
   -- aerial
   hi('AerialPrivate', { italic = true })
-  hi_fzflua()
+  -- hi_fzflua()
 end
 
 function M.custom_theme_gruvbox()
