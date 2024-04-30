@@ -77,6 +77,11 @@ plug({
         desc = 'Git push',
       },
       {
+        '<leader>gP',
+        cmdstr([[exec "OverDispatch! git push --force-with-lease origin " .. FugitiveHead()]]),
+        desc = 'Git push',
+      },
+      {
         '<leader>gu',
         function()
           vim.g.escape_cmd = 'pclose'
