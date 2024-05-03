@@ -151,7 +151,7 @@ pack.plug({
         fzf_lua = {
           winopts = {
             fullscreen = false,
-            height = 0.30,
+            height = 0.40,
             width = 0.80,
           },
           fzf_opts = {
