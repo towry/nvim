@@ -849,6 +849,7 @@ local Tabpage = {
       fg = 'gray',
     },
   },
+  lpad(FileIcon),
   {
     provider = '%T ',
   },
