@@ -77,9 +77,7 @@ plug({
     {
       '<localleader>fs',
       function()
-        local utils = require('rgflow.utils')
-        local content = utils.get_visual_selection(vim.fn.mode())
-        local first_line = utils.get_first_line(content)
+        local first_line = Ty.buf_vtext()
         -- Exit visual mode
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, true, true), 'x', true)
         require('rgflow').open(first_line, vim.b.grep_flags or nil, vim.t.Cwd or vim.uv.cwd(), {
@@ -557,34 +555,62 @@ plug({
         {
           '<leader>fg',
           function()
-            require('telescope.builtin').live_grep({
-              cwd = vim.cfg.runtime__starts_cwd,
-              prompt_title = 'Live Grep (root)',
-            })
+            local isNormal = vim.fn.mode() == 'n'
+            local text = isNormal and '' or Ty.buf_vtext()
+
+            local run = function(search)
+              require('telescope.builtin').live_grep({
+                cwd = vim.cfg.runtime__starts_cwd,
+                prompt_title = 'Live Grep (root)',
+                search = text == '' and search or text,
+                default_text = text == '' and search or text,
+              })
+            end
+
+            if not isNormal then
+              run()
+            else
+              local search = vim.fn.input({
+                prompt = 'Search: ',
+              })
+              if search == '' then
+                return
+              end
+              run(search)
+            end
           end,
           desc = 'Grep search in all projects',
+          mode = { 'v', 'x', 'n' },
         },
         {
           '<leader>fs',
           function()
+            local text = vim.fn.mode() == 'n' and '' or Ty.buf_vtext()
             require('telescope.builtin').live_grep({
               prompt_title = 'Live Grep in ' .. vim.fn.fnamemodify(vim.uv.cwd() or '', ':t'),
-            })
-          end,
-          desc = 'Grep search in project',
-        },
-        {
-          '<leader>fs',
-          function()
-            local text = Ty.buf_vtext()
-            require('telescope.builtin').grep_string({
-              prompt_title = 'Grep String in ' .. vim.fn.fnamemodify(vim.uv.cwd() or '', ':t'),
               search = text,
               default_text = text,
             })
           end,
-          desc = 'Grep search on selection in project',
-          mode = { 'v', 'x' },
+          mode = { 'v', 'x', 'n' },
+          desc = 'Grep search in project',
+        },
+        {
+          '<leader>fS',
+          function()
+            local ext = vim.fn.expand('%:e')
+            local text = vim.fn.mode() == 'n' and '' or Ty.buf_vtext()
+            require('telescope.builtin').live_grep({
+              prompt_title = ('Live Grep%s in ' .. vim.fn.fnamemodify(vim.uv.cwd() or '', ':t')):format(
+                ext and '(' .. ext .. ')' or ''
+              ),
+              glob_pattern = ext and '*.' .. ext or nil,
+              search = text,
+              default_text = text,
+            })
+          end,
+          mode = { 'v', 'x', 'n' },
+          desc = 'Grep search in project in same filetype',
         },
         {
           '<leader>fw',
@@ -621,9 +647,6 @@ plug({
       'pze/telescope-nucleo-sorter.nvim',
       enabled = vim.cfg.plugin_telescope_sorter == 'nucleo',
       build = 'cargo rustc --release -- -C link-arg=-undefined -C link-arg=dynamic_lookup',
-    },
-    {
-      'tknightz/telescope-termfinder.nvim',
     },
     {
       'pze/telescope-file-browser.nvim',
@@ -752,7 +775,7 @@ plug({
 plug({
   -- url = 'https://gitlab.com/ibhagwan/fzf-lua',
   'ibhagwan/fzf-lua',
-  commit = '36df11e3bbb6453014ff4736f6805b5a91dda56d',
+  -- commit = '36df11e3bbb6453014ff4736f6805b5a91dda56d',
   -- 'pze/fzf-lua',
   dev = false,
   dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -761,13 +784,29 @@ plug({
   event = 'User LazyUIEnterOncePost',
   keys = {
     {
-      '<localleader>:',
-      ':FzfLua commands<cr>',
-      desc = 'Command panel',
-      silent = true,
+      '<localleader>k',
+      function()
+        local default_text = vim.fn.mode() ~= 'n' and Ty.buf_vtext() or nil
+        if not default_text and vim.v.count >= 1 then
+          default_text = vim.g.pre_k_text
+        end
+        vim.ui.input({
+          prompt = 'Query >:',
+          default = default_text,
+          completion = 'tag',
+        }, function(input)
+          if input == nil then
+            return
+          end
+          vim.g.pre_k_text = vim.trim(input)
+          require('userlib.mini.clue.prequery-action').open(vim.g.pre_k_text)
+        end)
+      end,
+      mode = { 'n', 'v' },
+      desc = 'Pre query on text',
     },
     {
-      '<localleader>,',
+      '<localleader>:',
       ':FzfLua<cr>',
       desc = 'Fzf',
       silent = true,
@@ -795,6 +834,12 @@ plug({
       cmd_modcall(fzf_mod, 'buffers_or_recent(false)'),
       nowait = true,
       desc = 'List Buffers',
+    },
+    {
+      '<localleader>.',
+      cmd_modcall(fzf_mod, 'buffers_or_recent(true)'),
+      nowait = true,
+      desc = 'List local Buffers',
     },
     {
       '<leader>ff',
@@ -849,25 +894,31 @@ plug({
     },
     {
       '<leader>fg',
-      cmd_modcall(fzf_mod, [[ grep({ cwd = vim.cfg.runtime__starts_cwd }, true) ]]),
-      desc = 'Grep search in all projects',
-    },
-    {
-      '<leader>fg',
-      cmd_modcall(fzf_mod, [[grep_visual({ cwd = vim.cfg.runtime__starts_cwd })]]),
+      function()
+        local isNormal = vim.fn.mode() == 'n'
+        local text = isNormal and '' or Ty.buf_vtext()
+
+        require('userlib.fzflua').grep({
+          cwd = vim.cfg.runtime__starts_cwd,
+          query = text,
+        })
+      end,
       desc = 'Grep search on selection in all projects',
-      mode = { 'v', 'x' },
+      mode = { 'v', 'x', 'n' },
     },
     {
       '<leader>fs',
-      cmd_modcall(fzf_mod, [[ grep({ cwd = vim.t.Cwd or vim.uv.cwd(), cwd_header = true }, true) ]]),
-      desc = 'Grep search in project',
-    },
-    {
-      '<leader>fs',
-      cmd_modcall(fzf_mod, [[ grep_visual({ cwd = vim.t.Cwd or vim.uv.cwd() }) ]]),
+      function()
+        local isNormal = vim.fn.mode() == 'n'
+        local text = isNormal and '' or Ty.buf_vtext()
+
+        require('userlib.fzflua').grep({
+          cwd = vim.t.Cwd or vim.uv.cwd(),
+          query = text,
+        })
+      end,
       desc = 'Grep search on selection in project',
-      mode = { 'v', 'x' },
+      mode = { 'v', 'x', 'n' },
     },
     {
       '<leader>fw',
@@ -898,6 +949,8 @@ plug({
         end,
         border = 'single',
         fullscreen = false,
+        width = 0.8,
+        height = 0.75,
         preview = {
           delay = 150,
           scrollbar = false,
@@ -912,7 +965,18 @@ plug({
         },
       },
       keymap = {
-        fzf = {},
+        fzf = {
+          ['ctrl-z'] = 'abort',
+          ['ctrl-f'] = 'half-page-down',
+          ['ctrl-b'] = 'half-page-up',
+          ['ctrl-a'] = 'beginning-of-line',
+          ['ctrl-e'] = 'end-of-line',
+          ['alt-a'] = 'toggle-all',
+          ['ctrl-q'] = 'select-all+accept',
+        },
+      },
+      files = {
+        -- formatter = 'path.filename_first',
       },
       actions = {
         files = {
@@ -942,8 +1006,11 @@ plug({
         ['--info'] = 'inline',
         ['--height'] = '100%',
         ['--layout'] = 'reverse',
+        ['--margin'] = '0%',
+        ['--padding'] = '0%',
         ['--border'] = 'none',
         ['--cycle'] = '',
+        ['--no-separator'] = '',
       },
       previewers = {
         builtin = {
@@ -952,8 +1019,15 @@ plug({
           limit_b = 1024 * 50,
         },
       },
+      fzf_colors = {
+        -- ['bg'] = { 'bg', { 'NormalFloat' } },
+        -- ['border'] = { 'fg', { 'FloatBorder' } },
+        -- ['gutter'] = { 'bg', { 'NormalFloat' } },
+        ['bg+'] = { 'bg', { 'CursorLine' } }
+      },
     })
 
+    -- registered with dressing.
     -- local enable_fzf_select = vim.cfg.ui__input_select_provider == 'fzf-lua'
     local enable_fzf_select = false
 

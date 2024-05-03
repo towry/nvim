@@ -198,7 +198,7 @@ plug({
         function()
           local tabs_count = vim.fn.tabpagenr('$')
           if tabs_count <= 1 then
-            vim.cmd('hide | echo "hide current window"')
+            vim.cmd('silent! hide | echo "hide current window"')
             return
           end
           --- get current tab's window count
@@ -207,8 +207,7 @@ plug({
             vim.notify('Can not hide last window in tab', vim.log.levels.ERROR)
             return
           end
-          print('----')
-          vim.cmd('hide | echo "hide current window"')
+          vim.cmd('silent! hide | echo "hide current window"')
         end,
         desc = 'Hide current window',
         silent = false,

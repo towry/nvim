@@ -21,7 +21,7 @@ local function callgrep(_opts, callfn)
   opts.rg_opts = opts.rg_opts
     or [[--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e]]
 
-  opts.actions = {
+  opts.actions = vim.tbl_extend('keep', {
     -- press ctrl-e in fzf picker to switch to rgflow.
     ['ctrl-e'] = function()
       -- bring up rgflow ui to change rg args.
@@ -52,7 +52,7 @@ local function callgrep(_opts, callfn)
       -- hello --*.md *.js
       return callfn(opts)
     end,
-  }
+  }, opts.actions)
 
   return callfn(opts)
 end
@@ -65,6 +65,20 @@ function M.grep(opts, is_live)
   local fzflua = require('fzf-lua')
   if is_live then
     opts.prompt = '󱙓  Live Grep❯ '
+    -- fixed strings search
+    opts.rg_opts = '--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --fixed-strings'
+    local copyopts = vim.deepcopy(opts)
+
+    opts.actions = {
+      ['ctrl-k'] = function()
+        local new_opts = vim.deepcopy(copyopts)
+        new_opts.rg_opts = libutils.toggle_cmd_option(opts.rg_opts, '--fixed-strings')
+        new_opts.rg_opts = libutils.toggle_cmd_option(new_opts.rg_opts, '-e', true)
+        new_opts.query = utils.get_last_query()
+        vim.print(new_opts.rg_opts)
+        fzflua.live_grep(new_opts)
+      end,
+    }
   else
     opts.input_prompt = '󱙓  Grep❯ '
   end
@@ -127,8 +141,6 @@ function M.files(opts)
 
   opts.winopts = {
     fullscreen = false,
-    height = 0.90,
-    width = 1,
   }
   opts.ignore_current_file = false
 
@@ -161,6 +173,8 @@ function M.folders(opts)
   opts.toggle_ignore_flag = '--no-ignore-vcs'
   opts.winopts = {
     fullscreen = false,
+    width = 0.7,
+    height = 0.5,
   }
   opts.fzf_opts = {
     ['--preview-window'] = 'nohidden,down,50%',
@@ -211,6 +225,7 @@ function M.buffers_or_recent(no_buffers)
     filename_first = true,
     sort_lastused = true,
     winopts = {
+      height = 0.3,
       fullscreen = false,
       preview = {
         hidden = 'hidden',
@@ -223,6 +238,7 @@ function M.buffers_or_recent(no_buffers)
     cwd_only = true,
     include_current_session = true,
     winopts = {
+      height = 0.3,
       fullscreen = false,
       preview = {
         hidden = 'hidden',

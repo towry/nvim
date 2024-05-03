@@ -1,10 +1,13 @@
 local keymap = require('userlib.runtime.keymap')
+local libutil = require('userlib.runtime.utils')
 local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 
 local M = {}
 local is_profiling = false
 
 local function setup_basic()
+  set('n', 'q', '<NOP>', {})
+  set('n', '<C-q>', 'q', { noremap = true, desc = 'Start record macro' })
   set('n', '<Leader>er', 'gR', { nowait = true, desc = 'Enter visual replace mode' })
   --- a=1
   set('n', '<C-a>a', '<C-a>', { remap = false, nowait = true, silent = true })
@@ -67,7 +70,13 @@ local function setup_basic()
   set('v', '<C-w>', 'B', {})
   --- <left> make <c-o> starts at end of the word before cursor. avoid 'd'
   --- motion create newline.
-  set('i', '<C-w>', '<left><C-o>v', { remap = false })
+  set('i', '<C-w>', function()
+    -- check current is float
+    if vim.api.nvim_win_get_config(0).relative ~= '' then
+      return '<C-w>'
+    end
+    return '<left><C-o>v'
+  end, { remap = false, expr = true })
   set('v', '<BS>', 'd', { noremap = true })
   set('n', "';", ':lua require("userlib.runtime.buffer").edit_alt_buf()<cr>', {
     silent = true,
@@ -449,8 +458,12 @@ local function setup_basic()
           luasnip.expand_or_jump()
         end)
       else
-        -- final fallback
-        return [[<Plug>(neotab-out)]]
+        if package.loaded['neotab'] then
+          -- final fallback
+          return [[<Plug>(neotab-out)]]
+        else
+          return '<Tab>'
+        end
       end
     end, { expr = true, silent = false })
 

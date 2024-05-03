@@ -54,7 +54,10 @@ pack.plug({
   },
   { 'nvim-lua/popup.nvim' },
   {
-    'MunifTanjim/nui.nvim',
+    'grapp-dev/nui-components.nvim',
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+    },
   },
   {
     'tpope/vim-repeat',
@@ -84,7 +87,7 @@ pack.plug({
         -- These are passed to nvim_open_win
         border = vim.cfg.ui__float_border,
         -- 'editor' and 'win' will default to being centered
-        relative = 'cursor',
+        relative = 'editor',
         -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
         prefer_width = 50,
         width = nil,
@@ -123,7 +126,7 @@ pack.plug({
         -- Set to false to disable the vim.ui.select implementation
         enabled = vim.cfg.ui__input_select_provider == 'dressing' and true or false,
         -- Priority list of preferred vim.select implementations
-        backend = vim.cfg.runtime__starts_as_gittool and { 'builtin' } or { 'telescope', 'nui', 'builtin' },
+        backend = vim.cfg.runtime__starts_as_gittool and { 'builtin' } or { 'fzf_lua', 'telescope', 'nui', 'builtin' },
         -- Options for nui Menu
         nui = {
           position = {
@@ -144,6 +147,18 @@ pack.plug({
           },
           max_width = 80,
           max_height = 40,
+        },
+        fzf_lua = {
+          winopts = {
+            fullscreen = false,
+            height = 0.40,
+            width = 0.80,
+          },
+          fzf_opts = {
+            ['--no-hscroll'] = '',
+            ['--delimiter'] = '[\\.\\s]',
+            ['--with-nth'] = '3..',
+          },
         },
         telescope = (function()
           if vim.cfg.runtime__starts_as_gittool then

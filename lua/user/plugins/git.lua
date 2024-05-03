@@ -77,6 +77,11 @@ plug({
         desc = 'Git push',
       },
       {
+        '<leader>gP',
+        cmdstr([[exec "OverDispatch! git push --force-with-lease origin " .. FugitiveHead()]]),
+        desc = 'Git push',
+      },
+      {
         '<leader>gu',
         function()
           vim.g.escape_cmd = 'pclose'
@@ -532,7 +537,10 @@ plug({
 })
 
 plug({
+  -- TODO: how to start inside nvim automatically
   'whiteinge/diffconflicts',
+  cmd = { 'DiffConflicts' },
+  event = 'VeryLazy',
   lazy = not vim.cfg.runtime__starts_as_gittool,
   config = function() end,
 })
