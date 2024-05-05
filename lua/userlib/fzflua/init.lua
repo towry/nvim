@@ -18,6 +18,7 @@ local function callgrep(_opts, callfn)
     height = 0.90,
     width = 1,
   }
+  opts.formatter = 'path.filename_first'
   opts.rg_opts = opts.rg_opts
     or [[--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e]]
 

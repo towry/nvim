@@ -978,6 +978,15 @@ plug({
       files = {
         -- formatter = 'path.filename_first',
       },
+      live_grep = {
+        formatter = 'path.filename_first',
+      },
+      oldfiles = {
+        formatter = 'path.filename_first',
+      },
+      buffers = {
+        formatter = 'path.filename_first',
+      },
       actions = {
         files = {
           ['default'] = actions.file_edit_or_qf,
@@ -1023,7 +1032,7 @@ plug({
         -- ['bg'] = { 'bg', { 'NormalFloat' } },
         -- ['border'] = { 'fg', { 'FloatBorder' } },
         -- ['gutter'] = { 'bg', { 'NormalFloat' } },
-        ['bg+'] = { 'bg', { 'CursorLine' } }
+        ['bg+'] = { 'bg', { 'CursorLine' } },
       },
     })
 
