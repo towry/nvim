@@ -911,15 +911,9 @@ plug({
       function()
         local isNormal = vim.fn.mode() == 'n'
         local text = isNormal and '' or Ty.buf_vtext()
-        local cwd = nil
-        if vim.t.CwdLocked and vim.t.Cwd then
-          cwd = vim.t.Cwd
-        else
-          cwd = vim.uv.cwd()
-        end
 
         require('userlib.fzflua').grep({
-          cwd = cwd,
+          cwd = vim.t.Cwd or vim.uv.cwd(),
           query = text,
         })
       end,
@@ -928,10 +922,7 @@ plug({
     },
     {
       '<leader>fw',
-      cmd_modcall(
-        fzf_mod,
-        [[grep({ cwd = vim.t.CwdLocked and vim.t.Cwd or vim.uv.cwd(), query = vim.fn.expand("<cword>") }, true)]]
-      ),
+      cmd_modcall(fzf_mod, [[grep({ cwd = vim.t.Cwd or vim.uv.cwd(), query = vim.fn.expand("<cword>") }, true)]]),
       desc = 'Grep search word in current project',
     },
     {
@@ -965,8 +956,6 @@ plug({
           scrollbar = false,
           default = 'builtin',
           wrap = 'wrap',
-          layout = 'flex',
-          flip_columns = 240,
           horizontal = 'right:45%',
           vertical = 'down:40%',
           winopts = {
@@ -991,6 +980,13 @@ plug({
       },
       grep = {
         formatter = 'path.filename_first',
+        winopts = {
+          -- split = 'belowright new',
+          preview = {
+            layout = 'flex',
+            flip_columns = 240,
+          },
+        },
       },
       oldfiles = {
         formatter = 'path.filename_first',
