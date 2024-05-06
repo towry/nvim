@@ -956,6 +956,8 @@ plug({
           scrollbar = false,
           default = 'builtin',
           wrap = 'wrap',
+          layout = 'flex',
+          flip_columns = 240,
           horizontal = 'right:45%',
           vertical = 'down:40%',
           winopts = {
@@ -980,13 +982,6 @@ plug({
       },
       grep = {
         formatter = 'path.filename_first',
-        winopts = {
-          -- split = 'belowright new',
-          preview = {
-            layout = 'flex',
-            flip_columns = 240,
-          },
-        },
       },
       oldfiles = {
         formatter = 'path.filename_first',
