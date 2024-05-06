@@ -34,6 +34,7 @@ plug({
           provider = '%=',
         },
         {
+          comp.rpad(comp.LastExCommand),
           comp.rpad(comp.Copilot),
           comp.rpad(comp.Codeium),
           comp.rpad({

@@ -823,3 +823,12 @@ plug({
     deleteBufferWhenFileDeleted = false,
   },
 })
+
+plug({
+  'ariel-frischer/bmessages.nvim',
+  cmd = { 'Bmessages', 'Bmessagesvs', 'Bmessagessp', 'BmessagesEdit' },
+  event = 'CmdlineEnter',
+  opts = {
+    split_type = 'split',
+  },
+})

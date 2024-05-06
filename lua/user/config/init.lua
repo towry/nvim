@@ -13,6 +13,7 @@ function M.setup()
   require('user.config.options').startup()
   require('user.config.options').setup()
   require('user.config.keymaps').setup()
+  require('user.config.neovide')
 
   require('user.config.autocmd').setup({
     -- lazy

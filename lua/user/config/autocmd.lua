@@ -1,3 +1,4 @@
+--- https://github.com/akinsho/dotfiles/blob/0567c6786a7ead5c826f4b4c86776ec715223157/.config/nvim/plugin/autocommands.lua#L141
 local au = require('userlib.runtime.au')
 
 local M = {}
@@ -100,6 +101,12 @@ function M.load_on_startup()
           set('n', '<F1>', '<CR>q:', {
             buffer = bufnr,
             silent = true,
+          })
+          set('n', 'q', '<C-w>c', {
+            buffer = bufnr,
+            silent = true,
+            nowait = true,
+            noremap = true,
           })
         end,
       },
@@ -210,7 +217,8 @@ function M.load_on_startup()
     },
     -- enable foldexpr
     {
-      { 'BufWinEnter' },
+      -- before modeline
+      { 'BufRead' },
       {
         group = 'enable_foldexpr_for_buf',
         callback = function(ctx)
@@ -218,12 +226,7 @@ function M.load_on_startup()
           --- https://github.com/nvim-treesitter/nvim-treesitter/issues/1337
           local buf = ctx.buf
           local lines = vim.api.nvim_buf_line_count(buf)
-          if not vim.b[buf].is_big_file and lines < 10000 then
-            vim.wo.foldmethod = 'expr'
-            vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-            -- foldtext with ts hi
-            -- vim.wo.foldtext = 'v:lua.Ty.fold_text()'
-          else
+          if vim.b[buf].is_big_file or lines > 10000 then
             vim.wo.foldmethod = 'manual'
             vim.wo.foldexpr = ''
           end
