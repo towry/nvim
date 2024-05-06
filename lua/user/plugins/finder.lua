@@ -928,7 +928,10 @@ plug({
     },
     {
       '<leader>fw',
-      cmd_modcall(fzf_mod, [[grep({ cwd = vim.t.CwdLocked and vim.t.Cwd or vim.uv.cwd(), query = vim.fn.expand("<cword>") }, true)]]),
+      cmd_modcall(
+        fzf_mod,
+        [[grep({ cwd = vim.t.CwdLocked and vim.t.Cwd or vim.uv.cwd(), query = vim.fn.expand("<cword>") }, true)]]
+      ),
       desc = 'Grep search word in current project',
     },
     {
