@@ -12,7 +12,6 @@ local action_state = require('telescope.actions.state')
 local conf = require('telescope.config').values
 local entry_display = require('telescope.pickers.entry_display')
 local finders = require('telescope.finders')
-local themes = require('telescope.themes')
 local pickers = require('telescope.pickers')
 
 local function command_entry_maker(max_width)

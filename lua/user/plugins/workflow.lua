@@ -516,7 +516,6 @@ plug({
             return
           end
           require('mini.bufremove').unshow(buf)
-          -- TODO: use bufstack.
           vim.api.nvim_set_current_win(win)
           vim.api.nvim_win_set_buf(win, buf)
         end,
