@@ -112,24 +112,6 @@ function M.files(opts)
   if not opts.cwd then
     opts.cwd = safe_cwd(vim.t.Cwd)
   end
-  local cmd = nil
-  if vim.fn.executable('fd') == 1 then
-    local fzfutils = require('fzf-lua.utils')
-    -- fzf-lua.defaults#defaults.files.fd_opts
-    cmd = string.format(
-      [[fd --color=never --type f --follow --exclude .git -x echo {} | awk -F/ '{printf "%%s: ", $0; printf "%%s ", $NF; gsub(/^\.\//,"",$0); gsub($NF,"",$0); printf "%s ", $0; print ""}']],
-      fzfutils.ansi_codes.grey('%s')
-    )
-    opts.fzf_opts = {
-      -- process ansi colors
-      ['--ansi'] = '',
-      ['--no-hscroll'] = '',
-      ['--with-nth'] = '2..',
-      ['--delimiter'] = '\\s',
-      ['--tiebreak'] = 'begin,index',
-    }
-  end
-  opts.cmd = cmd
 
   opts.actions = {
     ['ctrl-h'] = function(_, o)
