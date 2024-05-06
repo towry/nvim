@@ -911,9 +911,15 @@ plug({
       function()
         local isNormal = vim.fn.mode() == 'n'
         local text = isNormal and '' or Ty.buf_vtext()
+        local cwd = nil
+        if vim.t.CwdLocked and vim.t.Cwd then
+          cwd = vim.t.Cwd
+        else
+          cwd = vim.uv.cwd()
+        end
 
         require('userlib.fzflua').grep({
-          cwd = vim.t.Cwd or vim.uv.cwd(),
+          cwd = cwd,
           query = text,
         })
       end,
@@ -922,7 +928,7 @@ plug({
     },
     {
       '<leader>fw',
-      cmd_modcall(fzf_mod, [[grep({ cwd = vim.t.Cwd or vim.uv.cwd(), query = vim.fn.expand("<cword>") }, true)]]),
+      cmd_modcall(fzf_mod, [[grep({ cwd = vim.t.CwdLocked and vim.t.Cwd or vim.uv.cwd(), query = vim.fn.expand("<cword>") }, true)]]),
       desc = 'Grep search word in current project',
     },
     {
