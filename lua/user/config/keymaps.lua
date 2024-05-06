@@ -1,11 +1,19 @@
 local keymap = require('userlib.runtime.keymap')
-local libutil = require('userlib.runtime.utils')
+-- local libutil = require('userlib.runtime.utils')
 local set, cmd, cmd_modcall = keymap.set, keymap.cmdstr, keymap.cmd_modcall
 
 local M = {}
 local is_profiling = false
 
 local function setup_basic()
+  set('n', '*', function()
+    vim.fn.setreg('/', [[\V\<]] .. vim.fn.escape(vim.fn.expand('<cword>'), [[/\]]) .. [[\>]])
+    vim.fn.histadd('/', vim.fn.getreg('/'))
+    vim.o.hlsearch = true
+  end, {
+    nowait = true,
+    noremap = true,
+  })
   set('n', 'q', '<NOP>', {})
   set('n', '<C-q>', 'q', { noremap = true, desc = 'Start record macro' })
   set('n', '<Leader>er', 'gR', { nowait = true, desc = 'Enter visual replace mode' })

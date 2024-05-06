@@ -1,3 +1,4 @@
+--- https://github.com/akinsho/dotfiles/blob/0567c6786a7ead5c826f4b4c86776ec715223157/.config/nvim/plugin/autocommands.lua#L141
 local au = require('userlib.runtime.au')
 
 local M = {}
@@ -100,6 +101,12 @@ function M.load_on_startup()
           set('n', '<F1>', '<CR>q:', {
             buffer = bufnr,
             silent = true,
+          })
+          set('n', 'q', '<C-w>c', {
+            buffer = bufnr,
+            silent = true,
+            nowait = true,
+            noremap = true,
           })
         end,
       },
