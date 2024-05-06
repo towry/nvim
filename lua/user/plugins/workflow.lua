@@ -530,23 +530,39 @@ plug({
     keys = {
       {
         -- super + i
-        keymap.super('i'),
+        -- keymap.super('i'),
+        '<C-n>',
         "<cmd>lua require('bufjump').forward()<cr>",
         desc = 'Forward buf jump',
         noremap = true,
       },
       {
         -- super + o
-        keymap.super('o'),
+        -- keymap.super('o'),
+        '<C-p>',
         "<cmd>lua require('bufjump').backward()<cr>",
         desc = 'Backward buf jump',
         noremap = true,
       },
+      {
+        -- '<M-i>',
+        keymap.super('i'),
+        [[<cmd>lua require('bufjump').forward_same_buf()<cr>]],
+        desc = 'Forward in same buf jump',
+      },
+      {
+        -- '<M-o>',
+        keymap.super('o'),
+        [[<cmd>lua require('bufjump').backward_same_buf()<cr>]],
+        desc = 'Backward in same buf jump',
+      },
     },
     opts = {
-      forward = nil,
-      backward = nil,
-      on_success = nil,
+      forward_key = false,
+      backward_key = false,
+      on_success = function()
+        vim.cmd([[execute "normal! g`\"zz"]])
+      end,
     },
   },
 })
