@@ -976,7 +976,23 @@ plug({
         },
       },
       files = {
-        -- formatter = 'path.filename_first',
+        formatter = 'path.filename_first',
+      },
+      grep = {
+        formatter = 'path.filename_first',
+        winopts = {
+          -- split = 'belowright new',
+          preview = {
+            layout = 'flex',
+            flip_columns = 240,
+          },
+        },
+      },
+      oldfiles = {
+        formatter = 'path.filename_first',
+      },
+      buffers = {
+        formatter = 'path.filename_first',
       },
       actions = {
         files = {
@@ -1023,7 +1039,7 @@ plug({
         -- ['bg'] = { 'bg', { 'NormalFloat' } },
         -- ['border'] = { 'fg', { 'FloatBorder' } },
         -- ['gutter'] = { 'bg', { 'NormalFloat' } },
-        ['bg+'] = { 'bg', { 'CursorLine' } }
+        -- ['bg+'] = { 'bg', { 'CursorLine' } },
       },
     })
 

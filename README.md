@@ -8,7 +8,6 @@
 - Enhanced workflow for opening folders and searching files, enabling additional actions to be performed on selected folders.
 - Git keymaps for diff, log (file, etc.), blame (file, chunks), stage, and more.
 - Optimized for use as a git mergetool, favoring a two-way merge approach.
-- Reasonable buffer closing behavior, close buffer without surprise.
 
 ## Screenshots
 
@@ -26,7 +25,7 @@
   </tr>
 </table>
 <table>
-  <tr><td>Git</td></tr>
+  <tr><td>Git(logs, mergetool)</td></tr>
     <tr>
     <td>
       <img width="100%" alt="diff" src="https://github.com/towry/nvim/assets/8279858/ff35a13c-bbbb-4ae9-b524-7c4b06fc4aaf"></td>
