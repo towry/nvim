@@ -239,7 +239,7 @@ function M.setup()
     callback = vim.schedule_wrap(function(args)
       local buf = args.buf
       --- is invalid when rename folders etc
-      if not vim.api.nvim_buf_is_valid(buf) then
+      if not vim.api.nvim_buf_is_valid(buf) or vim.fn.getbufinfo(buf)[1].hidden then
         return
       end
       local ft = vim.bo[buf].filetype
