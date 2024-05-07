@@ -352,6 +352,13 @@ end, {
 create_cmd('CloseAll', function()
   vim.cmd('silent! windo close')
   vim.cmd('bufdo bw')
+
+  vim.schedule(function()
+    vim.cmd.cd(vim.cfg.runtime__starts_cwd)
+    vim.t.Cwd = nil
+    vim.t.CwdLocked = nil
+    vim.cmd.redrawstatus()
+  end)
 end, {
   desc = 'Close all buffers and windows',
 })
