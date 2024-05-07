@@ -61,11 +61,12 @@ plug({
         comp.lpad({
           {
             provider = function()
-              return Ty.stl_relative_bufname(vim.api.nvim_get_current_buf())
+              local v = Ty.stl_relative_bufname(vim.api.nvim_get_current_buf())
+              return v == '' and '[No Name] ' or v .. ' '
             end,
           },
           {
-            provider = ' [%n]',
+            provider = '[%n]',
           },
           {
             provider = '%m%w%r',
@@ -86,11 +87,12 @@ plug({
         comp.lpad({
           {
             provider = function()
-              return Ty.stl_relative_bufname(vim.api.nvim_get_current_buf())
+              local v = Ty.stl_relative_bufname(vim.api.nvim_get_current_buf())
+              return v == '' and '[No Name] ' or v .. ' '
             end,
           },
           {
-            provider = ' [%n]',
+            provider = '[%n]',
           },
           {
             provider = '%m%w%r',
