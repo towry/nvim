@@ -348,3 +348,10 @@ end, {
   bang = true,
   desc = 'Change root cwd',
 })
+
+create_cmd('CloseAll', function()
+  vim.cmd('silent! windo close')
+  vim.cmd('bufdo bw')
+end, {
+  desc = 'Close all buffers and windows',
+})
