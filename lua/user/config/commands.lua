@@ -345,5 +345,6 @@ create_cmd('Cdin', function(params)
 end, {
   nargs = 1,
   complete = 'dir',
+  bang = true,
   desc = 'Change root cwd',
 })

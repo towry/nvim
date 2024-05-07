@@ -129,6 +129,7 @@ M.open = function(new_cwd)
     set('n', '#', function()
       vim.cfg.runtime__starts_cwd = new_cwd
       vim.cmd.cd(new_cwd)
+      vim.notify('New Cwd: ' .. vim.fn.fnamemodify(new_cwd, ':~'), vim.log.levels.INFO)
     end, {
       desc = 'Change project root',
     })
