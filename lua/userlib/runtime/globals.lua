@@ -1,5 +1,3 @@
-local Buffer = require('userlib.runtime.buffer')
-
 _G.unpack = _G.unpack or table.unpack
 _G.Ty = {}
 _G.R = require

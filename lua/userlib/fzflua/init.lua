@@ -9,15 +9,10 @@ local function callgrep(_opts, callfn)
   opts.cwd_header = true
 
   if not opts.cwd then
-    opts.cwd = vim.t.Cwd or safe_cwd()
+    opts.cwd = (vim.t.CwdLocked and vim.t.Cwd) or safe_cwd()
   end
 
   opts.no_header = false
-  opts.winopts = {
-    fullscreen = false,
-    height = 0.90,
-    width = 1,
-  }
   opts.formatter = 'path.filename_first'
   opts.rg_opts = opts.rg_opts
     or [[--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e]]
@@ -110,7 +105,7 @@ function M.files(opts)
   local fzflua = require('fzf-lua')
 
   if not opts.cwd then
-    opts.cwd = safe_cwd(vim.t.Cwd)
+    opts.cwd = safe_cwd(vim.t.CwdLocked and vim.t.Cwd or nil)
   end
 
   opts.actions = {
@@ -139,7 +134,7 @@ function M.folders(opts)
   local path = require('fzf-lua.path')
 
   if not opts.cwd then
-    opts.cwd = safe_cwd(vim.t.Cwd)
+    opts.cwd = safe_cwd(vim.t.CwdLocked and vim.t.Cwd or nil)
   end
   local preview_cwd = opts.cwd
 

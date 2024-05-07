@@ -9,9 +9,6 @@ local BufferListKey = '<Localleader>,'
 
 plug({
   'mangelozzi/rgflow.nvim',
-  dependencies = {
-    'pze/nvim-bqf',
-  },
   opts = {
     default_trigger_mappings = false,
     default_ui_mappings = true,
@@ -634,7 +631,7 @@ plug({
           desc = 'Show jumplist',
         },
       }
-      or {},
+    or {},
   dependencies = {
     { 'nvim-lua/popup.nvim' },
     { 'nvim-lua/plenary.nvim' },
