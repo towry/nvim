@@ -121,11 +121,12 @@ plug({
 plug({
   enabled = true,
   'stevearc/oil.nvim',
-  lazy = not vim.cfg.runtime__starts_in_buffer,
-  event = { 'TabEnter' },
+  lazy = (not vim.cfg.runtime__starts_in_buffer and not vim.env.NVIM),
+  event = { 'TabEnter', 'TermOpen' },
   cmd = 'Oil',
   opts = {
-    default_file_explorer = true,
+    --- fix issue when opening nvim inside terminal
+    default_file_explorer = not vim.env.NVIM,
     columns = {
       -- 'icon',
     },

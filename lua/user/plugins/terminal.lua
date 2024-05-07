@@ -197,17 +197,52 @@ plug({
   {
     'willothy/flatten.nvim',
     ft = { 'toggleterm', 'terminal', 'neo-term' },
+    branch = 'guest-data',
     enabled = true,
     lazy = vim.env['NVIM'] == nil,
     priority = 1000,
+    dependencies = {
+      {
+        'willothy/wezterm.nvim',
+        opts = {},
+      },
+    },
     opts = function()
       local saved_terminal
-      local is_neo_term = false
       return {
-        one_per = {
-          kitty = true,
-        },
         callbacks = {
+          pipe_path = function()
+            -- If running in a terminal inside Neovim:
+            local nvim = vim.env.NVIM
+            if nvim then
+              return nvim
+            end
+
+            -- If running in a Wezterm terminal,
+            -- all tabs/windows/os-windows in the same instance of wezterm will open in the first neovim instance
+            local wezterm = vim.env.WEZTERM_UNIX_SOCKET
+            if not wezterm then
+              return
+            end
+
+            local addr = ('%s/%s'):format(
+              vim.fn.stdpath('run'),
+              'wezterm.nvim-' .. wezterm:match('gui%-sock%-(%d+)') .. '-' .. vim.fn.getcwd(-1):gsub('/', '_')
+            )
+            if not vim.loop.fs_stat(addr) then
+              vim.fn.serverstart(addr)
+            end
+
+            return addr
+          end,
+          guest_data = function()
+            if not vim.cfg.runtime__is_wezterm then
+              return {}
+            end
+            return {
+              pane = require('wezterm').get_current_pane(),
+            }
+          end,
           should_block = function(argv)
             -- Note that argv contains all the parts of the CLI command, including
             -- Neovim's path, commands, options and files.
@@ -215,7 +250,7 @@ plug({
 
             -- In this case, we would block if we find the `-b` flag
             -- This allows you to use `nvim -b file1` instead of `nvim --cmd 'let g:flatten_wait=1' file1`
-            return vim.tbl_contains(argv, '-b') or vim.cfg.runtime__starts_as_gittool
+            return vim.tbl_contains(argv, '-b') or vim.tbl_contains(argv, '-d') or vim.cfg.runtime__starts_as_gittool
           end,
           pre_open = function()
             if libutils.has_plugin('toggleterm.nvim') then
@@ -223,17 +258,61 @@ plug({
               local termid = term.get_focused_id()
               saved_terminal = term.get(termid)
             end
-            is_neo_term = vim.bo.filetype == 'neo-term'
           end,
-          post_open = function(bufnr, winnr, ft, is_blocking)
+          no_files = vim.cfg.runtime__is_wezterm
+              and function()
+                -- If there's already a Neovim instance for this cwd, switch to it
+                local wezterm = require('wezterm')
+
+                local pane = wezterm.get_current_pane()
+                if pane then
+                  require('wezterm').switch_pane.id(pane)
+                end
+
+                return {
+                  nest = false,
+                  block = false,
+                }
+              end
+            or nil,
+          post_open = vim.schedule_wrap(function(opts)
+            local bufnr, winnr, ft, is_blocking, is_diff =
+              opts.bufnr, opts.winnr, opts.filetype, opts.is_blocking, opts.is_diff
+            local is_neo_term = vim.bo[bufnr].filetype == 'neo-term'
+
             if is_blocking and saved_terminal then
               -- vim.g.cmd_on_toggleterm_close = 'lua vim.api.nvim_set_current_win(' .. winnr .. ')'
               -- Hide the terminal while it's blocking
               saved_terminal:close()
-            elseif not is_neo_term then
+              vim.schedule(function()
+                -- get win of bufnr
+                if not vim.api.nvim_buf_is_loaded(bufnr) then
+                  return
+                end
+                local win = vim.fn.win_findbuf(bufnr)[1]
+                if win then
+                  vim.api.nvim_set_current_win(win)
+                end
+              end)
+            elseif not is_neo_term or is_diff then
               -- If it's a normal file, just switch to its window
-              vim.api.nvim_set_current_win(winnr)
+              if not vim.api.nvim_buf_is_loaded(bufnr) then
+                return
+              end
+              local win = vim.fn.win_findbuf(bufnr)[1]
+              if win then
+                vim.api.nvim_set_current_win(win)
+              end
+
+              do
+                if not vim.cfg.runtime__is_wezterm then
+                  return
+                end
+                -- If it's not in the current wezterm pane, switch to that pane.
+                require('wezterm').switch_pane.id(tonumber(os.getenv('WEZTERM_PANE')))
+              end
             end
+
             if ft == 'gitcommit' or ft == 'gitrebase' then
               -- If the file is a git commit, create one-shot autocmd to delete it on write
               -- If you just want the toggleable terminal integration, ignore this bit and only use the
@@ -246,22 +325,27 @@ plug({
                 end),
               })
             end
-          end,
-          block_end = function()
-            vim.schedule(function()
-              if saved_terminal then
-                saved_terminal:open()
-                saved_terminal = nil
-                vim.g.cmd_on_toggleterm_close = nil
-              end
-              if is_neo_term then
-                is_neo_term = false
-              end
-            end)
-          end,
+          end),
+          block_end = vim.schedule_wrap(function(opts)
+            if vim.cfg.runtime__is_wezterm and type(opts.data) == 'table' and opts.data.pane then
+              require('wezterm').switch_pane.id(opts.data.pane)
+            end
+            if saved_terminal then
+              saved_terminal:open()
+              saved_terminal = nil
+              vim.g.cmd_on_toggleterm_close = nil
+            end
+            if is_neo_term then
+              is_neo_term = false
+            end
+          end),
         },
         window = {
-          open = 'split',
+          open = 'smart',
+        },
+        nest_if_no_args = true,
+        integrations = {
+          wezterm = vim.cfg.runtime__is_wezterm,
         },
       }
     end,

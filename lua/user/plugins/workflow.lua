@@ -779,6 +779,7 @@ plug({
   --- better bn & bp
   'ton/vim-bufsurf',
   event = 'VeryLazy',
+  enabled = false,
   keys = {
     {
       ']b',
@@ -833,4 +834,10 @@ plug({
   opts = {
     split_type = 'split',
   },
+})
+
+plug({
+  'tiagovla/scope.nvim',
+  config = true,
+  event = 'VeryLazy',
 })

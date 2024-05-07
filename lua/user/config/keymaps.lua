@@ -14,6 +14,7 @@ local function setup_basic()
     nowait = true,
     noremap = true,
   })
+  set('n', '<leader>/c', '<cmd>CloseAll<cr>', { nowait = true, noremap = true, desc = 'Close all bufs and windows' })
   set('n', 'q', '<NOP>', {})
   set('n', '<C-q>', 'q', { noremap = true, desc = 'Start record macro' })
   set('n', '<Leader>er', 'gR', { nowait = true, desc = 'Enter visual replace mode' })
