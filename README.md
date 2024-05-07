@@ -8,6 +8,7 @@
 - Enhanced workflow for opening folders and searching files, enabling additional actions to be performed on selected folders.
 - Git keymaps for diff, log (file, etc.), blame (file, chunks), stage, and more.
 - Optimized for use as a git mergetool, favoring a two-way merge approach.
+- Zoxide support and change cwd from terminal buffer
 
 ## Screenshots
 

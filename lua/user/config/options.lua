@@ -234,7 +234,7 @@ function M.setup()
   end
 
   local ftau = vim.api.nvim_create_augroup('option_ft', { clear = true })
-  vim.api.nvim_create_autocmd('FileType', {
+  vim.api.nvim_create_autocmd('BufReadPost', {
     group = ftau,
     callback = vim.schedule_wrap(function(args)
       local buf = args.buf
@@ -243,6 +243,9 @@ function M.setup()
         return
       end
       local ft = vim.bo[buf].filetype
+      if not ft or ft == '' then
+        return
+      end
       -- NOTE: nvim-treesitter on comment have some bugs.
       if ft == 'comment' or vim.g.vscode then
         return
@@ -265,7 +268,9 @@ function M.setup()
         return
       end
       -- start highlighter.
-      if not pcall(vim.treesitter.start, buf) then
+      local ok, err = pcall(vim.treesitter.start, buf)
+      if not ok then
+        -- vim.notify(err, vim.log.levels.ERROR)
         return
       end
       require('userlib.runtime.au').exec_useraucmd('TreeSitterStart', {

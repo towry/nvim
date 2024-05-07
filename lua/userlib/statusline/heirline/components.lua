@@ -310,7 +310,41 @@ local GitStatus = {
       or self.status_dict.removed ~= 0
       or self.status_dict.changed ~= 0
   end,
-  provider = '*',
+  provider = '[*]',
+}
+
+local GitRepoStatus = {
+  condition = function()
+    return package.loaded['gitsigns']
+  end,
+  init = function(self)
+    self.dirty = false
+    local m = require('gitsigns')
+    -- only current buffer
+    local hunks = m.get_hunks()
+    if not hunks then
+      self.dirty = false
+      return
+    end
+    if #hunks > 0 then
+      self.dirty = true
+    end
+  end,
+  update = { 'User', pattern = 'GitSignsUpdate' },
+  {
+    --
+    {
+      conditions = function(self)
+        return self.dirty
+      end,
+      provider = function(self)
+        if self.dirty then
+          return '[~]'
+        end
+        return ''
+      end,
+    },
+  },
 }
 
 local FullFileName = {
@@ -1022,6 +1056,7 @@ return {
   ProfileRecording = ProfileRecording,
   Branch = Branch,
   GitStatus = GitStatus,
+  GitRepoStatus = GitRepoStatus,
   Harpoon = Harpoon,
   DiagnosticsDisabled = DiagnosticsDisabled,
   WorkspaceRoot = WorkspaceRoot,

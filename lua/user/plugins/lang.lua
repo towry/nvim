@@ -1,6 +1,8 @@
 local plug = require('userlib.runtime.pack').plug
 local au = require('userlib.runtime.au')
 
+local treesitter_parsers_path = vim.fn.stdpath('data') .. '/site'
+
 plug({
   'nvim-treesitter/nvim-treesitter',
   branch = 'main',
@@ -9,7 +11,10 @@ plug({
   enabled = vim.cfg.lang__treesitter_next,
   cond = not vim.cfg.runtime__starts_as_gittool,
   config = function()
+    vim.opt.runtimepath:prepend(treesitter_parsers_path)
+
     require('nvim-treesitter').setup({
+      install_dir = treesitter_parsers_path,
       ensure_install = vim.cfg.lang__treesitter_ensure_installed,
       auto_install = vim.cfg.lang_treesitter_auto_install,
       ignore_install = { 'comment' },

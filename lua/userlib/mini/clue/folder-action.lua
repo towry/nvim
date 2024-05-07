@@ -6,7 +6,7 @@ M.open = function(new_cwd)
   local nicely_cwd = require('userlib.runtime.path').make_relative(new_cwd, vim.cfg.runtime__starts_cwd)
 
   require('userlib.mini.clue').shortly_open(function(set, unset)
-    set('n', '1', '<cmd>echo expand("%")<cr>', { desc = ' :' .. nicely_cwd })
+    set('n', '1', '<cmd>echo expand("%")<cr>', { desc = ' :' .. vim.fn.fnamemodify(nicely_cwd, ':~') })
 
     set('n', 'l', function()
       require('userlib.runtime.utils').lock_tcd(new_cwd)
@@ -125,6 +125,15 @@ M.open = function(new_cwd)
     end, {
       desc = 'Change cwd',
     })
+
+    set('n', '#', function()
+      vim.cfg.runtime__starts_cwd = new_cwd
+      vim.cmd.cd(new_cwd)
+      vim.notify('New Cwd: ' .. vim.fn.fnamemodify(new_cwd, ':~'), vim.log.levels.INFO)
+    end, {
+      desc = 'Change project root',
+    })
+
     set('n', 'o', function()
       require('oil').open(new_cwd)
       unset()

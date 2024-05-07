@@ -9,9 +9,6 @@ local BufferListKey = '<Localleader>,'
 
 plug({
   'mangelozzi/rgflow.nvim',
-  dependencies = {
-    'pze/nvim-bqf',
-  },
   opts = {
     default_trigger_mappings = false,
     default_ui_mappings = true,
@@ -634,7 +631,7 @@ plug({
           desc = 'Show jumplist',
         },
       }
-      or {},
+    or {},
   dependencies = {
     { 'nvim-lua/popup.nvim' },
     { 'nvim-lua/plenary.nvim' },
@@ -935,6 +932,11 @@ plug({
       cmd_modcall('fzf-lua', [[jumps()]]),
       desc = 'Show jumplist',
     },
+    {
+      '<leader>fz',
+      cmd_modcall(fzf_mod, [[zoxide_folders()]]),
+      desc = 'Zoxide folders',
+    },
   },
   config = function()
     local actions = require('fzf-lua.actions')
@@ -995,12 +997,6 @@ plug({
         formatter = 'path.filename_first',
       },
       live_grep = {
-        formatter = 'path.filename_first',
-      },
-      oldfiles = {
-        formatter = 'path.filename_first',
-      },
-      buffers = {
         formatter = 'path.filename_first',
       },
       actions = {

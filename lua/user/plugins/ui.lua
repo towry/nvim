@@ -101,8 +101,11 @@ plug({
 
   {
     'pze/nvim-bqf',
+    -- 'kevinhwang91/nvim-bqf',
+    -- version = '*',
     dev = false,
     ft = 'qf',
+    enabled = true,
     keys = {
       {
         '<A-q>',
@@ -124,6 +127,21 @@ plug({
         show_scroll_bar = false,
         show_title = true,
       },
+    },
+  },
+
+  {
+    'folke/trouble.nvim',
+    ft = 'qf',
+    enabled = false,
+    cmd = {
+      'Trouble',
+      'TroubleClose',
+      'TroubleToggle',
+      'TroubleRefresh',
+    },
+    opts = {
+      mode = 'quickfix',
     },
   },
 })

@@ -1,5 +1,3 @@
-local Buffer = require('userlib.runtime.buffer')
-
 _G.unpack = _G.unpack or table.unpack
 _G.Ty = {}
 _G.R = require
@@ -20,7 +18,6 @@ _G.safe_cwd = function(loose_or_path)
   end
   return cwd
 end
-
 ---see `require`
 
 Ty.P = function(v)
@@ -260,6 +257,10 @@ Ty.set_terminal_keymaps = vim.schedule_wrap(function(bufnr)
   local buffer = bufnr or vim.api.nvim_get_current_buf()
   local opts = { noremap = true, buffer = buffer, nowait = true, silent = true }
 
+  if not vim.api.nvim_buf_is_valid(buffer) then
+    return
+  end
+
   --- prevent <C-z> behavior in all terminals in neovim
   nvim_buf_set_keymap('t', '<C-z>', '<NOP>', opts)
 
@@ -267,6 +268,22 @@ Ty.set_terminal_keymaps = vim.schedule_wrap(function(bufnr)
   if vim.bo.filetype == 'fzf' then
     return
   end
+
+  nvim_buf_set_keymap({ 'n', 't' }, '<F2>', function()
+    if not vim.b.osc7_dir then
+      return
+    end
+    vim.cmd('stopinsert')
+
+    vim.schedule(function()
+      local choice = vim.fn.confirm('Cd into: ' .. vim.b.osc7_dir .. ' ?', '&Yes\n&No', 2)
+      if choice == 1 then
+        vim.cmd('Cdin ' .. vim.b.osc7_dir)
+        return
+      end
+      vim.cmd.startinsert()
+    end)
+  end, opts)
 
   nvim_buf_set_keymap('n', 'q', [[:startinsert<cr>]], opts)
   nvim_buf_set_keymap('t', '<ESC>', [[<C-\><C-n>]], opts)
