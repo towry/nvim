@@ -270,7 +270,7 @@ function M.setup()
       -- start highlighter.
       local ok, err = pcall(vim.treesitter.start, buf)
       if not ok then
-        vim.notify(err, vim.log.levels.ERROR)
+        -- vim.notify(err, vim.log.levels.ERROR)
         return
       end
       require('userlib.runtime.au').exec_useraucmd('TreeSitterStart', {
