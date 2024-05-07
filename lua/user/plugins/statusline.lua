@@ -36,6 +36,7 @@ plug({
         {
           comp.rpad({
             provider = '%{v:lua.vim.lsp.status()}',
+            update = { 'LspProgress' },
           }),
           comp.rpad(comp.LastExCommand),
           comp.rpad(comp.Copilot),

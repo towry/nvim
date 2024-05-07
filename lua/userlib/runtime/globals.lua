@@ -175,7 +175,7 @@ Ty.fold_expr = function()
   if skip_foldexpr[buf] then
     return '0'
   end
-  local ok = pcall(vim.treesitter.get_parser, buf)
+  local ok = vim.b[buf].ts_highlight
   if ok then
     return vim.treesitter.foldexpr()
   end
@@ -184,26 +184,6 @@ Ty.fold_expr = function()
     skip_foldexpr = {}
     skip_check:stop()
   end)
-end
-
-Ty.fold_text = function()
-  local ok, _ = pcall(vim.treesitter.get_parser, vim.api.nvim_get_current_buf())
-  local ret = (ok and vim.treesitter.foldtext) and vim.treesitter.foldtext() or nil
-  if not ret or type(ret) == 'string' then
-    ---@diagnostic disable-next-line: cast-local-type
-    ret = { { vim.api.nvim_buf_get_lines(0, vim.v.lnum - 1, vim.v.lnum, false)[1], {} } }
-  end
-  table.insert(ret, { ' ' .. '...' })
-
-  if not vim.treesitter.foldtext then
-    return table.concat(
-      vim.tbl_map(function(line)
-        return line[1]
-      end, ret),
-      ' '
-    )
-  end
-  return ret
 end
 
 Ty.stl_relative_bufname = function(buf)
