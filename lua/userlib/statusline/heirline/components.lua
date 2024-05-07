@@ -204,9 +204,11 @@ local ViMode = {
 
 local FileIcon = {
   init = function(self)
-    -- not working
-    self.icon, self.icon_color =
-      require('nvim-web-devicons').get_icon_color_by_filetype(vim.bo[self.bufnr or 0].filetype, { default = true })
+    local is_diff = self.winnr and vim.wo[self.winnr].diff
+    self.icon, self.icon_color = require('nvim-web-devicons').get_icon_color_by_filetype(
+      is_diff and 'gitcommit' or vim.bo[self.bufnr or 0].filetype,
+      { default = true }
+    )
   end,
   provider = function(self)
     return self.icon and (self.icon .. ' ')
@@ -830,6 +832,10 @@ local Tabpage = {
       return 'TabLineSel'
     end
   end,
+  init = function(self)
+    self.winnr = vim.api.nvim_tabpage_get_win(self.tabpage)
+    self.bufnr = vim.api.nvim_win_get_buf(self.winnr)
+  end,
   {
     provider = function(self)
       return '%' .. self.tabnr .. 'T ' .. self.tabnr .. (vim.t[self.tabpage].CwdLocked and '*' or '')
@@ -865,7 +871,6 @@ local Tabpage = {
   },
   {
     init = function(self)
-      self.bufnr = vim.api.nvim_win_get_buf(vim.api.nvim_tabpage_get_win(self.tabpage))
       self.filename = vim.api.nvim_buf_get_name(self.bufnr) or ''
       self.tail = ''
       if vim.bo[self.bufnr].buftype == '' and #self.filename > 0 then
