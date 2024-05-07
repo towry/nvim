@@ -122,6 +122,25 @@ function M.load_on_startup()
       },
     },
     {
+      { 'TermRequest' },
+      {
+        group = 'save_term_cwd',
+        callback = function(ev)
+          if string.sub(vim.v.termrequest, 1, 4) == '\x1b]7;' then
+            local dir = string.gsub(vim.v.termrequest, '\x1b]7;file://[^/]*', '')
+            if vim.fn.isdirectory(dir) == 0 then
+              vim.notify('invalid dir: ' .. dir)
+              return
+            end
+            vim.api.nvim_buf_set_var(ev.buf, 'osc7_dir', dir)
+            if vim.o.autochdir and vim.api.nvim_get_current_buf() == ev.buf then
+              vim.cmd.cd(dir)
+            end
+          end
+        end,
+      },
+    },
+    {
       { 'TermOpen' },
       {
         group = 'bind_key_on_term_open',

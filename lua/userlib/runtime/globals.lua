@@ -269,6 +269,22 @@ Ty.set_terminal_keymaps = vim.schedule_wrap(function(bufnr)
     return
   end
 
+  nvim_buf_set_keymap({ 'n', 't' }, '<F2>', function()
+    if not vim.b.osc7_dir then
+      return
+    end
+    vim.cmd('stopinsert')
+
+    vim.schedule(function()
+      local choice = vim.fn.confirm('Cd into: ' .. vim.b.osc7_dir .. ' ?', '&Yes\n&No', 2)
+      if choice == 1 then
+        vim.cmd('Cdin ' .. vim.b.osc7_dir)
+        return
+      end
+      vim.cmd.startinsert()
+    end)
+  end, opts)
+
   nvim_buf_set_keymap('n', 'q', [[:startinsert<cr>]], opts)
   nvim_buf_set_keymap('t', '<ESC>', [[<C-\><C-n>]], opts)
   --- switch windows
