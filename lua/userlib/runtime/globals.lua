@@ -257,6 +257,10 @@ Ty.set_terminal_keymaps = vim.schedule_wrap(function(bufnr)
   local buffer = bufnr or vim.api.nvim_get_current_buf()
   local opts = { noremap = true, buffer = buffer, nowait = true, silent = true }
 
+  if not vim.api.nvim_buf_is_valid(buffer) then
+    return
+  end
+
   --- prevent <C-z> behavior in all terminals in neovim
   nvim_buf_set_keymap('t', '<C-z>', '<NOP>', opts)
 

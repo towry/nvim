@@ -1,4 +1,3 @@
-local au = require('userlib.runtime.au')
 local keymap = require('userlib.runtime.keymap')
 local create_cmd = vim.api.nvim_create_user_command
 local package_path_updated = false
@@ -334,4 +333,17 @@ create_cmd('UnlockTcd', function()
   end)
 end, {
   desc = 'Unlock tcd',
+})
+
+create_cmd('Cdin', function(params)
+  local cwd = params.args and vim.trim(vim.fn.fnamemodify(params.args, ':p') or '')
+  if cwd == '' or not cwd then
+    cwd = vim.uv.cwd()
+  end
+  vim.cfg.runtime__starts_cwd = require('userlib.runtime.path').remove_path_last_separator(cwd)
+  vim.cmd.cd(cwd)
+end, {
+  nargs = 1,
+  complete = 'dir',
+  desc = 'Change root cwd',
 })

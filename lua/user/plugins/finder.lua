@@ -932,6 +932,11 @@ plug({
       cmd_modcall('fzf-lua', [[jumps()]]),
       desc = 'Show jumplist',
     },
+    {
+      '<leader>fz',
+      cmd_modcall(fzf_mod, [[zoxide_folders()]]),
+      desc = 'Zoxide folders',
+    },
   },
   config = function()
     local actions = require('fzf-lua.actions')
@@ -992,12 +997,6 @@ plug({
         formatter = 'path.filename_first',
       },
       live_grep = {
-        formatter = 'path.filename_first',
-      },
-      oldfiles = {
-        formatter = 'path.filename_first',
-      },
-      buffers = {
         formatter = 'path.filename_first',
       },
       actions = {

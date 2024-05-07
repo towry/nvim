@@ -125,6 +125,14 @@ M.open = function(new_cwd)
     end, {
       desc = 'Change cwd',
     })
+
+    set('n', '#', function()
+      vim.cfg.runtime__starts_cwd = new_cwd
+      vim.cmd.cd(new_cwd)
+    end, {
+      desc = 'Change project root',
+    })
+
     set('n', 'o', function()
       require('oil').open(new_cwd)
       unset()
