@@ -343,7 +343,7 @@ create_cmd('Cdin', function(params)
   vim.cfg.runtime__starts_cwd = require('userlib.runtime.path').remove_path_last_separator(cwd)
   vim.cmd.cd(vim.b.osc7_dir or cwd)
 end, {
-  nargs = 1,
+  nargs = '*',
   complete = 'dir',
   bang = true,
   desc = 'Change root cwd',
