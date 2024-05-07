@@ -234,15 +234,18 @@ function M.setup()
   end
 
   local ftau = vim.api.nvim_create_augroup('option_ft', { clear = true })
-  vim.api.nvim_create_autocmd('FileType', {
+  vim.api.nvim_create_autocmd('BufReadPost', {
     group = ftau,
     callback = vim.schedule_wrap(function(args)
       local buf = args.buf
       --- is invalid when rename folders etc
-      if not vim.api.nvim_buf_is_valid(buf) or vim.fn.getbufinfo(buf)[1].hidden then
+      if not vim.api.nvim_buf_is_valid(buf) then
         return
       end
       local ft = vim.bo[buf].filetype
+      if not ft or ft == '' then
+        return
+      end
       -- NOTE: nvim-treesitter on comment have some bugs.
       if ft == 'comment' or vim.g.vscode then
         return
