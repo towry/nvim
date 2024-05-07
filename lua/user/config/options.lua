@@ -140,6 +140,8 @@ function M.init_interface()
   o.emoji = true --- Fix emoji display
   o.cursorlineopt = 'line,number'
   o.foldcolumn = '1' -- Folding
+  o.foldmethod = 'expr'
+  o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
   o.list = true
   o.listchars:append('tab:· ')
   -- o.listchars:append('eol:↩')
