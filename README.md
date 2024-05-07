@@ -1,4 +1,4 @@
-# Towry's meticulously crafted Neovim configuration
+# Towry's Neovim configuration
 
 ## Noteworthy Features
 
