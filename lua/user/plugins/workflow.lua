@@ -837,7 +837,7 @@ plug({
 })
 
 plug({
-  'tiagovla/scope.nvim',
+  'pze/scope.nvim',
   config = true,
   event = 'VeryLazy',
 })

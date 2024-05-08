@@ -280,6 +280,59 @@ function M.set_current_buffer_focus(bufnr, tabonly)
   vim.api.nvim_set_current_buf(bufnr)
 end
 
+--- Taken from flatten.nvim
+---@param focus_bufnr? number
+---@return integer?
+function M.smart_open(focus_bufnr)
+  -- set of valid target windows
+  local valid_targets = {}
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local win_buf = vim.api.nvim_win_get_buf(win)
+    if vim.api.nvim_win_get_config(win).zindex == nil and vim.bo[win_buf].buftype == '' then
+      valid_targets[win] = true
+    end
+  end
+
+  local layout = vim.fn.winlayout()
+
+  -- traverse the window tree to find the first available window
+  local stack = { layout }
+  local win_alt = vim.fn.win_getid(vim.fn.winnr('#'))
+  local win
+
+  -- prefer the alternative window if it's valid
+  if valid_targets[win_alt] and win_alt ~= vim.api.nvim_get_current_win() then
+    win = win_alt
+  else
+    while #stack > 0 do
+      local node = table.remove(stack)
+      if node[1] == 'leaf' then
+        if valid_targets[node[2]] then
+          win = node[2]
+          break
+        end
+      else
+        for i = #node[2], 1, -1 do
+          table.insert(stack, node[2][i])
+        end
+      end
+    end
+  end
+
+  -- allows using this function as a utility to get a window to open something in
+  if not focus then
+    return win
+  end
+
+  if win then
+    vim.api.nvim_win_set_buf(win, focus_bufnr)
+    vim.api.nvim_set_current_win(win)
+  else
+    vim.cmd('split')
+    vim.api.nvim_win_set_buf(0, focus_bufnr)
+  end
+end
+
 --- Focus buffer in current tab's visible window
 function M.focus_buf_in_visible_windows(bufnr)
   local wins = vim.api.nvim_tabpage_list_wins(0)

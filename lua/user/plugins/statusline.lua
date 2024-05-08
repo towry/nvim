@@ -34,10 +34,10 @@ plug({
           provider = '%=',
         },
         {
-          comp.rpad({
-            provider = '%{v:lua.vim.lsp.status()}',
-            update = { 'LspProgress' },
-          }),
+          -- comp.rpad({
+          --   provider = '%{v:lua.vim.lsp.status()}',
+          --   update = { 'LspProgress' },
+          -- }),
           comp.rpad(comp.LastExCommand),
           comp.rpad(comp.Copilot),
           comp.rpad(comp.Codeium),
