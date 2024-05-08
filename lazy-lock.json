@@ -9,6 +9,7 @@
   "bmessages.nvim": { "branch": "main", "commit": "cad159ee584932d1a631ca7c5a2e6e58d3e9981e" },
   "bufexplorer": { "branch": "master", "commit": "20f0440948653b5482d555a35a432135ba46a26d" },
   "bufjump.nvim": { "branch": "master", "commit": "ae2728a77defbd27e9e5ef64c854fb0813ffba01" },
+  "bufresize.nvim": { "branch": "master", "commit": "3b19527ab936d6910484dcc20fb59bdb12322d8b" },
   "carbon-now.nvim": { "branch": "main", "commit": "4524d2b347830257bb9357d45c4f934960058476" },
   "close-buffers.nvim": { "branch": "master", "commit": "3acbcad1211572342632a6c0151f839e7dead27f" },
   "cmd-parser.nvim": { "branch": "master", "commit": "6363b8bddef968c3ec51a38172af44f675f01ef3" },

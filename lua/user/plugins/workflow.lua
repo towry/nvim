@@ -449,7 +449,7 @@ plug({
       },
     },
     dependencies = {
-      -- 'kwkarlwang/bufresize.nvim',
+      'kwkarlwang/bufresize.nvim',
     },
     -- only if you use kitty term
     -- build = './kitty/install-kittens.bash',
@@ -474,7 +474,7 @@ plug({
           },
           hooks = {
             on_leave = function()
-              -- require('bufresize').register()
+              require('bufresize').register()
             end,
           },
         },
