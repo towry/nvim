@@ -16,7 +16,7 @@ function M.toggle_qf()
   if is_list_open('quickfix') then
     vim.cmd.cclose(silence)
   elseif #vim.fn.getqflist() > 0 then
-    require('userlib.runtime.buffer').preserve_window(vim.cmd.copen, silence)
+    vim.cmd.copen(silence)
   elseif has_plugin('vim-dispatch') then
     vim.cmd('Copen')
   end
