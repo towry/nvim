@@ -19,7 +19,7 @@ local function callgrep(_opts, callfn)
   opts.no_header = false
   opts.formatter = 'path.filename_first'
   opts.rg_opts = opts.rg_opts
-    or [[--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e]]
+    or [[--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --fixed-strings]]
 
   opts.actions = vim.tbl_extend('keep', {
     -- press ctrl-e in fzf picker to switch to rgflow.
@@ -76,7 +76,7 @@ function M.grep(opts, is_live)
   local fzflua = require('fzf-lua')
 
   if is_live then
-    opts.prompt = '󱙓  Live Grep ❯ '
+    opts.prompt = '󱙓  Live Grep (Fixed) ❯ '
   else
     opts.input_prompt = '󱙓  Grep❯ '
   end
