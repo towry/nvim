@@ -17,6 +17,7 @@ end
 
 plug({
   {
+    enabled = false,
     'anuvyklack/windows.nvim',
     dependencies = {
       'anuvyklack/middleclass',
@@ -41,8 +42,13 @@ plug({
         nowait = true,
         desc = 'Toggle auto size',
       },
-      { '<C-w>m', '<cmd>WindowsMaximize<cr>', nowait = true, desc = 'Maximize window' },
-      { '<C-w>=', '<cmd>WindowsEqualize<cr>', nowait = true, desc = 'Equallize window' },
+      { '<C-w>m', '<cmd>WindowsMaximize | call v:lua.Ty.resize.record()<cr>', nowait = true, desc = 'Maximize window' },
+      {
+        '<C-w>=',
+        '<cmd>WindowsEqualize | call v:lua.Ty.resize.record()<cr>',
+        nowait = true,
+        desc = 'Equallize window',
+      },
       {
         '<C-w>x',
         function()
@@ -79,7 +85,6 @@ plug({
         desc = 'swap',
       },
     },
-    enabled = true,
     event = 'WinNew',
     opts = {
       autowidth = {
@@ -141,7 +146,18 @@ plug({
     'kwkarlwang/bufresize.nvim',
     event = 'VeryLazy',
     enabled = true,
-    config = true,
+    opts = {
+      register = {
+        trigger_events = { 'WinNew', 'WinResized' },
+        keys = {},
+      },
+      resize = {
+        trigger_events = {
+          'VimResized',
+        },
+        increment = 1,
+      },
+    },
   },
 
   {
@@ -158,7 +174,9 @@ plug({
         '<C-c><C-d>',
         function()
           if vim.fn.exists('&winfixbuf') == 1 and vim.api.nvim_get_option_value('winfixbuf', { win = 0 }) then
+            Ty.resize.block()
             vim.cmd('bd')
+            Ty.resize.after_close()
             return
           end
           -- do not use wipeout, because bqf doesn't update bufnr after buffer
@@ -177,7 +195,12 @@ plug({
             if error then
               vim.api.nvim_echo({ { 'Last window, press `<leader>bq` again to quit', 'Error' } }, false, {})
               local set = require('userlib.runtime.keymap').map_buf_thunk(0)
-              set('n', '<leader>bq', '<cmd>q!<cr>', { desc = 'Force quit' })
+              set(
+                'n',
+                '<leader>bq',
+                '<cmd>call v:lua.Ty.resize.block() <bar> q! <bar> call v:lua.Ty.resize.after_close() <cr>',
+                { desc = 'Force quit' }
+              )
             end
           end)
         end,
@@ -185,13 +208,13 @@ plug({
       },
       {
         '<C-c><C-q>',
-        ':echo "close buffer " .. bufnr("%") .. " and window" | q <cr>',
+        ':echo "close buffer " .. bufnr("%") .. " and window" <bar> :call v:lua.Ty.resize.block() <bar> q <bar> :call v:lua.Ty.resize.after_close() <cr>',
         'Quit current buffer and window',
         silent = false,
       },
       {
         '<leader>bk',
-        ':hide<cr>',
+        ':call v:lua.Ty.resize.block() <bar> :hide <bar> :call v:lua.Ty.resize.after_close()<cr>',
         desc = 'Hide current window',
       },
       {
@@ -199,7 +222,9 @@ plug({
         function()
           local tabs_count = vim.fn.tabpagenr('$')
           if tabs_count <= 1 then
+            Ty.resize.block()
             vim.cmd('silent! hide | echo "hide current window"')
+            Ty.resize.after_close()
             return
           end
           --- get current tab's window count
@@ -208,7 +233,9 @@ plug({
             vim.notify('Can not hide last window in tab', vim.log.levels.ERROR)
             return
           end
+          Ty.resize.block()
           vim.cmd('silent! hide | echo "hide current window"')
+          Ty.resize.after_close()
         end,
         desc = 'Hide current window',
         silent = false,
@@ -224,7 +251,9 @@ plug({
         '<C-c><C-c>',
         function()
           if vim.fn.exists('&winfixbuf') == 1 and vim.api.nvim_get_option_value('winfixbuf', { win = 0 }) then
+            Ty.resize.block()
             vim.cmd('hide')
+            Ty.resize.after_close()
             return
           end
           if vim.api.nvim_win_get_config(vim.api.nvim_get_current_win()).relative ~= '' then
@@ -448,9 +477,6 @@ plug({
         desc = 'Move cursor to right window',
       },
     },
-    dependencies = {
-      'kwkarlwang/bufresize.nvim',
-    },
     -- only if you use kitty term
     -- build = './kitty/install-kittens.bash',
     config = function()
@@ -474,7 +500,7 @@ plug({
           },
           hooks = {
             on_leave = function()
-              require('bufresize').register()
+              Ty.resize.record()
             end,
           },
         },

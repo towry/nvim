@@ -547,9 +547,6 @@ pack.plug({
         { mode = 'x', keys = 'gh', desc = '+Gitsigns' },
         --- windows
         miniclue.gen_clues.windows(),
-        { mode = 'n', keys = '<C-w>a' },
-        { mode = 'n', keys = '<C-w>m' },
-        { mode = 'n', keys = '<C-w>x' },
         { mode = 'n', keys = '<C-w>=' },
         --- localleader
         { mode = 'n', keys = '<LocalLeader>f', desc = '+Grep' },
