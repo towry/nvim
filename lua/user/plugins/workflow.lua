@@ -139,9 +139,8 @@ plug({
   },
   {
     'kwkarlwang/bufresize.nvim',
-    event = 'WinResized',
-    enabled = false,
-    lazy = true,
+    event = 'VeryLazy',
+    enabled = true,
     config = true,
   },
 
