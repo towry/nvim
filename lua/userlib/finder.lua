@@ -71,4 +71,37 @@ function M.get_most_likely_searchable_exts()
   return vim.list_slice(results, 1, 3)
 end
 
+--- collect extensions from open buffers
+--- return as glob pattern
+function M.get_glob_from_open_buffers()
+  local results = {}
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_loaded(buf) then
+      if vim.api.nvim_get_option_value('buftype', { buf = buf }) == '' then
+        local path = vim.api.nvim_buf_get_name(buf)
+        local ext = string.match(path, '%.([^%.]+)$')
+        if ext ~= '' and ext then
+          results[ext] = true
+        end
+      end
+    end
+  end
+  local lists = {}
+
+  for key, _ in pairs(results) do
+    table.insert(lists, key)
+  end
+
+  if #lists == 0 then
+    return ''
+  end
+  return '--glob=*.{' .. table.concat(lists, ',') .. '}'
+end
+
+function M.get_grep_flags_with_glob()
+  local cmd = '--smart-case --no-fixed-strings --fixed-strings -M 500'
+  local glob = M.get_glob_from_open_buffers()
+  return cmd .. ' ' .. glob
+end
+
 return M
