@@ -135,6 +135,10 @@ function M.init_interface()
   -- o.complete:append('d')
   -- scan buffer name
   o.complete:append('f')
+  o.shada:append('r/tmp/')
+  o.shada:append('r*://')
+  o.shada:append('r*://')
+  o.shada:append('r.git/*')
   -- o.complete:remove('t')
   o.cursorline = true --- Highlight of current line
   o.emoji = true --- Fix emoji display
