@@ -248,8 +248,10 @@ function M.load_on_startup()
           if vim.b[buf].is_big_file or lines > 10000 then
             vim.wo.foldmethod = 'manual'
             vim.wo.foldexpr = ''
+            vim.schedule(function()
+              vim.cmd('normal! zX')
+            end)
           end
-          -- vim.cmd('normal! zx zR')
         end,
       },
     },

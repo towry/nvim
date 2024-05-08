@@ -164,28 +164,6 @@ Ty.stl_num = function()
   return el .. vim.v.lnum .. space
 end
 
----@type table<number,boolean>
-local skip_foldexpr = {}
-local skip_check = assert(vim.uv.new_check())
-Ty.fold_expr = function()
-  local buf = vim.api.nvim_get_current_buf()
-  if vim.bo[buf].buftype ~= '' or vim.bo[buf].filetype == '' then
-    return '0'
-  end
-  if skip_foldexpr[buf] then
-    return '0'
-  end
-  local ok = vim.b[buf].ts_highlight
-  if ok then
-    return vim.treesitter.foldexpr()
-  end
-  skip_foldexpr[buf] = true
-  skip_check:start(function()
-    skip_foldexpr = {}
-    skip_check:stop()
-  end)
-end
-
 Ty.stl_relative_bufname = function(buf)
   local bufnr = buf or tonumber(vim.g.actual_curbuf)
   if not bufnr or vim.bo[bufnr].buftype ~= '' then

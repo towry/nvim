@@ -413,3 +413,5 @@ end
 -- M.zoxide_folders()
 
 return M
+
+--- vim: fdl=0

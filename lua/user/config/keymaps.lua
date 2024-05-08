@@ -188,7 +188,7 @@ local function setup_basic()
   set('n', 'H', '^', {
     desc = 'Move to first non-blank character of the line',
   })
-  set('n', 'L', '$', {
+  set('n', 'L', 'zo$', {
     desc = 'Move to last non-blank character of the line',
   })
 

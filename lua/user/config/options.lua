@@ -140,9 +140,10 @@ function M.init_interface()
   o.emoji = true --- Fix emoji display
   o.cursorlineopt = 'line,number'
   o.foldcolumn = '1' -- Folding
+  o.foldopen:remove('hor')
   if vim.fn.has('nvim-0.10') == 1 then
     vim.opt.foldmethod = 'expr'
-    vim.opt.foldexpr = 'v:lua.Ty.fold_expr()'
+    vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     vim.opt.foldtext = ''
     vim.opt.fillchars = 'fold: '
   else

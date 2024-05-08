@@ -6,7 +6,6 @@ require('user.plugins.cmdline')
 require('user.plugins.autocmp')
 require('user.plugins.debugger')
 require('user.plugins.theme')
-require('user.plugins.folding')
 require('user.plugins.indent')
 if not vim.cfg.edit__use_coc then
   require('user.plugins.lsp')
