@@ -2,6 +2,10 @@ local libutils = require('userlib.runtime.utils')
 local utils = require('userlib.fzflua.utils')
 local M = {}
 
+local has_fixed = function(s)
+  return string.find(s, '%-%-fixed%-strings') ~= nil
+end
+
 --- @param _opts table
 local function callgrep(_opts, callfn)
   local opts = vim.tbl_deep_extend('force', {}, _opts)
@@ -30,6 +34,17 @@ local function callgrep(_opts, callfn)
         end,
       })
     end,
+    ['ctrl-k'] = function()
+      local new_opts = opts
+
+      new_opts.rg_opts = libutils.toggle_cmd_option(new_opts.rg_opts, '--fixed-strings')
+      new_opts.rg_opts = libutils.toggle_cmd_option(new_opts.rg_opts, '-e', true)
+      new_opts.query = utils.get_last_query()
+
+      new_opts.prompt = has_fixed(new_opts.rg_opts) and '󱙓  Live Grep (Fixed) ❯ ' or '󱙓  Live Grep❯ '
+
+      return callfn(new_opts)
+    end,
     ['ctrl-h'] = function()
       --- toggle hidden files search.
       opts.rg_opts = libutils.toggle_cmd_option(opts.rg_opts, '--hidden')
@@ -48,7 +63,7 @@ local function callgrep(_opts, callfn)
       -- hello --*.md *.js
       return callfn(opts)
     end,
-  }, opts.actions)
+  }, opts.actions or {})
 
   return callfn(opts)
 end
@@ -59,22 +74,9 @@ function M.grep(opts, is_live)
     is_live = true
   end
   local fzflua = require('fzf-lua')
-  if is_live then
-    opts.prompt = '󱙓  Live Grep❯ '
-    -- fixed strings search
-    opts.rg_opts = '--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --fixed-strings'
-    local copyopts = vim.deepcopy(opts)
 
-    opts.actions = {
-      ['ctrl-k'] = function()
-        local new_opts = vim.deepcopy(copyopts)
-        new_opts.rg_opts = libutils.toggle_cmd_option(opts.rg_opts, '--fixed-strings')
-        new_opts.rg_opts = libutils.toggle_cmd_option(new_opts.rg_opts, '-e', true)
-        new_opts.query = utils.get_last_query()
-        vim.print(new_opts.rg_opts)
-        fzflua.live_grep(new_opts)
-      end,
-    }
+  if is_live then
+    opts.prompt = '󱙓  Live Grep ❯ '
   else
     opts.input_prompt = '󱙓  Grep❯ '
   end
