@@ -45,6 +45,8 @@ function M.map_buf_thunk(bufnr, opts)
 
   if opts.label and opts.label ~= '' and not buf_local_help[opts.label] then
     buf_local_help[opts.label] = {}
+  elseif vim.bo.filetype ~= '' then
+    buf_local_help[vim.bo.filetype .. '_'] = {}
   end
 
   if bufnr == 0 or not bufnr then

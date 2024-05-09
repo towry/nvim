@@ -32,9 +32,9 @@ end, {
   desc = 'qf: refresh dispatch',
 })
 
-map('n', '?', function()
+map('n', 'g?', function()
   require('userlib.mini.clue').show_buf_local_help(require('userlib.runtime.keymap').get_buf_local_help('qf'))
-end, { desc = 'Show this help' })
+end, { desc = 'Show this help', nowait = true, noremap = true })
 
 -- force quickfix to open beneath all other splits
 vim.cmd.wincmd('J')

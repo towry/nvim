@@ -6,6 +6,23 @@ local M = {}
 local is_profiling = false
 
 local function setup_basic()
+  set('n', 'g?', function()
+    local ft = vim.bo.filetype
+    if ft == '' then
+      vim.notify('No buf local keymap help for ft none', vim.log.levels.INFO)
+      return
+    end
+    local helps = require('userlib.runtime.keymap').get_buf_local_help(ft .. '_')
+    if not helps or #helps == 0 then
+      vim.notify('No buf local keymap help', vim.log.levels.INFO)
+      return
+    end
+    require('userlib.mini.clue').show_buf_local_help(helps)
+  end, {
+    desc = 'Show buffer local keys help',
+    nowait = true,
+    noremap = true,
+  })
   set('n', '*', function()
     vim.fn.setreg('/', [[\V\<]] .. vim.fn.escape(vim.fn.expand('<cword>'), [[/\]]) .. [[\>]])
     vim.fn.histadd('/', vim.fn.getreg('/'))
