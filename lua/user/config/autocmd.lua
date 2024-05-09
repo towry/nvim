@@ -26,6 +26,21 @@ function M.load_on_startup()
       },
     },
     {
+      { 'WinClosed' },
+      {
+        group = group_name,
+        callback = function(ctx)
+          local winid = tonumber(ctx.match)
+          local cur = vim.api.nvim_get_current_win()
+          if winid ~= cur then
+            return
+          end
+          vim.cmd('wincmd p')
+        end,
+        desc = 'Go to prev win after curr win closed',
+      },
+    },
+    {
       { 'CursorMovedI', 'InsertLeave' },
       {
         group = group_name,
@@ -248,8 +263,10 @@ function M.load_on_startup()
           if vim.b[buf].is_big_file or lines > 10000 then
             vim.wo.foldmethod = 'manual'
             vim.wo.foldexpr = ''
+            vim.schedule(function()
+              vim.cmd('normal! zX')
+            end)
           end
-          -- vim.cmd('normal! zx zR')
         end,
       },
     },

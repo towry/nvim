@@ -4,145 +4,23 @@ local plug = require('userlib.runtime.pack').plug
 local keymap = require('userlib.runtime.keymap')
 local cmdstr = keymap.cmdstr
 
-local function get_window_bufnr(winid)
-  return vim.api.nvim_win_call(winid, function()
-    return vim.fn.bufnr('%')
-  end)
-end
-local function change_window_bufnr(winid, bufnr)
-  vim.api.nvim_win_call(winid, function()
-    vim.cmd(string.format('buffer %d', bufnr))
-  end)
-end
-
 plug({
   {
-    'anuvyklack/windows.nvim',
-    dependencies = {
-      'anuvyklack/middleclass',
-    },
-    keys = {
-      {
-        '<C-w>a',
-        function()
-          local aw = require('windows.autowidth')
-          local awc = require('windows.config')
-          aw.toggle()
-          if awc.autowidth.enable then
-            vim.notify('󰿆 Windows auto width enabled', vim.log.levels.INFO, {
-              key = 'windows',
-            })
-          else
-            vim.notify('󱙱 Windows auto width disabled', vim.log.levels.INFO, {
-              key = 'windows',
-            })
-          end
-        end,
-        nowait = true,
-        desc = 'Toggle auto size',
-      },
-      { '<C-w>m', '<cmd>WindowsMaximize<cr>', nowait = true, desc = 'Maximize window' },
-      { '<C-w>=', '<cmd>WindowsEqualize<cr>', nowait = true, desc = 'Equallize window' },
-      {
-        '<C-w>x',
-        function()
-          local cur_win = vim.api.nvim_get_current_win()
-          if vim.fn.winnr('$') <= 2 then
-            vim.cmd('wincmd x')
-            return
-          end
-          vim.schedule(function()
-            local ok, winpick = pcall(require, 'window-picker')
-            if not ok then
-              vim.cmd('wincmd x')
-              return
-            else
-              local picked = winpick.pick_window({
-                autoselect_one = false,
-                include_current_win = false,
-                hint = 'floating-big-letter',
-              })
-              if not picked then
-                return
-              end
-              local current_bufnr = get_window_bufnr(cur_win)
-              local target_bufnr = get_window_bufnr(picked)
-              change_window_bufnr(picked, current_bufnr)
-              -- use wincmd to focus picked window.
-              change_window_bufnr(cur_win, target_bufnr)
-              vim.cmd(string.format('%dwincmd w', vim.fn.win_id2win(picked)))
-              -- go back, so we can use quickly switch between those two window.
-              vim.cmd('wincmd p')
-            end
-          end)
-        end,
-        desc = 'swap',
-      },
-    },
-    enabled = true,
-    event = 'WinNew',
-    opts = {
-      autowidth = {
-        enable = not vim.cfg.runtime__starts_as_gittool and false or false,
-        winwidth = 30,
-        winminwidth = 40,
-      },
-      ignore = {
-        buftype = vim.cfg.misc__buf_exclude,
-        filetype = vim.cfg.misc__ft_exclude,
-      },
-      animation = {
-        enable = false,
-      },
-    },
-    config = function(_, opts)
-      vim.o.equalalways = false
-      if vim.cfg.runtime__starts_as_gittool then
-        vim.o.equalalways = true
-      end
-      require('windows').setup(opts)
-    end,
-    init = function()
-      au.define_autocmd('VimEnter', {
-        once = true,
-        callback = function()
-          if (vim.cfg.runtime__starts_in_buffer and vim.wo.diff) or vim.cfg.runtime__starts_as_gittool then
-            vim.cmd('WindowsEqualize')
-          end
-        end,
-      })
-    end,
-    lazy = true,
-    cmd = {
-      'WindowsMaximize',
-      'WindowsMaximizeVertically',
-      'WindowsMaximizeHorizontally',
-      'WindowsEqualize',
-      'WindowsEnableAutowidth',
-      'WindowsDisableAutowidth',
-      'WindowsToggleAutowidth',
-    },
-  },
-
-  ----- buffers
-  {
-    'kazhala/close-buffers.nvim',
-    module = 'close_buffers',
-    --- BDelete regex=term://
-    keys = {
-      { '<leader>bo', '<cmd>BDelete other<cr>', desc = 'Only' },
-    },
-    cmd = {
-      'BDelete',
-      'BWipeout',
-    },
-  },
-  {
     'kwkarlwang/bufresize.nvim',
-    event = 'WinResized',
-    enabled = false,
-    lazy = true,
-    config = true,
+    event = 'VeryLazy',
+    enabled = true,
+    opts = {
+      register = {
+        trigger_events = { 'WinResized', 'WinLeave' },
+        keys = {},
+      },
+      resize = {
+        trigger_events = {
+          'VimResized',
+        },
+        increment = 1,
+      },
+    },
   },
 
   {
@@ -159,7 +37,9 @@ plug({
         '<C-c><C-d>',
         function()
           if vim.fn.exists('&winfixbuf') == 1 and vim.api.nvim_get_option_value('winfixbuf', { win = 0 }) then
+            Ty.resize.block()
             vim.cmd('bd')
+            Ty.resize.after_close()
             return
           end
           -- do not use wipeout, because bqf doesn't update bufnr after buffer
@@ -178,7 +58,12 @@ plug({
             if error then
               vim.api.nvim_echo({ { 'Last window, press `<leader>bq` again to quit', 'Error' } }, false, {})
               local set = require('userlib.runtime.keymap').map_buf_thunk(0)
-              set('n', '<leader>bq', '<cmd>q!<cr>', { desc = 'Force quit' })
+              set(
+                'n',
+                '<leader>bq',
+                '<cmd>call v:lua.Ty.resize.block() <bar> q! <bar> call v:lua.Ty.resize.after_close() <cr>',
+                { desc = 'Force quit' }
+              )
             end
           end)
         end,
@@ -186,13 +71,13 @@ plug({
       },
       {
         '<C-c><C-q>',
-        ':echo "close buffer " .. bufnr("%") .. " and window" | q <cr>',
+        ':echo "close buffer " .. bufnr("%") .. " and window" <bar> :call v:lua.Ty.resize.block() <bar> q <bar> :call v:lua.Ty.resize.after_close() <cr>',
         'Quit current buffer and window',
         silent = false,
       },
       {
         '<leader>bk',
-        ':hide<cr>',
+        ':call v:lua.Ty.resize.block() <bar> :hide <bar> :call v:lua.Ty.resize.after_close()<cr>',
         desc = 'Hide current window',
       },
       {
@@ -200,7 +85,9 @@ plug({
         function()
           local tabs_count = vim.fn.tabpagenr('$')
           if tabs_count <= 1 then
+            Ty.resize.block()
             vim.cmd('silent! hide | echo "hide current window"')
+            Ty.resize.after_close()
             return
           end
           --- get current tab's window count
@@ -209,7 +96,9 @@ plug({
             vim.notify('Can not hide last window in tab', vim.log.levels.ERROR)
             return
           end
+          Ty.resize.block()
           vim.cmd('silent! hide | echo "hide current window"')
+          Ty.resize.after_close()
         end,
         desc = 'Hide current window',
         silent = false,
@@ -225,7 +114,9 @@ plug({
         '<C-c><C-c>',
         function()
           if vim.fn.exists('&winfixbuf') == 1 and vim.api.nvim_get_option_value('winfixbuf', { win = 0 }) then
+            Ty.resize.block()
             vim.cmd('hide')
+            Ty.resize.after_close()
             return
           end
           if vim.api.nvim_win_get_config(vim.api.nvim_get_current_win()).relative ~= '' then
@@ -250,7 +141,7 @@ plug({
     opts = {
       lastplace_ignore_buftype = vim.cfg.misc__buf_exclude,
       lastplace_ignore_filetype = vim.cfg.misc__ft_exclude,
-      lastplace_open_folds = true,
+      lastplace_open_folds = false,
     },
   },
 
@@ -449,9 +340,6 @@ plug({
         desc = 'Move cursor to right window',
       },
     },
-    dependencies = {
-      -- 'kwkarlwang/bufresize.nvim',
-    },
     -- only if you use kitty term
     -- build = './kitty/install-kittens.bash',
     config = function()
@@ -475,7 +363,7 @@ plug({
           },
           hooks = {
             on_leave = function()
-              -- require('bufresize').register()
+              Ty.resize.record()
             end,
           },
         },
@@ -837,7 +725,7 @@ plug({
 })
 
 plug({
-  'tiagovla/scope.nvim',
+  'pze/scope.nvim',
   config = true,
   event = 'VeryLazy',
 })

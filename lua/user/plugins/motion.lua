@@ -15,14 +15,37 @@ plug({
 })
 
 plug({
+  'echasnovski/mini.surround',
+  version = '*',
+  event = au.user_autocmds.FileOpened_User,
+  opts = {
+    mappings = {
+      add = 'ys',
+      delete = 'ds',
+      find = 's]',
+      find_left = 's[',
+      highlight = '',
+      replace = 'cs',
+      update_n_lines = '',
+
+      -- Add this only if you don't want to use extended mappings
+      suffix_last = '',
+      suffix_next = '',
+    },
+    search_method = 'cover_or_next',
+  },
+})
+
+plug({
   {
     'kylechui/nvim-surround',
-    vscode = true,
+    vscode = 'true',
     version = '*',
+    enabled = false,
     event = au.user_autocmds.FileOpened_User,
     opts = {
       keymaps = {
-        delete = 'dz',
+        delete = 'ds',
       },
     },
   },

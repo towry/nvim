@@ -30,19 +30,45 @@ function M.cu_cmdstr(cmd)
   return string.format('<C-u><cmd>%s<cr>', cmd)
 end
 
+local buf_local_help = {}
+
+function M.get_buf_local_help(label)
+  return buf_local_help[label] or {}
+end
+
 local map_buf_thunk_defered = {}
 --- maybe use ft as throttle key
 ---@param bufnr number
-function M.map_buf_thunk(bufnr)
+---@param opts? { label: string }
+function M.map_buf_thunk(bufnr, opts)
+  opts = opts or {}
+
+  if opts.label and opts.label ~= '' and not buf_local_help[opts.label] then
+    buf_local_help[opts.label] = {}
+  elseif vim.bo.filetype ~= '' then
+    buf_local_help[vim.bo.filetype .. '_'] = {}
+  end
+
   if bufnr == 0 or not bufnr then
     bufnr = vim.api.nvim_get_current_buf()
   end
-  return function(mode, lhs, rhs, opts)
-    opts = opts or {}
-    opts.buffer = bufnr
-    M.set(mode, lhs, rhs, opts)
+
+  return function(mode, lhs, rhs, opts_)
+    opts_ = opts_ or {}
+    opts_.buffer = bufnr
+
+    if opts_.desc and (opts.label and opts.label ~= '') then
+      table.insert(buf_local_help[opts.label], {
+        mode = mode,
+        lhs = lhs,
+        desc = opts_.desc,
+      })
+    end
+
+    M.set(mode, lhs, rhs, opts_)
     if not map_buf_thunk_defered[bufnr] then
       map_buf_thunk_defered[bufnr] = true
+
       vim.schedule(function()
         require('userlib.runtime.au').exec_whichkey_refresh({
           buffer = bufnr,

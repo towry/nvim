@@ -14,7 +14,7 @@ plug({
     default_ui_mappings = true,
     default_quickfix_mappings = true,
     -- you can override it with vim.b.grep_flags
-    cmd_flags = '--smart-case --fixed-strings --no-fixed-strings -M 500',
+    cmd_flags = '--smart-case --no-fixed-strings --fixed-strings -M 500',
     colors = {
       RgFlowInputPath = { link = 'NormalFloat' },
       RgFlowInputBg = { link = 'NormalFloat' },
@@ -35,22 +35,32 @@ plug({
     {
       '<localleader>fg',
       function()
-        require('rgflow').open(nil, vim.b.grep_flags or nil, vim.cfg.runtime__starts_cwd, {
-          custom_start = function(pattern, flags, path)
-            require('userlib.fzflua').grep({ cwd = path, query = pattern, rg_opts = flags })
-          end,
-        })
+        require('rgflow').open(
+          nil,
+          vim.b.grep_flags or require('userlib.finder').get_grep_flags_with_glob(),
+          vim.cfg.runtime__starts_cwd,
+          {
+            custom_start = function(pattern, flags, path)
+              require('userlib.fzflua').grep({ cwd = path, query = pattern, rg_opts = flags })
+            end,
+          }
+        )
       end,
       desc = 'Grep search in all project',
     },
     {
       '<localleader>fs',
       function()
-        require('rgflow').open(nil, vim.b.grep_flags or nil, vim.uv.cwd(), {
-          custom_start = function(pattern, flags, path)
-            require('userlib.fzflua').grep({ cwd = path, query = pattern, rg_opts = flags })
-          end,
-        })
+        require('rgflow').open(
+          nil,
+          vim.b.grep_flags or require('userlib.finder').get_grep_flags_with_glob(),
+          vim.uv.cwd(),
+          {
+            custom_start = function(pattern, flags, path)
+              require('userlib.fzflua').grep({ cwd = path, query = pattern, rg_opts = flags })
+            end,
+          }
+        )
       end,
       desc = 'Grep search current project',
     },
@@ -63,11 +73,16 @@ plug({
     {
       '<localleader>fw',
       function()
-        require('rgflow').open(vim.fn.expand('<cword>'), vim.b.grep_flags or nil, vim.t.Cwd or vim.uv.cwd(), {
-          custom_start = function(pattern, flags, path)
-            require('userlib.fzflua').grep({ cwd = path, query = pattern, rg_opts = flags })
-          end,
-        })
+        require('rgflow').open(
+          vim.fn.expand('<cword>'),
+          vim.b.grep_flags or require('userlib.finder').get_grep_flags_with_glob(),
+          vim.t.Cwd or vim.uv.cwd(),
+          {
+            custom_start = function(pattern, flags, path)
+              require('userlib.fzflua').grep({ cwd = path, query = pattern, rg_opts = flags })
+            end,
+          }
+        )
       end,
       desc = 'Open rg flow with current word',
     },
@@ -77,11 +92,16 @@ plug({
         local first_line = Ty.buf_vtext()
         -- Exit visual mode
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, true, true), 'x', true)
-        require('rgflow').open(first_line, vim.b.grep_flags or nil, vim.t.Cwd or vim.uv.cwd(), {
-          custom_start = function(pattern, flags, path)
-            require('userlib.fzflua').grep({ cwd = path, query = pattern, rg_opts = flags })
-          end,
-        })
+        require('rgflow').open(
+          first_line,
+          vim.b.grep_flags or require('userlib.finder').get_grep_flags_with_glob(),
+          vim.t.Cwd or vim.uv.cwd(),
+          {
+            custom_start = function(pattern, flags, path)
+              require('userlib.fzflua').grep({ cwd = path, query = pattern, rg_opts = flags })
+            end,
+          }
+        )
       end,
       desc = 'Open rg flow with visual selection',
       mode = { 'v', 'x' },
@@ -96,7 +116,12 @@ plug({
     {
       '<leader>ss',
       function()
-        require('rgflow').open(nil, vim.b.grep_flags or nil, vim.uv.cwd(), {})
+        require('rgflow').open(
+          nil,
+          vim.b.grep_flags or require('userlib.finder').get_grep_flags_with_glob(),
+          vim.uv.cwd(),
+          {}
+        )
       end,
       desc = 'Open Rgflow',
     },
@@ -959,6 +984,8 @@ plug({
           scrollbar = false,
           default = 'builtin',
           wrap = 'wrap',
+          layout = 'flex',
+          flip_columns = 240,
           horizontal = 'right:45%',
           vertical = 'down:40%',
           winopts = {
@@ -985,10 +1012,6 @@ plug({
         formatter = 'path.filename_first',
         winopts = {
           -- split = 'belowright new',
-          preview = {
-            layout = 'flex',
-            flip_columns = 240,
-          },
         },
       },
       oldfiles = {

@@ -34,10 +34,10 @@ plug({
           provider = '%=',
         },
         {
-          comp.rpad({
-            provider = '%{v:lua.vim.lsp.status()}',
-            update = { 'LspProgress' },
-          }),
+          -- comp.rpad({
+          --   provider = '%{v:lua.vim.lsp.status()}',
+          --   update = { 'LspProgress' },
+          -- }),
           comp.rpad(comp.LastExCommand),
           comp.rpad(comp.Copilot),
           comp.rpad(comp.Codeium),
@@ -64,6 +64,9 @@ plug({
         end,
         comp.lpad({
           {
+            provider = '  ',
+          },
+          {
             provider = function()
               local v = Ty.stl_relative_bufname(vim.api.nvim_get_current_buf())
               return v == '' and '[No Name] ' or v .. ' '
@@ -89,6 +92,10 @@ plug({
         end,
         --- file info
         comp.lpad({
+          {
+            provider = '  ',
+          },
+
           {
             provider = function()
               local v = Ty.stl_relative_bufname(vim.api.nvim_get_current_buf())

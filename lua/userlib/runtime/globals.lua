@@ -164,28 +164,6 @@ Ty.stl_num = function()
   return el .. vim.v.lnum .. space
 end
 
----@type table<number,boolean>
-local skip_foldexpr = {}
-local skip_check = assert(vim.uv.new_check())
-Ty.fold_expr = function()
-  local buf = vim.api.nvim_get_current_buf()
-  if vim.bo[buf].buftype ~= '' or vim.bo[buf].filetype == '' then
-    return '0'
-  end
-  if skip_foldexpr[buf] then
-    return '0'
-  end
-  local ok = vim.b[buf].ts_highlight
-  if ok then
-    return vim.treesitter.foldexpr()
-  end
-  skip_foldexpr[buf] = true
-  skip_check:start(function()
-    skip_foldexpr = {}
-    skip_check:stop()
-  end)
-end
-
 Ty.stl_relative_bufname = function(buf)
   local bufnr = buf or tonumber(vim.g.actual_curbuf)
   if not bufnr or vim.bo[bufnr].buftype ~= '' then
@@ -357,3 +335,46 @@ Ty.buf_vtext = function()
   end
   return ''
 end
+
+Ty.resize = {
+  --- record current state.
+  record = function()
+    local ok, m = pcall(require, 'bufresize')
+    if ok then
+      m.register()
+    end
+  end,
+  --- block until sync action taken.
+  block = function()
+    local ok, m = pcall(require, 'bufresize')
+    if ok then
+      m.block_register()
+      vim.g.resize_info_win = vim.api.nvim_get_current_win()
+    end
+  end,
+  --- sync after terminal resized
+  sync = function()
+    local ok, m = pcall(require, 'bufresize')
+    if ok then
+      m.resize()
+    end
+  end,
+  --- sync after something closed
+  after_close = function()
+    local ok, m = pcall(require, 'bufresize')
+    if ok then
+      m.resize_close()
+      vim.schedule(vim.cmd.stopinsert)
+      vim.g.resize_info_win = nil
+    end
+  end,
+  --- sync after something opened
+  after_open = function()
+    local ok, m = pcall(require, 'bufresize')
+    if ok then
+      m.resize_open()
+      vim.schedule(vim.cmd.stopinsert)
+      vim.g.resize_info_win = nil
+    end
+  end,
+}

@@ -159,7 +159,7 @@ local function setup_coc_autocmd()
         return
       end
 
-      vim.cmd([[call CocAction("format") | sleep 1m]])
+      vim.cmd([[noau call CocAction("format") | sleep 1m]])
     end,
   })
   vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
@@ -169,12 +169,6 @@ local function setup_coc_autocmd()
       if vim.cfg.ui__window_equalalways == true then
         return
       end
-
-      -- if vim.bo.buftype == 'nofile' then
-      --   vim.cmd('set equalalways')
-      -- else
-      --   vim.cmd('set noequalalways')
-      -- end
     end,
   })
 end

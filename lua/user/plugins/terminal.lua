@@ -115,6 +115,23 @@ plug({
     end,
     init = function()
       local nvim_buf_set_keymap = vim.keymap.set
+      _G._plugin_toggle_term = function(direction, vcount)
+        vcount = vcount or 0
+        local command = vcount .. 'ToggleTerm'
+        if direction ~= nil then
+          command = command .. ' direction=' .. direction
+        end
+        if vim.bo.filetype == 'toggleterm' then
+          Ty.resize.block()
+          vim.api.nvim_command(command)
+          Ty.resize.after_close()
+        else
+          Ty.resize.block()
+          vim.api.nvim_command(command)
+          Ty.resize.after_open()
+          vim.cmd([[execute "normal! i"]])
+        end
+      end
       _G._plugin_set_terminal_keymaps = vim.schedule_wrap(function()
         if vim.bo.filetype == 'fzf' then
           return
@@ -128,8 +145,8 @@ plug({
         end
         -- local current_term_is_hidden = current_term.hidden
         local opts = { noremap = true, buffer = buffer, nowait = true }
-        nvim_buf_set_keymap('t', '<C-\\>', [[<C-\><C-n>:ToggleTerm<CR>]], opts)
-        nvim_buf_set_keymap('t', '<C-S-\\>', [[<C-\><C-n>:ToggleTerm<CR>]], opts)
+        nvim_buf_set_keymap('t', '<C-\\>', [[<C-\><C-n>:call v:lua._plugin_toggle_term()<CR>]], opts)
+        nvim_buf_set_keymap('t', '<C-S-\\>', [[<C-\><C-n>:call v:lua._plugin_toggle_term()<CR>]], opts)
       end)
 
       vim.cmd('autocmd! TermOpen term://* lua _plugin_set_terminal_keymaps()')
@@ -146,9 +163,9 @@ plug({
           return
         end
         if vim.v.count == 9 then
-          vim.cmd([[9ToggleTerm direction=float]])
+          vim.cmd([[call v:lua._plugin_toggle_term('float', 9)]])
         else
-          vim.cmd(vim.v.count .. [[ToggleTerm direction=horizontal]])
+          vim.cmd([[call v:lua._plugin_toggle_term('horizontal', ]] .. vim.v.count .. ')')
         end
       end, {
         desc = 'toggle term',
@@ -174,7 +191,10 @@ plug({
       vim.api.nvim_create_user_command('LocalTermExec', function(opts)
         local args = opts.args
 
-        local cmd = ([[TermExec cmd='%s' dir='%s']]):format(args, vim.uv.cwd())
+        local cmd = ([[call v:lua.Ty.resize.block() <bar> TermExec cmd='%s' dir='%s' <bar> call v:lua.Ty.resize.after_open()]]):format(
+          args,
+          vim.uv.cwd()
+        )
         vim.api.nvim_command(cmd)
       end, {
         nargs = '+',
@@ -184,7 +204,10 @@ plug({
       vim.api.nvim_create_user_command('RootTermExec', function(opts)
         local args = opts.args
 
-        local cmd = ([[TermExec cmd='%s' dir='%s']]):format(args, vim.cfg.runtime__starts_cwd)
+        local cmd = ([[call v:lua.Ty.resize.block() <bar> TermExec cmd='%s' dir='%s' <bar> call v:lua.Ty.resize.after_open()]]):format(
+          args,
+          vim.cfg.runtime__starts_cwd
+        )
         vim.api.nvim_command(cmd)
       end, {
         nargs = '+',

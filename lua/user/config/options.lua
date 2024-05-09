@@ -31,8 +31,8 @@ function M.startup()
   o.winminwidth = 10
   o.winwidth = 10
   o.equalalways = vim.cfg.ui__window_equalalways
-  o.winfixwidth = false
-  o.winfixheight = false
+  o.winfixwidth = true
+  o.winfixheight = true
   o.showmatch = false -- show {} match and jump
   o.undofile = true --- Sets undo to file
   o.undolevels = 10000
@@ -135,14 +135,19 @@ function M.init_interface()
   -- o.complete:append('d')
   -- scan buffer name
   o.complete:append('f')
+  o.shada:append('r/tmp/')
+  o.shada:append('r*://')
+  o.shada:append('r*://')
+  o.shada:append('r.git/*')
   -- o.complete:remove('t')
   o.cursorline = true --- Highlight of current line
   o.emoji = true --- Fix emoji display
   o.cursorlineopt = 'line,number'
   o.foldcolumn = '1' -- Folding
+  o.foldopen:remove('hor')
   if vim.fn.has('nvim-0.10') == 1 then
     vim.opt.foldmethod = 'expr'
-    vim.opt.foldexpr = 'v:lua.Ty.fold_expr()'
+    vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     vim.opt.foldtext = ''
     vim.opt.fillchars = 'fold: '
   else

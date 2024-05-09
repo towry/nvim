@@ -1,4 +1,6 @@
-local map = require('userlib.runtime.keymap').map_buf_thunk(0)
+local map = require('userlib.runtime.keymap').map_buf_thunk(0, {
+  label = 'qf',
+})
 local qf = require('userlib.runtime.qf')
 if vim.fn.exists('&winfixbuf') == 1 then
   vim.cmd('setlocal winfixbuf')
@@ -19,8 +21,8 @@ vim.b.minicursorword_disable = true
 
 map('n', 'dd', qf.qf_delete, { desc = 'delete current quickfix entry' })
 -- map('v', 'd', qf.qf_delete, { desc = 'delete selected quickfix entry' })
-map('n', ',q', ':colder<CR>', { desc = 'qf: older' })
-map('n', '.q', ':cnewer<CR>', { desc = 'qf: newer' })
+map('n', 'K', ':colder<CR>', { nowait = true, desc = 'qf: older' })
+map('n', 'J', ':cnewer<CR>', { nowait = true, desc = 'qf: newer' })
 map('n', '<C-r>', function()
   Ty.capture_tmux_pane(0)
   vim.defer_fn(function()
@@ -29,6 +31,10 @@ map('n', '<C-r>', function()
 end, {
   desc = 'qf: refresh dispatch',
 })
+
+map('n', 'g?', function()
+  require('userlib.mini.clue').show_buf_local_help(require('userlib.runtime.keymap').get_buf_local_help('qf'))
+end, { desc = 'Show this help', nowait = true, noremap = true })
 
 -- force quickfix to open beneath all other splits
 vim.cmd.wincmd('J')

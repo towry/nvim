@@ -6,6 +6,23 @@ local M = {}
 local is_profiling = false
 
 local function setup_basic()
+  set('n', 'g?', function()
+    local ft = vim.bo.filetype
+    if ft == '' then
+      vim.notify('No buf local keymap help for ft none', vim.log.levels.INFO)
+      return
+    end
+    local helps = require('userlib.runtime.keymap').get_buf_local_help(ft .. '_')
+    if not helps or #helps == 0 then
+      vim.notify('No buf local keymap help', vim.log.levels.INFO)
+      return
+    end
+    require('userlib.mini.clue').show_buf_local_help(helps)
+  end, {
+    desc = 'Show buffer local keys help',
+    nowait = true,
+    noremap = true,
+  })
   set('n', '*', function()
     vim.fn.setreg('/', [[\V\<]] .. vim.fn.escape(vim.fn.expand('<cword>'), [[/\]]) .. [[\>]])
     vim.fn.histadd('/', vim.fn.getreg('/'))
@@ -86,6 +103,18 @@ local function setup_basic()
     end
     return '<left><C-o>v'
   end, { remap = false, expr = true })
+  set(
+    'n',
+    '<C-w>m',
+    '<cmd>wincmd _ <bar> wincmd | <bar> call v:lua.Ty.resize.record()<cr>',
+    { nowait = true, noremap = true, desc = 'Max window' }
+  )
+  set(
+    'n',
+    '<C-w>=',
+    '<cmd>NoFixWin <bar> wincmd = <bar> FixWin <bar> call v:lua.Ty.resize.record()<cr>',
+    { nowait = true, noremap = true, desc = 'Equal window' }
+  )
   set('v', '<BS>', 'd', { noremap = true })
   set('n', "';", ':lua require("userlib.runtime.buffer").edit_alt_buf()<cr>', {
     silent = true,
@@ -188,7 +217,7 @@ local function setup_basic()
   set('n', 'H', '^', {
     desc = 'Move to first non-blank character of the line',
   })
-  set('n', 'L', '$', {
+  set('n', 'L', 'zo$', {
     desc = 'Move to last non-blank character of the line',
   })
 
