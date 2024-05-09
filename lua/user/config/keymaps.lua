@@ -86,6 +86,18 @@ local function setup_basic()
     end
     return '<left><C-o>v'
   end, { remap = false, expr = true })
+  set(
+    'n',
+    '<C-w>m',
+    '<cmd>wincmd _ <bar> wincmd | <bar> call v:lua.Ty.resize.record()<cr>',
+    { nowait = true, noremap = true, desc = 'Max window' }
+  )
+  set(
+    'n',
+    '<C-w>=',
+    '<cmd>NoFixWin <bar> wincmd = <bar> FixWin <bar> call v:lua.Ty.resize.record()<cr>',
+    { nowait = true, noremap = true, desc = 'Equal window' }
+  )
   set('v', '<BS>', 'd', { noremap = true })
   set('n', "';", ':lua require("userlib.runtime.buffer").edit_alt_buf()<cr>', {
     silent = true,

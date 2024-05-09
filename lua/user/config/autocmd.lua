@@ -17,29 +17,27 @@ function M.load_on_startup()
       },
     },
     {
-      { 'WinClosed' },
-      {
-        group = group_name,
-        callback = function(ctx)
-          if vim.g.resize_info_win ~= nil then
-            return
-          end
-          local winid = tonumber(ctx.match)
-          local ok, wincfg = pcall(vim.api.nvim_win_get_config, winid)
-          if ok and wincfg.relative ~= '' then
-            return
-          end
-          Ty.resize.after_close()
-        end,
-      },
-    },
-    {
       { 'WinLeave' },
       {
         group = group_name,
         pattern = '*',
         command = 'setlocal nocursorline',
         desc = 'DeHi non-active window cursorline',
+      },
+    },
+    {
+      { 'WinClosed' },
+      {
+        group = group_name,
+        callback = function(ctx)
+          local winid = tonumber(ctx.match)
+          local cur = vim.api.nvim_get_current_win()
+          if winid ~= cur then
+            return
+          end
+          vim.cmd('wincmd p')
+        end,
+        desc = 'Go to prev win after curr win closed',
       },
     },
     {

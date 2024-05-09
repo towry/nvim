@@ -346,6 +346,7 @@ end, {
   nargs = '*',
   complete = 'dir',
   bang = true,
+  bar = true,
   desc = 'Change root cwd',
 })
 
@@ -360,5 +361,57 @@ create_cmd('CloseAll', function()
     vim.cmd.redrawstatus()
   end)
 end, {
+  bar = true,
   desc = 'Close all buffers and windows',
+})
+
+--- ResizeAfterClose cmd ..args
+create_cmd('ResizeAfterClose', function(params)
+  Ty.resize.block()
+  vim.cmd(params.args)
+  Ty.resize.after_close()
+end, {
+  desc = 'Resize after close something',
+  nargs = '*',
+  bar = true,
+  complete = 'command',
+})
+create_cmd('ResizeAfterOpen', function(params)
+  Ty.resize.block()
+  vim.cmd(params.args)
+  Ty.resize.after_open()
+end, {
+  desc = 'Resize after open something',
+  nargs = '*',
+  bar = true,
+  complete = 'command',
+})
+
+create_cmd('NoFixWin', function(args)
+  if args.bang then
+    vim.cmd('set nowinfixwidth')
+    vim.cmd('set nowinfixheight')
+    return
+  end
+  vim.cmd('setlocal nowinfixwidth')
+  vim.cmd('setlocal nowinfixheight')
+end, {
+  nargs = 0,
+  bang = true,
+  bar = true,
+  desc = 'Unset win fix',
+})
+create_cmd('FixWin', function(args)
+  if args.bang then
+    vim.cmd('set winfixwidth')
+    vim.cmd('set winfixheight')
+    return
+  end
+  vim.cmd('setlocal winfixwidth')
+  vim.cmd('setlocal winfixheight')
+end, {
+  bar = true,
+  nargs = 0,
+  bang = true,
+  desc = 'Unset win fix',
 })

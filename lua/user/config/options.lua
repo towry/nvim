@@ -31,8 +31,8 @@ function M.startup()
   o.winminwidth = 10
   o.winwidth = 10
   o.equalalways = vim.cfg.ui__window_equalalways
-  o.winfixwidth = false
-  o.winfixheight = false
+  o.winfixwidth = true
+  o.winfixheight = true
   o.showmatch = false -- show {} match and jump
   o.undofile = true --- Sets undo to file
   o.undolevels = 10000
