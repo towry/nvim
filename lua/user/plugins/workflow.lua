@@ -141,7 +141,7 @@ plug({
     opts = {
       lastplace_ignore_buftype = vim.cfg.misc__buf_exclude,
       lastplace_ignore_filetype = vim.cfg.misc__ft_exclude,
-      lastplace_open_folds = true,
+      lastplace_open_folds = false,
     },
   },
 
