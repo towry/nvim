@@ -345,7 +345,7 @@ plug({
           end),
         },
         window = {
-          open = 'smart',
+          open = 'split',
         },
         nest_if_no_args = true,
         integrations = {
