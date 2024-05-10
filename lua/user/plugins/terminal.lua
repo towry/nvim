@@ -9,9 +9,14 @@ plug({
     keys = {
       {
         '<leader>gv',
-        '<cmd>lua require("userlib.terminal.term-git").toggle_tig()<cr>',
-        desc = 'Tig commits',
+        '<cmd>lua require("userlib.terminal.gitu").toggle()<cr>',
+        desc = 'Gitu',
       },
+      -- {
+      --   '<leader>gv',
+      --   '<cmd>lua require("userlib.terminal.term-git").toggle_tig()<cr>',
+      --   desc = 'Tig commits',
+      -- },
       {
         '<leader>gV',
         '<cmd>lua require("userlib.terminal.term-git").toggle_tig_file_history()<cr>',
