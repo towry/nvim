@@ -94,7 +94,7 @@ plug({
           -- the 'curved' border is a custom border type
           -- not natively supported but implemented in this plugin.
           border = vim.cfg.ui__float_border, -- single/double/shadow/curved
-          winblend = 15,
+          winblend = 0,
         },
         winbar = {
           enabled = false,
