@@ -657,7 +657,7 @@ local Dap = {
 
 local Codeium = {
   condition = function()
-    return vim.fn.exists('*codeium#GetStatusString') == 1 and vim.fn['codeium#GetStatusString']() ~= 'OFF'
+    return vim.g.loaded_codeium == 1 and vim.fn.exists('*codeium#GetStatusString') == 1
   end,
   {
     provider = function()
