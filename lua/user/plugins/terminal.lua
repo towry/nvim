@@ -294,24 +294,12 @@ plug({
               -- Hide the terminal while it's blocking
               saved_terminal:close()
               vim.schedule(function()
-                -- get win of bufnr
-                if not vim.api.nvim_buf_is_loaded(bufnr) then
-                  return
-                end
-                local win = vim.fn.win_findbuf(bufnr)[1]
-                if win then
-                  vim.api.nvim_set_current_win(win)
-                end
+                vim.api.nvim_set_current_win(winnr)
               end)
             elseif not is_neo_term or is_diff then
-              -- If it's a normal file, just switch to its window
-              if not vim.api.nvim_buf_is_loaded(bufnr) then
-                return
-              end
-              local win = vim.fn.win_findbuf(bufnr)[1]
-              if win then
-                vim.api.nvim_set_current_win(win)
-              end
+              vim.schedule(function()
+                vim.api.nvim_set_current_win(winnr)
+              end)
 
               do
                 if not vim.cfg.runtime__is_wezterm then
