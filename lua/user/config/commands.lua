@@ -415,3 +415,15 @@ end, {
   bang = true,
   desc = 'Unset win fix',
 })
+
+if vim.fn.executable('gitu') == 1 then
+  create_cmd('Gitu', function(params)
+    Ty.smart_split_cmd('terminal gitu ' .. params.args)
+  end, {
+    bar = true,
+    bang = true,
+    nargs = '*',
+    complete = 'shellcmd',
+    desc = 'Open gitu in term',
+  })
+end

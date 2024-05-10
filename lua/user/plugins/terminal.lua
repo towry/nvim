@@ -143,8 +143,7 @@ plug({
         end
         -- local current_term_is_hidden = current_term.hidden
         local opts = { noremap = true, buffer = buffer, nowait = true }
-        nvim_buf_set_keymap('t', '<C-\\>', [[<C-\><C-n>:call v:lua._plugin_toggle_term()<CR>]], opts)
-        nvim_buf_set_keymap('t', '<C-S-\\>', [[<C-\><C-n>:call v:lua._plugin_toggle_term()<CR>]], opts)
+        nvim_buf_set_keymap('t', '<C-\\><C-\\>', [[<C-\><C-n>:call v:lua._plugin_toggle_term()<CR>]], opts)
       end)
 
       vim.cmd('autocmd! TermOpen term://* lua _plugin_set_terminal_keymaps()')
@@ -155,7 +154,7 @@ plug({
         'fzf',
         'aerial',
       }
-      vim.keymap.set('n', '<C-\\>', function()
+      vim.keymap.set('n', '<C-\\><C-\\>', function()
         if vim.tbl_contains(misc_fts, vim.bo.filetype) then
           vim.notify('please open in normal buffer')
           return
@@ -164,22 +163,6 @@ plug({
           vim.cmd([[call v:lua._plugin_toggle_term('float', 9)]])
         else
           vim.cmd([[call v:lua._plugin_toggle_term('horizontal', ]] .. vim.v.count .. ')')
-        end
-      end, {
-        desc = 'toggle term',
-        silent = true,
-      })
-      --- open in workspace root.
-      --- super+ctrl+/
-      vim.keymap.set('n', vim.api.nvim_replace_termcodes('<C-S-\\>', true, true, false), function()
-        if vim.tbl_contains(misc_fts, vim.bo.filetype) then
-          vim.notify('please open in normal buffer')
-          return
-        end
-        if vim.v.count == 9 then
-          vim.cmd(([[9ToggleTerm direction=float dir=%s]]):format(vim.cfg.runtime__starts_cwd))
-        else
-          vim.cmd((vim.v.count .. [[ToggleTerm direction=horizontal dir=%s]]):format(vim.cfg.runtime__starts_cwd))
         end
       end, {
         desc = 'toggle term',

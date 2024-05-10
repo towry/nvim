@@ -474,6 +474,8 @@ pack.plug({
         { mode = 'n', keys = '<LocalLeader>' },
         { mode = 'x', keys = '<LocalLeader>' },
         { mode = 'n', keys = '<Leader>z+' },
+        { mode = 'n', keys = '<C-\\>' },
+        { mode = 't', keys = '<C-\\>' },
         { mode = 'n', keys = '<C-w>' },
         -- Built-in completion
         { mode = 'i', keys = '<C-x>' },
@@ -524,6 +526,17 @@ pack.plug({
         { mode = 'n', keys = '<Leader>/', desc = '+Outline|Terms' },
         { mode = 'n', keys = '<Leader>v', desc = '+Trails' },
         { mode = 'n', keys = '<Leader>z', desc = '+Extended' },
+        { mode = 'n', keys = '<C-\\><C-r>', desc = '+Resize window' },
+        { mode = 'n', keys = '<C-\\><C-r>h', postkeys = '<C-\\><C-r>', desc = 'Resize to left' },
+        { mode = 'n', keys = '<C-\\><C-r>k', postkeys = '<C-\\><C-r>', desc = 'Resize to up' },
+        { mode = 'n', keys = '<C-\\><C-r>j', postkeys = '<C-\\><C-r>', desc = 'Resize to down' },
+        { mode = 'n', keys = '<C-\\><C-r>l', postkeys = '<C-\\><C-r>', desc = 'Resize to right' },
+        --- term
+        { mode = 't', keys = '<C-\\><C-r>', desc = '+Resize window' },
+        { mode = 't', keys = '<C-\\><C-r>h', postkeys = '<C-\\><C-r>', desc = 'Resize to left' },
+        { mode = 't', keys = '<C-\\><C-r>k', postkeys = '<C-\\><C-r>', desc = 'Resize to up' },
+        { mode = 't', keys = '<C-\\><C-r>j', postkeys = '<C-\\><C-r>', desc = 'Resize to down' },
+        { mode = 't', keys = '<C-\\><C-r>l', postkeys = '<C-\\><C-r>', desc = 'Resize to right' },
 
         { mode = 'n', keys = '<Leader>m', desc = '+Motion' },
         { mode = 'n', keys = '<Leader>mj', desc = '+Join' },
