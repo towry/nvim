@@ -312,6 +312,7 @@ plug({
 
 plug({
   'rainbowhxch/accelerated-jk.nvim',
+  enabled = false,
   event = 'VeryLazy',
   opts = {
     acceleration_limit = 90,
