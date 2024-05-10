@@ -53,7 +53,8 @@ vim.api.nvim_create_autocmd('WinClosed', {
         wincount = wincount + 1
       elseif win == curwin then
       else
-        local is_special_win = vim.api.nvim_get_option_value('buftype', { buf = vim.api.nvim_win_get_buf(win) }) ~= ''
+        local buftype = vim.api.nvim_get_option_value('buftype', { buf = vim.api.nvim_win_get_buf(win) })
+        local is_special_win = buftype ~= '' and not vim.tbl_contains({ 'terminal' }, buftype)
         if not is_special_win then
           lastwin = win
           break

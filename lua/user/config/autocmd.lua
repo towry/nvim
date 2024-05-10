@@ -161,8 +161,21 @@ function M.load_on_startup()
         group = 'bind_key_on_term_open',
         pattern = 'term://*',
         callback = function(ctx)
+          vim.cmd('startinsert')
           Ty.set_terminal_keymaps(ctx.buf)
         end,
+      },
+    },
+    {
+      { 'WinEnter' },
+      {
+        group = 'start_insert_in_term',
+        pattern = 'term://*',
+        callback = vim.schedule_wrap(function()
+          -- maybe record whether user stopinsert.
+          vim.cmd('normal! g0')
+          vim.cmd('startinsert')
+        end),
       },
     },
     {

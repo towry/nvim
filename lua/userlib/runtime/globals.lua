@@ -227,6 +227,9 @@ Ty.set_terminal_keymaps = vim.schedule_wrap(function(bufnr)
     return
   end
 
+  nvim_buf_set_keymap('t', '<F1>', function()
+    vim.cmd.stopinsert()
+  end, opts)
   nvim_buf_set_keymap({ 'n', 't' }, '<F2>', function()
     if not vim.b.osc7_dir then
       return
@@ -244,7 +247,7 @@ Ty.set_terminal_keymaps = vim.schedule_wrap(function(bufnr)
   end, opts)
 
   nvim_buf_set_keymap('n', 'q', [[:startinsert<cr>]], opts)
-  nvim_buf_set_keymap('t', '<ESC>', [[<C-\><C-n>]], opts)
+  -- nvim_buf_set_keymap('t', '<ESC>', [[<C-\><C-n>]], opts)
   --- switch windows
   nvim_buf_set_keymap('t', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
   nvim_buf_set_keymap('t', '<C-j>', [[<C-\><C-n><C-W>j]], opts)
@@ -364,7 +367,7 @@ Ty.resize = {
     local ok, m = pcall(require, 'bufresize')
     if ok then
       m.resize_close()
-      vim.schedule(vim.cmd.stopinsert)
+      -- vim.schedule(vim.cmd.stopinsert)
       vim.g.resize_info_win = nil
     end
   end,
@@ -373,7 +376,7 @@ Ty.resize = {
     local ok, m = pcall(require, 'bufresize')
     if ok then
       m.resize_open()
-      vim.schedule(vim.cmd.stopinsert)
+      -- vim.schedule(vim.cmd.stopinsert)
       vim.g.resize_info_win = nil
     end
   end,
