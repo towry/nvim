@@ -19,7 +19,7 @@ local function callgrep(_opts, callfn)
   opts.no_header = false
   opts.formatter = 'path.filename_first'
   opts.rg_opts = opts.rg_opts
-    or [[--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --fixed-strings]]
+    or [[--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --fixed-strings --]]
 
   opts.actions = vim.tbl_extend('keep', {
     -- press ctrl-e in fzf picker to switch to rgflow.
