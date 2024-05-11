@@ -747,6 +747,7 @@ pack.plug({
         ['DressingInput'] = false,
         ['DressingSelect'] = false,
       }
+      vim.g.codeium_workspace_root_hints = require('userlib.runtime.utils').root_patterns
     end,
   },
   {

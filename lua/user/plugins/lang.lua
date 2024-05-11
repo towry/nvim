@@ -36,11 +36,11 @@ plug({
 })
 
 plug({
-  'pze/nvim-treesitter-textobjects',
-  dev = true,
-  branch = 'fix_main',
-  -- 'nvim-treesitter/nvim-treesitter-textobjects',
-  -- branch = 'main',
+  -- 'pze/nvim-treesitter-textobjects',
+  -- dev = true,
+  -- branch = 'fix_main',
+  'nvim-treesitter/nvim-treesitter-textobjects',
+  branch = 'main',
   dependencies = {
     { 'nvim-treesitter/nvim-treesitter', branch = 'main' },
   },
@@ -90,7 +90,6 @@ plug({
     for method, maps in pairs(move_maps) do
       for input, cap in pairs(maps) do
         set({ 'o', 'x', 'n' }, input, function()
-          vim.print({ method, cap })
           require('nvim-treesitter-textobjects.move')[method](cap, 'textobjects')
         end)
       end

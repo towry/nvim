@@ -326,6 +326,7 @@ plug({
 
   {
     'lewis6991/gitsigns.nvim',
+    cond = not vim.g.is_start_as_merge_tool,
     keys = {
       {
         'ghd',

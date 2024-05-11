@@ -26,21 +26,6 @@ function M.load_on_startup()
       },
     },
     {
-      { 'WinClosed' },
-      {
-        group = group_name,
-        callback = function(ctx)
-          local winid = tonumber(ctx.match)
-          local cur = vim.api.nvim_get_current_win()
-          if winid ~= cur then
-            return
-          end
-          vim.cmd('wincmd p')
-        end,
-        desc = 'Go to prev win after curr win closed',
-      },
-    },
-    {
       { 'CursorMovedI', 'InsertLeave' },
       {
         group = group_name,
@@ -160,9 +145,25 @@ function M.load_on_startup()
       {
         group = 'bind_key_on_term_open',
         pattern = 'term://*',
-        callback = function(ctx)
+        callback = vim.schedule_wrap(function(ctx)
+          if vim.api.nvim_get_current_buf() ~= ctx.buf then
+            -- Overseer will open term, and close shortly.
+            return
+          end
+          vim.cmd.setlocal('sidescrolloff=0')
+          vim.cmd('startinsert')
           Ty.set_terminal_keymaps(ctx.buf)
-        end,
+        end),
+      },
+    },
+    {
+      { 'WinEnter' },
+      {
+        group = 'start_insert_in_term',
+        pattern = 'term://*',
+        callback = vim.schedule_wrap(function()
+          vim.cmd('startinsert')
+        end),
       },
     },
     {

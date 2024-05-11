@@ -1,5 +1,4 @@
 local plug = require('userlib.runtime.pack').plug
-local cmd = require('userlib.runtime.keymap').cmdstr
 local au = require('userlib.runtime.au')
 
 plug({
@@ -312,6 +311,7 @@ plug({
 
 plug({
   'rainbowhxch/accelerated-jk.nvim',
+  enabled = false,
   event = 'VeryLazy',
   opts = {
     acceleration_limit = 90,

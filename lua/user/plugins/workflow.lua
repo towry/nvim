@@ -300,6 +300,31 @@ plug({
     event = 'VeryLazy',
     keys = {
       {
+        '<C-\\><C-r>h',
+        mode = { 'n', 't' },
+        cmdstr([[lua require("smart-splits").resize_left(vim.cfg.editor_resize_steps)]]),
+        desc = 'Start resize mode',
+      },
+      {
+        '<C-\\><C-r>j',
+        mode = { 'n', 't' },
+        cmdstr([[lua require("smart-splits").resize_down(vim.cfg.editor_resize_steps)]]),
+        desc = 'Resize window to down',
+      },
+      {
+        '<C-\\><C-r>k',
+        mode = { 'n', 't' },
+        cmdstr([[lua require("smart-splits").resize_up(vim.cfg.editor_resize_steps)]]),
+        desc = 'Resize window to up',
+      },
+      {
+        '<C-\\><C-r>l',
+        mode = { 'n', 't' },
+        cmdstr([[lua require("smart-splits").resize_right(vim.cfg.editor_resize_steps)]]),
+        desc = 'Resize window to right',
+      },
+
+      {
         '<A-h>',
         cmdstr([[lua require("smart-splits").resize_left(vim.cfg.editor_resize_steps)]]),
         desc = 'Resize window to left',
@@ -717,6 +742,7 @@ plug({
 
 plug({
   'ariel-frischer/bmessages.nvim',
+  cond = not vim.g.is_start_as_merge_tool,
   cmd = { 'Bmessages', 'Bmessagesvs', 'Bmessagessp', 'BmessagesEdit' },
   event = 'CmdlineEnter',
   opts = {
@@ -727,5 +753,6 @@ plug({
 plug({
   'pze/scope.nvim',
   config = true,
+  cond = not vim.g.is_start_as_merge_tool,
   event = 'VeryLazy',
 })

@@ -288,12 +288,14 @@ plug({
     au.define_autocmd('BufHidden', {
       group = '_oil_change_cwd',
       pattern = 'oil:///*',
-      callback = function()
+      callback = vim.schedule_wrap(function()
         -- restore locked cwd
         if vim.t.CwdLocked and vim.t.Cwd then
           vim.cmd.lcd(vim.t.Cwd)
+        elseif vim.api.nvim_buf_get_name(0) == '' then
+          vim.cmd.lcd(vim.cfg.runtime__starts_cwd)
         end
-      end,
+      end),
     })
   end,
 })

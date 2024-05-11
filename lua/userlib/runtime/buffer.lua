@@ -320,7 +320,7 @@ function M.smart_open(focus_bufnr)
   end
 
   -- allows using this function as a utility to get a window to open something in
-  if not focus then
+  if not focus_bufnr then
     return win
   end
 
@@ -348,6 +348,14 @@ end
 M.edit_alt_buf = function()
   local altnr = vim.fn.bufnr('#')
   if not altnr or altnr < 1 then
+    return
+  end
+  if not vim.api.nvim_buf_is_loaded(altnr) then
+    -- buf is deleted but not wipped out
+    ---@diagnostic disable-next-line: cast-local-type
+    altnr = M.next_bufnr()
+  end
+  if not altnr then
     return
   end
   M.set_current_buffer_focus(altnr)

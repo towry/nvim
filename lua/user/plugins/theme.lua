@@ -269,5 +269,4 @@ plug({
 
 plug({
   'maxmx03/solarized.nvim',
-  lazy = false,
 })

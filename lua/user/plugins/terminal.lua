@@ -7,6 +7,11 @@ plug({
     'akinsho/toggleterm.nvim',
     dev = false,
     keys = {
+      -- {
+      --   '<leader>gv',
+      --   '<cmd>lua require("userlib.terminal.gitu").toggle()<cr>',
+      --   desc = 'Gitu',
+      -- },
       {
         '<leader>gv',
         '<cmd>lua require("userlib.terminal.term-git").toggle_tig()<cr>',
@@ -74,7 +79,7 @@ plug({
         -- shade_filetypes = { 'none', 'fzf' },
         shade_terminals = true,
         shading_factor = 1, -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
-        start_in_insert = false,
+        start_in_insert = true,
         insert_mappings = true, -- whether or not the open mapping applies in insert mode
         persist_size = false,
         persist_mode = false,
@@ -89,7 +94,7 @@ plug({
           -- the 'curved' border is a custom border type
           -- not natively supported but implemented in this plugin.
           border = vim.cfg.ui__float_border, -- single/double/shadow/curved
-          winblend = 15,
+          winblend = 0,
         },
         winbar = {
           enabled = false,
@@ -102,15 +107,13 @@ plug({
             end
           end)
         end,
-        on_open = function(term)
+        on_open = vim.schedule_wrap(function(term)
           au.do_useraucmd(au.user_autocmds.TermIsOpen_User)
-          if term.start_in_insert then
-            vim.cmd('startinsert!')
-          end
+          vim.cmd('startinsert!')
           if vim.fn.exists('&winfixbuf') == 1 then
             vim.cmd('setlocal winfixbuf')
           end
-        end,
+        end),
       })
     end,
     init = function()
@@ -145,8 +148,7 @@ plug({
         end
         -- local current_term_is_hidden = current_term.hidden
         local opts = { noremap = true, buffer = buffer, nowait = true }
-        nvim_buf_set_keymap('t', '<C-\\>', [[<C-\><C-n>:call v:lua._plugin_toggle_term()<CR>]], opts)
-        nvim_buf_set_keymap('t', '<C-S-\\>', [[<C-\><C-n>:call v:lua._plugin_toggle_term()<CR>]], opts)
+        nvim_buf_set_keymap('t', '<C-\\><C-\\>', [[<C-\><C-n>:call v:lua._plugin_toggle_term()<CR>]], opts)
       end)
 
       vim.cmd('autocmd! TermOpen term://* lua _plugin_set_terminal_keymaps()')
@@ -157,7 +159,7 @@ plug({
         'fzf',
         'aerial',
       }
-      vim.keymap.set('n', '<C-\\>', function()
+      vim.keymap.set('n', '<C-\\><C-\\>', function()
         if vim.tbl_contains(misc_fts, vim.bo.filetype) then
           vim.notify('please open in normal buffer')
           return
@@ -166,22 +168,6 @@ plug({
           vim.cmd([[call v:lua._plugin_toggle_term('float', 9)]])
         else
           vim.cmd([[call v:lua._plugin_toggle_term('horizontal', ]] .. vim.v.count .. ')')
-        end
-      end, {
-        desc = 'toggle term',
-        silent = true,
-      })
-      --- open in workspace root.
-      --- super+ctrl+/
-      vim.keymap.set('n', vim.api.nvim_replace_termcodes('<C-S-\\>', true, true, false), function()
-        if vim.tbl_contains(misc_fts, vim.bo.filetype) then
-          vim.notify('please open in normal buffer')
-          return
-        end
-        if vim.v.count == 9 then
-          vim.cmd(([[9ToggleTerm direction=float dir=%s]]):format(vim.cfg.runtime__starts_cwd))
-        else
-          vim.cmd((vim.v.count .. [[ToggleTerm direction=horizontal dir=%s]]):format(vim.cfg.runtime__starts_cwd))
         end
       end, {
         desc = 'toggle term',
@@ -308,24 +294,12 @@ plug({
               -- Hide the terminal while it's blocking
               saved_terminal:close()
               vim.schedule(function()
-                -- get win of bufnr
-                if not vim.api.nvim_buf_is_loaded(bufnr) then
-                  return
-                end
-                local win = vim.fn.win_findbuf(bufnr)[1]
-                if win then
-                  vim.api.nvim_set_current_win(win)
-                end
+                vim.api.nvim_set_current_win(winnr)
               end)
             elseif not is_neo_term or is_diff then
-              -- If it's a normal file, just switch to its window
-              if not vim.api.nvim_buf_is_loaded(bufnr) then
-                return
-              end
-              local win = vim.fn.win_findbuf(bufnr)[1]
-              if win then
-                vim.api.nvim_set_current_win(win)
-              end
+              vim.schedule(function()
+                vim.api.nvim_set_current_win(winnr)
+              end)
 
               do
                 if not vim.cfg.runtime__is_wezterm then
@@ -364,7 +338,7 @@ plug({
           end),
         },
         window = {
-          open = 'smart',
+          open = 'split',
         },
         nest_if_no_args = true,
         integrations = {

@@ -227,6 +227,9 @@ Ty.set_terminal_keymaps = vim.schedule_wrap(function(bufnr)
     return
   end
 
+  nvim_buf_set_keymap('t', '<F1>', function()
+    vim.cmd.stopinsert()
+  end, opts)
   nvim_buf_set_keymap({ 'n', 't' }, '<F2>', function()
     if not vim.b.osc7_dir then
       return
@@ -244,18 +247,18 @@ Ty.set_terminal_keymaps = vim.schedule_wrap(function(bufnr)
   end, opts)
 
   nvim_buf_set_keymap('n', 'q', [[:startinsert<cr>]], opts)
-  nvim_buf_set_keymap('t', '<ESC>', [[<C-\><C-n>]], opts)
+  -- nvim_buf_set_keymap('t', '<ESC>', [[<C-\><C-n>]], opts)
   --- switch windows
-  nvim_buf_set_keymap('t', '<C-h>', [[<C-\><C-n><C-W>h]], opts)
-  nvim_buf_set_keymap('t', '<C-j>', [[<C-\><C-n><C-W>j]], opts)
-  nvim_buf_set_keymap('t', '<C-k>', [[<C-\><C-n><C-W>k]], opts)
-  nvim_buf_set_keymap('t', '<C-l>', [[<C-\><C-n><C-W>l]], opts)
+  nvim_buf_set_keymap('t', '<C-\\><C-h>', [[<C-\><C-n><C-W>h]], opts)
+  nvim_buf_set_keymap('t', '<C-\\><C-j>', [[<C-\><C-n><C-W>j]], opts)
+  nvim_buf_set_keymap('t', '<C-\\><C-k>', [[<C-\><C-n><C-W>k]], opts)
+  nvim_buf_set_keymap('t', '<C-\\><C-l>', [[<C-\><C-n><C-W>l]], opts)
 
   --- resize
-  nvim_buf_set_keymap('t', '<A-h>', [[<C-\><C-n><A-h>]], opts)
-  nvim_buf_set_keymap('t', '<A-j>', [[<C-\><C-n><A-j>]], opts)
-  nvim_buf_set_keymap('t', '<A-k>', [[<C-\><C-n><A-k>]], opts)
-  nvim_buf_set_keymap('t', '<A-l>', [[<C-\><C-n><A-l>]], opts)
+  -- nvim_buf_set_keymap('t', '<A-h>', [[<C-\><C-n><A-h>]], opts)
+  -- nvim_buf_set_keymap('t', '<A-j>', [[<C-\><C-n><A-j>]], opts)
+  -- nvim_buf_set_keymap('t', '<A-k>', [[<C-\><C-n><A-k>]], opts)
+  -- nvim_buf_set_keymap('t', '<A-l>', [[<C-\><C-n><A-l>]], opts)
 end)
 
 Ty.lsp_methods = function()
@@ -364,7 +367,7 @@ Ty.resize = {
     local ok, m = pcall(require, 'bufresize')
     if ok then
       m.resize_close()
-      vim.schedule(vim.cmd.stopinsert)
+      -- vim.schedule(vim.cmd.stopinsert)
       vim.g.resize_info_win = nil
     end
   end,
@@ -373,8 +376,18 @@ Ty.resize = {
     local ok, m = pcall(require, 'bufresize')
     if ok then
       m.resize_open()
-      vim.schedule(vim.cmd.stopinsert)
+      -- vim.schedule(vim.cmd.stopinsert)
       vim.g.resize_info_win = nil
     end
   end,
 }
+
+--- check window cols and rows to determine vertical split or horizontal split
+Ty.smart_split_cmd = function(cmd)
+  local rows, cols = vim.o.lines, vim.o.columns
+  if rows > cols then
+    vim.cmd('vert ' .. cmd)
+  else
+    vim.cmd('hor ' .. cmd)
+  end
+end
