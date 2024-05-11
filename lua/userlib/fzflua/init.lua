@@ -377,6 +377,7 @@ function M.zoxide_folders(opts)
     height = 0.5,
   }
   opts.fzf_opts = {
+    ['--tiebreak'] = 'index',
     ['--preview-window'] = 'nohidden,down,50%',
     ['--preview'] = fzflua.shell.raw_preview_action_cmd(function(items)
       local item = (items[1] or ''):gsub('%s%[.*%]$', '')
