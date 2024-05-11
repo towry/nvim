@@ -113,7 +113,7 @@ function M.init_interface()
   if vim.fn.has('nvim-0.10') == 1 then
     o.smoothscroll = true
   end
-  o.sidescroll = 10 --- Used only when 'wrap' option is off and the cursor is moved off the screen.
+  o.sidescroll = 0 --- Used only when 'wrap' option is off and the cursor is moved off the screen.
   o.mouse = 'a' --- Enable mouse
   o.sidescrolloff = 0 -- Columns of context, should be disabled inside term(cause term scroll left a bit)
   o.lazyredraw = true --- lazyredraw on startup
