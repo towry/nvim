@@ -878,7 +878,9 @@ local Tabpage = {
       elseif #self.filename <= 0 then
         self.tail = '[No Name]'
       else
-        self.tail = '[' .. vim.bo[self.bufnr].filetype .. ']'
+        local specialname = vim.bo[self.bufnr].filetype == '' and vim.bo[self.bufnr].buftype
+          or vim.bo[self.bufnr].filetype
+        self.tail = '[' .. specialname .. ']'
       end
     end,
     provider = function(self)
