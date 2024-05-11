@@ -145,11 +145,15 @@ function M.load_on_startup()
       {
         group = 'bind_key_on_term_open',
         pattern = 'term://*',
-        callback = function(ctx)
+        callback = vim.schedule_wrap(function(ctx)
+          if vim.api.nvim_get_current_buf() ~= ctx.buf then
+            -- Overseer will open term, and close shortly.
+            return
+          end
           vim.cmd.setlocal('sidescrolloff=0')
           vim.cmd('startinsert')
           Ty.set_terminal_keymaps(ctx.buf)
-        end,
+        end),
       },
     },
     {
