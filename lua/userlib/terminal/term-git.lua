@@ -18,7 +18,7 @@ local function get_tig_term()
   local tig_ = Terminal:new({
     cmd = 'tig',
     dir = git_dir,
-    direction = 'tab',
+    direction = 'float',
     close_on_exit = true,
     hidden = true,
     float_opts = {
