@@ -742,6 +742,7 @@ plug({
 
 plug({
   'ariel-frischer/bmessages.nvim',
+  cond = not vim.g.is_start_as_merge_tool,
   cmd = { 'Bmessages', 'Bmessagesvs', 'Bmessagessp', 'BmessagesEdit' },
   event = 'CmdlineEnter',
   opts = {
@@ -752,5 +753,6 @@ plug({
 plug({
   'pze/scope.nvim',
   config = true,
+  cond = not vim.g.is_start_as_merge_tool,
   event = 'VeryLazy',
 })

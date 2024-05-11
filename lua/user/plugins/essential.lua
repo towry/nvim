@@ -608,6 +608,7 @@ pack.plug({
   'gbprod/cutlass.nvim',
   vscode = true,
   event = 'User LazyUIEnter',
+  cond = not vim.g.is_start_as_merge_tool,
   opts = {
     cut_key = nil,
     override_del = true,

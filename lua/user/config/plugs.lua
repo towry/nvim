@@ -3,22 +3,24 @@
 require('user.plugins.essential')
 --- basic
 require('user.plugins.cmdline')
-require('user.plugins.autocmp')
-require('user.plugins.debugger')
+require('user.plugins.git')
 require('user.plugins.theme')
 require('user.plugins.indent')
 if not vim.cfg.edit__use_coc then
   require('user.plugins.lsp')
 end
-require('user.plugins.statusline')
-require('user.plugins.finder')
-require('user.plugins.git')
-require('user.plugins.terminal')
-require('user.plugins.lang')
-require('user.plugins.ui')
-require('user.plugins.motion')
+if not vim.g.is_start_as_merge_tool then
+  require('user.plugins.debugger')
+  require('user.plugins.autocmp')
+  require('user.plugins.statusline')
+  require('user.plugins.finder')
+  require('user.plugins.terminal')
+  require('user.plugins.lang')
+  require('user.plugins.ui')
+  require('user.plugins.motion')
+end
 require('user.plugins.workflow')
---- extras
+--- extras and lazy
 require('plugin-extras.workbench.neo-tree')
 require('plugin-extras.coding.word-switch')
 require('plugin-extras.coding.leetcode')

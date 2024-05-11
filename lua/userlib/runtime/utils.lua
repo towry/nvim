@@ -377,6 +377,19 @@ function M.update_cwd_env(cwd, cwd_short)
   return cwd, vim.t.CwdShort
 end
 
+M.is_start_as_merge_tool = function()
+  if vim.g.is_start_as_merge_tool == 1 then
+    return true
+  end
+  local tail = vim.fn.expand('%:t')
+  args = { 'MERGE_MSG', 'COMMIT_EDITMSG' }
+  if vim.tbl_contains(args, tail) then
+    vim.g.is_start_as_merge_tool = 1
+    return true
+  end
+  return false
+end
+
 M.is_start_as_git_tool = function()
   if vim.fn.argc(-1) == 0 then
     return false
@@ -397,19 +410,7 @@ M.is_start_as_git_tool = function()
     end
   end
 
-  argv = { vim.fn.expand('%:t') }
-  args = { 'MERGE_MSG', 'COMMIT_EDITMSG' }
-  for _, arg in ipairs(args) do
-    local is_match = true
-    if not vim.tbl_contains(argv, arg) then
-      is_match = false
-    end
-    if is_match then
-      return true
-    end
-  end
-
-  return false
+  return M.is_start_as_merge_tool()
 end
 
 M.get_range = function()
