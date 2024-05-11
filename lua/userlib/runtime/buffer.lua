@@ -320,7 +320,7 @@ function M.smart_open(focus_bufnr)
   end
 
   -- allows using this function as a utility to get a window to open something in
-  if not focus then
+  if not focus_bufnr then
     return win
   end
 
