@@ -5,16 +5,16 @@ require('user.plugins.essential')
 require('user.plugins.cmdline')
 require('user.plugins.git')
 require('user.plugins.theme')
-require('user.plugins.indent')
+require('user.plugins.terminal')
 if not vim.cfg.edit__use_coc then
   require('user.plugins.lsp')
 end
 if not vim.g.is_start_as_merge_tool then
+  require('user.plugins.indent')
   require('user.plugins.debugger')
   require('user.plugins.autocmp')
   require('user.plugins.statusline')
   require('user.plugins.finder')
-  require('user.plugins.terminal')
   require('user.plugins.lang')
   require('user.plugins.ui')
   require('user.plugins.motion')
