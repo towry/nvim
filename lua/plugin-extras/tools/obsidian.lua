@@ -112,10 +112,4 @@ return plug({
 
     require('obsidian').setup(opts)
   end,
-  init = function()
-    vim.g.obsidian_personal_location = vim.g.obsidian_personal_location or vim.env['OBSIDIAN_DEFAULT_VAULT']
-    if not vim.g.obsidian_personal_location then
-      return
-    end
-  end,
 })
