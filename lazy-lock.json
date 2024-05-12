@@ -101,5 +101,6 @@
   "vim-startuptime": { "branch": "master", "commit": "ac2cccb5be617672add1f4f3c0a55ce99ba34e01" },
   "vim-test": { "branch": "master", "commit": "eb5bd18d58a859e7d55d732d37e4e2b94fa50275" },
   "wezterm.nvim": { "branch": "main", "commit": "86bd73e14a695e88922aac4cf84f38a08911df63" },
+  "yazi.nvim": { "branch": "master", "commit": "2cf605783e66523d1ac83cc65b2196193d81adcd" },
   "zen-mode.nvim": { "branch": "main", "commit": "78557d972b4bfbb7488e17b5703d25164ae64e6a" }
 }

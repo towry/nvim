@@ -144,6 +144,52 @@ plug({
 })
 
 plug({
+  'mikavilpas/yazi.nvim',
+  keys = {
+    -- 👇 in this section, choose your own keymappings!
+    {
+      '<leader>-',
+      function()
+        require('yazi').yazi(nil, vim.uv.cwd())
+      end,
+      desc = 'Open the file manager',
+    },
+  },
+  ---@type YaziConfig
+  opts = {
+    open_for_directories = false,
+    -- what Neovim should do a when a file was opened (selected) in yazi.
+    -- Defaults to simply opening the file.
+    -- open_file_function = function(chosen_file, config) end,
+
+    -- completely override the keymappings for yazi. This function will be
+    -- called in the context of the yazi terminal buffer.
+    set_keymappings_function = function(yazi_buffer_id, config) end,
+
+    -- the type of border to use for the floating window. Can be many values,
+    -- including 'none', 'rounded', 'single', 'double', 'shadow', etc. For
+    -- more information, see :h nvim_open_win
+    yazi_floating_window_border = 'rounded',
+
+    hooks = {
+      -- if you want to execute a custom action when yazi has been opened,
+      -- you can define it here.
+      -- yazi_opened = function(preselected_path, yazi_buffer_id, config)
+      --   -- you can optionally modify the config for this specific yazi
+      --   -- invocation if you want to customize the behaviour
+      -- end,
+
+      -- when yazi was successfully closed
+      -- yazi_closed_successfully = function(chosen_file, config) end,
+
+      -- when yazi opened multiple files. The default is to send them to the
+      -- quickfix list, but if you want to change that, you can define it here
+      -- yazi_opened_multiple_files = function(chosen_files, config) end,
+    },
+  },
+})
+
+plug({
   enabled = true,
   'stevearc/oil.nvim',
   lazy = (not vim.cfg.runtime__starts_in_buffer and not vim.env.NVIM),
