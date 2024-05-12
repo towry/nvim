@@ -26,8 +26,7 @@ return plug({
   'epwalsh/obsidian.nvim',
   version = '*',
   lazy = true,
-  ft = 'markdown',
-  enabled = false,
+  enabled = true,
   keys = {
     {
       '<leader>no',
@@ -67,6 +66,24 @@ return plug({
         }
       end, commands)
 
+      local funcs = {
+        {
+          function()
+            if not vim.g.obsidian_personal_location and not vim.env['OBSIDIAN_DEFAULT_VAULT'] then
+              vim.notify('No obsidian vault folder', vim.log.levels.ERROR)
+              return
+            end
+            require('userlib.fzflua').grep({
+              prompt = 'Grep in Obsidian(Personal): ',
+              cwd = vim.g.obsidian_personal_location or vim.env['OBSIDIAN_DEFAULT_VAULT'],
+            })
+          end,
+          desc = 'Grep inside personal obsidian notes',
+        },
+      }
+
+      lg.funcs(funcs)
+
       lg.commands({
         itemgroup = 'obsidian',
         description = 'Obsidian',
@@ -90,5 +107,11 @@ return plug({
     opts.workspaces = workspaces
 
     require('obsidian').setup(opts)
+  end,
+  init = function()
+    vim.g.obsidian_personal_location = vim.g.obsidian_personal_location or vim.env['OBSIDIAN_DEFAULT_VAULT']
+    if not vim.g.obsidian_personal_location then
+      return
+    end
   end,
 })

@@ -76,7 +76,7 @@ function M.grep(opts, is_live)
   local fzflua = require('fzf-lua')
 
   if is_live then
-    opts.prompt = '󱙓  Live Grep (Fixed) ❯ '
+    opts.prompt = opts.prompt or '󱙓  Live Grep (Fixed) ❯ '
   else
     opts.input_prompt = '󱙓  Grep❯ '
   end
@@ -416,5 +416,3 @@ end
 -- M.zoxide_folders()
 
 return M
-
---- vim: fdl=0
