@@ -749,10 +749,3 @@ plug({
     split_type = 'split',
   },
 })
-
-plug({
-  'pze/scope.nvim',
-  config = true,
-  cond = not vim.g.is_start_as_merge_tool,
-  event = 'VeryLazy',
-})

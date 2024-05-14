@@ -62,10 +62,8 @@ plug({
         condition = function()
           return conditions.is_active()
         end,
+        comp.ViMode,
         comp.lpad({
-          {
-            provider = '  ',
-          },
           {
             provider = function()
               local v = Ty.stl_relative_bufname(vim.api.nvim_get_current_buf())
@@ -91,11 +89,8 @@ plug({
           return not conditions.is_active()
         end,
         --- file info
+        comp.ViMode,
         comp.lpad({
-          {
-            provider = '  ',
-          },
-
           {
             provider = function()
               local v = Ty.stl_relative_bufname(vim.api.nvim_get_current_buf())

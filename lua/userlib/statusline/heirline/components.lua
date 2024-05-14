@@ -33,7 +33,7 @@ end
 
 local stl_static = {
   mode_color_map = {
-    n = 'label',
+    n = 'visual',
     i = 'green',
     v = 'statement',
     V = 'statement',
@@ -45,7 +45,7 @@ local stl_static = {
     R = 'red',
     r = 'red',
     ['!'] = 'constant',
-    t = 'function',
+    t = 'cyan',
   },
   mode_color = function(self)
     local mode = vim.fn.mode():sub(1, 1) -- get only the first mode character
@@ -178,9 +178,6 @@ local ViMode = {
     },
   },
   {
-    hl = {
-      bg = 'none',
-    },
     {
       provider = ' ',
     },
@@ -192,13 +189,12 @@ local ViMode = {
         return { fg = self:mode_color(), bold = true }
       end,
     },
-    {
-      provider = ' ',
-    },
   },
   update = {
     'ModeChanged',
     'BufEnter',
+    'TermEnter',
+    'TermLeave',
   },
 }
 

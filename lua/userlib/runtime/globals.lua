@@ -227,7 +227,7 @@ Ty.set_terminal_keymaps = vim.schedule_wrap(function(bufnr)
     return
   end
 
-  nvim_buf_set_keymap('t', '<F1>', function()
+  nvim_buf_set_keymap('t', '<esc><esc>', function()
     vim.cmd.stopinsert()
   end, opts)
   nvim_buf_set_keymap({ 'n', 't' }, '<F2>', function()
