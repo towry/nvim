@@ -1,5 +1,9 @@
 # User notes
 
+## Generate helptags
+
+`:helptags ./doc`
+
 ## Lookahead and lookbehind
 
 refs:
@@ -19,20 +23,20 @@ refs:
 
 ## Diff current buffer with fugitive
 
-我们想要查看当前文件和某个commit下此文件之间的变动
+我们想要查看当前文件和某个 commit 下此文件之间的变动
 
-### 方法1. 在 _fugitive-object_ 中:
+### 方法 1. 在 _fugitive-object_ 中:
 
 1.  通过 fugtive (_:Git_) 导航到此文件在某 commit 下的 _fugitive_ 历史文件。
-2.  你可以获取到 _fugitive_ 历史文件的名字，_bufnr_ (我们记做123).
+2.  你可以获取到 _fugitive_ 历史文件的名字，_bufnr_ (我们记做 123).
 3.  在当前文件中运行命令 `:exec "diffsplit" bufname(123)`.
 
-### 方法2. 在 _:Git_blame_ 中:
+### 方法 2. 在 _:Git_blame_ 中:
 
 1.  你可以通过 Git blame 当前文件，查找到当前文件相关行的改动。
 2.  在 blame view 中，你能看到相关行的 <commit-hash>。
-3.  在当前文件中运行 `Gdiffsplit <commit-hash>` ，可以进行当前文件的diff。
-4.  如果 3 中的操作你发现没有变动，说明 <commit-hash> 可能是最新的，请看"步骤5".
+3.  在当前文件中运行 `Gdiffsplit <commit-hash>` ，可以进行当前文件的 diff。
+4.  如果 3 中的操作你发现没有变动，说明 <commit-hash> 可能是最新的，请看"步骤 5".
 5.  或者运行 `Gdiffsplit <commit-hash^1>`，来查看当前文件和 <commit-hash> 前的变动。
 
 ## Align block of text
@@ -80,3 +84,7 @@ line 1234 = 5
 ```
 --glob="*.{vue,ts}" -M 500
 ```
+
+## Motion
+
+- `gv` reselect last selection.
