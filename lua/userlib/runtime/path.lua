@@ -134,10 +134,10 @@ end
 local function path_join(...)
   local args = ...
   if args and args[1] and type(args[1]) == 'table' then
-    return table.concat(vim.tbl_flatten(args[1]), path_separator)
+    return table.concat(vim.iter(args[1]):flatten():totable(), path_separator)
   end
 
-  return table.concat(vim.tbl_flatten({ ... }), path_separator)
+  return table.concat(vim.iter({ ... }):flatten():totable(), path_separator)
 end
 
 ---@param path_string string
