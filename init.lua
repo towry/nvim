@@ -1,3 +1,5 @@
+vim.deprecate = function() end
+
 do
   if vim.fn.has('nvim-0.10') == 0 then
     print('nvim >= 0.10 is required')
