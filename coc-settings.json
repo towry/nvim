@@ -44,4 +44,19 @@
   "typescript.preferences.importModuleSpecifierEnding": "index",
   "javascript.preferences.importModuleSpecifierEnding": "index",
   "sumneko-lua.enable": false,
+  "languageserver": {
+    "nix": {
+      "command": "nil",
+      "filetypes": ["nix"],
+      "rootPatterns": ["flake.nix"],
+      "settings": {
+        "nil": {
+          "formatting": {},
+          "nix": {
+            "maxMemoryMB": 2048
+          }
+        }
+      }
+    }
+  }
 }

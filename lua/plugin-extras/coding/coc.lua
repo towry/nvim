@@ -158,8 +158,11 @@ local function setup_coc_autocmd()
       if not vim.fn.CocHasProvider('format') then
         return
       end
+      if vim.bo.filetype == 'nix' and vim.fn.executable('nixpkgs-fmt') == 0 then
+        return
+      end
 
-      vim.cmd([[noau call CocAction("format") | sleep 1m]])
+      vim.cmd([[silent noau call CocAction("format") | sleep 1m]])
     end,
   })
   vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
