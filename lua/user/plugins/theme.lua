@@ -74,7 +74,7 @@ plug({
   'ellisonleao/gruvbox.nvim',
   event = 'User LazyTheme',
   priority = 1000,
-  enabled = vim.cfg.ui__theme_name == 'gruvbox',
+  cond = vim.cfg.ui__theme_name == 'gruvbox',
   opts = {
     terminal_colors = true, -- add neovim terminal colors
     undercurl = true,
