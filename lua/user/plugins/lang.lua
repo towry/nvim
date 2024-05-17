@@ -181,6 +181,7 @@ plug({
 
   {
     'JoosepAlviste/nvim-ts-context-commentstring',
+    enabled = false,
     cond = not vim.cfg.runtime__starts_as_gittool,
     dependencies = {
       'nvim-treesitter/nvim-treesitter',
@@ -195,6 +196,7 @@ plug({
     'numToStr/Comment.nvim',
     cond = not vim.cfg.runtime__starts_as_gittool,
     event = 'User FileOpenedAfter',
+    enabled = false,
     opts = function()
       local pre_hook = nil
       return {
