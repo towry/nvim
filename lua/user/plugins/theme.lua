@@ -55,6 +55,8 @@ plug({
         hl.CocInlayHintParameter = { link = 'CocInlayHint' }
         hl.CocErrorHighlight = { undercurl = true, sp = c.aurora.red }
         hl.CocWarningHighlight = { sp = c.aurora.yellow, undercurl = true }
+        hl.StatusLine = { fg = c.frost.ice, bg = c.polar_night.brighter }
+        hl.StatusLineNC = { fg = c.polar_night.light, bg = c.polar_night.bright }
         hl.CocUnusedHighlight = { link = 'DiagnosticUnderlineWarn' }
         hl.CocInfoHighlight = { sp = c.aurora.green, undercurl = true }
         hl.CocHintHighlight = { sp = c.aurora.orange, undercurl = true }

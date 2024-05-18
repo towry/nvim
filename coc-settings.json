@@ -51,7 +51,9 @@
       "rootPatterns": ["flake.nix"],
       "settings": {
         "nil": {
-          "formatting": {},
+          "formatting": {
+            "command": ["alejandra"]
+          },
           "nix": {
             "maxMemoryMB": 2048
           }

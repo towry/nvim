@@ -89,7 +89,6 @@ plug({
           return not conditions.is_active()
         end,
         --- file info
-        comp.ViMode,
         comp.lpad({
           {
             provider = function()
