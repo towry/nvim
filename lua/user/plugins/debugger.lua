@@ -612,3 +612,46 @@ pack.plug({
     end)
   end),
 })
+
+pack.plug({
+  'chrisgrieser/nvim-chainsaw',
+  opts = {
+    -- The marker should be a unique string, since `.removeLogs()` will remove
+    -- any line with it. Emojis or strings like "[Chainsaw]" are recommended.
+    marker = '🪚',
+
+    -- emojis used for `.beepLog()`
+    beepEmojis = { '🔵', '🟩', '⭐', '⭕', '💜', '🔲' },
+    logStatements = {
+      beepLog = {
+        vue = 'console.log("%s beep %s");',
+      },
+      messageLog = {
+        vue = 'console.log("%s ");',
+      },
+    },
+  },
+  keys = {
+    {
+      '<leader>rK',
+      '<cmd>lua require("chainsaw").removeLogs()<cr>',
+      desc = 'Remove all logs',
+    },
+    {
+      '<leader>rMM',
+      '<cmd>lua require("chainsaw").messageLog()<cr>',
+      desc = 'Add message log',
+    },
+    {
+      '<leader>rMS',
+      '<cmd>lua require("chainsaw").stacktraceLog()<cr>',
+      desc = 'Add stacktrace log',
+      vim.notify('🪚 beep 🟩'),
+    },
+    {
+      '<leader>rMB',
+      '<cmd>lua require("chainsaw").beepLog()<cr>',
+      desc = 'Add quick beep log',
+    },
+  },
+})

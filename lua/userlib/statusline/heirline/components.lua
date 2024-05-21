@@ -179,7 +179,7 @@ local ViMode = {
   },
   {
     hl = function(self)
-      return { bg = self:mode_color(), fg = 'gray', bold = true }
+      return { bg = self:mode_color(), fg = 'white', bold = true }
     end,
     {
       provider = ' ',
@@ -426,10 +426,10 @@ local function setup_colors()
     visual = utils.get_highlight('Visual').bg or 'none',
     diag_warn = utils.get_highlight('DiagnosticWarn').fg or 'none',
     diag_error = utils.get_highlight('DiagnosticError').fg or 'none',
-    mode_n = utils.get_highlight('Function').fg or 'none',
-    mode_i = utils.get_highlight('Keyword').fg or 'none',
-    mode_v = utils.get_highlight('Visual').fg or 'none',
-    mode_c = utils.get_highlight('Label').fg or 'none',
+    mode_n = utils.get_highlight('Search').bg or 'none',
+    mode_i = utils.get_highlight('CursorLine').bg or 'none',
+    mode_v = utils.get_highlight('Visual').bg or 'none',
+    mode_c = utils.get_highlight('Cursor').bg or 'none',
     mode_x = utils.get_highlight('Statement').fg or 'none',
     mode_t = utils.get_highlight('NonText').fg or 'none',
   }
