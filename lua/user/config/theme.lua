@@ -47,6 +47,7 @@ function M.custom_theme_default()
   hi('diffAdded', { link = 'DiffAdd' })
   hi('diffRemoved', { link = 'DiffDelete' })
   hi('diffChanged', { link = 'DiffChange' })
+  hi('gitIdentity', { bold = true, underline = true, italic = true })
   extend_hl({ 'diffFile', 'Type' }, {
     bold = true,
   })
