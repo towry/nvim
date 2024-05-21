@@ -29,6 +29,9 @@ M.shortly_open = function(fn)
       return
     end
     is_unset = true
+    if not vim.api.nvim_buf_is_loaded(buf) then
+      return
+    end
     vim.b[buf].miniclue_config = {}
   end
 
