@@ -33,6 +33,7 @@ plug({
     {
       '<leader>gz',
       '<cmd>GV<cr>',
+      desc = 'Git logs with GV',
     },
   },
 })
@@ -44,6 +45,29 @@ plug({
       'tpope/vim-dispatch',
     },
     keys = {
+      {
+        '<leader>g1',
+        function()
+          local res = vim
+            .system({
+              'git',
+              'log',
+              '--oneline',
+              '--date=relative',
+              '--abbrev',
+              '--no-color',
+              '--pretty=format:%s (%an)',
+              '-3',
+            }, { text = true })
+            :wait()
+          if res.code == 0 then
+            vim.notify('   \n' .. res.stdout, vim.log.levels.INFO)
+          else
+            vim.notify(res.stderr, vim.log.levels.ERROR)
+          end
+        end,
+        desc = 'Emit HEAD commit info',
+      },
       { '<leader>g.', ':Git', desc = 'Fugitive start :Git' },
       { '<leader>gm', ':Git merge', desc = 'Fugitive start git merge' },
       {
@@ -58,7 +82,7 @@ plug({
       },
       {
         '<leader>ga',
-        cmdstr([[OverDispatch! git add %]]),
+        cmdstr([[OverDispatch! git add -- % && git diff --cached --check || echo Conflict founds || exit 1]]),
         desc = '!Git add current',
       },
       {
@@ -73,11 +97,6 @@ plug({
       },
       {
         '<leader>gp',
-        cmdstr([[exec "OverDispatch! git push origin " .. FugitiveHead()]]),
-        desc = 'Git push',
-      },
-      {
-        '<leader>gP',
         cmdstr([[exec "OverDispatch! git push --force-with-lease origin " .. FugitiveHead()]]),
         desc = 'Git push',
       },
@@ -175,14 +194,9 @@ plug({
         desc = 'Git blame current file with range',
       },
       {
-        '<leader>gC',
-        function()
-          vim.cmd('Git commit')
-          vim.schedule(function()
-            vim.cmd('WriteGitCommitMessage')
-          end)
-        end,
-        desc = 'Let ai write the commit',
+        '<leader>gx',
+        '<cmd>OverDispatch! git add -- % && git diff --cached --check --quiet || git commit --amend --no-edit<cr>',
+        desc = 'Git amend all',
       },
       {
         '<leader>gc',
@@ -554,7 +568,7 @@ plug({
   dev = false,
   enabled = false,
   event = au.user_autocmds.FileOpenedAfter_User,
-  version = 'v1.2.2',
+  version = 'v1.3.0',
   keys = {
     {
       '<leader>gcb',

@@ -1,86 +1,6 @@
 local plug = require('userlib.runtime.pack').plug
 
 plug({
-  'towry/dracula-mini.nvim',
-  event = 'User LazyTheme',
-  cond = vim.cfg.ui__theme_name:match('dracula-mini'),
-  dev = true,
-  config = function()
-    require('dracula-mini').setup({
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      transparent = false, -- Enable this to disable setting the background color
-      terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
-      diff = { mode = 'fg' }, -- enables/disables colorful backgrounds when used in diff mode. values : [bg|fg]
-      borders = true, -- Enable the border between verticaly split windows visible
-      errors = { mode = 'fg' }, -- Display mode for errors and diagnostics
-      -- values : [bg|fg|none]
-      search = { theme = 'vim' }, -- theme for highlighting search results
-      -- values : [vim|vscode]
-      styles = {
-        -- Style to be applied to different syntax groups
-        -- Value is any valid attr-list value for `:help nvim_set_hl`
-        comments = { italic = false, bold = false },
-        keywords = { italic = true },
-        functions = { bold = true, italic = true },
-        variables = {},
-      },
-
-      --- You can override specific highlights to use other groups or a hex color
-      --- function will be called with all highlights and the colorScheme table
-      on_highlights = function(hl, c)
-        hl.WinbarPathTail = {
-          fg = c.aurora.green,
-        }
-      end,
-    })
-  end,
-})
-
-plug({
-  'towry/flexoki-neovim',
-  dev = false,
-  branch = 'next',
-  cond = vim.cfg.ui__theme_name == 'flexoki',
-  name = 'flexoki',
-  event = 'User LazyTheme',
-  config = function()
-    local palette = require('flexoki.palette')
-    local c = palette.palette()
-
-    local hl = {}
-    hl.CocMenuSel = { link = 'PmenuSel' }
-    hl.WinbarPathTail = {
-      fg = c['ora'],
-    }
-    hl.WinBar = {
-      fg = c['ui_3'],
-      bg = 'none',
-    }
-    hl.WinBarNC = {
-      fg = c['ui_3'],
-      bg = 'none',
-    }
-
-    require('flexoki').setup({
-      ---Set the desired variant: 'auto' will follow the vim background,
-      ---defaulting to 'main' for dark and 'dawn' for light. To change the dark
-      ---variant, use `options.dark_variant = 'moon'`.
-      variant = 'auto',
-      dark_variant = 'dark',
-      ---Set the desired light variant: applies when `options.variant` is set to
-      ---'auto' to match `vim.o.background`
-      light_variant = 'light',
-      styles = {
-        undercurl = true,
-      },
-
-      highlight_groups = hl,
-    })
-  end,
-})
-
-plug({
   'gbprod/nord.nvim',
   event = vim.cfg.ui__theme_name:match('nord') and 'User LazyTheme' or nil,
   config = function()
@@ -135,6 +55,8 @@ plug({
         hl.CocInlayHintParameter = { link = 'CocInlayHint' }
         hl.CocErrorHighlight = { undercurl = true, sp = c.aurora.red }
         hl.CocWarningHighlight = { sp = c.aurora.yellow, undercurl = true }
+        hl.StatusLine = { fg = c.frost.ice, bg = c.polar_night.brighter }
+        hl.StatusLineNC = { fg = c.polar_night.light, bg = c.polar_night.bright }
         hl.CocUnusedHighlight = { link = 'DiagnosticUnderlineWarn' }
         hl.CocInfoHighlight = { sp = c.aurora.green, undercurl = true }
         hl.CocHintHighlight = { sp = c.aurora.orange, undercurl = true }
@@ -154,7 +76,7 @@ plug({
   'ellisonleao/gruvbox.nvim',
   event = 'User LazyTheme',
   priority = 1000,
-  enabled = vim.cfg.ui__theme_name == 'gruvbox',
+  cond = vim.cfg.ui__theme_name == 'gruvbox',
   opts = {
     terminal_colors = true, -- add neovim terminal colors
     undercurl = true,
@@ -182,12 +104,6 @@ plug({
     dim_inactive = false,
     transparent_mode = false,
   },
-})
-
-plug({
-  'cocopon/iceberg.vim',
-  event = vim.cfg.ui__theme_name == 'nordic' and 'User LazyTheme' or nil,
-  config = false,
 })
 
 plug({
@@ -268,5 +184,18 @@ plug({
 })
 
 plug({
-  'maxmx03/solarized.nvim',
+  'rmehri01/onenord.nvim',
+  event = 'User LazyTheme',
+  priority = 1000,
+  cond = string.match(vim.cfg.ui__theme_name, 'onenord') ~= nil,
+  opts = {
+    borders = true,
+    fade_nc = false,
+    styles = {},
+    inverse = {
+      match_paren = false,
+    },
+    custom_highlights = {}, -- Overwrite default highlight groups
+    custom_colors = {}, -- Overwrite default colors
+  },
 })

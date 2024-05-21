@@ -235,6 +235,11 @@ pack.plug({
       desc = 'Legendary repeat last',
     },
     {
+      '<D-p>',
+      '<cmd>Legendary<cr>',
+      desc = 'Legendary',
+    },
+    {
       '<localleader>p',
       '<cmd>Legendary<cr>',
       desc = 'Legendary',

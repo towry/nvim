@@ -33,19 +33,19 @@ end
 
 local stl_static = {
   mode_color_map = {
-    n = 'label',
-    i = 'green',
-    v = 'statement',
-    V = 'statement',
-    ['\22'] = 'statement',
-    c = 'cyan',
-    s = 'statement',
-    S = 'statement',
-    ['\19'] = 'statement',
-    R = 'red',
-    r = 'red',
-    ['!'] = 'constant',
-    t = 'function',
+    n = 'mode_n',
+    i = 'mode_i',
+    v = 'mode_v',
+    V = 'mode_v',
+    ['\22'] = 'mode_x',
+    c = 'mode_c',
+    s = 'mode_x',
+    S = 'mode_x',
+    ['\19'] = 'mode_x',
+    R = 'mode_x',
+    r = 'mode_x',
+    ['!'] = 'mode_x',
+    t = 'mode_t',
   },
   mode_color = function(self)
     local mode = vim.fn.mode():sub(1, 1) -- get only the first mode character
@@ -178,18 +178,15 @@ local ViMode = {
     },
   },
   {
-    hl = {
-      bg = 'none',
-    },
+    hl = function(self)
+      return { bg = self:mode_color(), fg = 'white', bold = true }
+    end,
     {
       provider = ' ',
     },
     {
       provider = function(self)
         return self.mode_names[self.mode] or self.mode_names['n']
-      end,
-      hl = function(self)
-        return { fg = self:mode_color(), bold = true }
       end,
     },
     {
@@ -199,6 +196,8 @@ local ViMode = {
   update = {
     'ModeChanged',
     'BufEnter',
+    'TermEnter',
+    'TermLeave',
   },
 }
 
@@ -420,13 +419,19 @@ local function setup_colors()
     green = utils.get_highlight('DiagnosticOk').fg or 'none',
     keyword = utils.get_highlight('Keyword').fg or 'none',
     label = utils.get_highlight('Label').fg or 'none',
-    gray = utils.get_highlight('NonText').fg or 'none',
+    gray = utils.get_highlight('Comment').fg or 'none',
     ['function'] = utils.get_highlight('Function').fg or 'none',
     constant = utils.get_highlight('Constant').fg or 'none',
     statement = utils.get_highlight('Statement').fg or 'none',
     visual = utils.get_highlight('Visual').bg or 'none',
     diag_warn = utils.get_highlight('DiagnosticWarn').fg or 'none',
     diag_error = utils.get_highlight('DiagnosticError').fg or 'none',
+    mode_n = utils.get_highlight('Search').bg or 'none',
+    mode_i = utils.get_highlight('CursorLine').bg or 'none',
+    mode_v = utils.get_highlight('Visual').bg or 'none',
+    mode_c = utils.get_highlight('Cursor').bg or 'none',
+    mode_x = utils.get_highlight('Statement').fg or 'none',
+    mode_t = utils.get_highlight('NonText').fg or 'none',
   }
 end
 
@@ -874,7 +879,7 @@ local Tabpage = {
       self.filename = vim.api.nvim_buf_get_name(self.bufnr) or ''
       self.tail = ''
       if vim.bo[self.bufnr].buftype == '' and #self.filename > 0 then
-        self.tail = vim.fn.fnamemodify(self.filename, ':t:r')
+        self.tail = vim.fn.fnamemodify(self.filename, ':t')
       elseif #self.filename <= 0 then
         self.tail = '[No Name]'
       else
@@ -887,7 +892,7 @@ local Tabpage = {
       return '%</%.20(' .. self.tail .. '%)'
     end,
     hl = {
-      fg = 'gray',
+      fg = 'keyword',
     },
   },
   lpad(FileIcon),

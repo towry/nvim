@@ -58,6 +58,10 @@ return plug({
     },
   },
   init = au.schedule_lazy(function()
+    if not vim.g.obsidian_personal_location then
+      vim.g.obsidian_personal_location = vim.g.obsidian_personal_location or vim.env['OBSIDIAN_DEFAULT_VAULT']
+    end
+
     require('userlib.legendary').register('obsidian', function(lg)
       local cmds = vim.tbl_map(function(item)
         return {

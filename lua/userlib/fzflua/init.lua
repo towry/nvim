@@ -23,7 +23,7 @@ local function callgrep(_opts, callfn)
 
   opts.actions = vim.tbl_extend('keep', {
     -- press ctrl-e in fzf picker to switch to rgflow.
-    ['ctrl-e'] = function()
+    ['ctrl-E'] = function()
       -- bring up rgflow ui to change rg args.
       require('rgflow').open(utils.get_last_query(), opts.rg_opts, opts.cwd, {
         custom_start = function(pattern, flags, path)
@@ -34,23 +34,23 @@ local function callgrep(_opts, callfn)
         end,
       })
     end,
-    ['ctrl-k'] = function()
-      local new_opts = opts
-
-      new_opts.rg_opts = libutils.toggle_cmd_option(new_opts.rg_opts, '--fixed-strings')
-      new_opts.rg_opts = libutils.toggle_cmd_option(new_opts.rg_opts, '-e', true)
-      new_opts.query = utils.get_last_query()
-
-      new_opts.prompt = has_fixed(new_opts.rg_opts) and '󱙓  Live Grep (Fixed) ❯ ' or '󱙓  Live Grep❯ '
-
-      return callfn(new_opts)
-    end,
+    -- ['ctrl-k'] = function()
+    --   local new_opts = opts
+    --
+    --   new_opts.rg_opts = libutils.toggle_cmd_option(new_opts.rg_opts, '--fixed-strings')
+    --   new_opts.rg_opts = libutils.toggle_cmd_option(new_opts.rg_opts, '-e', true)
+    --   new_opts.query = utils.get_last_query()
+    --
+    --   new_opts.prompt = has_fixed(new_opts.rg_opts) and '󱙓  Live Grep (Fixed) ❯ ' or '󱙓  Live Grep❯ '
+    --
+    --   return callfn(new_opts)
+    -- end,
     ['ctrl-h'] = function()
       --- toggle hidden files search.
       opts.rg_opts = libutils.toggle_cmd_option(opts.rg_opts, '--hidden')
       return callfn(opts)
     end,
-    ['ctrl-a'] = function()
+    ['ctrl-r'] = function()
       --- toggle rg_glob
       opts.rg_glob = not opts.rg_glob
       if opts.rg_glob then

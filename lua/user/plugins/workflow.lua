@@ -93,7 +93,11 @@ plug({
           --- get current tab's window count
           local win_count = require('userlib.runtime.buffer').current_tab_windows_count()
           if win_count <= 1 then
-            vim.notify('Can not hide last window in tab', vim.log.levels.ERROR)
+            local choice = vim.fn.confirm('Close last window in tab?', '&Yes\n&No', 2)
+            if choice == 2 then
+              return
+            end
+            vim.cmd('silent! hide')
             return
           end
           Ty.resize.block()
@@ -748,11 +752,4 @@ plug({
   opts = {
     split_type = 'split',
   },
-})
-
-plug({
-  'pze/scope.nvim',
-  config = true,
-  cond = not vim.g.is_start_as_merge_tool,
-  event = 'VeryLazy',
 })

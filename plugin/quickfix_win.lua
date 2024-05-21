@@ -1,3 +1,6 @@
+-- FIXME:
+-- 1. open a below term
+-- 2. <C-w>B to close below term window.
 do
   if vim.g.quickfix_win_loaded == 1 then
     return
