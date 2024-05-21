@@ -879,7 +879,7 @@ local Tabpage = {
       self.filename = vim.api.nvim_buf_get_name(self.bufnr) or ''
       self.tail = ''
       if vim.bo[self.bufnr].buftype == '' and #self.filename > 0 then
-        self.tail = vim.fn.fnamemodify(self.filename, ':t:r')
+        self.tail = vim.fn.fnamemodify(self.filename, ':t')
       elseif #self.filename <= 0 then
         self.tail = '[No Name]'
       else

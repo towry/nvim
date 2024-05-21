@@ -568,7 +568,7 @@ plug({
   dev = false,
   enabled = false,
   event = au.user_autocmds.FileOpenedAfter_User,
-  version = 'v1.2.2',
+  version = 'v1.3.0',
   keys = {
     {
       '<leader>gcb',
