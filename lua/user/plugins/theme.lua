@@ -124,6 +124,9 @@ plug({
     overrides = function(colors) -- add/modify highlights
       -- do not foget to run ':KanagawaCompile'
       return {
+        MiniIndentscopeSymbol = { link = 'IndentBlanklineChar' },
+        IndentLine = { link = 'IndentBlanklineChar' },
+        IndentLineCurrent = { link = 'IndentBlanklineContextChar' },
         StatusLine = { bg = colors.theme.syn.fun, fg = colors.theme.ui.bg_m3 },
         -- StatusLineNC = { bg = colors.theme.ui.bg_m3, fg = colors.theme.ui.fg_dim },
         TelescopeNormal = { link = 'NormalFloat' },

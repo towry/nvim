@@ -122,6 +122,16 @@ pack.plug({
       })
     end,
   },
+
+  {
+    'nvimdev/indentmini.nvim',
+    enabled = false,
+    event = 'BufReadPost',
+    opts = {
+      char = '│',
+      exclude = { 'markdown', 'gitcommit', 'git' },
+    },
+  },
 })
 
 pack.plug({
