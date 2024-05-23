@@ -178,12 +178,12 @@ end
 ---}}}
 
 return plug({
-  -- 'neoclide/coc.nvim',
-  -- branch = 'release',
-  'pze/coc.nvim',
+  'neoclide/coc.nvim',
+  branch = 'release',
+  -- 'pze/coc.nvim',
   dev = false,
-  branch = 'master',
-  build = 'npm ci',
+  -- branch = 'master',
+  -- build = 'npm ci',
   cmd = {
     'CocInstall',
   },
