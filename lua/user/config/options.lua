@@ -117,9 +117,7 @@ function M.init_interface()
   o.mouse = 'a' --- Enable mouse
   o.sidescrolloff = 0 -- Columns of context, should be disabled inside term(cause term scroll left a bit)
   o.lazyredraw = true --- lazyredraw on startup
-  -- use <C-z> to trigger cmp and remap <Tab> to call <C-z>
   o.wildmenu = true
-  o.wildchar = ('<C-z>'):byte()
   -- longest: CmdA, CmdB, 'Cmd' is longest match
   o.wildmode = { 'full', 'full:longest', 'list:full', 'lastused' } -- Command-line completion mode
   o.wildignorecase = true
@@ -127,7 +125,7 @@ function M.init_interface()
   o.wildignore = { '*.pyc', '*node_modules/**', '.git/**', '*.DS_Store', '*.min.js', '*.obj' } --- Don't search inside Node.js modules (works for gutentag)
   o.cmdheight = 1 --- Give more space for displaying messages
   o.cmdwinheight = 10 -- the cmd window height
-  o.completeopt = 'menu,menuone,noinsert,noselect,popup' --- Better autocompletion
+  o.completeopt = 'menu,noinsert,noselect,preview,popup' --- Better autocompletion
   o.complete:append('kspell') -- Add spellcheck options for autocomplete
   -- scan current and included files.
   -- o.complete:append('i')

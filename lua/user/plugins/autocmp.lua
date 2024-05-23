@@ -135,7 +135,7 @@ pack.plug({
       'rafamadriz/friendly-snippets',
     },
     event = 'BufReadPost',
-    enabled = not vim.cfg.edit__use_coc,
+    cond = not vim.cfg.edit__use_coc,
     opts = {
       create_autocmd = true,
       create_cmp_source = false,
@@ -153,7 +153,8 @@ pack.plug({
     event = 'User LazyInsertEnter',
     build = 'make install_jsregexp',
     version = 'v2.*',
-    enabled = not vim.cfg.edit__use_coc,
+    enabled = false,
+    -- enabled = not vim.cfg.edit__use_coc,
     dependencies = {
       'rafamadriz/friendly-snippets',
       --'saadparwaiz1/cmp_luasnip'

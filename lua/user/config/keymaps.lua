@@ -466,8 +466,8 @@ local function setup_basic()
     ['bs-ctrl-z'] = vim.api.nvim_replace_termcodes('<C-h><C-z>', true, true, false),
   }
   ---- wildmode
-  if vim.cfg.edit__use_coq_cmp or vim.cfg.edit__use_coc then
-    set({ 'c' }, '<', '<', { noremap = true, silent = false })
+  if vim.cfg.edit__use_native_cmp or vim.cfg.edit__use_coc then
+    -- set({ 'c' }, '<', '<', { noremap = true, silent = false })
     set({ 'c' }, [[<Tab>]], function()
       if vim.fn.pumvisible() ~= 0 then
         return '<C-n>'

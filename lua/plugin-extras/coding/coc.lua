@@ -187,7 +187,7 @@ return plug({
   cmd = {
     'CocInstall',
   },
-  enabled = vim.cfg.edit__use_coc and not vim.g.vscode and not vim.g.is_start_as_merge_tool,
+  cond = vim.cfg.edit__use_coc and not vim.g.vscode and not vim.g.is_start_as_merge_tool,
   event = 'User FileOpenedAfter',
   ---{{{config
   config = function()
