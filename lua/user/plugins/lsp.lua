@@ -33,7 +33,6 @@ plug({
     'neovim/nvim-lspconfig',
     lazy = true,
     dependencies = {
-      -- 'hrsh7th/cmp-nvim-lsp',
       'williamboman/mason-lspconfig.nvim',
       'williamboman/mason.nvim',
       {
@@ -60,7 +59,7 @@ plug({
       au.do_useraucmd(au.user_autocmds.LspConfigDone_User)
       require('userlib.lsp.cfg.diagnostic').setup()
       require('userlib.lsp.cfg.inlayhints').setup({
-        enabled = false,
+        enabled = true,
         insert_only = false,
         highlight = 'NonText',
       })
@@ -79,8 +78,10 @@ plug({
 
   {
     -- null-ls
-    -- be sure to run ./scripts/install-web-dep.sh
     'nvimtools/none-ls.nvim',
+    dependencies = {
+      'nvimtools/none-ls-extras.nvim',
+    },
     dev = false,
   },
 

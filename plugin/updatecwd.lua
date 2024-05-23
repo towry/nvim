@@ -17,5 +17,7 @@ if newcwd ~= cwd then
     vim.cmd('noau cd ' .. newcwd)
   end
   vim.cfg.runtime__starts_cwd = newcwd
-  vim.notify('Cwd changed: ' .. newcwd, vim.log.levels.INFO)
+  vim.schedule(function()
+    vim.notify('Cwd changed: ' .. newcwd, vim.log.levels.INFO)
+  end)
 end

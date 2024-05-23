@@ -199,6 +199,7 @@ function M.init_other()
   elseif not has_py and vim.fn.executable('/usr/bin/python3') == 1 then
     vim.g.python3_host_prog = '/usr/bin/python3'
   end
+  g.node_host_prog = '$HOME/.nix-profile/bin/neovim-node-host'
 
   -- Fix markdown indentation settings
   g.markdown_recommended_style = 0

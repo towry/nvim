@@ -50,7 +50,7 @@ return {
     -- 'python',
     -- 'python3',
   },
-  runtime__python3_host_prog = '/usr/local/bin/python3',
+  runtime__python3_host_prog = '$HOME/.nix-profile/bin/python3',
   ---editing
   edit__use_native_cmp = not vim.g.vscode and not use_coc,
   edit__use_plugin_cmp = false,
@@ -212,5 +212,5 @@ return {
   plugin__whichkey_or_clue = 'clue',
   ---@type 'fzf'|'telescope'
   plugin_fzf_or_telescope = 'fzf',
-  plugin_telescope_sorter = vim.fn.executable('cargo') == 1 and 'nucleo' or nil,
+  plugin_telescope_sorter = 'fzf' or vim.fn.executable('cargo') == 1 and 'nucleo' or nil,
 }

@@ -1,5 +1,5 @@
 local nvm_alias_for_nvim = 'nvim-node'
-local nvim_npm_folder = vim.fn.expand('$HOME/.config/nvim-npm')
+local nvim_npm_folder = vim.fn.expand('$HOME/.nix-profile')
 local stdpath = vim.fn.stdpath
 local Path = require('userlib.runtime.path')
 

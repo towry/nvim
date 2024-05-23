@@ -24,7 +24,7 @@ return {
   },
   ['typescript'] = {
     filetypes = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact' },
-    lspconfig = { 'typescript-tools', 'eslint', 'null-ls' },
+    lspconfig = { 'typescript-tools', 'null-ls' },
     treesitter = { 'typescript', 'javascript', 'tsx' },
   },
   ['lua'] = {
@@ -46,9 +46,9 @@ return {
     linter = 'shellcheck',
     treesitter = { 'bash' },
   },
-  -- ['nix'] = {
-  --   lspconfig = 'nil_ls',
-  -- },
+  ['nix'] = {
+    lspconfig = { 'nil_ls' },
+  },
   ['toml'] = {
     lspconfig = { 'taplo' },
   },

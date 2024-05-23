@@ -34,7 +34,9 @@ local function setup_async_formatting()
     if is_ok and format_changedtick == changedtick then
       local view = vim.fn.winsaveview()
       vim.lsp.util.apply_text_edits(result, ctx.bufnr, 'utf-16')
-      vim.fn.winrestview(view)
+      if view then
+        vim.fn.winrestview(view)
+      end
       if ctx.bufnr == vim.api.nvim_get_current_buf() then
         vim.b.format_saving = true
         vim.cmd('silent! noau update')

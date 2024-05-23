@@ -53,7 +53,9 @@ function M.on_attach(client, bufnr, opts)
   M.state[bufnr] = client.id
 
   if not opts.insert_only then
-    vim.lsp.inlay_hint.enable(bufnr, true)
+    vim.lsp.inlay_hint.enable(true, {
+      bufnr = bufnr,
+    })
   end
   if opts.insert_only then
     local gr = vim.api.nvim_create_augroup('_inlayhint_buf_' .. bufnr, { clear = true })
@@ -61,14 +63,18 @@ function M.on_attach(client, bufnr, opts)
       group = gr,
       buffer = bufnr,
       callback = function()
-        vim.lsp.inlay_hint.enable(bufnr, true)
+        vim.lsp.inlay_hint.enable(true, {
+          bufnr = bufnr,
+        })
       end,
     })
     vim.api.nvim_create_autocmd('InsertLeave', {
       group = gr,
       buffer = bufnr,
       callback = function()
-        vim.lsp.inlay_hint.enable(bufnr, false)
+        vim.lsp.inlay_hint.enable(false, {
+          bufnr = bufnr,
+        })
       end,
     })
   end
