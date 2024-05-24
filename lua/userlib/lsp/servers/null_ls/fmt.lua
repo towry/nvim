@@ -106,17 +106,6 @@ function M.format(bufnr, opts)
   end
 
   vim.lsp.buf.format(fmt_opts)
-  -- if not opts.auto then
-  --   vim.notify('format with ' .. (impl_formatter_name or name or 'default'), vim.log.levels.INFO, { key = 'format' })
-  -- else
-  --   vim.defer_fn(function()
-  --     vim.notify(
-  --       'written! also format with ' .. (impl_formatter_name or name or 'default'),
-  --       vim.log.levels.INFO,
-  --       { key = 'format' }
-  --     )
-  --   end, 1)
-  -- end
 end
 
 ---@return string|nil, string|nil

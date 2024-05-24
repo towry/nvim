@@ -76,6 +76,7 @@ plug({
           comp.lpad(require('userlib.statusline.heirline.component_diagnostic')),
         }),
         comp.lpad(comp.CocStl),
+        comp.lpad(comp.LSPActive),
         { provider = '%=' },
         { provider = '%=' },
         {

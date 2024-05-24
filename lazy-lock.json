@@ -91,7 +91,7 @@
   "stay-in-place.nvim": { "branch": "main", "commit": "0628b6db8970fc731abf9608d6f80659b58932c9" },
   "switch.vim": { "branch": "main", "commit": "21defb202ebb8406b8ed63183a43ea026f2645b3" },
   "telescope-file-browser.nvim": { "branch": "master", "commit": "e34fb31aba3325e530c2cc5442ffdffc3f227208" },
-  "telescope-nucleo-sorter.nvim": { "branch": "main", "commit": "1740a2ef930c959dfdebd8ad2609c16f7d23ba63" },
+  "telescope-fzf-native.nvim": { "branch": "main", "commit": "9ef21b2e6bb6ebeaf349a0781745549bbb870d27" },
   "telescope.nvim": { "branch": "master", "commit": "5665d93988acfbb0747bdbf4f4cb583bcebc8930" },
   "text-case.nvim": { "branch": "main", "commit": "d62c63a4e9a996c7321885937ab89920fca2c1c8" },
   "todo-comments.nvim": { "branch": "main", "commit": "e1549807066947818113a7d7ed48f637e49620d3" },

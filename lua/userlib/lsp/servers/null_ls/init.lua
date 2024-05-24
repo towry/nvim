@@ -73,4 +73,23 @@ M.setup = function()
   })
 end
 
+--- @param bufnr number
+--- @param ft? string
+--- @return string[]
+M.get_active_sources = function(bufnr, ft)
+  local sources = require('null-ls.sources')
+  local filetype = ft or vim.api.nvim_get_option_value('filetype', { buf = bufnr })
+  local list = {}
+  local added = {}
+
+  for _, source in ipairs(sources.get_available(filetype)) do
+    if not added[source.name] then
+      table.insert(list, source.name)
+      added[source.name] = true
+    end
+  end
+
+  return list
+end
+
 return M
