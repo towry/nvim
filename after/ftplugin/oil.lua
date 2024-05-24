@@ -31,10 +31,9 @@ local function open_file_in_win(pick_window)
   end
 end
 
--- <C-o>
 set(
   'n',
-  '<C-o>',
+  'go',
   open_file_in_win(function()
     local win = require('window-picker').pick_window({
       autoselect_one = true,
