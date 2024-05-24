@@ -14,7 +14,9 @@ end
 plug({
   {
     -- replace tsserver setup.
-    'pmizio/typescript-tools.nvim',
+    -- 'pmizio/typescript-tools.nvim',
+    'pze/typescript-tools.nvim',
+    dev = false,
     config = function() end,
   },
   {
