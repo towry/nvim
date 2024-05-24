@@ -452,6 +452,19 @@ function M.load_on_startup()
         end,
       },
     },
+    {
+      { 'TabNewEntered' },
+      {
+        pattern = '*',
+        group = group_name,
+        callback = function()
+          if vim.t.Cwd then
+            return
+          end
+          vim.cmd.tcd(vim.cfg.runtime__starts_cwd)
+        end,
+      },
+    },
   }
 
   ---////// user autocmds.
