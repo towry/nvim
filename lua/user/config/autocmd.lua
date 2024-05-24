@@ -184,7 +184,7 @@ function M.load_on_startup()
         callback = function(args)
           local buf = args.buf
           if vim.b[buf].diagnostic_disable or vim.api.nvim_buf_line_count(0) > 40000 then
-            vim.diagnostic.disable(buf)
+            vim.diagnostic.enable(false, { bufnr = buf })
             return
           end
         end,

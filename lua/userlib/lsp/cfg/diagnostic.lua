@@ -75,7 +75,7 @@ function M.setup()
   end
 
   vim.api.nvim_create_user_command('UserLspDiagnosticDisable', function()
-    vim.diagnostic.disable()
+    vim.diagnostic.enable(false, { bufnr = 0 })
   end, {})
   vim.api.nvim_create_user_command('UserLspDiagnosticEnable', function()
     vim.diagnostic.enable()

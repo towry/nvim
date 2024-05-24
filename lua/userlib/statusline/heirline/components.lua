@@ -577,7 +577,7 @@ local ProfileRecording = {
 
 local DiagnosticsDisabled = {
   condition = function()
-    return vim.diagnostic.is_disabled()
+    return not vim.diagnostic.is_enabled()
   end,
   provider = function()
     return ' '
