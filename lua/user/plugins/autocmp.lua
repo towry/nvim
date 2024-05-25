@@ -130,12 +130,31 @@ pack.plug({
     end,
   },
   {
+    'garymjr/nvim-snippets',
+    dependencies = {
+      'rafamadriz/friendly-snippets',
+    },
+    event = 'BufReadPost',
+    cond = not vim.cfg.edit__use_coc,
+    opts = {
+      create_autocmd = true,
+      create_cmp_source = false,
+      friendly_snippets = true,
+      ignored_filetypes = { 'gitcommit', 'git' },
+      global_snippets = { 'all' },
+      search_paths = {
+        vim.fn.stdpath('config') .. '/user-snippets',
+      },
+    },
+  },
+  {
     'L3MON4D3/LuaSnip',
     lazy = true,
     event = 'User LazyInsertEnter',
     build = 'make install_jsregexp',
     version = 'v2.*',
-    enabled = not vim.cfg.edit__use_coc,
+    enabled = false,
+    -- enabled = not vim.cfg.edit__use_coc,
     dependencies = {
       'rafamadriz/friendly-snippets',
       --'saadparwaiz1/cmp_luasnip'
@@ -256,7 +275,7 @@ pack.plug({
 
       lspkind.init({
         symbol_map = {
-          Copilot = '',
+          Copilot = '��',
         },
       })
 

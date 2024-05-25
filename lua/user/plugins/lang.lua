@@ -29,10 +29,10 @@ plug({
       pattern = 'TreeSitterStart',
       callback = function(ctx)
         -- FIXME: tree sitter indent not working well on some ft like nix.
-        if vim.b[ctx.buf].did_indent == 1 then
+        local buf = ctx.data.bufnr
+        if vim.b[buf].indentexpr == 0 then
           return
         end
-        local buf = ctx.data.bufnr
         vim.bo[buf].indentexpr = [[v:lua.require('nvim-treesitter').indentexpr()]]
       end,
     })

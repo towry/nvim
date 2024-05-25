@@ -47,12 +47,13 @@ M.setup = function()
     }),
     -- only prettier works with monorepo.
     builtins.formatting.prettier,
+    builtins.formatting.stylua,
     -- builtins.code_actions.gitsigns,
     -- require("typescript.extensions.null-ls.code-actions"), -- disabled on volar take over mode.
     -- eslint.
+    require('none-ls.diagnostics.eslint'),
+    require('none-ls.code_actions.eslint'),
     -- Make sure do not use the version of mason.
-    -- builtins.code_actions.eslint,
-    -- builtins.diagnostics.eslint,
     -- yaml
     builtins.diagnostics.yamllint,
   }
@@ -70,6 +71,25 @@ M.setup = function()
     -- end
     root_dir = require('null-ls.utils').root_pattern(unpack(require('userlib.runtime.utils').root_patterns)),
   })
+end
+
+--- @param bufnr number
+--- @param ft? string
+--- @return string[]
+M.get_active_sources = function(bufnr, ft)
+  local sources = require('null-ls.sources')
+  local filetype = ft or vim.api.nvim_get_option_value('filetype', { buf = bufnr })
+  local list = {}
+  local added = {}
+
+  for _, source in ipairs(sources.get_available(filetype)) do
+    if not added[source.name] then
+      table.insert(list, source.name)
+      added[source.name] = true
+    end
+  end
+
+  return list
 end
 
 return M

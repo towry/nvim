@@ -184,7 +184,7 @@ function M.load_on_startup()
         callback = function(args)
           local buf = args.buf
           if vim.b[buf].diagnostic_disable or vim.api.nvim_buf_line_count(0) > 40000 then
-            vim.diagnostic.disable(buf)
+            vim.diagnostic.enable(false, { bufnr = buf })
             return
           end
         end,
@@ -449,6 +449,19 @@ function M.load_on_startup()
               })
             end, 1)
           end)
+        end,
+      },
+    },
+    {
+      { 'TabNewEntered' },
+      {
+        pattern = '*',
+        group = group_name,
+        callback = function()
+          if vim.t.Cwd then
+            return
+          end
+          vim.cmd.tcd(vim.cfg.runtime__starts_cwd)
         end,
       },
     },

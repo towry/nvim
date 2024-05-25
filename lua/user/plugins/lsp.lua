@@ -14,7 +14,9 @@ end
 plug({
   {
     -- replace tsserver setup.
-    'pmizio/typescript-tools.nvim',
+    -- 'pmizio/typescript-tools.nvim',
+    'pze/typescript-tools.nvim',
+    dev = false,
     config = function() end,
   },
   {
@@ -33,7 +35,6 @@ plug({
     'neovim/nvim-lspconfig',
     lazy = true,
     dependencies = {
-      -- 'hrsh7th/cmp-nvim-lsp',
       'williamboman/mason-lspconfig.nvim',
       'williamboman/mason.nvim',
       {
@@ -79,8 +80,10 @@ plug({
 
   {
     -- null-ls
-    -- be sure to run ./scripts/install-web-dep.sh
     'nvimtools/none-ls.nvim',
+    dependencies = {
+      'nvimtools/none-ls-extras.nvim',
+    },
     dev = false,
   },
 

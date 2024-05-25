@@ -8,6 +8,11 @@ vim.opt_local.listchars:append('trail: ')
 vim.b[0].autoformat_disable = true
 vim.bo.syntax = 'diff'
 vim.opt_local.foldmethod = 'syntax'
+if vim.fn.exists('*fugitive#Foldtext()') == 1 then
+  vim.cmd('setlocal foldtext=fugitive#Foldtext()')
+end
+
+vim.cmd('normal! zM')
 
 --- copy file path from git view
 --- press <enter> in the cmdline to yank

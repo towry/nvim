@@ -18,7 +18,8 @@ au.on_verylazy(function()
       ['.swcrc'] = 'json',
     },
     pattern = {
-      ['.*ignore$'] = 'gitignore',
+      ['.*ignore'] = 'gitignore',
+      ['.*justfile'] = { 'just', 'make' },
     },
   })
 end, {

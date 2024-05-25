@@ -471,14 +471,12 @@ local LSPActive = {
       local lsp = vim.lsp
       if lsp then
         for _, server in pairs(lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })) do
-          table.insert(names, server.name)
-        end
-      end
-      local lint = package.loaded.lint
-      if lint and vim.bo.buftype == '' then
-        table.insert(names, '⫽')
-        for _, linter in ipairs(lint.linters_by_ft[vim.bo.filetype] or {}) do
-          table.insert(names, linter)
+          if server.name == 'null-ls' then
+            local null_sources = require('userlib.lsp.servers.null_ls').get_active_sources()
+            names = require('userlib.runtime.table').concat({ names, null_sources })
+          else
+            table.insert(names, server.name)
+          end
         end
       end
       local conform = package.loaded.conform
@@ -579,7 +577,7 @@ local ProfileRecording = {
 
 local DiagnosticsDisabled = {
   condition = function()
-    return vim.diagnostic.is_disabled()
+    return not vim.diagnostic.is_enabled()
   end,
   provider = function()
     return ' '

@@ -107,13 +107,19 @@ plug({
             end
           end)
         end,
-        on_open = vim.schedule_wrap(function(term)
+        on_open = function(term)
+          local bufnr = vim.api.nvim_get_current_buf()
           au.do_useraucmd(au.user_autocmds.TermIsOpen_User)
-          vim.cmd('startinsert!')
-          if vim.fn.exists('&winfixbuf') == 1 then
-            vim.cmd('setlocal winfixbuf')
-          end
-        end),
+          vim.schedule(function()
+            if vim.api.nvim_get_current_buf() ~= bufnr then
+              return
+            end
+            vim.cmd('startinsert!')
+            if vim.fn.exists('&winfixbuf') == 1 then
+              vim.cmd('setlocal winfixbuf')
+            end
+          end)
+        end,
       })
     end,
     init = function()

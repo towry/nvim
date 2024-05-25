@@ -1,10 +1,10 @@
 local M = {}
 
 M.DiagnosticIcons = {
-  error_icon = '~',
-  warn_icon = '~',
-  info_icon = '~',
-  hint_icon = '~',
+  error_icon = 'E',
+  warn_icon = 'W',
+  info_icon = 'I',
+  hint_icon = 'H',
 }
 
 function M.setup()
@@ -75,7 +75,7 @@ function M.setup()
   end
 
   vim.api.nvim_create_user_command('UserLspDiagnosticDisable', function()
-    vim.diagnostic.disable()
+    vim.diagnostic.enable(false, { bufnr = 0 })
   end, {})
   vim.api.nvim_create_user_command('UserLspDiagnosticEnable', function()
     vim.diagnostic.enable()

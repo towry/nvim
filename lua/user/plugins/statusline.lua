@@ -34,10 +34,6 @@ plug({
           provider = '%=',
         },
         {
-          -- comp.rpad({
-          --   provider = '%{v:lua.vim.lsp.status()}',
-          --   update = { 'LspProgress' },
-          -- }),
           comp.rpad(comp.LastExCommand),
           comp.rpad(comp.Copilot),
           comp.rpad(comp.Codeium),
@@ -77,8 +73,10 @@ plug({
             provider = '%m%w%r',
           },
           comp.BufVisited,
+          comp.lpad(require('userlib.statusline.heirline.component_diagnostic')),
         }),
         comp.lpad(comp.CocStl),
+        comp.lpad(comp.LSPActive),
         { provider = '%=' },
         { provider = '%=' },
         {
@@ -103,6 +101,7 @@ plug({
             provider = '%m%w%r',
           },
           comp.BufVisited,
+          comp.lpad(require('userlib.statusline.heirline.component_diagnostic')),
         }),
         comp.lpad(comp.CocStl),
         { provider = '%=' },

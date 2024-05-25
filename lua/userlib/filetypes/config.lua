@@ -20,11 +20,11 @@ return {
     filetypes = vim.cfg.lsp__server_volar_takeover_mode
         and { 'vue', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }
       or { 'vue' },
-    lspconfig = { 'volar', 'null-ls', 'eslint' },
+    lspconfig = { 'volar', 'null-ls' },
   },
   ['typescript'] = {
     filetypes = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact' },
-    lspconfig = { 'typescript-tools', 'eslint', 'null-ls' },
+    lspconfig = { 'typescript-tools', 'null-ls' },
     treesitter = { 'typescript', 'javascript', 'tsx' },
   },
   ['lua'] = {
@@ -46,9 +46,9 @@ return {
     linter = 'shellcheck',
     treesitter = { 'bash' },
   },
-  -- ['nix'] = {
-  --   lspconfig = 'nil_ls',
-  -- },
+  ['nix'] = {
+    lspconfig = { 'nil_ls' },
+  },
   ['toml'] = {
     lspconfig = { 'taplo' },
   },

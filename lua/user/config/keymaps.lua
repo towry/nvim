@@ -466,8 +466,8 @@ local function setup_basic()
     ['bs-ctrl-z'] = vim.api.nvim_replace_termcodes('<C-h><C-z>', true, true, false),
   }
   ---- wildmode
-  if vim.cfg.edit__use_coq_cmp or vim.cfg.edit__use_coc then
-    set({ 'c' }, '<', '<', { noremap = true, silent = false })
+  if vim.cfg.edit__use_native_cmp or vim.cfg.edit__use_coc then
+    -- set({ 'c' }, '<', '<', { noremap = true, silent = false })
     set({ 'c' }, [[<Tab>]], function()
       if vim.fn.pumvisible() ~= 0 then
         return '<C-n>'
@@ -487,13 +487,12 @@ local function setup_basic()
   if vim.cfg.edit__use_native_cmp then
     -- Move inside completion list with <TAB>
     set({ 'i' }, [[<Tab>]], function()
-      local has_luasnip, luasnip = pcall(require, 'luasnip')
       if vim.fn.pumvisible() ~= 0 then
         return '<C-n>'
-      elseif has_luasnip and luasnip.expand_or_jumpable() then
+      elseif vim.snippet.active({ direction = 1 }) then
         --- must use schedule becase edit must occures in next loop.
         vim.schedule(function()
-          luasnip.expand_or_jump()
+          vim.snippet.jump(1)
         end)
       else
         if package.loaded['neotab'] then
@@ -514,13 +513,11 @@ local function setup_basic()
     end, { expr = true, silent = true, noremap = true })
 
     set({ 'i' }, [[<S-Tab>]], function()
-      local has_luasnip, luasnip = pcall(require, 'luasnip')
-
       if vim.fn.pumvisible() ~= 0 then
         return '<C-p>'
-      elseif has_luasnip and luasnip.jumpable(-1) then
+      elseif vim.snippet.active({ direction = -1 }) then
         vim.schedule(function()
-          luasnip.jump(-1)
+          vim.snippet.jump(-1)
         end)
       else
         return '<S-Tab>'

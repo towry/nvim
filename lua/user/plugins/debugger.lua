@@ -646,7 +646,6 @@ pack.plug({
       '<leader>rMS',
       '<cmd>lua require("chainsaw").stacktraceLog()<cr>',
       desc = 'Add stacktrace log',
-      vim.notify('🪚 beep 🟩'),
     },
     {
       '<leader>rMB',

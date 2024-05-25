@@ -405,7 +405,6 @@ function M.zoxide_folders(opts)
         return
       end
       entry_path = entry_path:gsub('%s%[.*%]$', '')
-      print(entry_path)
       require('userlib.mini.clue.folder-action').open(entry_path)
     end,
   }
