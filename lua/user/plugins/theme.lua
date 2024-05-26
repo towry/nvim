@@ -127,7 +127,7 @@ plug({
         MiniIndentscopeSymbol = { link = 'IndentBlanklineChar' },
         IndentLine = { link = 'IndentBlanklineChar' },
         IndentLineCurrent = { link = 'IndentBlanklineContextChar' },
-        StatusLine = { bg = colors.theme.syn.fun, fg = colors.theme.ui.bg_m3 },
+        -- StatusLine = { bg = colors.theme.syn.fun, fg = colors.theme.ui.bg_m3 },
         -- StatusLineNC = { bg = colors.theme.ui.bg_m3, fg = colors.theme.ui.fg_dim },
         TelescopeNormal = { link = 'NormalFloat' },
         TelescopeBorder = { link = 'FloatBorder' },
@@ -164,7 +164,7 @@ plug({
       theme = {
         all = {
           ui = {
-            bg_gutter = 'none',
+            -- bg_gutter = 'none',
           },
         },
         lotus = {
@@ -179,8 +179,8 @@ plug({
       },
     },
     background = {
-      -- dark = 'wave',
-      dark = 'dragon',
+      dark = 'wave',
+      -- dark = 'dragon',
       light = 'lotus',
     },
   },
