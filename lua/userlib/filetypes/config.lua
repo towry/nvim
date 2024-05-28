@@ -24,7 +24,7 @@ return {
   },
   ['typescript'] = {
     filetypes = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact' },
-    lspconfig = { 'typescript-tools', 'null-ls' },
+    lspconfig = { 'vtsls', 'null-ls' },
     treesitter = { 'typescript', 'javascript', 'tsx' },
   },
   ['lua'] = {

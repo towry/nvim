@@ -217,7 +217,15 @@ local function setup_basic()
   set('n', 'H', '^', {
     desc = 'Move to first non-blank character of the line',
   })
-  set('n', 'L', 'zo$', {
+  set('n', 'L', function()
+    if vim.fn.foldclosed('.') > -1 then
+      return 'zo'
+    else
+      return '$'
+    end
+  end, {
+    expr = true,
+    remap = false,
     desc = 'Move to last non-blank character of the line',
   })
 

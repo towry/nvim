@@ -29,6 +29,9 @@ plug({
         border = vim.cfg.ui__float_border,
       },
     },
+    init = function()
+      vim.env.PATH = vim.env.HOME .. '/.local/share/nvim/mason/bin' .. ':' .. vim.env.PATH
+    end,
   },
 
   {

@@ -47,12 +47,12 @@ plug({
 
         --- + solarized
         lotusWhite0 = '#ECE8D8',
-        lotusWhite1 = '#E9E5D6',
+        lotusWhite1 = '#F5DEAC',
         lotusWhite2 = '#F3EEDD',
         --- main bg
-        lotusWhite3 = '#FDF6E3',
+        lotusWhite3 = '#F6EED9',
         --- tabline etc
-        lotusWhite4 = '#f3eedd',
+        lotusWhite4 = '#C5C0AF',
         lotusWhite5 = '#eee8d5',
       },
       theme = {
@@ -73,8 +73,8 @@ plug({
       },
     },
     background = {
-      dark = 'wave',
-      -- dark = 'dragon',
+      -- dark = 'wave',
+      dark = 'dragon',
       light = 'lotus',
     },
   },
