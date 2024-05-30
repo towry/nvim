@@ -80,7 +80,7 @@
   "overseer.nvim": { "branch": "master", "commit": "31f309692c9dd9162d3f63b5456a7932799c347c" },
   "plenary.nvim": { "branch": "master", "commit": "a3e3bc82a3f95c5ed0d7201546d5d2c19b20d683" },
   "popup.nvim": { "branch": "master", "commit": "b7404d35d5d3548a82149238289fa71f7f6de4ac" },
-  "project_nvim": { "branch": "main", "commit": "8382af87db17f17973619263103945188418448e" },
+  "project_nvim": { "branch": "main", "commit": "e5360d4b7bbd7f149ccd0aecea2ea0c8cc15ee12" },
   "range-highlight.nvim": { "branch": "master", "commit": "8b5e8ccb3460b2c3675f4639b9f54e64eaab36d9" },
   "registers": { "branch": "main", "commit": "22bb98f93a423252fffeb3531f7bc12a3e07b63f" },
   "rgflow.nvim": { "branch": "master", "commit": "697e90e04cde5caf2a4f394b4375f0f1284c935a" },
