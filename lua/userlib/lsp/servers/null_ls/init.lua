@@ -66,10 +66,10 @@ M.setup = function()
     save_after_format = false,
     sources = sources,
     update_in_insert = false,
-    -- root_dir = function()
-    --   return require('userlib.runtime.utils').get_root()
-    -- end
-    root_dir = require('null-ls.utils').root_pattern(unpack(require('userlib.runtime.utils').root_patterns)),
+    log_level = 'error',
+    root_dir = function(start_path)
+      return vim.fs.root(start_path, require('userlib.runtime.utils').root_patterns)
+    end,
   })
 end
 
