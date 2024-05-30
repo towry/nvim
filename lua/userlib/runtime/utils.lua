@@ -1,7 +1,6 @@
 local M = {}
 
-M.root_patterns =
-  { '_darcs', '.bzr', '.vscode', 'package.json', 'pnpm-workspace.yaml', 'Cargo.toml', '.git', '.gitmodules', '.svn' }
+M.root_patterns = { '.git', '.vscode', 'package.json', 'Cargo.toml', '.gitmodules', '.svn', 'pyproject.toml' }
 --- ignore jsonls: inside package.json, it give root to parent root.
 M.root_lsp_ignore = { 'tailwindcss', 'jsonls', 'copilot', 'null-ls', 'eslint' }
 

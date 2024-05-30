@@ -34,7 +34,7 @@ local hi_coc = function()
   hi('CocPumMenu', { link = 'PmenuSel' })
 end
 
-function M.custom_theme_slate()
+function M.custom_theme_dracula()
   M.custom_theme_default()
   hi_coc()
 end

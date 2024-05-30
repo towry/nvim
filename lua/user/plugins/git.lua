@@ -125,7 +125,7 @@ plug({
           local file_name = vim.api.nvim_buf_get_name(0)
           local line_range = libutils.get_range()
           local cmd =
-            string.format([[vert Git log --max-count=10 -L %s,%s:%s]], line_range[1], line_range[2], file_name)
+            string.format([[vert Git log --max-count=100 -L %s,%s:%s]], line_range[1], line_range[2], file_name)
           vim.print(cmd)
           vim.cmd(cmd)
         end,

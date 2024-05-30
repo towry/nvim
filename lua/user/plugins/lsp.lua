@@ -29,6 +29,9 @@ plug({
         border = vim.cfg.ui__float_border,
       },
     },
+    init = function()
+      vim.env.PATH = vim.env.HOME .. '/.local/share/nvim/mason/bin' .. ':' .. vim.env.PATH
+    end,
   },
 
   {
@@ -73,6 +76,7 @@ plug({
       au.on_lsp_attach(function(client, bufnr)
         require('userlib.lsp.cfg.commands').setup_commands(client, bufnr)
         require('userlib.lsp.cfg.keymaps').setup_keybinding(client, bufnr)
+        require('userlib.lsp.cfg.cmp').on_attach(client, bufnr)
         require('userlib.lsp.servers.null_ls.fmt').attach(client, bufnr)
       end)
     end,

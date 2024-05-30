@@ -81,60 +81,11 @@ pack.plug({
     end,
   },
   {
-    'echasnovski/mini.completion',
-    dependencies = {
-      'echasnovski/mini.fuzzy',
-    },
-    enabled = vim.cfg.edit__use_native_cmp and not vim.cfg.edit__use_coq_cmp,
-    event = { 'LspAttach', 'User LazyInsertEnter' },
-    config = function()
-      local MC = require('mini.completion')
-      local MiniFuzzy = require('mini.fuzzy')
-      MC.setup({
-        set_vim_settings = false,
-        -- h: ins-completion
-        fallback_action = vim.schedule_wrap(function()
-          if vim.bo.completefunc and vim.bo.completefunc ~= '' then
-            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-x><C-u>', true, false, true), 'i', false)
-          end
-          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-g><C-g><C-n>', true, false, true), 'n', false)
-        end),
-        delay = { completion = 250, info = 250, signature = 100 },
-        lsp_completion = {
-          source_func = 'omnifunc',
-          auto_setup = false,
-          process_items = function(items, base)
-            -- Don't show 'Text' and 'Snippet' suggestions
-            items = vim.tbl_filter(function(x)
-              -- TODO: remove this when neovim cmp sideeffect is done.
-              return x.kind ~= 15
-              -- return x.kind ~= 1 and x.kind ~= 15
-            end, items)
-            -- return MC.default_process_items(items, base)
-            -- better
-            return MiniFuzzy.process_lsp_items(items, base)
-          end,
-        },
-        window = {
-          info = { border = 'solid', winblend = 30 },
-          signature = { border = 'single', winblend = 80 },
-        },
-      })
-    end,
-    init = function()
-      au.on_lsp_attach(function(_, bufnr)
-        vim.api.nvim_set_option_value('omnifunc', 'v:lua.MiniCompletion.completefunc_lsp', {
-          buf = bufnr,
-        })
-      end)
-    end,
-  },
-  {
     'garymjr/nvim-snippets',
     dependencies = {
       'rafamadriz/friendly-snippets',
     },
-    event = 'BufReadPost',
+    event = 'VeryLazy',
     cond = not vim.cfg.edit__use_coc,
     opts = {
       create_autocmd = true,
@@ -143,7 +94,7 @@ pack.plug({
       ignored_filetypes = { 'gitcommit', 'git' },
       global_snippets = { 'all' },
       search_paths = {
-        vim.fn.stdpath('config') .. '/user-snippets',
+        vim.fn.stdpath('config') .. '/snippets',
       },
     },
   },

@@ -1,0 +1,6 @@
+{
+  "test lua": {
+    "prefix": ["test_lua_snippets"],
+    "body": ["local test_lua_snippets = \"$1\"", "vim.print(test_lua_snippets)"]
+  }
+}

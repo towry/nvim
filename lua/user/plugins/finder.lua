@@ -841,6 +841,23 @@ plug({
   config = function(_, opts)
     require('mini.visits').setup(opts)
   end,
+  init = function()
+    require('userlib.legendary').register('harpoon_remove', function(lg)
+      lg.funcs({
+        {
+          function()
+            local visits = require('mini.visits')
+            local cwd = vim.uv.cwd()
+            -- remove all
+            visits.remove_label('harpoon', '', cwd)
+            visits.write_index()
+            vim.notify('Removed harpoon[s]', vim.log.levels.INFO)
+          end,
+          description = 'Remove harpoons in current project',
+        },
+      })
+    end)
+  end,
 })
 
 plug({
@@ -885,7 +902,7 @@ plug({
     {
       '<C-x><C-e>',
       function()
-        require('userlib.snippets.luasnip').fzf_complete_snippet()
+        require('userlib.snippets').fzf_complete_snippet()
       end,
       mode = { 'i' },
       desc = 'Complete snippets',

@@ -31,14 +31,14 @@ function M.startup()
   o.winminwidth = 10
   o.winwidth = 10
   o.equalalways = vim.cfg.ui__window_equalalways
-  o.winfixwidth = true
-  o.winfixheight = true
+  o.winfixwidth = false
+  o.winfixheight = false
   o.showmatch = false -- show {} match and jump
   o.undofile = true --- Sets undo to file
   o.undolevels = 10000
   o.updatetime = 250 --- Faster completion
   -- o.viminfo        = "'1000" --- Increase the size of file history
-  o.wrap = false --- Display long lines as just one line
+  o.wrap = true --- Display long lines as just one line
   o.linebreak = true
   o.showbreak = '↳ '
   -- enable line-wrapping with left and right cursor movement
