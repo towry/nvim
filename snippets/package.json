@@ -1,5 +1,5 @@
 {
-  "name": "user-snippets",
+  "name": "snippets",
   "engines": {
     "vscode": "^1.11.0"
   },
@@ -7,11 +7,15 @@
   "contributes": {
     "snippets": [
       {
-        "language": ["all"],
+        "language": [
+          "all"
+        ],
         "path": "./all.json"
       },
       {
-        "language": ["lua"],
+        "language": [
+          "lua"
+        ],
         "path": "./test-lua.json"
       }
     ]

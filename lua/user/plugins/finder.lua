@@ -902,7 +902,7 @@ plug({
     {
       '<C-x><C-e>',
       function()
-        require('userlib.snippets.luasnip').fzf_complete_snippet()
+        require('userlib.snippets').fzf_complete_snippet()
       end,
       mode = { 'i' },
       desc = 'Complete snippets',

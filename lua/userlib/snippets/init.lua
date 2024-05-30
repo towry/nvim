@@ -9,22 +9,23 @@ local function get_snippet_info_desc(description)
   return ''
 end
 
---- get available snippets from luasnip by using luasnip.available() api
 function M.get_available_snippets()
-  local luasnip = require('luasnip')
+  local lua_snippets = require('snippets')
   local snippets_flatten = {}
-  local availables = luasnip.available() or {}
 
-  for ft, snippets in pairs(availables) do
-    for _, snippet in ipairs(snippets) do
-      table.insert(snippets_flatten, {
-        name = snippet.name,
-        description = get_snippet_info_desc(snippet.description),
-        ft = ft,
-        trigger = snippet.trigger,
-      })
-    end
+  --- { [snippet_name] = { body = 'string', description = 'string', prefix =
+  --- 'string' }
+  local availables = lua_snippets.loaded_snippets or {}
+
+  for snippet_name, snippet_definition in pairs(availables) do
+    table.insert(snippets_flatten, {
+      name = snippet_name,
+      description = get_snippet_info_desc(snippet_definition.description),
+      body = snippet_definition.body,
+      trigger = snippet_definition.prefix,
+    })
   end
+
   return snippets_flatten
 end
 
@@ -61,24 +62,17 @@ function M.fzf_complete_snippet(opts)
           vim.notify('No snippets selected', vim.log.levels.WARN)
           return
         end
-        local trigger = sp.trigger
 
-        vim.schedule(function()
-          --- if current cursor have word before, remove the word and insert
-          --- trigger
-          --- else insert trigger
-          --- use vim.api.nvim_set_current_line api
-          local line = vim.api.nvim_get_current_line()
-          local col = vim.api.nvim_win_get_cursor(0)[2] + 1
-          local has_before_word = col > 1 and line:sub(1, col - 1):match('%w+$')
-          local after = line:sub(col)
-          local before = has_before_word and line:sub(1, col - #has_before_word - 1) or line:sub(1, col - 1)
-          vim.api.nvim_set_current_line(before .. trigger .. after)
-          --- make sure cursor is in insert mode and after the inserted trigger
-          --- so we can use tab to expand this snippet
-          vim.cmd('normal! ' .. #trigger .. 'l')
-          vim.cmd([[noautocmd lua vim.api.nvim_feedkeys('a', 'n', true)]])
-        end)
+        if not sp.body then
+          return
+        end
+
+        local body = type(sp.body) == 'string' and sp.body or table.concat(sp.body, '\n')
+
+        vim.defer_fn(function()
+          vim.cmd.startinsert()
+          vim.snippet.expand(body)
+        end, 1)
       end,
     }
 
@@ -86,7 +80,7 @@ function M.fzf_complete_snippet(opts)
   local contents = vim
     .iter(ipairs(snippets))
     :map(function(i, snip)
-      return string.format('%s: %s', i, snip.description or snip.trigger)
+      return string.format('%s: %s', i, snip.description or snip.name)
     end)
     :totable()
 

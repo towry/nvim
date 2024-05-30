@@ -54,7 +54,7 @@ return {
   ---editing
   edit__use_native_cmp = not vim.g.vscode and not use_coc,
   edit__use_plugin_cmp = false,
-  edit__use_coq_cmp = not use_coc and true,
+  edit__use_coq_cmp = not use_coc and false,
   edit__use_coc = not vim.g.vscode and use_coc,
   ---editor stuff
   --enable relative number or not.

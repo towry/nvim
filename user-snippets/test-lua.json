@@ -1,8 +1,0 @@
-{
-  "test lua": {
-    "prefix": ["test_lua_snippets"],
-    "body": [
-      "local test_lua_snippets = \"test_lua_snippets\""
-    ]
-  }
-}

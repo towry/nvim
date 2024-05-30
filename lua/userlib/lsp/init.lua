@@ -36,7 +36,7 @@ function M.is_client_active(name, bufnr)
 end
 
 ---@param filetype string
----@param opts? { bufnr? number, name? string, ignores? table }
+---@param opts? { bufnr?: number, name?: string, ignores?: table }
 function M.get_active_clients_by_ft(filetype, opts)
   opts = opts or {}
   local ignores = { 'null-ls' }
@@ -52,7 +52,7 @@ function M.get_active_clients_by_ft(filetype, opts)
 
   for _, client in pairs(clients) do
     local supported_filetypes = client.config.filetypes or {}
-    if not vim.tbl_contains(ignores, client.name) and vim.tbl_contains(supported_filetypes, filetype) then
+    if not vim.tbl_contains(ignores or {}, client.name) and vim.tbl_contains(supported_filetypes, filetype) then
       table.insert(matches, client)
     end
   end
