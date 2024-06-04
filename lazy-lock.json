@@ -14,7 +14,7 @@
   "codeium.vim": { "branch": "main", "commit": "289eb724e5d6fab2263e94a1ad6e54afebefafb2" },
   "coq.artifacts": { "branch": "artifacts", "commit": "9c5067a471322c6bb866545e88e5b28c82511865" },
   "coq.thirdparty": { "branch": "3p", "commit": "5f45777bcb0c14266a7e07ed474cb70c4e8b6397" },
-  "coq_luasnip": { "branch": "master", "commit": "b3fd68d15ae99899ef47fe398d391b09f6e3799c" },
+  "coq_luasnip": { "branch": "master", "commit": "19b20fe781bdec57b63138a3789a21d81264f8ec" },
   "coq_nvim": { "branch": "coq", "commit": "595dac4524896090bdc9e144b6bf7a1aa58d8a71" },
   "crates.nvim": { "branch": "main", "commit": "d556c00d60c9421c913ee54ff690df2a34f6264e" },
   "cutlass.nvim": { "branch": "main", "commit": "1ac7e4b53d79410be52a9e464d44c60556282b3e" },

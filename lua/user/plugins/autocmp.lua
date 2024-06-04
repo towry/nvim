@@ -27,7 +27,7 @@ pack.plug({
         branch = '3p',
       },
       {
-        'mendes-davi/coq_luasnip',
+        'pze/coq_luasnip',
         dependencies = {
           'L3MON4D3/LuaSnip',
         },
@@ -124,7 +124,7 @@ pack.plug({
       luasnip.log.set_loglevel('error')
       require('luasnip.loaders.from_vscode').lazy_load({
         paths = {
-          './user-snippets',
+          vim.fn.stdpath('config') .. '/snippets',
           vim.uv.cwd() .. '/.vscode',
           Path.path_join(vim.cfg.runtime__starts_cwd, '.vscode'),
         },
