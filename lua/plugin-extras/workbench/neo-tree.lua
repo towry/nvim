@@ -185,8 +185,8 @@ plug({
         end,
       },
       window = {
-        width = 40,
-        auto_expand_width = true,
+        width = 50,
+        auto_expand_width = false,
         mapping_options = {
           noremap = true,
           nowait = false,
