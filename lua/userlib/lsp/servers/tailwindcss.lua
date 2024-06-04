@@ -1,7 +1,6 @@
 local M = {}
 
 local capabilities = require('userlib.lsp.cfg.capbilities')()
--- capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.colorProvider = { dynamicRegistration = false }
 
 -- Settings
@@ -51,8 +50,8 @@ local settings = {
       invalidVariant = 'error',
       recommendedVariantOrder = 'warning',
     },
-    classAttributes = { 'class', 'className', 'classList', 'ngClass' },
-    validate = false,
+    classAttributes = { ':class', 'class', 'className', 'classList', 'ngClass' },
+    validate = true,
   },
 }
 

@@ -1,20 +1,23 @@
 local function add_snippet_compa(cap)
   cap.textDocument.completion = {
+    dynamicRegistration = false,
+    contextSupport = true,
     completionItem = {
       deprecatedSupport = true,
       insertReplaceSupport = true,
-      insertTextModeSupport = { valueSet = { 1, 2 } },
+      commitCharactersSupport = true,
+      -- insertTextModeSupport = { valueSet = { 1, 2 } },
       labelDetailsSupport = true,
       preselectSupport = true,
-      tagSupport = { valueSet = { 1 } },
+      -- tagSupport = { valueSet = { 1 } },
       snippetSupport = true,
       resolveSupport = {
-        properties = {},
-        -- properties = { 'edit', 'documentation', 'detail', 'additionalTextEdits' },
+        properties = { 'edit', 'documentation', 'detail', 'additionalTextEdits' },
       },
     },
     completionList = {
       itemDefaults = {
+        'commitCharacters',
         'editRange',
         'insertTextFormat',
         'insertTextMode',

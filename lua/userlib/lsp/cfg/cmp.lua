@@ -24,6 +24,10 @@ function M.on_attach(client, bufnr)
     return
   end
 
+  if not client.supports_method(Ty.lsp_methods().textDocument_completion) then
+    return
+  end
+
   vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
 end
 

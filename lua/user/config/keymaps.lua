@@ -40,6 +40,7 @@ local function setup_basic()
   set('n', '<C-a>x', '<C-x>', { remap = false, nowait = true, silent = true })
   --- <C-a> and <C-x> is free to use
   set('i', 'jj', '<ESC>', { silent = true, nowait = true, noremap = true })
+  set('i', '<esc>', 'pumvisible() ? "\\<C-e><esc>" : "\\<ESC>"', { silent = true, expr = true, noremap = true })
 
   -- Save jumps > 5 lines to the jumplist
   -- Jumps <= 5 respect line wraps
@@ -494,7 +495,7 @@ local function setup_basic()
   ---- native cmp keys
   if vim.cfg.edit__use_native_cmp then
     -- Move inside completion list with <TAB>
-    set({ 'i' }, [[<Tab>]], function()
+    set({ 'i', 's' }, [[<Tab>]], function()
       if vim.fn.pumvisible() ~= 0 then
         return '<C-n>'
       elseif vim.snippet.active({ direction = 1 }) then
@@ -512,7 +513,7 @@ local function setup_basic()
       end
     end, { expr = true, silent = false })
 
-    set({ 'i' }, [[<CR>]], function()
+    set({ 'i', 's' }, [[<CR>]], function()
       if vim.fn.pumvisible() ~= 0 then
         local item_selected = vim.fn.complete_info()['selected'] ~= -1
         return item_selected and keys['ctrl-y'] or keys['ctrl-y_cr']
@@ -520,7 +521,7 @@ local function setup_basic()
       return keys['cr']
     end, { expr = true, silent = true, noremap = true })
 
-    set({ 'i' }, [[<S-Tab>]], function()
+    set({ 'i', 's' }, [[<S-Tab>]], function()
       if vim.fn.pumvisible() ~= 0 then
         return '<C-p>'
       elseif vim.snippet.active({ direction = -1 }) then
@@ -531,6 +532,11 @@ local function setup_basic()
         return '<S-Tab>'
       end
     end, { expr = true, silent = false })
+
+    set({ 's' }, '<BS>', '<C-o>s', {
+      remap = false,
+      desc = 'Remove snippet placeholder',
+    })
 
     set({ 'i' }, '<C-j>', function()
       local trigger_ai = function()

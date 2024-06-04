@@ -5,7 +5,7 @@ local capabilities = nil
 local lspconfig_cache = {}
 
 local lsp_flags = {
-  debounce_text_changes = 150,
+  debounce_text_changes = 50,
   allow_incremental_sync = true,
 }
 

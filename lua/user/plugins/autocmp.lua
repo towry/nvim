@@ -55,7 +55,7 @@ pack.plug({
             context = { ' ', '' },
           },
           pum = {
-            fast_close = true,
+            fast_close = false,
           },
           preview = {
             enabled = true,
@@ -84,7 +84,7 @@ pack.plug({
           },
         },
         completion = {
-          skip_after = { ';', ',', ':', '[', ']', '{', '}', ' ', '`' },
+          skip_after = { "'", '"', ';', ',', ':', '[', ']', '{', '}', ' ', '`' },
         },
       }
     end,
