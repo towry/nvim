@@ -34,7 +34,7 @@ return function()
   return vim.tbl_extend('force', {}, {
     cmd = {
       'node',
-      vim.env.HOME .. '/.nix-profile/lib/node_modules/dotfiles/node_modules/.bin/vue-language-server',
+      vim.cfg.lsp__vue_language_server,
       '--stdio',
     },
     filetypes = fts,

@@ -50,7 +50,8 @@ return {
     -- 'python',
     -- 'python3',
   },
-  runtime__python3_host_prog = '$HOME/.nix-profile/bin/python3',
+  runtime__python3_host_prog = nil,
+  runtime__node_host_prog = nil,
   ---editing
   edit__use_native_cmp = not vim.g.vscode and not use_coc,
   edit__use_plugin_cmp = false,
@@ -161,6 +162,8 @@ return {
     'html',
     'scss',
   },
+  lsp__vue_typescript_plugin = nil,
+  lsp__vue_language_server = 'vue-language-server',
   lsp__plugin_lspsaga = true,
   ---User interfaces
   ui__theme_name = 'default',
@@ -208,6 +211,8 @@ return {
     -- folke/noice
     'noice',
   },
+  ---env
+  env__npm_root = nil,
   ---plugins specific.
   plugin__whichkey_or_clue = 'clue',
   ---@type 'fzf'|'telescope'

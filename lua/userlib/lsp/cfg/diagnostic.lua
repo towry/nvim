@@ -33,7 +33,7 @@ function M.setup()
       border = 'solid',
       focused = false,
       style = 'minimal',
-      source = 'always',
+      source = true,
       winblend = 10,
     },
     severity_sort = true,

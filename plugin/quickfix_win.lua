@@ -1,4 +1,3 @@
--- FIXME:
 -- 1. open a below term
 -- 2. <C-w>B to close below term window.
 do
@@ -62,9 +61,15 @@ vim.api.nvim_create_autocmd('WinClosed', {
       if vim.fn.exists('&winfixbuf') == 1 and vim.api.nvim_get_option_value('winfixbuf', { win = win }) then
         wincount = wincount + 1
       elseif win == curwin then
+        -- pass
       else
-        local buftype = vim.api.nvim_get_option_value('buftype', { buf = vim.api.nvim_win_get_buf(win) })
-        local is_special_win = buftype ~= '' and not vim.tbl_contains({ 'terminal' }, buftype)
+        local current_win_bufnr = vim.api.nvim_win_get_buf(win)
+        local buftype = vim.api.nvim_get_option_value('buftype', { buf = current_win_bufnr })
+        local filetype = vim.api.nvim_get_option_value('filetype', { buf = current_win_bufnr })
+
+        local is_special_win = buftype ~= ''
+          and not vim.tbl_contains({ 'terminal' }, buftype)
+          and not vim.tbl_contains({ 'oil' }, filetype)
         if not is_special_win then
           lastwin = win
           break

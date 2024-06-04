@@ -63,8 +63,7 @@ M.init_options = {
     -- with config 'volar#tsserver'.
     {
       name = '@vue/typescript-plugin',
-      -- TODO: make it configurable
-      location = vim.env.HOME .. '/.nix-profile/lib/node_modules/dotfiles/node_modules/@vue/typescript-plugin',
+      location = vim.cfg.lsp__vue_typescript_plugin,
       languages = { 'javascript', 'typescript', 'vue' },
     },
   },

@@ -4,6 +4,7 @@ do
     return
   end
 end
+pcall(require, 'nix-env')
 pcall(require, 'settings_env')
 if vim.g.vscode then
   require('user.vscode.startup')

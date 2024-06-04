@@ -3,7 +3,6 @@ local o = vim.opt
 local g = vim.g
 
 function M.startup()
-  o.shell = ('%s/.nix-profile/bin/fish'):format(vim.env.HOME)
   o.winbar = ''
   o.autowrite = true
   o.startofline = false -- cursor start of line when scroll
@@ -200,7 +199,7 @@ function M.init_other()
   elseif not has_py and vim.fn.executable('/usr/bin/python3') == 1 then
     vim.g.python3_host_prog = '/usr/bin/python3'
   end
-  g.node_host_prog = '$HOME/.nix-profile/bin/neovim-node-host'
+  g.node_host_prog = vim.cfg.runtime__node_host_prog
 
   -- Fix markdown indentation settings
   g.markdown_recommended_style = 0
