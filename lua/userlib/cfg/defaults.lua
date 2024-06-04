@@ -1,6 +1,6 @@
 local cwd = vim.uv.cwd()
 
-local use_coc = false
+local use_coc = true
 
 return {
   ---runtime
