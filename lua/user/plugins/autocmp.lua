@@ -26,7 +26,12 @@ pack.plug({
         'ms-jpq/coq.thirdparty',
         branch = '3p',
       },
-      { 'mendes-davi/coq_luasnip' },
+      {
+        'mendes-davi/coq_luasnip',
+        dependencies = {
+          'L3MON4D3/LuaSnip',
+        },
+      },
     },
     enabled = vim.cfg.edit__use_coq_cmp and vim.cfg.edit__use_native_cmp,
     event = { 'LspAttach', 'User LazyInsertEnter', 'CmdlineEnter' },
@@ -72,6 +77,7 @@ pack.plug({
           snippets = {
             -- use coq luasnip
             enabled = false,
+            user_path = vim.fn.stdpath('config') .. '/snippets',
           },
         },
         completion = {
@@ -104,7 +110,6 @@ pack.plug({
     event = 'User LazyInsertEnter',
     build = 'make install_jsregexp',
     version = 'v2.*',
-    enabled = false,
     -- enabled = not vim.cfg.edit__use_coc,
     dependencies = {
       'rafamadriz/friendly-snippets',
@@ -149,8 +154,8 @@ pack.plug({
         })
       end
 
-      vim.cmd([[au InsertEnter,TextChangedP,CursorHoldI * lua pcall(Ty.luasnip_notify)]])
-      vim.cmd([[au InsertLeave * lua pcall(Ty.luasnip_notify_clear)]])
+      -- vim.cmd([[au InsertEnter,TextChangedP,CursorHoldI * lua pcall(Ty.luasnip_notify)]])
+      -- vim.cmd([[au InsertLeave * lua pcall(Ty.luasnip_notify_clear)]])
     end,
   },
   {

@@ -1,9 +1,16 @@
 local function add_snippet_compa(cap)
   cap.textDocument.completion = {
     completionItem = {
+      deprecatedSupport = true,
+      insertReplaceSupport = true,
+      insertTextModeSupport = { valueSet = { 1, 2 } },
+      labelDetailsSupport = true,
+      preselectSupport = true,
+      tagSupport = { valueSet = { 1 } },
       snippetSupport = true,
       resolveSupport = {
-        properties = { 'edit', 'documentation', 'detail', 'additionalTextEdits' },
+        properties = {},
+        -- properties = { 'edit', 'documentation', 'detail', 'additionalTextEdits' },
       },
     },
     completionList = {
