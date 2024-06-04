@@ -43,9 +43,11 @@ pack.plug({
         auto_start = 'shut-up',
         keymap = {
           recommended = false,
-          manual_complete = '',
-          jump_to_mark = '',
-          bigger_preview = '',
+          manual_complete = nil,
+          jump_to_mark = nil,
+          bigger_preview = nil,
+          pre_select = false,
+          ['repeat'] = nil,
         },
         display = {
           ghost_text = {
@@ -53,13 +55,14 @@ pack.plug({
             context = { ' ', '' },
           },
           pum = {
-            fast_close = false,
+            fast_close = true,
           },
           preview = {
             enabled = true,
             border = 'single',
             positions = { north = 2, south = 3, west = 4, east = 1 },
           },
+          mark_applied_notify = false,
         },
         -- https://github.com/ms-jpq/coq_nvim/blob/coq/docs/FUZZY.md
         weights = {
