@@ -12,9 +12,9 @@ set({ 'x' }, '<leader>cf', _call('editor.action.formatSelection'), {
 set({ 'n' }, '<leader>cf', _call('prettier.forceFormatDocument'), {
   desc = 'format with prettier if prettier exists',
 })
-set({ 'n' }, 'KK', _call('editor.action.showDefinitionPreviewHover'), {
-  desc = 'Show Definition Preview Hover',
-})
+-- set({ 'n' }, 'KK', _call('editor.action.showDefinitionPreviewHover'), {
+--   desc = 'Show Definition Preview Hover',
+-- })
 set({ 'n' }, '<leader>cp', _call('editor.action.peekDefinition'), {
   desc = 'Peek Definition',
 })
