@@ -58,10 +58,25 @@ M.on_attach = on_attach
 M.settings = settings
 --- https://github.com/typescript-language-server/typescript-language-server#initializationoptions
 M.init_options = {
+  plugins = {
+    -- NOTE: make make this module reuseable by the volar module
+    -- with config 'volar#tsserver'.
+    {
+      name = '@vue/typescript-plugin',
+      -- TODO: make it configurable
+      location = vim.env.HOME .. '/.nix-profile/lib/node_modules/dotfiles/node_modules/@vue/typescript-plugin',
+      languages = { 'javascript', 'typescript', 'vue' },
+    },
+  },
   preferences = {
     importModuleSpecifierPreference = 'relative',
     importModuleSpecifierEnding = 'index',
   },
+}
+M.filetypes = {
+  'javascript',
+  'typescript',
+  'vue',
 }
 
 return M
