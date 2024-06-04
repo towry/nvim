@@ -43,9 +43,9 @@ pack.plug({
         auto_start = 'shut-up',
         keymap = {
           recommended = false,
-          manual_complete = nil,
-          jump_to_mark = nil,
-          bigger_preview = nil,
+          manual_complete = '',
+          jump_to_mark = '',
+          bigger_preview = '',
           pre_select = false,
           ['repeat'] = nil,
         },
