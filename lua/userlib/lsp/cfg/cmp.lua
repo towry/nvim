@@ -20,7 +20,7 @@ function M.on_attach(client, bufnr)
     client.server_capabilities.completionProvider.triggerCharacters = vim.iter(triggers):totable()
   end
 
-  if vim.cfg.edit__use_coc or vim.cfg.edit__use_coq_cmp then
+  if vim.edit__cmp_provider ~= 'native' then
     return
   end
 

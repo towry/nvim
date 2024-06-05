@@ -4,6 +4,7 @@ local Path = require('userlib.runtime.path')
 local libutils = require('userlib.runtime.utils')
 
 local enable_cody = false
+local enable_cmp_plug = vim.cfg.edit__cmp_provider == 'cmp'
 
 local MAX_INDEX_FILE_SIZE = 2000
 
@@ -33,7 +34,7 @@ pack.plug({
         },
       },
     },
-    enabled = vim.cfg.edit__use_coq_cmp and vim.cfg.edit__use_native_cmp,
+    enabled = vim.cfg.edit__cmp_provider == 'coq',
     event = { 'LspAttach', 'User LazyInsertEnter', 'CmdlineEnter' },
     lazy = true,
     config = function() end,
@@ -66,7 +67,7 @@ pack.plug({
         },
         -- https://github.com/ms-jpq/coq_nvim/blob/coq/docs/FUZZY.md
         weights = {
-          prefix_matches = 4,
+          prefix_matches = 2,
         },
         clients = {
           lsp = {
@@ -84,7 +85,7 @@ pack.plug({
           },
         },
         completion = {
-          skip_after = { "'", '"', ';', ',', ':', '[', ']', '{', '}', ' ', '`' },
+          skip_after = { '=', '..', ')', '(', "'", '"', ';', ',', ':', '[', ']', '{', '}', ' ', '`' },
         },
       }
     end,
@@ -95,7 +96,7 @@ pack.plug({
       'rafamadriz/friendly-snippets',
     },
     event = 'VeryLazy',
-    cond = not vim.cfg.edit__use_coc,
+    cond = not (vim.cfg.edit__cmp_provider == 'coc'),
     opts = {
       create_autocmd = true,
       create_cmp_source = false,
@@ -113,7 +114,6 @@ pack.plug({
     event = 'User LazyInsertEnter',
     build = 'make install_jsregexp',
     version = 'v2.*',
-    -- enabled = not vim.cfg.edit__use_coc,
     dependencies = {
       'rafamadriz/friendly-snippets',
       --'saadparwaiz1/cmp_luasnip'
@@ -164,7 +164,7 @@ pack.plug({
   {
     'petertriho/cmp-git',
     ft = 'gitcommit',
-    enabled = vim.cfg.edit__use_plugin_cmp,
+    enabled = enable_cmp_plug,
     dependencies = {
       'hrsh7th/nvim-cmp',
       'hrsh7th/cmp-buffer',
@@ -183,7 +183,7 @@ pack.plug({
   {
     'lukas-reineke/cmp-rg',
     cond = function()
-      return vim.fn.executable('rg') == 1 and vim.cfg.edit__use_plugin_cmp
+      return enable_cmp_plug and vim.fn.executable('rg') == 1
     end,
     ft = 'rgflow',
     dependencies = {
@@ -202,7 +202,7 @@ pack.plug({
   },
   {
     'hrsh7th/nvim-cmp',
-    enabled = vim.cfg.edit__use_plugin_cmp,
+    enabled = enable_cmp_plug,
     event = { 'User LazyInsertEnter', 'CmdlineEnter' },
     dependencies = {
       'noearc/cmp-registers',
@@ -319,7 +319,7 @@ pack.plug({
         preselect = cmp.PreselectMode.None,
         snippet = {
           expand = function(args)
-            luasnip.lsp_expand(args.body)
+            vim.snippet.expand(args.body)
           end,
         },
         mapping = cmp.mapping.preset.insert({
@@ -327,7 +327,7 @@ pack.plug({
           ['<C-n>'] = cmp.mapping.select_next_item(select_option),
           ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
           ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-          ['<C-f>'] = cmp.mapping(function(fallback)
+          ['<C-j>'] = cmp.mapping(function(fallback)
             if vim.bo.buftype == 'prompt' then
               return fallback()
             end
@@ -493,10 +493,7 @@ pack.plug({
         },
         experimental = {
           -- can be anoying.
-          ghost_text = false,
-          -- ghost_text = {
-          --   hl_group = "LspCodeLens",
-          -- },
+          ghost_text = true,
         },
       }
 
@@ -569,7 +566,7 @@ pack.plug({
 
 ---autopairs
 pack.plug({
-  enabled = not vim.cfg.lang__treesitter_next and vim.cfg.edit__use_plugin_cmp,
+  enabled = not vim.cfg.lang__treesitter_next and enable_cmp_plug,
   'windwp/nvim-autopairs',
   event = { 'InsertEnter' },
   config = function()
@@ -591,7 +588,7 @@ pack.plug({
     }
     npairs.setup(args)
 
-    if vim.cfg.edit__use_plugin_cmp then
+    if enable_cmp_plug then
       local cmp_autopairs = require('nvim-autopairs.completion.cmp')
       local cmpcore = require('cmp')
 

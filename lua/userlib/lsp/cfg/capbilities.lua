@@ -32,11 +32,13 @@ end
 return function(default_capabilities)
   local capabilities = default_capabilities
   if not capabilities then
-    if vim.cfg.edit__use_native_cmp then
+    if vim.tbl_contains({ 'coq', 'native' }, vim.cfg.edit__cmp_provider) then
       capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = add_snippet_compa(capabilities)
-    else
+    elseif vim.cfg.edit__cmp_provider == 'cmp' then
       capabilities = require('cmp_nvim_lsp').default_capabilities()
+    else
+      capabilities = vim.lsp.protocol.make_client_capabilities()
     end
   end
 

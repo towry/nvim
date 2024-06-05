@@ -1068,6 +1068,8 @@ plug({
           ['ctrl-e'] = 'end-of-line',
           ['alt-a'] = 'toggle-all',
           ['ctrl-q'] = 'select-all+accept',
+          ['tab'] = 'toggle+down',
+          ['shift-tab'] = 'toggle+up',
         },
       },
       files = {

@@ -6,7 +6,7 @@ require('user.plugins.cmdline')
 require('user.plugins.git')
 require('user.plugins.theme')
 require('user.plugins.terminal')
-if not vim.cfg.edit__use_coc then
+if vim.cfg.edit__cmp_provider ~= 'coc' then
   require('user.plugins.lsp')
 end
 if not vim.g.is_start_as_merge_tool then

@@ -258,14 +258,14 @@ local function setup_basic()
     --- use option key to navigate tab quickly.
     --- cmd key is used by the mux program.
     if vim.cfg.runtime__is_wezterm then
-      set('n', '<M-' .. i .. '>', cmd(i .. 'tabnext'), {
+      set({ 'n', 't' }, '<M-' .. i .. '>', cmd(i .. 'tabnext'), {
         desc = 'Go to tab ' .. i,
       })
     end
   end
   if vim.cfg.runtime__is_wezterm then
-    set('n', '<M-[>', cmd('tabp'), { desc = 'Tab pre' })
-    set('n', '<M-]>', cmd('tabn'), { desc = 'Tab next' })
+    set({ 'n', 't' }, '<M-[>', cmd('tabp'), { desc = 'Tab pre' })
+    set({ 'n', 't' }, '<M-]>', cmd('tabn'), { desc = 'Tab next' })
   end
   set('n', '<leader>tn', cmd('tabnew'), {
     desc = 'New tab',
@@ -277,7 +277,10 @@ local function setup_basic()
     })
   end
   set('n', '<leader>wp', cmd('wincmd p'), {
-    desc = 'which_key_ignore',
+    desc = 'Go to previous window',
+  })
+  set({ 'n', 't', 'i' }, '<M-z>', cmd('wincmd p'), {
+    desc = 'Go to previous window',
   })
 
   set('c', '<C-q>', '<C-u>qa<CR>', {
@@ -475,7 +478,7 @@ local function setup_basic()
     ['bs-ctrl-z'] = vim.api.nvim_replace_termcodes('<C-h><C-z>', true, true, false),
   }
   ---- wildmode
-  if vim.cfg.edit__use_native_cmp or vim.cfg.edit__use_coc then
+  if vim.tbl_contains({ 'coq', 'native' }, vim.cfg.edit__cmp_provider) then
     -- set({ 'c' }, '<', '<', { noremap = true, silent = false })
     set({ 'c' }, [[<Tab>]], function()
       if vim.fn.pumvisible() ~= 0 then
@@ -491,9 +494,7 @@ local function setup_basic()
       end
       return keys['bs-ctrl-z']
     end, { expr = true, silent = false, noremap = true })
-  end
-  ---- native cmp keys
-  if vim.cfg.edit__use_native_cmp then
+    ---- native cmp keys
     -- Move inside completion list with <TAB>
     set({ 'i', 's' }, [[<Tab>]], function()
       if vim.fn.pumvisible() ~= 0 then

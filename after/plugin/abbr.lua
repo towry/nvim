@@ -45,7 +45,7 @@ au.on_verylazy(function()
     return 'find ' .. name
   end)
   setca('ass', 'let @/=')
-  if vim.cfg and vim.cfg.edit__use_coc then
+  if vim.cfg and vim.cfg.edit__cmp_provider == 'coc' then
     setca('acc', 'CocCommand')
   end
 

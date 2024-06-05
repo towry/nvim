@@ -195,7 +195,7 @@ plug({
       },
       {
         '<leader>gx',
-        '<cmd>OverDispatch! git add -- % && git diff --cached --check --quiet || git commit --amend --no-edit<cr>',
+        '<cmd>silent OverDispatch! git add -- % && git diff --cached --check --quiet || git commit --amend --no-edit<cr>',
         desc = 'Git amend all',
       },
       {

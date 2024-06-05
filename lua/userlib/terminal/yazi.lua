@@ -1,6 +1,6 @@
 local M = {}
 
----@param opts {cwd?:string}
+---@param opts? {cwd?:string}
 function M.toggle(opts)
   opts = opts or {}
 
