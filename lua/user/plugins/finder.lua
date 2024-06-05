@@ -150,6 +150,15 @@ plug({
     {
       '<leader>-',
       function()
+        if vim.g.yazi_tabid then
+          vim.api.nvim_set_current_tabpage(vim.g.yazi_tabid)
+          return
+        end
+        -- create new tab
+        -- set vim.g.yazi_tabid
+        vim.cmd('tabnew')
+        vim.g.yazi_tabid = vim.api.nvim_get_current_tabpage()
+        -- open yazi
         require('yazi').yazi(nil, vim.uv.cwd())
       end,
       desc = 'Open the file manager',
@@ -157,6 +166,7 @@ plug({
   },
   ---@type YaziConfig
   opts = {
+    floating_window_scaling_factor = 0.86,
     open_for_directories = false,
     -- what Neovim should do a when a file was opened (selected) in yazi.
     -- Defaults to simply opening the file.
@@ -169,9 +179,23 @@ plug({
     -- the type of border to use for the floating window. Can be many values,
     -- including 'none', 'rounded', 'single', 'double', 'shadow', etc. For
     -- more information, see :h nvim_open_win
-    yazi_floating_window_border = 'rounded',
+    yazi_floating_window_border = 'single',
 
     hooks = {
+      yazi_closed_successfully = function(chosen_file)
+        vim.g.yazi_tabid = nil
+        if not chosen_file then
+          vim.cmd('tabclose')
+          return
+        end
+        vim.schedule(function()
+          local buf = vim.api.nvim_get_current_buf()
+          -- go to last tab
+          vim.cmd('tabnext #')
+          vim.cmd('tabclose #')
+          vim.api.nvim_win_set_buf(0, buf)
+        end)
+      end,
       -- if you want to execute a custom action when yazi has been opened,
       -- you can define it here.
       -- yazi_opened = function(preselected_path, yazi_buffer_id, config)

@@ -264,8 +264,8 @@ local function setup_basic()
     end
   end
   if vim.cfg.runtime__is_wezterm then
-    set({ 'n', 't' }, '<M-[>', cmd('tabp'), { desc = 'Tab pre' })
-    set({ 'n', 't' }, '<M-]>', cmd('tabn'), { desc = 'Tab next' })
+    set({ 'i', 'n', 't' }, '<M-[>', cmd('tabp'), { desc = 'Tab pre' })
+    set({ 'i', 'n', 't' }, '<M-]>', cmd('tabn'), { desc = 'Tab next' })
   end
   set('n', '<leader>tn', cmd('tabnew'), {
     desc = 'New tab',
@@ -281,6 +281,9 @@ local function setup_basic()
   })
   set({ 'n', 't', 'i' }, '<M-z>', cmd('wincmd p'), {
     desc = 'Go to previous window',
+  })
+  set({ 'n', 't', 'i' }, '<M-t>', cmd('tabnext #'), {
+    desc = 'Go to last accessed tab',
   })
 
   set('c', '<C-q>', '<C-u>qa<CR>', {
