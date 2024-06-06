@@ -12,6 +12,7 @@ return {
         'expect user configurations to be table',
       },
     })
+    user_cfg = vim.tbl_extend('force', user_cfg, vim.g.user_cfg or {})
     vim.cfg = setmetatable(user_cfg, {
       __index = function(_, key)
         return defaults[key]

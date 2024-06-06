@@ -3,6 +3,7 @@ local o = vim.opt
 local g = vim.g
 
 function M.startup()
+  o.includeexpr = "substitute(v:fname,'\\.','/','g')"
   o.winbar = ''
   o.autowrite = true
   o.startofline = false -- cursor start of line when scroll
@@ -91,8 +92,12 @@ end
 function M.init_interface()
   o.clipboard = { 'unnamed', 'unnamedplus' } --- Copy-paste between vim and everything else
   --- blink cursor see https://github.com/neovim/neovim/pull/26075
-  --- set guicursor+=n:blinkon1
-  -- o.guicursor:append('n-v-c:blinkon500-blinkoff500')
+  o.guicursor = {
+    -- 'n:blinkon1',
+    'n-v-c-sm:block-Cursor/lCursor',
+    'i-ci-ve:ver25-Cursor/lCursor',
+    'r-cr-o:hor20-Cursor/lCursor',
+  }
   o.report = 9001 -- Threshold for reporting number of lines channged.
   o.colorcolumn = '' -- Draw colored column one step to the right of desired maximum width
   o.showmode = false --- Don't show things like -- INSERT -- anymore
@@ -125,7 +130,7 @@ function M.init_interface()
   o.wildignore = { '*.pyc', '*node_modules/**', '.git/**', '*.DS_Store', '*.min.js', '*.obj' } --- Don't search inside Node.js modules (works for gutentag)
   o.cmdheight = 1 --- Give more space for displaying messages
   o.cmdwinheight = 10 -- the cmd window height
-  o.completeopt = 'menu,noinsert,noselect,preview,popup' --- Better autocompletion
+  o.completeopt = 'menu,noinsert,noselect,preview,popup,fuzzy' --- Better autocompletion
   o.complete:append('kspell') -- Add spellcheck options for autocomplete
   -- scan current and included files.
   -- o.complete:append('i')
@@ -199,7 +204,7 @@ function M.init_other()
   elseif not has_py and vim.fn.executable('/usr/bin/python3') == 1 then
     vim.g.python3_host_prog = '/usr/bin/python3'
   end
-  g.node_host_prog = '$HOME/.nix-profile/bin/neovim-node-host'
+  g.node_host_prog = vim.cfg.runtime__node_host_prog
 
   -- Fix markdown indentation settings
   g.markdown_recommended_style = 0

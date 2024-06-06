@@ -291,15 +291,15 @@ function M.setup_keybinding(client, buffer)
   )
 
   -- inline actions.
-  set(
-    'n',
-    'KK',
-    func_call('hover_action()'),
-    opts({
-      desc = _('Show hover or reveal UFO folding'),
-      nowait = true,
-    })
-  )
+  -- set(
+  --   'n',
+  --   'KK',
+  --   func_call('hover_action()'),
+  --   opts({
+  --     desc = _('Show hover or reveal UFO folding'),
+  --     nowait = true,
+  --   })
+  -- )
   set(
     'n',
     'KL',

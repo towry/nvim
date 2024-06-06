@@ -5,10 +5,6 @@ function M.on_attach(client, bufnr)
     return
   end
 
-  if vim.cfg.edit__use_coc or vim.cfg.edit__use_coq_cmp then
-    return
-  end
-
   local triggers = vim.tbl_get(client.server_capabilities, 'completionProvider', 'triggerCharacters')
   if triggers then
     for _, char in ipairs({ 'a', 'e', 'i', 'o', 'u' }) do
@@ -22,6 +18,14 @@ function M.on_attach(client, bufnr)
       end
     end
     client.server_capabilities.completionProvider.triggerCharacters = vim.iter(triggers):totable()
+  end
+
+  if vim.edit__cmp_provider ~= 'native' then
+    return
+  end
+
+  if not client.supports_method(Ty.lsp_methods().textDocument_completion) then
+    return
   end
 
   vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })

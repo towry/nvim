@@ -9,3 +9,4 @@ doc/*
 !doc/*.txt
 !doc/*.md
 .netrwhist
+lua/nix-env.lua

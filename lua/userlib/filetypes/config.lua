@@ -20,11 +20,11 @@ return {
     filetypes = vim.cfg.lsp__server_volar_takeover_mode
         and { 'vue', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }
       or { 'vue' },
-    lspconfig = { 'volar', 'null-ls' },
+    lspconfig = { 'volar', 'null-ls', 'tsserver', 'tailwindcss' },
   },
   ['typescript'] = {
     filetypes = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact' },
-    lspconfig = { 'vtsls', 'null-ls' },
+    lspconfig = { 'vtsls', 'null-ls', 'tailwindcss' },
     treesitter = { 'typescript', 'javascript', 'tsx' },
   },
   ['lua'] = {

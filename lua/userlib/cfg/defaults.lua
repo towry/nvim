@@ -1,7 +1,5 @@
 local cwd = vim.uv.cwd()
 
-local use_coc = false
-
 return {
   ---runtime
   runtime__is_zellij = os.getenv('ZELLIJ_SESSION_NAME') ~= nil,
@@ -50,12 +48,12 @@ return {
     -- 'python',
     -- 'python3',
   },
-  runtime__python3_host_prog = '$HOME/.nix-profile/bin/python3',
-  ---editing
-  edit__use_native_cmp = not vim.g.vscode and not use_coc,
-  edit__use_plugin_cmp = false,
-  edit__use_coq_cmp = not use_coc and true,
-  edit__use_coc = not vim.g.vscode and use_coc,
+  runtime__python3_host_prog = nil,
+  runtime__node_host_prog = nil,
+  -------editing
+  ---Please change this in your custom.lua
+  ---@type 'cmp'|'coq'|'native'|'vscode'|'coc'
+  edit__cmp_provider = vim.g.vscode and 'vscode' or 'cmp',
   ---editor stuff
   --enable relative number or not.
   editor__relative_number = true,
@@ -161,6 +159,8 @@ return {
     'html',
     'scss',
   },
+  lsp__vue_typescript_plugin = nil,
+  lsp__vue_language_server = 'vue-language-server',
   lsp__plugin_lspsaga = true,
   ---User interfaces
   ui__theme_name = 'default',
@@ -208,6 +208,8 @@ return {
     -- folke/noice
     'noice',
   },
+  ---env
+  env__npm_root = nil,
   ---plugins specific.
   plugin__whichkey_or_clue = 'clue',
   ---@type 'fzf'|'telescope'

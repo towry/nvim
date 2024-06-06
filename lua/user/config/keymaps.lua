@@ -40,6 +40,7 @@ local function setup_basic()
   set('n', '<C-a>x', '<C-x>', { remap = false, nowait = true, silent = true })
   --- <C-a> and <C-x> is free to use
   set('i', 'jj', '<ESC>', { silent = true, nowait = true, noremap = true })
+  set('i', '<esc>', 'pumvisible() ? "\\<C-e><esc>" : "\\<ESC>"', { silent = true, expr = true, noremap = true })
 
   -- Save jumps > 5 lines to the jumplist
   -- Jumps <= 5 respect line wraps
@@ -257,14 +258,14 @@ local function setup_basic()
     --- use option key to navigate tab quickly.
     --- cmd key is used by the mux program.
     if vim.cfg.runtime__is_wezterm then
-      set('n', '<M-' .. i .. '>', cmd(i .. 'tabnext'), {
+      set({ 'n', 't' }, '<M-' .. i .. '>', cmd(i .. 'tabnext'), {
         desc = 'Go to tab ' .. i,
       })
     end
   end
   if vim.cfg.runtime__is_wezterm then
-    set('n', '<M-[>', cmd('tabp'), { desc = 'Tab pre' })
-    set('n', '<M-]>', cmd('tabn'), { desc = 'Tab next' })
+    set({ 'i', 'n', 't' }, '<M-[>', cmd('tabp'), { desc = 'Tab pre' })
+    set({ 'i', 'n', 't' }, '<M-]>', cmd('tabn'), { desc = 'Tab next' })
   end
   set('n', '<leader>tn', cmd('tabnew'), {
     desc = 'New tab',
@@ -276,7 +277,13 @@ local function setup_basic()
     })
   end
   set('n', '<leader>wp', cmd('wincmd p'), {
-    desc = 'which_key_ignore',
+    desc = 'Go to previous window',
+  })
+  set({ 'n', 't', 'i' }, '<M-z>', cmd('wincmd p'), {
+    desc = 'Go to previous window',
+  })
+  set({ 'n', 't', 'i' }, '<M-t>', cmd('tabnext #'), {
+    desc = 'Go to last accessed tab',
   })
 
   set('c', '<C-q>', '<C-u>qa<CR>', {
@@ -474,7 +481,7 @@ local function setup_basic()
     ['bs-ctrl-z'] = vim.api.nvim_replace_termcodes('<C-h><C-z>', true, true, false),
   }
   ---- wildmode
-  if vim.cfg.edit__use_native_cmp or vim.cfg.edit__use_coc then
+  if vim.tbl_contains({ 'coq', 'native' }, vim.cfg.edit__cmp_provider) then
     -- set({ 'c' }, '<', '<', { noremap = true, silent = false })
     set({ 'c' }, [[<Tab>]], function()
       if vim.fn.pumvisible() ~= 0 then
@@ -490,11 +497,9 @@ local function setup_basic()
       end
       return keys['bs-ctrl-z']
     end, { expr = true, silent = false, noremap = true })
-  end
-  ---- native cmp keys
-  if vim.cfg.edit__use_native_cmp then
+    ---- native cmp keys
     -- Move inside completion list with <TAB>
-    set({ 'i' }, [[<Tab>]], function()
+    set({ 'i', 's' }, [[<Tab>]], function()
       if vim.fn.pumvisible() ~= 0 then
         return '<C-n>'
       elseif vim.snippet.active({ direction = 1 }) then
@@ -512,7 +517,7 @@ local function setup_basic()
       end
     end, { expr = true, silent = false })
 
-    set({ 'i' }, [[<CR>]], function()
+    set({ 'i', 's' }, [[<CR>]], function()
       if vim.fn.pumvisible() ~= 0 then
         local item_selected = vim.fn.complete_info()['selected'] ~= -1
         return item_selected and keys['ctrl-y'] or keys['ctrl-y_cr']
@@ -520,7 +525,7 @@ local function setup_basic()
       return keys['cr']
     end, { expr = true, silent = true, noremap = true })
 
-    set({ 'i' }, [[<S-Tab>]], function()
+    set({ 'i', 's' }, [[<S-Tab>]], function()
       if vim.fn.pumvisible() ~= 0 then
         return '<C-p>'
       elseif vim.snippet.active({ direction = -1 }) then
@@ -531,6 +536,11 @@ local function setup_basic()
         return '<S-Tab>'
       end
     end, { expr = true, silent = false })
+
+    set({ 's' }, '<BS>', '<C-o>s', {
+      remap = false,
+      desc = 'Remove snippet placeholder',
+    })
 
     set({ 'i' }, '<C-j>', function()
       local trigger_ai = function()

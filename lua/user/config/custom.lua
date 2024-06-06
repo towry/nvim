@@ -4,6 +4,7 @@ local user_cfg = {
   plug__enable_codeium_nvim = false,
   plug__enable_codeium_vim = true,
   plug__enable_copilot_vim = false,
+  edit__cmp_provider = 'coq',
 }
 
 return {

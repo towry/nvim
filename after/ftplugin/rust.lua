@@ -32,16 +32,22 @@ if not (vim.b.is_big_file and vim.g.vscode) then
   require('userlib.keymaps.dap').attach()
 end
 
-if vim.cfg.edit__use_coc then
+if vim.cfg.edit__cmp_provider == 'coc' then
   set('n', '<localleader>r', ':<C-u>CocCommand rust-analyzer.run<cr>', {
-    noremap = true, desc = 'Run run', })
+    noremap = true,
+    desc = 'Run run',
+  })
 end
 
 if vim.fn.executable('codesort') == 1 then
-  set('n', '<localleader>cs',
-    [[ma<ESC>:execute ":%!codesort --around ".line('.')." --detect ".shellescape(expand('%:t'))<CR>`a]], {
+  set(
+    'n',
+    '<localleader>cs',
+    [[ma<ESC>:execute ":%!codesort --around ".line('.')." --detect ".shellescape(expand('%:t'))<CR>`a]],
+    {
       noremap = true,
       desc = 'Sort code',
-    })
+    }
+  )
   set('x', '<localleader>cs', [[:<C-u>'<,'>!codesort<cr>]], { noremap = true, desc = 'Sort code' })
 end

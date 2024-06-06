@@ -223,7 +223,7 @@ Ty.set_terminal_keymaps = vim.schedule_wrap(function(bufnr)
   nvim_buf_set_keymap('t', '<C-z>', '<NOP>', opts)
 
   -- do not bind below keys in fzf-lua terminal window.
-  if vim.bo.filetype == 'fzf' then
+  if vim.tbl_contains({ 'yazi', 'fzf' }, vim.bo.filetype) then
     return
   end
 

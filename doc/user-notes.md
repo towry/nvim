@@ -88,3 +88,15 @@ line 1234 = 5
 ## Motion
 
 - `gv` reselect last selection.
+
+## Open current file's previous history with fugitive
+
+```
+:Gpedit @:%
+```
+
+Or to view the file at commit HEAD~2:
+
+```
+:Gpedit @~2:%
+```

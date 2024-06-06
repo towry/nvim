@@ -9,6 +9,8 @@
 - Git keymaps for diff, log (file, etc.), blame (file, chunks), stage, and more.
 - Optimized for use as a git mergetool, favoring a two-way merge approach.
 - Zoxide support and change cwd from terminal buffer
+- [Yazi](https://github.com/yazig/yazi) support, open yazi in new tab (do not
+  interupt current workflow), but chosen file will be opened in current window.
 
 ## Screenshots
 

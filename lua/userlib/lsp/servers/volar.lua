@@ -32,6 +32,11 @@ return function()
   local tsdk_path = node_util.get_typescript_server_path(node_root)
 
   return vim.tbl_extend('force', {}, {
+    cmd = {
+      'node',
+      vim.cfg.lsp__vue_language_server,
+      '--stdio',
+    },
     filetypes = fts,
     commands = require('userlib.lsp.commands'),
     settings = M.settings,
