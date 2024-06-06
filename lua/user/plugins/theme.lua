@@ -33,6 +33,7 @@ plug({
         CocUnusedHighlight = { link = 'DiagnosticUnderlineHint' },
         -- flash
         FlashCursor = { fg = colors.theme.ui.fg, bg = colors.palette.waveBlue1 },
+        WinSeparator = { fg = colors.palette.dragonPink, bg = 'NONE' },
       }
     end,
     colors = {

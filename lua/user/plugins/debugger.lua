@@ -489,9 +489,12 @@ pack.plug({
     'OverseerLoadBundle',
     'OverseerDeleteBundle',
     'OverseerRunCmd',
+    -- Show infos like checkhealth
     'OverseerInfo',
     'OverseerBuild',
+    -- run action on last.
     'OverseerQuickAction',
+    -- select running task and perf action: kill or restart etc.
     'OverseerTaskAction',
     'OverseerClearCache',
   },
@@ -513,7 +516,7 @@ pack.plug({
       '<cmd>OverseerQuickAction<cr>',
       desc = 'Run an action on the most recent task, or the task under the cursor',
     },
-    { '<localleader>oT', '<cmd>OverseerTaskAction<cr>', desc = 'Select a task to run an action on' },
+    { '<localleader>ot', '<cmd>OverseerTaskAction<cr>', desc = 'Select a task to run an action on' },
     { '<localleader>oC', '<cmd>OverseerClearCache<cr>', desc = 'Clear cache' },
   },
   opts = {
@@ -524,6 +527,7 @@ pack.plug({
     auto_detect_success_color = true,
     dap = true,
     task_list = {
+      default_detail = 2,
       max_width = { 100, 0.6 },
       min_width = { 50, 0.4 },
       direction = 'right',
@@ -538,6 +542,18 @@ pack.plug({
         ['<C-l>'] = false,
         ['<C-h>'] = false,
       },
+    },
+    form = {
+      border = 'single',
+    },
+    confirm = {
+      border = 'single',
+    },
+    task_win = {
+      border = 'single',
+    },
+    help_win = {
+      border = 'single',
     },
     task_launcher = {},
   },

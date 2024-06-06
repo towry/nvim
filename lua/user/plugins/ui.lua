@@ -55,9 +55,9 @@ plug({
         window = {
           winblend = 10,
           normal_hl = 'NormalFloat',
-          max_width = 200,
+          max_width = 120,
           border = 'solid',
-          align = 'top',
+          -- align = 'top',
         },
       },
     },
