@@ -132,6 +132,12 @@ pack.plug({
       exclude = { 'markdown', 'gitcommit', 'git' },
     },
   },
+
+  {
+    --- [](-+=)
+    'jeetsukumaran/vim-indentwise',
+    event = 'BufReadPost',
+  },
 })
 
 pack.plug({
