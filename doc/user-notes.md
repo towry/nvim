@@ -88,6 +88,7 @@ line 1234 = 5
 ## Motion
 
 - `gv` reselect last selection.
+- `yr` to start flash remote mode with yank motion.
 
 ## Open current file's previous history with fugitive
 

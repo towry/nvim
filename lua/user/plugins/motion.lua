@@ -170,7 +170,7 @@ plug({
       },
       {
         'r',
-        mode = 'o',
+        mode = { 'o', 'x' },
         function()
           require('flash').remote()
         end,
@@ -216,7 +216,7 @@ plug({
         },
       },
       -- press ; to continue
-      continue = true,
+      continue = false,
     },
     config = function(_, opts)
       require('flash').setup(opts)

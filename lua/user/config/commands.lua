@@ -431,3 +431,57 @@ if vim.fn.executable('gitu') == 1 then
     desc = 'Open gitu in term',
   })
 end
+
+local function is_valid_rev(rev)
+  local res = vim.system({ 'git', 'rev-parse', '--verify', rev }):wait()
+  if res.code ~= 0 then
+    return false
+  end
+  return true
+end
+
+--- In merge or rebase (twoway) conflict, we can know the line is added by who and when.
+create_cmd('GitOpenTwowayBlame', function(params)
+  local line1 = params.line1
+  local line2 = params.line2
+
+  local rev = params.args
+  if not rev then
+    vim.notify('git revision is required', vim.log.levels.ERROR)
+    return
+  end
+  if not is_valid_rev(rev) then
+    vim.notify('git revision is invalid', vim.log.levels.ERROR)
+    return
+  end
+
+  local line_args = ''
+  if params.range and params.range >= 1 then
+    line_args = ('-L %d,%d'):format(line1, line2)
+  end
+
+  local bufname = vim.fn.bufname('%')
+  -- create new tab for HEAD
+  vim.cmd(('tab Git blame HEAD %s -- %s'):format(line_args, bufname))
+  -- in new tab
+  vim.cmd(('hor botright Git blame %s %s -- %s'):format(rev, line_args, bufname))
+end, {
+  range = true,
+  desc = 'Open blame view for current buffer(HEAD) in new tab agast another revision',
+  nargs = 1,
+  complete = function(arg)
+    local list = {
+      'MERGE_HEAD',
+      'REBASE_HEAD',
+      'HEAD',
+      '@mh',
+      '@rh',
+      'ORIG_HEAD',
+      'REVERT_HEAD',
+    }
+    if not arg or arg == '' then
+      return list
+    end
+    return vim.fn.matchfuzzy(list, arg)
+  end,
+})

@@ -2,6 +2,8 @@ local bufnr = vim.api.nvim_get_current_buf()
 local set = require('userlib.runtime.keymap').map_buf_thunk(bufnr)
 
 vim.cmd('set colorcolumn=')
+vim.cmd('set nowrap')
+vim.cmd('set norelativenumber')
 
 set('n', 'q', function()
   local wc = vim.api.nvim_tabpage_list_wins(0)

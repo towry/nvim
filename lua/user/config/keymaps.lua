@@ -215,8 +215,20 @@ local function setup_basic()
     silent = true,
   })
 
-  set('n', 'H', '^', {
+  set('n', 'H', function()
+    local has_folded = vim.fn.foldclosed('.') > -1
+    local is_at_first_non_whitespace_char_of_line = (vim.fn.col('.') - 1) == vim.fn.match(vim.fn.getline('.'), '\\S')
+
+    if is_at_first_non_whitespace_char_of_line and not has_folded then
+      return 'za'
+    end
+    if vim.fn.foldclosed('.') == -1 then
+      return '^'
+    end
+  end, {
     desc = 'Move to first non-blank character of the line',
+    expr = true,
+    remap = false,
   })
   set('n', 'L', function()
     if vim.fn.foldclosed('.') > -1 then

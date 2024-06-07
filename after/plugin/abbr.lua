@@ -49,6 +49,9 @@ au.on_verylazy(function()
     setca('acc', 'CocCommand')
   end
 
+  setca('@mh', 'MERGE_HEAD')
+  setca('@rh', 'REBASE_HEAD')
+
   -- +----
   -- Insert
   setia('funciton', 'function')
