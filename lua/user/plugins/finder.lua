@@ -1101,6 +1101,7 @@ plug({
       },
       grep = {
         formatter = 'path.filename_first',
+        multiline = 1,
         winopts = {
           -- split = 'belowright new',
         },

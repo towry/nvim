@@ -78,6 +78,7 @@ plug({
         require('userlib.lsp.cfg.keymaps').setup_keybinding(client, bufnr)
         require('userlib.lsp.cfg.cmp').on_attach(client, bufnr)
         require('userlib.lsp.servers.null_ls.fmt').attach(client, bufnr)
+        require('userlib.lsp.cfg.highlight').on_attach(client, bufnr)
       end)
     end,
   },
