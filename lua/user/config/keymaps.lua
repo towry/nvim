@@ -427,9 +427,25 @@ local function setup_basic()
     silent = true,
   })
 
-  set('n', '<localleader>m', ':TryMake', {
+  set('n', '<localleader>M', ':TryMake', {
     desc = 'Run make',
     silent = false,
+  })
+  set('n', '<localleader>m', ':OverMake', {
+    desc = 'Run makeprg',
+    silent = false,
+  })
+
+  set('n', '<A-q>', function()
+    local current_win_is_qf = vim.bo.filetype == 'qf'
+    if current_win_is_qf then
+      vim.cmd('wincmd p')
+    else
+      -- focus on qf window
+      vim.cmd('copen')
+    end
+  end, {
+    desc = 'Switch between quickfix window and previous window',
   })
 
   set('n', '<leader>rl', function()

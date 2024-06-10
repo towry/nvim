@@ -451,4 +451,9 @@ plug({
       -- vim.cmd([[hi TreesitterContextBottom gui=underline guisp=Grey]])
     end,
   },
+
+  {
+    'ziglang/zig.vim',
+    ft = { 'zig', 'zir' },
+  },
 })

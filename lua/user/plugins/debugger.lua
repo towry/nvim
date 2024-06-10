@@ -499,6 +499,7 @@ pack.plug({
     'OverseerClearCache',
   },
   keys = {
+    { '<localleader>o;', '<cmd>OverseerRestartLast<cr>', desc = 'Restart last task' },
     { '<localleader>oo', '<cmd>OverseerToggle<cr>', desc = 'Toggle' },
     { '<localleader>or', '<cmd>OverseerRun<cr>', desc = 'Run' },
     { '<localleader>oR', '<cmd>OverseerRunCmd<cr>', desc = 'Run shell cmd' },
@@ -516,7 +517,18 @@ pack.plug({
       '<cmd>OverseerQuickAction<cr>',
       desc = 'Run an action on the most recent task, or the task under the cursor',
     },
-    { '<localleader>ot', '<cmd>OverseerTaskAction<cr>', desc = 'Select a task to run an action on' },
+    {
+      '<localleader>ot',
+      function()
+        local ovutils = require('userlib.overseers.utils')
+        ovutils.run_action_on_tasks({
+          unique = true,
+          recent_first = true,
+        })
+      end,
+      desc = 'List tasks',
+    },
+    -- { '<localleader>ot', '<cmd>OverseerTaskAction<cr>', desc = 'Select a task to run an action on' },
     { '<localleader>oC', '<cmd>OverseerClearCache<cr>', desc = 'Clear cache' },
   },
   opts = {

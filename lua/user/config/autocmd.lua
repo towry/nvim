@@ -53,6 +53,25 @@ function M.load_on_startup()
         desc = 'Edit files with :line at the end',
       },
     },
+    {
+      { 'BufReadCmd' },
+      {
+        group = group_name,
+        pattern = { 'file:///*' },
+        nested = true,
+        callback = function(args)
+          vim.cmd.bdelete({ bang = true })
+          -- extract linenumber from the file path like `/foo/bar.txt#L123`
+          local line = args.file:match('#L(%d+)$')
+
+          vim.cmd.edit(vim.uri_to_fname(args.file))
+
+          if line then
+            vim.api.nvim_win_set_cursor(0, { tonumber(line), 0 })
+          end
+        end,
+      },
+    },
     -- +---
     {
       { 'TextYankPost' },

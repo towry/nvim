@@ -322,7 +322,7 @@ plug({
     },
     {
       '<leader>f|',
-      ':vert Oil<cr>',
+      ':pclose | vert Oil<cr>',
       desc = 'Open oil vertical',
     },
     {
@@ -331,6 +331,8 @@ plug({
         if vim.bo.buftype ~= '' then
           return
         end
+        -- otherwise error: A preview window already opened
+        vim.cmd('pclose')
         require('oil').open()
       end,
       desc = 'Open oil file browser(buf) relative to current buffer',
@@ -1101,7 +1103,6 @@ plug({
       },
       grep = {
         formatter = 'path.filename_first',
-        multiline = 1,
         winopts = {
           -- split = 'belowright new',
         },

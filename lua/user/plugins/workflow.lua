@@ -237,6 +237,7 @@ plug({
   {
     'pze/project.nvim',
     branch = 'main',
+    enabled = true,
     dev = false,
     cond = not vim.cfg.runtime__starts_as_gittool,
     name = 'project_nvim',
@@ -254,6 +255,13 @@ plug({
     end,
     opts = {
       patterns = utils.root_patterns,
+      get_patterns = function(bufnr)
+        local ft = vim.bo[bufnr].filetype
+        if ft == '' then
+          return
+        end
+        return utils.get_ft_root_patterns(ft, true)
+      end,
       --- order matters
       detection_methods = { 'pattern', 'lsp' },
       manual_mode = false,

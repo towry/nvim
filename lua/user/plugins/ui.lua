@@ -106,21 +106,6 @@ plug({
     dev = false,
     ft = 'qf',
     enabled = false,
-    keys = {
-      {
-        '<A-q>',
-        function()
-          local current_win_is_qf = vim.bo.filetype == 'qf'
-          if current_win_is_qf then
-            vim.cmd('wincmd p')
-          else
-            -- focus on qf window
-            vim.cmd('copen')
-          end
-        end,
-        desc = 'Switch between quickfix window and previous window',
-      },
-    },
     opts = {
       preview = {
         winblend = 10,

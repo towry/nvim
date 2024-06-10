@@ -1,8 +1,23 @@
 local M = {}
+local unpack = table.unpack or unpack
 
-M.root_patterns = { '.git', '.vscode', 'package.json', 'Cargo.toml', '.gitmodules', '.svn', 'pyproject.toml' }
+M.root_patterns = { '.git', '.envrc', 'package.json', 'Cargo.toml', '.gitmodules', '.svn', 'pyproject.toml' }
 --- ignore jsonls: inside package.json, it give root to parent root.
 M.root_lsp_ignore = { 'tailwindcss', 'jsonls', 'copilot', 'null-ls', 'eslint' }
+
+---@param ft string
+---@param use_default? boolean
+M.get_ft_root_patterns = function(ft, use_default)
+  local cfg = require('userlib.filetypes.config')
+  local ft_cfg = cfg[ft]
+  if not ft_cfg then
+    return use_default and M.root_patterns or nil
+  end
+  if ft_cfg.root_patterns and #ft_cfg.root_patterns > 0 then
+    return ft_cfg.root_patterns
+  end
+  return use_default and M.root_patterns or nil
+end
 
 M.file_exists = function(path)
   return vim.fn.filereadable(path) == 1
