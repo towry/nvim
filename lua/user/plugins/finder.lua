@@ -1087,6 +1087,7 @@ plug({
       },
       keymap = {
         fzf = {
+          ['ctrl-x'] = 'jump',
           ['ctrl-z'] = 'abort',
           ['ctrl-f'] = 'half-page-down',
           ['ctrl-b'] = 'half-page-up',

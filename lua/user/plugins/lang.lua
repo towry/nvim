@@ -95,7 +95,9 @@ plug({
       for input, cap in pairs(maps) do
         set({ 'o', 'x', 'n' }, input, function()
           require('nvim-treesitter-textobjects.move')[method](cap, 'textobjects')
-        end)
+        end, {
+          desc = 'TS.move: ' .. method,
+        })
       end
     end
 

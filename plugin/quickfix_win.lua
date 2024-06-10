@@ -69,7 +69,7 @@ vim.api.nvim_create_autocmd('WinClosed', {
 
         local is_special_win = buftype ~= ''
           and not vim.tbl_contains({ 'terminal' }, buftype)
-          and not vim.tbl_contains({ 'oil' }, filetype)
+          and not vim.tbl_contains({ 'oil', 'GV' }, filetype)
         if not is_special_win then
           lastwin = win
           break

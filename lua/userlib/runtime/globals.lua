@@ -4,14 +4,17 @@ _G.R = require
 
 vim.g.miniclues = {}
 
-local local_cwd = vim.uv.cwd()
+--- vim.uv.cwd can return nil
+local local_cwd = vim.uv.cwd() or vim.uv.os_homedir()
 
 ---@param loose_or_path? boolean|string
 _G.safe_cwd = function(loose_or_path)
+  local _cwd = vim.uv.cwd() or vim.uv.os_homedir()
+
   if loose_or_path == true then
-    return vim.uv.cwd()
+    return _cwd
   end
-  local cwd = (type(loose_or_path) == 'string' and loose_or_path ~= '') and loose_or_path or vim.uv.cwd()
+  local cwd = (type(loose_or_path) == 'string' and loose_or_path ~= '') and loose_or_path or _cwd
   local pathutil = require('userlib.runtime.path')
   if pathutil.is_home_dir(cwd) or pathutil.is_fs_root(cwd) then
     return local_cwd

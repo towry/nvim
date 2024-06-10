@@ -12,7 +12,7 @@ local newcwd = utils.get_root({
   pattern_start_path = cwd,
 })
 
-if newcwd ~= cwd then
+if newcwd and newcwd ~= cwd then
   if vim.cfg.runtime__starts_cwd == vim.uv.cwd() then
     vim.cmd('noau cd ' .. newcwd)
   end

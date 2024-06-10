@@ -143,13 +143,14 @@ function M.get_root(root_opts)
 
   local rootPatterns = root_opts.root_patterns
   local lsp_ignore = root_opts.lsp_ignore or {}
+  local bufnr = vim.api.nvim_get_current_buf()
   ---@type string?
-  local path = vim.api.nvim_buf_get_name(0)
+  local path = vim.api.nvim_buf_get_name(bufnr)
   path = path ~= '' and vim.uv.fs_realpath(path) or nil
   ---@type string[]
   local roots = {}
   if path and not only_pattern then
-    for _, client in pairs(vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })) do
+    for _, client in pairs(vim.lsp.get_clients({ bufnr = bufnr })) do
       if not vim.tbl_contains(lsp_ignore, client.name or '') then
         local workspace = client.config.workspace_folders
         local paths = workspace
@@ -173,7 +174,13 @@ function M.get_root(root_opts)
   ---@type string?
   local root = roots[1]
   if not root then
-    path = root_opts.pattern_start_path or (path and vim.fs.dirname(path)) or vim.uv.cwd()
+    path = root_opts.pattern_start_path and root_opts.pattern_start_path
+      or (path and vim.fs.dirname(path))
+      or vim.uv.cwd()
+    --- vim file:///xxx will not get cwd
+    if not path then
+      return
+    end
     ---@type string?
     root = vim.fs.find(rootPatterns, { path = path, upward = true })[1]
     root = root and vim.fs.dirname(root) or vim.uv.cwd()

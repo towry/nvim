@@ -54,12 +54,23 @@ function M.load_on_startup()
       },
     },
     {
+      { 'BufReadPost' },
+      {
+        group = group_name,
+        pattern = { 'package.json' },
+        command = 'set makeprg=pnpm',
+      },
+    },
+    {
       { 'BufReadCmd' },
       {
         group = group_name,
         pattern = { 'file:///*' },
         nested = true,
         callback = function(args)
+          -- FIXME: handle :123,123
+          -- local path, linecol = uri:match("^(.-)(:[%w%d]+)$")
+          -- file:///Users/foo/bar/storybook/node_modules/.pnpm/vite@5.2.12_@types+node@20.14.0_sass@1.77.4/node_modules/vite/dist/node/chunks/dep-BKbDVx1T.js:52003:46
           vim.cmd.bdelete({ bang = true })
           -- extract linenumber from the file path like `/foo/bar.txt#L123`
           local line = args.file:match('#L(%d+)$')
