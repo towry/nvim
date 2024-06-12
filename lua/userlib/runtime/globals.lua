@@ -141,6 +141,8 @@ local function get_mark(buf, lnum)
   end
 end
 
+--- FIXME: if two window opened, the marks will be also displayed on the second
+--- window.
 --- return string for statuscolumn's number
 --- https://github.com/LazyVim/LazyVim/blob/864c58cae6df28c602ecb4c94bc12a46206760aa/lua/lazyvim/util/ui.lua#L112
 Ty.stl_num = function()

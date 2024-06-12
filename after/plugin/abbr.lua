@@ -51,6 +51,7 @@ au.on_verylazy(function()
 
   setca('@mh', 'MERGE_HEAD')
   setca('@rh', 'REBASE_HEAD')
+  setca('@oh', 'ORIG_HEAD')
 
   -- +----
   -- Insert

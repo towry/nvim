@@ -1101,6 +1101,11 @@ plug({
       },
       files = {
         formatter = 'path.filename_first',
+        keymap = {
+          fzf = {
+            ['/'] = [[transform-query(echo '{fzf:query} ')]],
+          },
+        },
       },
       grep = {
         formatter = 'path.filename_first',

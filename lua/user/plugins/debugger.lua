@@ -661,7 +661,7 @@ pack.plug({
   },
   keys = {
     {
-      '<leader>rK',
+      '<leader>rMK',
       '<cmd>lua require("chainsaw").removeLogs()<cr>',
       desc = 'Remove all logs',
     },
