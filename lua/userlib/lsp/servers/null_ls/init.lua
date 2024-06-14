@@ -60,9 +60,9 @@ M.setup = function()
 
   nls.setup({
     debug = false,
-    debounce = 1500,
+    debounce = 1000,
     -- sources may not work if timeout is too short.
-    default_timeout = 1500,
+    default_timeout = 4500,
     save_after_format = false,
     sources = sources,
     update_in_insert = false,

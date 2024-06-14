@@ -17,10 +17,13 @@ plug({
     -- 'pmizio/typescript-tools.nvim',
     'pze/typescript-tools.nvim',
     dev = false,
+    enabled = false,
     config = function() end,
   },
   {
     'williamboman/mason.nvim',
+    lazy = true,
+    dependencies = { 'williamboman/mason-lspconfig.nvim' },
     cmd = { 'Mason', 'MasonInstall', 'MasonLog', 'MasonUpdate', 'MasonUninstall', 'MasonUninstallAll' },
     opts = {
       PATH = 'prepend',
@@ -38,8 +41,6 @@ plug({
     'neovim/nvim-lspconfig',
     lazy = true,
     dependencies = {
-      'williamboman/mason-lspconfig.nvim',
-      'williamboman/mason.nvim',
       {
         --- bad performance
         'hrsh7th/nvim-gtd',
@@ -53,11 +54,13 @@ plug({
     },
     config = function()
       require('user.config.options').setup_lsp()
-      require('mason')
-      require('mason-lspconfig').setup({
-        ensure_installed = vim.cfg.lsp__auto_install_servers,
-        automatic_installation = vim.cfg.lsp__automatic_installation,
-      })
+      if false then
+        require('mason')
+        require('mason-lspconfig').setup({
+          ensure_installed = vim.cfg.lsp__auto_install_servers,
+          automatic_installation = vim.cfg.lsp__automatic_installation,
+        })
+      end
 
       default_lspconfig_ui_options()
 
@@ -85,10 +88,12 @@ plug({
 
   {
     -- null-ls
-    'nvimtools/none-ls.nvim',
+    -- 'nvimtools/none-ls.nvim',
+    'pze/none-ls.nvim',
     dependencies = {
       'nvimtools/none-ls-extras.nvim',
     },
+    config = false,
     dev = false,
   },
 

@@ -138,6 +138,7 @@ pack.plug({
     dap.adapters.node2 = {
       type = 'executable',
       command = 'node',
+      -- FIXME: use nix
       args = { vim.fn.stdpath('data') .. '/mason/packages/node-debug2-adapter/out/src/nodeDebug.js' },
     }
 
@@ -145,6 +146,7 @@ pack.plug({
     dap.adapters.chrome = {
       type = 'executable',
       command = 'node',
+      -- FIXME: use nix
       args = { vim.fn.stdpath('data') .. '/mason/packages/chrome-debug-adapter/out/src/chromeDebug.js' },
     }
 
