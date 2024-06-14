@@ -65,37 +65,44 @@ pack.plug({
   {
     'lukas-reineke/indent-blankline.nvim',
     event = au.user_autocmds.FileOpenedAfter_User,
-    enabled = false,
+    main = 'ibl',
     config = function()
-      require('indent_blankline').setup({
-        use_treesitter = true,
-        show_current_context = false,
-        buftype_exclude = {
-          'nofile',
-          'terminal',
+      require('ibl').setup({
+        enabled = true,
+        debounce = 350,
+        scope = {
+          enabled = true,
         },
-        filetype_exclude = {
-          'help',
-          'startify',
-          'Outline',
-          'alpha',
-          'dashboard',
-          'lazy',
-          'neogitstatus',
-          'NvimTree',
-          'neo-tree',
-          'Trouble',
+        indent = {
+          char = '│',
+        },
+        exclude = {
+          buftypes = {
+            'nofile',
+            'terminal',
+          },
+          filetypes = {
+            'help',
+            'Outline',
+            'alpha',
+            'dashboard',
+            'lazy',
+            'neogitstatus',
+            'NvimTree',
+            'neo-tree',
+            'Trouble',
+          },
         },
       })
 
-      au.register_event(au.events.AfterColorschemeChanged, {
-        name = 'update_indentline_hl',
-        immediate = true,
-        callback = function()
-          -- local utils = require('userlib.runtime.utils')
-          -- vim.api.nvim_set_hl(0, 'IndentBlanklineChar', utils.fg("FloatBorder"))
-        end,
-      })
+      -- au.register_event(au.events.AfterColorschemeChanged, {
+      --   name = 'update_indentline_hl',
+      --   immediate = true,
+      --   callback = function()
+      --     -- local utils = require('userlib.runtime.utils')
+      --     -- vim.api.nvim_set_hl(0, 'IndentBlanklineChar', utils.fg("FloatBorder"))
+      --   end,
+      -- })
     end,
   },
 
@@ -104,7 +111,7 @@ pack.plug({
   {
     'echasnovski/mini.indentscope',
     event = au.user_autocmds.FileOpenedAfter_User,
-    enabled = true,
+    enabled = false,
     config = function()
       require('mini.indentscope').setup({
         symbol = '│',

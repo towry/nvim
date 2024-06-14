@@ -436,7 +436,7 @@ plug({
     event = 'BufReadPost',
     enabled = vim.cfg.lang__treesitter_next,
     opts = {
-      max_lines = 1,
+      max_lines = 2,
       mode = 'cursor',
       line_numbers = true,
       min_window_height = 4,
