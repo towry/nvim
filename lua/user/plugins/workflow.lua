@@ -304,10 +304,26 @@ plug({
       'ZellijNavigateDown',
     },
   },
+
   {
-    'mrjones2014/smart-splits.nvim',
-    -- 'pze/smart-splits.nvim',
-    dev = false,
+    'https://git.sr.ht/~swaits/zellij-nav.nvim',
+    lazy = true,
+    enabled = vim.cfg.runtime__is_zellij,
+    event = 'VeryLazy',
+    keys = {
+      { '<c-h>', '<cmd>ZellijNavigateLeft<cr>', { silent = true, desc = 'navigate left' } },
+      { '<c-j>', '<cmd>ZellijNavigateDown<cr>', { silent = true, desc = 'navigate down' } },
+      { '<c-k>', '<cmd>ZellijNavigateUp<cr>', { silent = true, desc = 'navigate up' } },
+      { '<c-l>', '<cmd>ZellijNavigateRight<cr>', { silent = true, desc = 'navigate right' } },
+    },
+    opts = {},
+  },
+
+  {
+    -- 'mrjones2014/smart-splits.nvim',
+    'pze/smart-splits.nvim',
+    dev = true,
+    enabled = not vim.cfg.runtime__is_zellij,
     -- lazy = vim.cfg.runtime__starts_as_gittool and false or true,
     event = 'VeryLazy',
     keys = {

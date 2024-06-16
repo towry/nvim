@@ -2,6 +2,9 @@
 
 local plug = require('userlib.runtime.pack').plug
 local au = require('userlib.runtime.au')
+local pathutil = require('userlib.runtime.path')
+
+local masonInstallDir = pathutil.path_join(vim.fn.stdpath('data'), 'mason')
 
 local function default_lspconfig_ui_options()
   local present, win = pcall(require, 'lspconfig.ui.windows')
@@ -26,14 +29,16 @@ plug({
     dependencies = { 'williamboman/mason-lspconfig.nvim' },
     cmd = { 'Mason', 'MasonInstall', 'MasonLog', 'MasonUpdate', 'MasonUninstall', 'MasonUninstallAll' },
     opts = {
-      PATH = 'prepend',
+      install_root_dir = masonInstallDir,
+      PATH = 'skip',
+      log_level = vim.log.levels.ERROR,
       ui = {
-        -- The border to use for the UI window. Accepts same border values as |nvim_open_win()|.
         border = vim.cfg.ui__float_border,
       },
     },
     init = function()
-      vim.env.PATH = vim.env.HOME .. '/.local/share/nvim/mason/bin' .. ':' .. vim.env.PATH
+      local masonBinDir = pathutil.path_join(masonInstallDir, 'bin')
+      vim.env.PATH = vim.env.PATH .. ':' .. masonBinDir
     end,
   },
 
@@ -132,70 +137,102 @@ plug({
     },
     -- https://github.com/mrcjkb/rustaceanvim
     init = function()
-      vim.g.rustaceanvim = {
-        -- Plugin configuration
-        tools = {},
-        -- LSP configuration
-        server = {
-          on_attach = function(client, bufnr)
-            -- you can also put keymaps in here
-          end,
-          default_settings = {
-            ['rust-analyzer'] = {
-              cargo = {
-                allFeatures = true,
-                loadOutDirsFromCheck = true,
-                runBuildScripts = true,
-              },
-              checkOnSave = {
-                allFeatures = true,
-                command = 'clippy',
-                extraArgs = { '--no-deps' },
-              },
-              inlayHints = {
-                bindingModeHints = { enable = true },
-                closureReturnTypeHints = { enable = true },
-                lifetimeElisionHints = { enable = true },
-                reborrowHints = { enable = true },
-              },
-              diagnostics = {
-                disabled = { 'inactive-code', 'unresolved-proc-macro' },
-              },
-              procMacro = {
-                enable = true,
-                ignored = {
-                  ['async-trait'] = { 'async_trait' },
-                  ['napi-derive'] = { 'napi' },
-                  ['async-recursion'] = { 'async_recursion' },
+      vim.g.rustaceanvim = function()
+        local cfg = require('rustaceanvim.config')
+        local dap_adapter = nil
+
+        if vim.cfg.codelldb_path then
+          local liblldb_path = vim.fn.fnamemodify(vim.cfg.liblldb_path, ':r')
+          liblldb_path = (liblldb_path .. '%s'):format(vim.uv.os_uname().sysname == 'Linux' and '.so' or '.dylib')
+          dap_adapter = cfg.get_codelldb_adapter(vim.cfg.codelldb_path, liblldb_path)
+        end
+
+        return {
+          -- Plugin configuration
+          tools = {},
+          -- LSP configuration
+          server = {
+            on_attach = function(client, bufnr)
+              vim.keymap.set('n', '<leader>ca', function()
+                vim.cmd.RustLsp('codeAction')
+              end, { silent = true, buffer = bufnr })
+              vim.keymap.set('n', '<localleader>dl', function()
+                vim.cmd.RustLsp('debuggables')
+              end, { buffer = bufnr })
+              vim.keymap.set('n', '<localleader>rl', function()
+                vim.cmd.RustLsp('runnables')
+              end, { buffer = bufnr })
+
+              local rustcfg = require('dap').configurations.rust or {}
+              table.insert(rustcfg, {
+                name = 'attache_to_process',
+                type = 'codelldb',
+                request = 'attach',
+                pid = require('dap.utils').pick_process,
+                args = {},
+                cwd = '${workspaceFolder}',
+              })
+              require('dap').configurations.rust = rustcfg
+            end,
+            default_settings = {
+              ['rust-analyzer'] = {
+                cargo = {
+                  allFeatures = true,
+                  loadOutDirsFromCheck = true,
+                  runBuildScripts = true,
                 },
-              },
-              files = {
-                excludeDirs = {
-                  '.direnv',
-                  'target',
-                  'js',
-                  'node_modules',
-                  'assets',
-                  'ci',
-                  'data',
-                  'docs',
-                  'store-metadata',
-                  '.gitlab',
-                  '.vscode',
-                  '.git',
+                checkOnSave = {
+                  allFeatures = true,
+                  command = 'clippy',
+                  extraArgs = { '--no-deps' },
                 },
-              },
-              completion = {
-                postfix = {
-                  enable = false,
+                inlayHints = {
+                  bindingModeHints = { enable = true },
+                  closureReturnTypeHints = { enable = true },
+                  lifetimeElisionHints = { enable = true },
+                  reborrowHints = { enable = true },
+                },
+                diagnostics = {
+                  disabled = { 'inactive-code', 'unresolved-proc-macro' },
+                },
+                procMacro = {
+                  enable = true,
+                  ignored = {
+                    ['async-trait'] = { 'async_trait' },
+                    ['napi-derive'] = { 'napi' },
+                    ['async-recursion'] = { 'async_recursion' },
+                  },
+                },
+                files = {
+                  excludeDirs = {
+                    '.direnv',
+                    'target',
+                    'js',
+                    'node_modules',
+                    'assets',
+                    'ci',
+                    'data',
+                    'docs',
+                    'store-metadata',
+                    '.gitlab',
+                    '.vscode',
+                    '.git',
+                  },
+                },
+                completion = {
+                  postfix = {
+                    enable = false,
+                  },
                 },
               },
             },
           },
-        },
-        -- DAP configuration
-        dap = {},
-      }
+          -- DAP configuration
+          dap = {
+            adapter = dap_adapter,
+          },
+        }
+      end
     end,
     event = 'BufReadPre Cargo.toml,*.rs',
   },

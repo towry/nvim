@@ -29,7 +29,6 @@ end, { noremap = true, desc = 'Run bacon on workspace root' })
 
 if not (vim.b.is_big_file and vim.g.vscode) then
   require('userlib.keymaps.neotest').attach()
-  require('userlib.keymaps.dap').attach()
 end
 
 if vim.cfg.edit__cmp_provider == 'coc' then
