@@ -17,12 +17,16 @@ plug({
   'echasnovski/mini.surround',
   version = '*',
   event = au.user_autocmds.FileOpened_User,
+  keys = {
+    { 'z]', desc = 'Mini surround find right' },
+    { 'z[', desc = 'Mini surround find left' },
+  },
   opts = {
     mappings = {
       add = 'ys',
       delete = 'ds',
-      find = 's]',
-      find_left = 's[',
+      find = 'z]',
+      find_left = 'z[',
       highlight = '',
       replace = 'cs',
       update_n_lines = '',
@@ -93,10 +97,11 @@ plug({
             },
           })
         end,
+        nowait = true,
         desc = 'Flash',
       },
       {
-        'sk',
+        '[s',
         mode = { 'n' },
         function()
           require('flash').jump({
@@ -110,7 +115,7 @@ plug({
         desc = 'Flash up',
       },
       {
-        'sj',
+        ']s',
         mode = { 'n' },
         function()
           require('flash').jump({

@@ -3,7 +3,6 @@ local o = vim.opt
 local g = vim.g
 
 function M.startup()
-  o.includeexpr = "substitute(v:fname,'\\.','/','g')"
   o.winbar = ''
   o.autowrite = true
   o.startofline = false -- cursor start of line when scroll
@@ -163,7 +162,7 @@ function M.init_interface()
   o.listchars:append('nbsp:␣')
   o.listchars:append('precedes:«')
   -- o.listchars:append('trail:-')
-  vim.o.statuscolumn = '%#SignColumn#%s%{%v:lua.Ty.stl_num()%}%{v:lua.Ty.stl_foldlevel()}'
+  vim.o.statuscolumn = '%#SignColumn#%s%l%{v:lua.Ty.stl_foldlevel()}'
   -- o.laststatus = 3 --- Have a global statusline at the bottom instead of one for each window
   -- o.formatoptions:append {
   --   r = true, -- Automatically insert comment leader after <Enter> in Insert mode.

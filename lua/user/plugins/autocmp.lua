@@ -978,7 +978,7 @@ pack.plug({
   cmd = { 'NewSnippet', 'EditSnippet' },
   config = function()
     require('scissors').setup({
-      snippetDir = vim.fn.stdpath('config') .. '/user-snippets',
+      snippetDir = vim.fn.stdpath('config') .. '/snippets',
       jsonFormatter = vim.fn.executable('jq') == 1 and 'jq' or 'none',
     })
 

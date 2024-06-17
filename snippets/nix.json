@@ -1,0 +1,15 @@
+{
+  "nixpkgs-stable-inputs + flake-nixpkgs": {
+    "body": "nixpkgs-stable.url = \"github:nixos/nixpkgs?ref=24.05\";",
+    "prefix": [
+      "nixpkgs-stable-inputs",
+      "flake-nixpkgs"
+    ]
+  },
+  "nixpkgs-unstable-url": {
+    "body": "github:nixos/nixpkgs?ref=nixpkgs-unstable",
+    "prefix": [
+      "nixpkgs-unstable-url"
+    ]
+  }
+}
