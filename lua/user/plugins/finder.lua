@@ -926,7 +926,7 @@ plug({
       silent = true,
     },
     {
-      '<C-x><C-e>',
+      '<C-x><C-[>',
       function()
         require('userlib.snippets').fzf_complete_snippet()
       end,

@@ -245,8 +245,8 @@ create_cmd('OverMake', function(params)
       {
         'on_output_quickfix',
         open = params.bang,
-        open_on_match = true,
-        open_on_exit = 'failure',
+        open_on_match = false,
+        -- open_on_exit = 'failure',
         tail = false,
         open_height = 8,
       },

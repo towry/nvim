@@ -11,5 +11,17 @@
     "prefix": [
       "nixpkgs-unstable-url"
     ]
+  },
+  "nixpkgs-stable-url": {
+    "body": "github:nixos/nixpkgs?ref=24.05",
+    "prefix": [
+      "nixpkgs-stable-url"
+    ]
+  },
+  "inputs-follows-nixpkgs": {
+    "body": "inputs.${1:nixpkgs}.follows = \"${2:nixpkgs}\";",
+    "prefix": [
+      "inputs-follows-nixpkgs"
+    ]
   }
 }

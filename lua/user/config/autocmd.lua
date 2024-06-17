@@ -196,16 +196,17 @@ function M.load_on_startup()
         end),
       },
     },
-    -- {
-    --   { 'BufReadPost' },
-    --   {
-    --     group = '_clear_fugitive_bufs',
-    --     pattern = 'fugitive://*',
-    --     callback = function()
-    --       vim.cmd('set bufhidden=delete')
-    --     end,
-    --   },
-    -- },
+    {
+      { 'BufReadPost' },
+      {
+        group = '_clear_fugitive_bufs',
+        pattern = 'fugitive://*',
+        callback = function()
+          vim.cmd('set bufhidden=')
+          vim.cmd('set nohidden')
+        end,
+      },
+    },
     {
       { 'BufWinEnter' },
       {

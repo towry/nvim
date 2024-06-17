@@ -448,6 +448,23 @@ plug({
     },
     keys = {
       {
+        'zw',
+        function()
+          local win = require('window-picker').pick_window({
+            selection_chars = '123456789ABCDEFGHIJKLMN',
+            autoselect_one = false,
+            include_current_win = true,
+            hint = 'floating-big-letter',
+            prompt_message = 'Focus window: ',
+          })
+          if not win then
+            return
+          end
+          vim.api.nvim_set_current_win(win)
+        end,
+        desc = 'Focus a window',
+      },
+      {
         '<leader>bm',
         function()
           local buf = vim.api.nvim_get_current_buf()

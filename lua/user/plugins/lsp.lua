@@ -182,9 +182,10 @@ plug({
                   runBuildScripts = true,
                 },
                 checkOnSave = {
+                  enable = false,
                   allFeatures = true,
                   command = 'clippy',
-                  extraArgs = { '--no-deps' },
+                  extraArgs = { '--no-deps', '--target-dir', 'target/check' },
                 },
                 inlayHints = {
                   bindingModeHints = { enable = true },

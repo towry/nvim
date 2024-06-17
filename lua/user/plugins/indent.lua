@@ -71,7 +71,11 @@ pack.plug({
         enabled = true,
         debounce = 350,
         scope = {
+          -- IblScope
           enabled = true,
+          char = '┃',
+          show_start = true,
+          show_exact_scope = true,
         },
         indent = {
           char = '│',
