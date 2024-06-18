@@ -431,7 +431,7 @@ plug({
         desc = 'Prev hunk',
       },
     },
-    event = au.user_autocmds.FileOpenedAfter_User,
+    event = 'VeryLazy',
     config = function()
       local gitsigns_current_blame_delay = 0
       local autocmd = require('userlib.runtime.au')

@@ -122,6 +122,7 @@ function M.setup_keybinding(client, buffer)
       opts({ desc = _('search workspace symbols') })
     )
   end
+  set('n', '<leader>cy', func_call([[lsp_document_symbols()]]), opts({ desc = _('search symbol in current document') }))
 
   -- Code actions.
   if support(ms.textDocument_codeAction) then

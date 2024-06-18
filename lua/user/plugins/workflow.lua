@@ -320,9 +320,9 @@ plug({
   },
 
   {
-    -- 'mrjones2014/smart-splits.nvim',
-    'pze/smart-splits.nvim',
-    dev = true,
+    'mrjones2014/smart-splits.nvim',
+    -- 'pze/smart-splits.nvim',
+    -- dev = true,
     enabled = not vim.cfg.runtime__is_zellij,
     -- lazy = vim.cfg.runtime__starts_as_gittool and false or true,
     event = 'VeryLazy',
