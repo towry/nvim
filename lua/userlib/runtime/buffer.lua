@@ -350,7 +350,7 @@ M.edit_alt_buf = function()
   if not altnr or altnr < 1 then
     return
   end
-  if not vim.api.nvim_buf_is_loaded(altnr) then
+  if not vim.api.nvim_buf_is_valid(altnr) then
     -- buf is deleted but not wipped out
     ---@diagnostic disable-next-line: cast-local-type
     altnr = M.next_bufnr()
