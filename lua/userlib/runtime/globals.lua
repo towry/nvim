@@ -179,7 +179,12 @@ Ty.stl_relative_bufname = function(buf)
   if relative == fullname then
     relative = vim.fn.fnamemodify(fullname, ([[:s?%s?%s?]]):format(vim.cfg.runtime__starts_cwd, ''))
   end
-  return relative
+  if relative == '' or not relative then
+    return ''
+  end
+  local tail = vim.fn.fnamemodify(relative, ':t')
+  local root = vim.fn.fnamemodify(relative, ':h')
+  return string.format('%s│%s', tail, root)
 end
 
 --- "│"

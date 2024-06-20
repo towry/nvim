@@ -22,7 +22,7 @@ plug({
         IndentLine = { link = 'IndentBlanklineChar' },
         IndentLineCurrent = { link = 'IndentBlanklineContextChar' },
         StatusLine = { bg = colors.theme.syn.fun, fg = colors.theme.ui.bg_m3 },
-        StatusLineNC = { bg = colors.theme.ui.bg_m3, fg = colors.theme.ui.fg_dim },
+        StatusLineNC = { bg = colors.theme.ui.whitespace, fg = colors.theme.ui.fg_dim },
         TelescopeNormal = { link = 'NormalFloat' },
         TelescopeBorder = { link = 'FloatBorder' },
         TelescopeSelection = { link = 'QuickFixLine' },
