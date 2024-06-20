@@ -486,6 +486,7 @@ plug({
 
   {
     'kwkarlwang/bufjump.nvim',
+    enabled = false,
     keys = {
       {
         -- super + i
@@ -756,19 +757,6 @@ plug({
   },
   init = function()
     vim.g.BufSurfIgnore = ',Fidget'
-  end,
-})
-
-plug({
-  'jlanzarotta/bufexplorer',
-  cmd = {
-    'ToggleBufExplorer',
-    'BufExplorerVerticalSplit',
-    'BufExplorerHorizontalSplit',
-    'BufExplorer',
-  },
-  init = function()
-    vim.g.bufExplorerDisableDefaultKeyMapping = 1
   end,
 })
 

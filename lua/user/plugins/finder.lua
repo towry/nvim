@@ -223,7 +223,7 @@ plug({
     --- fix issue when opening nvim inside terminal
     default_file_explorer = not vim.env.NVIM,
     columns = {
-      -- 'icon',
+      'icon',
     },
     keymaps = {
       ['g?'] = 'actions.show_help',
