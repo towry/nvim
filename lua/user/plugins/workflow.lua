@@ -237,6 +237,7 @@ plug({
   {
     'pze/project.nvim',
     branch = 'main',
+    enabled = true,
     dev = false,
     cond = not vim.cfg.runtime__starts_as_gittool,
     name = 'project_nvim',
@@ -254,6 +255,13 @@ plug({
     end,
     opts = {
       patterns = utils.root_patterns,
+      get_patterns = function(bufnr)
+        local ft = vim.bo[bufnr].filetype
+        if ft == '' then
+          return
+        end
+        return utils.get_ft_root_patterns(ft, true)
+      end,
       --- order matters
       detection_methods = { 'pattern', 'lsp' },
       manual_mode = false,
@@ -296,10 +304,26 @@ plug({
       'ZellijNavigateDown',
     },
   },
+
+  {
+    'https://git.sr.ht/~swaits/zellij-nav.nvim',
+    lazy = true,
+    enabled = vim.cfg.runtime__is_zellij,
+    event = 'VeryLazy',
+    keys = {
+      { '<c-h>', '<cmd>ZellijNavigateLeft<cr>', { silent = true, desc = 'navigate left' } },
+      { '<c-j>', '<cmd>ZellijNavigateDown<cr>', { silent = true, desc = 'navigate down' } },
+      { '<c-k>', '<cmd>ZellijNavigateUp<cr>', { silent = true, desc = 'navigate up' } },
+      { '<c-l>', '<cmd>ZellijNavigateRight<cr>', { silent = true, desc = 'navigate right' } },
+    },
+    opts = {},
+  },
+
   {
     'mrjones2014/smart-splits.nvim',
     -- 'pze/smart-splits.nvim',
-    dev = false,
+    -- dev = true,
+    enabled = not vim.cfg.runtime__is_zellij,
     -- lazy = vim.cfg.runtime__starts_as_gittool and false or true,
     event = 'VeryLazy',
     keys = {
@@ -424,6 +448,23 @@ plug({
     },
     keys = {
       {
+        'zw',
+        function()
+          local win = require('window-picker').pick_window({
+            selection_chars = '123456789ABCDEFGHIJKLMN',
+            autoselect_one = false,
+            include_current_win = true,
+            hint = 'floating-big-letter',
+            prompt_message = 'Focus window: ',
+          })
+          if not win then
+            return
+          end
+          vim.api.nvim_set_current_win(win)
+        end,
+        desc = 'Focus a window',
+      },
+      {
         '<leader>bm',
         function()
           local buf = vim.api.nvim_get_current_buf()
@@ -445,6 +486,7 @@ plug({
 
   {
     'kwkarlwang/bufjump.nvim',
+    enabled = false,
     keys = {
       {
         -- super + i
@@ -719,19 +761,6 @@ plug({
 })
 
 plug({
-  'jlanzarotta/bufexplorer',
-  cmd = {
-    'ToggleBufExplorer',
-    'BufExplorerVerticalSplit',
-    'BufExplorerHorizontalSplit',
-    'BufExplorer',
-  },
-  init = function()
-    vim.g.bufExplorerDisableDefaultKeyMapping = 1
-  end,
-})
-
-plug({
   'chrisgrieser/nvim-early-retirement',
   event = 'VeryLazy',
   --- disabled because it affect the jumplist.
@@ -751,5 +780,29 @@ plug({
   event = 'CmdlineEnter',
   opts = {
     split_type = 'split',
+  },
+})
+
+plug({
+  'toppair/reach.nvim',
+  keys = {
+    {
+      '<localleader>,',
+      function()
+        require('reach').buffers({})
+      end,
+      desc = 'List buffers',
+    },
+  },
+
+  opts = {
+    show_current = true,
+    actions = {
+      split = '-',
+      vertsplit = '|',
+      tabsplit = ']',
+      delete = '<Space>',
+      priority = '=',
+    },
   },
 })

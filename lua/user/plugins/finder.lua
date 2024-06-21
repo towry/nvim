@@ -5,7 +5,7 @@ local pickers_mod = 'userlib.telescope.pickers'
 local fzf_mod = 'userlib.fzflua'
 local au = require('userlib.runtime.au')
 
-local BufferListKey = '<Localleader>,'
+local BufferListKey = '<Localleader>bb'
 
 plug({
   'mangelozzi/rgflow.nvim',
@@ -76,7 +76,7 @@ plug({
         require('rgflow').open(
           vim.fn.expand('<cword>'),
           vim.b.grep_flags or require('userlib.finder').get_grep_flags_with_glob(),
-          vim.t.Cwd or vim.uv.cwd(),
+          vim.t.CwdLocked and vim.t.Cwd or vim.uv.cwd(),
           {
             custom_start = function(pattern, flags, path)
               require('userlib.fzflua').grep({ cwd = path, query = pattern, rg_opts = flags })
@@ -95,7 +95,7 @@ plug({
         require('rgflow').open(
           first_line,
           vim.b.grep_flags or require('userlib.finder').get_grep_flags_with_glob(),
-          vim.t.Cwd or vim.uv.cwd(),
+          vim.t.CwdLocked and vim.t.Cwd or vim.uv.cwd(),
           {
             custom_start = function(pattern, flags, path)
               require('userlib.fzflua').grep({ cwd = path, query = pattern, rg_opts = flags })
@@ -223,7 +223,7 @@ plug({
     --- fix issue when opening nvim inside terminal
     default_file_explorer = not vim.env.NVIM,
     columns = {
-      -- 'icon',
+      'icon',
     },
     keymaps = {
       ['g?'] = 'actions.show_help',
@@ -322,7 +322,7 @@ plug({
     },
     {
       '<leader>f|',
-      ':vert Oil<cr>',
+      ':pclose | vert Oil<cr>',
       desc = 'Open oil vertical',
     },
     {
@@ -331,6 +331,8 @@ plug({
         if vim.bo.buftype ~= '' then
           return
         end
+        -- otherwise error: A preview window already opened
+        vim.cmd('pclose')
         require('oil').open()
       end,
       desc = 'Open oil file browser(buf) relative to current buffer',
@@ -924,7 +926,7 @@ plug({
       silent = true,
     },
     {
-      '<C-x><C-e>',
+      '<C-x><C-[>',
       function()
         require('userlib.snippets').fzf_complete_snippet()
       end,
@@ -1025,7 +1027,7 @@ plug({
         local text = isNormal and '' or Ty.buf_vtext()
 
         require('userlib.fzflua').grep({
-          cwd = vim.t.Cwd or vim.uv.cwd(),
+          cwd = vim.t.CwdLocked and vim.t.Cwd or vim.uv.cwd(),
           query = text,
         })
       end,
@@ -1034,7 +1036,10 @@ plug({
     },
     {
       '<leader>fw',
-      cmd_modcall(fzf_mod, [[grep({ cwd = vim.t.Cwd or vim.uv.cwd(), query = vim.fn.expand("<cword>") }, true)]]),
+      cmd_modcall(
+        fzf_mod,
+        [[grep({ cwd = vim.t.CwdLocked and vim.t.Cwd or vim.uv.cwd(), query = vim.fn.expand("<cword>") }, true)]]
+      ),
       desc = 'Grep search word in current project',
     },
     {
@@ -1085,6 +1090,7 @@ plug({
       },
       keymap = {
         fzf = {
+          ['ctrl-x'] = 'jump',
           ['ctrl-z'] = 'abort',
           ['ctrl-f'] = 'half-page-down',
           ['ctrl-b'] = 'half-page-up',
@@ -1098,10 +1104,14 @@ plug({
       },
       files = {
         formatter = 'path.filename_first',
+        keymap = {
+          fzf = {
+            ['/'] = [[transform-query(echo '{fzf:query} ')]],
+          },
+        },
       },
       grep = {
         formatter = 'path.filename_first',
-        multiline = 1,
         winopts = {
           -- split = 'belowright new',
         },

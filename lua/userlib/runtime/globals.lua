@@ -4,14 +4,17 @@ _G.R = require
 
 vim.g.miniclues = {}
 
-local local_cwd = vim.uv.cwd()
+--- vim.uv.cwd can return nil
+local local_cwd = vim.uv.cwd() or vim.uv.os_homedir()
 
 ---@param loose_or_path? boolean|string
 _G.safe_cwd = function(loose_or_path)
+  local _cwd = vim.uv.cwd() or vim.uv.os_homedir()
+
   if loose_or_path == true then
-    return vim.uv.cwd()
+    return _cwd
   end
-  local cwd = (type(loose_or_path) == 'string' and loose_or_path ~= '') and loose_or_path or vim.uv.cwd()
+  local cwd = (type(loose_or_path) == 'string' and loose_or_path ~= '') and loose_or_path or _cwd
   local pathutil = require('userlib.runtime.path')
   if pathutil.is_home_dir(cwd) or pathutil.is_fs_root(cwd) then
     return local_cwd
@@ -138,6 +141,8 @@ local function get_mark(buf, lnum)
   end
 end
 
+--- FIXME: if two window opened, the marks will be also displayed on the second
+--- window.
 --- return string for statuscolumn's number
 --- https://github.com/LazyVim/LazyVim/blob/864c58cae6df28c602ecb4c94bc12a46206760aa/lua/lazyvim/util/ui.lua#L112
 Ty.stl_num = function()
@@ -174,7 +179,12 @@ Ty.stl_relative_bufname = function(buf)
   if relative == fullname then
     relative = vim.fn.fnamemodify(fullname, ([[:s?%s?%s?]]):format(vim.cfg.runtime__starts_cwd, ''))
   end
-  return relative
+  if relative == '' or not relative then
+    return ''
+  end
+  local tail = vim.fn.fnamemodify(relative, ':t')
+  local root = vim.fn.fnamemodify(relative, ':h')
+  return string.format('%s│%s', tail, root)
 end
 
 --- "│"

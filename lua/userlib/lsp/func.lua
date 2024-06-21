@@ -33,10 +33,12 @@ end
 --- @param next boolean "next or prev"
 --- @param severity string {"ERROR"|"WARN"|"INFO"|"HINT"}
 function M.diagnostic_goto(next, severity)
-  local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
   local sev = severity and vim.diagnostic.severity[severity] or nil
 
-  go({ severity = sev })
+  vim.diagnostic.jump({
+    count = next and 1 or -1,
+    severity = sev,
+  })
 end
 
 -- gtd have bad perf.
@@ -60,9 +62,22 @@ function M.lsp_workspace_symbol(initial_query)
     -- <c-g> to toggle live query
     fzf.lsp_live_workspace_symbols({
       query = initial_query,
-      fullscreen = false,
+      winopts = {
+        fullscreen = false,
+      },
       no_autoclose = true,
       cwd_only = true,
+    })
+  end)
+end
+
+function M.lsp_document_symbols(initial_query)
+  utils.use_plugin('fzf-lua', function(fzf)
+    fzf.lsp_document_symbols({
+      query = initial_query,
+      winopts = {
+        fullscreen = false,
+      },
     })
   end)
 end

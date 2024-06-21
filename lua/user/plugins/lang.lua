@@ -95,7 +95,9 @@ plug({
       for input, cap in pairs(maps) do
         set({ 'o', 'x', 'n' }, input, function()
           require('nvim-treesitter-textobjects.move')[method](cap, 'textobjects')
-        end)
+        end, {
+          desc = 'TS.move: ' .. method,
+        })
       end
     end
 
@@ -434,7 +436,7 @@ plug({
     event = 'BufReadPost',
     enabled = vim.cfg.lang__treesitter_next,
     opts = {
-      max_lines = 1,
+      max_lines = 2,
       mode = 'cursor',
       line_numbers = true,
       min_window_height = 4,
@@ -450,5 +452,10 @@ plug({
       require('treesitter-context').setup(opts)
       -- vim.cmd([[hi TreesitterContextBottom gui=underline guisp=Grey]])
     end,
+  },
+
+  {
+    'ziglang/zig.vim',
+    ft = { 'zig', 'zir' },
   },
 })

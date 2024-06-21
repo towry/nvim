@@ -2,6 +2,7 @@
 -- formatter and linter is configured by null-ls
 -- use vim.filettype.add to manage pattern and filetype.
 
+--- TODO: add root_patterns
 return {
   ['css'] = {
     lspconfig = { 'cssls', 'null-ls' },
@@ -48,6 +49,10 @@ return {
   },
   ['nix'] = {
     lspconfig = { 'nil_ls' },
+  },
+  ['zig'] = {
+    lspconfig = { 'zls' },
+    root_patterns = { 'zls.json', 'build.zig', '.git' },
   },
   ['toml'] = {
     lspconfig = { 'taplo' },

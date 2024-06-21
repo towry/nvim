@@ -8,6 +8,12 @@
     "snippets": [
       {
         "language": [
+          "nix"
+        ],
+        "path": "./nix.json"
+      },
+      {
+        "language": [
           "all"
         ],
         "path": "./all.json"

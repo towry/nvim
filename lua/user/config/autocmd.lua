@@ -53,6 +53,36 @@ function M.load_on_startup()
         desc = 'Edit files with :line at the end',
       },
     },
+    {
+      { 'BufReadPost' },
+      {
+        group = group_name,
+        pattern = { 'package.json' },
+        command = 'set makeprg=pnpm',
+      },
+    },
+    {
+      { 'BufReadCmd' },
+      {
+        group = group_name,
+        pattern = { 'file:///*' },
+        nested = true,
+        callback = function(args)
+          -- FIXME: handle :123,123
+          -- local path, linecol = uri:match("^(.-)(:[%w%d]+)$")
+          -- file:///Users/foo/bar/storybook/node_modules/.pnpm/vite@5.2.12_@types+node@20.14.0_sass@1.77.4/node_modules/vite/dist/node/chunks/dep-BKbDVx1T.js:52003:46
+          vim.cmd.bdelete({ bang = true })
+          -- extract linenumber from the file path like `/foo/bar.txt#L123`
+          local line = args.file:match('#L(%d+)$')
+
+          vim.cmd.edit(vim.uri_to_fname(args.file))
+
+          if line then
+            vim.api.nvim_win_set_cursor(0, { tonumber(line), 0 })
+          end
+        end,
+      },
+    },
     -- +---
     {
       { 'TextYankPost' },
@@ -166,13 +196,15 @@ function M.load_on_startup()
         end),
       },
     },
+    ----- causing fugitive delete the wrong buffer
     -- {
     --   { 'BufReadPost' },
     --   {
     --     group = '_clear_fugitive_bufs',
     --     pattern = 'fugitive://*',
     --     callback = function()
-    --       vim.cmd('set bufhidden=delete')
+    --       vim.cmd('setlocal bufhidden=')
+    --       vim.cmd('setlocal nohidden')
     --     end,
     --   },
     -- },

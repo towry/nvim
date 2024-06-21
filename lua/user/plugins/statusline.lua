@@ -37,6 +37,7 @@ plug({
           comp.rpad(comp.LastExCommand),
           comp.rpad(comp.Copilot),
           comp.rpad(comp.Codeium),
+          comp.rpad(comp.TrailStackNameCurrent),
           comp.rpad({
             comp.Branch,
             comp.GitStatus,

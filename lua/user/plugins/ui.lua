@@ -106,21 +106,6 @@ plug({
     dev = false,
     ft = 'qf',
     enabled = false,
-    keys = {
-      {
-        '<A-q>',
-        function()
-          local current_win_is_qf = vim.bo.filetype == 'qf'
-          if current_win_is_qf then
-            vim.cmd('wincmd p')
-          else
-            -- focus on qf window
-            vim.cmd('copen')
-          end
-        end,
-        desc = 'Switch between quickfix window and previous window',
-      },
-    },
     opts = {
       preview = {
         winblend = 10,
@@ -133,8 +118,7 @@ plug({
   {
     'folke/trouble.nvim',
     ft = 'qf',
-    branch = 'dev',
-    enabled = false,
+    enabled = true,
     cmd = {
       'Trouble',
       'TroubleClose',
@@ -142,22 +126,5 @@ plug({
       'TroubleRefresh',
     },
     opts = {},
-    init = function()
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = 'qf',
-        callback = function(args)
-          local trouble = require('trouble')
-          local bufnr = args.buf
-          vim.defer_fn(function()
-            local winid = vim.fn.bufwinid(bufnr)
-            if winid == -1 then
-              return
-            end
-            vim.api.nvim_win_close(winid, true)
-            trouble.open('quickfix')
-          end, 0)
-        end,
-      })
-    end,
   },
 })

@@ -1044,7 +1044,25 @@ local CocStl = {
   provider = '%{coc#status()}',
 }
 
+local TrailStackNameCurrent = {
+  condition = function()
+    return package.loaded['trailblazer'] ~= nil
+  end,
+  provider = function()
+    local cur = require('trailblazer.trails.stacks').current_trail_mark_stack_name
+    if cur == 'default' then
+      return ''
+    end
+    return 'T:' .. cur
+  end,
+  update = {
+    'User',
+    pattern = 'TrailBlazerCurrentTrailMarkStackChanged',
+  },
+}
+
 return {
+  TrailStackNameCurrent = TrailStackNameCurrent,
   TerminalStatusline = TerminalStatusline,
   HelpFileName = HelpFileName,
   ViMode = ViMode,

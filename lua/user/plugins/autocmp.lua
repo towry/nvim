@@ -128,7 +128,7 @@ pack.plug({
       require('luasnip.loaders.from_vscode').lazy_load({
         paths = {
           vim.fn.stdpath('config') .. '/snippets',
-          vim.uv.cwd() .. '/.vscode',
+          safe_cwd() .. '/.vscode',
           Path.path_join(vim.cfg.runtime__starts_cwd, '.vscode'),
         },
       })
@@ -978,7 +978,7 @@ pack.plug({
   cmd = { 'NewSnippet', 'EditSnippet' },
   config = function()
     require('scissors').setup({
-      snippetDir = vim.fn.stdpath('config') .. '/user-snippets',
+      snippetDir = vim.fn.stdpath('config') .. '/snippets',
       jsonFormatter = vim.fn.executable('jq') == 1 and 'jq' or 'none',
     })
 

@@ -167,7 +167,7 @@ create_cmd('TryMake', function(opts)
     end
     local mk = pathlib.join(dir, 'Makefile')
     if vim.fn.filereadable(mk) == 1 then
-      local cwd = vim.uv.cwd()
+      cwd = vim.uv.cwd()
       vim.cmd.lcd(dir)
       local cmds = string.format([[OverMake%s -f %s%s]], opts.bang and '!' or '', mk, target)
       vim.cmd(cmds)
@@ -242,15 +242,19 @@ create_cmd('OverMake', function(params)
   local task = require('overseer').new_task({
     cmd = cmd,
     components = {
-      { 'on_output_quickfix', open = not params.bang, open_height = 8 },
+      {
+        'on_output_quickfix',
+        open = params.bang,
+        open_on_match = false,
+        -- open_on_exit = 'failure',
+        tail = false,
+        open_height = 8,
+      },
       'default',
     },
   })
 
   task:start()
-  vim.schedule(function()
-    vim.api.nvim_echo({ { 'OverMake: ', 'InfoFloat' }, { cmd, 'Comment' } }, true, {})
-  end)
 end, {
   desc = 'Run your makeprg as an Overseer task',
   nargs = '*',
@@ -445,7 +449,7 @@ create_cmd('GitOpenTwowayBlame', function(params)
   local line1 = params.line1
   local line2 = params.line2
 
-  local rev = params.args
+  local rev = vim.trim(params.args)
   if not rev then
     vim.notify('git revision is required', vim.log.levels.ERROR)
     return

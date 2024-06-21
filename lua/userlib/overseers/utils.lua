@@ -95,4 +95,35 @@ function M.open_vsplit_last()
   end
 end
 
+function M.run_action_on_tasks(opts)
+  local task_list = require('overseer.task_list')
+  local tasks = task_list.list_tasks({ unique = true, recent_first = true })
+  local action_util = require('overseer.action_util')
+
+  if #tasks == 0 then
+    vim.notify('No tasks available', vim.log.levels.WARN)
+    return
+  elseif #tasks == 1 then
+    action_util.run_task_action(tasks[1])
+    return
+  end
+
+  local task_summaries = vim.tbl_map(function(task)
+    return { name = task.name, id = task.id }
+  end, tasks)
+
+  vim.ui.select(task_summaries, {
+    prompt = 'Select task',
+    kind = 'overseer_task',
+    format_item = function(task)
+      return task.name
+    end,
+  }, function(task_summary)
+    if task_summary then
+      local task = assert(task_list.get(task_summary.id))
+      action_util.run_task_action(task)
+    end
+  end)
+end
+
 return M

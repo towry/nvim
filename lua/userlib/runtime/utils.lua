@@ -1,8 +1,23 @@
 local M = {}
+local unpack = table.unpack or unpack
 
-M.root_patterns = { '.git', '.vscode', 'package.json', 'Cargo.toml', '.gitmodules', '.svn', 'pyproject.toml' }
+M.root_patterns = { '.git', '.envrc', 'package.json', 'Cargo.toml', '.gitmodules', '.svn', 'pyproject.toml' }
 --- ignore jsonls: inside package.json, it give root to parent root.
 M.root_lsp_ignore = { 'tailwindcss', 'jsonls', 'copilot', 'null-ls', 'eslint' }
+
+---@param ft string
+---@param use_default? boolean
+M.get_ft_root_patterns = function(ft, use_default)
+  local cfg = require('userlib.filetypes.config')
+  local ft_cfg = cfg[ft]
+  if not ft_cfg then
+    return use_default and M.root_patterns or nil
+  end
+  if ft_cfg.root_patterns and #ft_cfg.root_patterns > 0 then
+    return ft_cfg.root_patterns
+  end
+  return use_default and M.root_patterns or nil
+end
 
 M.file_exists = function(path)
   return vim.fn.filereadable(path) == 1
@@ -128,13 +143,14 @@ function M.get_root(root_opts)
 
   local rootPatterns = root_opts.root_patterns
   local lsp_ignore = root_opts.lsp_ignore or {}
+  local bufnr = vim.api.nvim_get_current_buf()
   ---@type string?
-  local path = vim.api.nvim_buf_get_name(0)
+  local path = vim.api.nvim_buf_get_name(bufnr)
   path = path ~= '' and vim.uv.fs_realpath(path) or nil
   ---@type string[]
   local roots = {}
   if path and not only_pattern then
-    for _, client in pairs(vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })) do
+    for _, client in pairs(vim.lsp.get_clients({ bufnr = bufnr })) do
       if not vim.tbl_contains(lsp_ignore, client.name or '') then
         local workspace = client.config.workspace_folders
         local paths = workspace
@@ -158,7 +174,13 @@ function M.get_root(root_opts)
   ---@type string?
   local root = roots[1]
   if not root then
-    path = root_opts.pattern_start_path or (path and vim.fs.dirname(path)) or vim.uv.cwd()
+    path = root_opts.pattern_start_path and root_opts.pattern_start_path
+      or (path and vim.fs.dirname(path))
+      or vim.uv.cwd()
+    --- vim file:///xxx will not get cwd
+    if not path then
+      return
+    end
     ---@type string?
     root = vim.fs.find(rootPatterns, { path = path, upward = true })[1]
     root = root and vim.fs.dirname(root) or vim.uv.cwd()
