@@ -15,6 +15,40 @@ local function get_available_stacks(notify)
   return available_stacks
 end
 
+local function switch_trail_mark_stack_picker()
+  local stacks = get_available_stacks(false)
+
+  if #stacks <= 0 then
+    return
+  end
+
+  vim.ui.select(stacks, {
+    prompt = 'Select trail stack',
+  }, function(selected)
+    if not selected or selected == '' then
+      return
+    end
+    require('trailblazer').switch_trail_mark_stack(selected, true)
+  end)
+end
+
+local function select_trail_stack_to_delete_picker()
+  local stacks = get_available_stacks(false)
+
+  if #stacks <= 0 then
+    return
+  end
+
+  vim.ui.select(stacks, {
+    prompt = '!Delete trail stack',
+  }, function(selected)
+    if not selected or selected == '' then
+      return
+    end
+    require('trailblazer').delete_trail_mark_stack(selected, true)
+  end)
+end
+
 local function add_trail_mark_stack()
   vim.ui.input({ prompt = 'stack name: ' }, function(name)
     if not name then
@@ -70,46 +104,70 @@ return plug({
     { '<leader>vn', '<cmd>TrailBlazerMoveToNearest<cr>', desc = 'Trail nearest' },
     -- { '<leader>vt',      desc = 'Toggle trail mark list' },
     { '<leader>vx', '<cmd>TrailBlazerDeleteAllTrailMarks<cr>', desc = 'clear all marks' },
-    { '<leader>vX', '<cmd>TrailBlazerDeleteAllTrailMarks 0<cr>', desc = 'clear all marks in buffer' },
+    { '<localleader>vx', '<cmd>TrailBlazerDeleteAllTrailMarks 0<cr>', desc = 'clear all marks in buffer' },
     { '<leader>va', add_trail_mark_stack, desc = 'Add stack' },
     { '<leader>vc', '<cmd>TrailBlazerMoveToTrailMarkCursor<cr>', desc = 'Move to cursor mark' },
     { '<leader>vd', delete_trail_mark_stack, desc = 'Delete stack' },
     {
-      '<leader>vg',
+      '<leader>vgl',
       function()
         get_available_stacks(true)
       end,
       desc = 'Get stacks',
+    },
+    {
+      '<leader>v-',
+      switch_trail_mark_stack_picker,
+      desc = 'Switch trail stack',
+    },
+    {
+      '<leader>vgd',
+      select_trail_stack_to_delete_picker,
+      desc = 'Delete stack picker',
+    },
+    {
+      '<leader>vg]',
+      function()
+        require('trailblazer').switch_to_next_trail_mark_stack(nil, true)
+      end,
+      desc = 'Switch stack to next',
+    },
+    {
+      '<leader>vg[',
+      function()
+        require('trailblazer').switch_to_previous_trail_mark_stack(nil, true)
+      end,
+      desc = 'Switch stack to previous',
     },
     { '<leader>vs', '<Cmd>TrailBlazerSaveSession<CR>', desc = 'Save session' },
     { '<leader>vl', '<Cmd>TrailBlazerLoadSession<CR>', desc = 'Load session' },
   },
   init = au.schedule_lazy(function()
     local set = vim.keymap.set
-    set('n', '<leader>vb', '<cmd>TrailBlazerTrackBack 0<cr>', {
+    set('n', '<localleader>vb', '<cmd>TrailBlazerTrackBack 0<cr>', {
       silent = false,
       desc = 'Trace back in buffer',
     })
-    set('n', '<leader>vv', '<cmd>TrailBlazerTrackBack<cr>', {
+    set('n', '<leader>vb', '<cmd>TrailBlazerTrackBack<cr>', {
       silent = false,
       desc = 'Trace back global',
     })
-    set('n', '<leader>v]', '<cmd>TrailBlazerPeekMoveNextDown %<cr>', {
+    set('n', '<localleader>v]', '<cmd>TrailBlazerPeekMoveNextDown %<cr>', {
       silent = true,
       noremap = true,
       desc = 'Trail next in buf',
     })
-    set('n', '<leader>v[', '<cmd>TrailBlazerPeekMovePreviousUp %<cr>', {
+    set('n', '<localleader>v[', '<cmd>TrailBlazerPeekMovePreviousUp %<cr>', {
       silent = true,
       noremap = true,
       desc = 'Trail pre in buf',
     })
-    set('n', '<leader>v.', '<cmd>TrailBlazerPeekMoveNextDown<cr>', {
+    set('n', '<leader>v]', '<cmd>TrailBlazerPeekMoveNextDown<cr>', {
       silent = true,
       noremap = true,
       desc = 'Trail next global',
     })
-    set('n', '<leader>v,', '<cmd>TrailBlazerPeekMovePreviousUp<cr>', {
+    set('n', '<leader>v[', '<cmd>TrailBlazerPeekMovePreviousUp<cr>', {
       silent = true,
       noremap = true,
       desc = 'Trail pre global',
@@ -143,9 +201,9 @@ return plug({
       },
       current_trail_mark_mode = 'global_chron_buf_switch_group_chron',
       verbose_trail_mark_select = false,
-      mark_symbol = '▢',
-      newest_mark_symbol = '■',
-      cursor_mark_symbol = '↔',
+      mark_symbol = '󰓎',
+      newest_mark_symbol = '󰔟',
+      cursor_mark_symbol = '',
       next_mark_symbol = '▶',
       previous_mark_symbol = '◀',
       multiple_mark_symbol_counters_enabled = false,
