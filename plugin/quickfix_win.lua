@@ -97,5 +97,7 @@ vim.api.nvim_create_autocmd('WinClosed', {
       exclude_bufnr = tonumber(ctx.buf),
     })
     vim.notify('No special window become last', vim.log.levels.INFO)
+    -- focus the speicial window
+    vim.cmd('wincmd p')
   end,
 })

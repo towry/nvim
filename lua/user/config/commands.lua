@@ -449,7 +449,7 @@ create_cmd('GitOpenTwowayBlame', function(params)
   local line1 = params.line1
   local line2 = params.line2
 
-  local rev = params.args
+  local rev = vim.trim(params.args)
   if not rev then
     vim.notify('git revision is required', vim.log.levels.ERROR)
     return
