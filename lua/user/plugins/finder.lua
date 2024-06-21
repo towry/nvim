@@ -5,7 +5,7 @@ local pickers_mod = 'userlib.telescope.pickers'
 local fzf_mod = 'userlib.fzflua'
 local au = require('userlib.runtime.au')
 
-local BufferListKey = '<Localleader>,'
+local BufferListKey = '<Localleader>bb'
 
 plug({
   'mangelozzi/rgflow.nvim',

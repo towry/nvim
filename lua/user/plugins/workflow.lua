@@ -782,3 +782,27 @@ plug({
     split_type = 'split',
   },
 })
+
+plug({
+  'toppair/reach.nvim',
+  keys = {
+    {
+      '<localleader>,',
+      function()
+        require('reach').buffers({})
+      end,
+      desc = 'List buffers',
+    },
+  },
+
+  opts = {
+    show_current = true,
+    actions = {
+      split = '-',
+      vertsplit = '|',
+      tabsplit = ']',
+      delete = '<Space>',
+      priority = '=',
+    },
+  },
+})
