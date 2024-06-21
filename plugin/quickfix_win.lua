@@ -7,7 +7,7 @@ do
   vim.g.quickfix_win_loaded = 1
 end
 
----@param opts {height:number,width: number,exclude_bufnr?:number,vertical:boolean,split:'left'|'right'|'above'|'below'}
+---@param opts {focus_winid?:number,height:number,width: number,exclude_bufnr?:number,vertical:boolean,split:'left'|'right'|'above'|'below'}
 local function create_window_at_top_and_focus(opts)
   local exclude_bufnr = opts.exclude_bufnr
   local vertical = opts.vertical
@@ -28,6 +28,11 @@ local function create_window_at_top_and_focus(opts)
     end
     vim.cmd('resize ' .. opts.height)
     Ty.resize.record()
+
+    -- so user can close this speicial win
+    if opts.focus_winid then
+      vim.api.nvim_set_current_win(opts.focus_winid)
+    end
   end)
 end
 
@@ -57,8 +62,10 @@ vim.api.nvim_create_autocmd('WinClosed', {
 
     local lastwin = nil
     local wincount = 0
+    local speicial_win = nil
     for _, win in ipairs(wc_excluded_float_win) do
       if vim.fn.exists('&winfixbuf') == 1 and vim.api.nvim_get_option_value('winfixbuf', { win = win }) then
+        speicial_win = win
         wincount = wincount + 1
       elseif win == curwin then
         -- pass
@@ -74,6 +81,7 @@ vim.api.nvim_create_autocmd('WinClosed', {
           lastwin = win
           break
         end
+        speicial_win = win
         wincount = wincount + 1
       end
     end
@@ -95,9 +103,8 @@ vim.api.nvim_create_autocmd('WinClosed', {
       height = curwin_height,
       vertical = curwin_config.vertical,
       exclude_bufnr = tonumber(ctx.buf),
+      focus_winid = speicial_win,
     })
     vim.notify('No special window become last', vim.log.levels.INFO)
-    -- focus the speicial window
-    vim.cmd('wincmd p')
   end,
 })
