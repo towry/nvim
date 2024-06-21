@@ -196,17 +196,18 @@ function M.load_on_startup()
         end),
       },
     },
-    {
-      { 'BufReadPost' },
-      {
-        group = '_clear_fugitive_bufs',
-        pattern = 'fugitive://*',
-        callback = function()
-          vim.cmd('setlocal bufhidden=')
-          vim.cmd('setlocal nohidden')
-        end,
-      },
-    },
+    ----- causing fugitive delete the wrong buffer
+    -- {
+    --   { 'BufReadPost' },
+    --   {
+    --     group = '_clear_fugitive_bufs',
+    --     pattern = 'fugitive://*',
+    --     callback = function()
+    --       vim.cmd('setlocal bufhidden=')
+    --       vim.cmd('setlocal nohidden')
+    --     end,
+    --   },
+    -- },
     {
       { 'BufWinEnter' },
       {
