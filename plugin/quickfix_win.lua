@@ -23,11 +23,10 @@ local function create_window_at_top_and_focus(opts)
   Ty.resize.after_open()
 
   vim.schedule(function()
-    if not opts.height or opts.vertical then
-      return
+    if opts.height and not opts.vertical then
+      vim.cmd('resize ' .. opts.height)
+      Ty.resize.record()
     end
-    vim.cmd('resize ' .. opts.height)
-    Ty.resize.record()
 
     -- so user can close this speicial win
     if opts.focus_winid then
@@ -105,6 +104,6 @@ vim.api.nvim_create_autocmd('WinClosed', {
       exclude_bufnr = tonumber(ctx.buf),
       focus_winid = speicial_win,
     })
-    vim.notify('No special window become last', vim.log.levels.INFO)
+    vim.notify('No special window is allowed to become last', vim.log.levels.INFO)
   end,
 })
