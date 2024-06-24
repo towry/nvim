@@ -64,4 +64,8 @@ return {
     lspconfig = { 'yamlls' },
     treesitter = { 'yaml' },
   },
+  ['cpp'] = {
+    lspconfig = { 'clangd' },
+    filetypes = { 'c', 'cpp' },
+  },
 }

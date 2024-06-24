@@ -446,17 +446,14 @@ plug({
       -- ╰──────────────────────────────────────────────────────────╯
       signs.setup({
         signs = {
-          add = { hl = 'GitSignsAdd', text = '┃', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
-          change = { hl = 'GitSignsChange', text = '┃', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
-          delete = { hl = 'GitSignsDelete', text = '┃', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-          topdelete = { hl = 'GitSignsDelete', text = '┃', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
+          add = { text = '┃' },
+          change = { text = '┃' },
+          delete = { text = '┃' },
+          topdelete = { text = '┃' },
           changedelete = {
-            hl = 'GitSignsChangeNr',
             text = '┃',
-            numhl = 'GitSignsChangeNr',
-            linehl = 'GitSignsChangeLn',
           },
-          untracked = { hl = 'GitSignsAddNr', text = '┃', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
+          untracked = { text = '┃' },
         },
         signcolumn = not vim.cfg.runtime__starts_as_gittool, -- Toggle with `:Gitsigns toggle_signs`
         numhl = vim.cfg.runtime__starts_as_gittool, -- Toggle with `:Gitsigns toggle_numhl`
@@ -466,7 +463,7 @@ plug({
           interval = vim.cfg.runtime__starts_as_gittool and 3000 or 1000,
           follow_files = true,
         },
-        attach_to_untracked = true,
+        attach_to_untracked = false,
         current_line_blame = vim.cfg.runtime__starts_as_gittool, -- Toggle with `:Gitsigns toggle_current_line_blame`
         current_line_blame_opts = {
           virt_text = true,
@@ -486,9 +483,6 @@ plug({
           relative = 'cursor',
           row = 0,
           col = 1,
-        },
-        yadm = {
-          enable = false,
         },
         on_attach = function(bufnr)
           autocmd.fire_event(autocmd.events.onGitsignsAttach, {
