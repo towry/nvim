@@ -1162,8 +1162,8 @@ plug({
       previewers = {
         builtin = {
           syntax_limit_l = 20000,
-          syntax_limit_b = 1024 * 100,
-          limit_b = 1024 * 100,
+          syntax_limit_b = 1024 * 200,
+          limit_b = 1024 * 200,
         },
       },
       fzf_colors = {
