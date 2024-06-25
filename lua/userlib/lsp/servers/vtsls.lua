@@ -64,4 +64,12 @@ local settings = {
 
 M.settings = settings
 
+M.filetypes = {
+  'javascript',
+  'typescript',
+  'javascriptreact',
+  'typescriptreact',
+  'vue',
+}
+
 return M
