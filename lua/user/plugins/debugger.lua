@@ -42,7 +42,7 @@ pack.plug({
       desc = 'Toggle Breakpoint',
     },
     {
-      '<leader>dc',
+      '<leader>dC',
       function()
         require('dap').continue()
       end,
@@ -56,7 +56,7 @@ pack.plug({
       desc = 'Run with Args',
     },
     {
-      '<leader>dC',
+      '<leader>dc',
       function()
         require('dap').run_to_cursor()
       end,
@@ -98,14 +98,14 @@ pack.plug({
       desc = 'Run Last',
     },
     {
-      '<leader>do',
+      '<leader>dO',
       function()
         require('dap').step_out()
       end,
       desc = 'Step Out',
     },
     {
-      '<leader>dO',
+      '<leader>do',
       function()
         require('dap').step_over()
       end,
@@ -369,19 +369,36 @@ pack.plug({
     {
       '<leader>df',
       function()
-        require('dapui').float_element()
+        require('dapui').float_element(nil, { enter = true })
       end,
       desc = 'Open floating',
     },
   },
   dependencies = { 'nvim-neotest/nvim-nio' },
-  opts = {},
+  opts = {
+    mappings = {
+      -- Edit an expression or set the value of a child variable.
+      edit = 'E',
+      expand = { '<CR>', 'e' },
+      -- Jump to a place within the stack frame.
+      open = 'o',
+      -- Remove the watched expression.
+      remove = 'D',
+      -- Send expression to REPL
+      repl = 'r',
+      --  Toggle displaying subtle frames
+      toggle = 't',
+    },
+  },
   config = function(_, opts)
     local dap = require('dap')
     local dapui = require('dapui')
     dapui.setup(opts)
-    dap.listeners.after.event_initialized['dapui_config'] = function()
-      dapui.open({})
+    dap.listeners.before.attach.dapui_config = function()
+      dapui.open()
+    end
+    dap.listeners.before.launch.dapui_config = function()
+      dapui.open()
     end
     dap.listeners.before.event_terminated['dapui_config'] = function()
       dapui.close({})
@@ -463,7 +480,7 @@ pack.plug({
       },
       floating = {
         border = 'single',
-        max_height = 0.6,
+        max_height = 0.8,
         max_width = 0.9,
       },
       highlights = {
