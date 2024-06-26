@@ -209,9 +209,28 @@ pack.plug({
       }
     end
 
+    dap.configurations.cpp = {
+      {
+        name = '[debug] Run debug',
+        type = 'codelldb',
+        request = 'launch',
+        program = function()
+          local prg = vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+          if not prg or vim.fn.executable(prg) == 0 then
+            return
+          end
+          return prg
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+      },
+    }
+    dap.configurations.c = dap.configurations.cpp
+    dap.configurations.rust = dap.configurations.cpp
+
     local rustcfg = dap.configurations.rust or {}
     table.insert(rustcfg, {
-      name = 'attache_to_process',
+      name = '[debug] Attach to process',
       type = 'codelldb',
       request = 'attach',
       pid = require('dap.utils').pick_process,

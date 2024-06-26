@@ -123,7 +123,7 @@ function M.init_interface()
   o.lazyredraw = true --- lazyredraw on startup
   o.wildmenu = true
   -- longest: CmdA, CmdB, 'Cmd' is longest match
-  o.wildmode = { 'full', 'full:longest', 'list:full', 'lastused' } -- Command-line completion mode
+  o.wildmode = { 'list:longest', 'list:full' } -- Command-line completion mode
   o.wildignorecase = true
   o.wildoptions = { 'fuzzy', 'pum', 'tagfile' }
   o.wildignore = { '*.pyc', '*node_modules/**', '.git/**', '*.DS_Store', '*.min.js', '*.obj' } --- Don't search inside Node.js modules (works for gutentag)

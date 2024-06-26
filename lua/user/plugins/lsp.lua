@@ -157,13 +157,11 @@ plug({
             default_settings = {
               ['rust-analyzer'] = {
                 cargo = {
-                  allFeatures = true,
                   loadOutDirsFromCheck = true,
                   runBuildScripts = true,
                 },
                 checkOnSave = {
                   enable = false,
-                  allFeatures = true,
                   command = 'clippy',
                   extraArgs = { '--no-deps', '--target-dir', 'target/check' },
                 },
