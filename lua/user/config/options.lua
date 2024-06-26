@@ -123,13 +123,13 @@ function M.init_interface()
   o.lazyredraw = true --- lazyredraw on startup
   o.wildmenu = true
   -- longest: CmdA, CmdB, 'Cmd' is longest match
-  o.wildmode = { 'list:longest', 'list:full' } -- Command-line completion mode
+  o.wildmode = { 'longest:full', 'list:longest', 'list:full' } -- Command-line completion mode
   o.wildignorecase = true
-  o.wildoptions = { 'fuzzy', 'pum', 'tagfile' }
+  o.wildoptions = { 'fuzzy', 'tagfile' }
   o.wildignore = { '*.pyc', '*node_modules/**', '.git/**', '*.DS_Store', '*.min.js', '*.obj' } --- Don't search inside Node.js modules (works for gutentag)
   o.cmdheight = 1 --- Give more space for displaying messages
   o.cmdwinheight = 10 -- the cmd window height
-  o.completeopt = 'menu,noinsert,noselect,preview,popup,fuzzy' --- Better autocompletion
+  o.completeopt = 'menu,noinsert,noselect,popup,fuzzy' --- Better autocompletion
   o.complete:append('kspell') -- Add spellcheck options for autocomplete
   -- scan current and included files.
   -- o.complete:append('i')
