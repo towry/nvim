@@ -209,7 +209,17 @@ pack.plug({
       }
     end
 
-    -- TODO: move to ftplugin.
+    local rustcfg = dap.configurations.rust or {}
+    table.insert(rustcfg, {
+      name = 'attache_to_process',
+      type = 'codelldb',
+      request = 'attach',
+      pid = require('dap.utils').pick_process,
+      args = {},
+      cwd = '${workspaceFolder}',
+    })
+    dap.configurations.rust = rustcfg
+
     dap.configurations.javascript = {
       {
         type = 'node2',

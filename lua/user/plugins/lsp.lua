@@ -138,15 +138,6 @@ plug({
     -- https://github.com/mrcjkb/rustaceanvim
     init = function()
       vim.g.rustaceanvim = function()
-        local cfg = require('rustaceanvim.config')
-        local dap_adapter = nil
-
-        if vim.cfg.codelldb_path then
-          local liblldb_path = vim.fn.fnamemodify(vim.cfg.liblldb_path, ':r')
-          liblldb_path = (liblldb_path .. '%s'):format(vim.uv.os_uname().sysname == 'Linux' and '.so' or '.dylib')
-          dap_adapter = cfg.get_codelldb_adapter(vim.cfg.codelldb_path, liblldb_path)
-        end
-
         return {
           -- Plugin configuration
           tools = {},
@@ -162,17 +153,6 @@ plug({
               vim.keymap.set('n', '<localleader>rl', function()
                 vim.cmd.RustLsp('runnables')
               end, { buffer = bufnr })
-
-              local rustcfg = require('dap').configurations.rust or {}
-              table.insert(rustcfg, {
-                name = 'attache_to_process',
-                type = 'codelldb',
-                request = 'attach',
-                pid = require('dap.utils').pick_process,
-                args = {},
-                cwd = '${workspaceFolder}',
-              })
-              require('dap').configurations.rust = rustcfg
             end,
             default_settings = {
               ['rust-analyzer'] = {
@@ -227,10 +207,6 @@ plug({
                 },
               },
             },
-          },
-          -- DAP configuration
-          dap = {
-            adapter = dap_adapter,
           },
         }
       end
