@@ -12,9 +12,8 @@ pack.plug({
   {
     'ms-jpq/coq_nvim',
     branch = 'coq',
-    build = function(plug)
-      local cwd = plug.dir
-      vim.cmd(string.format('tabe term://%s//%s', cwd, 'make .venv/bin/mypy ; python3 -u -m coq deps'))
+    build = function()
+      vim.cmd('COQdeps')
     end,
     cmd = {
       'COQhelp',
