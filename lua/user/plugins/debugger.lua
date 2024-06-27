@@ -211,10 +211,30 @@ pack.plug({
       return vim.json.decode(json.json_strip_comments(str))
     end
 
-    -- ╭──────────────────────────────────────────────────────────╮
-    -- │ Adapters                                                 │
-    -- ╰──────────────────────────────────────────────────────────╯
     -- NODE / TYPESCRIPT
+    if vim.cfg.dap_firefox_debug_adapter_path then
+      dap.adapters.firefox = {
+        type = 'executable',
+        command = 'node',
+        args = {
+          vim.cfg.dap_firefox_debug_adapter_path,
+        },
+      }
+    end
+
+    local firefox_localhost_config = {
+      name = 'Debug with firefox localhost',
+      type = 'firefox',
+      -- request = 'launch',
+      request = 'attach',
+      reAttach = true,
+      sourceMaps = true,
+      url = 'http://localhost/',
+      webRoot = '${workspaceFolder}',
+      -- see https://github.com/firefox-devtools/vscode-firefox-debug?tab=readme-ov-file#overriding-configuration-properties-in-your-settings
+      -- TODO: change to var
+      -- firefoxExecutable = '/Applications/Firefox.app/Contents/MacOS/firefox',
+    }
     dap.adapters.node2 = {
       type = 'executable',
       command = 'node',
@@ -276,6 +296,7 @@ pack.plug({
     dap.configurations.rust = rustcfg
 
     dap.configurations.javascript = {
+      firefox_localhost_config,
       {
         type = 'node2',
         request = 'launch',
@@ -286,8 +307,10 @@ pack.plug({
         console = 'integratedTerminal',
       },
     }
+    dap.configurations.typescript = dap.configurations.javascript
 
-    dap.configurations.javascript = {
+    dap.configurations.javascriptreact = {
+      firefox_localhost_config,
       {
         type = 'chrome',
         request = 'attach',
@@ -300,20 +323,12 @@ pack.plug({
       },
     }
 
-    dap.configurations.javascriptreact = {
-      {
-        type = 'chrome',
-        request = 'attach',
-        program = '${file}',
-        cwd = utils.get_root(),
-        sourceMaps = true,
-        protocol = 'inspector',
-        port = 9222,
-        webRoot = '${workspaceFolder}',
-      },
+    dap.configurations.vue = {
+      firefox_localhost_config,
     }
 
     dap.configurations.typescriptreact = {
+      firefox_localhost_config,
       {
         type = 'chrome',
         request = 'attach',
