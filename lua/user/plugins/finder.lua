@@ -5,7 +5,7 @@ local pickers_mod = 'userlib.telescope.pickers'
 local fzf_mod = 'userlib.fzflua'
 local au = require('userlib.runtime.au')
 
-local BufferListKey = '<Localleader>bb'
+local BufferListKey = '<Localleader>,'
 
 plug({
   'mangelozzi/rgflow.nvim',
@@ -1161,9 +1161,9 @@ plug({
       },
       previewers = {
         builtin = {
-          syntax_limit_l = 8000,
-          syntax_limit_b = 1024 * 50,
-          limit_b = 1024 * 50,
+          syntax_limit_l = 20000,
+          syntax_limit_b = 1024 * 200,
+          limit_b = 1024 * 200,
         },
       },
       fzf_colors = {

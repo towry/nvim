@@ -204,6 +204,7 @@ function M.buffers_or_recent(no_buffers)
   local bufopts = {
     filename_first = true,
     sort_lastused = true,
+    show_unloaded = false,
     winopts = {
       height = 0.3,
       fullscreen = false,

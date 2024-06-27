@@ -26,7 +26,6 @@ pack.plug({
     'rcarriga/nvim-dap-ui',
   },
   keys = {
-    { '<leader>d', '', desc = '+debug', mode = { 'n', 'v' } },
     {
       '<leader>dB',
       function()
@@ -56,7 +55,7 @@ pack.plug({
       desc = 'Run with Args',
     },
     {
-      '<leader>dC',
+      '<leader>d<space>',
       function()
         require('dap').run_to_cursor()
       end,
@@ -77,14 +76,14 @@ pack.plug({
       desc = 'Step Into',
     },
     {
-      '<leader>dj',
+      '<leader>d]',
       function()
         require('dap').down()
       end,
       desc = 'Down',
     },
     {
-      '<leader>dk',
+      '<leader>d[',
       function()
         require('dap').up()
       end,
@@ -98,18 +97,25 @@ pack.plug({
       desc = 'Run Last',
     },
     {
-      '<leader>do',
+      '<leader>dO',
       function()
         require('dap').step_out()
       end,
       desc = 'Step Out',
     },
     {
-      '<leader>dO',
+      '<leader>do',
       function()
         require('dap').step_over()
       end,
       desc = 'Step Over',
+    },
+    {
+      '<leader>dz',
+      function()
+        require('dap').step_back()
+      end,
+      desc = 'Step back (may fail)',
     },
     {
       '<leader>dp',
@@ -140,11 +146,34 @@ pack.plug({
       desc = 'Terminate',
     },
     {
-      '<leader>dw',
+      '<leader>dh',
       function()
         require('dap.ui.widgets').hover()
       end,
-      desc = 'Widgets',
+      desc = 'Widgets hover',
+    },
+    {
+      '<leader>dp',
+      function()
+        require('dap.ui.widgets').preview()
+      end,
+      desc = 'Widgets preview',
+    },
+    {
+      '<leader>dwf',
+      function()
+        local widgets = require('dap.ui.widgets')
+        widgets.centered_float(widgets.frames)
+      end,
+      desc = 'Widgets frames float',
+    },
+    {
+      '<leader>dws',
+      function()
+        local widgets = require('dap.ui.widgets')
+        widgets.centered_float(widgets.scopes)
+      end,
+      desc = 'Widgets scopes float',
     },
     {
       '<leader>dL',
@@ -158,8 +187,16 @@ pack.plug({
     local dap = require('dap')
     local utils = require('userlib.runtime.utils')
 
-    vim.api.nvim_set_hl(0, 'DapStoppedLine', { default = true, link = 'Visual' })
+    --- terminal to launch the debugtee
+    dap.defaults.fallback.force_external_terminal = true
+    dap.defaults.fallback.external_terminal = {
+      command = vim.cfg.alacritty_bin or 'alacritty',
+      args = { '-e' },
+    }
+    dap.defaults.fallback.terminal_win_cmd = 'tabnew'
+    dap.defaults.fallback.focus_terminal = true
 
+    vim.api.nvim_set_hl(0, 'DapStoppedLine', { default = true, link = 'Visual' })
     for name, sign in pairs(require('userlib.icons.dap')) do
       sign = type(sign) == 'table' and sign or { sign }
       vim.fn.sign_define(
@@ -167,7 +204,6 @@ pack.plug({
         { text = sign[1], texthl = sign[2] or 'DiagnosticInfo', linehl = sign[3], numhl = sign[3] }
       )
     end
-
     -- setup dap config by VsCode launch.json file
     local vscode = require('dap.ext.vscode')
     local json = require('plenary.json')
@@ -209,7 +245,36 @@ pack.plug({
       }
     end
 
-    -- TODO: move to ftplugin.
+    dap.configurations.cpp = {
+      {
+        name = '[debug] Run debug',
+        type = 'codelldb',
+        request = 'launch',
+        program = function()
+          local prg = vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file') or ''
+          if not prg or vim.trim(prg) == '' then
+            return dap.ABORT
+          end
+          return prg
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+      },
+    }
+    dap.configurations.c = dap.configurations.cpp
+    dap.configurations.rust = dap.configurations.cpp
+
+    local rustcfg = dap.configurations.rust or {}
+    table.insert(rustcfg, {
+      name = '[debug] Attach to process',
+      type = 'codelldb',
+      request = 'attach',
+      pid = require('dap.utils').pick_process,
+      args = {},
+      cwd = '${workspaceFolder}',
+    })
+    dap.configurations.rust = rustcfg
+
     dap.configurations.javascript = {
       {
         type = 'node2',
@@ -340,19 +405,36 @@ pack.plug({
     {
       '<leader>df',
       function()
-        require('dapui').float_element()
+        require('dapui').float_element(nil, { enter = true })
       end,
       desc = 'Open floating',
     },
   },
   dependencies = { 'nvim-neotest/nvim-nio' },
-  opts = {},
+  opts = {
+    mappings = {
+      -- Edit an expression or set the value of a child variable.
+      edit = 'E',
+      expand = { '<CR>', 'e' },
+      -- Jump to a place within the stack frame.
+      open = 'o',
+      -- Remove the watched expression.
+      remove = 'D',
+      -- Send expression to REPL
+      repl = 'r',
+      --  Toggle displaying subtle frames
+      toggle = 't',
+    },
+  },
   config = function(_, opts)
     local dap = require('dap')
     local dapui = require('dapui')
     dapui.setup(opts)
-    dap.listeners.after.event_initialized['dapui_config'] = function()
-      dapui.open({})
+    dap.listeners.before.attach.dapui_config = function()
+      dapui.open()
+    end
+    dap.listeners.before.launch.dapui_config = function()
+      dapui.open()
     end
     dap.listeners.before.event_terminated['dapui_config'] = function()
       dapui.close({})
@@ -434,7 +516,7 @@ pack.plug({
       },
       floating = {
         border = 'single',
-        max_height = 0.6,
+        max_height = 0.8,
         max_width = 0.9,
       },
       highlights = {

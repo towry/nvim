@@ -785,6 +785,7 @@ plug({
 
 plug({
   'toppair/reach.nvim',
+  enabled = false,
   keys = {
     {
       '<localleader>,',

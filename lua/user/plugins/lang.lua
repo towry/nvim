@@ -459,3 +459,8 @@ plug({
     ft = { 'zig', 'zir' },
   },
 })
+
+plug({
+  'pze/amber.vim',
+  filetypes = { 'amber' },
+})
