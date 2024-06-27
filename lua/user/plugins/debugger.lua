@@ -26,7 +26,6 @@ pack.plug({
     'rcarriga/nvim-dap-ui',
   },
   keys = {
-    { '<leader>d', '', desc = '+debug', mode = { 'n', 'v' } },
     {
       '<leader>dB',
       function()
@@ -42,7 +41,7 @@ pack.plug({
       desc = 'Toggle Breakpoint',
     },
     {
-      '<leader>dC',
+      '<leader>dc',
       function()
         require('dap').continue()
       end,
@@ -56,7 +55,7 @@ pack.plug({
       desc = 'Run with Args',
     },
     {
-      '<leader>dc',
+      '<leader>d<space>',
       function()
         require('dap').run_to_cursor()
       end,
@@ -77,14 +76,14 @@ pack.plug({
       desc = 'Step Into',
     },
     {
-      '<leader>dj',
+      '<leader>d]',
       function()
         require('dap').down()
       end,
       desc = 'Down',
     },
     {
-      '<leader>dk',
+      '<leader>d[',
       function()
         require('dap').up()
       end,
@@ -110,6 +109,13 @@ pack.plug({
         require('dap').step_over()
       end,
       desc = 'Step Over',
+    },
+    {
+      '<leader>dz',
+      function()
+        require('dap').step_back()
+      end,
+      desc = 'Step back (may fail)',
     },
     {
       '<leader>dp',
@@ -140,11 +146,34 @@ pack.plug({
       desc = 'Terminate',
     },
     {
-      '<leader>dw',
+      '<leader>dh',
       function()
         require('dap.ui.widgets').hover()
       end,
-      desc = 'Widgets',
+      desc = 'Widgets hover',
+    },
+    {
+      '<leader>dp',
+      function()
+        require('dap.ui.widgets').preview()
+      end,
+      desc = 'Widgets preview',
+    },
+    {
+      '<leader>dwf',
+      function()
+        local widgets = require('dap.ui.widgets')
+        widgets.centered_float(widgets.frames)
+      end,
+      desc = 'Widgets frames float',
+    },
+    {
+      '<leader>dws',
+      function()
+        local widgets = require('dap.ui.widgets')
+        widgets.centered_float(widgets.scopes)
+      end,
+      desc = 'Widgets scopes float',
     },
     {
       '<leader>dL',
@@ -158,8 +187,16 @@ pack.plug({
     local dap = require('dap')
     local utils = require('userlib.runtime.utils')
 
-    vim.api.nvim_set_hl(0, 'DapStoppedLine', { default = true, link = 'Visual' })
+    --- terminal to launch the debugtee
+    dap.defaults.fallback.force_external_terminal = true
+    dap.defaults.fallback.external_terminal = {
+      command = vim.cfg.alacritty_bin or 'alacritty',
+      args = { '-e' },
+    }
+    dap.defaults.fallback.terminal_win_cmd = 'tabnew'
+    dap.defaults.fallback.focus_terminal = true
 
+    vim.api.nvim_set_hl(0, 'DapStoppedLine', { default = true, link = 'Visual' })
     for name, sign in pairs(require('userlib.icons.dap')) do
       sign = type(sign) == 'table' and sign or { sign }
       vim.fn.sign_define(
@@ -167,7 +204,6 @@ pack.plug({
         { text = sign[1], texthl = sign[2] or 'DiagnosticInfo', linehl = sign[3], numhl = sign[3] }
       )
     end
-
     -- setup dap config by VsCode launch.json file
     local vscode = require('dap.ext.vscode')
     local json = require('plenary.json')
@@ -215,9 +251,9 @@ pack.plug({
         type = 'codelldb',
         request = 'launch',
         program = function()
-          local prg = vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-          if not prg or vim.fn.executable(prg) == 0 then
-            return
+          local prg = vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file') or ''
+          if not prg or vim.trim(prg) == '' then
+            return dap.ABORT
           end
           return prg
         end,

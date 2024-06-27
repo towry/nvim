@@ -512,6 +512,7 @@ pack.plug({
         { mode = 'n', keys = '<Leader>a', desc = '+AI Assistant' },
         { mode = 'v', keys = '<Leader>a', desc = '+AI Assistant' },
         { mode = 'x', keys = '<Leader>a', desc = '+AI Assistant' },
+        { mode = 'n', keys = '<Leader>d', desc = '+Debugger' },
         { mode = 'e', keys = '<Leader>e', desc = '+Edits' },
         { mode = 'n', keys = '<Leader>n', desc = '+Normal mode utils' },
         { mode = 'n', keys = '<Leader>q', desc = '+Quickfix|Loclist' },
@@ -558,7 +559,7 @@ pack.plug({
         { mode = 'n', keys = '<Leader>s', desc = '+Search|Replace' },
         { mode = 'x', keys = '<Leader>s', desc = '+Search|Replace' },
         { mode = 'n', keys = '<Leader>sg', desc = '+Grep' },
-        { mode = 'n', keys = '<Leader>r', desc = '+Runner|Debugger' },
+        { mode = 'n', keys = '<Leader>r', desc = '+Runner' },
         { mode = 'n', keys = '<Leader>rM', desc = '+Add console.log' },
         { mode = 'n', keys = '<LocalLeader>o', desc = '+Overseer' },
         ---
