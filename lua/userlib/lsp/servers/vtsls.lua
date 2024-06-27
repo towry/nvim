@@ -10,7 +10,8 @@ M.cmd = {
 local settings = {
   typescript = {
     tsserver = {
-      maxTsServerMemory = 1500,
+      -- log = 'verbose',
+      maxTsServerMemory = 1800,
     },
     preferences = {
       importModuleSpecifierEnding = 'index',
@@ -52,7 +53,9 @@ local settings = {
         },
       },
     },
-    autoUseWorkspaceTsdk = true,
+
+    -- autoUseWorkspaceTsdk = true, --- this option cause it not working in some
+    -- project
     experimental = {
       completion = {
         --- Execute fuzzy match of completion items on server side. Enable this will help filter out useless completion items from tsserver.
