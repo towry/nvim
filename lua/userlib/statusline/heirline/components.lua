@@ -660,6 +660,9 @@ local Dap = {
 
 local Codeium = {
   condition = function()
+    if vim.bo.buftype ~= '' then
+      return false
+    end
     return vim.g.loaded_codeium == 1 and vim.fn.exists('*codeium#GetStatusString') == 1
   end,
   {

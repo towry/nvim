@@ -680,7 +680,10 @@ pack.plug({
     end,
   },
   {
-    'Exafunction/codeium.vim',
+    -- will cause oil indent weird.
+    -- 'Exafunction/codeium.vim',
+    'pze/codeium.vim',
+    dev = false,
     event = { 'InsertEnter' },
     cmd = { 'Codeium' },
     keys = {
@@ -714,6 +717,7 @@ pack.plug({
       vim.g.codeium_no_map_tab = true
       vim.g.codeium_filetypes = {
         ['*'] = true,
+        ['oil'] = false,
         ['gitcommit'] = true,
         ['fzf'] = false,
         ['TelescopePrompt'] = false,
