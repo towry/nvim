@@ -3,7 +3,10 @@ vim.b.treesitter_disable = true
 vim.opt_local.indentexpr = ''
 -- vim.opt_local.statuscolumn = ''
 vim.opt_local.colorcolumn = ''
-vim.opt_local.cindent = true
+vim.opt_local.cindent = false
+vim.opt_local.ai = false
+--- codeium.vim cause oil indent weird
+vim.b.codeium_enabled = false
 
 local bufnr = vim.api.nvim_get_current_buf()
 local set = require('userlib.runtime.keymap').map_buf_thunk(bufnr)

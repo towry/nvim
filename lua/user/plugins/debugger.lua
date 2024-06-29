@@ -48,11 +48,18 @@ pack.plug({
       desc = 'Continue',
     },
     {
-      '<leader>da',
+      '<leader>dA',
       function()
         require('dap').continue({ before = get_args })
       end,
       desc = 'Run with Args',
+    },
+    {
+      '<leader>da',
+      function()
+        require('dap').continue()
+      end,
+      desc = 'Run',
     },
     {
       '<leader>d<space>',
@@ -211,23 +218,47 @@ pack.plug({
       return vim.json.decode(json.json_strip_comments(str))
     end
 
-    -- ╭──────────────────────────────────────────────────────────╮
-    -- │ Adapters                                                 │
-    -- ╰──────────────────────────────────────────────────────────╯
     -- NODE / TYPESCRIPT
+    if vim.cfg.dap_firefox_debug_adapter_path then
+      dap.adapters.firefox = {
+        type = 'executable',
+        command = 'node',
+        args = {
+          vim.cfg.dap_firefox_debug_adapter_path,
+        },
+      }
+    end
+
+    --- https://stackoverflow.com/a/65088110
+    --- devtools.debugger.remote-enabled: true
+    --- devtools.chrome.enabled: true
+    local firefox_localhost_config = {
+      name = '[F] Attach to firefox web url',
+      type = 'firefox',
+      request = 'attach',
+      reAttach = true,
+      sourceMaps = true,
+      url = function()
+        local port = vim.trim(vim.fn.input('address:port?: ') or '')
+        if port ~= '' then
+          --- if starts with http:// or https://, leave it as it is
+          if port:sub(1, 7) == 'http://' or port:sub(1, 8) == 'https://' then
+            return port
+          end
+          port = ':' .. port
+        end
+        return ('http://127.0.0.1%s'):format(port)
+      end,
+      webRoot = '${workspaceFolder}',
+      -- see https://github.com/firefox-devtools/vscode-firefox-debug?tab=readme-ov-file#overriding-configuration-properties-in-your-settings
+      -- TODO: change to var
+      -- firefoxExecutable = '/Applications/Firefox.app/Contents/MacOS/firefox',
+    }
     dap.adapters.node2 = {
       type = 'executable',
       command = 'node',
       -- FIXME: use nix
       args = { vim.fn.stdpath('data') .. '/mason/packages/node-debug2-adapter/out/src/nodeDebug.js' },
-    }
-
-    -- Chrome
-    dap.adapters.chrome = {
-      type = 'executable',
-      command = 'node',
-      -- FIXME: use nix
-      args = { vim.fn.stdpath('data') .. '/mason/packages/chrome-debug-adapter/out/src/chromeDebug.js' },
     }
 
     if vim.cfg.codelldb_path then
@@ -247,7 +278,7 @@ pack.plug({
 
     dap.configurations.cpp = {
       {
-        name = '[debug] Run debug',
+        name = '[R] Run debug',
         type = 'codelldb',
         request = 'launch',
         program = function()
@@ -260,70 +291,33 @@ pack.plug({
         cwd = '${workspaceFolder}',
         stopOnEntry = false,
       },
+      {
+        name = '[P] Attach to process',
+        type = 'codelldb',
+        request = 'attach',
+        pid = require('dap.utils').pick_process,
+        args = {},
+        cwd = '${workspaceFolder}',
+      },
     }
     dap.configurations.c = dap.configurations.cpp
     dap.configurations.rust = dap.configurations.cpp
 
-    local rustcfg = dap.configurations.rust or {}
-    table.insert(rustcfg, {
-      name = '[debug] Attach to process',
-      type = 'codelldb',
-      request = 'attach',
-      pid = require('dap.utils').pick_process,
-      args = {},
-      cwd = '${workspaceFolder}',
-    })
-    dap.configurations.rust = rustcfg
-
     dap.configurations.javascript = {
-      {
-        type = 'node2',
-        request = 'launch',
-        program = '${file}',
-        cwd = utils.get_root(),
-        sourceMaps = true,
-        protocol = 'inspector',
-        console = 'integratedTerminal',
-      },
+      firefox_localhost_config,
     }
-
-    dap.configurations.javascript = {
-      {
-        type = 'chrome',
-        request = 'attach',
-        program = '${file}',
-        cwd = utils.get_root(),
-        sourceMaps = true,
-        protocol = 'inspector',
-        port = 9222,
-        webRoot = '${workspaceFolder}',
-      },
-    }
+    dap.configurations.typescript = dap.configurations.javascript
 
     dap.configurations.javascriptreact = {
-      {
-        type = 'chrome',
-        request = 'attach',
-        program = '${file}',
-        cwd = utils.get_root(),
-        sourceMaps = true,
-        protocol = 'inspector',
-        port = 9222,
-        webRoot = '${workspaceFolder}',
-      },
+      firefox_localhost_config,
+    }
+
+    dap.configurations.vue = {
+      firefox_localhost_config,
     }
 
     dap.configurations.typescriptreact = {
-      {
-        type = 'chrome',
-        request = 'attach',
-        program = '${file}',
-        cwd = utils.get_root(),
-        sourceMaps = true,
-        protocol = 'inspector',
-        port = 9222,
-        webRoot = '${workspaceFolder}',
-      },
+      firefox_localhost_config,
     }
 
     require('userlib.runtime.au').exec_useraucmd('PluginDapLoaded', {
@@ -343,11 +337,9 @@ pack.plug({
     -- Makes a best effort to setup the various debuggers with
     -- reasonable debug configurations
     automatic_installation = true,
-
     -- You can provide additional configuration to the handlers,
     -- see mason-nvim-dap README for more information
     handlers = {},
-
     -- You'll need to check that you have the required things installed
     -- online, please don't ask me how to install them :)
     ensure_installed = {
@@ -446,6 +438,7 @@ pack.plug({
 })
 
 ---neotest
+--- flatten.nvim may make neotest freeze nvim
 pack.plug({
   cmd = 'Neotest',
   'nvim-neotest/neotest',
@@ -453,7 +446,6 @@ pack.plug({
   dependencies = {
     'nvim-neotest/nvim-nio',
     'nvim-lua/plenary.nvim',
-    'antoinemadec/FixCursorHold.nvim',
     -- lang:js
     'haydenmeade/neotest-jest',
     -- lang:rust
@@ -502,6 +494,8 @@ pack.plug({
   opts = function()
     return {
       adapters = {
+        require('rustaceanvim.neotest'),
+
         require('neotest-jest')({
           jestCommand = 'pnpm test --',
           env = { CI = true },

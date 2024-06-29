@@ -17,12 +17,13 @@ function M.setup()
       [S.INFO] = M.DiagnosticIcons.info_icon,
     },
   }
-  local enable_virtual_text = false
+  local enable_virtual_text = true
   local virtual_text = enable_virtual_text
       and {
         severity = vim.diagnostic.severity.ERROR,
-        spacing = 1,
+        spacing = 2,
         prefix = '■',
+        hl_mode = 'blend',
         -- right_align | overlay | eol | inline
         -- virt_text_pos = 'right_align',
       }
@@ -30,7 +31,7 @@ function M.setup()
 
   vim.diagnostic.config({
     float = {
-      border = 'solid',
+      border = 'single',
       focused = false,
       style = 'minimal',
       source = true,

@@ -445,15 +445,30 @@ plug({
       -- │ Setup                                                    │
       -- ╰──────────────────────────────────────────────────────────╯
       signs.setup({
+        -- signs = {
+        --   add = { text = '┃' },
+        --   change = { text = '┃' },
+        --   delete = { text = '┃' },
+        --   topdelete = { text = '┃' },
+        --   changedelete = {
+        --     text = '┃',
+        --   },
+        --   untracked = { text = '┃' },
+        -- },
         signs = {
-          add = { text = '┃' },
-          change = { text = '┃' },
-          delete = { text = '┃' },
-          topdelete = { text = '┃' },
-          changedelete = {
-            text = '┃',
-          },
-          untracked = { text = '┃' },
+          add = { text = '▎' },
+          change = { text = '▎' },
+          delete = { text = '' },
+          topdelete = { text = '' },
+          changedelete = { text = '▎' },
+          untracked = { text = '▎' },
+        },
+        signs_staged = {
+          add = { text = '▎' },
+          change = { text = '▎' },
+          delete = { text = '' },
+          topdelete = { text = '' },
+          changedelete = { text = '▎' },
         },
         signcolumn = not vim.cfg.runtime__starts_as_gittool, -- Toggle with `:Gitsigns toggle_signs`
         numhl = vim.cfg.runtime__starts_as_gittool, -- Toggle with `:Gitsigns toggle_numhl`

@@ -124,16 +124,20 @@ plug({
     cmd = { 'RustLsp' },
     dependencies = {
       'neovim/nvim-lspconfig',
-      {
-        'nvim-neotest/neotest',
-        optional = true,
-        opts = function(_, opts)
-          opts.adapters = opts.adapters or {}
-          vim.list_extend(opts.adapters, {
-            require('rustaceanvim.neotest'),
-          })
-        end,
-      },
+      'nvim-neotest/neotest',
+      -- FIXME: not work
+      -- {
+      --   'nvim-neotest/neotest',
+      --   optional = true,
+      --   opts = function(_, opts)
+      --     opts.adapters = opts.adapters or {}
+      --     vim.list_extend(opts.adapters, {
+      --       require('rustaceanvim.neotest'),
+      --     })
+      --     vim.print(opts)
+      --     return opts
+      --   end,
+      -- },
     },
     -- https://github.com/mrcjkb/rustaceanvim
     init = function()
@@ -161,7 +165,7 @@ plug({
                   runBuildScripts = true,
                 },
                 checkOnSave = {
-                  enable = false,
+                  enable = true,
                   command = 'clippy',
                   extraArgs = { '--no-deps', '--target-dir', 'target/check' },
                 },
@@ -220,17 +224,6 @@ plug({
         autofocus = true,
         border = vim.cfg.ui__float_border,
       },
-    },
-  },
-
-  {
-    'Mofiqul/trld.nvim',
-    event = 'LspAttach',
-    enabled = true,
-    opts = {
-      -- bottom doesn't bottom enough.
-      position = 'top',
-      auto_cmds = true,
     },
   },
 })

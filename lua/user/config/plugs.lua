@@ -1,7 +1,7 @@
 --LuaCC code block
 
 require('user.plugins.essential')
---- basic
+-- basic
 require('user.plugins.cmdline')
 require('user.plugins.git')
 require('user.plugins.theme')

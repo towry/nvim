@@ -135,16 +135,6 @@ pack.plug({
   },
 
   {
-    'nvimdev/indentmini.nvim',
-    enabled = false,
-    event = 'BufReadPost',
-    opts = {
-      char = '│',
-      exclude = { 'markdown', 'gitcommit', 'git' },
-    },
-  },
-
-  {
     --- [](-+=)
     'jeetsukumaran/vim-indentwise',
     event = 'BufReadPost',

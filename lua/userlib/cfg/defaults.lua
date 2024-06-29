@@ -195,6 +195,7 @@ return {
     'help',
     'txt',
     'log',
+    'oil',
     'Trouble',
     'neo-tree',
     'NvimTree',

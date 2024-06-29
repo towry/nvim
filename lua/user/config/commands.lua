@@ -231,6 +231,7 @@ end, {
 
 -- Make with overseer
 create_cmd('OverMake', function(params)
+  local cwd = vim.uv.cwd()
   -- Insert args at the '$*' in the makeprg
   local cmd, num_subs = vim.o.makeprg:gsub('%$%*', params.args)
   if num_subs == 0 then
@@ -244,7 +245,10 @@ create_cmd('OverMake', function(params)
     components = {
       {
         'on_output_quickfix',
+        -- items_only = true,
+        errorformat = vim.o.errorformat,
         open = params.bang,
+        -- relative_file_root = cwd,
         open_on_match = false,
         -- open_on_exit = 'failure',
         tail = false,

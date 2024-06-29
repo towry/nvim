@@ -12,9 +12,8 @@ pack.plug({
   {
     'ms-jpq/coq_nvim',
     branch = 'coq',
-    build = function(plug)
-      local cwd = plug.dir
-      vim.cmd(string.format('tabe term://%s//%s', cwd, 'make .venv/bin/mypy ; python3 -u -m coq deps'))
+    build = function()
+      vim.cmd('COQdeps')
     end,
     cmd = {
       'COQhelp',
@@ -681,7 +680,10 @@ pack.plug({
     end,
   },
   {
-    'Exafunction/codeium.vim',
+    -- will cause oil indent weird.
+    -- 'Exafunction/codeium.vim',
+    'pze/codeium.vim',
+    dev = false,
     event = { 'InsertEnter' },
     cmd = { 'Codeium' },
     keys = {
@@ -715,6 +717,7 @@ pack.plug({
       vim.g.codeium_no_map_tab = true
       vim.g.codeium_filetypes = {
         ['*'] = true,
+        ['oil'] = false,
         ['gitcommit'] = true,
         ['fzf'] = false,
         ['TelescopePrompt'] = false,

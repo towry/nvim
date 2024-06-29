@@ -17,7 +17,11 @@ function M.pre_hook(name, callback)
 
   if vim.v.vim_did_enter then
     vim.schedule(function()
-      callback(require('legendary'))
+      local ok, legendary = pcall(require, 'legendary')
+      if not ok then
+        return
+      end
+      callback(legendary)
     end)
     return
   end
@@ -25,7 +29,11 @@ function M.pre_hook(name, callback)
   autocmd_id = vim.api.nvim_create_autocmd('User', {
     pattern = 'LegendaryUiPre',
     callback = function()
-      local result = callback(require('legendary'))
+      local ok, legendary = pcall(require, 'legendary')
+      if not ok then
+        return
+      end
+      local result = callback(legendary)
       if result ~= false then
         pre_hook_records[name] = true
         vim.api.nvim_del_autocmd(autocmd_id)

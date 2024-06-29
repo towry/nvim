@@ -138,7 +138,6 @@ function M.peek_type_definition()
   end)
 end
 
--- function M.format_code(bufnr) require('userlib.lsp.fmt').format_document(bufnr) end
 function M.format_code(bufnr, opts)
   require('userlib.lsp.servers.null_ls.fmt').format(bufnr, opts)
 end
