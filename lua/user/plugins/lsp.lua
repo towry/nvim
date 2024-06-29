@@ -132,6 +132,7 @@ plug({
           vim.list_extend(opts.adapters, {
             require('rustaceanvim.neotest'),
           })
+          return opts
         end,
       },
     },
@@ -161,7 +162,7 @@ plug({
                   runBuildScripts = true,
                 },
                 checkOnSave = {
-                  enable = false,
+                  enable = true,
                   command = 'clippy',
                   extraArgs = { '--no-deps', '--target-dir', 'target/check' },
                 },

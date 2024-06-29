@@ -10,7 +10,7 @@ map('n', 'q', '<cmd>cclose | lclose<cr>', { silent = true, nowait = true, norema
 
 local opt = vim.opt_local
 
-opt.wrap = false
+opt.wrap = true
 opt.cursorline = true
 opt.number = false
 opt.signcolumn = 'yes'

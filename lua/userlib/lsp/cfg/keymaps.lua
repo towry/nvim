@@ -93,7 +93,16 @@ function M.setup_keybinding(client, buffer)
   )
   set(
     'n',
-    '<leader>cld',
+    '<leader>cq',
+    ':lua vim.diagnostic.setloclist({title="[Err] Diagnostics",severity=vim.diagnostic.severity.ERROR})<cr>',
+    opts({
+      desc = _('Diagnostics ERROR in location list'),
+      nowait = true,
+    })
+  )
+  set(
+    'n',
+    '<leader>cll',
     ':lua vim.diagnostic.setloclist()<cr>',
     opts({
       desc = _('Diagnostics in location list'),
