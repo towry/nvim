@@ -438,6 +438,7 @@ pack.plug({
 })
 
 ---neotest
+--- flatten.nvim may make neotest freeze nvim
 pack.plug({
   cmd = 'Neotest',
   'nvim-neotest/neotest',

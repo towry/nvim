@@ -212,7 +212,6 @@ plug({
   {
     'willothy/flatten.nvim',
     ft = { 'toggleterm', 'terminal', 'neo-term' },
-    branch = 'guest-data',
     enabled = true,
     lazy = vim.env['NVIM'] == nil,
     priority = 1000,
@@ -225,48 +224,22 @@ plug({
     opts = function()
       local saved_terminal
       return {
+        block_for = {
+          gitcommit = true,
+          gitrebase = true,
+        },
+        allow_cmd_passthrough = true,
+        -- Allow a nested session to open if Neovim is opened without arguments
+        nest_if_no_args = false,
         callbacks = {
-          pipe_path = function()
-            -- If running in a terminal inside Neovim:
-            local nvim = vim.env.NVIM
-            if nvim then
-              return nvim
-            end
-
-            -- If running in a Wezterm terminal,
-            -- all tabs/windows/os-windows in the same instance of wezterm will open in the first neovim instance
-            local wezterm = vim.env.WEZTERM_UNIX_SOCKET
-            if not wezterm then
-              return
-            end
-
-            local addr = ('%s/%s'):format(
-              vim.fn.stdpath('run'),
-              'wezterm.nvim-' .. wezterm:match('gui%-sock%-(%d+)') .. '-' .. vim.fn.getcwd(-1):gsub('/', '_')
-            )
-            if not vim.loop.fs_stat(addr) then
-              vim.fn.serverstart(addr)
-            end
-
-            return addr
-          end,
-          guest_data = function()
-            if not vim.cfg.runtime__is_wezterm then
-              return {}
-            end
-            return {
-              pane = require('wezterm').get_current_pane(),
-            }
-          end,
           should_block = function(argv)
-            -- Note that argv contains all the parts of the CLI command, including
-            -- Neovim's path, commands, options and files.
-            -- See: :help v:argv
-
-            -- In this case, we would block if we find the `-b` flag
-            -- This allows you to use `nvim -b file1` instead of `nvim --cmd 'let g:flatten_wait=1' file1`
+            local should_block = require('flatten').default_should_block(argv)
+            if should_block == true then
+              return true
+            end
             return vim.tbl_contains(argv, '-b') or vim.tbl_contains(argv, '-d') or vim.cfg.runtime__starts_as_gittool
           end,
+          should_nest = require('flatten').default_should_nest,
           pre_open = function()
             if libutils.has_plugin('toggleterm.nvim') then
               local term = require('toggleterm.terminal')
@@ -274,22 +247,6 @@ plug({
               saved_terminal = term.get(termid)
             end
           end,
-          no_files = vim.cfg.runtime__is_wezterm
-              and function()
-                -- If there's already a Neovim instance for this cwd, switch to it
-                local wezterm = require('wezterm')
-
-                local pane = wezterm.get_current_pane()
-                if pane then
-                  require('wezterm').switch_pane.id(pane)
-                end
-
-                return {
-                  nest = false,
-                  block = false,
-                }
-              end
-            or nil,
           post_open = vim.schedule_wrap(function(opts)
             local bufnr, winnr, ft, is_blocking, is_diff =
               opts.bufnr, opts.winnr, opts.filetype, opts.is_blocking, opts.is_diff
@@ -330,25 +287,20 @@ plug({
             end
           end),
           block_end = vim.schedule_wrap(function(opts)
-            if vim.cfg.runtime__is_wezterm and type(opts.data) == 'table' and opts.data.pane then
-              require('wezterm').switch_pane.id(opts.data.pane)
-            end
             if saved_terminal then
               saved_terminal:open()
               saved_terminal = nil
               vim.g.cmd_on_toggleterm_close = nil
-            end
-            if is_neo_term then
-              is_neo_term = false
             end
           end),
         },
         window = {
           open = 'split',
         },
-        nest_if_no_args = true,
-        integrations = {
-          wezterm = vim.cfg.runtime__is_wezterm,
+        pipe_path = require('flatten').default_pipe_path,
+        one_per = {
+          kitty = false, -- Flatten all instance in the current Kitty session
+          wezterm = false, -- Flatten all instance in the current Wezterm session
         },
       }
     end,
@@ -359,6 +311,7 @@ plug({
   'nyngwang/NeoTerm.lua',
   cmd = { 'NeoTermToggle' },
   ft = 'terminal',
+  enabled = false,
   keys = {
     {
       '<M-Tab>',
