@@ -3,7 +3,6 @@ local o = vim.opt
 local g = vim.g
 
 function M.startup()
-  o.shell = 'direnv exec / fish'
   o.winbar = ''
   o.autowrite = true
   o.startofline = false -- cursor start of line when scroll
