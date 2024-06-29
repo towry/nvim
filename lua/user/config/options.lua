@@ -3,6 +3,10 @@ local o = vim.opt
 local g = vim.g
 
 function M.startup()
+  -- only if is fish
+  if vim.o.shell:find('fish') then
+    o.shellcmdflag = ('--init-command="set PATH %s" -Pc'):format(vim.env.PATH)
+  end
   o.winbar = ''
   o.autowrite = true
   o.startofline = false -- cursor start of line when scroll
