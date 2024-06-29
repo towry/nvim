@@ -124,17 +124,20 @@ plug({
     cmd = { 'RustLsp' },
     dependencies = {
       'neovim/nvim-lspconfig',
-      {
-        'nvim-neotest/neotest',
-        optional = true,
-        opts = function(_, opts)
-          opts.adapters = opts.adapters or {}
-          vim.list_extend(opts.adapters, {
-            require('rustaceanvim.neotest'),
-          })
-          return opts
-        end,
-      },
+      'nvim-neotest/neotest',
+      -- FIXME: not work
+      -- {
+      --   'nvim-neotest/neotest',
+      --   optional = true,
+      --   opts = function(_, opts)
+      --     opts.adapters = opts.adapters or {}
+      --     vim.list_extend(opts.adapters, {
+      --       require('rustaceanvim.neotest'),
+      --     })
+      --     vim.print(opts)
+      --     return opts
+      --   end,
+      -- },
     },
     -- https://github.com/mrcjkb/rustaceanvim
     init = function()

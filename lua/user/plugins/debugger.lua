@@ -446,7 +446,6 @@ pack.plug({
   dependencies = {
     'nvim-neotest/nvim-nio',
     'nvim-lua/plenary.nvim',
-    'antoinemadec/FixCursorHold.nvim',
     -- lang:js
     'haydenmeade/neotest-jest',
     -- lang:rust
@@ -495,6 +494,8 @@ pack.plug({
   opts = function()
     return {
       adapters = {
+        require('rustaceanvim.neotest'),
+
         require('neotest-jest')({
           jestCommand = 'pnpm test --',
           env = { CI = true },
