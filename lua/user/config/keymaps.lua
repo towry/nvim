@@ -49,6 +49,20 @@ local function setup_basic()
   --->>
   set('n', ']b', ':bnext<cr>', { desc = 'Next buffer', silent = false, nowait = true })
   set('n', '[b', ':bpre<cr>', { desc = 'Prev buffer', silent = false, nowait = true })
+  set({ 'n', 'i' }, keymap.super('j'), function()
+    if package.loaded['cybu'] then
+      return '<esc><plug>(CybuNext)'
+    else
+      return ':stopinsert | bnext<cr>'
+    end
+  end, { desc = 'Next buf', silent = true, nowait = true, expr = true })
+  set({ 'n', 'i' }, keymap.super('k'), function()
+    if package.loaded['cybu'] then
+      return '<esc><plug>(CybuPrev)'
+    else
+      return ':stopinsert | bprev<cr>'
+    end
+  end, { desc = 'Prev buf', silent = true, nowait = true, expr = true })
   set('n', '<c-w>B', function()
     vim.cmd('wincmd b')
     -- check if window is quickfix or terminal
@@ -317,6 +331,12 @@ local function setup_basic()
   })
   set('n', ']q', ':cnext<cr>', {
     desc = 'Jump to next quickfix item',
+  })
+  set('n', '[l', ':lprev<cr>', {
+    desc = 'Jump to previous loclist item',
+  })
+  set('n', ']l', ':lnext<cr>', {
+    desc = 'Jump to next loclist item',
   })
   set('n', '[qf', function()
     pcall(function()

@@ -1,8 +1,6 @@
 {
   "Align": { "branch": "master", "commit": "787662fe90cd057942bc5b682fd70c87e1a9dd77" },
-  "FixCursorHold.nvim": { "branch": "master", "commit": "1900f89dc17c603eec29960f57c00bd9ae696495" },
   "LuaSnip": { "branch": "master", "commit": "03c8e67eb7293c404845b3982db895d59c0d1538" },
-  "NeoTerm.lua": { "branch": "main", "commit": "f71a4a9663c52673a677a09894d945983c8da303" },
   "aerial.nvim": { "branch": "master", "commit": "a1c5476732686da2a51218f47580f0dc1a3b8aa9" },
   "amber.vim": { "branch": "master", "commit": "94dc09c95f76794d2473eb9afd73b61cc3728eec" },
   "blackjack.nvim": { "branch": "main", "commit": "cf59e79de25b87a3ef68b92b3277c50d4b345a92" },
@@ -101,6 +99,7 @@
   "toggleterm.nvim": { "branch": "main", "commit": "cd55bf6aab3f88c259fa29ea86bbdcb1a325687d" },
   "trailblazer.nvim": { "branch": "main", "commit": "674bb6254a376a234d0d243366224122fc064eab" },
   "treesj": { "branch": "main", "commit": "f98deb33805485b56a8d44d1a27d16874af00d7f" },
+  "trld.nvim": { "branch": "main", "commit": "f9955514afd0af8cbbf81506265adbcb56b953fa" },
   "trouble.nvim": { "branch": "main", "commit": "88c3be40c061ce053ab326ce4fdcb973a1f785ff" },
   "undotree": { "branch": "master", "commit": "56c684a805fe948936cda0d1b19505b84ad7e065" },
   "vim-dispatch": { "branch": "master", "commit": "4c695bc052cad2ae6b980aebbe48d046466e27ae" },

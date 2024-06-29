@@ -671,38 +671,34 @@ plug({
 })
 
 plug({
-  'ghillb/cybu.nvim',
+  'pze/cybu.nvim',
   branch = 'main',
+  dev = false,
   enabled = false,
-  keys = {
-    {
-      ']b',
-      '<plug>(CybuNext)',
-    },
-    {
-      '[b',
-      '<plug>(CybuPrev)',
-    },
-  },
+  event = 'VeryLazy',
   opts = {
     position = {
       relative_to = 'win',
-      ---@type "topleft" | "topcenter" | "topright" | "centerleft" | "center" | "bottomright" | "centerright"
-      anchor = 'centerleft',
-      max_win_height = 30,
-      vertical_offset = 0,
-      horizontal_offset = 1,
+      ---@type "topleft" | "topcenter" | "topright" | "centerleft" | "center" | "bottomright" | "centerright" | "bottomleft"
+      anchor = 'bottomleft',
+      max_win_height = 80,
+      max_win_width = 0.9,
+      vertical_offset = -1,
+      horizontal_offset = -1,
     },
-    display_time = 2000,
+    display_time = 450,
     style = {
       path = 'tail',
       border = vim.cfg.ui__float_border,
-      pading = 3,
+      pading = 10,
+      prefix = '..',
     },
     behavior = {
       mode = {
         default = {
-          switch = 'immediate',
+          -- switch = 'immediate',
+          switch = 'on_close',
+          -- view = 'rolling',
           view = 'paging',
         },
       },
@@ -718,8 +714,7 @@ plug({
       group = 'cyu_quick_nav',
       pattern = 'CybuOpen',
       callback = function()
-        vim.keymap.set('n', ']', '<plug>(CybuNext)', { noremap = true, nowait = true })
-        vim.keymap.set('n', '[', '<plug>(CybuPrev)', { noremap = true, nowait = true })
+        vim.g.user_nvim_pending = 1
       end,
     })
 
@@ -727,8 +722,7 @@ plug({
       group = 'cyu_quick_nav',
       pattern = 'CybuClose',
       callback = function()
-        vim.keymap.del('n', ']')
-        vim.keymap.del('n', '[')
+        vim.g.user_nvim_pending = 0
       end,
     })
   end,

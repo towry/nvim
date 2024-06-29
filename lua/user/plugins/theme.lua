@@ -18,6 +18,7 @@ plug({
     overrides = function(colors) -- add/modify highlights
       -- do not foget to run ':KanagawaCompile'
       return {
+        CybuFocus = { link = 'FlashCursor' },
         MiniIndentscopeSymbol = { link = 'IndentBlanklineChar' },
         IndentLine = { link = 'IndentBlanklineChar' },
         IndentLineCurrent = { link = 'IndentBlanklineContextChar' },

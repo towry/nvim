@@ -860,7 +860,7 @@ plug({
       silent = true,
       track = {
         event = 'BufEnter',
-        delay = 1000,
+        delay = 1500,
       },
     }
   end,
