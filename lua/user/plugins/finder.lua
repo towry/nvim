@@ -855,12 +855,12 @@ plug({
   opts = function()
     return {
       store = {
-        autowrite = true,
+        autowrite = false,
       },
       silent = true,
       track = {
         event = 'BufEnter',
-        delay = 1500,
+        delay = 200,
       },
     }
   end,

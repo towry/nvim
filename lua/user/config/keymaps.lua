@@ -50,18 +50,10 @@ local function setup_basic()
   set('n', ']b', ':bnext<cr>', { desc = 'Next buffer', silent = false, nowait = true })
   set('n', '[b', ':bpre<cr>', { desc = 'Prev buffer', silent = false, nowait = true })
   set({ 'n', 'i' }, keymap.super('j'), function()
-    if package.loaded['cybu'] then
-      return '<esc><plug>(CybuNext)'
-    else
-      return ':stopinsert | bnext<cr>'
-    end
+    require('userlib.mini.visits').buffer_cycle('forward')
   end, { desc = 'Next buf', silent = true, nowait = true, expr = true })
   set({ 'n', 'i' }, keymap.super('k'), function()
-    if package.loaded['cybu'] then
-      return '<esc><plug>(CybuPrev)'
-    else
-      return ':stopinsert | bprev<cr>'
-    end
+    require('userlib.mini.visits').buffer_cycle('backward')
   end, { desc = 'Prev buf', silent = true, nowait = true, expr = true })
   set('n', '<c-w>B', function()
     vim.cmd('wincmd b')
@@ -202,7 +194,7 @@ local function setup_basic()
     desc = 'Case change in visual mode',
   })
 
-  set({ 'n' }, keymap.super('s'), '<cmd>write<cr>', {
+  set({ 'n' }, keymap.super('s'), '<cmd>update<cr>', {
     desc = 'Save current buffer',
     silent = false,
     remap = false,
@@ -210,7 +202,7 @@ local function setup_basic()
   set({ 'i' }, keymap.super('s'), function()
     vim.cmd.stopinsert()
     vim.schedule(function()
-      vim.cmd('write')
+      vim.cmd('update')
     end)
   end, {
     desc = 'Save current buffer',

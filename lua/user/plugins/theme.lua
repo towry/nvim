@@ -112,3 +112,24 @@ plug({
     transparent_mode = false,
   },
 })
+
+plug({
+  'cdmill/neomodern.nvim',
+  event = 'User LazyTheme',
+  cond = vim.cfg.ui__theme_name == 'neomodern',
+  opts = {
+    style = 'darkforest',
+    ui = {
+      telescope = 'bordered',
+      diagnostics = {
+        darker = true, -- darker colors for diagnostic
+        undercurl = true, -- use undercurl for diagnostics
+        background = true, -- use background color for virtual text
+      },
+    },
+  },
+  config = function(_, opts)
+    require('neomodern').setup(opts)
+    require('neomodern').load()
+  end,
+})

@@ -184,7 +184,7 @@ Ty.stl_relative_bufname = function(buf)
   end
   local tail = vim.fn.fnamemodify(relative, ':t')
   local root = vim.fn.fnamemodify(relative, ':h')
-  return string.format('%s│%s', tail, root)
+  return string.format('%s%s', tail, root == '.' and '' or ('│' .. root))
 end
 
 --- "│"
