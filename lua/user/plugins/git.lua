@@ -343,6 +343,16 @@ plug({
     cond = not vim.g.is_start_as_merge_tool,
     keys = {
       {
+        'gh.',
+        ':Gitsigns',
+        desc = 'Start Gitsigns in cmd',
+      },
+      {
+        'ghl',
+        '<cmd>Gitsigns setloclist<cr>',
+        desc = 'Put hunks in location list',
+      },
+      {
         'ghd',
         '<cmd>Gitsigns diffthis<cr>',
         desc = 'Diff this',
@@ -395,6 +405,11 @@ plug({
         desc = 'Toggle current line blame',
       },
       {
+        'ghD',
+        '<cmd>Gitsigns toggle_deleted<cr>',
+        desc = 'Toggle deleted lines in virtual line',
+      },
+      {
         'ghv',
         '<cmd>Gitsigns toggle_signs<cr>',
         desc = 'Toggle signs',
@@ -412,7 +427,7 @@ plug({
             return
           end
           vim.schedule(function()
-            gs.next_hunk()
+            gs.nav_hunk('next')
           end)
         end,
         desc = 'Next hunk',
@@ -425,10 +440,30 @@ plug({
             return
           end
           vim.schedule(function()
-            gs.prev_hunk()
+            gs.nav_hunk('prev')
           end)
         end,
         desc = 'Prev hunk',
+      },
+      {
+        'gh<',
+        function()
+          local gs = require('gitsigns')
+          vim.schedule(function()
+            gs.nav_hunk('first')
+          end)
+        end,
+        desc = 'First hunk',
+      },
+      {
+        'gh>',
+        function()
+          local gs = require('gitsigns')
+          vim.schedule(function()
+            gs.nav_hunk('last')
+          end)
+        end,
+        desc = 'Last hunk',
       },
     },
     event = 'VeryLazy',

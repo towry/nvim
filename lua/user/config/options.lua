@@ -4,14 +4,17 @@ local g = vim.g
 
 function M.startup()
   -- only if is fish
-  if vim.o.shell:find('fish') then
+  if vim.o.shell and vim.o.shell:find('fish') then
     o.shellcmdflag = ('--init-command="set PATH %s" -Pc'):format(vim.env.PATH)
   end
   o.winbar = ''
   o.autowrite = true
   o.startofline = false -- cursor start of line when scroll
   o.exrc = true
-  o.jumpoptions = 'stack,view,unload'
+  pcall(function()
+    -- NOTE: unload is experimental
+    o.jumpoptions = 'stack,view,unload'
+  end)
   o.path = '**' -- use a recursive path for :find
   o.breakindent = true
   o.cpoptions:append('>') -- append to register with line break
