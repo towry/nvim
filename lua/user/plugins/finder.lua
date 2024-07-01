@@ -374,6 +374,8 @@ plug({
 
 plug({
   'stevearc/aerial.nvim',
+  -- have bugs, after aerial win closed, it's autocmd is still running.
+  enabled = false,
   keys = {
     { '<leader>/o', '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
     {
