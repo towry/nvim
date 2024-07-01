@@ -83,99 +83,6 @@ plug({
 })
 
 plug({
-  'ellisonleao/gruvbox.nvim',
-  event = 'User LazyTheme',
-  priority = 1000,
-  enabled = vim.cfg.ui__theme_name == 'gruvbox',
-  opts = {
-    terminal_colors = true, -- add neovim terminal colors
-    undercurl = true,
-    underline = true,
-    bold = true,
-    italic = {
-      strings = true,
-      emphasis = true,
-      comments = true,
-      operators = false,
-      folds = true,
-    },
-    strikethrough = true,
-    invert_selection = false,
-    invert_signs = false,
-    invert_tabline = false,
-    invert_intend_guides = false,
-    inverse = true, -- invert background for search, diffs, statuslines and errors
-    contrast = '', -- can be "hard", "soft" or empty string
-    palette_overrides = {},
-    overrides = {},
-    dim_inactive = false,
-    transparent_mode = false,
-  },
-})
-
-plug({
-  -- 'pze/nord.nvim',
-  'gbprod/nord.nvim',
-  event = 'User LazyTheme',
-  cond = vim.cfg.ui__theme_name:match('nord'),
-  dev = false,
-  config = function()
-    require('nord').setup({
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      transparent = false, -- Enable this to disable setting the background color
-      terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
-      diff = { mode = 'fg' }, -- enables/disables colorful backgrounds when used in diff mode. values : [bg|fg]
-      borders = true, -- Enable the border between verticaly split windows visible
-      errors = { mode = 'fg' }, -- Display mode for errors and diagnostics
-      -- values : [bg|fg|none]
-      search = { theme = 'vim' }, -- theme for highlighting search results
-      -- values : [vim|vscode]
-      styles = {
-        -- Style to be applied to different syntax groups
-        -- Value is any valid attr-list value for `:help nvim_set_hl`
-        comments = { italic = false, bold = false },
-        keywords = { italic = true },
-        functions = { bold = true, italic = true },
-        variables = {},
-      },
-
-      --- You can override specific highlights to use other groups or a hex color
-      --- function will be called with all highlights and the colorScheme table
-      on_highlights = function(hl, c)
-        hl.CocErrorSign = { link = 'DiagnosticError' }
-        hl.CocWarningSign = { link = 'DiagnosticWarn' }
-        hl.CocInfoSign = { link = 'DiagnosticInfo' }
-        hl.CocHintSign = { link = 'DiagnosticHint' }
-        hl.CocErrorFloat = { link = 'DiagnosticError' }
-        hl.CocWarningFloat = { link = 'DiagnosticWarn' }
-        hl.CocFloating = { link = 'NormalFloat' }
-        hl.CocInfoFloat = { link = 'DiagnosticInfo' }
-        hl.CocHintFloat = { link = 'DiagnosticHint' }
-        hl.CocDiagnosticsError = { link = 'DiagnosticError' }
-        hl.CocDiagnosticsWarning = { link = 'DiagnosticWarn' }
-        hl.CocDiagnosticsInfo = { link = 'DiagnosticInfo' }
-        hl.CocDiagnosticsHint = { link = 'DiagnosticHint' }
-        hl.CocSelectedText = { fg = c.snow_storm.origin }
-        hl.CocMenuSel = { link = 'PmenuSel' }
-        hl.CocCodeLens = { fg = c.polar_night.bright }
-        hl.CocInlayHint = { fg = c.polar_night.bright }
-        hl.CocInlayHintType = { link = 'CocInlayHint' }
-        hl.CocInlayHintParameter = { link = 'CocInlayHint' }
-        hl.CocErrorHighlight = { undercurl = true, sp = c.aurora.red }
-        hl.CocWarningHighlight = { sp = c.aurora.yellow, undercurl = true }
-        hl.CocInfoHighlight = { sp = c.aurora.green, undercurl = true }
-        hl.CocHintHighlight = { sp = c.aurora.orange, undercurl = true }
-        hl.TreesitterContextBottom = {
-          underline = true,
-          sp = c.polar_night.brightest,
-        }
-      end,
-    })
-  end,
-})
-
-plug({
   -- https://protesilaos.com/emacs/modus-themes-pictures
   'miikanissi/modus-themes.nvim',
   event = 'User LazyTheme',
@@ -189,68 +96,13 @@ plug({
     styles = {
       comments = { italic = false, bold = false },
       keywords = { italic = true },
-      functions = { bold = true, italic = true },
+      functions = { bold = false, italic = false },
     },
     on_highlights = function(hls, c)
-      local is_dark = vim.o.background == 'dark'
-      hls['FlashLabel'] = {
-        fg = c.bg_main_dim,
-        bg = c.bg_yellow_intense,
-        bold = true,
-      }
-      hls['FlashBackdrop'] = {
-        fg = is_dark and c.fg_dim or '#9f9f9f',
-      }
-      hls['LineNr'] = {
-        fg = c.bg_active,
-      }
-      hls['WinSeparator'] = {
-        fg = c.bg_active,
-      }
-      hls['Winbar'] = {
-        fg = c.fg_active,
-        bg = c.bg_main,
-      }
-      hls['WinbarNc'] = {
-        fg = c.fg_inactive,
-        bg = c.bg_main,
-      }
-      hls['CursorLineNr'] = {
-        bg = 'NONE',
-        fg = c.fg_main,
-        bold = true,
-      }
-      hls['FzfLuaNormal'] = { link = 'Normal' }
-      hls['FzfLuaBorder'] = { link = 'LineNr' }
-      hls['FzfLuaPreviewNormal'] = { link = 'Normal' }
-      hls['FoldColumn'] = { bg = c.bg_main, fg = c.fg_dim, bold = false }
-      hls['GitSignsAdd'] = {
-        fg = c.fg_added,
-        bg = 'NONE',
-      }
-      hls['GitSignsAddNr'] = {
-        fg = c.fg_added,
-        bg = 'NONE',
-      }
-      hls['GitSignsChange'] = {
-        fg = c.fg_changed,
-        bg = 'NONE',
-      }
-      hls['GitSignsChangeNr'] = {
-        fg = c.fg_changed,
-        bg = 'NONE',
-      }
-      hls['GitSignsDelete'] = {
-        fg = c.fg_removed,
-        bg = 'NONE',
-      }
-      hls['GitSignsDeleteNr'] = {
-        fg = c.fg_removed,
-        bg = 'NONE',
-      }
-      hls['StatusLine'] = {
+      hls['FloatBorder'] = { link = 'NormalFloat' }
+      hls['StatusLineNC'] = {
         bg = c.bg_active,
-        fg = c.bg_alt,
+        fg = c.slate,
       }
       hls['MiniCursorword'] = {
         italic = true,
