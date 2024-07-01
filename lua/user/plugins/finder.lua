@@ -769,6 +769,20 @@ plug({
       '<cmd>lua require("userlib.mini.visits").select_by_cwd(vim.cfg.runtime__starts_cwd)<cr>',
       desc = 'Show current cwd visits',
     },
+    {
+      ']h',
+      function()
+        require('userlib.mini.visits').buffer_cycle('forward')
+      end,
+      desc = 'Forward harpoon buffer',
+    },
+    {
+      '[h',
+      function()
+        require('userlib.mini.visits').buffer_cycle('backward')
+      end,
+      desc = 'Backward harpoon buffer',
+    },
     --- marks as m also create harpoon mark.
     {
       'mm',

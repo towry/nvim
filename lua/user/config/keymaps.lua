@@ -50,11 +50,17 @@ local function setup_basic()
   set('n', ']b', ':bnext<cr>', { desc = 'Next buffer', silent = false, nowait = true })
   set('n', '[b', ':bpre<cr>', { desc = 'Prev buffer', silent = false, nowait = true })
   set({ 'n', 'i' }, keymap.super('j'), function()
-    require('userlib.mini.visits').buffer_cycle('forward')
-  end, { desc = 'Next buf', silent = true, nowait = true, expr = true })
+    local buf = require('userlib.runtime.buffer').next_bufnr()
+    if buf then
+      vim.cmd('b' .. buf)
+    end
+  end, { desc = 'Next buf', silent = true, nowait = true })
   set({ 'n', 'i' }, keymap.super('k'), function()
-    require('userlib.mini.visits').buffer_cycle('backward')
-  end, { desc = 'Prev buf', silent = true, nowait = true, expr = true })
+    local buf = require('userlib.runtime.buffer').prev_bufnr()
+    if buf then
+      vim.cmd('b' .. buf)
+    end
+  end, { desc = 'Prev buf', silent = true, nowait = true })
   set('n', '<c-w>B', function()
     vim.cmd('wincmd b')
     -- check if window is quickfix or terminal
