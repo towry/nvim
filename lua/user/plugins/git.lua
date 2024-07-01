@@ -458,16 +458,16 @@ plug({
         signs = {
           add = { text = '▎' },
           change = { text = '▎' },
-          delete = { text = '' },
-          topdelete = { text = '' },
+          delete = { text = '▎' },
+          topdelete = { text = '▎' },
           changedelete = { text = '▎' },
           untracked = { text = '▎' },
         },
         signs_staged = {
           add = { text = '▎' },
           change = { text = '▎' },
-          delete = { text = '' },
-          topdelete = { text = '' },
+          delete = { text = '▎' },
+          topdelete = { text = '▎' },
           changedelete = { text = '▎' },
         },
         signcolumn = not vim.cfg.runtime__starts_as_gittool, -- Toggle with `:Gitsigns toggle_signs`
