@@ -11,7 +11,7 @@ function M.startup()
   o.autowrite = true
   o.startofline = false -- cursor start of line when scroll
   o.exrc = true
-  o.jumpoptions = 'stack,view'
+  o.jumpoptions = 'stack,view,unload'
   o.path = '**' -- use a recursive path for :find
   o.breakindent = true
   o.cpoptions:append('>') -- append to register with line break
