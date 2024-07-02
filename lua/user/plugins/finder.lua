@@ -374,6 +374,8 @@ plug({
 
 plug({
   'stevearc/aerial.nvim',
+  -- have bugs, after aerial win closed, it's autocmd is still running.
+  enabled = false,
   keys = {
     { '<leader>/o', '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
     {
@@ -769,6 +771,20 @@ plug({
       '<cmd>lua require("userlib.mini.visits").select_by_cwd(vim.cfg.runtime__starts_cwd)<cr>',
       desc = 'Show current cwd visits',
     },
+    {
+      ']h',
+      function()
+        require('userlib.mini.visits').buffer_cycle('forward')
+      end,
+      desc = 'Forward harpoon buffer',
+    },
+    {
+      '[h',
+      function()
+        require('userlib.mini.visits').buffer_cycle('backward')
+      end,
+      desc = 'Backward harpoon buffer',
+    },
     --- marks as m also create harpoon mark.
     {
       'mm',
@@ -855,12 +871,12 @@ plug({
   opts = function()
     return {
       store = {
-        autowrite = true,
+        autowrite = false,
       },
       silent = true,
       track = {
         event = 'BufEnter',
-        delay = 1000,
+        delay = 200,
       },
     }
   end,

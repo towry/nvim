@@ -226,4 +226,62 @@ plug({
       },
     },
   },
+
+  {
+    'dgagn/diagflow.nvim',
+    event = 'LspAttach',
+    enabled = false,
+    -- has bug, will show diagnostic on other buffer that does not belong to
+    -- that buffer.
+    opts = {
+      max_width = 50,
+      max_height = 10,
+      gap_size = 1,
+      scope = 'line',
+      text_align = 'right',
+      padding_right = 1,
+      toggle_event = { 'InsertEnter', 'InsertLeave' },
+      placement = 'top',
+      inline_padding_left = 1,
+      show_sign = false,
+      show_borders = false,
+    },
+  },
+
+  {
+    'rachartier/tiny-inline-diagnostic.nvim',
+    enabled = false,
+    event = 'LspAttach',
+    config = function()
+      require('tiny-inline-diagnostic').setup()
+    end,
+  },
+
+  {
+    'SmiteshP/nvim-navbuddy',
+    dependencies = {
+      'neovim/nvim-lspconfig',
+      'SmiteshP/nvim-navic',
+      'MunifTanjim/nui.nvim',
+    },
+    event = 'LspAttach',
+    cmd = 'Navbuddy',
+    keys = {
+      {
+        '<leader>ce',
+        function()
+          require('nvim-navbuddy').open()
+        end,
+        desc = 'Navigate symbols in tree view',
+      },
+    },
+    opts = { lsp = { auto_attach = false } },
+    init = function()
+      require('userlib.runtime.au').on_lsp_attach(function(client, bufnr)
+        if client.supports_method('textDocument/documentSymbol') then
+          require('nvim-navbuddy').attach(client, bufnr)
+        end
+      end)
+    end,
+  },
 })

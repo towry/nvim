@@ -49,6 +49,18 @@ local function setup_basic()
   --->>
   set('n', ']b', ':bnext<cr>', { desc = 'Next buffer', silent = false, nowait = true })
   set('n', '[b', ':bpre<cr>', { desc = 'Prev buffer', silent = false, nowait = true })
+  set({ 'n', 'i' }, keymap.super('j'), function()
+    local buf = require('userlib.runtime.buffer').next_bufnr()
+    if buf then
+      vim.cmd('b' .. buf)
+    end
+  end, { desc = 'Next buf', silent = true, nowait = true })
+  set({ 'n', 'i' }, keymap.super('k'), function()
+    local buf = require('userlib.runtime.buffer').prev_bufnr()
+    if buf then
+      vim.cmd('b' .. buf)
+    end
+  end, { desc = 'Prev buf', silent = true, nowait = true })
   set('n', '<c-w>B', function()
     vim.cmd('wincmd b')
     -- check if window is quickfix or terminal
@@ -188,7 +200,7 @@ local function setup_basic()
     desc = 'Case change in visual mode',
   })
 
-  set({ 'n' }, keymap.super('s'), '<cmd>write<cr>', {
+  set({ 'n' }, keymap.super('s'), '<cmd>update<cr>', {
     desc = 'Save current buffer',
     silent = false,
     remap = false,
@@ -196,7 +208,7 @@ local function setup_basic()
   set({ 'i' }, keymap.super('s'), function()
     vim.cmd.stopinsert()
     vim.schedule(function()
-      vim.cmd('write')
+      vim.cmd('update')
     end)
   end, {
     desc = 'Save current buffer',
@@ -317,6 +329,12 @@ local function setup_basic()
   })
   set('n', ']q', ':cnext<cr>', {
     desc = 'Jump to next quickfix item',
+  })
+  set('n', '[l', ':lprev<cr>', {
+    desc = 'Jump to previous loclist item',
+  })
+  set('n', ']l', ':lnext<cr>', {
+    desc = 'Jump to next loclist item',
   })
   set('n', '[qf', function()
     pcall(function()

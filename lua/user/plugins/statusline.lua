@@ -81,7 +81,7 @@ plug({
         { provider = '%=' },
         { provider = '%=' },
         {
-          provider = '%v:%l %P ',
+          provider = '%v:%l %P %<',
         },
       }, {
         condition = function()
@@ -107,7 +107,7 @@ plug({
         comp.lpad(comp.CocStl),
         { provider = '%=' },
         {
-          provider = '%v:%l %P ',
+          provider = '%v:%l %P %<',
         },
       }),
 

@@ -17,7 +17,7 @@ function M.setup()
       [S.INFO] = M.DiagnosticIcons.info_icon,
     },
   }
-  local enable_virtual_text = true
+  local enable_virtual_text = false
   local virtual_text = enable_virtual_text
       and {
         severity = vim.diagnostic.severity.ERROR,

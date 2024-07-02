@@ -18,6 +18,7 @@ plug({
     overrides = function(colors) -- add/modify highlights
       -- do not foget to run ':KanagawaCompile'
       return {
+        CybuFocus = { link = 'FlashCursor' },
         MiniIndentscopeSymbol = { link = 'IndentBlanklineChar' },
         IndentLine = { link = 'IndentBlanklineChar' },
         IndentLineCurrent = { link = 'IndentBlanklineContextChar' },
@@ -82,32 +83,70 @@ plug({
 })
 
 plug({
-  'ellisonleao/gruvbox.nvim',
+  -- https://protesilaos.com/emacs/modus-themes-pictures
+  'miikanissi/modus-themes.nvim',
   event = 'User LazyTheme',
   priority = 1000,
-  enabled = vim.cfg.ui__theme_name == 'gruvbox',
+  cond = vim.cfg.ui__theme_name == 'modus',
   opts = {
-    terminal_colors = true, -- add neovim terminal colors
-    undercurl = true,
-    underline = true,
-    bold = true,
-    italic = {
-      strings = true,
-      emphasis = true,
-      comments = true,
-      operators = false,
-      folds = true,
-    },
-    strikethrough = true,
-    invert_selection = false,
-    invert_signs = false,
-    invert_tabline = false,
-    invert_intend_guides = false,
-    inverse = true, -- invert background for search, diffs, statuslines and errors
-    contrast = '', -- can be "hard", "soft" or empty string
-    palette_overrides = {},
-    overrides = {},
+    -- `deuteranopia`,
+    -- variant = 'tritanopia',
+    variant = 'tritanopia',
     dim_inactive = false,
-    transparent_mode = false,
+    styles = {
+      comments = { italic = false, bold = false },
+      keywords = { italic = true },
+      functions = { bold = false, italic = false },
+    },
+    on_highlights = function(hls, c)
+      hls['FloatBorder'] = { link = 'NormalFloat' }
+      hls['StatusLineNC'] = {
+        bg = c.bg_active,
+        fg = c.slate,
+      }
+      hls['MiniCursorword'] = {
+        italic = true,
+        bold = true,
+        bg = 'NONE',
+        fg = 'NONE',
+      }
+      hls['MiniCursorwordCurrent'] = {
+        underline = false,
+        bold = false,
+        bg = 'NONE',
+        fg = 'NONE',
+      }
+      hls['MiniIndentscopeSymbol'] = {
+        fg = c.bg_dim,
+        bg = 'NONE',
+        bold = false,
+      }
+
+      hls.CocErrorSign = { link = 'DiagnosticError' }
+      hls.CocWarningSign = { link = 'DiagnosticWarn' }
+      hls.CocInfoSign = { link = 'DiagnosticInfo' }
+      hls.CocHintSign = { link = 'DiagnosticHint' }
+      hls.CocErrorFloat = { link = 'DiagnosticError' }
+      hls.CocWarningFloat = { link = 'DiagnosticWarn' }
+      hls.CocFloating = { link = 'NormalFloat' }
+      hls.CocInfoFloat = { link = 'DiagnosticInfo' }
+      hls.CocHintFloat = { link = 'DiagnosticHint' }
+      hls.CocDiagnosticsError = { link = 'DiagnosticError' }
+      hls.CocDiagnosticsWarning = { link = 'DiagnosticWarn' }
+      hls.CocDiagnosticsInfo = { link = 'DiagnosticInfo' }
+      hls.CocDiagnosticsHint = { link = 'DiagnosticHint' }
+      hls.CocSelectedText = { fg = c.blue }
+      hls.CocMenuSel = { link = 'PmenuSel' }
+      hls.CocCodeLens = { fg = c.visual }
+      hls.CocInlayHint = { fg = c.visual }
+      hls.CocInlayHintType = { link = 'CocInlayHint' }
+      hls.CocInlayHintParameter = { link = 'CocInlayHint' }
+      hls.CocErrorHighlight = { undercurl = true, sp = c.red }
+      hls.CocWarningHighlight = { sp = c.yellow, undercurl = true }
+      hls.CocInfoHighlight = { sp = c.green, undercurl = true }
+      hls.CocHintHighlight = { sp = c.orange, undercurl = true }
+
+      return hls
+    end,
   },
 })

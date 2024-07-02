@@ -34,12 +34,28 @@ local get_current_vcs_view_providers = function()
   return require('userlib.runtime.buffer').reduce_bufnrs(function(carry, bufnr)
     local name = vim.api.nvim_buf_get_name(bufnr)
     if string.find(name, 'diffview://') ~= nil then
-      carry['diffview'] = true
+      carry['diffview'] = {
+        bufnr = bufnr,
+      }
     elseif string.find(name, 'fugitive://') ~= nil then
-      carry['fugitive'] = true
+      carry['fugitive'] = {
+        bufnr = bufnr,
+      }
+    elseif string.find(name, 'gitsigns://') ~= nil then
+      carry['gitsigns'] = {
+        bufnr = bufnr,
+      }
     end
+    --
     return carry
   end, {})
+end
+
+local close_win = function(bufnr)
+  local win = require('userlib.runtime.buffer').get_buf_win(bufnr)
+  if win then
+    vim.api.nvim_win_close(win, false)
+  end
 end
 
 --- Close git views according the providers.
@@ -49,8 +65,12 @@ M.close_git_views = function()
     local providers = get_current_vcs_view_providers()
     if providers.diffview == true then
       vim.cmd('DiffviewClose')
-    elseif providers.fugitive == true then
-      vim.cmd('q')
+    elseif providers.fugitive or providers.gitsigns then
+      local bufnr = (providers.fugitive and providers.fugitive.bufnr)
+        or (providers.gitsigns and providers.gitsigns.bufnr)
+      if bufnr then
+        close_win(bufnr)
+      end
     end
   end)
 end

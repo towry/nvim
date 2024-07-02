@@ -29,7 +29,7 @@ local function create_window_at_top_and_focus(opts)
     end
 
     -- so user can close this speicial win
-    if opts.focus_winid then
+    if opts.focus_winid and vim.api.nvim_win_is_valid(opts.focus_winid) then
       vim.api.nvim_set_current_win(opts.focus_winid)
     end
   end)

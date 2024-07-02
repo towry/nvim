@@ -7,6 +7,24 @@ M.Weights = {
   Frequent = 0,
 }
 
+function M.buffer_cycle(dir)
+  local ok, visits = pcall(require, 'mini.visits')
+  if not ok then
+    if dir == 'forward' then
+      vim.cmd('bnext')
+    elseif dir == 'backward' then
+      vim.cmd('bpre')
+    end
+    return
+  end
+  vim.schedule(function()
+    local weight = M.Weights['Recent']
+    local sort = visits.gen_sort.default({ recency_weight = weight })
+    local select_opts = { sort = sort, filter = 'harpoon', wrap = true }
+    visits.iterate_paths(dir, vim.cfg.runtime__starts_cwd, select_opts)
+  end)
+end
+
 ---@param cwd string
 ---@param local_opts? { weight_name?:string, filter?:string}
 function M.select_by_cwd(cwd, local_opts)

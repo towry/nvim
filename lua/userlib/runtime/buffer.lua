@@ -255,6 +255,19 @@ function M.getfsize(bufnr)
   return size
 end
 
+-- Get win for bufnr in current tabpage.
+function M.get_buf_win(bufnr)
+  if not vim.api.nvim_buf_is_valid(bufnr) then
+    return
+  end
+
+  for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+    if vim.api.nvim_win_get_buf(win) == bufnr then
+      return win
+    end
+  end
+end
+
 -- set the current buffer, if already showed in visible windows,
 -- switch focus to it's window.
 function M.set_current_buffer_focus(bufnr, tabonly)
@@ -269,11 +282,9 @@ function M.set_current_buffer_focus(bufnr, tabonly)
       return
     end
   else
-    for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-      if vim.api.nvim_win_get_buf(win) == bufnr then
-        vim.api.nvim_set_current_win(win)
-        return
-      end
+    local w = M.get_buf_win(bufnr)
+    if w then
+      vim.api.nvim_set_current_win(w)
     end
   end
 

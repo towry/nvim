@@ -493,3 +493,13 @@ end, {
     return vim.fn.matchfuzzy(list, arg)
   end,
 })
+
+create_cmd('GitDiffChange', function(params)
+  local rev = vim.trim(params.args)
+  if not rev or rev == '' then
+    -- check if current file has staged changes
+  end
+end, {
+  nargs = '*',
+  desc = 'Open current files changes',
+})
