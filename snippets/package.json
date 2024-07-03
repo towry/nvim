@@ -22,7 +22,13 @@
         "language": [
           "lua"
         ],
-        "path": "./test-lua.json"
+        "path": "./lua.json"
+      },
+      {
+        "language": [
+          "rust"
+        ],
+        "path": "./rust.json"
       }
     ]
   }

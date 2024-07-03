@@ -1,18 +1,22 @@
 {
-  "Prettier ignore comment": {
-    "prefix": ["ignore_prettier", "prettier_ignore"],
-    "body": ["// prettier-ignore"]
-  },
   "Eslint disable next line": {
-    "prefix": ["eslint_disable"],
-    "body": ["// eslint-disable-next-line"]
+    "body": [
+      "// eslint-disable-next-line"
+    ],
+    "prefix": [
+      "eslint_disable"
+    ]
   },
-  "sass element": {
-    "prefix": ["sass-element"],
-    "body": ["@include element(\"${1}\") {", "  ${2}", "}"]
+  "Prettier ignore comment": {
+    "body": [
+      "// prettier-ignore"
+    ],
+    "prefix": [
+      "ignore_prettier",
+      "prettier_ignore"
+    ]
   },
   "generate snippet package": {
-    "prefix": ["snippet_package"],
     "body": [
       "{",
       " \"name\": \"user-snippets\",",
@@ -26,6 +30,19 @@
       "    ]",
       "  }",
       "}"
+    ],
+    "prefix": [
+      "snippet_package"
+    ]
+  },
+  "sass element": {
+    "body": [
+      "@include element(\"${1}\") {",
+      "  ${2}",
+      "}"
+    ],
+    "prefix": [
+      "sass-element"
     ]
   }
 }
