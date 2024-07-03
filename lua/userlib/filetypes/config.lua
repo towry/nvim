@@ -14,7 +14,7 @@ return {
     lspconfig = { 'html', 'null-ls' },
   },
   ['json'] = {
-    lspconfig = { 'jsonls' },
+    lspconfig = { 'jsonls', 'null-ls' },
     treesitter = { 'json', 'jsonc' },
   },
   ['vue'] = {

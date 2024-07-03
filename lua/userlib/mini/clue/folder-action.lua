@@ -77,17 +77,19 @@ M.open = function(new_cwd)
       desc = 'Search content',
     })
 
-    set('n', '|', function()
+    set('n', '\\', function()
       require('neo-tree.command').execute({
         position = 'right',
-        reveal_file = new_cwd,
+        -- action = 'set_root',
+        source = 'filesystem',
+        dir = new_cwd,
         reveal_force_cwd = true,
       })
     end, {
       desc = 'Open in tree',
     })
 
-    set('n', '\\', function()
+    set('n', '|', function()
       require('neo-tree.command').execute({
         position = 'left',
         reveal_file = new_cwd,

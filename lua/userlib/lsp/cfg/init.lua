@@ -1,5 +1,7 @@
 local M = {}
 
+---- lsp server do not attach if root_dir not found.
+
 local servers_path = 'userlib.lsp.servers.'
 local capabilities = nil
 local lspconfig_cache = {}
