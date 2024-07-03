@@ -101,6 +101,11 @@ plug({
         desc = 'Git push',
       },
       {
+        '<leader>gi',
+        cmdstr([[OverDispatch! git wip]]),
+        desc = 'Create wip commit',
+      },
+      {
         '<leader>gu',
         function()
           vim.g.escape_cmd = 'pclose'
@@ -211,7 +216,12 @@ plug({
               vim.notify('Empty commit message', vim.log.levels.ERROR)
               return
             end
-            vim.cmd(string.format('OverDispatch! git commit -m "%s"', input))
+
+            if require('userlib.git.utils').is_head_wip_commit() then
+              vim.cmd(string.format('OverDispatch! git commit --amend --no-edit -m "%s"', input))
+            else
+              vim.cmd(string.format('OverDispatch! git commit -m "%s"', input))
+            end
           end)
         end,
         desc = 'Git commit',

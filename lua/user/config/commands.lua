@@ -123,7 +123,7 @@ if vim.env['TMUX'] ~= nil then
     -- tmux >= 3.4 require -l to specific percentage size.
     local tmux_split_command = string.format(
       [[tmux split-window -l %s -c '#{pane_current_path}' %s]],
-      '5%',
+      '8%',
       vim.fn.shellescape('tmux last-pane>/dev/null; ' .. user_command .. '; cat')
     )
 

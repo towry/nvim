@@ -147,4 +147,26 @@ function M.get_repo_info()
   return git_root, abbrev_head
 end
 
+function M.is_head_wip_commit()
+  local res = vim
+    .system({
+      'git',
+      'log',
+      '--format=%B',
+      '-n',
+      '1',
+      'HEAD',
+    }, { text = true })
+    :wait()
+  if res.code == 0 then
+    -- local text = '[WIP]: kdjkkfj'
+    local text = res.stdout or ''
+    if text:find('%[WIP%]:') then
+      return true
+    end
+  end
+
+  return false
+end
+
 return M
