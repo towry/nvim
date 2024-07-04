@@ -303,7 +303,7 @@ local function setup_basic()
   set('n', '<leader>wp', cmd('wincmd p'), {
     desc = 'Go to previous window',
   })
-  set({ 'n', 't', 'i' }, '<M-z>', cmd('wincmd p'), {
+  set({ 'n', 't', 'i' }, '<M-w>', cmd('wincmd p'), {
     desc = 'Go to previous window',
   })
   set({ 'n', 't', 'i' }, '<M-t>', cmd('tabnext #'), {
