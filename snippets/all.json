@@ -1,20 +1,11 @@
 {
   "Eslint disable next line": {
-    "body": [
-      "// eslint-disable-next-line"
-    ],
-    "prefix": [
-      "eslint_disable"
-    ]
+    "body": ["// eslint-disable-next-line"],
+    "prefix": ["eslint_disable"]
   },
   "Prettier ignore comment": {
-    "body": [
-      "// prettier-ignore"
-    ],
-    "prefix": [
-      "ignore_prettier",
-      "prettier_ignore"
-    ]
+    "body": ["// prettier-ignore"],
+    "prefix": ["ignore_prettier", "prettier_ignore"]
   },
   "generate snippet package": {
     "body": [
@@ -31,18 +22,10 @@
       "  }",
       "}"
     ],
-    "prefix": [
-      "snippet_package"
-    ]
+    "prefix": ["snippet_package"]
   },
   "sass element": {
-    "body": [
-      "@include element(\"${1}\") {",
-      "  ${2}",
-      "}"
-    ],
-    "prefix": [
-      "sass-element"
-    ]
+    "body": ["@include element(\"${1}\") {", "  ${2}", "}"],
+    "prefix": ["sass-element"]
   }
 }
