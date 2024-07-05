@@ -159,9 +159,9 @@ function M.is_head_wip_commit()
     }, { text = true })
     :wait()
   if res.code == 0 then
-    -- local text = '[WIP]: kdjkkfj'
+    -- local text = 'wip: kdjkkfj'
     local text = res.stdout or ''
-    if text:find('%[WIP%]:') then
+    if text:find('%wip%:') then
       return true
     end
   end

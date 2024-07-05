@@ -204,6 +204,36 @@ plug({
         desc = 'Git amend all',
       },
       {
+        'gj',
+        function()
+          require('userlib.mini.clue.git-commit').open(function(prefix)
+            if not prefix then
+              return
+            end
+            vim.ui.input({
+              prompt = prefix,
+            }, function(input)
+              -- if input is trimmed empty
+              if vim.trim(input or '') == '' then
+                vim.notify('Empty commit message', vim.log.levels.ERROR)
+                return
+              end
+
+              input = prefix .. ' ' .. input
+
+              if require('userlib.git.utils').is_head_wip_commit() then
+                vim.cmd(string.format('OverDispatch! git commit --amend --no-edit -m "%s"', input))
+              else
+                vim.cmd(string.format('OverDispatch! git commit -m "%s"', input))
+              end
+            end)
+          end)
+        end,
+        desc = 'Git commit',
+        noremap = true,
+        silent = true,
+      },
+      {
         '<leader>gc',
         function()
           -- use vim.ui.input to write commit message and then commit with the
