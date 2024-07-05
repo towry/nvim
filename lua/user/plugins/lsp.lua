@@ -72,9 +72,9 @@ plug({
       au.do_useraucmd(au.user_autocmds.LspConfigDone_User)
       require('userlib.lsp.cfg.diagnostic').setup()
       require('userlib.lsp.cfg.inlayhints').setup({
-        enabled = false,
+        enabled = true,
         insert_only = false,
-        highlight = 'NonText',
+        -- highlight = 'NonText',
       })
     end,
     init = function()
@@ -314,4 +314,10 @@ plug({
       },
     })
   end,
+})
+
+plug({
+  'chrisgrieser/nvim-lsp-endhints',
+  event = 'LspAttach',
+  opts = {},
 })

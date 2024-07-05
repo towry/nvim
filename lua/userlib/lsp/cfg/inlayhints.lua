@@ -3,7 +3,7 @@ local M = {}
 
 M.opts = {
   enabled = false,
-  highlight = 'Comment',
+  highlight = nil,
   insert_only = false,
 }
 M.state = setmetatable({}, { __index = nil })
@@ -19,7 +19,9 @@ function M.setup(opts)
     return
   end
 
-  vim.cmd.highlight('default link LspInlayHint ' .. M.opts.highlight)
+  if M.opts.highlight then
+    vim.cmd.highlight('default link LspInlayHint ' .. M.opts.highlight)
+  end
 
   vim.api.nvim_create_augroup('LspSetup_Inlayhints', {})
   vim.api.nvim_create_autocmd('LspAttach', {
