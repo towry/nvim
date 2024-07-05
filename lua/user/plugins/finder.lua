@@ -908,7 +908,7 @@ plug({
   -- commit = '36df11e3bbb6453014ff4736f6805b5a91dda56d',
   -- 'pze/fzf-lua',
   dev = false,
-  dependencies = { 'nvim-tree/nvim-web-devicons' },
+  dependencies = { 'echasnovski/mini.icons' },
   cond = vim.cfg.plugin_fzf_or_telescope == 'fzf',
   cmd = 'FzfLua',
   event = 'User LazyUIEnterOncePost',

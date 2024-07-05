@@ -45,6 +45,7 @@
   "mini.cursorword": { "branch": "main", "commit": "fdf66ba66a33e91206b53068c98a3a559b10de27" },
   "mini.doc": { "branch": "main", "commit": "11756803265e923e9ec61553f5c14d265ee47cba" },
   "mini.extra": { "branch": "main", "commit": "68c3b5d9766af784b517f2188f5596058ef4fbbd" },
+  "mini.icons": { "branch": "main", "commit": "3c51394b8815e0cb9beb385909803cd4816951c4" },
   "mini.pick": { "branch": "main", "commit": "653b5d7403684921f872055d3ec1ecf2188e47cf" },
   "mini.sessions": { "branch": "main", "commit": "a36b78d12fc16c938ba7a1e5ad1300d43c8bb848" },
   "mini.surround": { "branch": "main", "commit": "3cb5b509ad34f2402df4b977be607a614c8c7524" },
