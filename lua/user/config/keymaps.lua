@@ -41,6 +41,17 @@ local function setup_basic()
   --- <C-a> and <C-x> is free to use
   set('i', 'jj', '<ESC>', { silent = true, nowait = true, noremap = true })
   set('i', '<esc>', 'pumvisible() ? "\\<C-e><esc>" : "\\<ESC>"', { silent = true, expr = true, noremap = true })
+  set('s', '<esc>', function()
+    if vim.snippet then
+      vim.snippet.stop()
+    end
+    return '<ESC>'
+  end, {
+    desc = 'cancel snippet session',
+    expr = true,
+    silent = true,
+    noremap = true,
+  })
 
   -- Save jumps > 5 lines to the jumplist
   -- Jumps <= 5 respect line wraps
@@ -582,11 +593,6 @@ local function setup_basic()
         return '<S-Tab>'
       end
     end, { expr = true, silent = false })
-
-    set({ 's' }, '<BS>', '<C-o>s', {
-      remap = false,
-      desc = 'Remove snippet placeholder',
-    })
 
     set({ 'i' }, '<C-j>', function()
       local trigger_ai = function()
