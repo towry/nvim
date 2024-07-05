@@ -41,6 +41,9 @@ return function()
     commands = require('userlib.lsp.commands'),
     settings = M.settings,
     init_options = {
+      vue = {
+        hybridMode = true,
+      },
       typescript = {
         tsdk = tsdk_path,
       },

@@ -9,6 +9,41 @@ local enable_cmp_plug = vim.cfg.edit__cmp_provider == 'cmp'
 local MAX_INDEX_FILE_SIZE = 2000
 
 pack.plug({
+  'echasnovski/mini.completion',
+  enabled = vim.cfg.edit__cmp_provider == 'native',
+  event = { 'LspAttach', 'InsertEnter' },
+  config = function()
+    local MC = require('mini.completion')
+    MC.setup({
+      set_vim_settings = false,
+      fallback_action = '<C-x><C-i>',
+      lsp_completion = {
+        source_func = 'omnifunc',
+        auto_setup = false,
+        process_items = function(items, base)
+          -- Don't show 'Text' and 'Snippet' suggestions
+          -- items = vim.tbl_filter(function(x)
+          --   -- return x.kind ~= 1 and x.kind ~= 15
+          -- end, items)
+          return MC.default_process_items(items, base)
+        end,
+      },
+      window = {
+        info = { border = 'none', winblend = 30 },
+        signature = { border = 'none', winblend = 30 },
+      },
+    })
+  end,
+  -- init = function()
+  --   au.on_lsp_attach(function(_, bufnr)
+  --     vim.api.nvim_set_option_value('omnifunc', 'v:lua.MiniCompletion.completefunc_lsp', {
+  --       buf = bufnr,
+  --     })
+  --   end)
+  -- end,
+})
+
+pack.plug({
   {
     'ms-jpq/coq_nvim',
     branch = 'coq',

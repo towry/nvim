@@ -46,11 +46,12 @@ local settings = {
   vtsls = {
     tsserver = {
       globalPlugins = {
-        {
-          name = '@vue/typescript-plugin',
-          location = vim.cfg.lsp__vue_typescript_plugin,
-          languages = { 'javascript', 'typescript', 'vue' },
-        },
+        ------ this will cause duplicate diagnostic in ts files.
+        -- {
+        --   name = '@vue/typescript-plugin',
+        --   location = vim.cfg.lsp__vue_typescript_plugin,
+        --   languages = { 'javascript', 'typescript', 'vue' },
+        -- },
       },
     },
 
@@ -59,7 +60,7 @@ local settings = {
     experimental = {
       completion = {
         --- Execute fuzzy match of completion items on server side. Enable this will help filter out useless completion items from tsserver.
-        enableServerSideFuzzyMatch = true,
+        enableServerSideFuzzyMatch = false,
       },
     },
   },
