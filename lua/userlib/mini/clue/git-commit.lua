@@ -24,6 +24,7 @@ M.open = function(callback)
     set('n', 'l', _('cleanup: <🗑️>'), { desc = 'cleanup: <🗑️>' })
     set('n', 'x', _('revert: <🔙>'), { desc = 'revert: <🔙>' })
     set('n', 'u', _('feat: <🐸>'), { desc = 'feat: <🐸>' })
+    set('n', 'm', _('minor: <🫰>'), { desc = 'Minor changes: <🫰>' })
   end)
 end
 
