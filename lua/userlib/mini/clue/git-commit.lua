@@ -20,11 +20,9 @@ M.open = function(callback)
     set('n', 'b', _('build: <🏗️>'), { desc = 'build: <🏗️>' })
     set('n', 'i', _('ci: <👷>'), { desc = 'ci: <👷>' })
     set('n', 'a', _('deps: <📦>'), { desc = 'deps: <📦>' })
-    set('n', 'e', _('typo: <🐛>'), { desc = 'typo: <🐛>' })
     set('n', 'l', _('cleanup: <🗑️>'), { desc = 'cleanup: <🗑️>' })
     set('n', 'x', _('revert: <🔙>'), { desc = 'revert: <🔙>' })
     set('n', 'u', _('feat: <🐸>'), { desc = 'feat: <🐸>' })
-    set('n', 'm', _('minor: <🫰>'), { desc = 'Minor changes: <🫰>' })
   end)
 end
 
