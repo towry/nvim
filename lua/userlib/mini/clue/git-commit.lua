@@ -10,7 +10,7 @@ M.open = function(callback)
 
   require('userlib.mini.clue').shortly_open(function(set, unset)
     set('n', 'j', _('wip: <🤩>'), { desc = 'wip: <🤩>', noremap = true })
-    set('n', 'f', _('fixup: <🐞>'), { desc = 'fixup: <🐞>' })
+    set('n', 'f', _('fix: <🐞>'), { desc = 'fix: <🐞>' })
     set('n', 's', _('format: <💅>'), { desc = 'format: <💅>' })
     set('n', 't', _('test: <🐛>'), { desc = 'test: <🐛>' })
     set('n', 'r', _('refactor: <🍔>'), { desc = 'refactor: <🍔>' })
