@@ -221,11 +221,7 @@ plug({
 
               input = prefix .. ' ' .. input
 
-              if require('userlib.git.utils').is_head_wip_commit() then
-                vim.cmd(string.format('OverDispatch! git commit --amend --no-edit -m "%s"', input))
-              else
-                vim.cmd(string.format('OverDispatch! git commit -m "%s"', input))
-              end
+              vim.cmd(string.format('OverDispatch! git commit -m "%s"', input))
             end)
           end)
         end,
