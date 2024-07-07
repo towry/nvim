@@ -4,6 +4,9 @@
 
 --- TODO: add root_patterns
 return {
+  ['python'] = {
+    lspconfig = { 'pyright', 'ruff' },
+  },
   ['css'] = {
     lspconfig = { 'cssls', 'null-ls' },
   },
