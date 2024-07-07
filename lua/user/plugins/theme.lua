@@ -171,8 +171,8 @@ plug({
   opts = {
     overrides = function(colors)
       return {
-        TabLineSel = { fg = colors.white, bg = colors.bg, bold = true },
-        TabLine = { bg = colors.menu, sp = colors.gutter_fg },
+        TabLineSel = { fg = colors.white, bg = colors.bg, bold = true, italic = false },
+        TabLine = { bg = colors.menu, sp = colors.gutter_fg, italic = true },
         TabLineFill = { bg = colors.black, fg = colors.purple },
         StatusLineNC = { fg = colors.comment, bg = colors.menu },
         NormalA = { fg = colors.black, bg = colors.purple, bold = true },
