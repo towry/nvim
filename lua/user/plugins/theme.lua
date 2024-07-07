@@ -100,6 +100,16 @@ plug({
       functions = { bold = false, italic = false },
     },
     on_highlights = function(hls, c)
+      hls['@lsp.type.unresolvedReference'] = {
+        undercurl = false,
+        sp = c.error,
+      }
+      hls['LineNrAbove'] = {
+        bg = 'none',
+      }
+      hls['LineNrBelow'] = {
+        bg = 'none',
+      }
       hls['FloatBorder'] = { link = 'NormalFloat' }
       hls['StatusLineNC'] = {
         bg = c.bg_active,
