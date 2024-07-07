@@ -62,7 +62,7 @@ return {
   editor__jump_lastline_enable = true,
   editor__jump_lastline_ignore_filetypes = { 'gitcommit', 'gitrebase', 'svn', 'hgcommit', 'Dashboard' },
   editor__jump_lastline_ignore_buftypes = { 'quickfix', 'nofile', 'help' },
-  editor__resize_steps = 5,
+  editor__resize_steps = 15,
   -- editor extended features.
   editorExtend__colorizer_enable = true,
   editorExtend__colorizer_filetypes = {
