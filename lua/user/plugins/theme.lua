@@ -171,8 +171,9 @@ plug({
   opts = {
     overrides = function(colors)
       return {
-        TabLineSel = { fg = colors.white, bg = colors.bg, bold = true, italic = false },
-        TabLine = { bg = colors.menu, sp = colors.gutter_fg, italic = true },
+        WidgetTextHighlight = { fg = colors.cyan, bg = colors.black, bold = true },
+        TabLineSel = { fg = colors.purple, bg = colors.bg, bold = true, italic = false },
+        TabLine = { bg = colors.menu, fg = colors.white, italic = true },
         TabLineFill = { bg = colors.black, fg = colors.purple },
         StatusLineNC = { fg = colors.comment, bg = colors.menu },
         NormalA = { fg = colors.black, bg = colors.purple, bold = true },
@@ -181,6 +182,8 @@ plug({
         CommandA = { fg = colors.black, bg = colors.red, bold = true },
         TermA = { fg = colors.black, bg = colors.yellow, bold = true },
         MotionA = { fg = colors.black, bg = colors.cyan, bold = true },
+        TreesitterContext = { bg = colors.visual },
+        TreesitterContextLineNumber = { link = 'TreesitterContext' },
       }
     end,
   },

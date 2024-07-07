@@ -190,7 +190,7 @@ Ty.stl_relative_bufname = function(buf)
   elseif vim.fn.strlen(relative) / winwidth > 0.8 then
     root = '!'
   end
-  return string.format('%s%s', tail, root == '.' and '' or ('│' .. root))
+  return string.format('%%#WidgetTextHighlight#%s%%#StatusLine#%s', tail, root == '.' and '' or ('│' .. root))
 end
 
 --- "│"
