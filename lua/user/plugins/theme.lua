@@ -90,8 +90,9 @@ plug({
   cond = vim.cfg.ui__theme_name == 'modus',
   opts = {
     -- `deuteranopia`,
-    -- variant = 'tritanopia',
-    variant = 'tritanopia',
+    style = 'auto',
+    --- @type 'deuteranopia' | 'tritanopia' | 'tinted' | 'default'
+    variant = 'deuteranopia',
     dim_inactive = false,
     styles = {
       comments = { italic = false, bold = false },
