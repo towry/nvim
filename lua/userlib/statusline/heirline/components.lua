@@ -399,6 +399,12 @@ local Overseer = {
 }
 
 local function setup_colors()
+  local fg = function(name)
+    return utils.get_highlight(name).fg
+  end
+  local bg = function(name)
+    return utils.get_highlight(name).bg
+  end
   return {
     bg_none = utils.get_highlight('Normal').bg or 'none',
     fg_none = utils.get_highlight('Normal').fg or 'none',
@@ -426,12 +432,12 @@ local function setup_colors()
     visual = utils.get_highlight('Visual').bg or 'none',
     diag_warn = utils.get_highlight('DiagnosticWarn').fg or 'none',
     diag_error = utils.get_highlight('DiagnosticError').fg or 'none',
-    mode_n = utils.get_highlight('Search').bg or 'none',
-    mode_i = utils.get_highlight('CursorLine').bg or 'none',
-    mode_v = utils.get_highlight('Visual').bg or 'none',
-    mode_c = utils.get_highlight('Cursor').bg or 'none',
-    mode_x = utils.get_highlight('Statement').fg or 'none',
-    mode_t = utils.get_highlight('NonText').fg or 'none',
+    mode_n = bg('NormalA') or bg('Search') or 'none',
+    mode_i = bg('InsertA') or bg('CursorLine') or 'none',
+    mode_v = bg('VisualA') or bg('Visual') or 'none',
+    mode_c = bg('CommandA') or bg('Cursor') or 'none',
+    mode_x = fg('MotionA') or fg('Statement') or 'none',
+    mode_t = fg('TermA') or fg('NonText') or 'none',
   }
 end
 

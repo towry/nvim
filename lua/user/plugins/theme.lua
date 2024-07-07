@@ -169,8 +169,19 @@ plug({
   priority = 1000,
   cond = vim.cfg.ui__theme_name == 'dracula',
   opts = {
-    overrides = function(_)
-      return {}
+    overrides = function(colors)
+      return {
+        TabLineSel = { fg = colors.white, bg = colors.bg, bold = true },
+        TabLine = { bg = colors.menu, sp = colors.gutter_fg },
+        TabLineFill = { bg = colors.black, fg = colors.purple },
+        StatusLineNC = { fg = colors.comment, bg = colors.menu },
+        NormalA = { fg = colors.black, bg = colors.purple, bold = true },
+        InsertA = { fg = colors.black, bg = colors.green, bold = true },
+        VisualA = { fg = colors.black, bg = colors.blue, bold = true },
+        CommandA = { fg = colors.black, bg = colors.red, bold = true },
+        TermA = { fg = colors.black, bg = colors.yellow, bold = true },
+        MotionA = { fg = colors.black, bg = colors.cyan, bold = true },
+      }
     end,
   },
 })
