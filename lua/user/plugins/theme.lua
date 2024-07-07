@@ -161,3 +161,16 @@ plug({
     end,
   },
 })
+
+plug({
+  'Mofiqul/dracula.nvim',
+  event = 'User LazyTheme',
+  name = 'dracula',
+  priority = 1000,
+  cond = vim.cfg.ui__theme_name == 'dracula',
+  opts = {
+    overrides = function(_)
+      return {}
+    end,
+  },
+})
