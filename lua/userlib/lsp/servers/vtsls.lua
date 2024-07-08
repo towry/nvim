@@ -47,11 +47,14 @@ local settings = {
     tsserver = {
       globalPlugins = {
         ------ this will cause duplicate diagnostic in ts files.
-        -- {
-        --   name = '@vue/typescript-plugin',
-        --   location = vim.cfg.lsp__vue_typescript_plugin,
-        --   languages = { 'javascript', 'typescript', 'vue' },
-        -- },
+        ---- but without this, vtsls will raise some error
+        {
+          name = '@vue/typescript-plugin',
+          location = vim.cfg.lsp__vue_typescript_plugin,
+          languages = { 'vue' },
+          configNamespace = 'typescript',
+          enableForWorkspaceTypeScriptVersions = true,
+        },
       },
     },
 
