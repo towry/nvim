@@ -148,11 +148,7 @@ function M.open_code_action()
     vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-U>', true, false, true))
   end
   -- https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_codeAction
-  utils.use_plugin('lspsaga', function()
-    vim.cmd('Lspsaga code_action')
-  end, function()
-    vim.lsp.buf.code_action({})
-  end)
+  vim.lsp.buf.code_action({})
 end
 
 --- Not working well.

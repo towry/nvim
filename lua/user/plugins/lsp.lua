@@ -293,30 +293,6 @@ plug({
 })
 
 plug({
-  'nvimdev/lspsaga.nvim',
-  event = 'LspAttach',
-  config = function()
-    require('lspsaga').setup({
-      ui = {
-        border = vim.cfg.ui__float_border,
-      },
-      code_action = {
-        show_server_name = true,
-        keys = {
-          quit = '<esc>',
-        },
-      },
-      lightbulb = {
-        enable = false,
-      },
-      symbol_in_winbar = {
-        enable = false,
-      },
-    })
-  end,
-})
-
-plug({
   'chrisgrieser/nvim-lsp-endhints',
   event = 'LspAttach',
   opts = {},

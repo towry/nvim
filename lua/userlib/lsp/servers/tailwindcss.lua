@@ -2,6 +2,7 @@ local M = {}
 
 local capabilities = require('userlib.lsp.cfg.capbilities')()
 capabilities.textDocument.colorProvider = { dynamicRegistration = false }
+capabilities.server_capabilities.hoverProvider = false
 
 -- Settings
 
@@ -19,6 +20,7 @@ local on_attach = function(client, bufnr)
   if vim.b[bufnr].is_big_file then
     return
   end
+  client.server_capabilities.hoverProvider = false
   if client.server_capabilities.colorProvider then
     -- require('userlib.lsp.cfg.documentcolors').buf_attach(bufnr)
     attach_colorizer_to_buffer(bufnr, {

@@ -161,7 +161,6 @@ return {
   },
   lsp__vue_typescript_plugin = nil,
   lsp__vue_language_server = 'vue-language-server',
-  lsp__plugin_lspsaga = true,
   ---User interfaces
   ui__theme_name = 'default',
   ui__float_border = 'single',
