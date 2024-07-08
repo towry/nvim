@@ -4,6 +4,9 @@
 
 --- TODO: add root_patterns
 return {
+  ['nim'] = {
+    lspconfig = { 'nimlangserver' },
+  },
   ['python'] = {
     lspconfig = { 'pyright', 'ruff' },
   },

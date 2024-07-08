@@ -106,6 +106,7 @@ return {
     'yaml',
     'markdown',
     'markdown_inline',
+    'nim',
   },
   lang__treesitter_plugin_disable_on_filetypes = {
     'NvimTree',
