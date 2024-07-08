@@ -224,6 +224,7 @@ pack.plug({
               },
             }
           end
+          return opts
         end,
       },
     })

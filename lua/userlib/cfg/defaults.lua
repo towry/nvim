@@ -165,7 +165,7 @@ return {
   ui__theme_name = 'default',
   ui__float_border = 'single',
   ui__window_equalalways = false,
-  ---@type "mini"|"dressing"
+  ---@type "mini"|"dressing"|"fzf_lua"
   ui__input_select_provider = 'dressing',
   workbench__lualine_theme = 'default',
   ---misc stuff.

@@ -1191,8 +1191,8 @@ plug({
     })
 
     -- registered with dressing.
-    -- local enable_fzf_select = vim.cfg.ui__input_select_provider == 'fzf-lua'
-    local enable_fzf_select = false
+    local enable_fzf_select = vim.cfg.ui__input_select_provider == 'fzf_lua'
+    -- local enable_fzf_select = false
 
     if not enable_fzf_select then
       return
