@@ -83,82 +83,38 @@ plug({
 })
 
 plug({
-  -- https://protesilaos.com/emacs/modus-themes-pictures
-  'miikanissi/modus-themes.nvim',
+  'EdenEast/nightfox.nvim',
   event = 'User LazyTheme',
   priority = 1000,
-  cond = vim.cfg.ui__theme_name == 'modus',
+  cond = vim.cfg.ui__theme_name == 'nordfox',
   opts = {
-    -- `deuteranopia`,
-    style = 'auto',
-    --- @type 'deuteranopia' | 'tritanopia' | 'tinted' | 'default'
-    variant = 'deuteranopia',
-    dim_inactive = false,
-    styles = {
-      comments = { italic = false, bold = false },
-      keywords = { italic = true },
-      functions = { bold = false, italic = false },
+    options = {
+      transparent = true,
+      styles = {
+        keywordStylewords = 'italic',
+        types = 'italic,bold',
+      },
     },
-    on_highlights = function(hls, c)
-      hls['@lsp.type.unresolvedReference'] = {
-        undercurl = false,
-        sp = c.error,
-      }
-      hls['LineNrAbove'] = {
-        bg = 'none',
-      }
-      hls['LineNrBelow'] = {
-        bg = 'none',
-      }
-      hls['FloatBorder'] = { link = 'NormalFloat' }
-      hls['StatusLineNC'] = {
-        bg = c.bg_active,
-        fg = c.slate,
-      }
-      hls['MiniCursorword'] = {
-        italic = true,
-        bold = true,
-        bg = 'NONE',
-        fg = 'NONE',
-      }
-      hls['MiniCursorwordCurrent'] = {
-        underline = false,
-        bold = false,
-        bg = 'NONE',
-        fg = 'NONE',
-      }
-      hls['MiniIndentscopeSymbol'] = {
-        fg = c.bg_dim,
-        bg = 'NONE',
-        bold = false,
-      }
-
-      hls.CocErrorSign = { link = 'DiagnosticError' }
-      hls.CocWarningSign = { link = 'DiagnosticWarn' }
-      hls.CocInfoSign = { link = 'DiagnosticInfo' }
-      hls.CocHintSign = { link = 'DiagnosticHint' }
-      hls.CocErrorFloat = { link = 'DiagnosticError' }
-      hls.CocWarningFloat = { link = 'DiagnosticWarn' }
-      hls.CocFloating = { link = 'NormalFloat' }
-      hls.CocInfoFloat = { link = 'DiagnosticInfo' }
-      hls.CocHintFloat = { link = 'DiagnosticHint' }
-      hls.CocDiagnosticsError = { link = 'DiagnosticError' }
-      hls.CocDiagnosticsWarning = { link = 'DiagnosticWarn' }
-      hls.CocDiagnosticsInfo = { link = 'DiagnosticInfo' }
-      hls.CocDiagnosticsHint = { link = 'DiagnosticHint' }
-      hls.CocSelectedText = { fg = c.blue }
-      hls.CocMenuSel = { link = 'PmenuSel' }
-      hls.CocCodeLens = { fg = c.visual }
-      hls.CocInlayHint = { fg = c.visual }
-      hls.CocInlayHintType = { link = 'CocInlayHint' }
-      hls.CocInlayHintParameter = { link = 'CocInlayHint' }
-      hls.CocErrorHighlight = { undercurl = true, sp = c.red }
-      hls.CocWarningHighlight = { sp = c.yellow, undercurl = true }
-      hls.CocInfoHighlight = { sp = c.green, undercurl = true }
-      hls.CocHintHighlight = { sp = c.orange, undercurl = true }
-
-      return hls
-    end,
+    groups = {
+      all = {
+        WidgetTextHighlight = {
+          fg = 'palette.blue',
+          bg = 'palette.bg0',
+        },
+        FloatBorder = { link = 'NormalFloat' },
+        NormalA = { fg = 'palette.bg0', bg = 'palette.blue' },
+        InsertA = { fg = 'palette.bg0', bg = 'palette.green' },
+        VisualA = { fg = 'palette.bg0', bg = 'palette.magenta' },
+        CommandA = { fg = 'palette.bg0', bg = 'palette.yellow' },
+        TermA = { fg = 'palette.bg0', bg = 'palette.orange' },
+        MotionA = { fg = 'palette.bg0', bg = 'palette.red' },
+        TabLineSel = { fg = 'palette.blue', bg = 'palette.bg3' },
+        TreesitterContext = { bg = 'palette.bg2' },
+        TreesitterContextLineNumber = { link = 'TreesitterContext' },
+      },
+      -- https://github.com/EdenEast/nightfox.nvim/blob/main/usage.md#palette
+      nordfox = {},
+    },
   },
 })
 

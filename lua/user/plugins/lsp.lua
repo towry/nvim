@@ -275,7 +275,7 @@ plug({
     },
     opts = {
       window = {
-        size = { width = '98%', height = '40%' },
+        size = { width = '98%', height = '60%' },
         position = '2%',
       },
       lsp = { auto_attach = false },
