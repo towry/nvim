@@ -59,13 +59,11 @@ plug({
     },
     config = function()
       require('user.config.options').setup_lsp()
-      if false then
-        require('mason')
-        require('mason-lspconfig').setup({
-          ensure_installed = vim.cfg.lsp__auto_install_servers,
-          automatic_installation = vim.cfg.lsp__automatic_installation,
-        })
-      end
+      require('mason')
+      require('mason-lspconfig').setup({
+        ensure_installed = vim.cfg.lsp__auto_install_servers,
+        automatic_installation = vim.cfg.lsp__automatic_installation,
+      })
 
       default_lspconfig_ui_options()
 
