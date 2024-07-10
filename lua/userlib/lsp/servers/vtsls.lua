@@ -1,4 +1,5 @@
 local M = {}
+local nodeutils = require('userlib.runtime.platform.nodejs')
 
 M.cmd = {
   vim.cfg.lsp__vtsls or 'vtsls',
@@ -49,7 +50,8 @@ local settings = {
         ---- but without this, vtsls will raise some error
         {
           name = '@vue/typescript-plugin',
-          location = vim.cfg.lsp__vue_typescript_plugin,
+          location = vim.cfg.lsp__vue_typescript_plugin
+            or nodeutils.get_pkg_path('vue-language-server', '/node_modules/@vue/language-server'),
           languages = { 'vue' },
           configNamespace = 'typescript',
           enableForWorkspaceTypeScriptVersions = true,
