@@ -59,22 +59,20 @@ plug({
     },
     config = function()
       require('user.config.options').setup_lsp()
-      if false then
-        require('mason')
-        require('mason-lspconfig').setup({
-          ensure_installed = vim.cfg.lsp__auto_install_servers,
-          automatic_installation = vim.cfg.lsp__automatic_installation,
-        })
-      end
+      require('mason')
+      require('mason-lspconfig').setup({
+        ensure_installed = vim.cfg.lsp__auto_install_servers,
+        automatic_installation = vim.cfg.lsp__automatic_installation,
+      })
 
       default_lspconfig_ui_options()
 
       au.do_useraucmd(au.user_autocmds.LspConfigDone_User)
       require('userlib.lsp.cfg.diagnostic').setup()
       require('userlib.lsp.cfg.inlayhints').setup({
-        enabled = false,
+        enabled = true,
         insert_only = false,
-        highlight = 'NonText',
+        -- highlight = 'NonText',
       })
     end,
     init = function()
@@ -226,4 +224,74 @@ plug({
       },
     },
   },
+
+  {
+    'dgagn/diagflow.nvim',
+    event = 'LspAttach',
+    enabled = false,
+    -- has bug, will show diagnostic on other buffer that does not belong to
+    -- that buffer.
+    opts = {
+      max_width = 50,
+      max_height = 10,
+      gap_size = 1,
+      scope = 'line',
+      text_align = 'right',
+      padding_right = 1,
+      toggle_event = { 'InsertEnter', 'InsertLeave' },
+      placement = 'top',
+      inline_padding_left = 1,
+      show_sign = false,
+      show_borders = false,
+    },
+  },
+
+  {
+    'rachartier/tiny-inline-diagnostic.nvim',
+    enabled = false,
+    event = 'LspAttach',
+    config = function()
+      require('tiny-inline-diagnostic').setup()
+    end,
+  },
+
+  {
+    'SmiteshP/nvim-navbuddy',
+    dependencies = {
+      'neovim/nvim-lspconfig',
+      'SmiteshP/nvim-navic',
+      'MunifTanjim/nui.nvim',
+    },
+    event = 'LspAttach',
+    cmd = 'Navbuddy',
+    keys = {
+      {
+        '<leader>ce',
+        function()
+          require('nvim-navbuddy').open()
+        end,
+        desc = 'Navigate symbols in tree view',
+      },
+    },
+    opts = {
+      window = {
+        size = { width = '98%', height = '60%' },
+        position = '2%',
+      },
+      lsp = { auto_attach = false },
+    },
+    init = function()
+      require('userlib.runtime.au').on_lsp_attach(function(client, bufnr)
+        if client.supports_method('textDocument/documentSymbol') then
+          require('nvim-navbuddy').attach(client, bufnr)
+        end
+      end)
+    end,
+  },
+})
+
+plug({
+  'chrisgrieser/nvim-lsp-endhints',
+  event = 'LspAttach',
+  opts = {},
 })

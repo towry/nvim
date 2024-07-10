@@ -146,20 +146,12 @@ function M.open_code_action()
   local mode = vim.api.nvim_get_mode().mode
   if mode == 'v' then
     vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-U>', true, false, true))
-  else
-    require('userlib.lsp.func').jump_to_diagnostic_in_line()
   end
   -- https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_codeAction
-  vim.lsp.buf.code_action({
-    context = {
-      -- only = {
-      --   'source',
-      -- },
-      diagnostics = get_diagnostic_at_cursor(),
-    },
-  })
+  vim.lsp.buf.code_action({})
 end
 
+--- Not working well.
 function M.jump_to_diagnostic_in_line()
   local current_line_cursor = vim.api.nvim_win_get_cursor(0)
   local next_dia_pos = vim.diagnostic.get_next_pos({

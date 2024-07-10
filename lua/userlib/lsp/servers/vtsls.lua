@@ -1,7 +1,6 @@
 local M = {}
 
 M.cmd = {
-  'node',
   vim.cfg.lsp__vtsls or 'vtsls',
   '--stdio',
 }
@@ -46,10 +45,14 @@ local settings = {
   vtsls = {
     tsserver = {
       globalPlugins = {
+        ------ this will cause duplicate diagnostic in ts files.
+        ---- but without this, vtsls will raise some error
         {
           name = '@vue/typescript-plugin',
           location = vim.cfg.lsp__vue_typescript_plugin,
-          languages = { 'javascript', 'typescript', 'vue' },
+          languages = { 'vue' },
+          configNamespace = 'typescript',
+          enableForWorkspaceTypeScriptVersions = true,
         },
       },
     },
@@ -59,7 +62,7 @@ local settings = {
     experimental = {
       completion = {
         --- Execute fuzzy match of completion items on server side. Enable this will help filter out useless completion items from tsserver.
-        enableServerSideFuzzyMatch = true,
+        enableServerSideFuzzyMatch = false,
       },
     },
   },

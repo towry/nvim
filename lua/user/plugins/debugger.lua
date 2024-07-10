@@ -510,23 +510,8 @@ pack.plug({
       },
       floating = {
         border = 'single',
-        max_height = 0.8,
+        max_height = 0.9,
         max_width = 0.9,
-      },
-      highlights = {
-        adapter_name = 'NeotestAdapterName',
-        border = 'NeotestBorder',
-        dir = 'NeotestDir',
-        expand_marker = 'NeotestExpandMarker',
-        failed = 'NeotestFailed',
-        file = 'NeotestFile',
-        focused = 'NeotestFocused',
-        indent = 'NeotestIndent',
-        namespace = 'NeotestNamespace',
-        passed = 'NeotestPassed',
-        running = 'NeotestRunning',
-        skipped = 'NeotestSkipped',
-        test = 'NeotestTest',
       },
       icons = {
         child_indent = '│',
@@ -551,7 +536,7 @@ pack.plug({
       },
       quickfix = {
         enabled = true,
-        open = false,
+        open = true,
       },
       status = {
         enabled = true,

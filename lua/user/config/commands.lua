@@ -123,7 +123,7 @@ if vim.env['TMUX'] ~= nil then
     -- tmux >= 3.4 require -l to specific percentage size.
     local tmux_split_command = string.format(
       [[tmux split-window -l %s -c '#{pane_current_path}' %s]],
-      '5%',
+      '8%',
       vim.fn.shellescape('tmux last-pane>/dev/null; ' .. user_command .. '; cat')
     )
 
@@ -492,4 +492,14 @@ end, {
     end
     return vim.fn.matchfuzzy(list, arg)
   end,
+})
+
+create_cmd('GitDiffChange', function(params)
+  local rev = vim.trim(params.args)
+  if not rev or rev == '' then
+    -- check if current file has staged changes
+  end
+end, {
+  nargs = '*',
+  desc = 'Open current files changes',
 })

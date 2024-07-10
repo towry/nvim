@@ -464,3 +464,8 @@ plug({
   'pze/amber.vim',
   filetypes = { 'amber' },
 })
+
+plug({
+  'alaviss/nim.nvim',
+  ft = 'nim',
+})

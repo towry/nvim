@@ -218,6 +218,7 @@ plug({
     dependencies = {
       {
         'willothy/wezterm.nvim',
+        enabled = vim.cfg.runtime__is_wezterm,
         opts = {},
       },
     },

@@ -374,6 +374,8 @@ plug({
 
 plug({
   'stevearc/aerial.nvim',
+  -- have bugs, after aerial win closed, it's autocmd is still running.
+  enabled = false,
   keys = {
     { '<leader>/o', '<cmd>AerialToggle<cr>', desc = 'Symbols outline' },
     {
@@ -769,6 +771,20 @@ plug({
       '<cmd>lua require("userlib.mini.visits").select_by_cwd(vim.cfg.runtime__starts_cwd)<cr>',
       desc = 'Show current cwd visits',
     },
+    {
+      ']h',
+      function()
+        require('userlib.mini.visits').buffer_cycle('forward')
+      end,
+      desc = 'Forward harpoon buffer',
+    },
+    {
+      '[h',
+      function()
+        require('userlib.mini.visits').buffer_cycle('backward')
+      end,
+      desc = 'Backward harpoon buffer',
+    },
     --- marks as m also create harpoon mark.
     {
       'mm',
@@ -855,12 +871,12 @@ plug({
   opts = function()
     return {
       store = {
-        autowrite = true,
+        autowrite = false,
       },
       silent = true,
       track = {
         event = 'BufEnter',
-        delay = 1000,
+        delay = 200,
       },
     }
   end,
@@ -892,7 +908,7 @@ plug({
   -- commit = '36df11e3bbb6453014ff4736f6805b5a91dda56d',
   -- 'pze/fzf-lua',
   dev = false,
-  dependencies = { 'nvim-tree/nvim-web-devicons' },
+  dependencies = { 'echasnovski/mini.icons' },
   cond = vim.cfg.plugin_fzf_or_telescope == 'fzf',
   cmd = 'FzfLua',
   event = 'User LazyUIEnterOncePost',
@@ -1175,8 +1191,8 @@ plug({
     })
 
     -- registered with dressing.
-    -- local enable_fzf_select = vim.cfg.ui__input_select_provider == 'fzf-lua'
-    local enable_fzf_select = false
+    local enable_fzf_select = vim.cfg.ui__input_select_provider == 'fzf_lua'
+    -- local enable_fzf_select = false
 
     if not enable_fzf_select then
       return

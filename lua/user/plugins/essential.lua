@@ -49,8 +49,19 @@ pack.plug({
       vim.g.dispatch_no_tmux_make = 1 -- do not use tmux strategy in tmux.
     end,
   },
+  -- {
+  --   'nvim-tree/nvim-web-devicons',
+  -- },
   {
-    'nvim-tree/nvim-web-devicons',
+    'echasnovski/mini.icons',
+    lazy = true,
+    opts = {},
+    init = function()
+      package.preload['nvim-web-devicons'] = function()
+        require('mini.icons').mock_nvim_web_devicons()
+        return package.loaded['nvim-web-devicons']
+      end
+    end,
   },
   { 'nvim-lua/popup.nvim' },
   {
@@ -213,6 +224,7 @@ pack.plug({
               },
             }
           end
+          return opts
         end,
       },
     })

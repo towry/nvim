@@ -4,6 +4,12 @@
 
 --- TODO: add root_patterns
 return {
+  ['nim'] = {
+    lspconfig = { 'nim_langserver' },
+  },
+  ['python'] = {
+    lspconfig = { 'pyright', 'ruff' },
+  },
   ['css'] = {
     lspconfig = { 'cssls', 'null-ls' },
   },
@@ -14,7 +20,7 @@ return {
     lspconfig = { 'html', 'null-ls' },
   },
   ['json'] = {
-    lspconfig = { 'jsonls' },
+    lspconfig = { 'jsonls', 'null-ls' },
     treesitter = { 'json', 'jsonc' },
   },
   ['vue'] = {

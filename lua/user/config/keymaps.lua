@@ -41,6 +41,17 @@ local function setup_basic()
   --- <C-a> and <C-x> is free to use
   set('i', 'jj', '<ESC>', { silent = true, nowait = true, noremap = true })
   set('i', '<esc>', 'pumvisible() ? "\\<C-e><esc>" : "\\<ESC>"', { silent = true, expr = true, noremap = true })
+  set('s', '<esc>', function()
+    if vim.snippet then
+      vim.snippet.stop()
+    end
+    return '<ESC>'
+  end, {
+    desc = 'cancel snippet session',
+    expr = true,
+    silent = true,
+    noremap = true,
+  })
 
   -- Save jumps > 5 lines to the jumplist
   -- Jumps <= 5 respect line wraps
@@ -49,6 +60,18 @@ local function setup_basic()
   --->>
   set('n', ']b', ':bnext<cr>', { desc = 'Next buffer', silent = false, nowait = true })
   set('n', '[b', ':bpre<cr>', { desc = 'Prev buffer', silent = false, nowait = true })
+  set({ 'n', 'i' }, keymap.super('j'), function()
+    local buf = require('userlib.runtime.buffer').next_bufnr()
+    if buf then
+      vim.cmd('b' .. buf)
+    end
+  end, { desc = 'Next buf', silent = true, nowait = true })
+  set({ 'n', 'i' }, keymap.super('k'), function()
+    local buf = require('userlib.runtime.buffer').prev_bufnr()
+    if buf then
+      vim.cmd('b' .. buf)
+    end
+  end, { desc = 'Prev buf', silent = true, nowait = true })
   set('n', '<c-w>B', function()
     vim.cmd('wincmd b')
     -- check if window is quickfix or terminal
@@ -188,7 +211,7 @@ local function setup_basic()
     desc = 'Case change in visual mode',
   })
 
-  set({ 'n' }, keymap.super('s'), '<cmd>write<cr>', {
+  set({ 'n' }, keymap.super('s'), '<cmd>update<cr>', {
     desc = 'Save current buffer',
     silent = false,
     remap = false,
@@ -196,7 +219,7 @@ local function setup_basic()
   set({ 'i' }, keymap.super('s'), function()
     vim.cmd.stopinsert()
     vim.schedule(function()
-      vim.cmd('write')
+      vim.cmd('update')
     end)
   end, {
     desc = 'Save current buffer',
@@ -269,16 +292,12 @@ local function setup_basic()
     })
     --- use option key to navigate tab quickly.
     --- cmd key is used by the mux program.
-    if vim.cfg.runtime__is_wezterm then
-      set({ 'n', 't' }, '<M-' .. i .. '>', cmd(i .. 'tabnext'), {
-        desc = 'Go to tab ' .. i,
-      })
-    end
+    set({ 'n', 't' }, '<M-' .. i .. '>', cmd(i .. 'tabnext'), {
+      desc = 'Go to tab ' .. i,
+    })
   end
-  if vim.cfg.runtime__is_wezterm then
-    set({ 'i', 'n', 't' }, '<M-[>', cmd('tabp'), { desc = 'Tab pre' })
-    set({ 'i', 'n', 't' }, '<M-]>', cmd('tabn'), { desc = 'Tab next' })
-  end
+  set({ 'i', 'n', 't' }, '<M-[>', cmd('tabp'), { desc = 'Tab pre' })
+  set({ 'i', 'n', 't' }, '<M-]>', cmd('tabn'), { desc = 'Tab next' })
   set('n', '<leader>tn', cmd('tabnew'), {
     desc = 'New tab',
   })
@@ -291,7 +310,7 @@ local function setup_basic()
   set('n', '<leader>wp', cmd('wincmd p'), {
     desc = 'Go to previous window',
   })
-  set({ 'n', 't', 'i' }, '<M-z>', cmd('wincmd p'), {
+  set({ 'n', 't', 'i' }, '<M-w>', cmd('wincmd p'), {
     desc = 'Go to previous window',
   })
   set({ 'n', 't', 'i' }, '<M-t>', cmd('tabnext #'), {
@@ -317,6 +336,12 @@ local function setup_basic()
   })
   set('n', ']q', ':cnext<cr>', {
     desc = 'Jump to next quickfix item',
+  })
+  set('n', '[l', ':lprev<cr>', {
+    desc = 'Jump to previous loclist item',
+  })
+  set('n', ']l', ':lnext<cr>', {
+    desc = 'Jump to next loclist item',
   })
   set('n', '[qf', function()
     pcall(function()
@@ -564,11 +589,6 @@ local function setup_basic()
         return '<S-Tab>'
       end
     end, { expr = true, silent = false })
-
-    set({ 's' }, '<BS>', '<C-o>s', {
-      remap = false,
-      desc = 'Remove snippet placeholder',
-    })
 
     set({ 'i' }, '<C-j>', function()
       local trigger_ai = function()

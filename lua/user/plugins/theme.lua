@@ -18,6 +18,7 @@ plug({
     overrides = function(colors) -- add/modify highlights
       -- do not foget to run ':KanagawaCompile'
       return {
+        CybuFocus = { link = 'FlashCursor' },
         MiniIndentscopeSymbol = { link = 'IndentBlanklineChar' },
         IndentLine = { link = 'IndentBlanklineChar' },
         IndentLineCurrent = { link = 'IndentBlanklineContextChar' },
@@ -82,32 +83,64 @@ plug({
 })
 
 plug({
-  'ellisonleao/gruvbox.nvim',
+  'EdenEast/nightfox.nvim',
   event = 'User LazyTheme',
   priority = 1000,
-  enabled = vim.cfg.ui__theme_name == 'gruvbox',
+  cond = vim.cfg.ui__theme_name == 'nordfox',
   opts = {
-    terminal_colors = true, -- add neovim terminal colors
-    undercurl = true,
-    underline = true,
-    bold = true,
-    italic = {
-      strings = true,
-      emphasis = true,
-      comments = true,
-      operators = false,
-      folds = true,
+    options = {
+      transparent = true,
+      styles = {
+        keywordStylewords = 'italic',
+        types = 'italic,bold',
+      },
     },
-    strikethrough = true,
-    invert_selection = false,
-    invert_signs = false,
-    invert_tabline = false,
-    invert_intend_guides = false,
-    inverse = true, -- invert background for search, diffs, statuslines and errors
-    contrast = '', -- can be "hard", "soft" or empty string
-    palette_overrides = {},
-    overrides = {},
-    dim_inactive = false,
-    transparent_mode = false,
+    groups = {
+      all = {
+        WidgetTextHighlight = {
+          fg = 'palette.blue',
+          bg = 'palette.bg0',
+        },
+        FloatBorder = { link = 'NormalFloat' },
+        NormalA = { fg = 'palette.bg0', bg = 'palette.blue' },
+        InsertA = { fg = 'palette.bg0', bg = 'palette.green' },
+        VisualA = { fg = 'palette.bg0', bg = 'palette.magenta' },
+        CommandA = { fg = 'palette.bg0', bg = 'palette.yellow' },
+        TermA = { fg = 'palette.bg0', bg = 'palette.orange' },
+        MotionA = { fg = 'palette.bg0', bg = 'palette.red' },
+        TabLineSel = { fg = 'palette.blue', bg = 'palette.bg3' },
+        TreesitterContext = { bg = 'palette.bg2' },
+        TreesitterContextLineNumber = { link = 'TreesitterContext' },
+      },
+      -- https://github.com/EdenEast/nightfox.nvim/blob/main/usage.md#palette
+      nordfox = {},
+    },
+  },
+})
+
+plug({
+  'Mofiqul/dracula.nvim',
+  event = 'User LazyTheme',
+  name = 'dracula',
+  priority = 1000,
+  cond = vim.cfg.ui__theme_name == 'dracula',
+  opts = {
+    overrides = function(colors)
+      return {
+        WidgetTextHighlight = { fg = colors.cyan, bg = colors.black, bold = true },
+        TabLineSel = { fg = colors.purple, bg = colors.bg, bold = true, italic = false },
+        TabLine = { bg = colors.menu, fg = colors.white, italic = true },
+        TabLineFill = { bg = colors.black, fg = colors.purple },
+        StatusLineNC = { fg = colors.comment, bg = colors.menu },
+        NormalA = { fg = colors.black, bg = colors.purple, bold = true },
+        InsertA = { fg = colors.black, bg = colors.green, bold = true },
+        VisualA = { fg = colors.black, bg = colors.blue, bold = true },
+        CommandA = { fg = colors.black, bg = colors.red, bold = true },
+        TermA = { fg = colors.black, bg = colors.yellow, bold = true },
+        MotionA = { fg = colors.black, bg = colors.cyan, bold = true },
+        TreesitterContext = { bg = colors.visual },
+        TreesitterContextLineNumber = { link = 'TreesitterContext' },
+      }
+    end,
   },
 })

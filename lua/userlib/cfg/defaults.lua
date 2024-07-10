@@ -62,7 +62,7 @@ return {
   editor__jump_lastline_enable = true,
   editor__jump_lastline_ignore_filetypes = { 'gitcommit', 'gitrebase', 'svn', 'hgcommit', 'Dashboard' },
   editor__jump_lastline_ignore_buftypes = { 'quickfix', 'nofile', 'help' },
-  editor__resize_steps = 5,
+  editor__resize_steps = 15,
   -- editor extended features.
   editorExtend__colorizer_enable = true,
   editorExtend__colorizer_filetypes = {
@@ -106,6 +106,7 @@ return {
     'yaml',
     'markdown',
     'markdown_inline',
+    'nim',
   },
   lang__treesitter_plugin_disable_on_filetypes = {
     'NvimTree',
@@ -135,7 +136,8 @@ return {
     -- 'lua_ls',
     -- 'tailwindcss',
     -- 'tsserver',
-    -- 'volar',
+    'volar',
+    'vtsls',
     -- 'prismals',
   },
   lsp__automatic_installation = false,
@@ -161,12 +163,11 @@ return {
   },
   lsp__vue_typescript_plugin = nil,
   lsp__vue_language_server = 'vue-language-server',
-  lsp__plugin_lspsaga = true,
   ---User interfaces
   ui__theme_name = 'default',
   ui__float_border = 'single',
   ui__window_equalalways = false,
-  ---@type "mini"|"dressing"
+  ---@type "mini"|"dressing"|"fzf_lua"
   ui__input_select_provider = 'dressing',
   workbench__lualine_theme = 'default',
   ---misc stuff.

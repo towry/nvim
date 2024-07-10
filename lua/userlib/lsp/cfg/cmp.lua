@@ -20,7 +20,7 @@ function M.on_attach(client, bufnr)
     client.server_capabilities.completionProvider.triggerCharacters = vim.iter(triggers):totable()
   end
 
-  if vim.edit__cmp_provider ~= 'native' then
+  if vim.cfg.edit__cmp_provider ~= 'native' then
     return
   end
 
@@ -28,7 +28,11 @@ function M.on_attach(client, bufnr)
     return
   end
 
-  vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
+  vim.api.nvim_set_option_value('omnifunc', 'v:lua.MiniCompletion.completefunc_lsp', {
+    buf = bufnr,
+  })
+
+  -- vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
 end
 
 return M

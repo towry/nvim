@@ -1,0 +1,16 @@
+{
+  "ci-test-rust-nix-steps + test rust ci": {
+    "body": [
+      "- uses: actions/checkout@v4",
+      "  with:",
+      "    fetch-deps: 1",
+      "- uses: DeterminateSystems/nix-installer-action@main",
+      "- uses: DeterminateSystems/magic-nix-cache-action@main",
+      "- name: Setup shell env",
+      "  run: nix develop",
+      "- name: test",
+      "  run: cargo test"
+    ],
+    "prefix": ["ci-test-rust-nix-steps", "test rust ci"]
+  }
+}

@@ -49,9 +49,9 @@ au.on_verylazy(function()
     setca('acc', 'CocCommand')
   end
 
-  setca('@mh', 'MERGE_HEAD')
-  setca('@rh', 'REBASE_HEAD')
-  setca('@oh', 'ORIG_HEAD')
+  setca('amh', 'MERGE_HEAD')
+  setca('arh', 'REBASE_HEAD')
+  setca('aoh', 'ORIG_HEAD')
 
   -- +----
   -- Insert

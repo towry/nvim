@@ -97,6 +97,7 @@ plug({
           end
           local reveal_file = vim.api.nvim_buf_get_name(vim.t.neotree_last_buf)
           if reveal_file == '' then
+            vim.notify('no last buffer', vim.log.levels.INFO)
             return
           else
             local f = io.open(reveal_file, 'r')
@@ -111,6 +112,14 @@ plug({
             dir = vim.uv.cwd(),
             source = 'filesystem', -- OPTIONAL, this is the default value
             reveal_file = reveal_file, -- path to file or folder to reveal
+            reveal_force_cwd = true, -- change cwd without asking if needed
+          })
+        end,
+        go_to_root = function()
+          require('neo-tree.command').execute({
+            dir = vim.uv.cwd(),
+            action = 'focus',
+            source = 'filesystem', -- OPTIONAL, this is the default value
             reveal_force_cwd = true, -- change cwd without asking if needed
           })
         end,
@@ -185,31 +194,39 @@ plug({
         end,
       },
       window = {
-        width = 50,
+        width = 40,
         auto_expand_width = false,
         mapping_options = {
           noremap = true,
           nowait = false,
         },
         mappings = {
-          ['[b'] = 'prev_source',
-          [']b'] = 'next_source',
-          ['m'] = 'action_in_dir',
-          ['w'] = 'open_with_window_picker',
+          ['[['] = 'prev_source',
+          [']]'] = 'next_source',
+          ['m'] = { 'action_in_dir', nowait = true },
+          ['w'] = { 'open_with_window_picker', nowait = true },
           O = 'system_open',
           Y = 'copy_selector',
-          ['<tab>'] = 'parent_or_close',
-          -- ['<tab>'] = 'child_or_open',
+          ['K'] = { 'parent_or_close', nowait = true },
+          ['J'] = { 'child_or_open', nowait = true },
+          ['<tab>'] = { 'expand_all_nodes', nowait = true },
+          ['<s-tab>'] = { 'close_all_nodes', nowait = true },
           ['<space>'] = { 'toggle_node', nowait = true },
-          o = 'open',
+          o = { 'open', nowait = true },
+          ['<cr>'] = { 'open', nowait = true },
+          ['<c-t>'] = 'open_tab_drop',
           e = false,
+          z = false,
           h = false,
           l = false,
           H = false,
+          t = false,
           L = false,
+          -- ['<space>'] = false,
           E = 'toggle_auto_expand_width',
-          q = 'unfocus',
+          q = { 'unfocus', nowait = true },
           Q = 'close_window',
+          ['<C-q>'] = { 'close_window', nowait = true },
         },
         fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
           ['<C-j>'] = 'move_cursor_down',
@@ -224,9 +241,10 @@ plug({
         group_empty_dirs = true,
         window = {
           mappings = {
+            ['_'] = 'go_to_root',
             ['-'] = 'navigate_up',
-            ['.'] = 'reveal_last_buf',
-            ['g.'] = 'set_root',
+            ['g.'] = 'reveal_last_buf',
+            ['.'] = 'set_root',
             ['gh'] = 'toggle_hidden',
           },
         },
