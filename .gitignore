@@ -10,3 +10,9 @@ doc/*
 !doc/*.md
 .netrwhist
 lua/nix-env.lua
+.repro
+debug
+tt.*
+.tests
+foo.*
+data
