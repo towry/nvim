@@ -89,9 +89,9 @@ plug({
   cond = vim.cfg.ui__theme_name == 'nordfox',
   opts = {
     options = {
-      transparent = true,
+      transparent = false,
       styles = {
-        keywordStylewords = 'italic',
+        keywords = 'italic',
         types = 'italic,bold',
       },
     },
