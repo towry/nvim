@@ -1,4 +1,9 @@
+local dislike = require('core.spec').dislike
+
 return {
+  dislike('folke/tokyonight'),
+  dislike('catppuccin/nvim'),
+
   {
     'LazyVim/LazyVim',
     opts = {

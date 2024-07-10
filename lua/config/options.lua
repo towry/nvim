@@ -29,3 +29,5 @@ pcall(function()
   -- NOTE: unload is experimental
   o.jumpoptions = 'stack,view,unload'
 end)
+
+require('core.globals')
