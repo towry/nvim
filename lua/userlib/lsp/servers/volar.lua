@@ -33,7 +33,6 @@ return function()
 
   return vim.tbl_extend('force', {}, {
     cmd = {
-      'node',
       vim.cfg.lsp__vue_language_server,
       '--stdio',
     },
