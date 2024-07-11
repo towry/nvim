@@ -119,3 +119,58 @@ do
     set(v[1], v[2], v[3], v[4])
   end
 end
+
+
+--------------------------------
+
+--- setup keymap on terminal
+vim.g.set_terminal_keymaps = vim.schedule_wrap(function(bufnr)
+  local nvim_buf_set_keymap = vim.keymap.set
+  local buffer = bufnr or vim.api.nvim_get_current_buf()
+  local opts = { noremap = true, buffer = buffer, nowait = true, silent = true }
+
+  if not vim.api.nvim_buf_is_valid(buffer) then
+    return
+  end
+
+  --- prevent <C-z> behavior in all terminals in neovim
+  nvim_buf_set_keymap('t', '<C-z>', '<NOP>', opts)
+
+  -- do not bind below keys in fzf-lua terminal window.
+  if vim.tbl_contains({ 'yazi', 'fzf' }, vim.bo.filetype) then
+    return
+  end
+
+  nvim_buf_set_keymap('t', '<esc><esc>', function()
+    vim.cmd.stopinsert()
+  end, opts)
+  nvim_buf_set_keymap({ 'n', 't' }, '<F2>', function()
+    if not vim.b.osc7_dir then
+      return
+    end
+    vim.cmd('stopinsert')
+
+    vim.schedule(function()
+      local choice = vim.fn.confirm('Cd into: ' .. vim.b.osc7_dir .. ' ?', '&Yes\n&No', 2)
+      if choice == 1 then
+        vim.cmd('Cdin ' .. vim.b.osc7_dir)
+        return
+      end
+      vim.cmd.startinsert()
+    end)
+  end, opts)
+
+  nvim_buf_set_keymap('n', 'q', [[:startinsert<cr>]], opts)
+  -- nvim_buf_set_keymap('t', '<ESC>', [[<C-\><C-n>]], opts)
+  --- switch windows
+  nvim_buf_set_keymap('t', '<C-\\><C-h>', [[<C-\><C-n><C-W>h]], opts)
+  nvim_buf_set_keymap('t', '<C-\\><C-j>', [[<C-\><C-n><C-W>j]], opts)
+  nvim_buf_set_keymap('t', '<C-\\><C-k>', [[<C-\><C-n><C-W>k]], opts)
+  nvim_buf_set_keymap('t', '<C-\\><C-l>', [[<C-\><C-n><C-W>l]], opts)
+
+  --- resize
+  -- nvim_buf_set_keymap('t', '<A-h>', [[<C-\><C-n><A-h>]], opts)
+  -- nvim_buf_set_keymap('t', '<A-j>', [[<C-\><C-n><A-j>]], opts)
+  -- nvim_buf_set_keymap('t', '<A-k>', [[<C-\><C-n><A-k>]], opts)
+  -- nvim_buf_set_keymap('t', '<A-l>', [[<C-\><C-n><A-l>]], opts)
+end)
