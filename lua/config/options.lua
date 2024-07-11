@@ -11,6 +11,15 @@ do --- User Custom Options
   vim.g.cfg_keymap_hint_helper = 'clue'
   ---@type "single" | "rounded" | "double" | "shadow"
   vim.g.cfg_border_style = 'single'
+  ---@type {git: boolean}
+  vim.g.cfg_inside = setmetatable({}, {
+    __index = function(_, key)
+      local v = require('v')
+      if key == 'git' then
+        v.git_is_using_nvim_as_tool()
+      end
+    end,
+  })
 end
 
 --- ======================================
@@ -29,5 +38,3 @@ pcall(function()
   -- NOTE: unload is experimental
   o.jumpoptions = 'stack,view,unload'
 end)
-
-require('core.globals')

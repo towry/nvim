@@ -1,14 +1,11 @@
-local dislike = require('core.spec').dislike
-local not_inside = require('core.spec').not_inside
-
 return {
-  dislike('folke/noice.nvim'),
-  dislike('rcarriga/nvim-notify'),
+  { 'folke/noice.nvim', enabled = false },
+  { 'rcarriga/nvim-notify', enabled = false },
   { import = 'lazyvim.plugins.extras.ui.treesitter-context' },
   {
     'j-hui/fidget.nvim',
     event = { 'VeryLazy' },
-    enabled = not_inside.git,
+    enabled = not vim.g.cfg_inside.git,
     opts = {
       progress = {
         ignore = {
@@ -30,7 +27,7 @@ return {
       },
     },
     init = function()
-      require('core.vi').command('FidgetHistory', function()
+      require('v').nvim_command('FidgetHistory', function()
         require('fidget.notification').show_history()
       end, {
         desc = 'Show fidget notification history',
