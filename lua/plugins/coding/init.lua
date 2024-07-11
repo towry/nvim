@@ -1,13 +1,18 @@
 return {
-  { import = 'lazyvim.plugins.extras.coding.luasnip' },
-  { import = 'lazyvim.plugins.extras.coding.codeium' },
-  { import = 'lazyvim.plugins.extras.coding.mini-comment' },
-  { import = 'lazyvim.plugins.extras.coding.mini-surround' },
-  { import = 'lazyvim.plugins.extras.coding.yanky' },
-  { import = 'lazyvim.plugins.extras.editor.mini-move' },
-  {
-    'echasnovski/mini.bracketed',
-    version = '*',
-    event = 'VeryLazy',
-  },
+    { import = 'plugins.coding.core' },
+    { import = 'plugins.coding.luasnip' },
+    { import = 'plugins.coding.mini-comment' },
+    { import = 'plugins.coding.mini-surround' },
+    { import = 'plugins.coding.yanky' },
+    {
+        "echasnovski/mini.move",
+        event = "VeryLazy",
+        version = '*',
+        opts = {},
+    },
+    {
+        'echasnovski/mini.bracketed',
+        version = '*',
+        event = 'VeryLazy',
+    },
 }

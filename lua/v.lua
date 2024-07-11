@@ -18,6 +18,13 @@ local function nvim_has_keymap(key, mode)
     return vim.fn.hasmapto(key, mode) == 1
 end
 
+local CREATE_UNDO = vim.api.nvim_replace_termcodes("<c-G>u", true, true, true)
+local function nvim_create_undo()
+    if vim.api.nvim_get_mode().mode == "i" then
+        vim.api.nvim_feedkeys(CREATE_UNDO, "n", false)
+    end
+end
+
 ---@private
 local _autocmd_keys = { 'event', 'buffer', 'pattern', 'desc', 'command', 'group', 'once', 'nested' }
 --- Validate the keys passed to as.augroup are valid
@@ -373,6 +380,7 @@ return {
     nvim_augroup = nvim_augroup,
     nvim_has_keymap = nvim_has_keymap,
     nvim_get_range = nvim_get_range,
+    nvim_create_undo = nvim_create_undo,
     git_is_using_nvim_as_tool = git_is_using_nvim_as_tool,
     buffer_is_empty = buffer_is_empty,
     buffer_set_options = buffer_set_options,

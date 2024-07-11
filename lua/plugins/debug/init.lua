@@ -1,5 +1,5 @@
 return {
-  { import = 'lazyvim.plugins.extras.editor.overseer' },
-  { import = 'lazyvim.plugins.extras.dap.core' },
-  { import = 'lazyvim.plugins.extras.test.core' },
+    { import = 'plugins.debug.overseer' },
+    { import = 'plugins.debug.dap' },
+    { import = 'lazyvim.plugins.extras.test.core' },
 }

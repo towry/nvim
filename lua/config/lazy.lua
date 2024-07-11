@@ -17,7 +17,6 @@ local function setup(opts)
     local is_window = jit.os:find('Windows')
     local lazy_opts = {
         spec = {
-            -- import/override with your plugins
             { import = "plugins" },
         },
         defaults = { lazy = true },
