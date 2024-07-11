@@ -221,6 +221,23 @@ end
 local function keymap_cmd(cmd)
   return string.format('<cmd>%s<cr>', cmd)
 end
+---@return function
+local function keymap_buf_set(bufnr, opts)
+  opts = opts or {}
+  opts.buffer = bufnr
+  return function(mode, lhs, rhs, opts_local)
+    vim.keymap.set(mode, lhs, rhs, vim.tbl_deep_extend('force', opts_local or {}, opts))
+  end
+end
+local function keymap_super(c)
+  if not vim.env.TMUX or not vim.env.MIMIC_SUPER then
+    if c == ';' then
+      return [[<C-;>]]
+    end
+    return string.format('<D-%s>', c)
+  end
+  return string.format('<Char-0xAE>%s', c)
+end
 
 local function nvim_get_range()
   if vim.fn.mode() == 'n' then
@@ -323,6 +340,8 @@ return {
   buffer_alt_focusable_bufnr = buffer_alt_focusable_bufnr,
   tab_win_count = tab_win_count,
   keymap_cmd = keymap_cmd,
+  keymap_buf_set = keymap_buf_set,
+  keymap_super = keymap_super,
   util_toggle_cmd_option = util_toggle_cmd_option,
   util_mk_pattern_table = util_mk_pattern_table,
   util_falsy = util_falsy,

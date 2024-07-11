@@ -22,6 +22,32 @@ do --- User Custom Options
     end,
   })
   vim.g.cfg_resize_steps = 10
+  vim.g.cfg_disabled_plugins = {
+    'gzip',
+    'zip',
+    'zipPlugin',
+    'tar',
+    'tarPlugin',
+    'getscript',
+    'getscriptPlugin',
+    'vimball',
+    'vimballPlugin',
+    '2html_plugin',
+    'matchit',
+    'matchparen',
+    'logiPat',
+    'rust_vim',
+    'rust_vim_plugin_cargo',
+    'rrhelper',
+    'netrw',
+    'netrwPlugin',
+    'netrwSettings',
+    'netrwFileHandlers',
+  }
+  vim.g.cfg_disabled_providers = {
+    'perl',
+    'ruby',
+  }
 end
 
 --- ======================================
