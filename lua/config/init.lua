@@ -20,6 +20,7 @@ require('v').nvim_augroup('SetupNvim', {
         require('config.commands')
     end,
 }, {
-    event = 'UIEnter',
+    event = 'User',
+    pattern = 'VeryLazy',
     command = 'colorscheme nordfox',
 })

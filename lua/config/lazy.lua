@@ -17,6 +17,7 @@ local function setup(opts)
     local is_window = jit.os:find('Windows')
     local lazy_opts = {
         spec = {
+            { 'LazyVim/LazyVim' },
             { import = "plugins" },
         },
         defaults = { lazy = true },
@@ -104,6 +105,25 @@ local function setup(opts)
         return
     end
 
+    local lazyvim = nil
+    _G.LazyVim = setmetatable({}, {
+        __index = function(_, key)
+            if lazyvim then
+                return lazyvim[key]
+            end
+            local plugin = require("lazy.core.config").spec.plugins.LazyVim
+            if plugin then
+                vim.opt.rtp:append(plugin.dir)
+            end
+            require('lazyvim.config')
+            lazyvim = _G.LazyVim
+            return lazyvim[key]
+        end
+    })
+    local Event = require("lazy.core.handler.event")
+
+    Event.mappings.LazyFile = { id = "LazyFile", event = { "BufReadPost", "BufNewFile", "BufWritePre" } }
+    Event.mappings["User LazyFile"] = Event.mappings.LazyFile
     require('lazy').setup(lazy_opts)
 end
 

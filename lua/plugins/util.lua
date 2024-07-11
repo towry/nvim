@@ -1,4 +1,8 @@
 return {
+    {
+        'LazyVim/LazyVim',
+        priority = 1000,
+    },
     { "nvim-lua/plenary.nvim", lazy = true },
 
     -- Session management. This saves your session in the background,
