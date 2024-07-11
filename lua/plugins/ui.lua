@@ -1,7 +1,19 @@
 return {
+  --- disabled
   { 'folke/noice.nvim', enabled = false },
   { 'rcarriga/nvim-notify', enabled = false },
+  ---
   { import = 'lazyvim.plugins.extras.ui.treesitter-context' },
+  {
+    'nvimdev/dashboard-nvim',
+    opts = {
+      config = {
+        week_header = {
+          enable = true,
+        },
+      },
+    },
+  },
   {
     'j-hui/fidget.nvim',
     event = { 'VeryLazy' },

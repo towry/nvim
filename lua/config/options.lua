@@ -20,6 +20,7 @@ do --- User Custom Options
       end
     end,
   })
+  vim.g.cfg_resize_steps = 10
 end
 
 --- ======================================

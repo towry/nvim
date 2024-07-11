@@ -201,6 +201,10 @@ local function buffer_alt_focusable_bufnr()
   return altnr
 end
 
+local function keymap_cmd(cmd)
+  return string.format('<cmd>%s<cr>', cmd)
+end
+
 return {
   register_global = register_global,
   nvim_command = nvim_command,
@@ -210,4 +214,5 @@ return {
   buffer_set_options = buffer_set_options,
   buffer_focus_or_current = buffer_focus_or_current,
   buffer_alt_focusable_bufnr = buffer_alt_focusable_bufnr,
+  keymap_cmd = keymap_cmd,
 }
