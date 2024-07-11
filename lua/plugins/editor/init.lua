@@ -19,7 +19,9 @@ return {
     opts = {},
   },
   { import = 'lazyvim.plugins.extras.editor.fzf' },
+  { import = 'plugins.editor.fzf-lua' },
   ---
   { import = 'plugins.editor.mini-clue' },
   { import = 'plugins.editor.smart-splits' },
+  { import = 'plugins.editor.nvim-window-picker' },
 }

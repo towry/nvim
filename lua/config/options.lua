@@ -4,6 +4,7 @@
 
 do --- LazyVim Options
   vim.g.lazyvim_picker = 'fzf'
+  vim.g.lazygit_config = false
 end
 
 do --- User Custom Options
@@ -35,6 +36,8 @@ if vim.o.shell and vim.o.shell:find('fish') then
   o.shellcmdflag = ('--init-command="set PATH %s" -Pc'):format(vim.env.PATH)
 end
 o.startofline = false -- cursor start of line when scroll
+o.showbreak = '↳ '
+-- o.jumpoptions = 'stack,view'
 pcall(function()
   -- NOTE: unload is experimental
   o.jumpoptions = 'stack,view,unload'

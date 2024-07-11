@@ -35,6 +35,8 @@ return {
           TabLineSel = { fg = 'palette.blue', bg = 'palette.bg3' },
           TreesitterContext = { bg = 'palette.bg2' },
           TreesitterContextLineNumber = { link = 'TreesitterContext' },
+          FzfLuaNormal = { link = 'NormalFloat' },
+          FzfLuaBorder = { link = 'FloatBorder' },
         },
         -- https://github.com/EdenEast/nightfox.nvim/blob/main/usage.md#palette
         nordfox = {},

@@ -14,6 +14,10 @@ local function nvim_command(name, rhs, opts)
   vim.api.nvim_create_user_command(name, rhs, opts)
 end
 
+local function nvim_has_keymap(key, mode)
+  return vim.fn.hasmapto(key, mode) == 1
+end
+
 ---@private
 local _autocmd_keys = { 'event', 'buffer', 'pattern', 'desc', 'command', 'group', 'once', 'nested' }
 --- Validate the keys passed to as.augroup are valid
@@ -201,18 +205,125 @@ local function buffer_alt_focusable_bufnr()
   return altnr
 end
 
+---Get current tab's win count
+---@return number
+local function tab_win_count()
+  local tab_wins = vim.api.nvim_tabpage_list_wins(0)
+  local count = 0
+  for _, win in ipairs(tab_wins) do
+    if vim.api.nvim_win_get_config(win).relative == '' then
+      count = count + 1
+    end
+  end
+  return count
+end
+
 local function keymap_cmd(cmd)
   return string.format('<cmd>%s<cr>', cmd)
+end
+
+local function nvim_get_range()
+  if vim.fn.mode() == 'n' then
+    local pos = vim.api.nvim_win_get_cursor(0)
+    return {
+      pos[1],
+      pos[1],
+    }
+  end
+
+  return {
+    vim.fn.getpos('v')[2],
+    vim.fn.getpos('.')[2],
+  }
+end
+
+--- @param option_to_toggle string hidden=true or --no-hidden
+--- @param insert_at_end? boolean
+local util_toggle_cmd_option = function(cmd_string_or_table, option_to_toggle, insert_at_end)
+  local cmd_is_table = true
+  if type(cmd_string_or_table) == 'string' then
+    cmd_is_table = false
+    -- split string to table by white space
+    cmd_string_or_table = vim.split(cmd_string_or_table, '%s+')
+  end
+
+  -- if option_to_toggle in table, remove it, or add to it.
+  local is_in_table = false
+  for i, v in ipairs(cmd_string_or_table) do
+    if v == option_to_toggle then
+      table.remove(cmd_string_or_table, i)
+      is_in_table = true
+      break
+    end
+  end
+  if not is_in_table then
+    if insert_at_end then
+      table.insert(cmd_string_or_table, option_to_toggle)
+    else
+      -- insert at start
+      table.insert(cmd_string_or_table, 2, option_to_toggle)
+    end
+  end
+
+  if cmd_is_table then
+    return cmd_string_or_table
+  else
+    return table.concat(cmd_string_or_table, ' ')
+  end
+end
+
+--- Returns a table that when accessed by key, match with pattern from
+--- key in the tbl
+--- @param tbl table
+--- @return table
+local util_mk_pattern_table = function(tbl)
+  return setmetatable({}, {
+    __index = function(_, key)
+      if not key then
+        return
+      end
+      for k, v in pairs(tbl) do
+        if k:match(key) then
+          return v
+        end
+      end
+    end,
+  })
+end
+local util_falsy = function(item)
+  if not item then
+    return true
+  end
+  local item_type = type(item)
+  if item_type == 'boolean' then
+    return not item
+  end
+  if item_type == 'string' then
+    return item == ''
+  end
+  if item_type == 'number' then
+    return item <= 0
+  end
+  if item_type == 'table' then
+    return vim.tbl_isempty(item)
+  end
+  return item ~= nil
 end
 
 return {
   register_global = register_global,
   nvim_command = nvim_command,
   nvim_augroup = nvim_augroup,
+  nvim_has_keymap = nvim_has_keymap,
+  nvim_get_range = nvim_get_range,
   git_is_using_nvim_as_tool = git_is_using_nvim_as_tool,
   buffer_is_empty = buffer_is_empty,
   buffer_set_options = buffer_set_options,
   buffer_focus_or_current = buffer_focus_or_current,
   buffer_alt_focusable_bufnr = buffer_alt_focusable_bufnr,
+  tab_win_count = tab_win_count,
   keymap_cmd = keymap_cmd,
+  util_toggle_cmd_option = util_toggle_cmd_option,
+  util_mk_pattern_table = util_mk_pattern_table,
+  util_falsy = util_falsy,
 }

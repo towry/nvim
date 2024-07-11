@@ -11,7 +11,7 @@ doc/*
 .netrwhist
 lua/nix-env.lua
 .repro
-debug
+./debug/
 tt.*
 .tests
 foo.*
