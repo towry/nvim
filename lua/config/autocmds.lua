@@ -77,7 +77,7 @@ v.nvim_augroup('TerminalAutocommands', {
   event = { 'TermClose' },
   command = function(args)
     --- automatically close a terminal if the job was successful
-    if v.util_falsy(v.event.status) and v.util_falsy(vim.bo[args.buf].ft) then
+    if v.util_falsy(vim.v.event.status) and v.util_falsy(vim.bo[args.buf].ft) then
       vim.cmd.bdelete({ args.buf, bang = true })
     end
   end,
