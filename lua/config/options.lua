@@ -70,21 +70,21 @@ o.guicursor = {
   'i-ci-ve:ver25-Cursor/lCursor',
   'r-cr-o:hor20-Cursor/lCursor',
 }
-o.report = 9001         -- Threshold for reporting number of lines channged.
-o.colorcolumn = ''      -- Draw colored column one step to the right of desired maximum width
-o.showmode = false      --- Don't show things like -- INSERT -- anymore
-o.modeline = true       -- Allow modeline
-o.ruler = false         -- Always show cursor position
-o.termguicolors = true  --- Correct terminal colors
+o.report = 9001 -- Threshold for reporting number of lines channged.
+o.colorcolumn = '' -- Draw colored column one step to the right of desired maximum width
+o.showmode = false --- Don't show things like -- INSERT -- anymore
+o.modeline = true -- Allow modeline
+o.ruler = false -- Always show cursor position
+o.termguicolors = true --- Correct terminal colors
 o.confirm = true
-o.showtabline = 2       --- Always show tabs
-o.signcolumn = 'yes:1'  --- Add extra sign column next to line number
+o.showtabline = 2 --- Always show tabs
+o.signcolumn = 'yes:1' --- Add extra sign column next to line number
 o.relativenumber = true --- Enables relative number
 o.numberwidth = 1
-o.number = true         --- Shows current line number
-o.pumheight = 8         --- Max num of items in completion menu
-o.pumblend = 0          -- popup blend
-o.startofline = false   -- cursor start of line when scroll
+o.number = true --- Shows current line number
+o.pumheight = 8 --- Max num of items in completion menu
+o.pumblend = 0 -- popup blend
+o.startofline = false -- cursor start of line when scroll
 o.showbreak = '↳ '
 -- o.jumpoptions = 'stack,view'
 pcall(function()
@@ -99,10 +99,10 @@ o.wildmode = { 'longest:full', 'list:longest', 'list:full' } -- Command-line com
 o.wildignorecase = true
 o.wildoptions = { 'fuzzy', 'tagfile' }
 o.wildignore = { '*.pyc', '*node_modules/**', '.git/**', '*.DS_Store', '*.min.js', '*.obj' } --- Don't search inside Node.js modules (works for gutentag)
-o.cmdheight = 1                                                                              --- Give more space for displaying messages
-o.cmdwinheight = 10                                                                          -- the cmd window height
-o.completeopt = 'menu,noinsert,noselect,popup,fuzzy'                                         --- Better autocompletion
-o.complete:append('kspell')                                                                  -- Add spellcheck options for autocomplete
+o.cmdheight = 1 --- Give more space for displaying messages
+o.cmdwinheight = 10 -- the cmd window height
+o.completeopt = 'menu,noinsert,noselect,popup,fuzzy' --- Better autocompletion
+o.complete:append('kspell') -- Add spellcheck options for autocomplete
 -- scan current and included files.
 -- o.complete:append('i')
 -- scan current and included files for defined name or macro
@@ -123,7 +123,7 @@ o.statuscolumn = '%#SignColumn#%s%l%C'
 o.sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help', 'globals', 'skiprtp', 'folds' }
 o.splitkeep = 'screen'
 o.foldnestmax = 10 -- deepest fold is 10 levels
-o.foldlevel = 99   --- Using ufo provider need a large value
+o.foldlevel = 99 --- Using ufo provider need a large value
 o.foldlevelstart = 99
 for _, provider in ipairs(vim.g.cfg_disabled_providers) do
   local var = 'loaded_' .. provider .. '_provider'
@@ -133,7 +133,7 @@ vim.opt.laststatus = 2
 if vim.g.cfg_inside.git then
   vim.opt.laststatus = 2
   pcall(function()
-    _G.V.stl_git_three_way_name = function()
+    _G.V_stl_git_three_way_name = function()
       local bufname = vim.api.nvim_buf_get_name(0)
       local basename = vim.fn.fnamemodify(bufname, ':t')
       if vim.bo.filetype == 'gitcommit' then
@@ -154,20 +154,20 @@ if vim.g.cfg_inside.git then
       end
     end
   end)
-  vim.opt.statusline = [[%<%n#%f %q%h%m%r[%{v:lua.V.stl_git_three_way_name()}]%=%-14.(%l,%c%V%)%p%% %y %w]]
+  vim.opt.statusline = [[%<%n#%f %q%h%m%r[%{v:lua.V_stl_git_three_way_name()}]%=%-14.(%l,%c%V%)%p%% %y %w]]
 end
 -- ===
 ---------------------------------------------
 vim.filetype.add({
   pattern = {
-    [".*"] = {
+    ['.*'] = {
       function(path, buf)
         return vim.bo[buf]
-            and vim.bo[buf].filetype ~= "bigfile"
+            and vim.bo[buf].filetype ~= 'bigfile'
             and path
             and vim.fn.getfsize(path) > vim.g.cfg_bigfile_size
-            and "bigfile"
-            or nil
+            and 'bigfile'
+          or nil
       end,
     },
   },
