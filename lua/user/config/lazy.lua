@@ -30,7 +30,7 @@ local function setup(opts)
     git = {
       timeout = 60,
     },
-    concurrency = 4,
+    concurrency = 10,
     custom_keys = {
       -- open lazygit log
       ['<localleader>l'] = function(plugin)
