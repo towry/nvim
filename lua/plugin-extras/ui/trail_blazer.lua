@@ -89,6 +89,7 @@ end
 --- https://github.com/FelixKratz/dotfiles/blob/6a84fc7882c31a60268386da0d67c7d39fc7ff55/.config/nvim/lua/plugins/trailblazer.lua#L16
 return plug({
   'LeonHeidelbach/trailblazer.nvim',
+  submodules = false,
   vscode = true,
   cmd = {
     'TrailBlazerTrackBack',

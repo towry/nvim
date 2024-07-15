@@ -3,6 +3,7 @@ local plug = require('userlib.runtime.pack').plug
 return plug({
   {
     vscode = true,
+    submodules = false,
     -- easily switch between word/text
     'AndrewRadev/switch.vim',
     keys = {
