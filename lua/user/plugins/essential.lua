@@ -65,12 +65,6 @@ pack.plug({
   },
   { 'nvim-lua/popup.nvim' },
   {
-    'grapp-dev/nui-components.nvim',
-    dependencies = {
-      'MunifTanjim/nui.nvim',
-    },
-  },
-  {
     'tpope/vim-repeat',
     vscode = true,
     keys = { '.' },
