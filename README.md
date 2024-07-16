@@ -1,4 +1,4 @@
-# Towry's Neovim configuration
+# Towry's Neovim configuration [deprecated ->](https://github.com/towry/nvim-astro)
 
 ## Noteworthy Features
 
